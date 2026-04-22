@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_hr_pool_approve_to_pool" model="ir.actions.server">
+        <field name="name">Approve to Pool</field>
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    if rec.x_intake_phase == 'prescreening' and rec.x_chairman_decision == 'pending':
+        rec.write({
+            'x_chairman_decision': 'approved',
+            'x_intake_phase': 'pooling',
+        })
+        ]]></field>
+    </record>
+
+    <record id="action_hr_pool_put_on_hold" model="ir.actions.server">
+        <field name="name">Put on Hold</field>
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    if rec.x_intake_phase != 'converted':
+        rec.write({
+            'x_chairman_decision': 'on_hold',
+            'x_intake_phase': 'pooling',
+        })
+        ]]></field>
+    </record>
+
+    <record id="action_hr_pool_reject" model="ir.actions.server">
+        <field name="name">Reject Pool Candidate</field>
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    if rec.x_intake_phase != 'converted':
+        rec.write({
+            'x_chairman_decision': 'rejected',
+            'x_intake_phase': 'pooling',
+        })
+        ]]></field>
+    </record>
+</odoo>

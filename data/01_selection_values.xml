@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sel_candidate_origin_current_staff" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_candidate_origin"/>
+        <field name="name">Current Staff</field>
+        <field name="value">current_staff</field>
+    </record>
+    <record id="sel_candidate_origin_public_candidate" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_candidate_origin"/>
+        <field name="name">Public Candidate</field>
+        <field name="value">public_candidate</field>
+    </record>
+    <record id="sel_candidate_origin_referral" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_candidate_origin"/>
+        <field name="name">Referral</field>
+        <field name="value">referral</field>
+    </record>
+    <record id="sel_candidate_origin_manual_intake" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_candidate_origin"/>
+        <field name="name">Manual Intake</field>
+        <field name="value">manual_intake</field>
+    </record>
+
+    <record id="sel_phase_prescreening" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_intake_phase"/>
+        <field name="name">Prescreening</field>
+        <field name="value">prescreening</field>
+    </record>
+    <record id="sel_phase_pooling" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_intake_phase"/>
+        <field name="name">Pooling</field>
+        <field name="value">pooling</field>
+    </record>
+    <record id="sel_phase_conversion" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_intake_phase"/>
+        <field name="name">Conversion</field>
+        <field name="value">conversion</field>
+    </record>
+    <record id="sel_phase_converted" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_intake_phase"/>
+        <field name="name">Converted</field>
+        <field name="value">converted</field>
+    </record>
+
+    <record id="sel_decision_pending" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_chairman_decision"/>
+        <field name="name">Pending</field>
+        <field name="value">pending</field>
+    </record>
+    <record id="sel_decision_approved" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_chairman_decision"/>
+        <field name="name">Approved</field>
+        <field name="value">approved</field>
+    </record>
+    <record id="sel_decision_on_hold" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_chairman_decision"/>
+        <field name="name">On Hold</field>
+        <field name="value">on_hold</field>
+    </record>
+    <record id="sel_decision_rejected" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_chairman_decision"/>
+        <field name="name">Rejected</field>
+        <field name="value">rejected</field>
+    </record>
+    <record id="sel_decision_conversion_approved" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_chairman_decision"/>
+        <field name="name">Conversion Approved</field>
+        <field name="value">conversion_approved</field>
+    </record>
+    <record id="sel_decision_conversion_rejected" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_chairman_decision"/>
+        <field name="name">Conversion Rejected</field>
+        <field name="value">conversion_rejected</field>
+    </record>
+
+    <record id="sel_recommend_qualify" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_reviewer_recommendation"/>
+        <field name="name">Recommend Qualify</field>
+        <field name="value">recommend_qualify</field>
+    </record>
+    <record id="sel_recommend_hold" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_reviewer_recommendation"/>
+        <field name="name">Recommend Hold</field>
+        <field name="value">recommend_hold</field>
+    </record>
+    <record id="sel_recommend_reject" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_reviewer_recommendation"/>
+        <field name="name">Recommend Reject</field>
+        <field name="value">recommend_reject</field>
+    </record>
+    <record id="sel_recommend_convert" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_reviewer_recommendation"/>
+        <field name="name">Recommend Convert</field>
+        <field name="value">recommend_convert</field>
+    </record>
+    <record id="sel_recommend_needs_more_information" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_reviewer_recommendation"/>
+        <field name="name">Needs More Information</field>
+        <field name="value">needs_more_information</field>
+    </record>
+    <record id="sel_recommend_duplicate_suspected" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_reviewer_recommendation"/>
+        <field name="name">Duplicate Suspected</field>
+        <field name="value">duplicate_suspected</field>
+    </record>
+
+    <record id="sel_marital_single" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_marital_status"/>
+        <field name="name">Single</field>
+        <field name="value">single</field>
+    </record>
+    <record id="sel_marital_married" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_marital_status"/>
+        <field name="name">Married</field>
+        <field name="value">married</field>
+    </record>
+
+    <record id="sel_work_type_full_time" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_preferred_work_type"/>
+        <field name="name">Full-Time</field>
+        <field name="value">full_time</field>
+    </record>
+    <record id="sel_work_type_part_time" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_preferred_work_type"/>
+        <field name="name">Part-Time</field>
+        <field name="value">part_time</field>
+    </record>
+    <record id="sel_work_type_contractor" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_preferred_work_type"/>
+        <field name="name">Contractor</field>
+        <field name="value">contractor</field>
+    </record>
+
+    <record id="sel_qualification_doctorate" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_edu_x_qualification_type"/>
+        <field name="name">Doctorate</field>
+        <field name="value">doctorate</field>
+    </record>
+    <record id="sel_qualification_masters" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_edu_x_qualification_type"/>
+        <field name="name">Masters</field>
+        <field name="value">masters</field>
+    </record>
+    <record id="sel_qualification_bachelors" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_edu_x_qualification_type"/>
+        <field name="name">Bachelors</field>
+        <field name="value">bachelors</field>
+    </record>
+    <record id="sel_qualification_diploma" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_edu_x_qualification_type"/>
+        <field name="name">Diploma</field>
+        <field name="value">diploma</field>
+    </record>
+    <record id="sel_qualification_college_certificate" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_edu_x_qualification_type"/>
+        <field name="name">College Certificate</field>
+        <field name="value">college_certificate</field>
+    </record>
+    <record id="sel_qualification_school_certificate" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_edu_x_qualification_type"/>
+        <field name="name">School Certificate</field>
+        <field name="value">school_certificate</field>
+    </record>
+    <record id="sel_qualification_training_certificate" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_edu_x_qualification_type"/>
+        <field name="name">Training Certificate</field>
+        <field name="value">training_certificate</field>
+    </record>
+
+    <record id="sel_skill_type_interpersonal" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_skill_x_skill_type"/>
+        <field name="name">Interpersonal</field>
+        <field name="value">interpersonal</field>
+    </record>
+    <record id="sel_skill_type_operational" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_skill_x_skill_type"/>
+        <field name="name">Operational</field>
+        <field name="value">operational</field>
+    </record>
+    <record id="sel_skill_type_technical" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_skill_x_skill_type"/>
+        <field name="name">Technical</field>
+        <field name="value">technical</field>
+    </record>
+    <record id="sel_skill_type_administrative" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_skill_x_skill_type"/>
+        <field name="name">Administrative</field>
+        <field name="value">administrative</field>
+    </record>
+
+    <record id="sel_working_level_basic" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_lang_x_working_level"/>
+        <field name="name">Basic</field>
+        <field name="value">basic</field>
+    </record>
+    <record id="sel_working_level_intermediate" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_lang_x_working_level"/>
+        <field name="name">Intermediate</field>
+        <field name="value">intermediate</field>
+    </record>
+    <record id="sel_working_level_advanced" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_lang_x_working_level"/>
+        <field name="name">Advanced</field>
+        <field name="value">advanced</field>
+    </record>
+    <record id="sel_working_level_proficient" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_lang_x_working_level"/>
+        <field name="name">Proficient</field>
+        <field name="value">proficient</field>
+    </record>
+    <record id="sel_freq_daily" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_commitment_x_frequency"/>
+        <field name="name">يومي</field>
+        <field name="value">daily</field>
+    </record>
+    <record id="sel_freq_weekly" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_commitment_x_frequency"/>
+        <field name="name">أسبوعي</field>
+        <field name="value">weekly</field>
+    </record>
+    <record id="sel_freq_monthly" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_commitment_x_frequency"/>
+        <field name="name">شهري</field>
+        <field name="value">monthly</field>
+    </record>
+    <record id="sel_freq_annually" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_commitment_x_frequency"/>
+        <field name="name">سنوي</field>
+        <field name="value">annually</field>
+    </record>
+</odoo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_commitment_type_list" model="ir.ui.view">
+        <field name="name">x_hr.commitment_type.list</field>
+        <field name="model">x_hr.commitment_type</field>
+        <field name="arch" type="xml">
+            <list string="Commitment Types">
+                <field name="x_name"/>
+                <field name="x_sequence"/>
+                <field name="x_active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_commitment_type_form" model="ir.ui.view">
+        <field name="name">x_hr.commitment_type.form</field>
+        <field name="model">x_hr.commitment_type</field>
+        <field name="arch" type="xml">
+            <form string="Commitment Type">
+                <sheet>
+                    <group>
+                        <field name="x_name"/>
+                        <field name="x_sequence"/>
+                        <field name="x_active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_preferred_role_type_list" model="ir.ui.view">
+        <field name="name">x_hr.preferred_role_type.list</field>
+        <field name="model">x_hr.preferred_role_type</field>
+        <field name="arch" type="xml">
+            <list string="Preferred Role Types">
+                <field name="x_name"/>
+                <field name="x_sequence"/>
+                <field name="x_active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_preferred_role_type_form" model="ir.ui.view">
+        <field name="name">x_hr.preferred_role_type.form</field>
+        <field name="model">x_hr.preferred_role_type</field>
+        <field name="arch" type="xml">
+            <form string="Preferred Role Type">
+                <sheet>
+                    <group>
+                        <field name="x_name"/>
+                        <field name="x_sequence"/>
+                        <field name="x_active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

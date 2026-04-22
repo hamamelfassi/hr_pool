@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="model_x_hr_pool" model="ir.model">
+        <field name="name">HR Pool</field>
+        <field name="model">x_hr.pool</field>
+        <field name="state">manual</field>
+    </record>
+
+    <record id="model_x_hr_pool_education_line" model="ir.model">
+        <field name="name">HR Pool Education Line</field>
+        <field name="model">x_hr.pool_education_line</field>
+        <field name="state">manual</field>
+    </record>
+
+    <record id="model_x_hr_pool_employment_line" model="ir.model">
+        <field name="name">HR Pool Employment Line</field>
+        <field name="model">x_hr.pool_employment_line</field>
+        <field name="state">manual</field>
+    </record>
+
+    <record id="model_x_hr_pool_skill_line" model="ir.model">
+        <field name="name">HR Pool Skill Line</field>
+        <field name="model">x_hr.pool_skill_line</field>
+        <field name="state">manual</field>
+    </record>
+
+    <record id="model_x_hr_pool_language_line" model="ir.model">
+        <field name="name">HR Pool Language Line</field>
+        <field name="model">x_hr.pool_language_line</field>
+        <field name="state">manual</field>
+    </record>
+
+    <record id="model_x_hr_pool_commitment_line" model="ir.model">
+        <field name="name">HR Pool Commitment Line</field>
+        <field name="model">x_hr.pool_commitment_line</field>
+        <field name="state">manual</field>
+    </record>
+
+    <record id="model_x_hr_commitment_type" model="ir.model">
+        <field name="name">HR Commitment Type</field>
+        <field name="model">x_hr.commitment_type</field>
+        <field name="state">manual</field>
+    </record>
+
+    <record id="model_x_hr_preferred_role_type" model="ir.model">
+        <field name="name">HR Preferred Role Type</field>
+        <field name="model">x_hr.preferred_role_type</field>
+        <field name="state">manual</field>
+    </record>
+
+    <record id="model_x_hr_language" model="ir.model">
+        <field name="name">HR Language</field>
+        <field name="model">x_hr.language</field>
+        <field name="state">manual</field>
+    </record>
+
+</odoo>

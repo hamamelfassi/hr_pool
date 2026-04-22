@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_hr_pool_root" name="HR Pool" sequence="10"/>
+
+        <menuitem id="menu_hr_pool_records"
+                name="HR Pool Records"
+                parent="hr_pool.menu_hr_pool_root"
+                sequence="10"/>
+
+                <menuitem id="menu_hr_pool_records_by_decision"
+                        name="By Chairman Decision"
+                        parent="hr_pool.menu_hr_pool_records"
+                        action="hr_pool.action_hr_pool"
+                        sequence="10"/>
+
+                <menuitem id="menu_hr_pool_records_by_phase"
+                        name="By Intake Phase"
+                        parent="hr_pool.menu_hr_pool_records"
+                        action="hr_pool.action_hr_pool_by_phase"
+                        sequence="20"/>
+
+    <menuitem id="menu_hr_pool_config"
+            name="Configuration"
+            parent="hr_pool.menu_hr_pool_root"
+            sequence="80"/>
+
+        <menuitem id="menu_commitment_types"
+                name="Commitment Types"
+                parent="hr_pool.menu_hr_pool_config"
+                action="hr_pool.action_commitment_type"
+                sequence="10"/>
+
+        <menuitem id="menu_role_types"
+                name="Preferred Role Types"
+                parent="hr_pool.menu_hr_pool_config"
+                action="hr_pool.action_preferred_role_type"
+                sequence="20"/>
+</odoo>

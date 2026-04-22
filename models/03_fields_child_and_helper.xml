@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Helper models -->
+    <record id="field_commitment_type_x_name" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_commitment_type"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Commitment Type</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+        <field name="translate" eval="True"/>
+    </record>
+    <record id="field_commitment_type_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_commitment_type"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_commitment_type_x_active" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_commitment_type"/>
+        <field name="name">x_active</field>
+        <field name="field_description">Active</field>
+        <field name="ttype">boolean</field>
+    </record>
+
+    <record id="field_role_type_x_name" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_preferred_role_type"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Preferred Role Type</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+        <field name="translate" eval="True"/>
+    </record>
+    <record id="field_role_type_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_preferred_role_type"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_role_type_x_active" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_preferred_role_type"/>
+        <field name="name">x_active</field>
+        <field name="field_description">Active</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_language_x_name" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_language"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Language Name</field>
+        <field name="ttype">char</field>
+        <field name="translate" eval="True"/>
+        <field name="required" eval="True"/>
+    </record>
+    <record id="field_hr_pool_x_preferred_role_type_ids" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_preferred_role_type_ids</field>
+        <field name="field_description">Preferred Role Types</field>
+        <field name="ttype">many2many</field>
+        <field name="relation">x_hr.preferred_role_type</field>
+        <field name="required" eval="True"/>
+    </record>
+
+    <!-- Education line -->
+    <record id="field_edu_x_name" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_education_line"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Name</field>
+        <field name="ttype">char</field>
+    </record>
+    <record id="field_edu_x_pool_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_education_line"/>
+        <field name="name">x_pool_id</field>
+        <field name="field_description">HR Pool</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_hr.pool</field>
+        <field name="required" eval="True"/>
+        <field name="on_delete">cascade</field>
+    </record>
+    <record id="field_edu_x_qualifying_institution" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_education_line"/>
+        <field name="name">x_qualifying_institution</field>
+        <field name="field_description">Qualifying Institution</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+    </record>
+    <record id="field_edu_x_qualification_subject" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_education_line"/>
+        <field name="name">x_qualification_subject</field>
+        <field name="field_description">Qualification Subject</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+    </record>
+    <record id="field_edu_x_qualification_type" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_education_line"/>
+        <field name="name">x_qualification_type</field>
+        <field name="field_description">Qualification Type</field>
+        <field name="ttype">selection</field>
+        <field name="required" eval="True"/>
+    </record>
+    <record id="field_edu_x_graduation_year" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_education_line"/>
+        <field name="name">x_graduation_year</field>
+        <field name="field_description">Graduation Year</field>
+        <field name="ttype">integer</field>
+        <field name="required" eval="True"/>
+    </record>
+    <record id="field_edu_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_education_line"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+    </record>
+
+    <!-- Employment line -->
+    <record id="field_emp_x_name" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_employment_line"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Name</field>
+        <field name="ttype">char</field>
+    </record>
+    <record id="field_emp_x_pool_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_employment_line"/>
+        <field name="name">x_pool_id</field>
+        <field name="field_description">HR Pool</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_hr.pool</field>
+        <field name="required" eval="True"/>
+        <field name="on_delete">cascade</field>
+    </record>
+    <record id="field_emp_x_employer_name" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_employment_line"/>
+        <field name="name">x_employer_name</field>
+        <field name="field_description">Employer Name</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+    </record>
+    <record id="field_emp_x_job_title" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_employment_line"/>
+        <field name="name">x_job_title</field>
+        <field name="field_description">Job Title</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+    </record>
+    <record id="field_emp_x_start_date" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_employment_line"/>
+        <field name="name">x_start_date</field>
+        <field name="field_description">Start Date</field>
+        <field name="ttype">date</field>
+    </record>
+    <record id="field_emp_x_end_date" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_employment_line"/>
+        <field name="name">x_end_date</field>
+        <field name="field_description">End Date</field>
+        <field name="ttype">date</field>
+    </record>
+    <record id="field_emp_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_employment_line"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+    </record>
+
+    <!-- Skill line -->
+    <record id="field_skill_x_name" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_skill_line"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Name</field>
+        <field name="ttype">char</field>
+    </record>
+    <record id="field_skill_x_pool_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_skill_line"/>
+        <field name="name">x_pool_id</field>
+        <field name="field_description">HR Pool</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_hr.pool</field>
+        <field name="required" eval="True"/>
+        <field name="on_delete">cascade</field>
+    </record>
+    <record id="field_skill_x_skill_type" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_skill_line"/>
+        <field name="name">x_skill_type</field>
+        <field name="field_description">Skill Type</field>
+        <field name="ttype">selection</field>
+        <field name="required" eval="True"/>
+    </record>
+    <record id="field_skill_x_skill_description" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_skill_line"/>
+        <field name="name">x_skill_description</field>
+        <field name="field_description">Skill Description</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+    </record>
+    <record id="field_skill_x_proficiency_level" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_skill_line"/>
+        <field name="name">x_proficiency_level</field>
+        <field name="field_description">Proficiency Level</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_skill_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_skill_line"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+    </record>
+
+    <!-- Language line -->
+    <record id="field_lang_x_name" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_language_line"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Notes/Name</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="False"/>
+    </record>
+    <record id="field_lang_x_language_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_language_line"/>
+        <field name="name">x_language_id</field>
+        <field name="field_description">Language</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_hr.language</field>
+        <field name="required" eval="True"/>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_lang_x_pool_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_language_line"/>
+        <field name="name">x_pool_id</field>
+        <field name="field_description">HR Pool</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_hr.pool</field>
+        <field name="required" eval="True"/>
+        <field name="on_delete">cascade</field>
+    </record>
+    <record id="field_lang_x_language_name" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_language_line"/>
+        <field name="name">x_language_name</field>
+        <field name="field_description">Language</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+    </record>
+    <record id="field_lang_x_working_level" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_language_line"/>
+        <field name="name">x_working_level</field>
+        <field name="field_description">Working Level</field>
+        <field name="ttype">selection</field>
+        <field name="required" eval="True"/>
+    </record>
+    <record id="field_lang_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_language_line"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_lang_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_language_line"/>
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+    </record>
+    <!-- Committments line -->
+    <record id="field_commitment_x_name" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_commitment_line"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Name</field>
+        <field name="ttype">char</field>
+    </record>
+    <record id="field_commitment_x_pool_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_commitment_line"/>
+        <field name="name">x_pool_id</field>
+        <field name="field_description">HR Pool</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_hr.pool</field>
+        <field name="required" eval="True"/>
+        <field name="on_delete">cascade</field>
+    </record>
+    <record id="field_commitment_x_commitment_type_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_commitment_line"/>
+        <field name="name">x_commitment_type_id</field>
+        <field name="field_description">Commitment Type</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_hr.commitment_type</field>
+        <field name="required" eval="True"/>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_commitment_x_frequency" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_commitment_line"/>
+        <field name="name">x_frequency</field>
+        <field name="field_description">Frequency</field>
+        <field name="ttype">selection</field>
+    </record>
+    <record id="field_commitment_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_commitment_line"/>
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+    </record>
+    <record id="field_commitment_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_commitment_line"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+    </record>
+
+    <!-- Parent one2many relations -->
+    <record id="field_hr_pool_x_education_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_education_line_ids</field>
+        <field name="field_description">Education Credentials</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.pool_education_line</field>
+        <field name="relation_field">x_pool_id</field>
+    </record>
+
+    <record id="field_hr_pool_x_employment_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_employment_line_ids</field>
+        <field name="field_description">Employment Credentials</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.pool_employment_line</field>
+        <field name="relation_field">x_pool_id</field>
+    </record>
+
+    <record id="field_hr_pool_x_skill_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_skill_line_ids</field>
+        <field name="field_description">Skills</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.pool_skill_line</field>
+        <field name="relation_field">x_pool_id</field>
+    </record>
+
+    <record id="field_hr_pool_x_language_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_language_line_ids</field>
+        <field name="field_description">Languages</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.pool_language_line</field>
+        <field name="relation_field">x_pool_id</field>
+    </record>
+
+    <record id="field_hr_pool_x_commitment_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_commitment_line_ids</field>
+        <field name="field_description">Commitments</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.pool_commitment_line</field>
+        <field name="relation_field">x_pool_id</field>
+    </record>
+</odoo>

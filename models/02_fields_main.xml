@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="field_hr_pool_x_name" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Record Title</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="False"/>
+        <field name="index" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_intake_reference" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_intake_reference</field>
+        <field name="field_description">Intake Reference</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_hr_pool_x_active" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_active</field>
+        <field name="field_description">Active</field>
+        <field name="ttype">boolean</field>
+    </record>
+
+    <record id="field_hr_pool_x_candidate_origin" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_candidate_origin</field>
+        <field name="field_description">Candidate Origin</field>
+        <field name="ttype">selection</field>
+        <field name="required" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_source_channel" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_source_channel</field>
+        <field name="field_description">Source Channel</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_hr_pool_x_intake_phase" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_intake_phase</field>
+        <field name="field_description">Intake Phase</field>
+        <field name="ttype">selection</field>
+        <field name="required" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_chairman_decision" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_chairman_decision</field>
+        <field name="field_description">Chairman Decision</field>
+        <field name="ttype">selection</field>
+        <field name="required" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_reviewer_recommendation" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_reviewer_recommendation</field>
+        <field name="field_description">Reviewer Recommendation</field>
+        <field name="ttype">selection</field>
+    </record>
+
+    <record id="field_hr_pool_x_profile_photo" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_profile_photo</field>
+        <field name="field_description">Profile Photo</field>
+        <field name="ttype">binary</field>
+    </record>
+
+    <record id="field_hr_pool_x_first_name_ar" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_first_name_ar</field>
+        <field name="field_description">First Name (AR)</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+    </record>
+    <record id="field_hr_pool_x_middle_names_ar" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_middle_names_ar</field>
+        <field name="field_description">Middle Names (AR)</field>
+        <field name="ttype">char</field>
+    </record>
+    <record id="field_hr_pool_x_surname_ar" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_surname_ar</field>
+        <field name="field_description">Surname (AR)</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_first_name_en" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_first_name_en</field>
+        <field name="field_description">First Name (EN)</field>
+        <field name="ttype">char</field>
+    </record>
+    <record id="field_hr_pool_x_middle_names_en" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_middle_names_en</field>
+        <field name="field_description">Middle Names (EN)</field>
+        <field name="ttype">char</field>
+    </record>
+    <record id="field_hr_pool_x_surname_en" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_surname_en</field>
+        <field name="field_description">Surname (EN)</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_hr_pool_x_nationality_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_nationality_id</field>
+        <field name="field_description">Nationality</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">res.country</field>
+        <field name="required" eval="True"/>
+        <field name="on_delete">restrict</field>
+    </record>
+
+    <record id="field_hr_pool_x_national_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_national_id</field>
+        <field name="field_description">National ID</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_hr_pool_x_date_of_birth" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_date_of_birth</field>
+        <field name="field_description">Date of Birth</field>
+        <field name="ttype">date</field>
+        <field name="required" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_marital_status" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_marital_status</field>
+        <field name="field_description">Marital Status</field>
+        <field name="ttype">selection</field>
+        <field name="required" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_phone" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_phone</field>
+        <field name="field_description">Phone</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_email" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_email</field>
+        <field name="field_description">Email</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_address_text" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_address_text</field>
+        <field name="field_description">Address</field>
+        <field name="ttype">text</field>
+        <field name="required" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_preferred_work_type" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_preferred_work_type</field>
+        <field name="field_description">Preferred Work Type</field>
+        <field name="ttype">selection</field>
+        <field name="required" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_preferred_work_locations" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_preferred_work_locations</field>
+        <field name="field_description">Preferred Work Locations</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_commitments_description" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_commitments_description</field>
+        <field name="field_description">Commitments Description</field>
+        <field name="ttype">text</field>
+    </record>
+
+    <record id="field_hr_pool_x_accuracy_declaration" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_accuracy_declaration</field>
+        <field name="field_description">Accuracy Declaration</field>
+        <field name="ttype">boolean</field>
+        <field name="required" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_privacy_declaration" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_privacy_declaration</field>
+        <field name="field_description">Privacy Declaration</field>
+        <field name="ttype">boolean</field>
+        <field name="required" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_typed_consent_name" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_typed_consent_name</field>
+        <field name="field_description">Typed Consent Name</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_reviewer_user_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_reviewer_user_id</field>
+        <field name="field_description">Reviewer</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">res.users</field>
+    </record>
+
+    <record id="field_hr_pool_x_conversion_job_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_conversion_job_id</field>
+        <field name="field_description">Conversion Job</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.job</field>
+    </record>
+
+    <record id="field_hr_pool_x_applicant_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_applicant_id</field>
+        <field name="field_description">Recruitment Applicant</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.applicant</field>
+    </record>
+</odoo>

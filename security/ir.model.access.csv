@@ -1,0 +1,44 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_pool_chairman,hr.pool chairman,hr_pool.model_x_hr_pool,hr_pool.group_hr_pool_chairman,1,1,1,0
+access_hr_pool_manager,hr.pool manager,hr_pool.model_x_hr_pool,hr_pool.group_hr_pool_manager,1,1,1,0
+access_hr_pool_reviewer,hr.pool reviewer,hr_pool.model_x_hr_pool,hr_pool.group_hr_pool_reviewer,1,1,0,0
+access_hr_pool_readonly,hr.pool readonly,hr_pool.model_x_hr_pool,hr_pool.group_hr_pool_readonly,1,0,0,0
+
+access_edu_manager,education line manager,hr_pool.model_x_hr_pool_education_line,hr_pool.group_hr_pool_manager,1,1,1,0
+access_edu_reviewer,education line reviewer,hr_pool.model_x_hr_pool_education_line,hr_pool.group_hr_pool_reviewer,1,1,0,0
+access_edu_chairman,education line chairman,hr_pool.model_x_hr_pool_education_line,hr_pool.group_hr_pool_chairman,1,1,1,0
+access_edu_readonly,education line readonly,hr_pool.model_x_hr_pool_education_line,hr_pool.group_hr_pool_readonly,1,0,0,0
+
+access_emp_manager,employment line manager,hr_pool.model_x_hr_pool_employment_line,hr_pool.group_hr_pool_manager,1,1,1,0
+access_emp_reviewer,employment line reviewer,hr_pool.model_x_hr_pool_employment_line,hr_pool.group_hr_pool_reviewer,1,1,0,0
+access_emp_chairman,employment line chairman,hr_pool.model_x_hr_pool_employment_line,hr_pool.group_hr_pool_chairman,1,1,1,0
+access_emp_readonly,employment line readonly,hr_pool.model_x_hr_pool_employment_line,hr_pool.group_hr_pool_readonly,1,0,0,0
+
+access_skill_manager,skill line manager,hr_pool.model_x_hr_pool_skill_line,hr_pool.group_hr_pool_manager,1,1,1,0
+access_skill_reviewer,skill line reviewer,hr_pool.model_x_hr_pool_skill_line,hr_pool.group_hr_pool_reviewer,1,1,0,0
+access_skill_chairman,skill line chairman,hr_pool.model_x_hr_pool_skill_line,hr_pool.group_hr_pool_chairman,1,1,1,0
+access_skill_readonly,skill line readonly,hr_pool.model_x_hr_pool_skill_line,hr_pool.group_hr_pool_readonly,1,0,0,0
+
+access_lang_manager,language line manager,hr_pool.model_x_hr_pool_language_line,hr_pool.group_hr_pool_manager,1,1,1,0
+access_lang_reviewer,language line reviewer,hr_pool.model_x_hr_pool_language_line,hr_pool.group_hr_pool_reviewer,1,1,0,0
+access_lang_chairman,language line chairman,hr_pool.model_x_hr_pool_language_line,hr_pool.group_hr_pool_chairman,1,1,1,0
+access_lang_readonly,language line readonly,hr_pool.model_x_hr_pool_language_line,hr_pool.group_hr_pool_readonly,1,0,0,0
+
+access_commitment_line_manager,commitment line manager,hr_pool.model_x_hr_pool_commitment_line,hr_pool.group_hr_pool_manager,1,1,1,0
+access_commitment_line_reviewer,commitment line reviewer,hr_pool.model_x_hr_pool_commitment_line,hr_pool.group_hr_pool_reviewer,1,1,0,0
+access_commitment_line_chairman,commitment line chairman,hr_pool.model_x_hr_pool_commitment_line,hr_pool.group_hr_pool_chairman,1,1,1,0
+access_commitment_line_readonly,commitment line readonly,hr_pool.model_x_hr_pool_commitment_line,hr_pool.group_hr_pool_readonly,1,0,0,0
+
+access_commitment_type_manager,commitment type manager,hr_pool.model_x_hr_commitment_type,hr_pool.group_hr_pool_manager,1,1,1,0
+access_commitment_type_chairman,commitment type chairman,hr_pool.model_x_hr_commitment_type,hr_pool.group_hr_pool_chairman,1,0,0,0
+access_commitment_type_readonly,commitment type readonly,hr_pool.model_x_hr_commitment_type,hr_pool.group_hr_pool_readonly,1,0,0,0
+access_role_type_manager,role type manager,hr_pool.model_x_hr_preferred_role_type,hr_pool.group_hr_pool_manager,1,1,1,0
+access_role_type_readonly,role type readonly,hr_pool.model_x_hr_preferred_role_type,hr_pool.group_hr_pool_readonly,1,0,0,0
+access_role_type_chairman,role type chairman,hr_pool.model_x_hr_preferred_role_type,hr_pool.group_hr_pool_chairman,1,0,0,0
+access_commitment_type_reviewer,commitment type reviewer,hr_pool.model_x_hr_commitment_type,hr_pool.group_hr_pool_reviewer,1,0,0,0
+access_role_type_reviewer,role type reviewer,hr_pool.model_x_hr_preferred_role_type,hr_pool.group_hr_pool_reviewer,1,0,0,0
+
+access_hr_language_manager,hr language manager,hr_pool.model_x_hr_language,hr_pool.group_hr_pool_manager,1,1,1,1
+access_hr_language_chairman,hr language chairman,hr_pool.model_x_hr_language,hr_pool.group_hr_pool_chairman,1,0,0,0
+access_hr_language_reviewer,hr language reviewer,hr_pool.model_x_hr_language,hr_pool.group_hr_pool_reviewer,1,0,0,0
+access_hr_language_readonly,hr language readonly,hr_pool.model_x_hr_language,hr_pool.group_hr_pool_readonly,1,0,0,0

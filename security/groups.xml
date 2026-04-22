@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_hr_pool_chairman" model="res.groups">
+        <field name="name">HR Pool / Chairman</field>
+    </record>
+
+    <record id="group_hr_pool_manager" model="res.groups">
+        <field name="name">HR Pool / Manager</field>
+    </record>
+
+    <record id="group_hr_pool_reviewer" model="res.groups">
+        <field name="name">HR Pool / Reviewer</field>
+    </record>
+
+    <record id="group_hr_pool_readonly" model="res.groups">
+        <field name="name">HR Pool / Read Only Manager</field>
+    </record>
+</odoo>
