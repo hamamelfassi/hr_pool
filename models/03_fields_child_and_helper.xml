@@ -21,6 +21,12 @@
         <field name="field_description">Active</field>
         <field name="ttype">boolean</field>
     </record>
+    <record id="field_commitment_type_x_source_record_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_commitment_type"/>
+        <field name="name">x_source_record_id</field>
+        <field name="field_description">Source Record ID</field>
+        <field name="ttype">char</field>
+    </record>
 
     <record id="field_role_type_x_name" model="ir.model.fields">
         <field name="model_id" ref="hr_pool.model_x_hr_preferred_role_type"/>
@@ -42,6 +48,74 @@
         <field name="field_description">Active</field>
         <field name="ttype">boolean</field>
     </record>
+    <record id="field_role_type_x_source_record_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_preferred_role_type"/>
+        <field name="name">x_source_record_id</field>
+        <field name="field_description">Source Record ID</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_skill_type_master_x_name" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_skill_type"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Skill Type</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+        <field name="translate" eval="True"/>
+    </record>
+    <record id="field_skill_type_master_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_skill_type"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_skill_type_master_x_active" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_skill_type"/>
+        <field name="name">x_active</field>
+        <field name="field_description">Active</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_skill_type_master_x_source_record_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_skill_type"/>
+        <field name="name">x_source_record_id</field>
+        <field name="field_description">Source Record ID</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_proficiency_level_x_name" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_proficiency_level"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Proficiency Level</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+        <field name="translate" eval="True"/>
+    </record>
+    <record id="field_proficiency_level_x_level_value" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_proficiency_level"/>
+        <field name="name">x_level_value</field>
+        <field name="field_description">Level Value</field>
+        <field name="ttype">integer</field>
+        <field name="required" eval="True"/>
+    </record>
+    <record id="field_proficiency_level_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_proficiency_level"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_proficiency_level_x_active" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_proficiency_level"/>
+        <field name="name">x_active</field>
+        <field name="field_description">Active</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_proficiency_level_x_source_record_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_proficiency_level"/>
+        <field name="name">x_source_record_id</field>
+        <field name="field_description">Source Record ID</field>
+        <field name="ttype">char</field>
+    </record>
+
     <record id="field_hr_language_x_name" model="ir.model.fields">
         <field name="model_id" ref="hr_pool.model_x_hr_language"/>
         <field name="name">x_name</field>
@@ -50,6 +124,45 @@
         <field name="translate" eval="True"/>
         <field name="required" eval="True"/>
     </record>
+    <record id="field_hr_language_x_name_ar" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_language"/>
+        <field name="name">x_name_ar</field>
+        <field name="field_description">Language Name (AR)</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="False"/>
+    </record>
+    <record id="field_hr_language_x_name_en" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_language"/>
+        <field name="name">x_name_en</field>
+        <field name="field_description">Language Name (EN)</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="False"/>
+    </record>
+    <record id="field_hr_language_x_source_record_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_language"/>
+        <field name="name">x_source_record_id</field>
+        <field name="field_description">Source Record ID</field>
+        <field name="ttype">char</field>
+    </record>
+    <record id="field_hr_language_x_source_code" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_language"/>
+        <field name="name">x_source_code</field>
+        <field name="field_description">Source Code</field>
+        <field name="ttype">char</field>
+    </record>
+    <record id="field_hr_language_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_language"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_hr_language_x_active" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_language"/>
+        <field name="name">x_active</field>
+        <field name="field_description">Active</field>
+        <field name="ttype">boolean</field>
+    </record>
+
     <record id="field_hr_pool_x_preferred_role_type_ids" model="ir.model.fields">
         <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
         <field name="name">x_preferred_role_type_ids</field>
@@ -103,6 +216,12 @@
         <field name="ttype">integer</field>
         <field name="required" eval="True"/>
     </record>
+    <record id="field_edu_x_source_record_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_education_line"/>
+        <field name="name">x_source_record_id</field>
+        <field name="field_description">Source Record ID</field>
+        <field name="ttype">char</field>
+    </record>
     <record id="field_edu_x_sequence" model="ir.model.fields">
         <field name="model_id" ref="hr_pool.model_x_hr_pool_education_line"/>
         <field name="name">x_sequence</field>
@@ -152,6 +271,12 @@
         <field name="field_description">End Date</field>
         <field name="ttype">date</field>
     </record>
+    <record id="field_emp_x_source_record_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_employment_line"/>
+        <field name="name">x_source_record_id</field>
+        <field name="field_description">Source Record ID</field>
+        <field name="ttype">char</field>
+    </record>
     <record id="field_emp_x_sequence" model="ir.model.fields">
         <field name="model_id" ref="hr_pool.model_x_hr_pool_employment_line"/>
         <field name="name">x_sequence</field>
@@ -178,9 +303,17 @@
     <record id="field_skill_x_skill_type" model="ir.model.fields">
         <field name="model_id" ref="hr_pool.model_x_hr_pool_skill_line"/>
         <field name="name">x_skill_type</field>
-        <field name="field_description">Skill Type</field>
+        <field name="field_description">Legacy Skill Type</field>
         <field name="ttype">selection</field>
-        <field name="required" eval="True"/>
+        <field name="required" eval="False"/>
+    </record>
+    <record id="field_skill_x_skill_type_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_skill_line"/>
+        <field name="name">x_skill_type_id</field>
+        <field name="field_description">Skill Type</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_hr.skill_type</field>
+        <field name="on_delete">restrict</field>
     </record>
     <record id="field_skill_x_skill_description" model="ir.model.fields">
         <field name="model_id" ref="hr_pool.model_x_hr_pool_skill_line"/>
@@ -195,6 +328,12 @@
         <field name="field_description">Proficiency Level</field>
         <field name="ttype">integer</field>
     </record>
+    <record id="field_skill_x_source_record_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_skill_line"/>
+        <field name="name">x_source_record_id</field>
+        <field name="field_description">Source Record ID</field>
+        <field name="ttype">char</field>
+    </record>
     <record id="field_skill_x_sequence" model="ir.model.fields">
         <field name="model_id" ref="hr_pool.model_x_hr_pool_skill_line"/>
         <field name="name">x_sequence</field>
@@ -206,7 +345,7 @@
     <record id="field_lang_x_name" model="ir.model.fields">
         <field name="model_id" ref="hr_pool.model_x_hr_pool_language_line"/>
         <field name="name">x_name</field>
-        <field name="field_description">Notes/Name</field>
+        <field name="field_description">Legacy Name</field>
         <field name="ttype">char</field>
         <field name="required" eval="False"/>
     </record>
@@ -231,16 +370,29 @@
     <record id="field_lang_x_language_name" model="ir.model.fields">
         <field name="model_id" ref="hr_pool.model_x_hr_pool_language_line"/>
         <field name="name">x_language_name</field>
-        <field name="field_description">Language</field>
+        <field name="field_description">Language Display Name</field>
         <field name="ttype">char</field>
         <field name="required" eval="True"/>
     </record>
     <record id="field_lang_x_working_level" model="ir.model.fields">
         <field name="model_id" ref="hr_pool.model_x_hr_pool_language_line"/>
         <field name="name">x_working_level</field>
-        <field name="field_description">Working Level</field>
+        <field name="field_description">Legacy Working Level</field>
         <field name="ttype">selection</field>
-        <field name="required" eval="True"/>
+        <field name="required" eval="False"/>
+    </record>
+    <record id="field_lang_x_working_level_value" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_language_line"/>
+        <field name="name">x_working_level_value</field>
+        <field name="field_description">Working Level</field>
+        <field name="ttype">integer</field>
+        <field name="required" eval="False"/>
+    </record>
+    <record id="field_lang_x_source_record_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_language_line"/>
+        <field name="name">x_source_record_id</field>
+        <field name="field_description">Source Record ID</field>
+        <field name="ttype">char</field>
     </record>
     <record id="field_lang_x_sequence" model="ir.model.fields">
         <field name="model_id" ref="hr_pool.model_x_hr_pool_language_line"/>
@@ -254,7 +406,8 @@
         <field name="field_description">Notes</field>
         <field name="ttype">text</field>
     </record>
-    <!-- Committments line -->
+
+    <!-- Commitments line -->
     <record id="field_commitment_x_name" model="ir.model.fields">
         <field name="model_id" ref="hr_pool.model_x_hr_pool_commitment_line"/>
         <field name="name">x_name</field>
@@ -290,6 +443,12 @@
         <field name="name">x_notes</field>
         <field name="field_description">Notes</field>
         <field name="ttype">text</field>
+    </record>
+    <record id="field_commitment_x_source_record_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_commitment_line"/>
+        <field name="name">x_source_record_id</field>
+        <field name="field_description">Source Record ID</field>
+        <field name="ttype">char</field>
     </record>
     <record id="field_commitment_x_sequence" model="ir.model.fields">
         <field name="model_id" ref="hr_pool.model_x_hr_pool_commitment_line"/>

@@ -76,23 +76,189 @@
         <field name="x_sequence">70</field>
         <field name="x_active" eval="True"/>
     </record>
-    <record id="lang_1" model="x_hr.language"><field name="x_name">English</field></record>
-    <record id="lang_2" model="x_hr.language"><field name="x_name">Arabic</field></record>
-    <record id="lang_3" model="x_hr.language"><field name="x_name">French</field></record>
-    <record id="lang_4" model="x_hr.language"><field name="x_name">Italian</field></record>
-    <record id="lang_5" model="x_hr.language"><field name="x_name">German</field></record>
-    <record id="lang_6" model="x_hr.language"><field name="x_name">Hausa</field></record>
-    <record id="lang_7" model="x_hr.language"><field name="x_name">Berber</field></record>
-    <record id="lang_8" model="x_hr.language"><field name="x_name">Tebu</field></record>
-    <record id="lang_9" model="x_hr.language"><field name="x_name">Turkish</field></record>
-    <record id="lang_10" model="x_hr.language"><field name="x_name">Kanuri</field></record>
-    <record id="lang_11" model="x_hr.language"><field name="x_name">Tagalog Filipino</field></record>
-    <record id="lang_12" model="x_hr.language"><field name="x_name">Amharic</field></record>
-    <record id="lang_13" model="x_hr.language"><field name="x_name">Tigrinya</field></record>
-    <record id="lang_14" model="x_hr.language"><field name="x_name">Tedaga</field></record>
-    <record id="lang_15" model="x_hr.language"><field name="x_name">Urdu</field></record>
-    <record id="lang_16" model="x_hr.language"><field name="x_name">Hindi</field></record>
-    <record id="lang_17" model="x_hr.language"><field name="x_name">Bengali</field></record>
-    <record id="lang_18" model="x_hr.language"><field name="x_name">Spanish</field></record>
-    <record id="lang_19" model="x_hr.language"><field name="x_name">Russian</field></record>
+
+    <record id="skill_type_interpersonal" model="x_hr.skill_type">
+        <field name="x_name">Interpersonal</field>
+        <field name="x_sequence">10</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="skill_type_operational" model="x_hr.skill_type">
+        <field name="x_name">Operational</field>
+        <field name="x_sequence">20</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="skill_type_technical" model="x_hr.skill_type">
+        <field name="x_name">Technical</field>
+        <field name="x_sequence">30</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="skill_type_administrative" model="x_hr.skill_type">
+        <field name="x_name">Administrative</field>
+        <field name="x_sequence">40</field>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="proficiency_level_basic" model="x_hr.proficiency_level">
+        <field name="x_name">Basic</field>
+        <field name="x_level_value">1</field>
+        <field name="x_sequence">10</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="proficiency_level_intermediate" model="x_hr.proficiency_level">
+        <field name="x_name">Intermediate</field>
+        <field name="x_level_value">2</field>
+        <field name="x_sequence">20</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="proficiency_level_advanced" model="x_hr.proficiency_level">
+        <field name="x_name">Advanced</field>
+        <field name="x_level_value">3</field>
+        <field name="x_sequence">30</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="proficiency_level_proficient" model="x_hr.proficiency_level">
+        <field name="x_name">Proficient</field>
+        <field name="x_level_value">4</field>
+        <field name="x_sequence">40</field>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="lang_1" model="x_hr.language">
+        <field name="x_name">English</field>
+        <field name="x_name_ar">الإنجليزية</field>
+        <field name="x_name_en">English</field>
+        <field name="x_source_code">en</field>
+        <field name="x_sequence">10</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="lang_2" model="x_hr.language">
+        <field name="x_name">Arabic</field>
+        <field name="x_name_ar">العربية</field>
+        <field name="x_name_en">Arabic</field>
+        <field name="x_source_code">ar</field>
+        <field name="x_sequence">20</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="lang_3" model="x_hr.language">
+        <field name="x_name">French</field>
+        <field name="x_name_ar">الفرنسية</field>
+        <field name="x_name_en">French</field>
+        <field name="x_source_code">fr</field>
+        <field name="x_sequence">30</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="lang_4" model="x_hr.language">
+        <field name="x_name">Italian</field>
+        <field name="x_name_ar">الإيطالية</field>
+        <field name="x_name_en">Italian</field>
+        <field name="x_source_code">it</field>
+        <field name="x_sequence">40</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="lang_5" model="x_hr.language">
+        <field name="x_name">German</field>
+        <field name="x_name_ar">الألمانية</field>
+        <field name="x_name_en">German</field>
+        <field name="x_source_code">de</field>
+        <field name="x_sequence">50</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="lang_6" model="x_hr.language">
+        <field name="x_name">Hausa</field>
+        <field name="x_name_ar">الهوسا</field>
+        <field name="x_name_en">Hausa</field>
+        <field name="x_sequence">60</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="lang_7" model="x_hr.language">
+        <field name="x_name">Berber</field>
+        <field name="x_name_ar">البربرية</field>
+        <field name="x_name_en">Berber</field>
+        <field name="x_sequence">70</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="lang_8" model="x_hr.language">
+        <field name="x_name">Tebu</field>
+        <field name="x_name_ar">التبو</field>
+        <field name="x_name_en">Tebu</field>
+        <field name="x_sequence">80</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="lang_9" model="x_hr.language">
+        <field name="x_name">Turkish</field>
+        <field name="x_name_ar">التركية</field>
+        <field name="x_name_en">Turkish</field>
+        <field name="x_sequence">90</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="lang_10" model="x_hr.language">
+        <field name="x_name">Kanuri</field>
+        <field name="x_name_ar">الكانورية</field>
+        <field name="x_name_en">Kanuri</field>
+        <field name="x_sequence">100</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="lang_11" model="x_hr.language">
+        <field name="x_name">Tagalog Filipino</field>
+        <field name="x_name_ar">اللغة التاغالوغية</field>
+        <field name="x_name_en">Tagalog Filipino</field>
+        <field name="x_sequence">110</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="lang_12" model="x_hr.language">
+        <field name="x_name">Amharic</field>
+        <field name="x_name_ar">الأمهرية</field>
+        <field name="x_name_en">Amharic</field>
+        <field name="x_sequence">120</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="lang_13" model="x_hr.language">
+        <field name="x_name">Tigrinya</field>
+        <field name="x_name_ar">التغرينية</field>
+        <field name="x_name_en">Tigrinya</field>
+        <field name="x_sequence">130</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="lang_14" model="x_hr.language">
+        <field name="x_name">Tedaga</field>
+        <field name="x_name_ar">التيداغا</field>
+        <field name="x_name_en">Tedaga</field>
+        <field name="x_sequence">140</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="lang_15" model="x_hr.language">
+        <field name="x_name">Urdu</field>
+        <field name="x_name_ar">الأوردية</field>
+        <field name="x_name_en">Urdu</field>
+        <field name="x_sequence">150</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="lang_16" model="x_hr.language">
+        <field name="x_name">Hindi</field>
+        <field name="x_name_ar">الهندية</field>
+        <field name="x_name_en">Hindi</field>
+        <field name="x_sequence">160</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="lang_17" model="x_hr.language">
+        <field name="x_name">Bengali</field>
+        <field name="x_name_ar">البنغالية</field>
+        <field name="x_name_en">Bengali</field>
+        <field name="x_sequence">170</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="lang_18" model="x_hr.language">
+        <field name="x_name">Spanish</field>
+        <field name="x_name_ar">الإسبانية</field>
+        <field name="x_name_en">Spanish</field>
+        <field name="x_sequence">180</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="lang_19" model="x_hr.language">
+        <field name="x_name">Russian</field>
+        <field name="x_name_ar">الروسية</field>
+        <field name="x_name_en">Russian</field>
+        <field name="x_sequence">190</field>
+        <field name="x_active" eval="True"/>
+    </record>
 </odoo>

@@ -863,3 +863,127 @@ msgstr "الإسبانية"
 #: model:x_hr.language,x_name:hr_pool.lang_19
 msgid "Russian"
 msgstr "الروسية"
+#. module: hr_pool
+#: model:ir.actions.act_window,name:hr_pool.action_hr_language
+#: model:ir.ui.menu,name:hr_pool.menu_languages
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_language_list
+msgid "Languages"
+msgstr "اللغات"
+
+#. module: hr_pool
+#: model:ir.actions.act_window,name:hr_pool.action_skill_type
+#: model:ir.ui.menu,name:hr_pool.menu_skill_types
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_skill_type_list
+msgid "Skill Types"
+msgstr "أنواع المهارات"
+
+#. module: hr_pool
+#: model:ir.actions.act_window,name:hr_pool.action_proficiency_level
+#: model:ir.ui.menu,name:hr_pool.menu_proficiency_levels
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_proficiency_level_list
+msgid "Proficiency Levels"
+msgstr "مستويات الإتقان"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_fillout_submission_id
+msgid "Fillout Submission ID"
+msgstr "معرّف إرسال Fillout"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_fillout_form_id
+msgid "Fillout Form ID"
+msgstr "معرّف نموذج Fillout"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_fillout_submission_time
+msgid "Fillout Submission Time"
+msgstr "وقت إرسال Fillout"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_fillout_last_updated_at
+msgid "Fillout Last Updated At"
+msgstr "آخر تحديث في Fillout"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_source_system
+msgid "Source System"
+msgstr "النظام المصدر"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_commitment_type_x_source_record_id
+#: model:ir.model.fields,field_description:hr_pool.field_role_type_x_source_record_id
+#: model:ir.model.fields,field_description:hr_pool.field_skill_type_master_x_source_record_id
+#: model:ir.model.fields,field_description:hr_pool.field_proficiency_level_x_source_record_id
+#: model:ir.model.fields,field_description:hr_pool.field_hr_language_x_source_record_id
+#: model:ir.model.fields,field_description:hr_pool.field_edu_x_source_record_id
+#: model:ir.model.fields,field_description:hr_pool.field_emp_x_source_record_id
+#: model:ir.model.fields,field_description:hr_pool.field_skill_x_source_record_id
+#: model:ir.model.fields,field_description:hr_pool.field_lang_x_source_record_id
+#: model:ir.model.fields,field_description:hr_pool.field_commitment_x_source_record_id
+msgid "Source Record ID"
+msgstr "معرّف السجل المصدر"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_language_x_source_code
+msgid "Source Code"
+msgstr "رمز المصدر"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_language_x_name_ar
+msgid "Language Name (AR)"
+msgstr "اسم اللغة (عربي)"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_language_x_name_en
+msgid "Language Name (EN)"
+msgstr "اسم اللغة (إنجليزي)"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_lang_x_language_name
+msgid "Language Display Name"
+msgstr "اسم اللغة للعرض"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_proficiency_level_x_level_value
+msgid "Level Value"
+msgstr "قيمة المستوى"
+
+#. module: hr_pool
+#: model:x_hr.skill_type,x_name:hr_pool.skill_type_interpersonal
+msgid "Interpersonal"
+msgstr "شخصية"
+
+#. module: hr_pool
+#: model:x_hr.skill_type,x_name:hr_pool.skill_type_operational
+msgid "Operational"
+msgstr "تشغيلية"
+
+#. module: hr_pool
+#: model:x_hr.skill_type,x_name:hr_pool.skill_type_technical
+msgid "Technical"
+msgstr "فنية"
+
+#. module: hr_pool
+#: model:x_hr.skill_type,x_name:hr_pool.skill_type_administrative
+msgid "Administrative"
+msgstr "إدارية"
+
+#. module: hr_pool
+#: model:x_hr.proficiency_level,x_name:hr_pool.proficiency_level_basic
+msgid "Basic"
+msgstr "أساسي"
+
+#. module: hr_pool
+#: model:x_hr.proficiency_level,x_name:hr_pool.proficiency_level_intermediate
+msgid "Intermediate"
+msgstr "متوسط"
+
+#. module: hr_pool
+#: model:x_hr.proficiency_level,x_name:hr_pool.proficiency_level_advanced
+msgid "Advanced"
+msgstr "متقدم"
+
+#. module: hr_pool
+#: model:x_hr.proficiency_level,x_name:hr_pool.proficiency_level_proficient
+msgid "Proficient"
+msgstr "متمكن"

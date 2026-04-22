@@ -16,6 +16,42 @@
         <field name="ttype">char</field>
     </record>
 
+    <record id="field_hr_pool_x_fillout_submission_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_fillout_submission_id</field>
+        <field name="field_description">Fillout Submission ID</field>
+        <field name="ttype">char</field>
+        <field name="index" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_fillout_form_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_fillout_form_id</field>
+        <field name="field_description">Fillout Form ID</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_hr_pool_x_fillout_submission_time" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_fillout_submission_time</field>
+        <field name="field_description">Fillout Submission Time</field>
+        <field name="ttype">datetime</field>
+    </record>
+
+    <record id="field_hr_pool_x_fillout_last_updated_at" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_fillout_last_updated_at</field>
+        <field name="field_description">Fillout Last Updated At</field>
+        <field name="ttype">datetime</field>
+    </record>
+
+    <record id="field_hr_pool_x_source_system" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_source_system</field>
+        <field name="field_description">Source System</field>
+        <field name="ttype">char</field>
+    </record>
+
     <record id="field_hr_pool_x_active" model="ir.model.fields">
         <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
         <field name="name">x_active</field>

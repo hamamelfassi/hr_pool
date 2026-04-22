@@ -2,37 +2,55 @@
 <odoo>
     <menuitem id="menu_hr_pool_root" name="HR Pool" sequence="10"/>
 
-        <menuitem id="menu_hr_pool_records"
-                name="HR Pool Records"
-                parent="hr_pool.menu_hr_pool_root"
-                sequence="10"/>
+    <menuitem id="menu_hr_pool_records"
+              name="HR Pool Records"
+              parent="hr_pool.menu_hr_pool_root"
+              sequence="10"/>
 
-                <menuitem id="menu_hr_pool_records_by_decision"
-                        name="By Chairman Decision"
-                        parent="hr_pool.menu_hr_pool_records"
-                        action="hr_pool.action_hr_pool"
-                        sequence="10"/>
+    <menuitem id="menu_hr_pool_records_by_decision"
+              name="By Chairman Decision"
+              parent="hr_pool.menu_hr_pool_records"
+              action="hr_pool.action_hr_pool"
+              sequence="10"/>
 
-                <menuitem id="menu_hr_pool_records_by_phase"
-                        name="By Intake Phase"
-                        parent="hr_pool.menu_hr_pool_records"
-                        action="hr_pool.action_hr_pool_by_phase"
-                        sequence="20"/>
+    <menuitem id="menu_hr_pool_records_by_phase"
+              name="By Intake Phase"
+              parent="hr_pool.menu_hr_pool_records"
+              action="hr_pool.action_hr_pool_by_phase"
+              sequence="20"/>
 
     <menuitem id="menu_hr_pool_config"
-            name="Configuration"
-            parent="hr_pool.menu_hr_pool_root"
-            sequence="80"/>
+              name="Configuration"
+              parent="hr_pool.menu_hr_pool_root"
+              sequence="80"/>
 
-        <menuitem id="menu_commitment_types"
-                name="Commitment Types"
-                parent="hr_pool.menu_hr_pool_config"
-                action="hr_pool.action_commitment_type"
-                sequence="10"/>
+    <menuitem id="menu_commitment_types"
+              name="Commitment Types"
+              parent="hr_pool.menu_hr_pool_config"
+              action="hr_pool.action_commitment_type"
+              sequence="10"/>
 
-        <menuitem id="menu_role_types"
-                name="Preferred Role Types"
-                parent="hr_pool.menu_hr_pool_config"
-                action="hr_pool.action_preferred_role_type"
-                sequence="20"/>
+    <menuitem id="menu_role_types"
+              name="Preferred Role Types"
+              parent="hr_pool.menu_hr_pool_config"
+              action="hr_pool.action_preferred_role_type"
+              sequence="20"/>
+
+    <menuitem id="menu_languages"
+              name="Languages"
+              parent="hr_pool.menu_hr_pool_config"
+              action="hr_pool.action_hr_language"
+              sequence="30"/>
+
+    <menuitem id="menu_skill_types"
+              name="Skill Types"
+              parent="hr_pool.menu_hr_pool_config"
+              action="hr_pool.action_skill_type"
+              sequence="40"/>
+
+    <menuitem id="menu_proficiency_levels"
+              name="Proficiency Levels"
+              parent="hr_pool.menu_hr_pool_config"
+              action="hr_pool.action_proficiency_level"
+              sequence="50"/>
 </odoo>

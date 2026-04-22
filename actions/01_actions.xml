@@ -29,7 +29,6 @@
         <field name="act_window_id" ref="hr_pool.action_hr_pool"/>
     </record>
 
-
     <record id="action_hr_pool_by_phase" model="ir.actions.act_window">
         <field name="name">HR Pool Records / By Intake Phase</field>
         <field name="res_model">x_hr.pool</field>
@@ -68,6 +67,24 @@
     <record id="action_preferred_role_type" model="ir.actions.act_window">
         <field name="name">Preferred Role Types</field>
         <field name="res_model">x_hr.preferred_role_type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_hr_language" model="ir.actions.act_window">
+        <field name="name">Languages</field>
+        <field name="res_model">x_hr.language</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_skill_type" model="ir.actions.act_window">
+        <field name="name">Skill Types</field>
+        <field name="res_model">x_hr.skill_type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_proficiency_level" model="ir.actions.act_window">
+        <field name="name">Proficiency Levels</field>
+        <field name="res_model">x_hr.proficiency_level</field>
         <field name="view_mode">list,form</field>
     </record>
 </odoo>

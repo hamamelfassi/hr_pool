@@ -208,6 +208,7 @@
         <field name="name">Proficient</field>
         <field name="value">proficient</field>
     </record>
+
     <record id="sel_freq_daily" model="ir.model.fields.selection">
         <field name="field_id" ref="hr_pool.field_commitment_x_frequency"/>
         <field name="name">يومي</field>

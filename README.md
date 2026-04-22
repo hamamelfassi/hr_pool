@@ -26,3 +26,8 @@ That script includes only the module files Odoo needs and excludes docs, helper 
 - Odoo module: `hr_pool`
 - Integration flow: Fillout/Zite -> n8n -> Odoo
 - SaaS constraint: keep non-module materials outside the shipped module archive
+
+## Integration Docs
+
+- Field mapping manifest: `docs/fillout_to_odoo_field_mapping.md`
+- n8n mapper reference: `docs/resources/n8n/hr_pool_mapper.js`

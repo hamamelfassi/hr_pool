@@ -5,7 +5,9 @@
         <field name="model">x_hr.commitment_type</field>
         <field name="arch" type="xml">
             <list string="Commitment Types">
+                <field name="id" optional="show"/>
                 <field name="x_name"/>
+                <field name="x_source_record_id" optional="show"/>
                 <field name="x_sequence"/>
                 <field name="x_active"/>
             </list>
@@ -19,7 +21,9 @@
             <form string="Commitment Type">
                 <sheet>
                     <group>
+                        <field name="id" readonly="1"/>
                         <field name="x_name"/>
+                        <field name="x_source_record_id"/>
                         <field name="x_sequence"/>
                         <field name="x_active"/>
                     </group>
@@ -33,7 +37,9 @@
         <field name="model">x_hr.preferred_role_type</field>
         <field name="arch" type="xml">
             <list string="Preferred Role Types">
+                <field name="id" optional="show"/>
                 <field name="x_name"/>
+                <field name="x_source_record_id" optional="show"/>
                 <field name="x_sequence"/>
                 <field name="x_active"/>
             </list>
@@ -47,7 +53,115 @@
             <form string="Preferred Role Type">
                 <sheet>
                     <group>
+                        <field name="id" readonly="1"/>
                         <field name="x_name"/>
+                        <field name="x_source_record_id"/>
+                        <field name="x_sequence"/>
+                        <field name="x_active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hr_language_list" model="ir.ui.view">
+        <field name="name">x_hr.language.list</field>
+        <field name="model">x_hr.language</field>
+        <field name="arch" type="xml">
+            <list string="Languages">
+                <field name="id" optional="show"/>
+                <field name="x_name"/>
+                <field name="x_name_ar"/>
+                <field name="x_name_en"/>
+                <field name="x_source_code" optional="show"/>
+                <field name="x_source_record_id" optional="show"/>
+                <field name="x_sequence" optional="show"/>
+                <field name="x_active" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hr_language_form" model="ir.ui.view">
+        <field name="name">x_hr.language.form</field>
+        <field name="model">x_hr.language</field>
+        <field name="arch" type="xml">
+            <form string="Language">
+                <sheet>
+                    <group>
+                        <field name="id" readonly="1"/>
+                        <field name="x_name"/>
+                        <field name="x_name_ar"/>
+                        <field name="x_name_en"/>
+                    </group>
+                    <group>
+                        <field name="x_source_code"/>
+                        <field name="x_source_record_id"/>
+                        <field name="x_sequence"/>
+                        <field name="x_active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_skill_type_list" model="ir.ui.view">
+        <field name="name">x_hr.skill_type.list</field>
+        <field name="model">x_hr.skill_type</field>
+        <field name="arch" type="xml">
+            <list string="Skill Types">
+                <field name="id" optional="show"/>
+                <field name="x_name"/>
+                <field name="x_source_record_id" optional="show"/>
+                <field name="x_sequence"/>
+                <field name="x_active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_skill_type_form" model="ir.ui.view">
+        <field name="name">x_hr.skill_type.form</field>
+        <field name="model">x_hr.skill_type</field>
+        <field name="arch" type="xml">
+            <form string="Skill Type">
+                <sheet>
+                    <group>
+                        <field name="id" readonly="1"/>
+                        <field name="x_name"/>
+                        <field name="x_source_record_id"/>
+                        <field name="x_sequence"/>
+                        <field name="x_active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_proficiency_level_list" model="ir.ui.view">
+        <field name="name">x_hr.proficiency_level.list</field>
+        <field name="model">x_hr.proficiency_level</field>
+        <field name="arch" type="xml">
+            <list string="Proficiency Levels">
+                <field name="id" optional="show"/>
+                <field name="x_name"/>
+                <field name="x_level_value"/>
+                <field name="x_source_record_id" optional="show"/>
+                <field name="x_sequence"/>
+                <field name="x_active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_proficiency_level_form" model="ir.ui.view">
+        <field name="name">x_hr.proficiency_level.form</field>
+        <field name="model">x_hr.proficiency_level</field>
+        <field name="arch" type="xml">
+            <form string="Proficiency Level">
+                <sheet>
+                    <group>
+                        <field name="id" readonly="1"/>
+                        <field name="x_name"/>
+                        <field name="x_level_value"/>
+                        <field name="x_source_record_id"/>
                         <field name="x_sequence"/>
                         <field name="x_active"/>
                     </group>

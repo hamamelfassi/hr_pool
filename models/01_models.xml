@@ -48,10 +48,21 @@
         <field name="state">manual</field>
     </record>
 
+    <record id="model_x_hr_skill_type" model="ir.model">
+        <field name="name">HR Skill Type</field>
+        <field name="model">x_hr.skill_type</field>
+        <field name="state">manual</field>
+    </record>
+
+    <record id="model_x_hr_proficiency_level" model="ir.model">
+        <field name="name">HR Proficiency Level</field>
+        <field name="model">x_hr.proficiency_level</field>
+        <field name="state">manual</field>
+    </record>
+
     <record id="model_x_hr_language" model="ir.model">
         <field name="name">HR Language</field>
         <field name="model">x_hr.language</field>
         <field name="state">manual</field>
     </record>
-
 </odoo>

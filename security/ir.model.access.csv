@@ -32,13 +32,24 @@ access_commitment_line_readonly,commitment line readonly,hr_pool.model_x_hr_pool
 access_commitment_type_manager,commitment type manager,hr_pool.model_x_hr_commitment_type,hr_pool.group_hr_pool_manager,1,1,1,0
 access_commitment_type_chairman,commitment type chairman,hr_pool.model_x_hr_commitment_type,hr_pool.group_hr_pool_chairman,1,0,0,0
 access_commitment_type_readonly,commitment type readonly,hr_pool.model_x_hr_commitment_type,hr_pool.group_hr_pool_readonly,1,0,0,0
+access_commitment_type_reviewer,commitment type reviewer,hr_pool.model_x_hr_commitment_type,hr_pool.group_hr_pool_reviewer,1,0,0,0
+
 access_role_type_manager,role type manager,hr_pool.model_x_hr_preferred_role_type,hr_pool.group_hr_pool_manager,1,1,1,0
 access_role_type_readonly,role type readonly,hr_pool.model_x_hr_preferred_role_type,hr_pool.group_hr_pool_readonly,1,0,0,0
 access_role_type_chairman,role type chairman,hr_pool.model_x_hr_preferred_role_type,hr_pool.group_hr_pool_chairman,1,0,0,0
-access_commitment_type_reviewer,commitment type reviewer,hr_pool.model_x_hr_commitment_type,hr_pool.group_hr_pool_reviewer,1,0,0,0
 access_role_type_reviewer,role type reviewer,hr_pool.model_x_hr_preferred_role_type,hr_pool.group_hr_pool_reviewer,1,0,0,0
 
 access_hr_language_manager,hr language manager,hr_pool.model_x_hr_language,hr_pool.group_hr_pool_manager,1,1,1,1
 access_hr_language_chairman,hr language chairman,hr_pool.model_x_hr_language,hr_pool.group_hr_pool_chairman,1,0,0,0
 access_hr_language_reviewer,hr language reviewer,hr_pool.model_x_hr_language,hr_pool.group_hr_pool_reviewer,1,0,0,0
 access_hr_language_readonly,hr language readonly,hr_pool.model_x_hr_language,hr_pool.group_hr_pool_readonly,1,0,0,0
+
+access_skill_type_manager,skill type manager,hr_pool.model_x_hr_skill_type,hr_pool.group_hr_pool_manager,1,1,1,1
+access_skill_type_chairman,skill type chairman,hr_pool.model_x_hr_skill_type,hr_pool.group_hr_pool_chairman,1,0,0,0
+access_skill_type_reviewer,skill type reviewer,hr_pool.model_x_hr_skill_type,hr_pool.group_hr_pool_reviewer,1,0,0,0
+access_skill_type_readonly,skill type readonly,hr_pool.model_x_hr_skill_type,hr_pool.group_hr_pool_readonly,1,0,0,0
+
+access_proficiency_level_manager,proficiency level manager,hr_pool.model_x_hr_proficiency_level,hr_pool.group_hr_pool_manager,1,1,1,1
+access_proficiency_level_chairman,proficiency level chairman,hr_pool.model_x_hr_proficiency_level,hr_pool.group_hr_pool_chairman,1,0,0,0
+access_proficiency_level_reviewer,proficiency level reviewer,hr_pool.model_x_hr_proficiency_level,hr_pool.group_hr_pool_reviewer,1,0,0,0
+access_proficiency_level_readonly,proficiency level readonly,hr_pool.model_x_hr_proficiency_level,hr_pool.group_hr_pool_readonly,1,0,0,0
