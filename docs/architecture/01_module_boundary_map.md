@@ -137,9 +137,9 @@ Consumes:
 - GRC taxonomy
 - intake handoff from `hr_pool`
 
-### 3.4 `grc_hr_bridge`
+### 3.4 `grc_recruitment_bridge`
 
-Domain-coherent HR governance bridge.
+Domain-coherent recruitment governance bridge.
 
 Owns:
 
@@ -166,6 +166,18 @@ Should not contain:
 - employee admin or HSE runtime forms
 - generated finalized PDFs for one-off cases unless they are generic reusable artifacts
 
+Current naming posture:
+
+- technical module name: `grc_recruitment_bridge`
+- English app label: `Recruitment Governance`
+- Arabic app label: `ضابط التوظيف`
+
+Future adjacent bridge:
+
+- technical module name: `grc_employee_bridge`
+- English app label: `Employee Governance`
+- Arabic app label: `ضابط شؤون الموظفين`
+
 ## 4. Decision rules for future work
 
 Use this test before placing a feature in a module:
@@ -173,9 +185,10 @@ Use this test before placing a feature in a module:
 1. Is it a governed vocabulary or standard? Put it in `grc_backbone`.
 2. Is it an operational workflow step or business record? Put it in the domain module.
 3. Is it a linkage between the two? Put it in the domain-coherent bridge responsibility of the domain module, unless multiple domains need the same adapter.
-4. Is it a reusable HR template family, signer-routing profile, or composition pack for recruitment/onboarding? Put it in `grc_hr_bridge`.
+4. Is it a reusable recruitment template family, signer-routing profile, or composition pack for recruitment/onboarding? Put it in `grc_recruitment_bridge`.
 5. Is it a live submission, a live applicant record, or a live generated document for a specific person? Put it in `hr_pool` or `hr_recruitment`.
 6. Is it employee admin, offboarding, leave, attendance, or HSE operations? Keep it out of the recruitment bridge and place it in a future domain module.
+7. Can the change break the live intake workflow? If yes, defer it until the replacement path is proven.
 
 ## 5. Practical examples
 
@@ -199,7 +212,7 @@ Use this test before placing a feature in a module:
 ### Example D: HR role templates and evaluation packs
 
 - the canonical governed functions and clauses live in `grc_backbone`
-- the HR-specific composition of those items into job description templates, interview rubrics, checklist packs, onboarding packs, declaration packs, and signer profiles lives in `grc_hr_bridge`
+- the HR-specific composition of those items into job description templates, interview rubrics, checklist packs, onboarding packs, declaration packs, and signer profiles lives in `grc_recruitment_bridge`
 - the actual job record, applicant record, interview response, and signed document instance live in the operational HR modules
 
 ## 6. Packaging rule

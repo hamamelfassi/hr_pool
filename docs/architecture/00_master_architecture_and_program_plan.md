@@ -9,7 +9,7 @@ It keeps the program aligned across:
 - HR intake and public candidate pooling
 - GRC backbone and constitutional governance
 - Recruitment handoff and applicant lifecycle
-- HR bridge template composition, document generation, and signature routing
+- Recruitment bridge template composition, document generation, and signature routing
 - future operational and commercial extensions
 - integration layers such as n8n, Fillout, Zite, and document generation
 
@@ -23,6 +23,7 @@ Marsellia is building a governed enterprise stack on Odoo SaaS, with a hybrid of
 - external form/database surfaces for non-Odoo users
 - Google Docs / Drive for controlled template generation and PDF export
 - Odoo Sign for formal external signature capture
+- HTML-to-PDF renderers where multi-line, table-heavy, or repeatable-row forms are better handled outside Google Docs
 
 The system should be organized as a controlled monorepo with separately zippable modules.
 
@@ -88,6 +89,18 @@ This means the project should stay domain-coherent rather than forcing every bri
 
 For HR, the bridge should cover the whole recruitment and onboarding lifecycle as one coherent domain, not as separate bridge modules per phase.
 
+Current naming posture:
+
+- technical bridge module: `grc_recruitment_bridge`
+- English app label: `Recruitment Governance`
+- Arabic app label: `ضابط التوظيف`
+
+Future adjacent bridge module:
+
+- `grc_employee_bridge`
+- English app label: `Employee Governance`
+- Arabic app label: `ضابط شؤون الموظفين`
+
 Examples:
 
 - `hr_pool` can own its own GRC-facing intake extension points if those extensions are only relevant to intake/pooling
@@ -130,6 +143,7 @@ Work:
 Implementation note:
 
 - Google Docs templates plus n8n are the default generation path for controlled bilingual forms
+- HTML/CSS-to-PDF is preferred for forms with multi-line rows, repeated sections, or heavy tabular structure
 - Odoo Sign is the default formal signing path for applicants, employees, managers, and chairman-level sign-offs where external signatures are needed
 - the live signed PDF is attached to the operational record, while the template source remains in the bridge/resources layer
 
@@ -153,24 +167,24 @@ The repository is organized to support:
 
 - `modules/hr_pool/`
 - `modules/grc_backbone/`
-- `modules/grc_hr_bridge/`
+- `modules/grc_recruitment_bridge/`
 - `docs/architecture/`
 - `docs/architecture/03_hr_form_family_inventory.md`
 - `docs/architecture/04_hr_document_generation_and_signature_workflow.md`
 - `docs/modules/hr_pool/`
 - `docs/modules/grc_backbone/`
-- `docs/modules/grc_hr_bridge/`
+- `docs/modules/grc_recruitment_bridge/`
 - `docs/resources/n8n/`
 - `resources/hr_pool/`
 - `resources/grc_backbone/`
-- `resources/grc_hr_bridge/`
+- `resources/grc_recruitment_bridge/`
 
 ### Boundary map companion
 
 The detailed module boundary map is maintained in:
 
 - `docs/architecture/01_module_boundary_map.md`
-- `docs/architecture/02_grc_hr_bridge_module_spec.md`
+- `docs/architecture/02_grc_recruitment_bridge_module_spec.md`
 
 ## 6. Packaging rules
 
@@ -194,6 +208,30 @@ Do not ship:
 6. design the HR document generation and signature workflow
 7. design phase-2 enrichment and document completion
 8. extend into operational consumption modules
+
+## 9. Refactor safety rules
+
+The live `hr_pool` intake pipeline is frozen as a compatibility contract until the new recruitment bridge is proven.
+
+Safe changes first:
+
+- add new optional fields only
+- add new bridge views and actions only
+- add new template and routing records only
+- add new docs and resource references only
+
+Unsafe changes until the replacement path is verified:
+
+- renaming live `hr_pool` XML IDs
+- changing existing field types
+- removing working views or actions
+- changing the payload contract used by the current Fillout/Zite/n8n path
+- deleting existing helper records that Zite maps by Odoo ID
+
+Rule of thumb:
+
+- if the change can break the live intake workflow, do not do it in the first refactor pass
+- if the change is purely additive or parallel, it is acceptable
 
 ## 8. Working rule
 

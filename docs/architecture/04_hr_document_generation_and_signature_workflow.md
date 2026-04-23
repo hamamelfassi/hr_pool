@@ -35,7 +35,7 @@ A template is authored once as a governed master document.
 The source can be:
 
 - a Google Docs template used by n8n
-- a markdown reference in `resources/grc_hr_bridge/forms/`
+- a markdown reference in the legacy source-corpus path `resources/grc_hr_bridge/forms/`
 - a bridge template record in Odoo that carries version and approval state
 
 The source of truth for the layout is the template family, not the generated record.

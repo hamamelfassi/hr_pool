@@ -1,6 +1,6 @@
-# GRC HR Bridge Module Docs
+# Recruitment Governance Bridge Module Docs
 
-Documentation for the `grc_hr_bridge` module lives here.
+Documentation for the `grc_recruitment_bridge` module lives here.
 
 Use this folder for:
 
@@ -16,6 +16,11 @@ Keep installable module code out of this folder.
 Key architecture references:
 
 - `docs/architecture/01_module_boundary_map.md`
-- `docs/architecture/02_grc_hr_bridge_module_spec.md`
+- `docs/architecture/02_grc_recruitment_bridge_module_spec.md`
 - `docs/architecture/03_hr_form_family_inventory.md`
 - `docs/architecture/04_hr_document_generation_and_signature_workflow.md`
+
+Note:
+
+- this folder remains the doc home while the scaffold is being renamed
+- the runtime module label should be `Recruitment Governance` / `ضابط التوظيف`

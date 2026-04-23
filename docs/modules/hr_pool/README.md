@@ -18,3 +18,4 @@ Key architecture references:
 - `docs/architecture/01_module_boundary_map.md`
 - `docs/architecture/03_hr_form_family_inventory.md`
 - `docs/architecture/04_hr_document_generation_and_signature_workflow.md`
+- `docs/architecture/02_grc_recruitment_bridge_module_spec.md`

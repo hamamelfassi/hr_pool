@@ -1,18 +1,18 @@
-# GRC HR Bridge Module Specification
+# Recruitment Governance Bridge Module Specification
 
 ## 1. Purpose
 
-`grc_hr_bridge` is the HR-domain bridge between canonical governance data in `grc_backbone` and operational records in `hr_pool` and `hr_recruitment`.
+`grc_recruitment_bridge` is the recruitment-domain bridge between canonical governance data in `grc_backbone` and operational records in `hr_pool` and `hr_recruitment`.
 
-It turns governed taxonomy into reusable HR template families, controlled references, and signer-routing profiles.
+It turns governed taxonomy into reusable recruitment and onboarding template families, controlled references, and signer-routing profiles.
 
 It does not own live people-process records.
 
 ## 2. Dashboard identity
 
-- Technical module name: `grc_hr_bridge`
-- English app label: `HR Governance Bridge`
-- Arabic app label: `جسر حوكمة الموارد البشرية`
+- Technical module name: `grc_recruitment_bridge`
+- English app label: `Recruitment Governance`
+- Arabic app label: `ضابط التوظيف`
 - Category: `Human Resources`
 - Module type: XML-only importable addon for Odoo SaaS
 
@@ -20,7 +20,7 @@ It does not own live people-process records.
 
 ### 3.1 Owns
 
-The module owns HR governance composition artifacts for the recruitment and onboarding lifecycle:
+The module owns governance composition artifacts for the recruitment lifecycle and the immediate post-intake continuation stage:
 
 - role / job description templates
 - interview evaluation templates
@@ -28,8 +28,8 @@ The module owns HR governance composition artifacts for the recruitment and onbo
 - onboarding continuation packs for the post-intake phase
 - declaration packs
 - signer-routing / signature profiles
-- bridge fields on HR operational models
-- inherited views and actions that expose governed HR template selection
+- bridge fields on recruitment operational models
+- inherited views and actions that expose governed recruitment template selection
 
 ### 3.2 Does not own
 
@@ -60,11 +60,11 @@ The bridge should be built around reusable form families, not one model per PDF.
 - `MCEP-HR-F-0008` training commitment
 - `MCEP-HR-F-0009` confidentiality declaration
 - `MCEP-HR-F-0010` exclusivity / outside-work declaration
-- `MCEP-HR-F-0013` safety / HSE acknowledgment tied to HR onboarding
+- `MCEP-HR-F-0013` safety / HSE acknowledgment tied to recruitment onboarding
 
 ### 4.2 Future operational families outside this bridge
 
-These are real forms, but they should move to later operational modules rather than widening the HR bridge:
+These are real forms, but they should move to later operational modules rather than widening the recruitment bridge:
 
 - `MCEP-HR-F-0011` ID card receipt / custody acknowledgement
 - `MCEP-HR-F-0014` permission / absence request
@@ -188,8 +188,8 @@ Signature profile line:
 
 ### 6.1 Root menu
 
-- English: `HR Governance Bridge`
-- Arabic: `جسر حوكمة الموارد البشرية`
+- English: `Recruitment Governance`
+- Arabic: `ضابط التوظيف`
 
 ### 6.2 Suggested submenu structure
 
@@ -300,8 +300,9 @@ These inherited views should expose:
 
 The intended generation path is:
 
-- templates are authored in Google Docs for controlled bilingual layout
-- n8n fills those templates from Odoo data
+- templates are authored in Google Docs for controlled bilingual layout when the form is mostly fixed-layout
+- HTML/CSS templates rendered through n8n are preferred when the form contains multi-line rows, repeaters, or table-heavy sections
+- n8n fills the selected template from Odoo data
 - n8n exports PDF output
 - the PDF is uploaded to Odoo Documents or stored as an attachment on the operational record
 - the template source stays in the bridge/resources layer, not in the shipped addon zip
@@ -348,12 +349,12 @@ It should not be the canonical signing engine for formal recruitment documents.
 - compliance governance vocabulary
 - governed provisions and declaration wording
 
-### 10.2 Belongs in `grc_hr_bridge`
+### 10.2 Belongs in `grc_recruitment_bridge`
 
-- HR-specific template assembly
+- recruitment-specific template assembly
 - interview / checklist / onboarding / declaration composition
 - signer-routing profiles
-- bridge fields to operational HR models
+- bridge fields to operational recruitment models
 - approval state for templates
 - published template selection
 
@@ -382,3 +383,9 @@ It should not be the canonical signing engine for formal recruitment documents.
 - HSE / field operations / human-waste declarations
 
 These should consume the same governance patterns, but they should not be forced into the recruitment bridge.
+
+## 11. Source corpus note
+
+The current markdown form corpus lives in the legacy source-corpus path `resources/grc_hr_bridge/forms/` until the scaffold and filesystem path are renamed.
+
+That directory is the source inventory, not the installable addon package.
