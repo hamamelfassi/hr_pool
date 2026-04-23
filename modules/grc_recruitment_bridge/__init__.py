@@ -1,0 +1,1 @@
+# XML-only addon scaffold.
