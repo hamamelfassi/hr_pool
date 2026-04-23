@@ -386,6 +386,6 @@ These should consume the same governance patterns, but they should not be forced
 
 ## 11. Source corpus note
 
-The current markdown form corpus lives in the legacy source-corpus path `resources/grc_hr_bridge/forms/` until the scaffold and filesystem path are renamed.
+The current markdown form corpus lives in `resources/forms/`.
 
 That directory is the source inventory, not the installable addon package.

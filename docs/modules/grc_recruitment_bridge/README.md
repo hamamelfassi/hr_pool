@@ -22,5 +22,5 @@ Key architecture references:
 
 Note:
 
-- this folder remains the doc home while the scaffold is being renamed
+- this folder is the doc home for the recruitment bridge scaffold
 - the runtime module label should be `Recruitment Governance` / `ضابط التوظيف`

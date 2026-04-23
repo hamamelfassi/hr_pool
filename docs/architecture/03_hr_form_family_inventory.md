@@ -75,7 +75,7 @@ Instead:
 This inventory is the reference point for future work when deciding whether a new form belongs in:
 
 - `grc_backbone`
-  - `grc_recruitment_bridge`
+- `grc_recruitment_bridge`
 - `hr_pool`
 - `hr_recruitment`
 - a future employee admin module

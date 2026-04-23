@@ -175,6 +175,7 @@ The repository is organized to support:
 - `docs/modules/grc_backbone/`
 - `docs/modules/grc_recruitment_bridge/`
 - `docs/resources/n8n/`
+- `resources/forms/`
 - `resources/hr_pool/`
 - `resources/grc_backbone/`
 - `resources/grc_recruitment_bridge/`

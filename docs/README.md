@@ -20,6 +20,10 @@ This folder stores project documentation and non-module implementation assets th
   GRC-specific documentation
 - `modules/grc_recruitment_bridge/`
   recruitment governance bridge documentation
+- `resources/forms/`
+  source markdown form corpus used by the recruitment bridge
+- `resources/grc_recruitment_bridge/`
+  generated PDFs, evidence artifacts, and bridge outputs
 - `resources/n8n/`
   n8n code-node scripts and mapping helpers
 
