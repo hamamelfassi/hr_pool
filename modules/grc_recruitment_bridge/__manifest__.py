@@ -13,6 +13,7 @@
     "data": [
         "security/groups.xml",
         "models/01_models.xml",
+        "models/02_fields_templates_inverse.xml",
         "models/02_fields_templates.xml",
         "models/03_fields_bridge.xml",
         "data/01_selection_values.xml",

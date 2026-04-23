@@ -251,6 +251,7 @@ Open next:
 - keep `hr_pool` frozen while the recruitment bridge becomes the only governed adapter in this slice
 - pruned stale backbone translations that still pointed at removed HR runtime fields
 - confirmed only bridge-owned recruitment functional-area links remain in the live graph
+- split bridge inverse `many2one` field creation into a preload XML so parent `one2many` fields can load cleanly in SaaS import order
 
 ## 9. Refactor safety rules
 

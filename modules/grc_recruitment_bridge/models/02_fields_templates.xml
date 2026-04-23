@@ -77,15 +77,6 @@
         <field name="ttype">char</field>
         <field name="translate">standard</field>
     </record>
-    <record id="field_hr_role_template_line_x_template_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template_line" />
-        <field name="name">x_template_id</field>
-        <field name="field_description">Template</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">x_grc.hr_role_template</field>
-        <field name="required">True</field>
-        <field name="on_delete">cascade</field>
-    </record>
     <record id="field_hr_role_template_x_line_ids" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template" />
         <field name="name">x_line_ids</field>
@@ -239,15 +230,6 @@
         <field name="field_description">Source Form Title</field>
         <field name="ttype">char</field>
         <field name="translate">standard</field>
-    </record>
-    <record id="field_hr_interview_template_line_x_template_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template_line" />
-        <field name="name">x_template_id</field>
-        <field name="field_description">Template</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">x_grc.hr_interview_template</field>
-        <field name="required">True</field>
-        <field name="on_delete">cascade</field>
     </record>
     <record id="field_hr_interview_template_x_line_ids" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template" />
@@ -404,15 +386,6 @@
         <field name="field_description">Source Form Title</field>
         <field name="ttype">char</field>
         <field name="translate">standard</field>
-    </record>
-    <record id="field_hr_document_checklist_template_line_x_template_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template_line" />
-        <field name="name">x_template_id</field>
-        <field name="field_description">Template</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">x_grc.hr_document_checklist_template</field>
-        <field name="required">True</field>
-        <field name="on_delete">cascade</field>
     </record>
     <record id="field_hr_document_checklist_template_x_line_ids" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template" />
@@ -575,15 +548,6 @@
         <field name="ttype">char</field>
         <field name="translate">standard</field>
     </record>
-    <record id="field_hr_onboarding_pack_line_x_template_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack_line" />
-        <field name="name">x_template_id</field>
-        <field name="field_description">Template</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">x_grc.hr_onboarding_pack</field>
-        <field name="required">True</field>
-        <field name="on_delete">cascade</field>
-    </record>
     <record id="field_hr_onboarding_pack_x_line_ids" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack" />
         <field name="name">x_line_ids</field>
@@ -726,15 +690,6 @@
         <field name="field_description">Source Form Title</field>
         <field name="ttype">char</field>
         <field name="translate">standard</field>
-    </record>
-    <record id="field_hr_declaration_pack_line_x_template_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack_line" />
-        <field name="name">x_template_id</field>
-        <field name="field_description">Template</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">x_grc.hr_declaration_pack</field>
-        <field name="required">True</field>
-        <field name="on_delete">cascade</field>
     </record>
     <record id="field_hr_declaration_pack_x_line_ids" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack" />
@@ -885,15 +840,6 @@
         <field name="field_description">Source Form Title</field>
         <field name="ttype">char</field>
         <field name="translate">standard</field>
-    </record>
-    <record id="field_hr_signature_profile_line_x_template_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile_line" />
-        <field name="name">x_template_id</field>
-        <field name="field_description">Profile</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">x_grc.hr_signature_profile</field>
-        <field name="required">True</field>
-        <field name="on_delete">cascade</field>
     </record>
     <record id="field_hr_signature_profile_x_line_ids" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile" />
