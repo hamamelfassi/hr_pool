@@ -1,3 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Scaffold placeholder for bridge fields on recruitment operational models. -->
+    <record id="field_hr_job_x_grc_role_template_id" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','hr.job')]" />
+        <field name="name">x_grc_role_template_id</field>
+        <field name="field_description">Role Template</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_role_template</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_job_x_grc_interview_template_id" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','hr.job')]" />
+        <field name="name">x_grc_interview_template_id</field>
+        <field name="field_description">Interview Template</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_interview_template</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_job_x_grc_document_checklist_template_id" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','hr.job')]" />
+        <field name="name">x_grc_document_checklist_template_id</field>
+        <field name="field_description">Document Checklist Template</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_document_checklist_template</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_job_x_grc_onboarding_pack_id" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','hr.job')]" />
+        <field name="name">x_grc_onboarding_pack_id</field>
+        <field name="field_description">Onboarding Pack</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_onboarding_pack</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_job_x_grc_declaration_pack_id" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','hr.job')]" />
+        <field name="name">x_grc_declaration_pack_id</field>
+        <field name="field_description">Declaration Pack</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_declaration_pack</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_job_x_grc_signature_profile_id" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','hr.job')]" />
+        <field name="name">x_grc_signature_profile_id</field>
+        <field name="field_description">Signature Profile</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_signature_profile</field>
+        <field name="on_delete">restrict</field>
+    </record>
 </odoo>

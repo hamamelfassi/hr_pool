@@ -1,3 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Scaffold placeholder for template family views. -->
+    <!-- Role template views -->
+    <record id="view_hr_role_template_list" model="ir.ui.view">
+        <field name="name">x_grc.hr_role_template.list</field>
+        <field name="model">x_grc.hr_role_template</field>
+        <field name="arch" type="xml">
+            <list string="Role / Job Description Templates">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_source_form_code"/>
+                <field name="x_version"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_hr_role_template_search" model="ir.ui.view">
+        <field name="name">x_grc.hr_role_template.search</field>
+        <field name="model">x_grc.hr_role_template</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_code"/>
+                <field name="x_source_form_code"/>
+                <filter name="draft" string="Draft" domain="[('x_state','=','draft')]"/>
+                <filter name="review" string="Under Review" domain="[('x_state','=','under_review')]"/>
+                <filter name="active" string="Active" domain="[('x_state','=','active')]"/>
+                <filter name="archived" string="Archived" domain="[('x_state','=','archived')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_hr_role_template_form" model="ir.ui.view">
+        <field name="name">x_grc.hr_role_template.form</field>
+        <field name="model">x_grc.hr_role_template</field>
+        <field name="arch" type="xml">
+            <form string="Role / Job Description Template">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_source_form_code"/>
+                            <field name="x_source_form_title"/>
+                        </group>
+                        <group>
+                            <field name="x_state"/>
+                            <field name="x_version"/>
+                            <field name="x_effective_date"/>
+                            <field name="x_retired_date"/>
+                            <field name="x_is_default"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Overview">
+                            <field name="x_description"/>
+                            <field name="x_notes"/>
+                        </page>
+                        <page string="Composition Lines">
+                            <field name="x_line_ids">
+                                <list>
+                                    <field name="x_sequence"/>
+                                    <field name="x_functional_area_id"/>
+                                    <field name="x_function_id"/>
+                                    <field name="x_minimum_requirement"/>
+                                    <field name="x_expected_output"/>
+                                    <field name="x_required"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Interview template views -->
+    <record id="view_hr_interview_template_list" model="ir.ui.view">
+        <field name="name">x_grc.hr_interview_template.list</field>
+        <field name="model">x_grc.hr_interview_template</field>
+        <field name="arch" type="xml">
+            <list string="Interview Evaluation Templates">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_source_form_code"/>
+                <field name="x_version"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_hr_interview_template_search" model="ir.ui.view">
+        <field name="name">x_grc.hr_interview_template.search</field>
+        <field name="model">x_grc.hr_interview_template</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_code"/>
+                <field name="x_source_form_code"/>
+                <filter name="draft" string="Draft" domain="[('x_state','=','draft')]"/>
+                <filter name="review" string="Under Review" domain="[('x_state','=','under_review')]"/>
+                <filter name="active" string="Active" domain="[('x_state','=','active')]"/>
+                <filter name="archived" string="Archived" domain="[('x_state','=','archived')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_hr_interview_template_form" model="ir.ui.view">
+        <field name="name">x_grc.hr_interview_template.form</field>
+        <field name="model">x_grc.hr_interview_template</field>
+        <field name="arch" type="xml">
+            <form string="Interview Evaluation Template">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_source_form_code"/>
+                            <field name="x_source_form_title"/>
+                        </group>
+                        <group>
+                            <field name="x_state"/>
+                            <field name="x_version"/>
+                            <field name="x_effective_date"/>
+                            <field name="x_retired_date"/>
+                            <field name="x_is_default"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Overview">
+                            <field name="x_description"/>
+                            <field name="x_notes"/>
+                        </page>
+                        <page string="Scoring">
+                            <field name="x_line_ids">
+                                <list>
+                                    <field name="x_sequence"/>
+                                    <field name="x_question"/>
+                                    <field name="x_answer_type"/>
+                                    <field name="x_max_score"/>
+                                    <field name="x_weight"/>
+                                    <field name="x_required"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Document checklist template views -->
+    <record id="view_hr_document_checklist_template_list" model="ir.ui.view">
+        <field name="name">x_grc.hr_document_checklist_template.list</field>
+        <field name="model">x_grc.hr_document_checklist_template</field>
+        <field name="arch" type="xml">
+            <list string="Document Checklist Templates">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_source_form_code"/>
+                <field name="x_version"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_hr_document_checklist_template_search" model="ir.ui.view">
+        <field name="name">x_grc.hr_document_checklist_template.search</field>
+        <field name="model">x_grc.hr_document_checklist_template</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_code"/>
+                <field name="x_source_form_code"/>
+                <filter name="draft" string="Draft" domain="[('x_state','=','draft')]"/>
+                <filter name="review" string="Under Review" domain="[('x_state','=','under_review')]"/>
+                <filter name="active" string="Active" domain="[('x_state','=','active')]"/>
+                <filter name="archived" string="Archived" domain="[('x_state','=','archived')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_hr_document_checklist_template_form" model="ir.ui.view">
+        <field name="name">x_grc.hr_document_checklist_template.form</field>
+        <field name="model">x_grc.hr_document_checklist_template</field>
+        <field name="arch" type="xml">
+            <form string="Document Checklist Template">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_source_form_code"/>
+                            <field name="x_source_form_title"/>
+                        </group>
+                        <group>
+                            <field name="x_state"/>
+                            <field name="x_version"/>
+                            <field name="x_effective_date"/>
+                            <field name="x_retired_date"/>
+                            <field name="x_is_default"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Overview">
+                            <field name="x_description"/>
+                            <field name="x_notes"/>
+                        </page>
+                        <page string="Required Documents">
+                            <field name="x_line_ids">
+                                <list>
+                                    <field name="x_sequence"/>
+                                    <field name="x_document_type"/>
+                                    <field name="x_is_mandatory"/>
+                                    <field name="x_requires_expiry"/>
+                                    <field name="x_renewal_period_months"/>
+                                    <field name="x_signoff_role"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Onboarding pack views -->
+    <record id="view_hr_onboarding_pack_list" model="ir.ui.view">
+        <field name="name">x_grc.hr_onboarding_pack.list</field>
+        <field name="model">x_grc.hr_onboarding_pack</field>
+        <field name="arch" type="xml">
+            <list string="Onboarding Packs">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_source_form_code"/>
+                <field name="x_version"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_hr_onboarding_pack_search" model="ir.ui.view">
+        <field name="name">x_grc.hr_onboarding_pack.search</field>
+        <field name="model">x_grc.hr_onboarding_pack</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_code"/>
+                <field name="x_source_form_code"/>
+                <filter name="draft" string="Draft" domain="[('x_state','=','draft')]"/>
+                <filter name="review" string="Under Review" domain="[('x_state','=','under_review')]"/>
+                <filter name="active" string="Active" domain="[('x_state','=','active')]"/>
+                <filter name="archived" string="Archived" domain="[('x_state','=','archived')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_hr_onboarding_pack_form" model="ir.ui.view">
+        <field name="name">x_grc.hr_onboarding_pack.form</field>
+        <field name="model">x_grc.hr_onboarding_pack</field>
+        <field name="arch" type="xml">
+            <form string="Onboarding Pack">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_source_form_code"/>
+                            <field name="x_source_form_title"/>
+                        </group>
+                        <group>
+                            <field name="x_state"/>
+                            <field name="x_version"/>
+                            <field name="x_effective_date"/>
+                            <field name="x_retired_date"/>
+                            <field name="x_is_default"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Overview">
+                            <field name="x_description"/>
+                            <field name="x_notes"/>
+                        </page>
+                        <page string="Continuation Sections">
+                            <field name="x_line_ids">
+                                <list>
+                                    <field name="x_sequence"/>
+                                    <field name="x_pack_section"/>
+                                    <field name="x_signoff_role"/>
+                                    <field name="x_required"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Declaration pack views -->
+    <record id="view_hr_declaration_pack_list" model="ir.ui.view">
+        <field name="name">x_grc.hr_declaration_pack.list</field>
+        <field name="model">x_grc.hr_declaration_pack</field>
+        <field name="arch" type="xml">
+            <list string="Declaration Packs">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_source_form_code"/>
+                <field name="x_version"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_hr_declaration_pack_search" model="ir.ui.view">
+        <field name="name">x_grc.hr_declaration_pack.search</field>
+        <field name="model">x_grc.hr_declaration_pack</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_code"/>
+                <field name="x_source_form_code"/>
+                <filter name="draft" string="Draft" domain="[('x_state','=','draft')]"/>
+                <filter name="review" string="Under Review" domain="[('x_state','=','under_review')]"/>
+                <filter name="active" string="Active" domain="[('x_state','=','active')]"/>
+                <filter name="archived" string="Archived" domain="[('x_state','=','archived')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_hr_declaration_pack_form" model="ir.ui.view">
+        <field name="name">x_grc.hr_declaration_pack.form</field>
+        <field name="model">x_grc.hr_declaration_pack</field>
+        <field name="arch" type="xml">
+            <form string="Declaration Pack">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_source_form_code"/>
+                            <field name="x_source_form_title"/>
+                        </group>
+                        <group>
+                            <field name="x_state"/>
+                            <field name="x_version"/>
+                            <field name="x_effective_date"/>
+                            <field name="x_retired_date"/>
+                            <field name="x_is_default"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Overview">
+                            <field name="x_description"/>
+                            <field name="x_notes"/>
+                        </page>
+                        <page string="Clauses">
+                            <field name="x_line_ids">
+                                <list>
+                                    <field name="x_sequence"/>
+                                    <field name="x_description"/>
+                                    <field name="x_applicant_must_sign"/>
+                                    <field name="x_hr_must_sign"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Signature profile views -->
+    <record id="view_hr_signature_profile_list" model="ir.ui.view">
+        <field name="name">x_grc.hr_signature_profile.list</field>
+        <field name="model">x_grc.hr_signature_profile</field>
+        <field name="arch" type="xml">
+            <list string="Signature Profiles">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_source_form_code"/>
+                <field name="x_version"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_hr_signature_profile_search" model="ir.ui.view">
+        <field name="name">x_grc.hr_signature_profile.search</field>
+        <field name="model">x_grc.hr_signature_profile</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_code"/>
+                <field name="x_source_form_code"/>
+                <filter name="draft" string="Draft" domain="[('x_state','=','draft')]"/>
+                <filter name="review" string="Under Review" domain="[('x_state','=','under_review')]"/>
+                <filter name="active" string="Active" domain="[('x_state','=','active')]"/>
+                <filter name="archived" string="Archived" domain="[('x_state','=','archived')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_hr_signature_profile_form" model="ir.ui.view">
+        <field name="name">x_grc.hr_signature_profile.form</field>
+        <field name="model">x_grc.hr_signature_profile</field>
+        <field name="arch" type="xml">
+            <form string="Signature Profile">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_source_form_code"/>
+                            <field name="x_source_form_title"/>
+                        </group>
+                        <group>
+                            <field name="x_state"/>
+                            <field name="x_version"/>
+                            <field name="x_effective_date"/>
+                            <field name="x_retired_date"/>
+                            <field name="x_is_default"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Overview">
+                            <field name="x_description"/>
+                            <field name="x_notes"/>
+                        </page>
+                        <page string="Signers / Routing">
+                            <field name="x_line_ids">
+                                <list>
+                                    <field name="x_sequence"/>
+                                    <field name="x_signer_role"/>
+                                    <field name="x_signer_order"/>
+                                    <field name="x_signing_backend"/>
+                                    <field name="x_required"/>
+                                    <field name="x_target_model"/>
+                                    <field name="x_target_state"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
 </odoo>

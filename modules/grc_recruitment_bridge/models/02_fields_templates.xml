@@ -1,3 +1,988 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Scaffold placeholder for template model field definitions. -->
+    <!-- Recruitment role template -->
+    <record id="field_hr_role_template_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template" />
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_hr_role_template_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template" />
+        <field name="name">x_name</field>
+        <field name="field_description">Template Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_role_template_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template" />
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_role_template_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_role_template_x_version" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template" />
+        <field name="name">x_version</field>
+        <field name="field_description">Version</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_hr_role_template_x_effective_date" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template" />
+        <field name="name">x_effective_date</field>
+        <field name="field_description">Effective Date</field>
+        <field name="ttype">date</field>
+    </record>
+    <record id="field_hr_role_template_x_retired_date" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template" />
+        <field name="name">x_retired_date</field>
+        <field name="field_description">Retired Date</field>
+        <field name="ttype">date</field>
+    </record>
+    <record id="field_hr_role_template_x_is_default" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template" />
+        <field name="name">x_is_default</field>
+        <field name="field_description">Default Template</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_role_template_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template" />
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+    </record>
+    <record id="field_hr_role_template_x_source_form_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template" />
+        <field name="name">x_source_form_code</field>
+        <field name="field_description">Source Form Code</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_hr_role_template_x_source_form_title" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template" />
+        <field name="name">x_source_form_title</field>
+        <field name="field_description">Source Form Title</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_role_template_x_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template" />
+        <field name="name">x_line_ids</field>
+        <field name="field_description">Composition Lines</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.hr_role_template_line</field>
+        <field name="relation_field">x_template_id</field>
+    </record>
+
+    <record id="field_hr_role_template_line_x_template_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template_line" />
+        <field name="name">x_template_id</field>
+        <field name="field_description">Template</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_role_template</field>
+        <field name="required">True</field>
+        <field name="on_delete">cascade</field>
+    </record>
+    <record id="field_hr_role_template_line_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template_line" />
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_role_template_line_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template_line" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_role_template_line_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template_line" />
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_role_template_line_x_required" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template_line" />
+        <field name="name">x_required</field>
+        <field name="field_description">Required</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_role_template_line_x_weight" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template_line" />
+        <field name="name">x_weight</field>
+        <field name="field_description">Weight</field>
+        <field name="ttype">float</field>
+    </record>
+    <record id="field_hr_role_template_line_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template_line" />
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+    </record>
+    <record id="field_hr_role_template_line_x_functional_area_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template_line" />
+        <field name="name">x_functional_area_id</field>
+        <field name="field_description">Functional Area</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.functional_area</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_role_template_line_x_function_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template_line" />
+        <field name="name">x_function_id</field>
+        <field name="field_description">Function</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.function</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_role_template_line_x_minimum_requirement" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template_line" />
+        <field name="name">x_minimum_requirement</field>
+        <field name="field_description">Minimum Requirement</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_role_template_line_x_expected_output" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template_line" />
+        <field name="name">x_expected_output</field>
+        <field name="field_description">Expected Output</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <!-- Interview evaluation template -->
+    <record id="field_hr_interview_template_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template" />
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_hr_interview_template_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template" />
+        <field name="name">x_name</field>
+        <field name="field_description">Template Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_interview_template_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template" />
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_interview_template_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_interview_template_x_version" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template" />
+        <field name="name">x_version</field>
+        <field name="field_description">Version</field>
+        <field name="ttype">char</field>
+    </record>
+    <record id="field_hr_interview_template_x_effective_date" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template" />
+        <field name="name">x_effective_date</field>
+        <field name="field_description">Effective Date</field>
+        <field name="ttype">date</field>
+    </record>
+    <record id="field_hr_interview_template_x_retired_date" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template" />
+        <field name="name">x_retired_date</field>
+        <field name="field_description">Retired Date</field>
+        <field name="ttype">date</field>
+    </record>
+    <record id="field_hr_interview_template_x_is_default" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template" />
+        <field name="name">x_is_default</field>
+        <field name="field_description">Default Template</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_interview_template_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template" />
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+    </record>
+    <record id="field_hr_interview_template_x_source_form_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template" />
+        <field name="name">x_source_form_code</field>
+        <field name="field_description">Source Form Code</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_hr_interview_template_x_source_form_title" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template" />
+        <field name="name">x_source_form_title</field>
+        <field name="field_description">Source Form Title</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_interview_template_x_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template" />
+        <field name="name">x_line_ids</field>
+        <field name="field_description">Questions and Criteria</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.hr_interview_template_line</field>
+        <field name="relation_field">x_template_id</field>
+    </record>
+
+    <record id="field_hr_interview_template_line_x_template_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template_line" />
+        <field name="name">x_template_id</field>
+        <field name="field_description">Template</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_interview_template</field>
+        <field name="required">True</field>
+        <field name="on_delete">cascade</field>
+    </record>
+    <record id="field_hr_interview_template_line_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template_line" />
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_interview_template_line_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template_line" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_interview_template_line_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template_line" />
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_interview_template_line_x_required" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template_line" />
+        <field name="name">x_required</field>
+        <field name="field_description">Required</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_interview_template_line_x_weight" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template_line" />
+        <field name="name">x_weight</field>
+        <field name="field_description">Weight</field>
+        <field name="ttype">float</field>
+    </record>
+    <record id="field_hr_interview_template_line_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template_line" />
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+    </record>
+    <record id="field_hr_interview_template_line_x_question" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template_line" />
+        <field name="name">x_question</field>
+        <field name="field_description">Question</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_interview_template_line_x_scoring_criterion" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template_line" />
+        <field name="name">x_scoring_criterion</field>
+        <field name="field_description">Scoring Criterion</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_interview_template_line_x_max_score" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template_line" />
+        <field name="name">x_max_score</field>
+        <field name="field_description">Maximum Score</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_hr_interview_template_line_x_answer_type" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template_line" />
+        <field name="name">x_answer_type</field>
+        <field name="field_description">Answer Type</field>
+        <field name="ttype">selection</field>
+    </record>
+    <record id="field_hr_interview_template_line_x_internal_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template_line" />
+        <field name="name">x_internal_notes</field>
+        <field name="field_description">Internal Notes</field>
+        <field name="ttype">text</field>
+    </record>
+
+    <!-- Document checklist template -->
+    <record id="field_hr_document_checklist_template_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template" />
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_hr_document_checklist_template_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template" />
+        <field name="name">x_name</field>
+        <field name="field_description">Template Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_document_checklist_template_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template" />
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_document_checklist_template_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_document_checklist_template_x_version" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template" />
+        <field name="name">x_version</field>
+        <field name="field_description">Version</field>
+        <field name="ttype">char</field>
+    </record>
+    <record id="field_hr_document_checklist_template_x_effective_date" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template" />
+        <field name="name">x_effective_date</field>
+        <field name="field_description">Effective Date</field>
+        <field name="ttype">date</field>
+    </record>
+    <record id="field_hr_document_checklist_template_x_retired_date" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template" />
+        <field name="name">x_retired_date</field>
+        <field name="field_description">Retired Date</field>
+        <field name="ttype">date</field>
+    </record>
+    <record id="field_hr_document_checklist_template_x_is_default" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template" />
+        <field name="name">x_is_default</field>
+        <field name="field_description">Default Template</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_document_checklist_template_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template" />
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+    </record>
+    <record id="field_hr_document_checklist_template_x_source_form_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template" />
+        <field name="name">x_source_form_code</field>
+        <field name="field_description">Source Form Code</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_hr_document_checklist_template_x_source_form_title" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template" />
+        <field name="name">x_source_form_title</field>
+        <field name="field_description">Source Form Title</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_document_checklist_template_x_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template" />
+        <field name="name">x_line_ids</field>
+        <field name="field_description">Required Documents</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.hr_document_checklist_template_line</field>
+        <field name="relation_field">x_template_id</field>
+    </record>
+
+    <record id="field_hr_document_checklist_template_line_x_template_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template_line" />
+        <field name="name">x_template_id</field>
+        <field name="field_description">Template</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_document_checklist_template</field>
+        <field name="required">True</field>
+        <field name="on_delete">cascade</field>
+    </record>
+    <record id="field_hr_document_checklist_template_line_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template_line" />
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_document_checklist_template_line_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template_line" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_document_checklist_template_line_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template_line" />
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_document_checklist_template_line_x_required" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template_line" />
+        <field name="name">x_required</field>
+        <field name="field_description">Required</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_document_checklist_template_line_x_weight" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template_line" />
+        <field name="name">x_weight</field>
+        <field name="field_description">Weight</field>
+        <field name="ttype">float</field>
+    </record>
+    <record id="field_hr_document_checklist_template_line_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template_line" />
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+    </record>
+    <record id="field_hr_document_checklist_template_line_x_document_type" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template_line" />
+        <field name="name">x_document_type</field>
+        <field name="field_description">Document Type</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_document_checklist_template_line_x_is_mandatory" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template_line" />
+        <field name="name">x_is_mandatory</field>
+        <field name="field_description">Mandatory</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_document_checklist_template_line_x_requires_expiry" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template_line" />
+        <field name="name">x_requires_expiry</field>
+        <field name="field_description">Requires Expiry</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_document_checklist_template_line_x_renewal_period_months" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template_line" />
+        <field name="name">x_renewal_period_months</field>
+        <field name="field_description">Renewal Period (Months)</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_hr_document_checklist_template_line_x_signoff_role" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template_line" />
+        <field name="name">x_signoff_role</field>
+        <field name="field_description">Sign-off Role</field>
+        <field name="ttype">selection</field>
+    </record>
+    <record id="field_hr_document_checklist_template_line_x_internal_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template_line" />
+        <field name="name">x_internal_notes</field>
+        <field name="field_description">Internal Notes</field>
+        <field name="ttype">text</field>
+    </record>
+
+    <!-- Onboarding pack -->
+    <record id="field_hr_onboarding_pack_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack" />
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_hr_onboarding_pack_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack" />
+        <field name="name">x_name</field>
+        <field name="field_description">Template Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_onboarding_pack_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack" />
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_onboarding_pack_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_onboarding_pack_x_version" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack" />
+        <field name="name">x_version</field>
+        <field name="field_description">Version</field>
+        <field name="ttype">char</field>
+    </record>
+    <record id="field_hr_onboarding_pack_x_effective_date" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack" />
+        <field name="name">x_effective_date</field>
+        <field name="field_description">Effective Date</field>
+        <field name="ttype">date</field>
+    </record>
+    <record id="field_hr_onboarding_pack_x_retired_date" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack" />
+        <field name="name">x_retired_date</field>
+        <field name="field_description">Retired Date</field>
+        <field name="ttype">date</field>
+    </record>
+    <record id="field_hr_onboarding_pack_x_is_default" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack" />
+        <field name="name">x_is_default</field>
+        <field name="field_description">Default Template</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_onboarding_pack_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack" />
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+    </record>
+    <record id="field_hr_onboarding_pack_x_source_form_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack" />
+        <field name="name">x_source_form_code</field>
+        <field name="field_description">Source Form Code</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_hr_onboarding_pack_x_source_form_title" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack" />
+        <field name="name">x_source_form_title</field>
+        <field name="field_description">Source Form Title</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_onboarding_pack_x_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack" />
+        <field name="name">x_line_ids</field>
+        <field name="field_description">Continuation Sections</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.hr_onboarding_pack_line</field>
+        <field name="relation_field">x_template_id</field>
+    </record>
+
+    <record id="field_hr_onboarding_pack_line_x_template_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack_line" />
+        <field name="name">x_template_id</field>
+        <field name="field_description">Template</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_onboarding_pack</field>
+        <field name="required">True</field>
+        <field name="on_delete">cascade</field>
+    </record>
+    <record id="field_hr_onboarding_pack_line_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack_line" />
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_onboarding_pack_line_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack_line" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_onboarding_pack_line_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack_line" />
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_onboarding_pack_line_x_required" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack_line" />
+        <field name="name">x_required</field>
+        <field name="field_description">Required</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_onboarding_pack_line_x_weight" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack_line" />
+        <field name="name">x_weight</field>
+        <field name="field_description">Weight</field>
+        <field name="ttype">float</field>
+    </record>
+    <record id="field_hr_onboarding_pack_line_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack_line" />
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+    </record>
+    <record id="field_hr_onboarding_pack_line_x_pack_section" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack_line" />
+        <field name="name">x_pack_section</field>
+        <field name="field_description">Pack Section</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_onboarding_pack_line_x_signoff_role" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack_line" />
+        <field name="name">x_signoff_role</field>
+        <field name="field_description">Sign-off Role</field>
+        <field name="ttype">selection</field>
+    </record>
+    <record id="field_hr_onboarding_pack_line_x_internal_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack_line" />
+        <field name="name">x_internal_notes</field>
+        <field name="field_description">Internal Notes</field>
+        <field name="ttype">text</field>
+    </record>
+
+    <!-- Declaration pack -->
+    <record id="field_hr_declaration_pack_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack" />
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_hr_declaration_pack_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack" />
+        <field name="name">x_name</field>
+        <field name="field_description">Template Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_declaration_pack_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack" />
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_declaration_pack_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_declaration_pack_x_version" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack" />
+        <field name="name">x_version</field>
+        <field name="field_description">Version</field>
+        <field name="ttype">char</field>
+    </record>
+    <record id="field_hr_declaration_pack_x_effective_date" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack" />
+        <field name="name">x_effective_date</field>
+        <field name="field_description">Effective Date</field>
+        <field name="ttype">date</field>
+    </record>
+    <record id="field_hr_declaration_pack_x_retired_date" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack" />
+        <field name="name">x_retired_date</field>
+        <field name="field_description">Retired Date</field>
+        <field name="ttype">date</field>
+    </record>
+    <record id="field_hr_declaration_pack_x_is_default" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack" />
+        <field name="name">x_is_default</field>
+        <field name="field_description">Default Template</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_declaration_pack_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack" />
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+    </record>
+    <record id="field_hr_declaration_pack_x_source_form_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack" />
+        <field name="name">x_source_form_code</field>
+        <field name="field_description">Source Form Code</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_hr_declaration_pack_x_source_form_title" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack" />
+        <field name="name">x_source_form_title</field>
+        <field name="field_description">Source Form Title</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_declaration_pack_x_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack" />
+        <field name="name">x_line_ids</field>
+        <field name="field_description">Clauses</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.hr_declaration_pack_line</field>
+        <field name="relation_field">x_template_id</field>
+    </record>
+
+    <record id="field_hr_declaration_pack_line_x_template_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack_line" />
+        <field name="name">x_template_id</field>
+        <field name="field_description">Template</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_declaration_pack</field>
+        <field name="required">True</field>
+        <field name="on_delete">cascade</field>
+    </record>
+    <record id="field_hr_declaration_pack_line_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack_line" />
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_declaration_pack_line_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack_line" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_declaration_pack_line_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack_line" />
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_declaration_pack_line_x_required" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack_line" />
+        <field name="name">x_required</field>
+        <field name="field_description">Required</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_declaration_pack_line_x_weight" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack_line" />
+        <field name="name">x_weight</field>
+        <field name="field_description">Weight</field>
+        <field name="ttype">float</field>
+    </record>
+    <record id="field_hr_declaration_pack_line_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack_line" />
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+    </record>
+    <record id="field_hr_declaration_pack_line_x_clause_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack_line" />
+        <field name="name">x_clause_id</field>
+        <field name="field_description">GRC Clause</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.clause</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_declaration_pack_line_x_applicant_must_sign" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack_line" />
+        <field name="name">x_applicant_must_sign</field>
+        <field name="field_description">Applicant Must Sign</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_declaration_pack_line_x_hr_must_sign" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack_line" />
+        <field name="name">x_hr_must_sign</field>
+        <field name="field_description">HR Must Sign</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_declaration_pack_line_x_internal_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack_line" />
+        <field name="name">x_internal_notes</field>
+        <field name="field_description">Internal Notes</field>
+        <field name="ttype">text</field>
+    </record>
+
+    <!-- Signature profile -->
+    <record id="field_hr_signature_profile_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile" />
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_hr_signature_profile_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile" />
+        <field name="name">x_name</field>
+        <field name="field_description">Profile Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_signature_profile_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile" />
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_signature_profile_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_signature_profile_x_version" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile" />
+        <field name="name">x_version</field>
+        <field name="field_description">Version</field>
+        <field name="ttype">char</field>
+    </record>
+    <record id="field_hr_signature_profile_x_effective_date" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile" />
+        <field name="name">x_effective_date</field>
+        <field name="field_description">Effective Date</field>
+        <field name="ttype">date</field>
+    </record>
+    <record id="field_hr_signature_profile_x_retired_date" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile" />
+        <field name="name">x_retired_date</field>
+        <field name="field_description">Retired Date</field>
+        <field name="ttype">date</field>
+    </record>
+    <record id="field_hr_signature_profile_x_is_default" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile" />
+        <field name="name">x_is_default</field>
+        <field name="field_description">Default Profile</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_signature_profile_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile" />
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+    </record>
+    <record id="field_hr_signature_profile_x_source_form_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile" />
+        <field name="name">x_source_form_code</field>
+        <field name="field_description">Source Form Code</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_hr_signature_profile_x_source_form_title" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile" />
+        <field name="name">x_source_form_title</field>
+        <field name="field_description">Source Form Title</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_signature_profile_x_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile" />
+        <field name="name">x_line_ids</field>
+        <field name="field_description">Signers / Routing</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.hr_signature_profile_line</field>
+        <field name="relation_field">x_template_id</field>
+    </record>
+
+    <record id="field_hr_signature_profile_line_x_template_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile_line" />
+        <field name="name">x_template_id</field>
+        <field name="field_description">Profile</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_signature_profile</field>
+        <field name="required">True</field>
+        <field name="on_delete">cascade</field>
+    </record>
+    <record id="field_hr_signature_profile_line_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile_line" />
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_signature_profile_line_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile_line" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_signature_profile_line_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile_line" />
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_signature_profile_line_x_required" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile_line" />
+        <field name="name">x_required</field>
+        <field name="field_description">Required</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_signature_profile_line_x_weight" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile_line" />
+        <field name="name">x_weight</field>
+        <field name="field_description">Weight</field>
+        <field name="ttype">float</field>
+    </record>
+    <record id="field_hr_signature_profile_line_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile_line" />
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+    </record>
+    <record id="field_hr_signature_profile_line_x_signer_role" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile_line" />
+        <field name="name">x_signer_role</field>
+        <field name="field_description">Signer Role</field>
+        <field name="ttype">selection</field>
+    </record>
+    <record id="field_hr_signature_profile_line_x_signer_order" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile_line" />
+        <field name="name">x_signer_order</field>
+        <field name="field_description">Signer Order</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_hr_signature_profile_line_x_signing_backend" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile_line" />
+        <field name="name">x_signing_backend</field>
+        <field name="field_description">Signing Backend</field>
+        <field name="ttype">selection</field>
+    </record>
+    <record id="field_hr_signature_profile_line_x_target_model" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile_line" />
+        <field name="name">x_target_model</field>
+        <field name="field_description">Target Model</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_signature_profile_line_x_target_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile_line" />
+        <field name="name">x_target_state</field>
+        <field name="field_description">Target State</field>
+        <field name="ttype">selection</field>
+    </record>
+    <record id="field_hr_signature_profile_line_x_internal_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile_line" />
+        <field name="name">x_internal_notes</field>
+        <field name="field_description">Internal Notes</field>
+        <field name="ttype">text</field>
+    </record>
 </odoo>

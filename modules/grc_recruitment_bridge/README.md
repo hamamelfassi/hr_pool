@@ -1,16 +1,21 @@
 # Recruitment Governance Bridge
 
-This is the XML-only scaffold for the `grc_recruitment_bridge` addon.
+This module is the XML-only recruitment governance bridge for Marsellia.
 
-Use this module for recruitment-domain governance composition only:
+It owns reusable recruitment and onboarding template families, controlled references, and signer-routing profiles.
+
+## First-wave scope
 
 - role / job description templates
 - interview evaluation templates
-- pre-employment checklist templates
+- pre-employment document checklist templates
 - onboarding continuation packs
 - declaration packs
-- signer-routing profiles
-- bridge fields and inherited views for recruitment operational models
+- signature profiles
+- bridge-facing recruitment job references
 
-Keep live records in `hr_pool` and `hr_recruitment`.
-Keep canonical governance data in `grc_backbone`.
+## Rule of use
+
+- keep canonical governance data in `grc_backbone`
+- keep live candidate and applicant records in `hr_pool` and `hr_recruitment`
+- keep generated PDFs and source forms outside the shipped addon zip

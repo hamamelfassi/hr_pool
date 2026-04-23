@@ -4,3 +4,21 @@ msgstr ""
 "Project-Id-Version: recruitment_governance\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language: ar\n"
+
+msgid "Recruitment Governance"
+msgstr "ضابط التوظيف"
+
+msgid "Recruitment Governance User"
+msgstr "مستخدم ضابط التوظيف"
+
+msgid "Recruitment Governance Manager"
+msgstr "مدير ضابط التوظيف"
+
+msgid "Templates"
+msgstr "القوالب"
+
+msgid "Approvals"
+msgstr "الاعتمادات"
+
+msgid "References"
+msgstr "المرجعيات"

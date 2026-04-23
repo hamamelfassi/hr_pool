@@ -1,3 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Scaffold placeholder for inherited recruitment bridge views. -->
+    <record id="view_hr_job_bridge_list" model="ir.ui.view">
+        <field name="name">hr.job.recruitment_governance.list</field>
+        <field name="model">hr.job</field>
+        <field name="arch" type="xml">
+            <list string="Recruitment Jobs">
+                <field name="name"/>
+                <field name="x_grc_functional_area_id"/>
+                <field name="x_grc_function_id"/>
+                <field name="x_grc_role_template_id"/>
+                <field name="x_grc_interview_template_id"/>
+                <field name="x_grc_document_checklist_template_id"/>
+                <field name="x_grc_declaration_pack_id"/>
+                <field name="x_grc_signature_profile_id"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_hr_job_bridge_search" model="ir.ui.view">
+        <field name="name">hr.job.recruitment_governance.search</field>
+        <field name="model">hr.job</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="x_grc_functional_area_id"/>
+                <field name="x_grc_function_id"/>
+                <field name="x_grc_role_template_id"/>
+                <field name="x_grc_interview_template_id"/>
+                <field name="x_grc_document_checklist_template_id"/>
+                <field name="x_grc_declaration_pack_id"/>
+                <field name="x_grc_signature_profile_id"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_hr_job_bridge_form" model="ir.ui.view">
+        <field name="name">hr.job.recruitment_governance.form</field>
+        <field name="model">hr.job</field>
+        <field name="arch" type="xml">
+            <form string="Recruitment Job Bridge">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="x_grc_functional_area_id"/>
+                            <field name="x_grc_function_id"/>
+                        </group>
+                        <group>
+                            <field name="x_grc_role_template_id"/>
+                            <field name="x_grc_interview_template_id"/>
+                            <field name="x_grc_document_checklist_template_id"/>
+                            <field name="x_grc_onboarding_pack_id"/>
+                            <field name="x_grc_declaration_pack_id"/>
+                            <field name="x_grc_signature_profile_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Governance Mapping">
+                            <group>
+                                <field name="x_grc_functional_area_id"/>
+                                <field name="x_grc_function_id"/>
+                            </group>
+                        </page>
+                        <page string="Template Families">
+                            <group>
+                                <field name="x_grc_role_template_id"/>
+                                <field name="x_grc_interview_template_id"/>
+                                <field name="x_grc_document_checklist_template_id"/>
+                                <field name="x_grc_onboarding_pack_id"/>
+                                <field name="x_grc_declaration_pack_id"/>
+                                <field name="x_grc_signature_profile_id"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
 </odoo>

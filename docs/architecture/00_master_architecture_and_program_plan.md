@@ -210,6 +210,32 @@ Do not ship:
 7. design phase-2 enrichment and document completion
 8. extend into operational consumption modules
 
+## 8. Implementation journal
+
+### 2026-04-23 - Recruitment bridge first implementation pass
+
+Completed:
+
+- scaffolded `modules/grc_recruitment_bridge/` as the recruitment-domain governance bridge
+- added XML-only template models, fields, data, actions, menus, security, and views
+- seeded the first-wave recruitment families:
+  - `MCEP-HR-F-0001` continuation pack
+  - `MCEP-HR-F-0002` interview evaluation
+  - `MCEP-HR-F-0003` pre-employment document checklist
+  - `MCEP-HR-F-0004`, `MCEP-HR-F-0007`, `MCEP-HR-F-0008`, `MCEP-HR-F-0009`, `MCEP-HR-F-0010`, `MCEP-HR-F-0013` declaration packs
+- added bridge links onto `hr.job` for role templates, interview templates, document checklists, onboarding packs, declaration packs, and signature profiles
+- kept the live `hr_pool` intake contract frozen and untouched
+- aligned document guidance to the agreed posture:
+  - HTML/CSS-to-PDF for multi-line / table-heavy forms
+  - Google Docs as fallback for simpler bilingual templates
+  - Odoo Sign as the default external signing path
+
+Open next:
+
+- validate the recruitment bridge scaffold against the install graph
+- begin the controlled split between canonical GRC data and bridge-domain composition
+- keep `hr_pool` additive-only until the replacement path is proven
+
 ## 9. Refactor safety rules
 
 The live `hr_pool` intake pipeline is frozen as a compatibility contract until the new recruitment bridge is proven.
@@ -234,6 +260,6 @@ Rule of thumb:
 - if the change can break the live intake workflow, do not do it in the first refactor pass
 - if the change is purely additive or parallel, it is acceptable
 
-## 8. Working rule
+## 10. Working rule
 
 When code and docs disagree, the installed module and current repository code take priority over the document text.
