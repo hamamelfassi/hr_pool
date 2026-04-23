@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sel_field_framework_x_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_framework_x_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="sel_field_framework_x_state_under_review" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_framework_x_state"/>
+        <field name="name">Under Review</field>
+        <field name="value">under_review</field>
+    </record>
+    <record id="sel_field_framework_x_state_active" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_framework_x_state"/>
+        <field name="name">Active</field>
+        <field name="value">active</field>
+    </record>
+    <record id="sel_field_framework_x_state_archived" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_framework_x_state"/>
+        <field name="name">Archived</field>
+        <field name="value">archived</field>
+    </record>
+    <record id="sel_field_policy_x_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_policy_x_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="sel_field_policy_x_state_under_review" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_policy_x_state"/>
+        <field name="name">Under Review</field>
+        <field name="value">under_review</field>
+    </record>
+    <record id="sel_field_policy_x_state_active" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_policy_x_state"/>
+        <field name="name">Active</field>
+        <field name="value">active</field>
+    </record>
+    <record id="sel_field_policy_x_state_archived" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_policy_x_state"/>
+        <field name="name">Archived</field>
+        <field name="value">archived</field>
+    </record>
+    <record id="sel_field_provision_x_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_provision_x_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="sel_field_provision_x_state_under_review" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_provision_x_state"/>
+        <field name="name">Under Review</field>
+        <field name="value">under_review</field>
+    </record>
+    <record id="sel_field_provision_x_state_active" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_provision_x_state"/>
+        <field name="name">Active</field>
+        <field name="value">active</field>
+    </record>
+    <record id="sel_field_provision_x_state_archived" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_provision_x_state"/>
+        <field name="name">Archived</field>
+        <field name="value">archived</field>
+    </record>
+    <record id="sel_field_functional_area_x_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_functional_area_x_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="sel_field_functional_area_x_state_under_review" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_functional_area_x_state"/>
+        <field name="name">Under Review</field>
+        <field name="value">under_review</field>
+    </record>
+    <record id="sel_field_functional_area_x_state_active" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_functional_area_x_state"/>
+        <field name="name">Active</field>
+        <field name="value">active</field>
+    </record>
+    <record id="sel_field_functional_area_x_state_archived" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_functional_area_x_state"/>
+        <field name="name">Archived</field>
+        <field name="value">archived</field>
+    </record>
+    <record id="sel_field_function_x_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_function_x_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="sel_field_function_x_state_under_review" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_function_x_state"/>
+        <field name="name">Under Review</field>
+        <field name="value">under_review</field>
+    </record>
+    <record id="sel_field_function_x_state_active" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_function_x_state"/>
+        <field name="name">Active</field>
+        <field name="value">active</field>
+    </record>
+    <record id="sel_field_function_x_state_archived" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_function_x_state"/>
+        <field name="name">Archived</field>
+        <field name="value">archived</field>
+    </record>
+    <record id="sel_field_sop_x_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_sop_x_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="sel_field_sop_x_state_under_review" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_sop_x_state"/>
+        <field name="name">Under Review</field>
+        <field name="value">under_review</field>
+    </record>
+    <record id="sel_field_sop_x_state_active" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_sop_x_state"/>
+        <field name="name">Active</field>
+        <field name="value">active</field>
+    </record>
+    <record id="sel_field_sop_x_state_archived" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_sop_x_state"/>
+        <field name="name">Archived</field>
+        <field name="value">archived</field>
+    </record>
+    <record id="sel_field_risk_x_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_risk_x_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="sel_field_risk_x_state_under_review" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_risk_x_state"/>
+        <field name="name">Under Review</field>
+        <field name="value">under_review</field>
+    </record>
+    <record id="sel_field_risk_x_state_active" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_risk_x_state"/>
+        <field name="name">Active</field>
+        <field name="value">active</field>
+    </record>
+    <record id="sel_field_risk_x_state_archived" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_risk_x_state"/>
+        <field name="name">Archived</field>
+        <field name="value">archived</field>
+    </record>
+    <record id="sel_field_control_x_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_control_x_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="sel_field_control_x_state_under_review" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_control_x_state"/>
+        <field name="name">Under Review</field>
+        <field name="value">under_review</field>
+    </record>
+    <record id="sel_field_control_x_state_active" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_control_x_state"/>
+        <field name="name">Active</field>
+        <field name="value">active</field>
+    </record>
+    <record id="sel_field_control_x_state_archived" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_control_x_state"/>
+        <field name="name">Archived</field>
+        <field name="value">archived</field>
+    </record>
+    <record id="sel_field_contract_template_x_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_contract_template_x_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="sel_field_contract_template_x_state_under_review" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_contract_template_x_state"/>
+        <field name="name">Under Review</field>
+        <field name="value">under_review</field>
+    </record>
+    <record id="sel_field_contract_template_x_state_active" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_contract_template_x_state"/>
+        <field name="name">Active</field>
+        <field name="value">active</field>
+    </record>
+    <record id="sel_field_contract_template_x_state_archived" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_contract_template_x_state"/>
+        <field name="name">Archived</field>
+        <field name="value">archived</field>
+    </record>
+    <record id="sel_field_clause_x_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_clause_x_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="sel_field_clause_x_state_under_review" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_clause_x_state"/>
+        <field name="name">Under Review</field>
+        <field name="value">under_review</field>
+    </record>
+    <record id="sel_field_clause_x_state_active" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_clause_x_state"/>
+        <field name="name">Active</field>
+        <field name="value">active</field>
+    </record>
+    <record id="sel_field_clause_x_state_archived" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_clause_x_state"/>
+        <field name="name">Archived</field>
+        <field name="value">archived</field>
+    </record>
+    <record id="sel_field_decision_x_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_decision_x_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="sel_field_decision_x_state_approved" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_decision_x_state"/>
+        <field name="name">Approved</field>
+        <field name="value">approved</field>
+    </record>
+    <record id="sel_field_decision_x_state_archived" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_decision_x_state"/>
+        <field name="name">Archived</field>
+        <field name="value">archived</field>
+    </record>
+    <record id="sel_field_risk_assessment_x_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_risk_assessment_x_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="sel_field_risk_assessment_x_state_confirmed" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_risk_assessment_x_state"/>
+        <field name="name">Confirmed</field>
+        <field name="value">confirmed</field>
+    </record>
+    <record id="sel_field_risk_assessment_x_state_closed" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_risk_assessment_x_state"/>
+        <field name="name">Closed</field>
+        <field name="value">closed</field>
+    </record>
+    <record id="sel_field_risk_assessment_x_state_cancelled" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_risk_assessment_x_state"/>
+        <field name="name">Cancelled</field>
+        <field name="value">cancelled</field>
+    </record>
+    <record id="sel_field_compliance_check_x_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_compliance_check_x_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="sel_field_compliance_check_x_state_confirmed" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_compliance_check_x_state"/>
+        <field name="name">Confirmed</field>
+        <field name="value">confirmed</field>
+    </record>
+    <record id="sel_field_compliance_check_x_state_closed" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_compliance_check_x_state"/>
+        <field name="name">Closed</field>
+        <field name="value">closed</field>
+    </record>
+    <record id="sel_field_compliance_check_x_state_cancelled" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_compliance_check_x_state"/>
+        <field name="name">Cancelled</field>
+        <field name="value">cancelled</field>
+    </record>
+    <record id="sel_field_tender_x_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_tender_x_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="sel_field_tender_x_state_confirmed" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_tender_x_state"/>
+        <field name="name">Confirmed</field>
+        <field name="value">confirmed</field>
+    </record>
+    <record id="sel_field_tender_x_state_closed" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_tender_x_state"/>
+        <field name="name">Closed</field>
+        <field name="value">closed</field>
+    </record>
+    <record id="sel_field_tender_x_state_cancelled" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_tender_x_state"/>
+        <field name="name">Cancelled</field>
+        <field name="value">cancelled</field>
+    </record>
+    <record id="sel_field_incident_x_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_incident_x_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="sel_field_incident_x_state_reported" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_incident_x_state"/>
+        <field name="name">Reported</field>
+        <field name="value">reported</field>
+    </record>
+    <record id="sel_field_incident_x_state_under_review" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_incident_x_state"/>
+        <field name="name">Under Review</field>
+        <field name="value">under_review</field>
+    </record>
+    <record id="sel_field_incident_x_state_closed" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_incident_x_state"/>
+        <field name="name">Closed</field>
+        <field name="value">closed</field>
+    </record>
+    <record id="sel_field_incident_x_state_cancelled" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_incident_x_state"/>
+        <field name="name">Cancelled</field>
+        <field name="value">cancelled</field>
+    </record>
+    <record id="sel_field_framework_x_type_international_standard" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_framework_x_type"/>
+        <field name="name">International Standard</field>
+        <field name="value">international_standard</field>
+    </record>
+    <record id="sel_field_framework_x_type_national_law" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_framework_x_type"/>
+        <field name="name">National Law</field>
+        <field name="value">national_law</field>
+    </record>
+    <record id="sel_field_framework_x_type_municipal_regulation" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_framework_x_type"/>
+        <field name="name">Municipal Regulation</field>
+        <field name="value">municipal_regulation</field>
+    </record>
+    <record id="sel_field_framework_x_type_industry_guideline" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_framework_x_type"/>
+        <field name="name">Industry Guideline</field>
+        <field name="value">industry_guideline</field>
+    </record>
+    <record id="sel_field_framework_x_type_internal_requirement" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_framework_x_type"/>
+        <field name="name">Internal Requirement</field>
+        <field name="value">internal_requirement</field>
+    </record>
+    <record id="sel_field_provision_x_metric_type_qualitative" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_provision_x_metric_type"/>
+        <field name="name">Qualitative</field>
+        <field name="value">qualitative</field>
+    </record>
+    <record id="sel_field_provision_x_metric_type_quantitative" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_provision_x_metric_type"/>
+        <field name="name">Quantitative</field>
+        <field name="value">quantitative</field>
+    </record>
+    <record id="sel_field_provision_x_evaluation_frequency_per_event" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_provision_x_evaluation_frequency"/>
+        <field name="name">Per Event</field>
+        <field name="value">per_event</field>
+    </record>
+    <record id="sel_field_provision_x_evaluation_frequency_daily" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_provision_x_evaluation_frequency"/>
+        <field name="name">Daily</field>
+        <field name="value">daily</field>
+    </record>
+    <record id="sel_field_provision_x_evaluation_frequency_weekly" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_provision_x_evaluation_frequency"/>
+        <field name="name">Weekly</field>
+        <field name="value">weekly</field>
+    </record>
+    <record id="sel_field_provision_x_evaluation_frequency_monthly" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_provision_x_evaluation_frequency"/>
+        <field name="name">Monthly</field>
+        <field name="value">monthly</field>
+    </record>
+    <record id="sel_field_provision_x_evaluation_frequency_quarterly" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_provision_x_evaluation_frequency"/>
+        <field name="name">Quarterly</field>
+        <field name="value">quarterly</field>
+    </record>
+    <record id="sel_field_provision_x_evaluation_frequency_annually" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_provision_x_evaluation_frequency"/>
+        <field name="name">Annually</field>
+        <field name="value">annually</field>
+    </record>
+    <record id="sel_field_decision_x_executive_body_board_of_directors" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_decision_x_executive_body"/>
+        <field name="name">Board of Directors</field>
+        <field name="value">board_of_directors</field>
+    </record>
+    <record id="sel_field_decision_x_executive_body_chairman" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_decision_x_executive_body"/>
+        <field name="name">Chairman</field>
+        <field name="value">chairman</field>
+    </record>
+    <record id="sel_field_decision_x_executive_body_general_manager" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_decision_x_executive_body"/>
+        <field name="name">General Manager</field>
+        <field name="value">general_manager</field>
+    </record>
+    <record id="sel_field_decision_x_executive_body_technical_management" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_decision_x_executive_body"/>
+        <field name="name">Technical Management</field>
+        <field name="value">technical_management</field>
+    </record>
+    <record id="sel_field_decision_x_executive_body_hse_management" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_decision_x_executive_body"/>
+        <field name="name">HSE Management</field>
+        <field name="value">hse_management</field>
+    </record>
+    <record id="sel_field_risk_x_category_strategic" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_risk_x_category"/>
+        <field name="name">Strategic</field>
+        <field name="value">strategic</field>
+    </record>
+    <record id="sel_field_risk_x_category_operational" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_risk_x_category"/>
+        <field name="name">Operational</field>
+        <field name="value">operational</field>
+    </record>
+    <record id="sel_field_risk_x_category_hse" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_risk_x_category"/>
+        <field name="name">HSE</field>
+        <field name="value">hse</field>
+    </record>
+    <record id="sel_field_risk_x_category_financial" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_risk_x_category"/>
+        <field name="name">Financial</field>
+        <field name="value">financial</field>
+    </record>
+    <record id="sel_field_risk_x_category_compliance" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_risk_x_category"/>
+        <field name="name">Compliance</field>
+        <field name="value">compliance</field>
+    </record>
+    <record id="sel_field_risk_assessment_x_status_acceptable" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_risk_assessment_x_status"/>
+        <field name="name">Acceptable</field>
+        <field name="value">acceptable</field>
+    </record>
+    <record id="sel_field_risk_assessment_x_status_needs_mitigation" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_risk_assessment_x_status"/>
+        <field name="name">Needs Mitigation</field>
+        <field name="value">needs_mitigation</field>
+    </record>
+    <record id="sel_field_risk_assessment_x_status_critical" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_risk_assessment_x_status"/>
+        <field name="name">Critical</field>
+        <field name="value">critical</field>
+    </record>
+    <record id="sel_field_control_x_control_type_preventive" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_control_x_control_type"/>
+        <field name="name">Preventive</field>
+        <field name="value">preventive</field>
+    </record>
+    <record id="sel_field_control_x_control_type_detective" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_control_x_control_type"/>
+        <field name="name">Detective</field>
+        <field name="value">detective</field>
+    </record>
+    <record id="sel_field_control_x_control_type_corrective" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_control_x_control_type"/>
+        <field name="name">Corrective</field>
+        <field name="value">corrective</field>
+    </record>
+    <record id="sel_field_compliance_check_x_result_pass" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_compliance_check_x_result"/>
+        <field name="name">Pass</field>
+        <field name="value">pass</field>
+    </record>
+    <record id="sel_field_compliance_check_x_result_fail" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_compliance_check_x_result"/>
+        <field name="name">Fail</field>
+        <field name="value">fail</field>
+    </record>
+    <record id="sel_field_compliance_check_x_result_needs_attention" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_compliance_check_x_result"/>
+        <field name="name">Needs Attention</field>
+        <field name="value">needs_attention</field>
+    </record>
+    <record id="sel_field_incident_x_severity_near_miss" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_incident_x_severity"/>
+        <field name="name">Near Miss</field>
+        <field name="value">near_miss</field>
+    </record>
+    <record id="sel_field_incident_x_severity_minor" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_incident_x_severity"/>
+        <field name="name">Minor</field>
+        <field name="value">minor</field>
+    </record>
+    <record id="sel_field_incident_x_severity_major" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_incident_x_severity"/>
+        <field name="name">Major</field>
+        <field name="value">major</field>
+    </record>
+    <record id="sel_field_incident_x_severity_catastrophic" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_incident_x_severity"/>
+        <field name="name">Catastrophic</field>
+        <field name="value">catastrophic</field>
+    </record>
+    <record id="sel_field_contract_template_x_type_client_contract" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_contract_template_x_type"/>
+        <field name="name">Client Contract</field>
+        <field name="value">client_contract</field>
+    </record>
+    <record id="sel_field_contract_template_x_type_subcontractor_agreement" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_contract_template_x_type"/>
+        <field name="name">Subcontractor Agreement</field>
+        <field name="value">subcontractor_agreement</field>
+    </record>
+    <record id="sel_field_contract_template_x_type_nda" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_contract_template_x_type"/>
+        <field name="name">NDA</field>
+        <field name="value">nda</field>
+    </record>
+    <record id="sel_field_contract_template_x_type_service_order_template" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_contract_template_x_type"/>
+        <field name="name">Service Order Template</field>
+        <field name="value">service_order_template</field>
+    </record>
+    <record id="sel_field_clause_x_category_liability" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_clause_x_category"/>
+        <field name="name">Liability</field>
+        <field name="value">liability</field>
+    </record>
+    <record id="sel_field_clause_x_category_hse_compliance" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_clause_x_category"/>
+        <field name="name">HSE Compliance</field>
+        <field name="value">hse_compliance</field>
+    </record>
+    <record id="sel_field_clause_x_category_financial" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_clause_x_category"/>
+        <field name="name">Financial</field>
+        <field name="value">financial</field>
+    </record>
+    <record id="sel_field_clause_x_category_operational" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_clause_x_category"/>
+        <field name="name">Operational</field>
+        <field name="value">operational</field>
+    </record>
+    <record id="sel_field_clause_x_category_administrative" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_clause_x_category"/>
+        <field name="name">Administrative</field>
+        <field name="value">administrative</field>
+    </record>
+</odoo>

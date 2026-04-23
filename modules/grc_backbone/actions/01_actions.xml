@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <record id="action_framework" model="ir.actions.act_window">
+        <field name="name">Governance Frameworks</field>
+        <field name="res_model">x_grc.framework</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_policy" model="ir.actions.act_window">
+        <field name="name">Governance Policys</field>
+        <field name="res_model">x_grc.policy</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_provision" model="ir.actions.act_window">
+        <field name="name">Governance Provisions</field>
+        <field name="res_model">x_grc.provision</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_decision" model="ir.actions.act_window">
+        <field name="name">Governance Decisions</field>
+        <field name="res_model">x_grc.decision</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_functional_area" model="ir.actions.act_window">
+        <field name="name">Functional Areas</field>
+        <field name="res_model">x_grc.functional_area</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_function" model="ir.actions.act_window">
+        <field name="name">Functions</field>
+        <field name="res_model">x_grc.function</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_sop" model="ir.actions.act_window">
+        <field name="name">Standard Operating Procedures</field>
+        <field name="res_model">x_grc.sop</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_risk" model="ir.actions.act_window">
+        <field name="name">Risks</field>
+        <field name="res_model">x_grc.risk</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_risk_assessment" model="ir.actions.act_window">
+        <field name="name">Risk Assessments</field>
+        <field name="res_model">x_grc.risk_assessment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_control" model="ir.actions.act_window">
+        <field name="name">Controls</field>
+        <field name="res_model">x_grc.control</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_compliance_check" model="ir.actions.act_window">
+        <field name="name">Compliance Checks</field>
+        <field name="res_model">x_grc.compliance_check</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_incident" model="ir.actions.act_window">
+        <field name="name">Incidents</field>
+        <field name="res_model">x_grc.incident</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_contract_template" model="ir.actions.act_window">
+        <field name="name">Contract Templates</field>
+        <field name="res_model">x_grc.contract_template</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_tender" model="ir.actions.act_window">
+        <field name="name">Tenders</field>
+        <field name="res_model">x_grc.tender</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_clause" model="ir.actions.act_window">
+        <field name="name">Clauses</field>
+        <field name="res_model">x_grc.clause</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    </odoo>

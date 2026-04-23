@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="field_functional_area_x_hr_pool_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_functional_area" />
+        <field name="name">x_hr_pool_ids</field>
+        <field name="field_description">HR Pool Records</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.pool</field>
+        <field name="relation_field">x_grc_functional_area_id</field>
+    </record>
+    <record id="field_functional_area_x_hr_job_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_functional_area" />
+        <field name="name">x_hr_job_ids</field>
+        <field name="field_description">Recruitment Jobs</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">hr.job</field>
+        <field name="relation_field">x_grc_functional_area_id</field>
+    </record>
+    <record id="field_function_x_hr_job_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_function" />
+        <field name="name">x_hr_job_ids</field>
+        <field name="field_description">Recruitment Jobs</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">hr.job</field>
+        <field name="relation_field">x_grc_function_id</field>
+    </record>
+</odoo>

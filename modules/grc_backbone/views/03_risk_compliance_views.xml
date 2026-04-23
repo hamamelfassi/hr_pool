@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_grc_risk" name="Risk &amp; Controls" parent="grc_backbone.menu_grc_root" sequence="40"/>
+    <menuitem id="menu_risks" name="Risks" parent="grc_backbone.menu_grc_risk" action="grc_backbone.action_risk" sequence="10"/>
+    <menuitem id="menu_risk_assessments" name="Risk Assessments" parent="grc_backbone.menu_grc_risk" action="grc_backbone.action_risk_assessment" sequence="20"/>
+    <menuitem id="menu_controls" name="Controls" parent="grc_backbone.menu_grc_risk" action="grc_backbone.action_control" sequence="30"/>
+    <menuitem id="menu_grc_compliance" name="Compliance &amp; Incidents" parent="grc_backbone.menu_grc_root" sequence="50"/>
+    <menuitem id="menu_checks" name="Compliance Checks" parent="grc_backbone.menu_grc_compliance" action="grc_backbone.action_compliance_check" sequence="10"/>
+    <menuitem id="menu_incidents" name="Incidents" parent="grc_backbone.menu_grc_compliance" action="grc_backbone.action_incident" sequence="20"/>
+    <record id="view_risk_list" model="ir.ui.view">
+        <field name="name">x_grc.risk.list</field>
+        <field name="model">x_grc.risk</field>
+        <field name="arch" type="xml">
+            <list string="Risks">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_category"/>
+                <field name="x_functional_area_id"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_risk_search" model="ir.ui.view">
+        <field name="name">x_grc.risk.search</field>
+        <field name="model">x_grc.risk</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_code"/>
+                <field name="x_functional_area_id"/>
+                <filter name="active" string="Active" domain="[('x_state','=','active')]"/>
+                <filter name="hse" string="HSE" domain="[('x_category','=','hse')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_risk_form" model="ir.ui.view">
+        <field name="name">x_grc.risk.form</field>
+        <field name="model">x_grc.risk</field>
+        <field name="arch" type="xml">
+            <form string="Risk">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_category"/>
+                            <field name="x_functional_area_id"/>
+                        </group>
+                        <group>
+                            <field name="x_state"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="x_description"/>
+                        </page>
+                        <page string="Assessments">
+                            <field name="x_assessment_ids">
+                                <list>
+                                    <field name="x_date"/>
+                                    <field name="x_likelihood"/>
+                                    <field name="x_impact"/>
+                                    <field name="x_risk_score"/>
+                                    <field name="x_status"/>
+                                    <field name="x_state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Controls">
+                            <field name="x_control_ids">
+                                <list>
+                                    <field name="x_code"/>
+                                    <field name="x_name"/>
+                                    <field name="x_control_type"/>
+                                    <field name="x_state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Incidents">
+                            <field name="x_incident_ids">
+                                <list>
+                                    <field name="x_name"/>
+                                    <field name="x_incident_date"/>
+                                    <field name="x_severity"/>
+                                    <field name="x_state"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_risk_assessment_list" model="ir.ui.view">
+        <field name="name">x_grc.risk_assessment.list</field>
+        <field name="model">x_grc.risk_assessment</field>
+        <field name="arch" type="xml">
+            <list string="Risk Assessments">
+                <field name="x_risk_id"/>
+                <field name="x_date"/>
+                <field name="x_likelihood"/>
+                <field name="x_impact"/>
+                <field name="x_risk_score"/>
+                <field name="x_status"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_risk_assessment_search" model="ir.ui.view">
+        <field name="name">x_grc.risk_assessment.search</field>
+        <field name="model">x_grc.risk_assessment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_risk_id"/>
+                <field name="x_assessor_employee_id"/>
+                <filter name="confirmed" string="Confirmed" domain="[('x_state','=','confirmed')]"/>
+                <filter name="closed" string="Closed" domain="[('x_state','=','closed')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_risk_assessment_form" model="ir.ui.view">
+        <field name="name">x_grc.risk_assessment.form</field>
+        <field name="model">x_grc.risk_assessment</field>
+        <field name="arch" type="xml">
+            <form string="Risk Assessment">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_name"/>
+                            <field name="x_risk_id"/>
+                            <field name="x_date"/>
+                            <field name="x_assessor_employee_id"/>
+                        </group>
+                        <group>
+                            <field name="x_likelihood"/>
+                            <field name="x_impact"/>
+                            <field name="x_risk_score"/>
+                            <field name="x_status"/>
+                            <field name="x_state"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_control_list" model="ir.ui.view">
+        <field name="name">x_grc.control.list</field>
+        <field name="model">x_grc.control</field>
+        <field name="arch" type="xml">
+            <list string="Controls">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_risk_id"/>
+                <field name="x_control_type"/>
+                <field name="x_is_hse_blocker"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_control_search" model="ir.ui.view">
+        <field name="name">x_grc.control.search</field>
+        <field name="model">x_grc.control</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_code"/>
+                <field name="x_risk_id"/>
+                <filter name="active" string="Active" domain="[('x_state','=','active')]"/>
+                <filter name="blocker" string="HSE Blocker" domain="[('x_is_hse_blocker','=',True)]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_control_form" model="ir.ui.view">
+        <field name="name">x_grc.control.form</field>
+        <field name="model">x_grc.control</field>
+        <field name="arch" type="xml">
+            <form string="Control">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_risk_id"/>
+                            <field name="x_control_type"/>
+                        </group>
+                        <group>
+                            <field name="x_is_hse_blocker"/>
+                            <field name="x_state"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Action Required">
+                            <field name="x_action_required"/>
+                        </page>
+                        <page string="Compliance Checks">
+                            <field name="x_compliance_check_ids">
+                                <list>
+                                    <field name="x_name"/>
+                                    <field name="x_check_date"/>
+                                    <field name="x_result"/>
+                                    <field name="x_state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Incidents">
+                            <field name="x_incident_ids">
+                                <list>
+                                    <field name="x_name"/>
+                                    <field name="x_incident_date"/>
+                                    <field name="x_severity"/>
+                                    <field name="x_state"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_compliance_check_list" model="ir.ui.view">
+        <field name="name">x_grc.compliance_check.list</field>
+        <field name="model">x_grc.compliance_check</field>
+        <field name="arch" type="xml">
+            <list string="Compliance Checks">
+                <field name="x_name"/>
+                <field name="x_check_date"/>
+                <field name="x_inspector_employee_id"/>
+                <field name="x_provision_id"/>
+                <field name="x_control_id"/>
+                <field name="x_result"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_compliance_check_search" model="ir.ui.view">
+        <field name="name">x_grc.compliance_check.search</field>
+        <field name="model">x_grc.compliance_check</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_provision_id"/>
+                <field name="x_control_id"/>
+                <field name="x_inspector_employee_id"/>
+                <filter name="confirmed" string="Confirmed" domain="[('x_state','=','confirmed')]"/>
+                <filter name="fail" string="Fail" domain="[('x_result','=','fail')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_compliance_check_form" model="ir.ui.view">
+        <field name="name">x_grc.compliance_check.form</field>
+        <field name="model">x_grc.compliance_check</field>
+        <field name="arch" type="xml">
+            <form string="Compliance Check">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_name"/>
+                            <field name="x_check_date"/>
+                            <field name="x_inspector_employee_id"/>
+                        </group>
+                        <group>
+                            <field name="x_provision_id"/>
+                            <field name="x_control_id"/>
+                            <field name="x_result"/>
+                            <field name="x_state"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="x_notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_incident_list" model="ir.ui.view">
+        <field name="name">x_grc.incident.list</field>
+        <field name="model">x_grc.incident</field>
+        <field name="arch" type="xml">
+            <list string="Incidents">
+                <field name="x_name"/>
+                <field name="x_incident_date"/>
+                <field name="x_severity"/>
+                <field name="x_reporter_employee_id"/>
+                <field name="x_realized_risk_id"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_incident_search" model="ir.ui.view">
+        <field name="name">x_grc.incident.search</field>
+        <field name="model">x_grc.incident</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_realized_risk_id"/>
+                <field name="x_failed_control_id"/>
+                <field name="x_reporter_employee_id"/>
+                <filter name="reported" string="Reported" domain="[('x_state','=','reported')]"/>
+                <filter name="major" string="Major" domain="[('x_severity','=','major')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_incident_form" model="ir.ui.view">
+        <field name="name">x_grc.incident.form</field>
+        <field name="model">x_grc.incident</field>
+        <field name="arch" type="xml">
+            <form string="Incident">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_name"/>
+                            <field name="x_incident_date"/>
+                            <field name="x_severity"/>
+                            <field name="x_reporter_employee_id"/>
+                        </group>
+                        <group>
+                            <field name="x_realized_risk_id"/>
+                            <field name="x_failed_control_id"/>
+                            <field name="x_state"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="x_description"/>
+                    </group>
+                    <group>
+                        <field name="x_corrective_action"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

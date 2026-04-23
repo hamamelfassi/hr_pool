@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="area_corp_gov" model="x_grc.functional_area">
+        <field name="x_name">Corporate Governance &amp; Regulatory Affairs</field>
+        <field name="x_code">GFA-001</field>
+        <field name="x_description">Board and statutory governance, policy management, regulatory alignment, and executive governance records.</field>
+        <field name="x_state">active</field>
+    </record>
+    <record id="area_admin_support" model="x_grc.functional_area">
+        <field name="x_name">Administration &amp; Corporate Support</field>
+        <field name="x_code">GFA-002</field>
+        <field name="x_description">Corporate administration, records control, correspondence handling, and office support.</field>
+        <field name="x_state">active</field>
+    </record>
+    <record id="area_hr_recruitment" model="x_grc.functional_area">
+        <field name="x_name">Human Resources &amp; Recruitment</field>
+        <field name="x_code">GFA-003</field>
+        <field name="x_description">Candidate intake, recruitment handoff, and governed workforce onboarding.</field>
+        <field name="x_state">active</field>
+    </record>
+    <record id="area_hse_compliance" model="x_grc.functional_area">
+        <field name="x_name">Health, Safety, Environment &amp; Compliance</field>
+        <field name="x_code">GFA-004</field>
+        <field name="x_description">Risk assessment, operational controls, compliance checks, incident governance, and HSE oversight.</field>
+        <field name="x_state">active</field>
+    </record>
+    <record id="area_medical_waste" model="x_grc.functional_area">
+        <field name="x_name">Medical Waste Management</field>
+        <field name="x_code">GFA-005</field>
+        <field name="x_description">Collection, transport, treatment, and final disposal of medical and biological waste.</field>
+        <field name="x_state">active</field>
+    </record>
+    <record id="area_hazardous_waste" model="x_grc.functional_area">
+        <field name="x_name">Hazardous &amp; Industrial Waste Management</field>
+        <field name="x_code">GFA-006</field>
+        <field name="x_description">Handling, segregation, storage, transport, and treatment of hazardous and industrial waste streams.</field>
+        <field name="x_state">active</field>
+    </record>
+    <record id="area_marine_spill" model="x_grc.functional_area">
+        <field name="x_name">Marine &amp; Oil Spill Response</field>
+        <field name="x_code">GFA-007</field>
+        <field name="x_description">Containment, response, shoreline remediation, and emergency field mobilization.</field>
+        <field name="x_state">active</field>
+    </record>
+    <record id="area_cleaning_decon" model="x_grc.functional_area">
+        <field name="x_name">Industrial Cleaning &amp; Decontamination</field>
+        <field name="x_code">GFA-008</field>
+        <field name="x_description">Tank cleaning, industrial cleaning, decontamination, and recovery support.</field>
+        <field name="x_state">active</field>
+    </record>
+    <record id="area_env_monitoring" model="x_grc.functional_area">
+        <field name="x_name">Environmental Monitoring &amp; Laboratory Coordination</field>
+        <field name="x_code">GFA-009</field>
+        <field name="x_description">Sampling, testing coordination, environmental analysis follow-up, and reporting closure.</field>
+        <field name="x_state">active</field>
+    </record>
+    <record id="area_logistics_fleet" model="x_grc.functional_area">
+        <field name="x_name">Logistics, Fleet &amp; Field Support</field>
+        <field name="x_code">GFA-010</field>
+        <field name="x_description">Fleet readiness, dispatch, site logistics, foreign team movement support, and field coordination.</field>
+        <field name="x_state">active</field>
+    </record>
+    <record id="area_technical_liaison" model="x_grc.functional_area">
+        <field name="x_name">Technical Liaison &amp; External Coordination</field>
+        <field name="x_code">GFA-011</field>
+        <field name="x_description">Technical coordination with regulators, oil entities, banks, and external stakeholders.</field>
+        <field name="x_state">active</field>
+    </record>
+    <record id="area_business_dev" model="x_grc.functional_area">
+        <field name="x_name">Business Development, Tenders &amp; Contracts</field>
+        <field name="x_code">GFA-012</field>
+        <field name="x_description">Tender preparation, contractual governance, client response management, and proposal coordination.</field>
+        <field name="x_state">active</field>
+    </record>
+    <record id="area_finance_bank" model="x_grc.functional_area">
+        <field name="x_name">Finance &amp; Banking Coordination</field>
+        <field name="x_code">GFA-013</field>
+        <field name="x_description">Banking coordination, signatory updates, guarantee processing, and procedural financial liaison.</field>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_policy_control" model="x_grc.function">
+        <field name="x_name">Policy &amp; Procedure Control</field>
+        <field name="x_code">GFN-001</field>
+        <field name="x_description">Corporate policy drafting, maintenance, and controlled release.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_corp_gov"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_regulatory_registers" model="x_grc.function">
+        <field name="x_name">Regulatory Register Management</field>
+        <field name="x_code">GFN-002</field>
+        <field name="x_description">Tracking external legal and regulatory governance requirements.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_corp_gov"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_executive_decisions" model="x_grc.function">
+        <field name="x_name">Executive Decision Logging</field>
+        <field name="x_code">GFN-003</field>
+        <field name="x_description">Recording and maintaining executive governance decisions.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_corp_gov"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_admin_records" model="x_grc.function">
+        <field name="x_name">Records &amp; Archive Control</field>
+        <field name="x_code">GFN-004</field>
+        <field name="x_description">Maintaining controlled filing, archiving, and administrative records.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_admin_support"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_official_correspondence" model="x_grc.function">
+        <field name="x_name">Official Correspondence Coordination</field>
+        <field name="x_code">GFN-005</field>
+        <field name="x_description">Handling incoming and outgoing official communications.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_admin_support"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_candidate_pooling" model="x_grc.function">
+        <field name="x_name">Candidate Intake &amp; Pooling</field>
+        <field name="x_code">GFN-006</field>
+        <field name="x_description">Capturing and classifying prospective applicant intake.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_hr_recruitment"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_recruitment_handoff" model="x_grc.function">
+        <field name="x_name">Formal Recruitment Handoff</field>
+        <field name="x_code">GFN-007</field>
+        <field name="x_description">Mapping intake candidates into formal recruitment jobs and workflows.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_hr_recruitment"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_onboarding_governance" model="x_grc.function">
+        <field name="x_name">Onboarding Governance</field>
+        <field name="x_code">GFN-008</field>
+        <field name="x_description">Ensuring required declarations and governance onboarding controls are completed.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_hr_recruitment"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_risk_assessment" model="x_grc.function">
+        <field name="x_name">Risk Assessment &amp; Control Design</field>
+        <field name="x_code">GFN-009</field>
+        <field name="x_description">Assessing risks and defining governance controls.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_hse_compliance"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_compliance_inspection" model="x_grc.function">
+        <field name="x_name">Compliance Inspection &amp; Verification</field>
+        <field name="x_code">GFN-010</field>
+        <field name="x_description">Executing and recording compliance checks against controls and provisions.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_hse_compliance"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_incident_followup" model="x_grc.function">
+        <field name="x_name">Incident Reporting &amp; Corrective Follow-Up</field>
+        <field name="x_code">GFN-011</field>
+        <field name="x_description">Logging incidents and coordinating corrective follow-up.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_hse_compliance"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_medical_collection" model="x_grc.function">
+        <field name="x_name">Medical Waste Collection</field>
+        <field name="x_code">GFN-012</field>
+        <field name="x_description">Collection of medical and biological waste from source points.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_medical_waste"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_medical_transport" model="x_grc.function">
+        <field name="x_name">Medical Waste Transport</field>
+        <field name="x_code">GFN-013</field>
+        <field name="x_description">Controlled movement of medical waste under governed handling procedures.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_medical_waste"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_medical_disposal" model="x_grc.function">
+        <field name="x_name">Medical Waste Treatment &amp; Final Disposal</field>
+        <field name="x_code">GFN-014</field>
+        <field name="x_description">Treatment and approved final disposal of medical waste.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_medical_waste"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_haz_storage" model="x_grc.function">
+        <field name="x_name">Hazardous Waste Segregation &amp; Storage</field>
+        <field name="x_code">GFN-015</field>
+        <field name="x_description">Segregation, controlled storage, and custody of hazardous waste.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_hazardous_waste"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_haz_transport" model="x_grc.function">
+        <field name="x_name">Hazardous &amp; Industrial Waste Transport</field>
+        <field name="x_code">GFN-016</field>
+        <field name="x_description">Transport coordination for hazardous and industrial waste operations.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_hazardous_waste"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_haz_treatment" model="x_grc.function">
+        <field name="x_name">Hazardous Waste Treatment Coordination</field>
+        <field name="x_code">GFN-017</field>
+        <field name="x_description">Treatment and controlled processing of hazardous waste streams.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_hazardous_waste"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_spill_containment" model="x_grc.function">
+        <field name="x_name">Marine Spill Containment</field>
+        <field name="x_code">GFN-018</field>
+        <field name="x_description">Rapid containment and response for marine spill incidents.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_marine_spill"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_shoreline_remediation" model="x_grc.function">
+        <field name="x_name">Shoreline Remediation</field>
+        <field name="x_code">GFN-019</field>
+        <field name="x_description">Field remediation and contamination recovery onshore/coastal areas.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_marine_spill"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_emergency_mobilization" model="x_grc.function">
+        <field name="x_name">Emergency Response Mobilization</field>
+        <field name="x_code">GFN-020</field>
+        <field name="x_description">Rapid field mobilization for spill and emergency incidents.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_marine_spill"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_tank_cleaning" model="x_grc.function">
+        <field name="x_name">Tank Cleaning</field>
+        <field name="x_code">GFN-021</field>
+        <field name="x_description">Cleaning and preparation of tanks and confined industrial units.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_cleaning_decon"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_site_cleaning" model="x_grc.function">
+        <field name="x_name">Industrial Site Cleaning</field>
+        <field name="x_code">GFN-022</field>
+        <field name="x_description">Cleaning and recovery support at industrial sites.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_cleaning_decon"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_decontamination" model="x_grc.function">
+        <field name="x_name">Decontamination &amp; Recovery</field>
+        <field name="x_code">GFN-023</field>
+        <field name="x_description">Decontamination procedures and recovery support activities.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_cleaning_decon"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_sampling" model="x_grc.function">
+        <field name="x_name">Environmental Sampling</field>
+        <field name="x_code">GFN-024</field>
+        <field name="x_description">Sampling of waste, water, soil, or other environmental media.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_env_monitoring"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_lab_coordination" model="x_grc.function">
+        <field name="x_name">Laboratory Coordination &amp; Analysis Follow-Up</field>
+        <field name="x_code">GFN-025</field>
+        <field name="x_description">Coordinating laboratory analysis and results follow-up.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_env_monitoring"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_env_reporting" model="x_grc.function">
+        <field name="x_name">Environmental Reporting Closure</field>
+        <field name="x_code">GFN-026</field>
+        <field name="x_description">Closing environmental reports and final analytical submissions.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_env_monitoring"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_fleet_dispatch" model="x_grc.function">
+        <field name="x_name">Fleet Dispatch &amp; Movement Control</field>
+        <field name="x_code">GFN-027</field>
+        <field name="x_description">Dispatching and movement control for vehicles and field assets.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_logistics_fleet"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_foreign_team_support" model="x_grc.function">
+        <field name="x_name">Foreign Team Logistics &amp; Permit Support</field>
+        <field name="x_code">GFN-028</field>
+        <field name="x_description">Coordinating foreign team entry, visits, and movement support.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_logistics_fleet"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_site_support" model="x_grc.function">
+        <field name="x_name">Site Receipt &amp; Field Support Coordination</field>
+        <field name="x_code">GFN-029</field>
+        <field name="x_description">Coordinating site support, receipt, and field logistics.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_logistics_fleet"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_regulator_liaison" model="x_grc.function">
+        <field name="x_name">Regulator &amp; Oil Entity Liaison</field>
+        <field name="x_code">GFN-030</field>
+        <field name="x_description">Liaison with regulators, oil companies, and official stakeholders.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_technical_liaison"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_contract_requirements" model="x_grc.function">
+        <field name="x_name">Contractual Requirement Coordination</field>
+        <field name="x_code">GFN-031</field>
+        <field name="x_description">Coordinating contract-linked technical and compliance requirements.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_technical_liaison"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_meeting_coordination" model="x_grc.function">
+        <field name="x_name">Technical Meeting &amp; Committee Coordination</field>
+        <field name="x_code">GFN-032</field>
+        <field name="x_description">Preparing meetings, committees, and official coordination records.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_technical_liaison"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_tender_prep" model="x_grc.function">
+        <field name="x_name">Tender Preparation &amp; Submission</field>
+        <field name="x_code">GFN-033</field>
+        <field name="x_description">Preparing and structuring governed tender submissions.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_business_dev"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_clause_governance" model="x_grc.function">
+        <field name="x_name">Contract Clause Governance</field>
+        <field name="x_code">GFN-034</field>
+        <field name="x_description">Selecting and maintaining governed contractual clauses.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_business_dev"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_client_response" model="x_grc.function">
+        <field name="x_name">Client Proposal &amp; Response Coordination</field>
+        <field name="x_code">GFN-035</field>
+        <field name="x_description">Coordinating proposal responses and commercial follow-up.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_business_dev"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_bank_coordination" model="x_grc.function">
+        <field name="x_name">Bank Account &amp; Signatory Coordination</field>
+        <field name="x_code">GFN-036</field>
+        <field name="x_description">Coordinating bank account matters and authorized signatory updates.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_finance_bank"/>
+        <field name="x_state">active</field>
+    </record>
+    <record id="fn_guarantee_processing" model="x_grc.function">
+        <field name="x_name">Letters of Guarantee Coordination</field>
+        <field name="x_code">GFN-037</field>
+        <field name="x_description">Following guarantee and procedural banking requirements.</field>
+        <field name="x_functional_area_id" ref="grc_backbone.area_finance_bank"/>
+        <field name="x_state">active</field>
+    </record>
+
+
+
+
+
+</odoo>

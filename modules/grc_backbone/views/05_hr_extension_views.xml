@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_pool_form_inherit_grc" model="ir.ui.view">
+        <field name="name">x_hr.pool.form.grc.inherit</field>
+        <field name="model">x_hr.pool</field>
+        <field name="inherit_id" ref="hr_pool.view_hr_pool_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='x_preferred_work_locations']" position="after">
+                <field name="x_grc_functional_area_id"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_hr_pool_list_inherit_grc" model="ir.ui.view">
+        <field name="name">x_hr.pool.list.grc.inherit</field>
+        <field name="model">x_hr.pool</field>
+        <field name="inherit_id" ref="hr_pool.view_hr_pool_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list/field[@name='x_candidate_origin']" position="after">
+                <field name="x_grc_functional_area_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="model_framework" model="ir.model">
+        <field name="name">Governance Framework</field>
+        <field name="model">x_grc.framework</field>
+    </record>
+    <record id="model_policy" model="ir.model">
+        <field name="name">Governance Policy</field>
+        <field name="model">x_grc.policy</field>
+    </record>
+    <record id="model_provision" model="ir.model">
+        <field name="name">Governance Provision</field>
+        <field name="model">x_grc.provision</field>
+    </record>
+    <record id="model_decision" model="ir.model">
+        <field name="name">Governance Decision</field>
+        <field name="model">x_grc.decision</field>
+    </record>
+    <record id="model_functional_area" model="ir.model">
+        <field name="name">Functional Area</field>
+        <field name="model">x_grc.functional_area</field>
+    </record>
+    <record id="model_function" model="ir.model">
+        <field name="name">Function</field>
+        <field name="model">x_grc.function</field>
+    </record>
+    <record id="model_sop" model="ir.model">
+        <field name="name">Standard Operating Procedure</field>
+        <field name="model">x_grc.sop</field>
+    </record>
+    <record id="model_risk" model="ir.model">
+        <field name="name">Risk</field>
+        <field name="model">x_grc.risk</field>
+    </record>
+    <record id="model_risk_assessment" model="ir.model">
+        <field name="name">Risk Assessment</field>
+        <field name="model">x_grc.risk_assessment</field>
+    </record>
+    <record id="model_control" model="ir.model">
+        <field name="name">Control</field>
+        <field name="model">x_grc.control</field>
+    </record>
+    <record id="model_compliance_check" model="ir.model">
+        <field name="name">Compliance Check</field>
+        <field name="model">x_grc.compliance_check</field>
+    </record>
+    <record id="model_incident" model="ir.model">
+        <field name="name">Incident</field>
+        <field name="model">x_grc.incident</field>
+    </record>
+    <record id="model_contract_template" model="ir.model">
+        <field name="name">Contract Template</field>
+        <field name="model">x_grc.contract_template</field>
+    </record>
+    <record id="model_tender" model="ir.model">
+        <field name="name">Tender</field>
+        <field name="model">x_grc.tender</field>
+    </record>
+    <record id="model_clause" model="ir.model">
+        <field name="name">Clause</field>
+        <field name="model">x_grc.clause</field>
+    </record>
+</odoo>

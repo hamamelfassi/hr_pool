@@ -1,0 +1,1559 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* grc_backbone
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server saas~19.2+e\\n"
+"Report-Msgid-Bugs-To: \\n"
+"POT-Creation-Date: 2026-04-17 14:24+0000\\n"
+"PO-Revision-Date: 2026-04-17 14:24+0000\\n"
+"Last-Translator: \\n"
+"Language-Team: Arabic\\n"
+"Language: ar_001\\n"
+"MIME-Version: 1.0\\n"
+"Content-Type: text/plain; charset=UTF-8\\n"
+"Content-Transfer-Encoding: 8bit\\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\\n"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_risk_assessment_x_status_acceptable
+msgid "Acceptable"
+msgstr "مقبول"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_control_x_action_required
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_control_form
+msgid "Action Required"
+msgstr "الإجراء المطلوب"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_clause_x_state_active
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_contract_template_x_state_active
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_control_x_state_active
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_framework_x_state_active
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_function_x_state_active
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_functional_area_x_state_active
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_policy_x_state_active
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_provision_x_state_active
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_risk_x_state_active
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_sop_x_state_active
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_clause_search
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_contract_template_search
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_control_search
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_framework_search
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_function_search
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_functional_area_search
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_policy_search
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_provision_search
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_risk_search
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_sop_search
+msgid "Active"
+msgstr "نشط"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_clause_x_category_administrative
+msgid "Administrative"
+msgstr "إداري"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_provision_x_evaluation_frequency_annually
+msgid "Annually"
+msgstr "سنوي"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_decision_x_state_approved
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_search
+msgid "Approved"
+msgstr "معتمد"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_clause_x_state_archived
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_contract_template_x_state_archived
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_control_x_state_archived
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_decision_x_state_archived
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_framework_x_state_archived
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_function_x_state_archived
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_functional_area_x_state_archived
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_policy_x_state_archived
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_provision_x_state_archived
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_risk_x_state_archived
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_sop_x_state_archived
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_framework_search
+msgid "Archived"
+msgstr "مؤرشف"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_risk_assessment_x_date
+msgid "Assessment Date"
+msgstr "تاريخ التقييم"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_risk_assessment_x_status
+msgid "Assessment Status"
+msgstr "حالة التقييم"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_risk_assessment_x_name
+msgid "Assessment Title"
+msgstr "عنوان التقييم"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_risk_x_assessment_ids
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_risk_form
+msgid "Assessments"
+msgstr "التقييمات"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_risk_assessment_x_assessor_employee_id
+msgid "Assessor (Employee)"
+msgstr "المقيّم (الموظف)"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_decision_x_executive_body_board_of_directors
+msgid "Board of Directors"
+msgstr "مجلس الإدارة"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_compliance_check_x_state_cancelled
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_incident_x_state_cancelled
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_risk_assessment_x_state_cancelled
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_tender_x_state_cancelled
+msgid "Cancelled"
+msgstr "ملغي"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_incident_x_severity_catastrophic
+msgid "Catastrophic"
+msgstr "كارثي"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_clause_x_category
+#: model:ir.model.fields,field_description:grc_backbone.field_risk_x_category
+msgid "Category"
+msgstr "الفئة"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_decision_x_executive_body_chairman
+msgid "Chairman"
+msgstr "رئيس مجلس الإدارة"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_compliance_check_x_check_date
+msgid "Check Date"
+msgstr "تاريخ الفحص"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_compliance_check_x_name
+msgid "Check Reference"
+msgstr "مرجع الفحص"
+
+#. module: grc_backbone
+#: model:ir.model,name:grc_backbone.model_clause
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_clause_form
+msgid "Clause"
+msgstr "بند"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_clause_x_content
+msgid "Clause Content"
+msgstr "محتوى البند"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_clause_x_name
+msgid "Clause Title"
+msgstr "عنوان البند"
+
+#. module: grc_backbone
+#: model:ir.actions.act_window,name:grc_backbone.action_clause
+#: model:ir.model.fields,field_description:grc_backbone.field_contract_template_x_clause_ids
+#: model:ir.model.fields,field_description:grc_backbone.field_functional_area_x_clause_ids
+#: model:ir.model.fields,field_description:grc_backbone.field_tender_x_clause_ids
+#: model:ir.ui.menu,name:grc_backbone.menu_clauses
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_clause_list
+msgid "Clauses"
+msgstr "البنود"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_tender_x_client_id
+msgid "Client"
+msgstr "العميل"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_contract_template_x_type_client_contract
+msgid "Client Contract"
+msgstr "عقد العميل"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_compliance_check_x_state_closed
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_incident_x_state_closed
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_risk_assessment_x_state_closed
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_tender_x_state_closed
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_risk_assessment_search
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_tender_search
+msgid "Closed"
+msgstr "مغلق"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_clause_x_code
+#: model:ir.model.fields,field_description:grc_backbone.field_contract_template_x_code
+#: model:ir.model.fields,field_description:grc_backbone.field_control_x_code
+#: model:ir.model.fields,field_description:grc_backbone.field_framework_x_code
+#: model:ir.model.fields,field_description:grc_backbone.field_function_x_code
+#: model:ir.model.fields,field_description:grc_backbone.field_functional_area_x_code
+#: model:ir.model.fields,field_description:grc_backbone.field_policy_x_code
+#: model:ir.model.fields,field_description:grc_backbone.field_provision_x_code
+#: model:ir.model.fields,field_description:grc_backbone.field_risk_x_code
+#: model:ir.model.fields,field_description:grc_backbone.field_sop_x_code
+msgid "Code"
+msgstr "الرمز"
+
+#. module: grc_backbone
+#: model:ir.ui.menu,name:grc_backbone.menu_grc_commercial
+msgid "Commercial Governance"
+msgstr "الحوكمة التجارية"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_risk_x_category_compliance
+msgid "Compliance"
+msgstr "الامتثال"
+
+#. module: grc_backbone
+#: model:ir.ui.menu,name:grc_backbone.menu_grc_compliance
+msgid "Compliance & Incidents"
+msgstr "الامتثال والحوادث"
+
+#. module: grc_backbone
+#: model:ir.model,name:grc_backbone.model_compliance_check
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_compliance_check_form
+msgid "Compliance Check"
+msgstr "فحص الامتثال"
+
+#. module: grc_backbone
+#: model:ir.actions.act_window,name:grc_backbone.action_compliance_check
+#: model:ir.model.fields,field_description:grc_backbone.field_control_x_compliance_check_ids
+#: model:ir.model.fields,field_description:grc_backbone.field_provision_x_compliance_check_ids
+#: model:ir.ui.menu,name:grc_backbone.menu_checks
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_compliance_check_list
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_control_form
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_provision_form
+msgid "Compliance Checks"
+msgstr "فحوصات الامتثال"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_compliance_check_x_state_confirmed
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_risk_assessment_x_state_confirmed
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_tender_x_state_confirmed
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_compliance_check_search
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_risk_assessment_search
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_tender_search
+msgid "Confirmed"
+msgstr "مؤكد"
+
+#. module: grc_backbone
+#: model:ir.model,name:grc_backbone.model_contract_template
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_contract_template_form
+msgid "Contract Template"
+msgstr "قالب العقد"
+
+#. module: grc_backbone
+#: model:ir.actions.act_window,name:grc_backbone.action_contract_template
+#: model:ir.model.fields,field_description:grc_backbone.field_functional_area_x_contract_template_ids
+#: model:ir.ui.menu,name:grc_backbone.menu_contract_templates
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_contract_template_list
+msgid "Contract Templates"
+msgstr "قوالب العقود"
+
+#. module: grc_backbone
+#: model:ir.model,name:grc_backbone.model_control
+#: model:ir.model.fields,field_description:grc_backbone.field_compliance_check_x_control_id
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_control_form
+msgid "Control"
+msgstr "ضابط"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_control_x_name
+msgid "Control Name"
+msgstr "اسم الضابط"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_control_x_control_type
+msgid "Control Type"
+msgstr "نوع الضابط"
+
+#. module: grc_backbone
+#: model:ir.actions.act_window,name:grc_backbone.action_control
+#: model:ir.model.fields,field_description:grc_backbone.field_risk_x_control_ids
+#: model:ir.ui.menu,name:grc_backbone.menu_controls
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_control_list
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_risk_form
+msgid "Controls"
+msgstr "الضوابط"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_control_x_control_type_corrective
+msgid "Corrective"
+msgstr "تصحيحي"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_incident_x_corrective_action
+msgid "Corrective Action"
+msgstr "إجراء تصحيحي"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_risk_assessment_x_status_critical
+msgid "Critical"
+msgstr "حرج"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_provision_x_evaluation_frequency_daily
+msgid "Daily"
+msgstr "يومي"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_form
+msgid "Decision"
+msgstr "قرار"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_decision_x_decision_date
+msgid "Decision Date"
+msgstr "تاريخ القرار"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_decision_x_name
+msgid "Decision Title"
+msgstr "عنوان القرار"
+
+#. module: grc_backbone
+#: model:ir.ui.menu,name:grc_backbone.menu_decisions
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_list
+msgid "Decisions"
+msgstr "القرارات"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_contract_template_x_description
+#: model:ir.model.fields,field_description:grc_backbone.field_framework_x_description
+#: model:ir.model.fields,field_description:grc_backbone.field_function_x_description
+#: model:ir.model.fields,field_description:grc_backbone.field_functional_area_x_description
+#: model:ir.model.fields,field_description:grc_backbone.field_incident_x_description
+#: model:ir.model.fields,field_description:grc_backbone.field_provision_x_description
+#: model:ir.model.fields,field_description:grc_backbone.field_risk_x_description
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_framework_form
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_function_form
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_functional_area_form
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_provision_form
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_risk_form
+msgid "Description"
+msgstr "الوصف"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_control_x_control_type_detective
+msgid "Detective"
+msgstr "كاشف"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_clause_x_state_draft
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_compliance_check_x_state_draft
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_contract_template_x_state_draft
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_control_x_state_draft
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_decision_x_state_draft
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_framework_x_state_draft
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_function_x_state_draft
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_functional_area_x_state_draft
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_incident_x_state_draft
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_policy_x_state_draft
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_provision_x_state_draft
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_risk_assessment_x_state_draft
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_risk_x_state_draft
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_sop_x_state_draft
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_tender_x_state_draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_provision_x_evaluation_frequency
+msgid "Evaluation Frequency"
+msgstr "تكرار التقييم"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_decision_x_executive_body
+msgid "Executive Body"
+msgstr "الجهة التنفيذية"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_tender_x_expected_revenue
+msgid "Expected Revenue"
+msgstr "الإيراد المتوقع"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_compliance_check_x_result_fail
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_compliance_check_search
+msgid "Fail"
+msgstr "غير مطابق"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_incident_x_failed_control_id
+msgid "Failed Control"
+msgstr "فشل الضابط"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_clause_x_category_financial
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_risk_x_category_financial
+msgid "Financial"
+msgstr "مالي"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_provision_x_framework_id
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_framework_form
+msgid "Framework"
+msgstr "إطار"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_framework_x_name
+msgid "Framework Name"
+msgstr "اسم الإطار"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_framework_x_type
+msgid "Framework Type"
+msgstr "نوع الإطار"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_policy_x_framework_ids
+#: model:ir.ui.menu,name:grc_backbone.menu_frameworks
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_framework_list
+msgid "Frameworks"
+msgstr "الأطر"
+
+#. module: grc_backbone
+#: model:ir.model,name:grc_backbone.model_function
+#: model:ir.model.fields,field_description:grc_backbone.field_function_x_name
+#: model:ir.model.fields,field_description:grc_backbone.field_sop_x_function_id
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_function_form
+msgid "Function"
+msgstr "وظيفة"
+
+#. module: grc_backbone
+#: model:ir.model,name:grc_backbone.model_functional_area
+#: model:ir.model.fields,field_description:grc_backbone.field_clause_x_functional_area_id
+#: model:ir.model.fields,field_description:grc_backbone.field_contract_template_x_functional_area_id
+#: model:ir.model.fields,field_description:grc_backbone.field_function_x_functional_area_id
+#: model:ir.model.fields,field_description:grc_backbone.field_functional_area_x_name
+#: model:ir.model.fields,field_description:grc_backbone.field_hr_job_x_grc_functional_area_id
+#: model:ir.model.fields,field_description:grc_backbone.field_pool_x_grc_functional_area_id
+#: model:ir.model.fields,field_description:grc_backbone.field_risk_x_functional_area_id
+#: model:ir.model.fields,field_description:grc_backbone.field_tender_x_functional_area_id
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_functional_area_form
+msgid "Functional Area"
+msgstr "المجال الوظيفي"
+
+#. module: grc_backbone
+#: model:ir.actions.act_window,name:grc_backbone.action_functional_area
+#: model:ir.ui.menu,name:grc_backbone.menu_functional_areas
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_functional_area_list
+msgid "Functional Areas"
+msgstr "المجالات الوظيفية"
+
+#. module: grc_backbone
+#: model:ir.ui.menu,name:grc_backbone.menu_grc_taxonomy
+msgid "Functional Taxonomy"
+msgstr "التصنيف الوظيفي"
+
+#. module: grc_backbone
+#: model:ir.actions.act_window,name:grc_backbone.action_function
+#: model:ir.model.fields,field_description:grc_backbone.field_functional_area_x_function_ids
+#: model:ir.ui.menu,name:grc_backbone.menu_functions
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_function_list
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_functional_area_form
+msgid "Functions"
+msgstr "الوظائف"
+
+#. module: grc_backbone
+#: model:ir.ui.menu,name:grc_backbone.menu_grc_root
+msgid "GRC"
+msgstr "الحوكمة والمخاطر والامتثال"
+
+#. module: grc_backbone
+#: model:res.groups,name:grc_backbone.group_grc_administrator
+msgid "GRC / Administrator"
+msgstr "الحوكمة والمخاطر والامتثال / مسؤول النظام"
+
+#. module: grc_backbone
+#: model:res.groups,name:grc_backbone.group_grc_contributor
+msgid "GRC / Contributor"
+msgstr "الحوكمة والمخاطر والامتثال / مساهم"
+
+#. module: grc_backbone
+#: model:res.groups,name:grc_backbone.group_grc_reader
+msgid "GRC / Reader"
+msgstr "الحوكمة والمخاطر والامتثال / قارئ"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_decision_x_executive_body_general_manager
+msgid "General Manager"
+msgstr "المدير العام"
+
+#. module: grc_backbone
+#: model:ir.ui.menu,name:grc_backbone.menu_grc_governance
+msgid "Governance"
+msgstr "الحوكمة"
+
+#. module: grc_backbone
+#: model:ir.model,name:grc_backbone.model_decision
+msgid "Governance Decision"
+msgstr "قرار حوكمة"
+
+#. module: grc_backbone
+#: model:ir.actions.act_window,name:grc_backbone.action_decision
+msgid "Governance Decisions"
+msgstr "قرارات الحوكمة"
+
+#. module: grc_backbone
+#: model:ir.model,name:grc_backbone.model_framework
+msgid "Governance Framework"
+msgstr "إطار الحوكمة"
+
+#. module: grc_backbone
+#: model:ir.actions.act_window,name:grc_backbone.action_framework
+msgid "Governance Frameworks"
+msgstr "أطر الحوكمة"
+
+#. module: grc_backbone
+#: model:ir.model,name:grc_backbone.model_policy
+msgid "Governance Policy"
+msgstr "سياسة الحوكمة"
+
+#. module: grc_backbone
+#: model:ir.actions.act_window,name:grc_backbone.action_policy
+msgid "Governance Policys"
+msgstr "سياسات الحوكمة"
+
+#. module: grc_backbone
+#: model:ir.model,name:grc_backbone.model_provision
+msgid "Governance Provision"
+msgstr "مقتضى الحوكمة"
+
+#. module: grc_backbone
+#: model:ir.actions.act_window,name:grc_backbone.action_provision
+msgid "Governance Provisions"
+msgstr "مقتضيات الحوكمة"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_functional_area_x_hr_pool_ids
+msgid "HR Pool Records"
+msgstr "سجلات مخزون الموارد البشرية"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_risk_x_category_hse
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_risk_search
+msgid "HSE"
+msgstr "الصحة والسلامة والبيئة"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_control_x_is_hse_blocker
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_control_search
+msgid "HSE Blocker"
+msgstr "معيق للصحة والسلامة والبيئة"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_clause_x_category_hse_compliance
+msgid "HSE Compliance"
+msgstr "امتثال الصحة والسلامة والبيئة"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_decision_x_executive_body_hse_management
+msgid "HSE Management"
+msgstr "إدارة الصحة والسلامة والبيئة"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_risk_assessment_x_impact
+msgid "Impact"
+msgstr "الأثر"
+
+#. module: grc_backbone
+#: model:ir.model,name:grc_backbone.model_incident
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_incident_form
+msgid "Incident"
+msgstr "حادثة"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_incident_x_incident_date
+msgid "Incident Date"
+msgstr "تاريخ الحادثة"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_incident_x_name
+msgid "Incident Reference"
+msgstr "مرجع الحادثة"
+
+#. module: grc_backbone
+#: model:ir.actions.act_window,name:grc_backbone.action_incident
+#: model:ir.model.fields,field_description:grc_backbone.field_control_x_incident_ids
+#: model:ir.model.fields,field_description:grc_backbone.field_risk_x_incident_ids
+#: model:ir.ui.menu,name:grc_backbone.menu_incidents
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_control_form
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_incident_list
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_risk_form
+msgid "Incidents"
+msgstr "الحوادث"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_framework_x_type_industry_guideline
+msgid "Industry Guideline"
+msgstr "دليل قطاعي"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_compliance_check_x_inspector_employee_id
+msgid "Inspector (Employee)"
+msgstr "المفتش (الموظف)"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_framework_x_type_internal_requirement
+msgid "Internal Requirement"
+msgstr "متطلب داخلي"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_framework_x_type_international_standard
+msgid "International Standard"
+msgstr "معيار دولي"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_framework_x_authority
+msgid "Issuing Authority"
+msgstr "الجهة المصدرة"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_clause_x_category_liability
+msgid "Liability"
+msgstr "مسؤولية"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_risk_assessment_x_likelihood
+msgid "Likelihood"
+msgstr "الاحتمالية"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_incident_x_severity_major
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_incident_search
+msgid "Major"
+msgstr "جسيم"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_functional_area_x_manager_employee_id
+msgid "Manager (Employee)"
+msgstr "المدير (الموظف)"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_clause_x_is_mandatory
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_clause_search
+msgid "Mandatory"
+msgstr "إلزامي"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_provision_x_metric_type
+msgid "Metric Type"
+msgstr "نوع المؤشر"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_incident_x_severity_minor
+msgid "Minor"
+msgstr "طفيف"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_provision_x_evaluation_frequency_monthly
+msgid "Monthly"
+msgstr "شهري"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_framework_x_type_municipal_regulation
+msgid "Municipal Regulation"
+msgstr "لائحة بلدية"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_contract_template_x_type_nda
+msgid "NDA"
+msgstr "اتفاقية عدم الإفصاح"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_framework_x_type_national_law
+msgid "National Law"
+msgstr "قانون وطني"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_incident_x_severity_near_miss
+msgid "Near Miss"
+msgstr "شبه حادث"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_compliance_check_x_result_needs_attention
+msgid "Needs Attention"
+msgstr "يحتاج إلى انتباه"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_risk_assessment_x_status_needs_mitigation
+msgid "Needs Mitigation"
+msgstr "يحتاج إلى تخفيف"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_compliance_check_x_notes
+msgid "Notes"
+msgstr "ملاحظات"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_policy_x_objective
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_policy_form
+msgid "Objective"
+msgstr "الهدف"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_clause_x_category_operational
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_risk_x_category_operational
+msgid "Operational"
+msgstr "تشغيلي"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_compliance_check_x_result_pass
+msgid "Pass"
+msgstr "مطابق"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_provision_x_evaluation_frequency_per_event
+msgid "Per Event"
+msgstr "لكل حدث"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_framework_x_policy_ids
+#: model:ir.ui.menu,name:grc_backbone.menu_policies
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_policy_list
+msgid "Policies"
+msgstr "السياسات"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_provision_x_policy_id
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_policy_form
+msgid "Policy"
+msgstr "سياسة"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_policy_x_name
+msgid "Policy Name"
+msgstr "اسم السياسة"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_control_x_control_type_preventive
+msgid "Preventive"
+msgstr "وقائي"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_hr_job_x_grc_function_id
+msgid "Primary Governed Function"
+msgstr "الوظيفة المحكومة الرئيسية"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_sop_x_procedure_steps
+msgid "Procedure Steps"
+msgstr "خطوات الإجراء"
+
+#. module: grc_backbone
+#: model:ir.ui.menu,name:grc_backbone.menu_sops
+msgid "Procedures / SOPs"
+msgstr "الإجراءات / إجراءات التشغيل القياسية"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_compliance_check_x_provision_id
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_provision_form
+msgid "Provision"
+msgstr "مقتضى"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_provision_x_name
+msgid "Provision Name"
+msgstr "اسم المقتضى"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_framework_x_provision_ids
+#: model:ir.model.fields,field_description:grc_backbone.field_policy_x_provision_ids
+#: model:ir.ui.menu,name:grc_backbone.menu_provisions
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_policy_form
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_provision_list
+msgid "Provisions"
+msgstr "المقتضيات"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_sop_x_purpose
+msgid "Purpose"
+msgstr "الغرض"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_provision_x_metric_type_qualitative
+msgid "Qualitative"
+msgstr "نوعي"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_provision_x_metric_type_quantitative
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_provision_search
+msgid "Quantitative"
+msgstr "كمي"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_provision_x_evaluation_frequency_quarterly
+msgid "Quarterly"
+msgstr "ربع سنوي"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_incident_x_realized_risk_id
+msgid "Realized Risk"
+msgstr "خطر متحقق"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_hr_job_form_grc
+msgid "Recruitment Job"
+msgstr "الوظيفة الشاغرة"
+
+#. module: grc_backbone
+#: model:ir.actions.act_window,name:grc_backbone.action_recruitment_jobs
+#: model:ir.model.fields,field_description:grc_backbone.field_function_x_hr_job_ids
+#: model:ir.model.fields,field_description:grc_backbone.field_functional_area_x_hr_job_ids
+#: model:ir.ui.menu,name:grc_backbone.menu_recruitment_jobs
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_function_form
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_hr_job_list_grc
+msgid "Recruitment Jobs"
+msgstr "الوظائف الشاغرة"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_functional_area_form
+msgid "Recruitment Linkage"
+msgstr "الربط بالتوظيف"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_tender_x_reference_code
+msgid "Reference Code"
+msgstr "الرمز المرجعي"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_decision_x_related_policy_id
+msgid "Related Policy"
+msgstr "السياسة ذات الصلة"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_framework_form
+msgid "Relations"
+msgstr "العلاقات"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_incident_x_state_reported
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_incident_search
+msgid "Reported"
+msgstr "مبلّغ عنها"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_incident_x_reporter_employee_id
+msgid "Reporter (Employee)"
+msgstr "المبلّغ (الموظف)"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_decision_x_resolution_text
+msgid "Resolution Text"
+msgstr "نص المعالجة"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_compliance_check_x_result
+msgid "Result"
+msgstr "النتيجة"
+
+#. module: grc_backbone
+#: model:ir.model,name:grc_backbone.model_risk
+#: model:ir.model.fields,field_description:grc_backbone.field_control_x_risk_id
+#: model:ir.model.fields,field_description:grc_backbone.field_risk_assessment_x_risk_id
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_risk_form
+msgid "Risk"
+msgstr "خطر"
+
+#. module: grc_backbone
+#: model:ir.ui.menu,name:grc_backbone.menu_grc_risk
+msgid "Risk & Controls"
+msgstr "المخاطر والضوابط"
+
+#. module: grc_backbone
+#: model:ir.model,name:grc_backbone.model_risk_assessment
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_risk_assessment_form
+msgid "Risk Assessment"
+msgstr "تقييم المخاطر"
+
+#. module: grc_backbone
+#: model:ir.actions.act_window,name:grc_backbone.action_risk_assessment
+#: model:ir.ui.menu,name:grc_backbone.menu_risk_assessments
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_risk_assessment_list
+msgid "Risk Assessments"
+msgstr "تقييمات المخاطر"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_risk_assessment_x_risk_score
+msgid "Risk Score"
+msgstr "درجة الخطر"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_risk_x_name
+msgid "Risk Title"
+msgstr "عنوان الخطر"
+
+#. module: grc_backbone
+#: model:ir.actions.act_window,name:grc_backbone.action_risk
+#: model:ir.model.fields,field_description:grc_backbone.field_functional_area_x_risk_ids
+#: model:ir.ui.menu,name:grc_backbone.menu_risks
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_risk_list
+msgid "Risks"
+msgstr "المخاطر"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_sop_form
+msgid "SOP"
+msgstr "إجراء تشغيلي قياسي"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_sop_x_name
+msgid "SOP Title"
+msgstr "عنوان الإجراء التشغيلي القياسي"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_function_x_sop_ids
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_function_form
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_sop_list
+msgid "SOPs"
+msgstr "إجراءات التشغيل القياسية"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_contract_template_x_type_service_order_template
+msgid "Service Order Template"
+msgstr "قالب أمر الخدمة"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_incident_x_severity
+msgid "Severity"
+msgstr "الشدة"
+
+#. module: grc_backbone
+#: model:ir.model,name:grc_backbone.model_sop
+msgid "Standard Operating Procedure"
+msgstr "إجراء تشغيلي قياسي"
+
+#. module: grc_backbone
+#: model:ir.actions.act_window,name:grc_backbone.action_sop
+msgid "Standard Operating Procedures"
+msgstr "إجراءات التشغيل القياسية"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_clause_x_state
+#: model:ir.model.fields,field_description:grc_backbone.field_compliance_check_x_state
+#: model:ir.model.fields,field_description:grc_backbone.field_contract_template_x_state
+#: model:ir.model.fields,field_description:grc_backbone.field_control_x_state
+#: model:ir.model.fields,field_description:grc_backbone.field_decision_x_state
+#: model:ir.model.fields,field_description:grc_backbone.field_framework_x_state
+#: model:ir.model.fields,field_description:grc_backbone.field_function_x_state
+#: model:ir.model.fields,field_description:grc_backbone.field_functional_area_x_state
+#: model:ir.model.fields,field_description:grc_backbone.field_incident_x_state
+#: model:ir.model.fields,field_description:grc_backbone.field_policy_x_state
+#: model:ir.model.fields,field_description:grc_backbone.field_provision_x_state
+#: model:ir.model.fields,field_description:grc_backbone.field_risk_assessment_x_state
+#: model:ir.model.fields,field_description:grc_backbone.field_risk_x_state
+#: model:ir.model.fields,field_description:grc_backbone.field_sop_x_state
+#: model:ir.model.fields,field_description:grc_backbone.field_tender_x_state
+msgid "State"
+msgstr "الحالة"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_risk_x_category_strategic
+msgid "Strategic"
+msgstr "استراتيجي"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_contract_template_x_type_subcontractor_agreement
+msgid "Subcontractor Agreement"
+msgstr "اتفاقية مقاول باطن"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_tender_x_submission_deadline
+msgid "Submission Deadline"
+msgstr "الموعد النهائي للتقديم"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_provision_x_target_value
+msgid "Target Value"
+msgstr "القيمة المستهدفة"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_decision_x_executive_body_technical_management
+msgid "Technical Management"
+msgstr "الإدارة الفنية"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_contract_template_x_name
+msgid "Template Name"
+msgstr "اسم القالب"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_contract_template_x_type
+msgid "Template Type"
+msgstr "نوع القالب"
+
+#. module: grc_backbone
+#: model:ir.model,name:grc_backbone.model_tender
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_tender_form
+msgid "Tender"
+msgstr "مناقصة"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_tender_x_name
+msgid "Tender Name"
+msgstr "اسم المناقصة"
+
+#. module: grc_backbone
+#: model:ir.actions.act_window,name:grc_backbone.action_tender
+#: model:ir.model.fields,field_description:grc_backbone.field_functional_area_x_tender_ids
+#: model:ir.ui.menu,name:grc_backbone.menu_tenders
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_tender_list
+msgid "Tenders"
+msgstr "المناقصات"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_clause_x_state_under_review
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_contract_template_x_state_under_review
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_control_x_state_under_review
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_framework_x_state_under_review
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_function_x_state_under_review
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_functional_area_x_state_under_review
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_incident_x_state_under_review
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_policy_x_state_under_review
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_provision_x_state_under_review
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_risk_x_state_under_review
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_sop_x_state_under_review
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_policy_search
+msgid "Under Review"
+msgstr "قيد المراجعة"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_provision_x_uom_id
+msgid "Unit of Measure"
+msgstr "وحدة القياس"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_framework_x_valid_from
+msgid "Valid From"
+msgstr "ساري من"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_framework_x_valid_to
+msgid "Valid To"
+msgstr "ساري إلى"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_sop_x_version
+msgid "Version"
+msgstr "الإصدار"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.sel_field_provision_x_evaluation_frequency_weekly
+msgid "Weekly"
+msgstr "أسبوعي"
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_corp_gov
+msgid "Corporate Governance & Regulatory Affairs"
+msgstr "الحوكمة المؤسسية والشؤون التنظيمية"
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_corp_gov
+msgid "Board and statutory governance, policy management, regulatory alignment, and executive governance records."
+msgstr "حوكمة مجلس الإدارة والحوكمة النظامية وإدارة السياسات والمواءمة التنظيمية وسجلات الحوكمة التنفيذية."
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_admin_support
+msgid "Administration & Corporate Support"
+msgstr "الإدارة والدعم المؤسسي"
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_admin_support
+msgid "Corporate administration, records control, correspondence handling, and office support."
+msgstr "الإدارة المؤسسية وضبط السجلات وإدارة المراسلات والدعم المكتبي."
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_hr_recruitment
+msgid "Human Resources & Recruitment"
+msgstr "الموارد البشرية والاستقطاب"
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_hr_recruitment
+msgid "Candidate intake, recruitment handoff, and governed workforce onboarding."
+msgstr "استقبال المرشحين وتحويلهم إلى التوظيف الرسمي وتهيئة القوى العاملة وفق الضوابط."
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_hse_compliance
+msgid "Health, Safety, Environment & Compliance"
+msgstr "الصحة والسلامة والبيئة والامتثال"
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_hse_compliance
+msgid "Risk assessment, operational controls, compliance checks, incident governance, and HSE oversight."
+msgstr "تقييم المخاطر والضوابط التشغيلية وفحوصات الامتثال وحوكمة الحوادث والإشراف على الصحة والسلامة والبيئة."
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_medical_waste
+msgid "Medical Waste Management"
+msgstr "إدارة النفايات الطبية"
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_medical_waste
+msgid "Collection, transport, treatment, and final disposal of medical and biological waste."
+msgstr "جمع ونقل ومعالجة والتخلص النهائي من النفايات الطبية والبيولوجية."
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_hazardous_waste
+msgid "Hazardous & Industrial Waste Management"
+msgstr "إدارة النفايات الخطرة والصناعية"
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_hazardous_waste
+msgid "Handling, segregation, storage, transport, and treatment of hazardous and industrial waste streams."
+msgstr "مناولة وفرز وتخزين ونقل ومعالجة تدفقات النفايات الخطرة والصناعية."
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_marine_spill
+msgid "Marine & Oil Spill Response"
+msgstr "الاستجابة البحرية وانسكابات النفط"
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_marine_spill
+msgid "Containment, response, shoreline remediation, and emergency field mobilization."
+msgstr "الاحتواء والاستجابة ومعالجة الشواطئ والحشد الميداني للطوارئ."
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_cleaning_decon
+msgid "Industrial Cleaning & Decontamination"
+msgstr "التنظيف الصناعي وإزالة التلوث"
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_cleaning_decon
+msgid "Tank cleaning, industrial cleaning, decontamination, and recovery support."
+msgstr "تنظيف الخزانات والتنظيف الصناعي وإزالة التلوث ودعم الاسترداد."
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_env_monitoring
+msgid "Environmental Monitoring & Laboratory Coordination"
+msgstr "الرصد البيئي وتنسيق المختبرات"
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_env_monitoring
+msgid "Sampling, testing coordination, environmental analysis follow-up, and reporting closure."
+msgstr "أخذ العينات وتنسيق الاختبارات ومتابعة التحاليل البيئية وإقفال التقارير."
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_logistics_fleet
+msgid "Logistics, Fleet & Field Support"
+msgstr "اللوجستيات والأسطول والدعم الميداني"
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_logistics_fleet
+msgid "Fleet readiness, dispatch, site logistics, foreign team movement support, and field coordination."
+msgstr "جاهزية الأسطول والتشغيل واللوجستيات الموقعية ودعم حركة الفرق الأجنبية والتنسيق الميداني."
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_technical_liaison
+msgid "Technical Liaison & External Coordination"
+msgstr "الاتصال الفني والتنسيق الخارجي"
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_technical_liaison
+msgid "Technical coordination with regulators, oil entities, banks, and external stakeholders."
+msgstr "التنسيق الفني مع الجهات التنظيمية والجهات النفطية والمصارف وأصحاب المصلحة الخارجيين."
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_business_dev
+msgid "Business Development, Tenders & Contracts"
+msgstr "تطوير الأعمال والمناقصات والعقود"
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_business_dev
+msgid "Tender preparation, contractual governance, client response management, and proposal coordination."
+msgstr "إعداد المناقصات وحوكمة العقود وإدارة الردود على العملاء وتنسيق العروض."
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_finance_bank
+msgid "Finance & Banking Coordination"
+msgstr "التنسيق المالي والمصرفي"
+
+#. module: grc_backbone
+#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_finance_bank
+msgid "Banking coordination, signatory updates, guarantee processing, and procedural financial liaison."
+msgstr "التنسيق المصرفي وتحديث المفوضين ومعالجة الضمانات والاتصال المالي الإجرائي."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_policy_control
+msgid "Policy & Procedure Control"
+msgstr "ضبط السياسات والإجراءات"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_policy_control
+msgid "Corporate policy drafting, maintenance, and controlled release."
+msgstr "صياغة السياسات المؤسسية وصيانتها وإصدارها بصورة مضبوطة."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_regulatory_registers
+msgid "Regulatory Register Management"
+msgstr "إدارة السجل التنظيمي"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_regulatory_registers
+msgid "Tracking external legal and regulatory governance requirements."
+msgstr "متابعة المتطلبات القانونية والتنظيمية الخارجية الخاصة بالحوكمة."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_executive_decisions
+msgid "Executive Decision Logging"
+msgstr "تسجيل القرارات التنفيذية"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_executive_decisions
+msgid "Recording and maintaining executive governance decisions."
+msgstr "تسجيل قرارات الحوكمة التنفيذية والمحافظة عليها."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_admin_records
+msgid "Records & Archive Control"
+msgstr "ضبط السجلات والأرشفة"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_admin_records
+msgid "Maintaining controlled filing, archiving, and administrative records."
+msgstr "الحفاظ على الحفظ المنضبط والأرشفة والسجلات الإدارية."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_official_correspondence
+msgid "Official Correspondence Coordination"
+msgstr "تنسيق المراسلات الرسمية"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_official_correspondence
+msgid "Handling incoming and outgoing official communications."
+msgstr "إدارة المراسلات الرسمية الواردة والصادرة."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_candidate_pooling
+msgid "Candidate Intake & Pooling"
+msgstr "استقبال المرشحين وتجميعهم"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_candidate_pooling
+msgid "Capturing and classifying prospective applicant intake."
+msgstr "التقاط طلبات المتقدمين المحتملين وتصنيفها."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_recruitment_handoff
+msgid "Formal Recruitment Handoff"
+msgstr "التحويل إلى التوظيف الرسمي"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_recruitment_handoff
+msgid "Mapping intake candidates into formal recruitment jobs and workflows."
+msgstr "ربط مرشحي الاستقبال الأولي بوظائف ومسارات التوظيف الرسمية."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_onboarding_governance
+msgid "Onboarding Governance"
+msgstr "حوكمة التهيئة الوظيفية"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_onboarding_governance
+msgid "Ensuring required declarations and governance onboarding controls are completed."
+msgstr "ضمان استكمال الإقرارات المطلوبة وضوابط التهيئة المرتبطة بالحوكمة."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_risk_assessment
+msgid "Risk Assessment & Control Design"
+msgstr "تقييم المخاطر وتصميم الضوابط"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_risk_assessment
+msgid "Assessing risks and defining governance controls."
+msgstr "تقييم المخاطر وتحديد ضوابط الحوكمة."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_compliance_inspection
+msgid "Compliance Inspection & Verification"
+msgstr "فحص الامتثال والتحقق"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_compliance_inspection
+msgid "Executing and recording compliance checks against controls and provisions."
+msgstr "تنفيذ وتسجيل فحوصات الامتثال مقابل الضوابط والأحكام."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_incident_followup
+msgid "Incident Reporting & Corrective Follow-Up"
+msgstr "الإبلاغ عن الحوادث ومتابعة الإجراءات التصحيحية"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_incident_followup
+msgid "Logging incidents and coordinating corrective follow-up."
+msgstr "تسجيل الحوادث وتنسيق متابعة الإجراءات التصحيحية."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_medical_collection
+msgid "Medical Waste Collection"
+msgstr "جمع النفايات الطبية"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_medical_collection
+msgid "Collection of medical and biological waste from source points."
+msgstr "جمع النفايات الطبية والبيولوجية من نقاط المصدر."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_medical_transport
+msgid "Medical Waste Transport"
+msgstr "نقل النفايات الطبية"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_medical_transport
+msgid "Controlled movement of medical waste under governed handling procedures."
+msgstr "نقل النفايات الطبية بشكل منضبط وفق إجراءات المناولة المعتمدة."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_medical_disposal
+msgid "Medical Waste Treatment & Final Disposal"
+msgstr "معالجة النفايات الطبية والتخلص النهائي منها"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_medical_disposal
+msgid "Treatment and approved final disposal of medical waste."
+msgstr "معالجة النفايات الطبية والتخلص النهائي المعتمد منها."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_haz_storage
+msgid "Hazardous Waste Segregation & Storage"
+msgstr "فرز وتخزين النفايات الخطرة"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_haz_storage
+msgid "Segregation, controlled storage, and custody of hazardous waste."
+msgstr "فرز النفايات الخطرة وتخزينها بشكل منضبط وحفظ عهدتها."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_haz_transport
+msgid "Hazardous & Industrial Waste Transport"
+msgstr "نقل النفايات الخطرة والصناعية"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_haz_transport
+msgid "Transport coordination for hazardous and industrial waste operations."
+msgstr "تنسيق النقل لعمليات النفايات الخطرة والصناعية."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_haz_treatment
+msgid "Hazardous Waste Treatment Coordination"
+msgstr "تنسيق معالجة النفايات الخطرة"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_haz_treatment
+msgid "Treatment and controlled processing of hazardous waste streams."
+msgstr "معالجة وتسيير تدفقات النفايات الخطرة بطريقة منضبطة."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_spill_containment
+msgid "Marine Spill Containment"
+msgstr "احتواء الانسكابات البحرية"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_spill_containment
+msgid "Rapid containment and response for marine spill incidents."
+msgstr "الاحتواء السريع والاستجابة لحوادث الانسكابات البحرية."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_shoreline_remediation
+msgid "Shoreline Remediation"
+msgstr "معالجة الشواطئ"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_shoreline_remediation
+msgid "Field remediation and contamination recovery onshore/coastal areas."
+msgstr "المعالجة الميدانية واسترداد التلوث في المناطق الساحلية والبرية."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_emergency_mobilization
+msgid "Emergency Response Mobilization"
+msgstr "الحشد للاستجابة للطوارئ"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_emergency_mobilization
+msgid "Rapid field mobilization for spill and emergency incidents."
+msgstr "الحشد الميداني السريع لحوادث الانسكاب والطوارئ."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_tank_cleaning
+msgid "Tank Cleaning"
+msgstr "تنظيف الخزانات"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_tank_cleaning
+msgid "Cleaning and preparation of tanks and confined industrial units."
+msgstr "تنظيف وتجهيز الخزانات والوحدات الصناعية المغلقة."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_site_cleaning
+msgid "Industrial Site Cleaning"
+msgstr "تنظيف المواقع الصناعية"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_site_cleaning
+msgid "Cleaning and recovery support at industrial sites."
+msgstr "تنفيذ أعمال التنظيف ودعم الاسترداد في المواقع الصناعية."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_decontamination
+msgid "Decontamination & Recovery"
+msgstr "إزالة التلوث والاسترداد"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_decontamination
+msgid "Decontamination procedures and recovery support activities."
+msgstr "إجراءات إزالة التلوث وأنشطة دعم الاسترداد."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_sampling
+msgid "Environmental Sampling"
+msgstr "أخذ العينات البيئية"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_sampling
+msgid "Sampling of waste, water, soil, or other environmental media."
+msgstr "أخذ عينات من النفايات أو المياه أو التربة أو غيرها من الأوساط البيئية."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_lab_coordination
+msgid "Laboratory Coordination & Analysis Follow-Up"
+msgstr "تنسيق المختبرات ومتابعة التحاليل"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_lab_coordination
+msgid "Coordinating laboratory analysis and results follow-up."
+msgstr "تنسيق التحاليل المخبرية ومتابعة النتائج."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_env_reporting
+msgid "Environmental Reporting Closure"
+msgstr "إقفال التقارير البيئية"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_env_reporting
+msgid "Closing environmental reports and final analytical submissions."
+msgstr "إقفال التقارير البيئية والتقارير التحليلية النهائية."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_fleet_dispatch
+msgid "Fleet Dispatch & Movement Control"
+msgstr "تشغيل الأسطول وضبط الحركة"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_fleet_dispatch
+msgid "Dispatching and movement control for vehicles and field assets."
+msgstr "تشغيل المركبات وضبط حركة الأصول الميدانية."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_foreign_team_support
+msgid "Foreign Team Logistics & Permit Support"
+msgstr "الدعم اللوجستي وتصاريح الفرق الأجنبية"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_foreign_team_support
+msgid "Coordinating foreign team entry, visits, and movement support."
+msgstr "تنسيق دخول الفرق الأجنبية وزياراتها ودعم حركتها."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_site_support
+msgid "Site Receipt & Field Support Coordination"
+msgstr "تنسيق الاستلام بالموقع والدعم الميداني"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_site_support
+msgid "Coordinating site support, receipt, and field logistics."
+msgstr "تنسيق الدعم الموقعي وأعمال الاستلام واللوجستيات الميدانية."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_regulator_liaison
+msgid "Regulator & Oil Entity Liaison"
+msgstr "الاتصال مع الجهات التنظيمية والجهات النفطية"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_regulator_liaison
+msgid "Liaison with regulators, oil companies, and official stakeholders."
+msgstr "الاتصال مع الجهات التنظيمية والشركات النفطية وأصحاب المصلحة الرسميين."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_contract_requirements
+msgid "Contractual Requirement Coordination"
+msgstr "تنسيق المتطلبات التعاقدية"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_contract_requirements
+msgid "Coordinating contract-linked technical and compliance requirements."
+msgstr "تنسيق المتطلبات الفنية ومتطلبات الامتثال المرتبطة بالعقود."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_meeting_coordination
+msgid "Technical Meeting & Committee Coordination"
+msgstr "تنسيق الاجتماعات الفنية واللجان"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_meeting_coordination
+msgid "Preparing meetings, committees, and official coordination records."
+msgstr "إعداد الاجتماعات واللجان وسجلات التنسيق الرسمية."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_tender_prep
+msgid "Tender Preparation & Submission"
+msgstr "إعداد المناقصات وتقديمها"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_tender_prep
+msgid "Preparing and structuring governed tender submissions."
+msgstr "إعداد وتنسيق ملفات تقديم المناقصات وفق الضوابط."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_clause_governance
+msgid "Contract Clause Governance"
+msgstr "حوكمة بنود العقود"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_clause_governance
+msgid "Selecting and maintaining governed contractual clauses."
+msgstr "اختيار البنود التعاقدية المحكومة وصيانتها."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_client_response
+msgid "Client Proposal & Response Coordination"
+msgstr "تنسيق العروض والردود للعملاء"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_client_response
+msgid "Coordinating proposal responses and commercial follow-up."
+msgstr "تنسيق الردود على العروض والمتابعة التجارية."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_bank_coordination
+msgid "Bank Account & Signatory Coordination"
+msgstr "تنسيق الحسابات المصرفية والمفوضين"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_bank_coordination
+msgid "Coordinating bank account matters and authorized signatory updates."
+msgstr "تنسيق شؤون الحسابات المصرفية وتحديث المفوضين المعتمدين."
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_name:grc_backbone.fn_guarantee_processing
+msgid "Letters of Guarantee Coordination"
+msgstr "تنسيق خطابات الضمان"
+
+#. module: grc_backbone
+#: model_terms:x_grc.function,x_description:grc_backbone.fn_guarantee_processing
+msgid "Following guarantee and procedural banking requirements."
+msgstr "متابعة متطلبات خطابات الضمان والمتطلبات المصرفية الإجرائية."
+

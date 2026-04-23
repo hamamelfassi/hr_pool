@@ -14,6 +14,11 @@ This repository is the shared working tree for Marsellia's Odoo SaaS custom modu
 - `docs/resources/n8n/` - n8n code-node scripts and payload mapping helpers
 - `scripts/` - local build helpers, including Odoo zip packaging
 
+Key architecture references:
+
+- `docs/architecture/00_master_architecture_and_program_plan.md`
+- `docs/architecture/01_module_boundary_map.md`
+
 ## Packaging rule
 
 Only the contents of an individual module directory should be zipped for Odoo SaaS import.
@@ -39,4 +44,5 @@ This repository is intentionally organized as an integrated program workspace:
 - shared architecture and governance live once in `docs/`
 - each module keeps its own code, views, data, and packaging boundary
 - each module gets its own documentation and resource subtrees
-- cross-module bridges can live in separate helper modules or bridge docs, but not inside the installable docs tree
+- bridge logic stays domain-coherent and usually lives with the operational module it serves
+- shared bridge addons are only needed when multiple domains truly need the same adapter

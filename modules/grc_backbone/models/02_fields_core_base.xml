@@ -1,0 +1,822 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="field_framework_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_framework" />
+        <field name="name">x_name</field>
+        <field name="field_description">Framework Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_framework_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_framework" />
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_framework_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_framework" />
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">html</field>
+    
+        <field name="translate">html_translate</field>
+    </record>
+    <record id="field_framework_x_type" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_framework" />
+        <field name="name">x_type</field>
+        <field name="field_description">Framework Type</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_framework_x_authority" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_framework" />
+        <field name="name">x_authority</field>
+        <field name="field_description">Issuing Authority</field>
+        <field name="ttype">char</field>
+    
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_framework_x_valid_from" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_framework" />
+        <field name="name">x_valid_from</field>
+        <field name="field_description">Valid From</field>
+        <field name="ttype">date</field>
+    </record>
+    <record id="field_framework_x_valid_to" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_framework" />
+        <field name="name">x_valid_to</field>
+        <field name="field_description">Valid To</field>
+        <field name="ttype">date</field>
+    </record>
+    <record id="field_framework_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_framework" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_framework_x_policy_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_framework" />
+        <field name="name">x_policy_ids</field>
+        <field name="field_description">Policies</field>
+        <field name="ttype">many2many</field>
+        <field name="relation">x_grc.policy</field>
+        <field name="relation_table">x_grc_framework_policy_rel</field>
+        <field name="column1">x_framework_id</field>
+        <field name="column2">x_policy_id</field>
+    </record>
+    <record id="field_policy_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_policy" />
+        <field name="name">x_name</field>
+        <field name="field_description">Policy Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_policy_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_policy" />
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_policy_x_objective" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_policy" />
+        <field name="name">x_objective</field>
+        <field name="field_description">Objective</field>
+        <field name="ttype">text</field>
+    
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_policy_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_policy" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_policy_x_framework_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_policy" />
+        <field name="name">x_framework_ids</field>
+        <field name="field_description">Frameworks</field>
+        <field name="ttype">many2many</field>
+        <field name="relation">x_grc.framework</field>
+        <field name="relation_table">x_grc_framework_policy_rel</field>
+        <field name="column1">x_policy_id</field>
+        <field name="column2">x_framework_id</field>
+    </record>
+    <record id="field_provision_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_provision" />
+        <field name="name">x_name</field>
+        <field name="field_description">Provision Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_provision_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_provision" />
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_provision_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_provision" />
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+    
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_provision_x_framework_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_provision" />
+        <field name="name">x_framework_id</field>
+        <field name="field_description">Framework</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.framework</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_provision_x_policy_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_provision" />
+        <field name="name">x_policy_id</field>
+        <field name="field_description">Policy</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.policy</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_provision_x_metric_type" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_provision" />
+        <field name="name">x_metric_type</field>
+        <field name="field_description">Metric Type</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_provision_x_target_value" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_provision" />
+        <field name="name">x_target_value</field>
+        <field name="field_description">Target Value</field>
+        <field name="ttype">float</field>
+    </record>
+    <record id="field_provision_x_uom_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_provision" />
+        <field name="name">x_uom_id</field>
+        <field name="field_description">Unit of Measure</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">uom.uom</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_provision_x_evaluation_frequency" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_provision" />
+        <field name="name">x_evaluation_frequency</field>
+        <field name="field_description">Evaluation Frequency</field>
+        <field name="ttype">selection</field>
+    </record>
+    <record id="field_provision_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_provision" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_decision_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision" />
+        <field name="name">x_name</field>
+        <field name="field_description">Decision Title</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_decision_x_decision_date" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision" />
+        <field name="name">x_decision_date</field>
+        <field name="field_description">Decision Date</field>
+        <field name="ttype">date</field>
+    </record>
+    <record id="field_decision_x_executive_body" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision" />
+        <field name="name">x_executive_body</field>
+        <field name="field_description">Executive Body</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_decision_x_resolution_text" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision" />
+        <field name="name">x_resolution_text</field>
+        <field name="field_description">Resolution Text</field>
+        <field name="ttype">html</field>
+    
+        <field name="translate">html_translate</field>
+    </record>
+    <record id="field_decision_x_related_policy_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision" />
+        <field name="name">x_related_policy_id</field>
+        <field name="field_description">Related Policy</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.policy</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_decision_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_functional_area_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_functional_area" />
+        <field name="name">x_name</field>
+        <field name="field_description">Functional Area</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_functional_area_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_functional_area" />
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_functional_area_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_functional_area" />
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+    
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_functional_area_x_manager_employee_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_functional_area" />
+        <field name="name">x_manager_employee_id</field>
+        <field name="field_description">Manager (Employee)</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.employee</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_functional_area_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_functional_area" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_function_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_function" />
+        <field name="name">x_name</field>
+        <field name="field_description">Function</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_function_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_function" />
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_function_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_function" />
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+    
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_function_x_functional_area_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_function" />
+        <field name="name">x_functional_area_id</field>
+        <field name="field_description">Functional Area</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.functional_area</field>
+        <field name="required">True</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_function_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_function" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_sop_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_sop" />
+        <field name="name">x_name</field>
+        <field name="field_description">SOP Title</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_sop_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_sop" />
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_sop_x_version" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_sop" />
+        <field name="name">x_version</field>
+        <field name="field_description">Version</field>
+        <field name="ttype">char</field>
+    </record>
+    <record id="field_sop_x_function_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_sop" />
+        <field name="name">x_function_id</field>
+        <field name="field_description">Function</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.function</field>
+        <field name="required">True</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_sop_x_purpose" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_sop" />
+        <field name="name">x_purpose</field>
+        <field name="field_description">Purpose</field>
+        <field name="ttype">text</field>
+    
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_sop_x_procedure_steps" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_sop" />
+        <field name="name">x_procedure_steps</field>
+        <field name="field_description">Procedure Steps</field>
+        <field name="ttype">html</field>
+    
+        <field name="translate">html_translate</field>
+    </record>
+    <record id="field_sop_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_sop" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_risk_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_risk" />
+        <field name="name">x_name</field>
+        <field name="field_description">Risk Title</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_risk_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_risk" />
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_risk_x_category" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_risk" />
+        <field name="name">x_category</field>
+        <field name="field_description">Category</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_risk_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_risk" />
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+    
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_risk_x_functional_area_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_risk" />
+        <field name="name">x_functional_area_id</field>
+        <field name="field_description">Functional Area</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.functional_area</field>
+        <field name="required">True</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_risk_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_risk" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_risk_assessment_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_risk_assessment" />
+        <field name="name">x_name</field>
+        <field name="field_description">Assessment Title</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_risk_assessment_x_risk_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_risk_assessment" />
+        <field name="name">x_risk_id</field>
+        <field name="field_description">Risk</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.risk</field>
+        <field name="required">True</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_risk_assessment_x_date" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_risk_assessment" />
+        <field name="name">x_date</field>
+        <field name="field_description">Assessment Date</field>
+        <field name="ttype">date</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_risk_assessment_x_likelihood" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_risk_assessment" />
+        <field name="name">x_likelihood</field>
+        <field name="field_description">Likelihood</field>
+        <field name="ttype">integer</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_risk_assessment_x_impact" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_risk_assessment" />
+        <field name="name">x_impact</field>
+        <field name="field_description">Impact</field>
+        <field name="ttype">integer</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_risk_assessment_x_risk_score" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_risk_assessment" />
+        <field name="name">x_risk_score</field>
+        <field name="field_description">Risk Score</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_risk_assessment_x_assessor_employee_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_risk_assessment" />
+        <field name="name">x_assessor_employee_id</field>
+        <field name="field_description">Assessor (Employee)</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.employee</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_risk_assessment_x_status" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_risk_assessment" />
+        <field name="name">x_status</field>
+        <field name="field_description">Assessment Status</field>
+        <field name="ttype">selection</field>
+    </record>
+    <record id="field_risk_assessment_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_risk_assessment" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_control_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_control" />
+        <field name="name">x_name</field>
+        <field name="field_description">Control Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_control_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_control" />
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_control_x_risk_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_control" />
+        <field name="name">x_risk_id</field>
+        <field name="field_description">Risk</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.risk</field>
+        <field name="required">True</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_control_x_control_type" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_control" />
+        <field name="name">x_control_type</field>
+        <field name="field_description">Control Type</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_control_x_action_required" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_control" />
+        <field name="name">x_action_required</field>
+        <field name="field_description">Action Required</field>
+        <field name="ttype">html</field>
+    
+        <field name="translate">html_translate</field>
+    </record>
+    <record id="field_control_x_is_hse_blocker" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_control" />
+        <field name="name">x_is_hse_blocker</field>
+        <field name="field_description">HSE Blocker</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_control_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_control" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_compliance_check_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_compliance_check" />
+        <field name="name">x_name</field>
+        <field name="field_description">Check Reference</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_compliance_check_x_check_date" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_compliance_check" />
+        <field name="name">x_check_date</field>
+        <field name="field_description">Check Date</field>
+        <field name="ttype">datetime</field>
+    </record>
+    <record id="field_compliance_check_x_inspector_employee_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_compliance_check" />
+        <field name="name">x_inspector_employee_id</field>
+        <field name="field_description">Inspector (Employee)</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.employee</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_compliance_check_x_provision_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_compliance_check" />
+        <field name="name">x_provision_id</field>
+        <field name="field_description">Provision</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.provision</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_compliance_check_x_control_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_compliance_check" />
+        <field name="name">x_control_id</field>
+        <field name="field_description">Control</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.control</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_compliance_check_x_result" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_compliance_check" />
+        <field name="name">x_result</field>
+        <field name="field_description">Result</field>
+        <field name="ttype">selection</field>
+    </record>
+    <record id="field_compliance_check_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_compliance_check" />
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+    </record>
+    <record id="field_compliance_check_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_compliance_check" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_incident_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_incident" />
+        <field name="name">x_name</field>
+        <field name="field_description">Incident Reference</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_incident_x_incident_date" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_incident" />
+        <field name="name">x_incident_date</field>
+        <field name="field_description">Incident Date</field>
+        <field name="ttype">datetime</field>
+    </record>
+    <record id="field_incident_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_incident" />
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+    </record>
+    <record id="field_incident_x_severity" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_incident" />
+        <field name="name">x_severity</field>
+        <field name="field_description">Severity</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_incident_x_reporter_employee_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_incident" />
+        <field name="name">x_reporter_employee_id</field>
+        <field name="field_description">Reporter (Employee)</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.employee</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_incident_x_failed_control_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_incident" />
+        <field name="name">x_failed_control_id</field>
+        <field name="field_description">Failed Control</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.control</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_incident_x_realized_risk_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_incident" />
+        <field name="name">x_realized_risk_id</field>
+        <field name="field_description">Realized Risk</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.risk</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_incident_x_corrective_action" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_incident" />
+        <field name="name">x_corrective_action</field>
+        <field name="field_description">Corrective Action</field>
+        <field name="ttype">text</field>
+    </record>
+    <record id="field_incident_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_incident" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_contract_template_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_contract_template" />
+        <field name="name">x_name</field>
+        <field name="field_description">Template Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_contract_template_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_contract_template" />
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_contract_template_x_type" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_contract_template" />
+        <field name="name">x_type</field>
+        <field name="field_description">Template Type</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_contract_template_x_functional_area_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_contract_template" />
+        <field name="name">x_functional_area_id</field>
+        <field name="field_description">Functional Area</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.functional_area</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_contract_template_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_contract_template" />
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+    
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_contract_template_x_clause_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_contract_template" />
+        <field name="name">x_clause_ids</field>
+        <field name="field_description">Clauses</field>
+        <field name="ttype">many2many</field>
+        <field name="relation">x_grc.clause</field>
+    </record>
+    <record id="field_contract_template_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_contract_template" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_tender_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_tender" />
+        <field name="name">x_name</field>
+        <field name="field_description">Tender Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_tender_x_reference_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_tender" />
+        <field name="name">x_reference_code</field>
+        <field name="field_description">Reference Code</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_tender_x_client_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_tender" />
+        <field name="name">x_client_id</field>
+        <field name="field_description">Client</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">res.partner</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_tender_x_functional_area_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_tender" />
+        <field name="name">x_functional_area_id</field>
+        <field name="field_description">Functional Area</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.functional_area</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_tender_x_submission_deadline" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_tender" />
+        <field name="name">x_submission_deadline</field>
+        <field name="field_description">Submission Deadline</field>
+        <field name="ttype">datetime</field>
+    </record>
+    <record id="field_tender_x_expected_revenue" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_tender" />
+        <field name="name">x_expected_revenue</field>
+        <field name="field_description">Expected Revenue</field>
+        <field name="ttype">float</field>
+    </record>
+    <record id="field_tender_x_clause_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_tender" />
+        <field name="name">x_clause_ids</field>
+        <field name="field_description">Clauses</field>
+        <field name="ttype">many2many</field>
+        <field name="relation">x_grc.clause</field>
+    </record>
+    <record id="field_tender_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_tender" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_clause_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_clause" />
+        <field name="name">x_name</field>
+        <field name="field_description">Clause Title</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_clause_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_clause" />
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_clause_x_category" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_clause" />
+        <field name="name">x_category</field>
+        <field name="field_description">Category</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_clause_x_content" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_clause" />
+        <field name="name">x_content</field>
+        <field name="field_description">Clause Content</field>
+        <field name="ttype">html</field>
+    
+        <field name="translate">html_translate</field>
+    </record>
+    <record id="field_clause_x_functional_area_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_clause" />
+        <field name="name">x_functional_area_id</field>
+        <field name="field_description">Functional Area</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.functional_area</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_clause_x_is_mandatory" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_clause" />
+        <field name="name">x_is_mandatory</field>
+        <field name="field_description">Mandatory</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_clause_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_clause" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+</odoo>

@@ -1,0 +1,46 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_framework_admin,Governance Framework admin,grc_backbone.model_framework,base.group_user,1,1,1,1
+access_framework_contributor,Governance Framework contributor,grc_backbone.model_framework,base.group_user,1,1,1,1
+access_framework_reader,Governance Framework reader,grc_backbone.model_framework,base.group_user,1,1,1,1
+access_policy_admin,Governance Policy admin,grc_backbone.model_policy,base.group_user,1,1,1,1
+access_policy_contributor,Governance Policy contributor,grc_backbone.model_policy,base.group_user,1,1,1,1
+access_policy_reader,Governance Policy reader,grc_backbone.model_policy,base.group_user,1,1,1,1
+access_provision_admin,Governance Provision admin,grc_backbone.model_provision,base.group_user,1,1,1,1
+access_provision_contributor,Governance Provision contributor,grc_backbone.model_provision,base.group_user,1,1,1,1
+access_provision_reader,Governance Provision reader,grc_backbone.model_provision,base.group_user,1,1,1,1
+access_decision_admin,Governance Decision admin,grc_backbone.model_decision,base.group_user,1,1,1,1
+access_decision_contributor,Governance Decision contributor,grc_backbone.model_decision,base.group_user,1,1,1,1
+access_decision_reader,Governance Decision reader,grc_backbone.model_decision,base.group_user,1,1,1,1
+access_functional_area_admin,Functional Area admin,grc_backbone.model_functional_area,base.group_user,1,1,1,1
+access_functional_area_contributor,Functional Area contributor,grc_backbone.model_functional_area,base.group_user,1,1,1,1
+access_functional_area_reader,Functional Area reader,grc_backbone.model_functional_area,base.group_user,1,1,1,1
+access_function_admin,Function admin,grc_backbone.model_function,base.group_user,1,1,1,1
+access_function_contributor,Function contributor,grc_backbone.model_function,base.group_user,1,1,1,1
+access_function_reader,Function reader,grc_backbone.model_function,base.group_user,1,1,1,1
+access_sop_admin,Standard Operating Procedure admin,grc_backbone.model_sop,base.group_user,1,1,1,1
+access_sop_contributor,Standard Operating Procedure contributor,grc_backbone.model_sop,base.group_user,1,1,1,1
+access_sop_reader,Standard Operating Procedure reader,grc_backbone.model_sop,base.group_user,1,1,1,1
+access_risk_admin,Risk admin,grc_backbone.model_risk,base.group_user,1,1,1,1
+access_risk_contributor,Risk contributor,grc_backbone.model_risk,base.group_user,1,1,1,1
+access_risk_reader,Risk reader,grc_backbone.model_risk,base.group_user,1,1,1,1
+access_risk_assessment_admin,Risk Assessment admin,grc_backbone.model_risk_assessment,base.group_user,1,1,1,1
+access_risk_assessment_contributor,Risk Assessment contributor,grc_backbone.model_risk_assessment,base.group_user,1,1,1,1
+access_risk_assessment_reader,Risk Assessment reader,grc_backbone.model_risk_assessment,base.group_user,1,1,1,1
+access_control_admin,Control admin,grc_backbone.model_control,base.group_user,1,1,1,1
+access_control_contributor,Control contributor,grc_backbone.model_control,base.group_user,1,1,1,1
+access_control_reader,Control reader,grc_backbone.model_control,base.group_user,1,1,1,1
+access_compliance_check_admin,Compliance Check admin,grc_backbone.model_compliance_check,base.group_user,1,1,1,1
+access_compliance_check_contributor,Compliance Check contributor,grc_backbone.model_compliance_check,base.group_user,1,1,1,1
+access_compliance_check_reader,Compliance Check reader,grc_backbone.model_compliance_check,base.group_user,1,1,1,1
+access_incident_admin,Incident admin,grc_backbone.model_incident,base.group_user,1,1,1,1
+access_incident_contributor,Incident contributor,grc_backbone.model_incident,base.group_user,1,1,1,1
+access_incident_reader,Incident reader,grc_backbone.model_incident,base.group_user,1,1,1,1
+access_contract_template_admin,Contract Template admin,grc_backbone.model_contract_template,base.group_user,1,1,1,1
+access_contract_template_contributor,Contract Template contributor,grc_backbone.model_contract_template,base.group_user,1,1,1,1
+access_contract_template_reader,Contract Template reader,grc_backbone.model_contract_template,base.group_user,1,1,1,1
+access_tender_admin,Tender admin,grc_backbone.model_tender,base.group_user,1,1,1,1
+access_tender_contributor,Tender contributor,grc_backbone.model_tender,base.group_user,1,1,1,1
+access_tender_reader,Tender reader,grc_backbone.model_tender,base.group_user,1,1,1,1
+access_clause_admin,Clause admin,grc_backbone.model_clause,base.group_user,1,1,1,1
+access_clause_contributor,Clause contributor,grc_backbone.model_clause,base.group_user,1,1,1,1
+access_clause_reader,Clause reader,grc_backbone.model_clause,base.group_user,1,1,1,1

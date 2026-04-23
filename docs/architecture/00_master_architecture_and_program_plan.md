@@ -71,6 +71,24 @@ Owns:
 - formal application enrichment
 - document completion
 
+## 3.4 Bridge-domain rule
+
+Bridge logic is not the same thing as canonical governance.
+
+Bridge layers exist where governed vocabulary must be exposed into a live operational domain. In practice:
+
+- canonical governance stays in `grc_backbone`
+- operational process ownership stays in the domain module that runs the work
+- bridge fields, inherited views, and light mapping helpers live with the module that needs the governed extension, unless a separate shared bridge is genuinely required later
+
+This means the project should stay domain-coherent rather than forcing every bridge concern into a separate generic bridge addon.
+
+Examples:
+
+- `hr_pool` can own its own GRC-facing intake extension points if those extensions are only relevant to intake/pooling
+- `hr_recruitment` can own recruitment-stage extensions if they are only relevant to recruitment
+- a shared bridge addon is only justified when multiple operational modules need the same governed adapter
+
 ## 4. Program phases
 
 ### Phase 1 - Constitutional and intake foundation
@@ -81,7 +99,7 @@ Status:
 - GRC backbone exists as an importable XML module and needs integration discipline
 
 Work:
-- split canonical GRC data from bridge logic
+- split canonical GRC data from domain-coherent bridge logic
 - stabilize helper taxonomy
 - harden permissions and workflow overlays
 
@@ -130,6 +148,12 @@ The repository is organized to support:
 - `resources/hr_pool/`
 - `resources/grc_backbone/`
 
+### Boundary map companion
+
+The detailed module boundary map is maintained in:
+
+- `docs/architecture/01_module_boundary_map.md`
+
 ## 6. Packaging rules
 
 Each installable module must be zipped from its own directory only.
@@ -154,4 +178,3 @@ Do not ship:
 ## 8. Working rule
 
 When code and docs disagree, the installed module and current repository code take priority over the document text.
-

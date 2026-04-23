@@ -1,0 +1,239 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <menuitem id="menu_grc_taxonomy" name="Functional Taxonomy" parent="grc_backbone.menu_grc_root" sequence="20"/>
+    <menuitem id="menu_functional_areas" name="Functional Areas" parent="grc_backbone.menu_grc_taxonomy" action="grc_backbone.action_functional_area" sequence="10"/>
+    <menuitem id="menu_functions" name="Functions" parent="grc_backbone.menu_grc_taxonomy" action="grc_backbone.action_function" sequence="20"/>
+    <menuitem id="menu_sops" name="Procedures / SOPs" parent="grc_backbone.menu_grc_root" action="grc_backbone.action_sop" sequence="30"/>
+    <record id="view_functional_area_list" model="ir.ui.view">
+        <field name="name">x_grc.functional_area.list</field>
+        <field name="model">x_grc.functional_area</field>
+        <field name="arch" type="xml">
+            <list string="Functional Areas">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_manager_employee_id"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_functional_area_search" model="ir.ui.view">
+        <field name="name">x_grc.functional_area.search</field>
+        <field name="model">x_grc.functional_area</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_code"/>
+                <field name="x_manager_employee_id"/>
+                <filter name="active" string="Active" domain="[('x_state','=','active')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_functional_area_form" model="ir.ui.view">
+        <field name="name">x_grc.functional_area.form</field>
+        <field name="model">x_grc.functional_area</field>
+        <field name="arch" type="xml">
+            <form string="Functional Area">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_manager_employee_id"/>
+                        </group>
+                        <group>
+                            <field name="x_state"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="x_description"/>
+                        </page>
+                        <page string="Functions">
+                            <field name="x_function_ids">
+                                <list>
+                                    <field name="x_code"/>
+                                    <field name="x_name"/>
+                                    <field name="x_state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Recruitment Linkage">
+                            <group>
+                                <field name="x_hr_job_ids">
+                                    <list>
+                                        <field name="name"/>
+                                        <field name="x_grc_function_id"/>
+                                    </list>
+                                </field>
+                            </group>
+                            <group>
+                                <field name="x_hr_pool_ids">
+                                    <list>
+                                        <field name="x_intake_reference"/>
+                                        <field name="x_name"/>
+                                    </list>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_function_list" model="ir.ui.view">
+        <field name="name">x_grc.function.list</field>
+        <field name="model">x_grc.function</field>
+        <field name="arch" type="xml">
+            <list string="Functions">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_functional_area_id"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_function_search" model="ir.ui.view">
+        <field name="name">x_grc.function.search</field>
+        <field name="model">x_grc.function</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_code"/>
+                <field name="x_functional_area_id"/>
+                <filter name="active" string="Active" domain="[('x_state','=','active')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_function_form" model="ir.ui.view">
+        <field name="name">x_grc.function.form</field>
+        <field name="model">x_grc.function</field>
+        <field name="arch" type="xml">
+            <form string="Function">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_functional_area_id"/>
+                        </group>
+                        <group>
+                            <field name="x_state"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="x_description"/>
+                        </page>
+                        <page string="SOPs">
+                            <field name="x_sop_ids">
+                                <list>
+                                    <field name="x_code"/>
+                                    <field name="x_name"/>
+                                    <field name="x_version"/>
+                                    <field name="x_state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Recruitment Jobs">
+                            <field name="x_hr_job_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="x_grc_functional_area_id"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_sop_list" model="ir.ui.view">
+        <field name="name">x_grc.sop.list</field>
+        <field name="model">x_grc.sop</field>
+        <field name="arch" type="xml">
+            <list string="SOPs">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_version"/>
+                <field name="x_function_id"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_sop_search" model="ir.ui.view">
+        <field name="name">x_grc.sop.search</field>
+        <field name="model">x_grc.sop</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_code"/>
+                <field name="x_function_id"/>
+                <filter name="active" string="Active" domain="[('x_state','=','active')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_sop_form" model="ir.ui.view">
+        <field name="name">x_grc.sop.form</field>
+        <field name="model">x_grc.sop</field>
+        <field name="arch" type="xml">
+            <form string="SOP">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_version"/>
+                            <field name="x_function_id"/>
+                        </group>
+                        <group>
+                            <field name="x_state"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="x_purpose"/>
+                    </group>
+                    <group>
+                        <field name="x_procedure_steps"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_hr_job_list_grc" model="ir.ui.view">
+        <field name="name">hr.job.grc.list</field>
+        <field name="model">hr.job</field>
+        <field name="arch" type="xml">
+            <list string="Recruitment Jobs">
+                <field name="name"/>
+                <field name="x_grc_functional_area_id"/>
+                <field name="x_grc_function_id"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_hr_job_search_grc" model="ir.ui.view">
+        <field name="name">hr.job.grc.search</field>
+        <field name="model">hr.job</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="x_grc_functional_area_id"/>
+                <field name="x_grc_function_id"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_hr_job_form_grc" model="ir.ui.view">
+        <field name="name">hr.job.grc.form</field>
+        <field name="model">hr.job</field>
+        <field name="arch" type="xml">
+            <form string="Recruitment Job">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="x_grc_functional_area_id"/>
+                        <field name="x_grc_function_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_grc_root" name="GRC" sequence="35"/>
+    <menuitem id="menu_grc_governance" name="Governance" parent="grc_backbone.menu_grc_root" sequence="10"/>
+    <menuitem id="menu_frameworks" name="Frameworks" parent="grc_backbone.menu_grc_governance" action="grc_backbone.action_framework" sequence="10"/>
+    <menuitem id="menu_policies" name="Policies" parent="grc_backbone.menu_grc_governance" action="grc_backbone.action_policy" sequence="20"/>
+    <menuitem id="menu_provisions" name="Provisions" parent="grc_backbone.menu_grc_governance" action="grc_backbone.action_provision" sequence="30"/>
+    <menuitem id="menu_decisions" name="Decisions" parent="grc_backbone.menu_grc_governance" action="grc_backbone.action_decision" sequence="40"/>
+    <record id="view_framework_list" model="ir.ui.view">
+        <field name="name">x_grc.framework.list</field>
+        <field name="model">x_grc.framework</field>
+        <field name="arch" type="xml">
+            <list string="Frameworks">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_type"/>
+                <field name="x_authority"/>
+                <field name="x_valid_to"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_framework_search" model="ir.ui.view">
+        <field name="name">x_grc.framework.search</field>
+        <field name="model">x_grc.framework</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_code"/>
+                <field name="x_authority"/>
+                <filter name="active" string="Active" domain="[('x_state','=','active')]"/>
+                <filter name="archived" string="Archived" domain="[('x_state','=','archived')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_framework_form" model="ir.ui.view">
+        <field name="name">x_grc.framework.form</field>
+        <field name="model">x_grc.framework</field>
+        <field name="arch" type="xml">
+            <form string="Framework">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_type"/>
+                            <field name="x_authority"/>
+                        </group>
+                        <group>
+                            <field name="x_valid_from"/>
+                            <field name="x_valid_to"/>
+                            <field name="x_state"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="x_description"/>
+                        </page>
+                        <page string="Relations">
+                            <group>
+                                <field name="x_policy_ids" widget="many2many_tags"/>
+                            </group>
+                            <group>
+                                <field name="x_provision_ids">
+                                    <list>
+                                        <field name="x_code"/>
+                                        <field name="x_name"/>
+                                        <field name="x_metric_type"/>
+                                        <field name="x_state"/>
+                                    </list>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_policy_list" model="ir.ui.view">
+        <field name="name">x_grc.policy.list</field>
+        <field name="model">x_grc.policy</field>
+        <field name="arch" type="xml">
+            <list string="Policies">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_policy_search" model="ir.ui.view">
+        <field name="name">x_grc.policy.search</field>
+        <field name="model">x_grc.policy</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_code"/>
+                <filter name="active" string="Active" domain="[('x_state','=','active')]"/>
+                <filter name="review" string="Under Review" domain="[('x_state','=','under_review')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_policy_form" model="ir.ui.view">
+        <field name="name">x_grc.policy.form</field>
+        <field name="model">x_grc.policy</field>
+        <field name="arch" type="xml">
+            <form string="Policy">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                        </group>
+                        <group>
+                            <field name="x_state"/>
+                            <field name="x_framework_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Objective">
+                            <field name="x_objective"/>
+                        </page>
+                        <page string="Provisions">
+                            <field name="x_provision_ids">
+                                <list>
+                                    <field name="x_code"/>
+                                    <field name="x_name"/>
+                                    <field name="x_metric_type"/>
+                                    <field name="x_state"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_provision_list" model="ir.ui.view">
+        <field name="name">x_grc.provision.list</field>
+        <field name="model">x_grc.provision</field>
+        <field name="arch" type="xml">
+            <list string="Provisions">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_framework_id"/>
+                <field name="x_policy_id"/>
+                <field name="x_metric_type"/>
+                <field name="x_evaluation_frequency"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_provision_search" model="ir.ui.view">
+        <field name="name">x_grc.provision.search</field>
+        <field name="model">x_grc.provision</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_code"/>
+                <field name="x_framework_id"/>
+                <field name="x_policy_id"/>
+                <filter name="active" string="Active" domain="[('x_state','=','active')]"/>
+                <filter name="quantitative" string="Quantitative" domain="[('x_metric_type','=','quantitative')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_provision_form" model="ir.ui.view">
+        <field name="name">x_grc.provision.form</field>
+        <field name="model">x_grc.provision</field>
+        <field name="arch" type="xml">
+            <form string="Provision">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_framework_id"/>
+                            <field name="x_policy_id"/>
+                        </group>
+                        <group>
+                            <field name="x_metric_type"/>
+                            <field name="x_target_value"/>
+                            <field name="x_uom_id"/>
+                            <field name="x_evaluation_frequency"/>
+                            <field name="x_state"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="x_description"/>
+                        </page>
+                        <page string="Compliance Checks">
+                            <field name="x_compliance_check_ids">
+                                <list>
+                                    <field name="x_name"/>
+                                    <field name="x_check_date"/>
+                                    <field name="x_result"/>
+                                    <field name="x_state"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_decision_list" model="ir.ui.view">
+        <field name="name">x_grc.decision.list</field>
+        <field name="model">x_grc.decision</field>
+        <field name="arch" type="xml">
+            <list string="Decisions">
+                <field name="x_name"/>
+                <field name="x_decision_date"/>
+                <field name="x_executive_body"/>
+                <field name="x_related_policy_id"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_decision_search" model="ir.ui.view">
+        <field name="name">x_grc.decision.search</field>
+        <field name="model">x_grc.decision</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_executive_body"/>
+                <field name="x_related_policy_id"/>
+                <filter name="approved" string="Approved" domain="[('x_state','=','approved')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_decision_form" model="ir.ui.view">
+        <field name="name">x_grc.decision.form</field>
+        <field name="model">x_grc.decision</field>
+        <field name="arch" type="xml">
+            <form string="Decision">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_name"/>
+                            <field name="x_decision_date"/>
+                            <field name="x_executive_body"/>
+                        </group>
+                        <group>
+                            <field name="x_related_policy_id"/>
+                            <field name="x_state"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="x_resolution_text"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

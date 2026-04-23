@@ -6,6 +6,8 @@ This folder stores project documentation and non-module implementation assets th
 
 - `architecture/`
   master architecture, integrated plans, and program strategy
+- `architecture/01_module_boundary_map.md`
+  concrete module ownership and bridge-domain rules
 - `modules/hr_pool/`
   HR Pool-specific documentation
 - `modules/grc_backbone/`

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_grc_commercial" name="Commercial Governance" parent="grc_backbone.menu_grc_root" sequence="60"/>
+    <menuitem id="menu_clauses" name="Clauses" parent="grc_backbone.menu_grc_commercial" action="grc_backbone.action_clause" sequence="10"/>
+    <menuitem id="menu_contract_templates" name="Contract Templates" parent="grc_backbone.menu_grc_commercial" action="grc_backbone.action_contract_template" sequence="20"/>
+    <menuitem id="menu_tenders" name="Tenders" parent="grc_backbone.menu_grc_commercial" action="grc_backbone.action_tender" sequence="30"/>
+    <record id="view_clause_list" model="ir.ui.view">
+        <field name="name">x_grc.clause.list</field>
+        <field name="model">x_grc.clause</field>
+        <field name="arch" type="xml">
+            <list string="Clauses">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_category"/>
+                <field name="x_functional_area_id"/>
+                <field name="x_is_mandatory"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_clause_search" model="ir.ui.view">
+        <field name="name">x_grc.clause.search</field>
+        <field name="model">x_grc.clause</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_code"/>
+                <field name="x_functional_area_id"/>
+                <filter name="active" string="Active" domain="[('x_state','=','active')]"/>
+                <filter name="mandatory" string="Mandatory" domain="[('x_is_mandatory','=',True)]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_clause_form" model="ir.ui.view">
+        <field name="name">x_grc.clause.form</field>
+        <field name="model">x_grc.clause</field>
+        <field name="arch" type="xml">
+            <form string="Clause">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_category"/>
+                            <field name="x_functional_area_id"/>
+                        </group>
+                        <group>
+                            <field name="x_is_mandatory"/>
+                            <field name="x_state"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="x_content"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_contract_template_list" model="ir.ui.view">
+        <field name="name">x_grc.contract_template.list</field>
+        <field name="model">x_grc.contract_template</field>
+        <field name="arch" type="xml">
+            <list string="Contract Templates">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_type"/>
+                <field name="x_functional_area_id"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_contract_template_search" model="ir.ui.view">
+        <field name="name">x_grc.contract_template.search</field>
+        <field name="model">x_grc.contract_template</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_code"/>
+                <field name="x_functional_area_id"/>
+                <filter name="active" string="Active" domain="[('x_state','=','active')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_contract_template_form" model="ir.ui.view">
+        <field name="name">x_grc.contract_template.form</field>
+        <field name="model">x_grc.contract_template</field>
+        <field name="arch" type="xml">
+            <form string="Contract Template">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_type"/>
+                            <field name="x_functional_area_id"/>
+                        </group>
+                        <group>
+                            <field name="x_state"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="x_description"/>
+                    </group>
+                    <group>
+                        <field name="x_clause_ids" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_tender_list" model="ir.ui.view">
+        <field name="name">x_grc.tender.list</field>
+        <field name="model">x_grc.tender</field>
+        <field name="arch" type="xml">
+            <list string="Tenders">
+                <field name="x_reference_code"/>
+                <field name="x_name"/>
+                <field name="x_client_id"/>
+                <field name="x_functional_area_id"/>
+                <field name="x_submission_deadline"/>
+                <field name="x_expected_revenue"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_tender_search" model="ir.ui.view">
+        <field name="name">x_grc.tender.search</field>
+        <field name="model">x_grc.tender</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_reference_code"/>
+                <field name="x_client_id"/>
+                <field name="x_functional_area_id"/>
+                <filter name="confirmed" string="Confirmed" domain="[('x_state','=','confirmed')]"/>
+                <filter name="closed" string="Closed" domain="[('x_state','=','closed')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_tender_form" model="ir.ui.view">
+        <field name="name">x_grc.tender.form</field>
+        <field name="model">x_grc.tender</field>
+        <field name="arch" type="xml">
+            <form string="Tender">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_reference_code"/>
+                            <field name="x_name"/>
+                            <field name="x_client_id"/>
+                            <field name="x_functional_area_id"/>
+                        </group>
+                        <group>
+                            <field name="x_submission_deadline"/>
+                            <field name="x_expected_revenue"/>
+                            <field name="x_state"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="x_clause_ids" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

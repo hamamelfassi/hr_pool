@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="field_framework_x_provision_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_framework" />
+        <field name="name">x_provision_ids</field>
+        <field name="field_description">Provisions</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.provision</field>
+        <field name="relation_field">x_framework_id</field>
+    </record>
+    <record id="field_policy_x_provision_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_policy" />
+        <field name="name">x_provision_ids</field>
+        <field name="field_description">Provisions</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.provision</field>
+        <field name="relation_field">x_policy_id</field>
+    </record>
+    <record id="field_provision_x_compliance_check_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_provision" />
+        <field name="name">x_compliance_check_ids</field>
+        <field name="field_description">Compliance Checks</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.compliance_check</field>
+        <field name="relation_field">x_provision_id</field>
+    </record>
+    <record id="field_functional_area_x_function_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_functional_area" />
+        <field name="name">x_function_ids</field>
+        <field name="field_description">Functions</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.function</field>
+        <field name="relation_field">x_functional_area_id</field>
+    </record>
+    <record id="field_functional_area_x_risk_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_functional_area" />
+        <field name="name">x_risk_ids</field>
+        <field name="field_description">Risks</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.risk</field>
+        <field name="relation_field">x_functional_area_id</field>
+    </record>
+    <record id="field_functional_area_x_clause_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_functional_area" />
+        <field name="name">x_clause_ids</field>
+        <field name="field_description">Clauses</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.clause</field>
+        <field name="relation_field">x_functional_area_id</field>
+    </record>
+    <record id="field_functional_area_x_contract_template_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_functional_area" />
+        <field name="name">x_contract_template_ids</field>
+        <field name="field_description">Contract Templates</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.contract_template</field>
+        <field name="relation_field">x_functional_area_id</field>
+    </record>
+    <record id="field_functional_area_x_tender_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_functional_area" />
+        <field name="name">x_tender_ids</field>
+        <field name="field_description">Tenders</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.tender</field>
+        <field name="relation_field">x_functional_area_id</field>
+    </record>
+    <record id="field_function_x_sop_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_function" />
+        <field name="name">x_sop_ids</field>
+        <field name="field_description">SOPs</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.sop</field>
+        <field name="relation_field">x_function_id</field>
+    </record>
+    <record id="field_risk_x_assessment_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_risk" />
+        <field name="name">x_assessment_ids</field>
+        <field name="field_description">Assessments</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.risk_assessment</field>
+        <field name="relation_field">x_risk_id</field>
+    </record>
+    <record id="field_risk_x_control_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_risk" />
+        <field name="name">x_control_ids</field>
+        <field name="field_description">Controls</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.control</field>
+        <field name="relation_field">x_risk_id</field>
+    </record>
+    <record id="field_risk_x_incident_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_risk" />
+        <field name="name">x_incident_ids</field>
+        <field name="field_description">Incidents</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.incident</field>
+        <field name="relation_field">x_realized_risk_id</field>
+    </record>
+    <record id="field_control_x_compliance_check_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_control" />
+        <field name="name">x_compliance_check_ids</field>
+        <field name="field_description">Compliance Checks</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.compliance_check</field>
+        <field name="relation_field">x_control_id</field>
+    </record>
+    <record id="field_control_x_incident_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_control" />
+        <field name="name">x_incident_ids</field>
+        <field name="field_description">Incidents</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.incident</field>
+        <field name="relation_field">x_failed_control_id</field>
+    </record>
+</odoo>
