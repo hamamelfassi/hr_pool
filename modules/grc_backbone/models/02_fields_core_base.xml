@@ -257,14 +257,6 @@
     
         <field name="translate">standard</field>
     </record>
-    <record id="field_functional_area_x_manager_employee_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_backbone.model_functional_area" />
-        <field name="name">x_manager_employee_id</field>
-        <field name="field_description">Manager (Employee)</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">hr.employee</field>
-        <field name="on_delete">restrict</field>
-    </record>
     <record id="field_functional_area_x_state" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_functional_area" />
         <field name="name">x_state</field>
@@ -459,14 +451,6 @@
         <field name="field_description">Risk Score</field>
         <field name="ttype">integer</field>
     </record>
-    <record id="field_risk_assessment_x_assessor_employee_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_backbone.model_risk_assessment" />
-        <field name="name">x_assessor_employee_id</field>
-        <field name="field_description">Assessor (Employee)</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">hr.employee</field>
-        <field name="on_delete">restrict</field>
-    </record>
     <record id="field_risk_assessment_x_status" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_risk_assessment" />
         <field name="name">x_status</field>
@@ -547,14 +531,6 @@
         <field name="field_description">Check Date</field>
         <field name="ttype">datetime</field>
     </record>
-    <record id="field_compliance_check_x_inspector_employee_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_backbone.model_compliance_check" />
-        <field name="name">x_inspector_employee_id</field>
-        <field name="field_description">Inspector (Employee)</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">hr.employee</field>
-        <field name="on_delete">restrict</field>
-    </record>
     <record id="field_compliance_check_x_provision_id" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_compliance_check" />
         <field name="name">x_provision_id</field>
@@ -615,14 +591,6 @@
         <field name="field_description">Severity</field>
         <field name="ttype">selection</field>
         <field name="required">True</field>
-    </record>
-    <record id="field_incident_x_reporter_employee_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_backbone.model_incident" />
-        <field name="name">x_reporter_employee_id</field>
-        <field name="field_description">Reporter (Employee)</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">hr.employee</field>
-        <field name="on_delete">restrict</field>
     </record>
     <record id="field_incident_x_failed_control_id" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_incident" />

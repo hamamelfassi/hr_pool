@@ -94,16 +94,17 @@ Should contain:
 - taxonomy data
 - GRC menus, actions, and views
 - translations
-- internal GRC relations
+- internal GRC relations that do not require HR runtime addons
 
 Should not contain:
 
 - domain-specific operational process logic
 - domain-specific bridge fields that only matter to one operational app
+- HR runtime dependencies
 
 ### 3.2 `hr_pool`
 
-Governed intake and pooling.
+Standalone intake and pooling.
 
 Owns:
 
@@ -112,12 +113,7 @@ Owns:
 - child-line capture for education, experience, skills, languages, commitments
 - intake states and chairman workflow
 - conversion request / approval scaffolding
-- any HR-pool-specific bridge fields that are only relevant to intake/pooling
-
-Consumes:
-
-- GRC functional areas
-- GRC functions where useful
+- no direct GRC dependency in the current install graph
 
 ### 3.3 `hr_recruitment`
 
@@ -149,7 +145,7 @@ Owns:
 - declaration packs
 - onboarding continuation packs
 - signature profiles and routing rules
-- bridge fields on HR operational models
+- bridge fields on `hr.job` and other recruitment-domain operational models
 - inherited views, actions, and menus that expose governed HR template selection
 
 Consumes:
@@ -195,7 +191,7 @@ Use this test before placing a feature in a module:
 ### Example A: job function taxonomy
 
 - governed function definitions live in `grc_backbone`
-- `hr.job` field links to that taxonomy live in the HR domain bridge responsibility
+- `hr.job` field links to that taxonomy live in `grc_recruitment_bridge`
 
 ### Example B: recruitment interview forms
 

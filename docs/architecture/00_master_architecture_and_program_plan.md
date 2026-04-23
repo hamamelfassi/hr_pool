@@ -50,7 +50,7 @@ Owns:
 
 ### 3.2 `hr_pool`
 
-The governed intake and pool layer.
+The frozen intake and pool layer for the public intake surface.
 
 Owns:
 
@@ -59,7 +59,6 @@ Owns:
 - reviewer recommendations
 - conversion requests
 - pool approval / hold / reject
-- linkage to functional area taxonomy
 - applicant backlink and provenance
 
 ### 3.3 `hr_recruitment`
@@ -103,9 +102,9 @@ Future adjacent bridge module:
 
 Examples:
 
-- `hr_pool` can own its own GRC-facing intake extension points if those extensions are only relevant to intake/pooling
+- `hr_pool` remains standalone for intake in this reshuffle and does not consume GRC directly
 - `hr_recruitment` can own recruitment-stage extensions if they are only relevant to recruitment
-- a shared bridge addon is only justified when multiple operational modules need the same governed adapter
+- `grc_recruitment_bridge` owns the governed template and routing layer that the recruitment runtime consumes
 
 ## 4. Program phases
 
@@ -235,6 +234,23 @@ Open next:
 - validate the recruitment bridge scaffold against the install graph
 - begin the controlled split between canonical GRC data and bridge-domain composition
 - keep `hr_pool` additive-only until the replacement path is proven
+
+### 2026-04-23 - Broader dependency reshuffle
+
+Completed:
+
+- removed HR runtime dependencies from `grc_backbone`
+- moved recruitment-facing `hr.job` governance links into `grc_recruitment_bridge`
+- removed the unused GRC functional-area field from `hr_pool`
+- removed the `grc_backbone` dependency from `hr_pool`
+- kept the live intake payload shape unchanged
+
+Open next:
+
+- validate the reshuffled dependency graph before any install/upgrade attempt
+- keep `hr_pool` frozen while the recruitment bridge becomes the only governed adapter in this slice
+- pruned stale backbone translations that still pointed at removed HR runtime fields
+- confirmed only bridge-owned recruitment functional-area links remain in the live graph
 
 ## 9. Refactor safety rules
 

@@ -3,8 +3,7 @@
     "depends": [
         "base",
         "contacts",
-        "hr_recruitment",
-        "grc_backbone"
+        "hr_recruitment"
     ],
     "category": "Human Resources",
     "application": True,

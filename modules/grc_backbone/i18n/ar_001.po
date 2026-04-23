@@ -105,11 +105,6 @@ msgid "Assessments"
 msgstr "التقييمات"
 
 #. module: grc_backbone
-#: model:ir.model.fields,field_description:grc_backbone.field_risk_assessment_x_assessor_employee_id
-msgid "Assessor (Employee)"
-msgstr "المقيّم (الموظف)"
-
-#. module: grc_backbone
 #: model:ir.model.fields.selection,name:grc_backbone.sel_field_decision_x_executive_body_board_of_directors
 msgid "Board of Directors"
 msgstr "مجلس الإدارة"
@@ -440,8 +435,6 @@ msgstr "وظيفة"
 #: model:ir.model.fields,field_description:grc_backbone.field_contract_template_x_functional_area_id
 #: model:ir.model.fields,field_description:grc_backbone.field_function_x_functional_area_id
 #: model:ir.model.fields,field_description:grc_backbone.field_functional_area_x_name
-#: model:ir.model.fields,field_description:grc_backbone.field_hr_job_x_grc_functional_area_id
-#: model:ir.model.fields,field_description:grc_backbone.field_pool_x_grc_functional_area_id
 #: model:ir.model.fields,field_description:grc_backbone.field_risk_x_functional_area_id
 #: model:ir.model.fields,field_description:grc_backbone.field_tender_x_functional_area_id
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_functional_area_form
@@ -540,11 +533,6 @@ msgid "Governance Provisions"
 msgstr "مقتضيات الحوكمة"
 
 #. module: grc_backbone
-#: model:ir.model.fields,field_description:grc_backbone.field_functional_area_x_hr_pool_ids
-msgid "HR Pool Records"
-msgstr "سجلات مخزون الموارد البشرية"
-
-#. module: grc_backbone
 #: model:ir.model.fields.selection,name:grc_backbone.sel_field_risk_x_category_hse
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_risk_search
 msgid "HSE"
@@ -604,11 +592,6 @@ msgid "Industry Guideline"
 msgstr "دليل قطاعي"
 
 #. module: grc_backbone
-#: model:ir.model.fields,field_description:grc_backbone.field_compliance_check_x_inspector_employee_id
-msgid "Inspector (Employee)"
-msgstr "المفتش (الموظف)"
-
-#. module: grc_backbone
 #: model:ir.model.fields.selection,name:grc_backbone.sel_field_framework_x_type_internal_requirement
 msgid "Internal Requirement"
 msgstr "متطلب داخلي"
@@ -638,11 +621,6 @@ msgstr "الاحتمالية"
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_incident_search
 msgid "Major"
 msgstr "جسيم"
-
-#. module: grc_backbone
-#: model:ir.model.fields,field_description:grc_backbone.field_functional_area_x_manager_employee_id
-msgid "Manager (Employee)"
-msgstr "المدير (الموظف)"
 
 #. module: grc_backbone
 #: model:ir.model.fields,field_description:grc_backbone.field_clause_x_is_mandatory
@@ -846,11 +824,6 @@ msgstr "العلاقات"
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_incident_search
 msgid "Reported"
 msgstr "مبلّغ عنها"
-
-#. module: grc_backbone
-#: model:ir.model.fields,field_description:grc_backbone.field_incident_x_reporter_employee_id
-msgid "Reporter (Employee)"
-msgstr "المبلّغ (الموظف)"
 
 #. module: grc_backbone
 #: model:ir.model.fields,field_description:grc_backbone.field_decision_x_resolution_text
@@ -1556,4 +1529,3 @@ msgstr "تنسيق خطابات الضمان"
 #: model_terms:x_grc.function,x_description:grc_backbone.fn_guarantee_processing
 msgid "Following guarantee and procedural banking requirements."
 msgstr "متابعة متطلبات خطابات الضمان والمتطلبات المصرفية الإجرائية."
-

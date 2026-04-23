@@ -112,7 +112,6 @@
         <field name="arch" type="xml">
             <search>
                 <field name="x_risk_id"/>
-                <field name="x_assessor_employee_id"/>
                 <filter name="confirmed" string="Confirmed" domain="[('x_state','=','confirmed')]"/>
                 <filter name="closed" string="Closed" domain="[('x_state','=','closed')]"/>
             </search>
@@ -129,7 +128,6 @@
                             <field name="x_name"/>
                             <field name="x_risk_id"/>
                             <field name="x_date"/>
-                            <field name="x_assessor_employee_id"/>
                         </group>
                         <group>
                             <field name="x_likelihood"/>
@@ -224,7 +222,6 @@
             <list string="Compliance Checks">
                 <field name="x_name"/>
                 <field name="x_check_date"/>
-                <field name="x_inspector_employee_id"/>
                 <field name="x_provision_id"/>
                 <field name="x_control_id"/>
                 <field name="x_result"/>
@@ -240,7 +237,6 @@
                 <field name="x_name"/>
                 <field name="x_provision_id"/>
                 <field name="x_control_id"/>
-                <field name="x_inspector_employee_id"/>
                 <filter name="confirmed" string="Confirmed" domain="[('x_state','=','confirmed')]"/>
                 <filter name="fail" string="Fail" domain="[('x_result','=','fail')]"/>
             </search>
@@ -256,7 +252,6 @@
                         <group>
                             <field name="x_name"/>
                             <field name="x_check_date"/>
-                            <field name="x_inspector_employee_id"/>
                         </group>
                         <group>
                             <field name="x_provision_id"/>
@@ -280,7 +275,6 @@
                 <field name="x_name"/>
                 <field name="x_incident_date"/>
                 <field name="x_severity"/>
-                <field name="x_reporter_employee_id"/>
                 <field name="x_realized_risk_id"/>
                 <field name="x_state"/>
             </list>
@@ -294,7 +288,6 @@
                 <field name="x_name"/>
                 <field name="x_realized_risk_id"/>
                 <field name="x_failed_control_id"/>
-                <field name="x_reporter_employee_id"/>
                 <filter name="reported" string="Reported" domain="[('x_state','=','reported')]"/>
                 <filter name="major" string="Major" domain="[('x_severity','=','major')]"/>
             </search>
@@ -311,7 +304,6 @@
                             <field name="x_name"/>
                             <field name="x_incident_date"/>
                             <field name="x_severity"/>
-                            <field name="x_reporter_employee_id"/>
                         </group>
                         <group>
                             <field name="x_realized_risk_id"/>

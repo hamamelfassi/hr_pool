@@ -9,7 +9,6 @@
                 <field name="x_name"/>
                 <field name="x_fillout_submission_id" optional="show"/>
                 <field name="x_candidate_origin"/>
-                <field name="x_grc_functional_area_id"/>
                 <field name="x_intake_phase"/>
                 <field name="x_chairman_decision"/>
                 <field name="x_reviewer_recommendation"/>
@@ -29,7 +28,6 @@
                 <field name="x_name"/>
                 <field name="x_intake_reference"/>
                 <field name="x_candidate_origin"/>
-                <field name="x_grc_functional_area_id"/>
                 <field name="x_intake_phase"/>
                 <field name="x_chairman_decision"/>
                 <field name="x_reviewer_recommendation"/>
@@ -42,7 +40,6 @@
                                     <div class="fw-bold"><field name="x_name"/></div>
                                     <div><field name="x_intake_reference"/></div>
                                     <div><field name="x_candidate_origin"/></div>
-                                    <div><field name="x_grc_functional_area_id"/></div>
                                     <div><field name="x_intake_phase"/></div>
                                     <div><field name="x_chairman_decision"/></div>
                                     <div><field name="x_reviewer_recommendation"/></div>
@@ -64,7 +61,6 @@
                 <field name="x_name"/>
                 <field name="x_intake_reference"/>
                 <field name="x_candidate_origin"/>
-                <field name="x_grc_functional_area_id"/>
                 <field name="x_intake_phase"/>
                 <field name="x_chairman_decision"/>
                 <field name="x_reviewer_recommendation"/>
@@ -77,7 +73,6 @@
                                     <div class="fw-bold"><field name="x_name"/></div>
                                     <div><field name="x_intake_reference"/></div>
                                     <div><field name="x_candidate_origin"/></div>
-                                    <div><field name="x_grc_functional_area_id"/></div>
                                     <div><field name="x_intake_phase"/></div>
                                     <div><field name="x_chairman_decision"/></div>
                                     <div><field name="x_reviewer_recommendation"/></div>
@@ -201,7 +196,6 @@
                         <page string="Preferences">
                             <group>
                                 <field name="x_preferred_role_type_ids" widget="many2many_tags"/>
-                                <field name="x_grc_functional_area_id"/>
                                 <field name="x_preferred_work_type"/>
                                 <field name="x_preferred_work_locations"/>
                             </group>
