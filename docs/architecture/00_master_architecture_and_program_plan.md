@@ -9,6 +9,7 @@ It keeps the program aligned across:
 - HR intake and public candidate pooling
 - GRC backbone and constitutional governance
 - Recruitment handoff and applicant lifecycle
+- HR bridge template composition, document generation, and signature routing
 - future operational and commercial extensions
 - integration layers such as n8n, Fillout, Zite, and document generation
 
@@ -20,6 +21,8 @@ Marsellia is building a governed enterprise stack on Odoo SaaS, with a hybrid of
 - Studio where low-risk refinement is useful
 - n8n for orchestration and public integration edges
 - external form/database surfaces for non-Odoo users
+- Google Docs / Drive for controlled template generation and PDF export
+- Odoo Sign for formal external signature capture
 
 The system should be organized as a controlled monorepo with separately zippable modules.
 
@@ -79,9 +82,11 @@ Bridge layers exist where governed vocabulary must be exposed into a live operat
 
 - canonical governance stays in `grc_backbone`
 - operational process ownership stays in the domain module that runs the work
-- bridge fields, inherited views, and light mapping helpers live with the module that needs the governed extension, unless a separate shared bridge is genuinely required later
+- bridge fields, inherited views, light mapping helpers, and template routing live with the domain module that needs the governed extension, unless a separate shared bridge is genuinely required later
 
 This means the project should stay domain-coherent rather than forcing every bridge concern into a separate generic bridge addon.
+
+For HR, the bridge should cover the whole recruitment and onboarding lifecycle as one coherent domain, not as separate bridge modules per phase.
 
 Examples:
 
@@ -118,8 +123,15 @@ Work:
 - interview evaluation
 - document checklist
 - negotiated TOR / job description generation
-- applicant-side completion surface
-- contract and signature flow
+- applicant-side continuation and prefill surface
+- contract, declaration, and signature flow
+- PDF generation and attachment handling
+
+Implementation note:
+
+- Google Docs templates plus n8n are the default generation path for controlled bilingual forms
+- Odoo Sign is the default formal signing path for applicants, employees, managers, and chairman-level sign-offs where external signatures are needed
+- the live signed PDF is attached to the operational record, while the template source remains in the bridge/resources layer
 
 ### Phase 4 - Operational governance expansion
 
@@ -143,6 +155,8 @@ The repository is organized to support:
 - `modules/grc_backbone/`
 - `modules/grc_hr_bridge/`
 - `docs/architecture/`
+- `docs/architecture/03_hr_form_family_inventory.md`
+- `docs/architecture/04_hr_document_generation_and_signature_workflow.md`
 - `docs/modules/hr_pool/`
 - `docs/modules/grc_backbone/`
 - `docs/modules/grc_hr_bridge/`
@@ -175,9 +189,11 @@ Do not ship:
 1. split canonical GRC data from bridge logic
 2. normalize shared taxonomy and model ownership
 3. finish the HR Pool conversion boundary
-4. add phase-1 PDF snapshotting
-5. design phase-2 enrichment and document completion
-6. extend into operational consumption modules
+4. lock the HR form-family inventory and runtime ownership map
+5. add phase-1 PDF snapshotting
+6. design the HR document generation and signature workflow
+7. design phase-2 enrichment and document completion
+8. extend into operational consumption modules
 
 ## 8. Working rule
 

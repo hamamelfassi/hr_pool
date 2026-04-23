@@ -4,7 +4,7 @@
 
 `grc_hr_bridge` is the HR-domain bridge between canonical governance data in `grc_backbone` and operational records in `hr_pool` and `hr_recruitment`.
 
-It exists to turn governed taxonomy into usable HR templates and controlled reference points.
+It turns governed taxonomy into reusable HR template families, controlled references, and signer-routing profiles.
 
 It does not own live people-process records.
 
@@ -16,21 +16,20 @@ It does not own live people-process records.
 - Category: `Human Resources`
 - Module type: XML-only importable addon for Odoo SaaS
 
-## 3. Module responsibility
+## 3. Module scope
 
 ### 3.1 Owns
 
-The module owns HR governance composition artifacts:
+The module owns HR governance composition artifacts for the recruitment and onboarding lifecycle:
 
 - role / job description templates
 - interview evaluation templates
 - pre-employment document checklist templates
+- onboarding continuation packs for the post-intake phase
 - declaration packs
-- contract / offer packs
-- template versioning fields
-- template approval state fields
+- signer-routing / signature profiles
 - bridge fields on HR operational models
-- inherited views and actions that expose the bridge state to HR users
+- inherited views and actions that expose governed HR template selection
 
 ### 3.2 Does not own
 
@@ -40,15 +39,54 @@ The module does not own the live workflow records themselves:
 - pooled candidate records
 - applicant records
 - actual interview sessions and responses
+- actual document submissions
 - actual contract acceptance records
-- actual uploaded PII documents
 - final signed PDFs for a specific person
+- employee admin or HSE runtime forms
 
-Those belong in `hr_pool` or `hr_recruitment`.
+Those belong in `hr_pool`, `hr_recruitment`, or a future domain module.
 
-## 4. Exact model names
+## 4. In-scope form families
 
-### 4.1 Template models
+The bridge should be built around reusable form families, not one model per PDF.
+
+### 4.1 First-wave bridge families
+
+- `MCEP-HR-F-0001` post-intake continuation sections
+- `MCEP-HR-F-0002` interview evaluation
+- `MCEP-HR-F-0003` pre-employment document checklist
+- `MCEP-HR-F-0004` truthfulness / document validity declaration
+- `MCEP-HR-F-0007` policy acknowledgment
+- `MCEP-HR-F-0008` training commitment
+- `MCEP-HR-F-0009` confidentiality declaration
+- `MCEP-HR-F-0010` exclusivity / outside-work declaration
+- `MCEP-HR-F-0013` safety / HSE acknowledgment tied to HR onboarding
+
+### 4.2 Future operational families outside this bridge
+
+These are real forms, but they should move to later operational modules rather than widening the HR bridge:
+
+- `MCEP-HR-F-0011` ID card receipt / custody acknowledgement
+- `MCEP-HR-F-0014` permission / absence request
+- `MCEP-HR-F-0015` leave request
+- `MCEP-HR-F-0016` assignment / secondment
+- `MCEP-HR-F-0017` resignation / termination request
+- `MCEP-HR-F-0018` human-waste handling declaration
+- `MCEP-HR-F-0019` human-waste storage supervisor declaration
+- `MCEP-HR-F-0020` clearance / exit handoff checklist
+- `MCEP-HR-F-0021` human-waste handling declaration variant
+- `MCEP-HR-F-0022` human-waste supervisor declaration variant
+
+### 4.3 Inventory gaps
+
+- `MCEP-HR-F-0005` is missing from the source corpus
+- `MCEP-HR-F-0012` is missing from the source corpus
+
+See `docs/architecture/03_hr_form_family_inventory.md` for the runtime ownership map.
+
+## 5. Exact model names
+
+### 5.1 Core template models
 
 - `x_grc.hr_role_template`
 - `x_grc.hr_role_template_line`
@@ -56,14 +94,23 @@ Those belong in `hr_pool` or `hr_recruitment`.
 - `x_grc.hr_interview_template_line`
 - `x_grc.hr_document_checklist_template`
 - `x_grc.hr_document_checklist_template_line`
+- `x_grc.hr_onboarding_pack`
+- `x_grc.hr_onboarding_pack_line`
 - `x_grc.hr_declaration_pack`
 - `x_grc.hr_declaration_pack_line`
+- `x_grc.hr_signature_profile`
+- `x_grc.hr_signature_profile_line`
+
+### 5.2 Optional future extension
+
 - `x_grc.hr_contract_pack`
 - `x_grc.hr_contract_pack_line`
 
-### 4.2 Shared bridge fields and common metadata
+The contract pack is useful later, but it is not required for the first bridge slice.
 
-Each template parent should carry the same operational metadata pattern:
+### 5.3 Shared bridge metadata pattern
+
+Each template parent should carry:
 
 - `x_code`
 - `x_name`
@@ -84,7 +131,7 @@ Each line model should carry:
 - `x_weight`
 - `x_notes`
 
-### 4.3 Recommended line-level link fields
+### 5.4 Recommended line-level link fields
 
 Role template line:
 
@@ -112,6 +159,13 @@ Document checklist line:
 - `x_signoff_role`
 - `x_internal_notes`
 
+Onboarding pack line:
+
+- `x_pack_section`
+- `x_is_required`
+- `x_signoff_role`
+- `x_internal_notes`
+
 Declaration pack line:
 
 - `x_clause_id` -> `x_grc.clause`
@@ -120,36 +174,41 @@ Declaration pack line:
 - `x_sequence`
 - `x_internal_notes`
 
-Contract pack line:
+Signature profile line:
 
-- `x_clause_id` -> `x_grc.clause`
-- `x_is_optional`
-- `x_sequence`
+- `x_signer_role`
+- `x_signer_order`
+- `x_signing_backend`
+- `x_required`
+- `x_target_model`
+- `x_target_state`
 - `x_internal_notes`
 
-## 5. Exact menus
+## 6. Exact menus
 
-### 5.1 Root menu
+### 6.1 Root menu
 
 - English: `HR Governance Bridge`
 - Arabic: `جسر حوكمة الموارد البشرية`
 
-### 5.2 Suggested submenu structure
+### 6.2 Suggested submenu structure
 
 - `Templates`
   - `Role / Job Description Templates`
   - `Interview Evaluation Templates`
   - `Document Checklist Templates`
+  - `Onboarding Packs`
   - `Declaration Packs`
-  - `Contract / Offer Packs`
+  - `Signature Profiles`
 - `Approvals`
   - `Template Review Queue`
   - `Published Templates`
 - `References`
   - `Linked Functional Areas`
   - `Linked Functions`
+  - `Linked Clauses`
 
-## 6. Exact actions
+## 7. Exact actions
 
 The module should expose one `ir.actions.act_window` action per template model, plus filtered approval views.
 
@@ -158,12 +217,14 @@ Recommended action names:
 - `action_hr_role_template`
 - `action_hr_interview_template`
 - `action_hr_document_checklist_template`
+- `action_hr_onboarding_pack`
 - `action_hr_declaration_pack`
-- `action_hr_contract_pack`
+- `action_hr_signature_profile`
 - `action_hr_template_review_queue`
 - `action_hr_template_published`
+- `action_hr_contract_pack` if the optional pack is later activated
 
-## 7. Exact views
+## 8. Exact views
 
 Each template model should have:
 
@@ -171,62 +232,112 @@ Each template model should have:
 - search view
 - form view
 
-### 7.1 Role template form pages
+### 8.1 Role template form pages
 
 - Overview
 - GRC Mapping
 - Composition Lines
 - Version / Approval
 
-### 7.2 Interview template form pages
+### 8.2 Interview template form pages
 
 - Overview
 - Questions / Criteria
 - Scoring
 - Version / Approval
 
-### 7.3 Document checklist template form pages
+### 8.3 Document checklist template form pages
 
 - Overview
 - Required Documents
 - Renewal / Expiry Logic
 - Version / Approval
 
-### 7.4 Declaration pack form pages
+### 8.4 Onboarding pack form pages
+
+- Overview
+- Continuation Sections
+- Sign-off Rules
+- Version / Approval
+
+### 8.5 Declaration pack form pages
 
 - Overview
 - Clauses
 - Sign-off Rules
 - Version / Approval
 
-### 7.5 Contract pack form pages
+### 8.6 Signature profile form pages
 
 - Overview
-- Clauses
-- Signature Routing
+- Signers / Roles
+- Routing Order
+- Backend Selection
 - Version / Approval
 
-### 7.6 Inherited operational views
+### 8.7 Inherited operational views
 
 The bridge module should also add inherited views to:
 
 - `hr.job`
 - `x_hr.pool`
-- `hr.applicant` if the recruitment workflow needs direct visibility in the applicant form
+- `hr.recruitment` or `hr.applicant` if the recruitment workflow needs direct visibility in the applicant form
 
 These inherited views should expose:
 
 - selected role template
 - selected interview template
 - selected document checklist template
+- selected onboarding pack
 - selected declaration pack
-- selected contract pack
+- selected signature profile
 - linked functional area
 - linked governed function
 
-## 8. Ownership split against other modules
+## 9. Document generation and signing workflow
 
-### 8.1 Belongs in `grc_backbone`
+### 9.1 Generation
+
+The intended generation path is:
+
+- templates are authored in Google Docs for controlled bilingual layout
+- n8n fills those templates from Odoo data
+- n8n exports PDF output
+- the PDF is uploaded to Odoo Documents or stored as an attachment on the operational record
+- the template source stays in the bridge/resources layer, not in the shipped addon zip
+
+### 9.2 Signing
+
+The formal signing path is:
+
+- Odoo Sign is the default signing engine for external signers
+- applicants, employees, managers, and chairman-level signers do not need to be Odoo users to sign
+- the signature profile determines who signs, in what order, and whether the signature is mandatory or conditional
+- the signed PDF is stored on the operational record, not as a template artifact
+
+### 9.3 Routing principle
+
+Routing means the system chooses the right signer sequence from the profile, instead of hardcoding one-off logic in the flow.
+
+A signature profile is a structured routing table that defines:
+
+- document family
+- signer role
+- signer order
+- required or optional status
+- signing backend
+- target record linkage
+- approval or countersign rules
+
+### 9.4 Fillout continuation
+
+Fillout remains a continuation and prefill surface only.
+
+It should not be the canonical signing engine for formal recruitment documents.
+
+## 10. Ownership split against other modules
+
+### 10.1 Belongs in `grc_backbone`
 
 - functional areas
 - governed functions
@@ -235,48 +346,39 @@ These inherited views should expose:
 - contract template primitives
 - risk and compliance taxonomy
 - compliance governance vocabulary
+- governed provisions and declaration wording
 
-### 8.2 Belongs in `grc_hr_bridge`
+### 10.2 Belongs in `grc_hr_bridge`
 
 - HR-specific template assembly
-- checklist and evaluation template composition
+- interview / checklist / onboarding / declaration composition
+- signer-routing profiles
 - bridge fields to operational HR models
 - approval state for templates
 - published template selection
 
-### 8.3 Belongs in `hr_pool`
+### 10.3 Belongs in `hr_pool`
 
 - intake candidate records
 - source metadata
 - intake-stage approval / conversion workflow
 - intake PDF snapshots
 - intake-specific operational records and child lines
+- the approved intake snapshot that feeds the next HR stage
 
-### 8.4 Belongs in `hr_recruitment`
+### 10.4 Belongs in `hr_recruitment`
 
 - applicant records
 - interviews
 - evaluation submissions
-- offers
-- contract execution
-- onboarding and document instances
+- offer progression
+- post-conversion onboarding continuation
+- live declaration instances
+- signed document instances for the specific person
 
-## 9. Document-to-model mapping
+### 10.5 Future domain modules
 
-The existing HR forms should be treated as template inputs for this bridge layer.
+- employee admin / attendance / leave / offboarding
+- HSE / field operations / human-waste declarations
 
-Likely mapping:
-
-- `MCEP-HR-F-0002` -> `x_grc.hr_document_checklist_template`
-- `MCEP-HR-F-0003` -> `x_grc.hr_interview_template`
-- role/job description forms -> `x_grc.hr_role_template`
-
-The completed, signed, or person-specific instances belong in the operational modules, not in the bridge module.
-
-## 10. Packaging rule
-
-This module must remain separately zippable.
-
-Only installable module files should be packaged.
-
-Documentation, PDFs, mapping notes, and generated outputs stay outside the module archive in `docs/` or `resources/`.
+These should consume the same governance patterns, but they should not be forced into the recruitment bridge.

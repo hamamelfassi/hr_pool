@@ -10,6 +10,10 @@ This folder stores project documentation and non-module implementation assets th
   concrete module ownership and bridge-domain rules
 - `architecture/02_grc_hr_bridge_module_spec.md`
   concrete HR governance bridge module specification
+- `architecture/03_hr_form_family_inventory.md`
+  runtime ownership and form-family mapping
+- `architecture/04_hr_document_generation_and_signature_workflow.md`
+  document generation, PDF export, and signature routing rules
 - `modules/hr_pool/`
   HR Pool-specific documentation
 - `modules/grc_backbone/`
