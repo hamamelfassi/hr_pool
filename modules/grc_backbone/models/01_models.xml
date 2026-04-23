@@ -60,4 +60,12 @@
         <field name="name">Clause</field>
         <field name="model">x_grc.clause</field>
     </record>
+    <record id="model_task_template" model="ir.model">
+        <field name="name">Task Template</field>
+        <field name="model">x_grc.task_template</field>
+    </record>
+    <record id="model_task_template_line" model="ir.model">
+        <field name="name">Task Template Line</field>
+        <field name="model">x_grc.task_template_line</field>
+    </record>
 </odoo>

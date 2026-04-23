@@ -44,3 +44,9 @@ access_tender_reader,Tender reader,grc_backbone.model_tender,base.group_user,1,1
 access_clause_admin,Clause admin,grc_backbone.model_clause,base.group_user,1,1,1,1
 access_clause_contributor,Clause contributor,grc_backbone.model_clause,base.group_user,1,1,1,1
 access_clause_reader,Clause reader,grc_backbone.model_clause,base.group_user,1,1,1,1
+access_task_template_admin,Task Template admin,grc_backbone.model_task_template,base.group_user,1,1,1,1
+access_task_template_contributor,Task Template contributor,grc_backbone.model_task_template,base.group_user,1,1,1,1
+access_task_template_reader,Task Template reader,grc_backbone.model_task_template,base.group_user,1,1,1,1
+access_task_template_line_admin,Task Template Line admin,grc_backbone.model_task_template_line,base.group_user,1,1,1,1
+access_task_template_line_contributor,Task Template Line contributor,grc_backbone.model_task_template_line,base.group_user,1,1,1,1
+access_task_template_line_reader,Task Template Line reader,grc_backbone.model_task_template_line,base.group_user,1,1,1,1

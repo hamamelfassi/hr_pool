@@ -427,7 +427,7 @@ msgstr "الأطر"
 #: model:ir.model.fields,field_description:grc_backbone.field_sop_x_function_id
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_function_form
 msgid "Function"
-msgstr "وظيفة"
+msgstr "الاختصاص الوظيفي"
 
 #. module: grc_backbone
 #: model:ir.model,name:grc_backbone.model_functional_area
@@ -460,7 +460,59 @@ msgstr "التصنيف الوظيفي"
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_function_list
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_functional_area_form
 msgid "Functions"
-msgstr "الوظائف"
+msgstr "الاختصاصات الوظيفية"
+
+#. module: grc_backbone
+#: model:ir.model,name:grc_backbone.model_task_template
+#: model:ir.ui.menu,name:grc_backbone.menu_task_templates
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_task_template_list
+msgid "Task Template"
+msgstr "قالب مهمة"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_task_template_list
+msgid "Task Templates"
+msgstr "قوالب المهام"
+
+#. module: grc_backbone
+#: model:ir.model,name:grc_backbone.model_task_template_line
+msgid "Task Template Line"
+msgstr "بند قالب المهمة"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_task_template_form
+msgid "Task Steps"
+msgstr "خطوات المهمة"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_task_template_x_name
+msgid "Task Template Name"
+msgstr "اسم قالب المهمة"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_task_template_line_x_name
+msgid "Step Name"
+msgstr "اسم الخطوة"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_task_template_line_x_instruction
+msgid "Instruction"
+msgstr "التوجيه"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_task_template_line_x_expected_outcome
+msgid "Expected Outcome"
+msgstr "النتيجة المتوقعة"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_task_template_line_x_required
+msgid "Required"
+msgstr "إلزامي"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_task_template_x_is_default
+msgid "Default Template"
+msgstr "القالب الافتراضي"
 
 #. module: grc_backbone
 #: model:ir.ui.menu,name:grc_backbone.menu_grc_root
@@ -726,7 +778,7 @@ msgstr "وقائي"
 #. module: grc_backbone
 #: model:ir.model.fields,field_description:grc_backbone.field_hr_job_x_grc_function_id
 msgid "Primary Governed Function"
-msgstr "الوظيفة المحكومة الرئيسية"
+msgstr "الاختصاص المحكوم الرئيسي"
 
 #. module: grc_backbone
 #: model:ir.model.fields,field_description:grc_backbone.field_sop_x_procedure_steps

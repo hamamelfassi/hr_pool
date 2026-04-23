@@ -10,6 +10,7 @@ It keeps the program aligned across:
 - GRC backbone and constitutional governance
 - Recruitment handoff and applicant lifecycle
 - Recruitment bridge template composition, document generation, and signature routing
+- canonical task-template governance for repeatable operational work
 - future operational and commercial extensions
 - integration layers such as n8n, Fillout, Zite, and document generation
 
@@ -42,6 +43,7 @@ Owns:
 - functional areas
 - granular functions
 - SOPs
+- task templates and task template lines
 - risks
 - controls
 - compliance checks
@@ -92,7 +94,7 @@ Current naming posture:
 
 - technical bridge module: `grc_recruitment_bridge`
 - English app label: `Recruitment Governance`
-- Arabic app label: `ضابط التوظيف`
+- Arabic app label: `إجراءات التوظيف`
 
 Future adjacent bridge module:
 
@@ -111,16 +113,24 @@ Examples:
 ### Phase 1 - Constitutional and intake foundation
 
 Status:
-- HR intake is operational
+- HR intake is operational and frozen as a compatibility contract
 - n8n ingestion is operational
-- GRC backbone exists as an importable XML module and needs integration discipline
+- GRC backbone is installed cleanly and now owns canonical task templates
+- recruitment bridge is installed cleanly and visible once access groups are assigned
+- Arabic translation coverage is still partial and needs normalization
 
 Work:
 - split canonical GRC data from domain-coherent bridge logic
-- stabilize helper taxonomy
+- stabilize helper taxonomy and Arabic naming
+- seed and extend task templates as canonical GRC primitives
 - harden permissions and workflow overlays
 
 ### Phase 2 - Controlled recruitment handoff
+
+Status:
+- recruitment bridge template families are in place
+- live intake continues to write to `hr_pool`
+- the handoff is not yet implemented as a formal conversion workflow
 
 Work:
 - conversion request model/action
@@ -130,6 +140,12 @@ Work:
 - freeze or semi-freeze intake after conversion
 
 ### Phase 3 - Phase 2 recruitment enrichment
+
+Status:
+- the form corpus is mapped to recruitment/onboarding families
+- document generation posture is decided
+- external signing posture is decided
+- implementation of runtime record flows is still pending
 
 Work:
 - interview evaluation
@@ -229,6 +245,12 @@ Completed:
   - Google Docs as fallback for simpler bilingual templates
   - Odoo Sign as the default external signing path
 
+Open:
+
+- add Arabic translations aligned to the form corpus and Libyan usage
+- normalize recruitment terminology to `إجراءات التوظيف`
+- formalize the canonical task-template layer in `grc_backbone`
+
 Open next:
 
 - validate the recruitment bridge scaffold against the install graph
@@ -244,6 +266,7 @@ Completed:
 - removed the unused GRC functional-area field from `hr_pool`
 - removed the `grc_backbone` dependency from `hr_pool`
 - kept the live intake payload shape unchanged
+- introduced canonical `task_template` / `task_template_line` governance in `grc_backbone`
 
 Open next:
 
@@ -253,6 +276,7 @@ Open next:
 - confirmed only bridge-owned recruitment functional-area links remain in the live graph
 - split bridge inverse `many2one` field creation into a preload XML so parent `one2many` fields can load cleanly in SaaS import order
 - reuse legacy `hr.job` governance fields already present in upgraded databases instead of recreating duplicate `ir.model.fields` records during the bridge install path
+- add Arabic terminology alignment and task-template translation coverage
 
 ## 9. Refactor safety rules
 

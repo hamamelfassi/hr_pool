@@ -6,6 +6,7 @@ Suggested contents:
 
 - taxonomy design notes
 - functional area / function maps
+- canonical task-template design notes
 - bridge-field references
 - governance policy and SOP notes
 - generated evidence / output form specs

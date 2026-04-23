@@ -18,7 +18,7 @@ The rule is:
 | `0003` | Required Pre-Employment Documents | Checklist / evidence pack | `hr_recruitment` | `grc_recruitment_bridge` | Applicant, HR manager | First-wave bridge template family |
 | `0004` | Truthfulness / document validity declaration | Declaration pack | `hr_recruitment` | `grc_recruitment_bridge` | Applicant, HR manager | Reusable declaration wording comes from GRC provisions |
 | `0005` | Missing from corpus | Gap | n/a | n/a | n/a | Track as a source inventory gap |
-| `0006` | Task / equipment acceptance | Employee admin / task control | Future employee admin or ops module | Not core bridge | Employee, supervisor | Not recruitment-core |
+| `0006` | Task / equipment acceptance | Employee admin / task control | Future employee admin or ops module | Not core bridge | Employee, supervisor | Strong source for the canonical `task_template` layer in `grc_backbone`; not recruitment-core |
 | `0007` | Internal regulations acknowledgment | Declaration / acknowledgment | `hr_recruitment` / onboarding continuation | `grc_recruitment_bridge` | Applicant, HR manager | First-wave bridge template family |
 | `0008` | Training commitment / reimbursement | Declaration / commitment | `hr_recruitment` / onboarding continuation | `grc_recruitment_bridge` | Applicant, HR manager | First-wave bridge template family |
 | `0009` | Confidentiality declaration | Declaration pack | `hr_recruitment` / onboarding continuation | `grc_recruitment_bridge` | Applicant, HR manager | First-wave bridge template family |
@@ -69,6 +69,8 @@ Instead:
 - one runtime module owns the live instance
 - one signer profile owns the routing
 - one PDF artifact is generated per runtime record
+
+Task templates are a separate canonical GRC primitive, not part of the bridge-owned HR form families. Form `0006` is the main corpus evidence for that layer because it expresses repeatable task/control steps rather than recruitment composition.
 
 ## 5. Practical consequence
 

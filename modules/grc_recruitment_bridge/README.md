@@ -3,6 +3,7 @@
 This module is the XML-only recruitment governance bridge for Marsellia.
 
 It owns reusable recruitment and onboarding template families, controlled references, and signer-routing profiles.
+Its Arabic dashboard label is `إجراءات التوظيف`.
 
 ## First-wave scope
 
@@ -13,6 +14,7 @@ It owns reusable recruitment and onboarding template families, controlled refere
 - declaration packs
 - signature profiles
 - bridge-facing recruitment job references
+- canonical task templates are owned by `grc_backbone`, not by this module
 
 ## Rule of use
 

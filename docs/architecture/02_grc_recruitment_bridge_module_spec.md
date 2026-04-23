@@ -12,7 +12,7 @@ It does not own live people-process records.
 
 - Technical module name: `grc_recruitment_bridge`
 - English app label: `Recruitment Governance`
-- Arabic app label: `ضابط التوظيف`
+- Arabic app label: `إجراءات التوظيف`
 - Category: `Human Resources`
 - Module type: XML-only importable addon for Odoo SaaS
 
@@ -43,6 +43,7 @@ The module does not own the live workflow records themselves:
 - actual contract acceptance records
 - final signed PDFs for a specific person
 - employee admin or HSE runtime forms
+- canonical task templates and task template lines
 
 Those belong in `hr_pool`, `hr_recruitment`, or a future domain module.
 
@@ -83,6 +84,14 @@ These are real forms, but they should move to later operational modules rather t
 - `MCEP-HR-F-0012` is missing from the source corpus
 
 See `docs/architecture/03_hr_form_family_inventory.md` for the runtime ownership map.
+
+## 4.4 Task-template boundary
+
+Task templates are not bridge-owned.
+
+They live in `grc_backbone` because they are cross-domain governed execution units rather than recruitment-specific compositions.
+
+The bridge may reference them later for recruitment-specific operational routing, but it should not define the canonical task-template models.
 
 ## 5. Exact model names
 
@@ -189,7 +198,7 @@ Signature profile line:
 ### 6.1 Root menu
 
 - English: `Recruitment Governance`
-- Arabic: `ضابط التوظيف`
+- Arabic: `إجراءات التوظيف`
 
 ### 6.2 Suggested submenu structure
 
@@ -205,8 +214,8 @@ Signature profile line:
   - `Published Templates`
 - `References`
   - `Linked Functional Areas`
-  - `Linked Functions`
-  - `Linked Clauses`
+- `Linked Functions`
+- `Linked Clauses`
 
 ## 7. Exact actions
 

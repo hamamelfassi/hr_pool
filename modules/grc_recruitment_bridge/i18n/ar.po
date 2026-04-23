@@ -6,13 +6,13 @@ msgstr ""
 "Language: ar\n"
 
 msgid "Recruitment Governance"
-msgstr "ضابط التوظيف"
+msgstr "إجراءات التوظيف"
 
 msgid "Recruitment Governance User"
-msgstr "مستخدم ضابط التوظيف"
+msgstr "مستخدم إجراءات التوظيف"
 
 msgid "Recruitment Governance Manager"
-msgstr "مدير ضابط التوظيف"
+msgstr "مدير إجراءات التوظيف"
 
 msgid "Templates"
 msgstr "القوالب"
@@ -22,3 +22,39 @@ msgstr "الاعتمادات"
 
 msgid "References"
 msgstr "المرجعيات"
+
+msgid "Role / Job Description Templates"
+msgstr "قوالب الوصف الوظيفي"
+
+msgid "Interview Evaluation Templates"
+msgstr "قوالب تقييم مقابلة المتقدم للوظيفة"
+
+msgid "Document Checklist Templates"
+msgstr "قوائم المستندات المطلوبة قبل التوظيف"
+
+msgid "Onboarding Packs"
+msgstr "حزم استكمال إجراءات التوظيف"
+
+msgid "Declaration Packs"
+msgstr "حزم الإقرارات"
+
+msgid "Signature Profiles"
+msgstr "مسارات التوقيع"
+
+msgid "Task Templates"
+msgstr "قوالب المهام"
+
+msgid "Template Review Queue"
+msgstr "طابور مراجعة القوالب"
+
+msgid "Published Templates"
+msgstr "القوالب المعتمدة"
+
+msgid "Linked Functional Areas"
+msgstr "المجالات الوظيفية المرتبطة"
+
+msgid "Linked Functions"
+msgstr "الاختصاصات الوظيفية المرتبطة"
+
+msgid "Linked Clauses"
+msgstr "البنود المرتبطة"

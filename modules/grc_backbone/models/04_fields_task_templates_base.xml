@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="field_task_template_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_task_template" />
+        <field name="name">x_name</field>
+        <field name="field_description">Task Template Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_task_template_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_task_template" />
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_task_template_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_task_template" />
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_task_template_x_function_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_task_template" />
+        <field name="name">x_function_id</field>
+        <field name="field_description">Function</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.function</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_task_template_x_sop_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_task_template" />
+        <field name="name">x_sop_ids</field>
+        <field name="field_description">SOPs</field>
+        <field name="ttype">many2many</field>
+        <field name="relation">x_grc.sop</field>
+        <field name="relation_table">x_grc_task_template_sop_rel</field>
+        <field name="column1">x_task_template_id</field>
+        <field name="column2">x_sop_id</field>
+    </record>
+    <record id="field_task_template_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_task_template" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_task_template_x_version" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_task_template" />
+        <field name="name">x_version</field>
+        <field name="field_description">Version</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_task_template_x_effective_date" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_task_template" />
+        <field name="name">x_effective_date</field>
+        <field name="field_description">Effective Date</field>
+        <field name="ttype">date</field>
+    </record>
+    <record id="field_task_template_x_retired_date" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_task_template" />
+        <field name="name">x_retired_date</field>
+        <field name="field_description">Retired Date</field>
+        <field name="ttype">date</field>
+    </record>
+    <record id="field_task_template_x_is_default" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_task_template" />
+        <field name="name">x_is_default</field>
+        <field name="field_description">Default Template</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_task_template_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_task_template" />
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_task_template_line_x_template_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_task_template_line" />
+        <field name="name">x_template_id</field>
+        <field name="field_description">Task Template</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.task_template</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_task_template_line_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_task_template_line" />
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_task_template_line_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_task_template_line" />
+        <field name="name">x_name</field>
+        <field name="field_description">Step Name</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_task_template_line_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_task_template_line" />
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_task_template_line_x_instruction" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_task_template_line" />
+        <field name="name">x_instruction</field>
+        <field name="field_description">Instruction</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_task_template_line_x_expected_outcome" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_task_template_line" />
+        <field name="name">x_expected_outcome</field>
+        <field name="field_description">Expected Outcome</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_task_template_line_x_required" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_task_template_line" />
+        <field name="name">x_required</field>
+        <field name="field_description">Required</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_task_template_line_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_task_template_line" />
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+</odoo>

@@ -7,17 +7,14 @@ Type
 Dependencies
 - base
 - uom
-- hr
-- hr_recruitment
-- hr_pool
+- no HR runtime dependencies in the current reshuffled graph
 
 Included
 - 15 core GRC models
 - Full internal GRC relations
-- Minimal HR bridges:
-  - HR Pool -> Functional Area
-  - Preferred Role Type -> Functional Areas
-  - Recruitment Jobs -> Functional Area / Function
+- Canonical task templates:
+  - task template
+  - task template line
 - Minimal ACLs
 - Preliminary list/form/search views
 - Functional area and function seed data
@@ -28,9 +25,7 @@ Notes
 - Wider operational/commercial integrations are intentionally deferred.
 
 Install
-1. Ensure hr_pool is already installed.
-2. Ensure base_import_module is installed on the target database.
-3. Go to Apps -> Import Module and upload the zip.
+1. Ensure base_import_module is installed on the target database.
+2. Go to Apps -> Import Module and upload the zip.
 
-
-Patch v8: added translate=True to key reference/content fields and bundled Arabic translations in i18n/ar.po and i18n/ar_001.po.
+Patch v9: canonical GRC only, with task templates added as a cross-domain primitive and HR bridge logic removed from the backbone layer.

@@ -300,6 +300,46 @@
         <field name="name">Cancelled</field>
         <field name="value">cancelled</field>
     </record>
+    <record id="sel_field_task_template_x_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_task_template_x_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="sel_field_task_template_x_state_under_review" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_task_template_x_state"/>
+        <field name="name">Under Review</field>
+        <field name="value">under_review</field>
+    </record>
+    <record id="sel_field_task_template_x_state_active" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_task_template_x_state"/>
+        <field name="name">Active</field>
+        <field name="value">active</field>
+    </record>
+    <record id="sel_field_task_template_x_state_archived" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_task_template_x_state"/>
+        <field name="name">Archived</field>
+        <field name="value">archived</field>
+    </record>
+    <record id="sel_field_task_template_line_x_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_task_template_line_x_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="sel_field_task_template_line_x_state_under_review" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_task_template_line_x_state"/>
+        <field name="name">Under Review</field>
+        <field name="value">under_review</field>
+    </record>
+    <record id="sel_field_task_template_line_x_state_active" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_task_template_line_x_state"/>
+        <field name="name">Active</field>
+        <field name="value">active</field>
+    </record>
+    <record id="sel_field_task_template_line_x_state_archived" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_backbone.field_task_template_line_x_state"/>
+        <field name="name">Archived</field>
+        <field name="value">archived</field>
+    </record>
     <record id="sel_field_framework_x_type_international_standard" model="ir.model.fields.selection">
         <field name="field_id" ref="grc_backbone.field_framework_x_type"/>
         <field name="name">International Standard</field>

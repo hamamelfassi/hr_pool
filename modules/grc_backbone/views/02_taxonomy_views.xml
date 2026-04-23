@@ -113,6 +113,16 @@
                                 </list>
                             </field>
                         </page>
+                        <page string="Task Templates">
+                            <field name="x_task_template_ids">
+                                <list>
+                                    <field name="x_code"/>
+                                    <field name="x_name"/>
+                                    <field name="x_state"/>
+                                    <field name="x_version"/>
+                                </list>
+                            </field>
+                        </page>
                     </notebook>
                 </sheet>
             </form>
@@ -166,6 +176,18 @@
                     <group>
                         <field name="x_procedure_steps"/>
                     </group>
+                    <notebook>
+                        <page string="Task Templates">
+                            <field name="x_task_template_ids">
+                                <list>
+                                    <field name="x_code"/>
+                                    <field name="x_name"/>
+                                    <field name="x_function_id"/>
+                                    <field name="x_state"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>

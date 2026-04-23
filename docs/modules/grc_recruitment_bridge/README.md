@@ -23,4 +23,5 @@ Key architecture references:
 Note:
 
 - this folder is the doc home for the recruitment bridge scaffold
-- the runtime module label should be `Recruitment Governance` / `ضابط التوظيف`
+- the runtime module label should be `Recruitment Governance` / `إجراءات التوظيف`
+- canonical task templates belong in `grc_backbone`, not here

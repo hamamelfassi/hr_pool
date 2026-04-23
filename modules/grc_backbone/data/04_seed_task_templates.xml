@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sop_external_governance_renewal" model="x_grc.sop">
+        <field name="x_name">External Governance Document Renewal</field>
+        <field name="x_code">SOP-CORP-001</field>
+        <field name="x_version">1.0</field>
+        <field name="x_function_id" ref="grc_backbone.fn_regulatory_registers"/>
+        <field name="x_state">active</field>
+        <field name="x_purpose">Renew commercial registers, chamber of commerce certificates, and related external governance documents without losing audit traceability.</field>
+        <field name="x_procedure_steps">1. Check expiry date and renewal window.
+2. Collect supporting documents.
+3. Submit to the competent authority and record references.
+4. Archive the renewed copies and notify the record owner.</field>
+    </record>
+    <record id="sop_site_supply_replenishment" model="x_grc.sop">
+        <field name="x_name">Diesel Supply Replenishment Control</field>
+        <field name="x_code">SOP-SITE-001</field>
+        <field name="x_version">1.0</field>
+        <field name="x_function_id" ref="grc_backbone.fn_site_support"/>
+        <field name="x_state">active</field>
+        <field name="x_purpose">Track the renewal of diesel supply for plant operations and keep replenishment evidence in the operational file.</field>
+        <field name="x_procedure_steps">1. Verify plant consumption and minimum stock.
+2. Raise the replenishment request and confirm supplier availability.
+3. Coordinate delivery and on-site receipt.
+4. Record the delivery evidence and close the cycle.</field>
+    </record>
+    <record id="task_template_external_governance_renewal" model="x_grc.task_template">
+        <field name="x_name">External Governance Document Renewal Task</field>
+        <field name="x_code">TT-CORP-001</field>
+        <field name="x_description">Recurring task package for commercial register, chamber of commerce, and related external document renewals.</field>
+        <field name="x_function_id" ref="grc_backbone.fn_regulatory_registers"/>
+        <field name="x_sop_ids" eval="[(4, ref('grc_backbone.sop_external_governance_renewal'))]"/>
+        <field name="x_state">active</field>
+        <field name="x_version">1.0</field>
+        <field name="x_is_default">True</field>
+        <field name="x_notes">Seeded as the first canonical example of a cross-domain task template anchored to a function and linked to an SOP.</field>
+    </record>
+    <record id="task_template_diesel_supply_replenishment" model="x_grc.task_template">
+        <field name="x_name">Diesel Supply Replenishment Task</field>
+        <field name="x_code">TT-SITE-001</field>
+        <field name="x_description">Recurring operational task package for monitoring diesel stock and coordinating replenishment for treatment plant operations.</field>
+        <field name="x_function_id" ref="grc_backbone.fn_site_support"/>
+        <field name="x_sop_ids" eval="[(4, ref('grc_backbone.sop_site_supply_replenishment'))]"/>
+        <field name="x_state">active</field>
+        <field name="x_version">1.0</field>
+        <field name="x_notes">Represents the granular task layer beneath the site support function.</field>
+    </record>
+</odoo>

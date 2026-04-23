@@ -21,6 +21,7 @@ Owns:
 - functional areas
 - functions
 - SOPs
+- task templates and task template lines
 - risks
 - controls
 - compliance checks
@@ -160,13 +161,14 @@ Should not contain:
 - live interview submissions
 - live offer acceptance records
 - employee admin or HSE runtime forms
+- canonical task-template ownership
 - generated finalized PDFs for one-off cases unless they are generic reusable artifacts
 
 Current naming posture:
 
 - technical module name: `grc_recruitment_bridge`
 - English app label: `Recruitment Governance`
-- Arabic app label: `ضابط التوظيف`
+- Arabic app label: `إجراءات التوظيف`
 
 Future adjacent bridge:
 
@@ -182,9 +184,10 @@ Use this test before placing a feature in a module:
 2. Is it an operational workflow step or business record? Put it in the domain module.
 3. Is it a linkage between the two? Put it in the domain-coherent bridge responsibility of the domain module, unless multiple domains need the same adapter.
 4. Is it a reusable recruitment template family, signer-routing profile, or composition pack for recruitment/onboarding? Put it in `grc_recruitment_bridge`.
-5. Is it a live submission, a live applicant record, or a live generated document for a specific person? Put it in `hr_pool` or `hr_recruitment`.
-6. Is it employee admin, offboarding, leave, attendance, or HSE operations? Keep it out of the recruitment bridge and place it in a future domain module.
-7. Can the change break the live intake workflow? If yes, defer it until the replacement path is proven.
+5. Is it a canonical task template used to govern repeatable execution across domains? Put it in `grc_backbone` as a child of `x_grc.function`.
+6. Is it a live submission, a live applicant record, or a live generated document for a specific person? Put it in `hr_pool` or `hr_recruitment`.
+7. Is it employee admin, offboarding, leave, attendance, or HSE operations? Keep it out of the recruitment bridge and place it in a future domain module.
+8. Can the change break the live intake workflow? If yes, defer it until the replacement path is proven.
 
 ## 5. Practical examples
 

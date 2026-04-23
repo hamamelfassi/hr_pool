@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="field_function_x_task_template_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_function" />
+        <field name="name">x_task_template_ids</field>
+        <field name="field_description">Task Templates</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.task_template</field>
+        <field name="relation_field">x_function_id</field>
+    </record>
+    <record id="field_sop_x_task_template_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_sop" />
+        <field name="name">x_task_template_ids</field>
+        <field name="field_description">Task Templates</field>
+        <field name="ttype">many2many</field>
+        <field name="relation">x_grc.task_template</field>
+        <field name="relation_table">x_grc_task_template_sop_rel</field>
+        <field name="column1">x_sop_id</field>
+        <field name="column2">x_task_template_id</field>
+    </record>
+    <record id="field_task_template_x_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_task_template" />
+        <field name="name">x_line_ids</field>
+        <field name="field_description">Task Steps</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.task_template_line</field>
+        <field name="relation_field">x_template_id</field>
+    </record>
+</odoo>

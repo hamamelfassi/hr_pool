@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <menuitem id="menu_task_templates" name="Task Templates" parent="grc_backbone.menu_grc_taxonomy" action="grc_backbone.action_task_template" sequence="25"/>
+
+    <record id="view_task_template_list" model="ir.ui.view">
+        <field name="name">x_grc.task_template.list</field>
+        <field name="model">x_grc.task_template</field>
+        <field name="arch" type="xml">
+            <list string="Task Templates">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_function_id"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_task_template_search" model="ir.ui.view">
+        <field name="name">x_grc.task_template.search</field>
+        <field name="model">x_grc.task_template</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_code"/>
+                <field name="x_function_id"/>
+                <field name="x_sop_ids"/>
+                <filter name="active" string="Active" domain="[('x_state','=','active')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_task_template_form" model="ir.ui.view">
+        <field name="name">x_grc.task_template.form</field>
+        <field name="model">x_grc.task_template</field>
+        <field name="arch" type="xml">
+            <form string="Task Template">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_function_id"/>
+                            <field name="x_state"/>
+                        </group>
+                        <group>
+                            <field name="x_version"/>
+                            <field name="x_effective_date"/>
+                            <field name="x_retired_date"/>
+                            <field name="x_is_default"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="x_description"/>
+                        </page>
+                        <page string="SOP References">
+                            <field name="x_sop_ids">
+                                <list>
+                                    <field name="x_code"/>
+                                    <field name="x_name"/>
+                                    <field name="x_function_id"/>
+                                    <field name="x_state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Steps">
+                            <field name="x_line_ids">
+                                <list>
+                                    <field name="x_sequence"/>
+                                    <field name="x_name"/>
+                                    <field name="x_required"/>
+                                    <field name="x_state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="x_notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
