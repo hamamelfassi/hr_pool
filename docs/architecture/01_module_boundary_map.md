@@ -135,6 +135,33 @@ Consumes:
 - GRC taxonomy
 - intake handoff from `hr_pool`
 
+### 3.4 `grc_hr_bridge`
+
+Domain-coherent HR governance bridge.
+
+Owns:
+
+- HR role / job description templates
+- interview evaluation templates
+- document checklist templates
+- declaration packs
+- contract / offer packs
+- bridge fields on HR operational models
+- inherited views, actions, and menus that expose governed HR template selection
+
+Consumes:
+
+- `grc_backbone` functional areas, functions, SOPs, and clause libraries
+- operational HR records from `hr_pool` and `hr_recruitment`
+
+Should not contain:
+
+- live candidate intake records
+- live applicant records
+- live interview submissions
+- live offer acceptance records
+- generated finalized PDFs for one-off cases unless they are generic reusable artifacts
+
 ## 4. Decision rules for future work
 
 Use this test before placing a feature in a module:
@@ -161,6 +188,12 @@ Use this test before placing a feature in a module:
 - the intake candidate record lives in `hr_pool`
 - the conversion workflow lives in `hr_pool` or the recruitment handoff domain, depending on where the record is executed
 - the chairman approval logic remains attached to the domain workflow, not the GRC backbone itself
+
+### Example D: HR role templates and evaluation packs
+
+- the canonical governed functions and clauses live in `grc_backbone`
+- the HR-specific composition of those items into job description templates, interview rubrics, and checklist packs lives in `grc_hr_bridge`
+- the actual job record, applicant record, interview response, and signed document instance live in the operational HR modules
 
 ## 6. Packaging rule
 

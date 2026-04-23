@@ -8,10 +8,14 @@ This folder stores project documentation and non-module implementation assets th
   master architecture, integrated plans, and program strategy
 - `architecture/01_module_boundary_map.md`
   concrete module ownership and bridge-domain rules
+- `architecture/02_grc_hr_bridge_module_spec.md`
+  concrete HR governance bridge module specification
 - `modules/hr_pool/`
   HR Pool-specific documentation
 - `modules/grc_backbone/`
   GRC-specific documentation
+- `modules/grc_hr_bridge/`
+  HR governance bridge documentation
 - `resources/n8n/`
   n8n code-node scripts and mapping helpers
 

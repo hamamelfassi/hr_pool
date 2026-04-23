@@ -141,18 +141,22 @@ The repository is organized to support:
 
 - `modules/hr_pool/`
 - `modules/grc_backbone/`
+- `modules/grc_hr_bridge/`
 - `docs/architecture/`
 - `docs/modules/hr_pool/`
 - `docs/modules/grc_backbone/`
+- `docs/modules/grc_hr_bridge/`
 - `docs/resources/n8n/`
 - `resources/hr_pool/`
 - `resources/grc_backbone/`
+- `resources/grc_hr_bridge/`
 
 ### Boundary map companion
 
 The detailed module boundary map is maintained in:
 
 - `docs/architecture/01_module_boundary_map.md`
+- `docs/architecture/02_grc_hr_bridge_module_spec.md`
 
 ## 6. Packaging rules
 
