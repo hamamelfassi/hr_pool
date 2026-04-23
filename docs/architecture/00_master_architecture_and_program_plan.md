@@ -252,6 +252,7 @@ Open next:
 - pruned stale backbone translations that still pointed at removed HR runtime fields
 - confirmed only bridge-owned recruitment functional-area links remain in the live graph
 - split bridge inverse `many2one` field creation into a preload XML so parent `one2many` fields can load cleanly in SaaS import order
+- reuse legacy `hr.job` governance fields already present in upgraded databases instead of recreating duplicate `ir.model.fields` records during the bridge install path
 
 ## 9. Refactor safety rules
 
