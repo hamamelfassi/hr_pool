@@ -1,33 +1,42 @@
-# hr_pool
+# Marsellia HR / GRC Monorepo
 
-XML-only Odoo SaaS module for candidate pooling and recruitment intake.
+This repository is the shared working tree for Marsellia's Odoo SaaS custom modules, supporting documents, integration scripts, and exported artifacts.
 
-## Repo Layout
+## Current module layout
 
-- Module source stays at repo root so Odoo still sees a normal module.
-- Supporting documentation lives under `docs/`.
-- n8n assets live under `docs/resources/n8n/`.
-- Generated upload archives go to `dist/` and are gitignored.
+- `modules/hr_pool/` - governed HR intake / pooling module
+- `modules/grc_backbone/` - governance, risk, compliance backbone module scaffold
 
-## Odoo Upload
+## Supporting structure
 
-Do not zip the whole repository directory manually.
+- `docs/` - canonical architecture, plans, field maps, and module-specific documentation
+- `resources/` - non-installable assets, exported PDFs, templates, and operational files
+- `docs/resources/n8n/` - n8n code-node scripts and payload mapping helpers
+- `scripts/` - local build helpers, including Odoo zip packaging
 
-Build a clean Odoo upload archive with:
+## Packaging rule
+
+Only the contents of an individual module directory should be zipped for Odoo SaaS import.
+Do not include `docs/`, `resources/`, or `scripts/` in an installable module archive.
+
+## Build
 
 ```bash
 ./scripts/build_odoo_zip.sh
 ```
 
-That script includes only the module files Odoo needs and excludes docs, helper scripts, git metadata, and local junk files.
+That currently builds the `hr_pool` module archive from `modules/hr_pool/`.
+To build any other module later, use:
 
-## Current Scope
+```bash
+./scripts/build_module_zip.sh <module_name>
+```
 
-- Odoo module: `hr_pool`
-- Integration flow: Fillout/Zite -> n8n -> Odoo
-- SaaS constraint: keep non-module materials outside the shipped module archive
+## Working model
 
-## Integration Docs
+This repository is intentionally organized as an integrated program workspace:
 
-- Field mapping manifest: `docs/fillout_to_odoo_field_mapping.md`
-- n8n mapper reference: `docs/resources/n8n/hr_pool_mapper.js`
+- shared architecture and governance live once in `docs/`
+- each module keeps its own code, views, data, and packaging boundary
+- each module gets its own documentation and resource subtrees
+- cross-module bridges can live in separate helper modules or bridge docs, but not inside the installable docs tree
