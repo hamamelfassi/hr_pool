@@ -14,6 +14,10 @@ This folder stores project documentation and non-module implementation assets th
   runtime ownership and form-family mapping
 - `architecture/04_hr_document_generation_and_signature_workflow.md`
   document generation, PDF export, and signature routing rules
+- `architecture/05_hr_native_first_decision_matrix.md`
+  form-family generation/signing decision matrix
+- `architecture/06_hr_native_first_workflow_playbook.md`
+  native-first build sequence for documents, chatter, activities, Sign, and QWeb
 - `modules/hr_pool/`
   HR Pool-specific documentation
 - `modules/grc_backbone/`

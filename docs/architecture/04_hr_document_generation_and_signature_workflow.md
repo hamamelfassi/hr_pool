@@ -2,6 +2,11 @@
 
 This document defines the practical path for turning Marsellia HR templates into signed PDFs and linked operational records.
 
+See also:
+
+- `docs/architecture/05_hr_native_first_decision_matrix.md`
+- `docs/architecture/06_hr_native_first_workflow_playbook.md`
+
 The rule is:
 
 - the template source belongs in docs/resources or Google Docs

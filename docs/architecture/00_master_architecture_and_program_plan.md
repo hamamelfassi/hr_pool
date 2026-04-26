@@ -13,6 +13,7 @@ It keeps the program aligned across:
 - canonical task-template governance for repeatable operational work
 - future operational and commercial extensions
 - integration layers such as n8n, Fillout, Zite, and document generation
+- native Odoo document/signature flows via Documents, Sign, QWeb, chatter, and activities
 
 ## 2. Architectural posture
 
@@ -143,8 +144,8 @@ Work:
 
 Status:
 - the form corpus is mapped to recruitment/onboarding families
-- document generation posture is decided
-- external signing posture is decided
+- document generation posture is decided in favor of Odoo-native first
+- external signing posture is decided in favor of Odoo Sign
 - implementation of runtime record flows is still pending
 
 Work:
@@ -154,6 +155,7 @@ Work:
 - applicant-side continuation and prefill surface
 - contract, declaration, and signature flow
 - PDF generation and attachment handling
+- native Odoo Documents storage and chatter/activity integration
 
 Implementation note:
 
@@ -277,6 +279,20 @@ Open next:
 - split bridge inverse `many2one` field creation into a preload XML so parent `one2many` fields can load cleanly in SaaS import order
 - reuse legacy `hr.job` governance fields already present in upgraded databases instead of recreating duplicate `ir.model.fields` records during the bridge install path
 - add Arabic terminology alignment and task-template translation coverage
+
+### 2026-04-26 - Native document and signature strategy review
+
+Open:
+
+- define native record schemas for signable and reportable HR workflows
+- decide which form families use static Sign templates versus QWeb PDFs
+- define Documents foldering and attachment lifecycle rules
+- decide where Survey is sufficient and where a custom governed record is required
+
+References:
+
+- `docs/architecture/05_hr_native_first_decision_matrix.md`
+- `docs/architecture/06_hr_native_first_workflow_playbook.md`
 
 ## 9. Refactor safety rules
 
