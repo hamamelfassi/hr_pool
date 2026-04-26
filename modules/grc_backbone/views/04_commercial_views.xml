@@ -8,14 +8,14 @@
         <field name="name">x_grc.clause.list</field>
         <field name="model">x_grc.clause</field>
         <field name="arch" type="xml">
-            <list string="Clauses">
+            <tree string="Clauses">
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_category"/>
                 <field name="x_functional_area_id"/>
                 <field name="x_is_mandatory"/>
                 <field name="x_state"/>
-            </list>
+            </tree>
         </field>
     </record>
     <record id="view_clause_search" model="ir.ui.view">
@@ -60,13 +60,13 @@
         <field name="name">x_grc.contract_template.list</field>
         <field name="model">x_grc.contract_template</field>
         <field name="arch" type="xml">
-            <list string="Contract Templates">
+            <tree string="Contract Templates">
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_type"/>
                 <field name="x_functional_area_id"/>
                 <field name="x_state"/>
-            </list>
+            </tree>
         </field>
     </record>
     <record id="view_contract_template_search" model="ir.ui.view">
@@ -112,7 +112,7 @@
         <field name="name">x_grc.tender.list</field>
         <field name="model">x_grc.tender</field>
         <field name="arch" type="xml">
-            <list string="Tenders">
+            <tree string="Tenders">
                 <field name="x_reference_code"/>
                 <field name="x_name"/>
                 <field name="x_client_id"/>
@@ -120,7 +120,7 @@
                 <field name="x_submission_deadline"/>
                 <field name="x_expected_revenue"/>
                 <field name="x_state"/>
-            </list>
+            </tree>
         </field>
     </record>
     <record id="view_tender_search" model="ir.ui.view">

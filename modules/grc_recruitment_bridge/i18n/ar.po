@@ -26,11 +26,32 @@ msgstr "المرجعيات"
 msgid "Role / Job Description Templates"
 msgstr "قوالب الوصف الوظيفي"
 
+msgid "Role / Job Description Template"
+msgstr "قالب الوصف الوظيفي"
+
+msgid "Recruitment Role Template Master"
+msgstr "القالب الرئيسي للدور الوظيفي"
+
+msgid "State"
+msgstr "الحالة"
+
+msgid "Version"
+msgstr "الإصدار"
+
+msgid "Source Form Code"
+msgstr "رمز النموذج المصدر"
+
+msgid "Template Name"
+msgstr "اسم القالب"
+
+msgid "Code"
+msgstr "الرمز"
+
+msgid "New"
+msgstr "جديد"
+
 msgid "Job Positions"
 msgstr "الوظائف الشاغرة"
-
-msgid "Job Position"
-msgstr "الوظيفة الشاغرة"
 
 msgid "Job Page"
 msgstr "صفحة الوظيفة"
@@ -49,6 +70,51 @@ msgstr "معلومات التقديم"
 
 msgid "Trackers"
 msgstr "المتابعات"
+
+msgid "Hiring Process"
+msgstr "عملية التوظيف"
+
+msgid "Recruiter"
+msgstr "الموظف المسؤول"
+
+msgid "Published"
+msgstr "منشور"
+
+msgid "Target"
+msgstr "الهدف"
+
+msgid "Interviews"
+msgstr "المقابلات"
+
+msgid "Email Alias"
+msgstr "الاسم المستعار للبريد"
+
+msgid "Tags"
+msgstr "الوسوم"
+
+msgid "Contract"
+msgstr "العقد"
+
+msgid "Contract Type"
+msgstr "نوع العقد"
+
+msgid "Department"
+msgstr "القسم"
+
+msgid "Expected Skills"
+msgstr "المهارات المتوقعة"
+
+msgid "Expected Degree"
+msgstr "المؤهل المتوقع"
+
+msgid "Salary Range"
+msgstr "نطاق الراتب"
+
+msgid "Job Location"
+msgstr "موقع الوظيفة"
+
+msgid "Job Position"
+msgstr "الوظيفة الشاغرة"
 
 msgid "Interview Evaluation Templates"
 msgstr "قوالب تقييم مقابلة المتقدم للوظيفة"

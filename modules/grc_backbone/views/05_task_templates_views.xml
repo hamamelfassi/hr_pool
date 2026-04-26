@@ -6,12 +6,12 @@
         <field name="name">x_grc.task_template.list</field>
         <field name="model">x_grc.task_template</field>
         <field name="arch" type="xml">
-            <list string="Task Templates">
+            <tree string="Task Templates">
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_function_id"/>
                 <field name="x_state"/>
-            </list>
+            </tree>
         </field>
     </record>
 
@@ -55,22 +55,22 @@
                         </page>
                         <page string="SOP References">
                             <field name="x_sop_ids">
-                                <list>
+                                <tree>
                                     <field name="x_code"/>
                                     <field name="x_name"/>
                                     <field name="x_function_id"/>
                                     <field name="x_state"/>
-                                </list>
+                                </tree>
                             </field>
                         </page>
                         <page string="Steps">
                             <field name="x_line_ids">
-                                <list>
+                                <tree>
                                     <field name="x_sequence"/>
                                     <field name="x_name"/>
                                     <field name="x_required"/>
                                     <field name="x_state"/>
-                                </list>
+                                </tree>
                             </field>
                         </page>
                         <page string="Notes">

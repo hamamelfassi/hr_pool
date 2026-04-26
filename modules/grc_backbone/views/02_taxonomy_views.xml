@@ -8,11 +8,11 @@
         <field name="name">x_grc.functional_area.list</field>
         <field name="model">x_grc.functional_area</field>
         <field name="arch" type="xml">
-            <list string="Functional Areas">
+            <tree string="Functional Areas">
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_state"/>
-            </list>
+            </tree>
         </field>
     </record>
     <record id="view_functional_area_search" model="ir.ui.view">
@@ -47,11 +47,11 @@
                         </page>
                         <page string="Functions">
                             <field name="x_function_ids">
-                                <list>
+                                <tree>
                                     <field name="x_code"/>
                                     <field name="x_name"/>
                                     <field name="x_state"/>
-                                </list>
+                                </tree>
                             </field>
                         </page>
                     </notebook>
@@ -63,12 +63,12 @@
         <field name="name">x_grc.function.list</field>
         <field name="model">x_grc.function</field>
         <field name="arch" type="xml">
-            <list string="Functions">
+            <tree string="Functions">
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_functional_area_id"/>
                 <field name="x_state"/>
-            </list>
+            </tree>
         </field>
     </record>
     <record id="view_function_search" model="ir.ui.view">
@@ -105,22 +105,22 @@
                         </page>
                         <page string="SOPs">
                             <field name="x_sop_ids">
-                                <list>
+                                <tree>
                                     <field name="x_code"/>
                                     <field name="x_name"/>
                                     <field name="x_version"/>
                                     <field name="x_state"/>
-                                </list>
+                                </tree>
                             </field>
                         </page>
                         <page string="Task Templates">
                             <field name="x_task_template_ids">
-                                <list>
+                                <tree>
                                     <field name="x_code"/>
                                     <field name="x_name"/>
                                     <field name="x_state"/>
                                     <field name="x_version"/>
-                                </list>
+                                </tree>
                             </field>
                         </page>
                     </notebook>
@@ -132,13 +132,13 @@
         <field name="name">x_grc.sop.list</field>
         <field name="model">x_grc.sop</field>
         <field name="arch" type="xml">
-            <list string="SOPs">
+            <tree string="SOPs">
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_version"/>
                 <field name="x_function_id"/>
                 <field name="x_state"/>
-            </list>
+            </tree>
         </field>
     </record>
     <record id="view_sop_search" model="ir.ui.view">
@@ -179,12 +179,12 @@
                     <notebook>
                         <page string="Task Templates">
                             <field name="x_task_template_ids">
-                                <list>
+                                <tree>
                                     <field name="x_code"/>
                                     <field name="x_name"/>
                                     <field name="x_function_id"/>
                                     <field name="x_state"/>
-                                </list>
+                                </tree>
                             </field>
                         </page>
                     </notebook>
