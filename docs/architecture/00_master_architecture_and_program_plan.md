@@ -323,6 +323,8 @@ Completed:
 - documented the schema in `docs/architecture/07_native_document_schema_implementation.md`
 - clarified the corrected target structure so the bridge owns definitions and the recruitment domain owns live runtime records
 - pinned the recruitment runtime UI / document submission structure in `docs/architecture/08_recruitment_runtime_ui_and_schema_map.md`
+- realigned the bridge code so the live interview evaluation, document checklist, and document submission records now use recruitment-side runtime model names and menu/view surfaces
+- added the recruitment document type catalog and typed document checklist submission structure
 
 Open:
 

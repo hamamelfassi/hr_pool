@@ -209,6 +209,7 @@
                                 <list>
                                     <field name="x_sequence"/>
                                     <field name="x_document_type"/>
+                                    <field name="x_document_type_id"/>
                                     <field name="x_is_mandatory"/>
                                     <field name="x_requires_expiry"/>
                                     <field name="x_renewal_period_months"/>
@@ -439,6 +440,62 @@
                             </field>
                         </page>
                     </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Document type catalog views -->
+    <record id="view_hr_document_type_list" model="ir.ui.view">
+        <field name="name">x_grc.hr_document_type.list</field>
+        <field name="model">x_grc.hr_document_type</field>
+        <field name="arch" type="xml">
+            <list string="Document Types">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_category"/>
+                <field name="x_is_mandatory_default"/>
+                <field name="x_requires_expiry_default"/>
+                <field name="x_default_signoff_role"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_hr_document_type_search" model="ir.ui.view">
+        <field name="name">x_grc.hr_document_type.search</field>
+        <field name="model">x_grc.hr_document_type</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_category"/>
+                <filter name="identity" string="Identity" domain="[('x_category','=','identity')]"/>
+                <filter name="legal" string="Legal" domain="[('x_category','=','legal')]"/>
+                <filter name="health" string="Health" domain="[('x_category','=','health')]"/>
+                <filter name="employment" string="Employment" domain="[('x_category','=','employment')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_hr_document_type_form" model="ir.ui.view">
+        <field name="name">x_grc.hr_document_type.form</field>
+        <field name="model">x_grc.hr_document_type</field>
+        <field name="arch" type="xml">
+            <form string="Document Type">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_category"/>
+                            <field name="x_default_signoff_role"/>
+                        </group>
+                        <group>
+                            <field name="x_is_mandatory_default"/>
+                            <field name="x_requires_expiry_default"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="x_description"/>
+                    </group>
                 </sheet>
             </form>
         </field>

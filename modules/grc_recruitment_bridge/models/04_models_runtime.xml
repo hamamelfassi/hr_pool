@@ -2,14 +2,35 @@
 <odoo>
     <record id="model_hr_interview_evaluation" model="ir.model">
         <field name="name">Interview Evaluation</field>
-        <field name="model">x_grc.hr_interview_evaluation</field>
+        <field name="model">x_hr.recruitment_interview_evaluation</field>
         <field name="state">manual</field>
         <field name="is_mail_thread" eval="True"/>
         <field name="is_mail_activity" eval="True"/>
     </record>
     <record id="model_hr_interview_evaluation_line" model="ir.model">
         <field name="name">Interview Evaluation Line</field>
-        <field name="model">x_grc.hr_interview_evaluation_line</field>
+        <field name="model">x_hr.recruitment_interview_evaluation_line</field>
         <field name="state">manual</field>
+    </record>
+
+    <record id="model_hr_document_checklist" model="ir.model">
+        <field name="name">Document Checklist</field>
+        <field name="model">x_hr.recruitment_document_checklist</field>
+        <field name="state">manual</field>
+        <field name="is_mail_thread" eval="True"/>
+        <field name="is_mail_activity" eval="True"/>
+    </record>
+    <record id="model_hr_document_checklist_line" model="ir.model">
+        <field name="name">Document Checklist Line</field>
+        <field name="model">x_hr.recruitment_document_checklist_line</field>
+        <field name="state">manual</field>
+    </record>
+
+    <record id="model_hr_document_submission" model="ir.model">
+        <field name="name">Document Submission</field>
+        <field name="model">x_hr.recruitment_document_submission</field>
+        <field name="state">manual</field>
+        <field name="is_mail_thread" eval="True"/>
+        <field name="is_mail_activity" eval="True"/>
     </record>
 </odoo>

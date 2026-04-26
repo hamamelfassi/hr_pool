@@ -80,4 +80,71 @@
             </t>
         </t>
     </template>
+
+    <template id="report_hr_document_checklist_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <style>
+                            .marsellia-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+                            .marsellia-table th, .marsellia-table td { border: 1px solid #222; padding: 4px 6px; vertical-align: top; }
+                            .marsellia-title { margin-bottom: 8px; font-weight: 700; font-size: 16px; }
+                            .marsellia-section { margin-top: 14px; }
+                        </style>
+                        <div class="marsellia-title">Document Checklist</div>
+                        <table class="marsellia-table">
+                            <tr>
+                                <th>Code</th>
+                                <td><span t-field="o.x_code"/></td>
+                                <th>State</th>
+                                <td><span t-field="o.x_state"/></td>
+                            </tr>
+                            <tr>
+                                <th>Applicant</th>
+                                <td><span t-field="o.x_applicant_id"/></td>
+                                <th>Job</th>
+                                <td><span t-field="o.x_job_id"/></td>
+                            </tr>
+                            <tr>
+                                <th>Signature Profile</th>
+                                <td><span t-field="o.x_signature_profile_id"/></td>
+                                <th>Documents Folder</th>
+                                <td><span t-field="o.x_documents_folder_id"/></td>
+                            </tr>
+                        </table>
+                        <div class="marsellia-section">
+                            <table class="marsellia-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Document Type</th>
+                                        <th>Required</th>
+                                        <th>Requires Expiry</th>
+                                        <th>Renewal Period (Months)</th>
+                                        <th>Sign-off Role</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.x_line_ids" t-as="line">
+                                        <tr>
+                                            <td><span t-esc="line.x_sequence"/></td>
+                                            <td><span t-field="line.x_document_type_id"/></td>
+                                            <td><span t-field="line.x_is_required"/></td>
+                                            <td><span t-field="line.x_requires_expiry"/></td>
+                                            <td><span t-field="line.x_renewal_period_months"/></td>
+                                            <td><span t-field="line.x_signoff_role"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6"><strong>Notes:</strong> <span t-field="line.x_notes"/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
 </odoo>

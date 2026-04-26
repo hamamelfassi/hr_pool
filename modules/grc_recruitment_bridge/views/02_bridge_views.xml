@@ -83,4 +83,28 @@
             </form>
         </field>
     </record>
+
+    <record id="view_hr_applicant_runtime_extension" model="ir.ui.view">
+        <field name="name">hr.applicant.recruitment_runtime.form</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Recruitment Runtime">
+                    <group>
+                        <group>
+                            <field name="x_documents_folder_id"/>
+                            <field name="x_signature_profile_id"/>
+                            <field name="x_interview_evaluation_id"/>
+                            <field name="x_document_checklist_id"/>
+                        </group>
+                        <group>
+                            <field name="x_pdf_attachment_id"/>
+                            <field name="x_signed_pdf_attachment_id"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
 </odoo>

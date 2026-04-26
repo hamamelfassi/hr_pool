@@ -441,6 +441,14 @@
         <field name="ttype">char</field>
         <field name="translate">standard</field>
     </record>
+    <record id="field_hr_document_checklist_template_line_x_document_type_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template_line" />
+        <field name="name">x_document_type_id</field>
+        <field name="field_description">Typed Document Type</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_document_type</field>
+        <field name="on_delete">set null</field>
+    </record>
     <record id="field_hr_document_checklist_template_line_x_is_mandatory" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template_line" />
         <field name="name">x_is_mandatory</field>
@@ -924,5 +932,56 @@
         <field name="name">x_internal_notes</field>
         <field name="field_description">Internal Notes</field>
         <field name="ttype">text</field>
+    </record>
+
+    <!-- Document type catalog -->
+    <record id="field_hr_document_type_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_type" />
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_hr_document_type_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_type" />
+        <field name="name">x_name</field>
+        <field name="field_description">Document Type Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_document_type_x_category" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_type" />
+        <field name="name">x_category</field>
+        <field name="field_description">Category</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_document_type_x_is_mandatory_default" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_type" />
+        <field name="name">x_is_mandatory_default</field>
+        <field name="field_description">Mandatory by Default</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_document_type_x_requires_expiry_default" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_type" />
+        <field name="name">x_requires_expiry_default</field>
+        <field name="field_description">Requires Expiry by Default</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_document_type_x_default_signoff_role" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_type" />
+        <field name="name">x_default_signoff_role</field>
+        <field name="field_description">Default Sign-off Role</field>
+        <field name="ttype">selection</field>
+    </record>
+    <record id="field_hr_document_type_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_type" />
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
     </record>
 </odoo>

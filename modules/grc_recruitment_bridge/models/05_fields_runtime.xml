@@ -115,7 +115,15 @@
         <field name="name">x_interview_evaluation_id</field>
         <field name="field_description">Interview Evaluation</field>
         <field name="ttype">many2one</field>
-        <field name="relation">x_grc.hr_interview_evaluation</field>
+        <field name="relation">x_hr.recruitment_interview_evaluation</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_applicant_x_document_checklist_id" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','hr.applicant')]"/>
+        <field name="name">x_document_checklist_id</field>
+        <field name="field_description">Document Checklist</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_hr.recruitment_document_checklist</field>
         <field name="on_delete">set null</field>
     </record>
     <record id="field_hr_applicant_x_pdf_attachment_id" model="ir.model.fields">
@@ -227,7 +235,7 @@
         <field name="name">x_line_ids</field>
         <field name="field_description">Scoring Lines</field>
         <field name="ttype">one2many</field>
-        <field name="relation">x_grc.hr_interview_evaluation_line</field>
+        <field name="relation">x_hr.recruitment_interview_evaluation_line</field>
         <field name="relation_field">x_evaluation_id</field>
     </record>
 
@@ -236,7 +244,7 @@
         <field name="name">x_evaluation_id</field>
         <field name="field_description">Interview Evaluation</field>
         <field name="ttype">many2one</field>
-        <field name="relation">x_grc.hr_interview_evaluation</field>
+        <field name="relation">x_hr.recruitment_interview_evaluation</field>
         <field name="on_delete">restrict</field>
     </record>
     <record id="field_hr_interview_evaluation_line_x_sequence" model="ir.model.fields">
@@ -281,6 +289,273 @@
     </record>
     <record id="field_hr_interview_evaluation_line_x_notes" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation_line"/>
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <!-- Recruitment checklist runtime -->
+    <record id="field_hr_document_checklist_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_hr_document_checklist_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Checklist Title</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_document_checklist_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_document_checklist_x_applicant_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
+        <field name="name">x_applicant_id</field>
+        <field name="field_description">Applicant</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.applicant</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_document_checklist_x_job_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
+        <field name="name">x_job_id</field>
+        <field name="field_description">Job</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.job</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_document_checklist_x_documents_folder_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
+        <field name="name">x_documents_folder_id</field>
+        <field name="field_description">Documents Folder</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">documents.folder</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_document_checklist_x_signature_profile_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
+        <field name="name">x_signature_profile_id</field>
+        <field name="field_description">Signature Profile</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_signature_profile</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_document_checklist_x_pdf_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
+        <field name="name">x_pdf_attachment_id</field>
+        <field name="field_description">Generated PDF Attachment</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_document_checklist_x_signed_pdf_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
+        <field name="name">x_signed_pdf_attachment_id</field>
+        <field name="field_description">Signed PDF Attachment</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_document_checklist_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_document_checklist_x_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
+        <field name="name">x_line_ids</field>
+        <field name="field_description">Checklist Lines</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.recruitment_document_checklist_line</field>
+        <field name="relation_field">x_checklist_id</field>
+    </record>
+
+    <record id="field_hr_document_checklist_line_x_checklist_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_line"/>
+        <field name="name">x_checklist_id</field>
+        <field name="field_description">Document Checklist</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_hr.recruitment_document_checklist</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_line"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_document_type_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_line"/>
+        <field name="name">x_document_type_id</field>
+        <field name="field_description">Document Type</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_document_type</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_is_required" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_line"/>
+        <field name="name">x_is_required</field>
+        <field name="field_description">Required</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_line"/>
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_requires_expiry" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_line"/>
+        <field name="name">x_requires_expiry</field>
+        <field name="field_description">Requires Expiry</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_renewal_period_months" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_line"/>
+        <field name="name">x_renewal_period_months</field>
+        <field name="field_description">Renewal Period (Months)</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_signoff_role" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_line"/>
+        <field name="name">x_signoff_role</field>
+        <field name="field_description">Sign-off Role</field>
+        <field name="ttype">selection</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_line"/>
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_submission_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_line"/>
+        <field name="name">x_submission_ids</field>
+        <field name="field_description">Document Submissions</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.recruitment_document_submission</field>
+        <field name="relation_field">x_checklist_line_id</field>
+    </record>
+
+    <record id="field_hr_document_submission_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_hr_document_submission_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Submission Title</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_document_submission_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_document_submission_x_applicant_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
+        <field name="name">x_applicant_id</field>
+        <field name="field_description">Applicant</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.applicant</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_document_submission_x_job_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
+        <field name="name">x_job_id</field>
+        <field name="field_description">Job</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.job</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_document_submission_x_checklist_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
+        <field name="name">x_checklist_id</field>
+        <field name="field_description">Document Checklist</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_hr.recruitment_document_checklist</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_document_submission_x_checklist_line_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
+        <field name="name">x_checklist_line_id</field>
+        <field name="field_description">Checklist Line</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_hr.recruitment_document_checklist_line</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_document_submission_x_document_type_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
+        <field name="name">x_document_type_id</field>
+        <field name="field_description">Document Type</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_document_type</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_document_submission_x_uploaded_by_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
+        <field name="name">x_uploaded_by_id</field>
+        <field name="field_description">Uploaded By</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">res.users</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_document_submission_x_uploaded_at" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
+        <field name="name">x_uploaded_at</field>
+        <field name="field_description">Uploaded At</field>
+        <field name="ttype">datetime</field>
+    </record>
+    <record id="field_hr_document_submission_x_documents_folder_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
+        <field name="name">x_documents_folder_id</field>
+        <field name="field_description">Documents Folder</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">documents.folder</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_document_submission_x_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
+        <field name="name">x_attachment_id</field>
+        <field name="field_description">Attachment</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_document_submission_x_reviewed_by_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
+        <field name="name">x_reviewed_by_id</field>
+        <field name="field_description">Reviewed By</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">res.users</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_document_submission_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
         <field name="name">x_notes</field>
         <field name="field_description">Notes</field>
         <field name="ttype">text</field>

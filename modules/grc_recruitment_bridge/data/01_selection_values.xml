@@ -440,4 +440,196 @@
         <field name="name">Archived</field>
         <field name="value">archived</field>
     </record>
+    <record id="field_hr_document_checklist_x_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_checklist_x_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="field_hr_document_checklist_x_state_in_progress" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_checklist_x_state"/>
+        <field name="name">In Progress</field>
+        <field name="value">in_progress</field>
+    </record>
+    <record id="field_hr_document_checklist_x_state_completed" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_checklist_x_state"/>
+        <field name="name">Completed</field>
+        <field name="value">completed</field>
+    </record>
+    <record id="field_hr_document_checklist_x_state_signed" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_checklist_x_state"/>
+        <field name="name">Signed</field>
+        <field name="value">signed</field>
+    </record>
+    <record id="field_hr_document_checklist_x_state_archived" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_checklist_x_state"/>
+        <field name="name">Archived</field>
+        <field name="value">archived</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_checklist_line_x_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_state_in_progress" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_checklist_line_x_state"/>
+        <field name="name">In Progress</field>
+        <field name="value">in_progress</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_state_completed" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_checklist_line_x_state"/>
+        <field name="name">Completed</field>
+        <field name="value">completed</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_state_archived" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_checklist_line_x_state"/>
+        <field name="name">Archived</field>
+        <field name="value">archived</field>
+    </record>
+    <record id="field_hr_document_submission_x_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_submission_x_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="field_hr_document_submission_x_state_submitted" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_submission_x_state"/>
+        <field name="name">Submitted</field>
+        <field name="value">submitted</field>
+    </record>
+    <record id="field_hr_document_submission_x_state_reviewed" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_submission_x_state"/>
+        <field name="name">Reviewed</field>
+        <field name="value">reviewed</field>
+    </record>
+    <record id="field_hr_document_submission_x_state_approved" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_submission_x_state"/>
+        <field name="name">Approved</field>
+        <field name="value">approved</field>
+    </record>
+    <record id="field_hr_document_submission_x_state_rejected" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_submission_x_state"/>
+        <field name="name">Rejected</field>
+        <field name="value">rejected</field>
+    </record>
+    <record id="field_hr_document_submission_x_state_archived" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_submission_x_state"/>
+        <field name="name">Archived</field>
+        <field name="value">archived</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_signoff_role_applicant" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_checklist_line_x_signoff_role"/>
+        <field name="name">Applicant</field>
+        <field name="value">applicant</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_signoff_role_hr_manager" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_checklist_line_x_signoff_role"/>
+        <field name="name">HR Manager</field>
+        <field name="value">hr_manager</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_signoff_role_interviewer" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_checklist_line_x_signoff_role"/>
+        <field name="name">Interviewer</field>
+        <field name="value">interviewer</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_signoff_role_chairman" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_checklist_line_x_signoff_role"/>
+        <field name="name">Chairman</field>
+        <field name="value">chairman</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_signoff_role_employee" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_checklist_line_x_signoff_role"/>
+        <field name="name">Employee</field>
+        <field name="value">employee</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_signoff_role_supervisor" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_checklist_line_x_signoff_role"/>
+        <field name="name">Supervisor</field>
+        <field name="value">supervisor</field>
+    </record>
+
+    <record id="field_hr_document_type_x_category_identity" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_type_x_category"/>
+        <field name="name">Identity</field>
+        <field name="value">identity</field>
+    </record>
+    <record id="field_hr_document_type_x_category_civil_status" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_type_x_category"/>
+        <field name="name">Civil Status</field>
+        <field name="value">civil_status</field>
+    </record>
+    <record id="field_hr_document_type_x_category_residency" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_type_x_category"/>
+        <field name="name">Residency</field>
+        <field name="value">residency</field>
+    </record>
+    <record id="field_hr_document_type_x_category_legal" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_type_x_category"/>
+        <field name="name">Legal</field>
+        <field name="value">legal</field>
+    </record>
+    <record id="field_hr_document_type_x_category_health" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_type_x_category"/>
+        <field name="name">Health</field>
+        <field name="value">health</field>
+    </record>
+    <record id="field_hr_document_type_x_category_photos" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_type_x_category"/>
+        <field name="name">Photos</field>
+        <field name="value">photos</field>
+    </record>
+    <record id="field_hr_document_type_x_category_education" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_type_x_category"/>
+        <field name="name">Education</field>
+        <field name="value">education</field>
+    </record>
+    <record id="field_hr_document_type_x_category_employment" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_type_x_category"/>
+        <field name="name">Employment</field>
+        <field name="value">employment</field>
+    </record>
+    <record id="field_hr_document_type_x_category_declarations" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_type_x_category"/>
+        <field name="name">Declarations</field>
+        <field name="value">declarations</field>
+    </record>
+    <record id="field_hr_document_type_x_category_other" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_type_x_category"/>
+        <field name="name">Other</field>
+        <field name="value">other</field>
+    </record>
+
+    <record id="field_hr_document_type_x_default_signoff_role_applicant" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_type_x_default_signoff_role"/>
+        <field name="name">Applicant</field>
+        <field name="value">applicant</field>
+    </record>
+    <record id="field_hr_document_type_x_default_signoff_role_hr_manager" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_type_x_default_signoff_role"/>
+        <field name="name">HR Manager</field>
+        <field name="value">hr_manager</field>
+    </record>
+    <record id="field_hr_document_type_x_default_signoff_role_interviewer" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_type_x_default_signoff_role"/>
+        <field name="name">Interviewer</field>
+        <field name="value">interviewer</field>
+    </record>
+    <record id="field_hr_document_type_x_default_signoff_role_chairman" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_type_x_default_signoff_role"/>
+        <field name="name">Chairman</field>
+        <field name="value">chairman</field>
+    </record>
+    <record id="field_hr_document_type_x_default_signoff_role_employee" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_type_x_default_signoff_role"/>
+        <field name="name">Employee</field>
+        <field name="value">employee</field>
+    </record>
+    <record id="field_hr_document_type_x_default_signoff_role_supervisor" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_type_x_default_signoff_role"/>
+        <field name="name">Supervisor</field>
+        <field name="value">supervisor</field>
+    </record>
+    <record id="field_hr_document_type_x_default_signoff_role_hse_reviewer" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_document_type_x_default_signoff_role"/>
+        <field name="name">HSE Reviewer</field>
+        <field name="value">hse_reviewer</field>
+    </record>
 </odoo>

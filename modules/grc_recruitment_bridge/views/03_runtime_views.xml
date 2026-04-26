@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="view_hr_interview_evaluation_list" model="ir.ui.view">
-        <field name="name">x_grc.hr_interview_evaluation.list</field>
-        <field name="model">x_grc.hr_interview_evaluation</field>
+        <field name="name">x_hr.recruitment_interview_evaluation.list</field>
+        <field name="model">x_hr.recruitment_interview_evaluation</field>
         <field name="arch" type="xml">
             <list string="Interview Evaluations">
                 <field name="x_code"/>
@@ -16,8 +16,8 @@
     </record>
 
     <record id="view_hr_interview_evaluation_search" model="ir.ui.view">
-        <field name="name">x_grc.hr_interview_evaluation.search</field>
-        <field name="model">x_grc.hr_interview_evaluation</field>
+        <field name="name">x_hr.recruitment_interview_evaluation.search</field>
+        <field name="model">x_hr.recruitment_interview_evaluation</field>
         <field name="arch" type="xml">
             <search>
                 <field name="x_code"/>
@@ -35,8 +35,8 @@
     </record>
 
     <record id="view_hr_interview_evaluation_form" model="ir.ui.view">
-        <field name="name">x_grc.hr_interview_evaluation.form</field>
-        <field name="model">x_grc.hr_interview_evaluation</field>
+        <field name="name">x_hr.recruitment_interview_evaluation.form</field>
+        <field name="model">x_hr.recruitment_interview_evaluation</field>
         <field name="arch" type="xml">
             <form string="Interview Evaluation">
                 <sheet>
@@ -73,6 +73,159 @@
                             <field name="x_notes"/>
                         </page>
                     </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hr_document_checklist_list" model="ir.ui.view">
+        <field name="name">x_hr.recruitment_document_checklist.list</field>
+        <field name="model">x_hr.recruitment_document_checklist</field>
+        <field name="arch" type="xml">
+            <list string="Document Checklists">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_applicant_id"/>
+                <field name="x_job_id"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hr_document_checklist_search" model="ir.ui.view">
+        <field name="name">x_hr.recruitment_document_checklist.search</field>
+        <field name="model">x_hr.recruitment_document_checklist</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_applicant_id"/>
+                <field name="x_job_id"/>
+                <filter name="draft" string="Draft" domain="[('x_state','=','draft')]"/>
+                <filter name="progress" string="In Progress" domain="[('x_state','=','in_progress')]"/>
+                <filter name="completed" string="Completed" domain="[('x_state','=','completed')]"/>
+                <filter name="signed" string="Signed" domain="[('x_state','=','signed')]"/>
+                <filter name="archived" string="Archived" domain="[('x_state','=','archived')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_hr_document_checklist_form" model="ir.ui.view">
+        <field name="name">x_hr.recruitment_document_checklist.form</field>
+        <field name="model">x_hr.recruitment_document_checklist</field>
+        <field name="arch" type="xml">
+            <form string="Document Checklist">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_state"/>
+                            <field name="x_applicant_id"/>
+                            <field name="x_job_id"/>
+                        </group>
+                        <group>
+                            <field name="x_signature_profile_id"/>
+                            <field name="x_documents_folder_id"/>
+                            <field name="x_pdf_attachment_id"/>
+                            <field name="x_signed_pdf_attachment_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Checklist Lines">
+                            <field name="x_line_ids">
+                                <list editable="bottom">
+                                    <field name="x_sequence" widget="handle"/>
+                                    <field name="x_document_type_id"/>
+                                    <field name="x_is_required"/>
+                                    <field name="x_state"/>
+                                    <field name="x_requires_expiry"/>
+                                    <field name="x_renewal_period_months"/>
+                                    <field name="x_signoff_role"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="x_notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hr_document_submission_list" model="ir.ui.view">
+        <field name="name">x_hr.recruitment_document_submission.list</field>
+        <field name="model">x_hr.recruitment_document_submission</field>
+        <field name="arch" type="xml">
+            <list string="Document Submissions">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_applicant_id"/>
+                <field name="x_checklist_line_id"/>
+                <field name="x_document_type_id"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hr_document_submission_search" model="ir.ui.view">
+        <field name="name">x_hr.recruitment_document_submission.search</field>
+        <field name="model">x_hr.recruitment_document_submission</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_applicant_id"/>
+                <field name="x_document_type_id"/>
+                <filter name="draft" string="Draft" domain="[('x_state','=','draft')]"/>
+                <filter name="submitted" string="Submitted" domain="[('x_state','=','submitted')]"/>
+                <filter name="reviewed" string="Reviewed" domain="[('x_state','=','reviewed')]"/>
+                <filter name="approved" string="Approved" domain="[('x_state','=','approved')]"/>
+                <filter name="rejected" string="Rejected" domain="[('x_state','=','rejected')]"/>
+                <filter name="archived" string="Archived" domain="[('x_state','=','archived')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_hr_document_submission_form" model="ir.ui.view">
+        <field name="name">x_hr.recruitment_document_submission.form</field>
+        <field name="model">x_hr.recruitment_document_submission</field>
+        <field name="arch" type="xml">
+            <form string="Document Submission">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_state"/>
+                            <field name="x_applicant_id"/>
+                            <field name="x_job_id"/>
+                            <field name="x_checklist_id"/>
+                            <field name="x_checklist_line_id"/>
+                            <field name="x_document_type_id"/>
+                        </group>
+                        <group>
+                            <field name="x_uploaded_by_id"/>
+                            <field name="x_uploaded_at"/>
+                            <field name="x_documents_folder_id"/>
+                            <field name="x_attachment_id"/>
+                            <field name="x_reviewed_by_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="x_notes"/>
+                    </group>
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids"/>

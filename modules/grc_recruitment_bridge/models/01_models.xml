@@ -54,4 +54,10 @@
         <field name="model">x_grc.hr_signature_profile_line</field>
     </record>
 
+    <record id="model_hr_document_type" model="ir.model">
+        <field name="name">Recruitment Document Type</field>
+        <field name="model">x_grc.hr_document_type</field>
+        <field name="state">manual</field>
+    </record>
+
 </odoo>
