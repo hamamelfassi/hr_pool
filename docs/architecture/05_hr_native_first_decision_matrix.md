@@ -14,15 +14,15 @@ The rule is:
 
 | Form family | What it is | Runtime owner | Generate | Sign | Store | Default path |
 |---|---|---|---|---|---|---|
-| `0001` | Intake continuation after prescreening | `hr_pool` for intake, `hr_recruitment` after conversion | Intake snapshot from `hr_pool`; continuation document in Odoo | Sign only for post-approval confirmations or declarations | Documents folder on the intake/recruitment record | Split the legacy form; keep intake separate from post-conversion continuation |
-| `0002` | Interview evaluation | `hr_recruitment` custom evaluation record | QWeb PDF from the evaluation record and its line items | Optional sign-off by interviewer, chairman, or approver depending on policy | Documents folder on the evaluation record | Custom governed record + QWeb + optional Sign |
-| `0003` | Pre-employment document checklist | `hr_recruitment` | QWeb PDF from checklist lines and status fields | Applicant and HR sign-off if required by policy | Documents folder on the recruitment record | Custom record + QWeb + Sign where sign-off is mandatory |
-| `0004` | Truthfulness / validity declaration | `hr_recruitment` / onboarding continuation | Static Sign template, or QWeb if branded composition is needed | Applicant signature required; HR countersign only if policy requires it | Documents folder on the recruitment/onboarding record | Static Sign template by default |
-| `0007` | Internal regulations acknowledgment | `hr_recruitment` / onboarding continuation | Static Sign template | Applicant signature required; HR optional | Documents folder on the onboarding record | Static Sign template |
-| `0008` | Training commitment | `hr_recruitment` / onboarding continuation | Static Sign template | Applicant signature required; HR sign-off if policy requires it | Documents folder on the onboarding record | Static Sign template |
-| `0009` | Confidentiality declaration | `hr_recruitment` / onboarding continuation | Static Sign template | Applicant signature required; HR optional | Documents folder on the onboarding record | Static Sign template |
-| `0010` | Exclusivity declaration | `hr_recruitment` / onboarding continuation | Static Sign template | Applicant signature required; HR optional | Documents folder on the onboarding record | Static Sign template |
-| `0013` | Safety / HSE acknowledgment | `hr_recruitment` first, later employee/HSE runtime | Static Sign template if the body is fixed; QWeb + Sign if the packet becomes multi-line | Applicant / employee signature required; HSE reviewer if policy requires it | Documents folder on the onboarding record | Start with Sign; move to QWeb + Sign if the form grows |
+| `0001` | Intake continuation after prescreening | `hr_pool` for intake, `hr.applicant` after conversion | Intake snapshot from `hr_pool`; negotiated continuation document in recruitment runtime | Sign only for post-approval confirmations or declarations | Documents folder on the intake/recruitment record | Split the legacy form; keep intake separate from post-conversion continuation |
+| `0002` | Interview evaluation | `hr.job` baseline rubric link, `hr.applicant` runtime evaluation | QWeb PDF from the applicant runtime record and its line items | Optional sign-off by interviewer, chairman, or approver depending on policy | Documents folder on the evaluation record | Custom governed record + QWeb + optional Sign |
+| `0003` | Pre-employment document checklist | `hr.job` baseline checklist link, `hr.applicant` runtime checklist | QWeb PDF from checklist lines and status fields | Applicant and HR sign-off if required by policy | Documents folder on the recruitment record | Custom record + QWeb + Sign where sign-off is mandatory |
+| `0004` | Truthfulness / validity declaration | `hr.applicant` runtime declaration envelope | Static Sign template, or QWeb if branded composition is needed | Applicant signature required; HR countersign only if policy requires it | Documents folder on the recruitment/onboarding record | Static Sign template by default |
+| `0007` | Internal regulations acknowledgment | `hr.applicant` runtime declaration envelope | Static Sign template | Applicant signature required; HR optional | Documents folder on the onboarding record | Static Sign template |
+| `0008` | Training commitment | `hr.applicant` runtime declaration envelope | Static Sign template | Applicant signature required; HR sign-off if policy requires it | Documents folder on the onboarding record | Static Sign template |
+| `0009` | Confidentiality declaration | `hr.applicant` runtime declaration envelope | Static Sign template | Applicant signature required; HR optional | Documents folder on the onboarding record | Static Sign template |
+| `0010` | Exclusivity declaration | `hr.applicant` runtime declaration envelope | Static Sign template | Applicant signature required; HR optional | Documents folder on the onboarding record | Static Sign template |
+| `0013` | Safety / HSE acknowledgment | `hr.applicant` first, later employee/HSE runtime | Static Sign template if the body is fixed; QWeb + Sign if the packet becomes multi-line | Applicant / employee signature required; HSE reviewer if policy requires it | Documents folder on the onboarding record | Start with Sign; move to QWeb + Sign if the form grows |
 | `0006` | Task / equipment acceptance | Future employee/admin or ops module | QWeb or later operational form | Employee and supervisor sign-off if required | Documents folder on the operational record | Not recruitment core; useful evidence for the canonical task-template layer |
 
 ## 2. Default generation rules
@@ -91,4 +91,3 @@ Best for:
 - recruitment forms stay in `grc_recruitment_bridge`, `hr_pool`, and `hr_recruitment`
 - task templates stay in `grc_backbone`
 - employee admin and HSE forms move to future domain modules
-

@@ -6,26 +6,26 @@ The rule is:
 
 - canonical governed wording lives in `grc_backbone`
 - reusable recruitment composition lives in `grc_recruitment_bridge`
-- live person-specific records live in `hr_pool` or `hr_recruitment`
+- live person-specific records live in `hr_pool`, `hr.job`, or `hr.applicant` depending on the phase
 - employee-admin and HSE forms should move to future operational modules
 
 ## 1. Inventory summary
 
 | Form code | Short name | Family | Current runtime owner | Bridge ownership | Signer / reviewer roles | Notes |
 |---|---|---|---|---|---|---|
-| `0001` | Job Request / Intake | Intake + continuation | `hr_pool` for intake, `hr_recruitment` for post-approval continuation | `grc_recruitment_bridge` only for continuation pack reuse | Candidate, HR manager, chairman | Legacy form split in practice; omitted fields move after approval |
-| `0002` | Candidate Interview Evaluation | Interview rubric | `hr_recruitment` | `grc_recruitment_bridge` | Interviewer, optional chairman review | First-wave bridge template family |
-| `0003` | Required Pre-Employment Documents | Checklist / evidence pack | `hr_recruitment` | `grc_recruitment_bridge` | Applicant, HR manager | First-wave bridge template family |
-| `0004` | Truthfulness / document validity declaration | Declaration pack | `hr_recruitment` | `grc_recruitment_bridge` | Applicant, HR manager | Reusable declaration wording comes from GRC provisions |
+| `0001` | Job Request / Intake | Intake + continuation | `hr_pool` for intake, `hr.applicant` for post-approval continuation | `grc_recruitment_bridge` only for continuation pack reuse | Candidate, HR manager, chairman | Legacy form split in practice; omitted fields move after approval |
+| `0002` | Candidate Interview Evaluation | Interview rubric | `hr.job` for vacancy baseline, `hr.applicant` for negotiated runtime interview case | `grc_recruitment_bridge` | Interviewer, optional chairman review | First-wave bridge template family |
+| `0003` | Required Pre-Employment Documents | Checklist / evidence pack | `hr.job` for baseline checklist policy, `hr.applicant` for runtime checklist and submissions | `grc_recruitment_bridge` | Applicant, HR manager | First-wave bridge template family |
+| `0004` | Truthfulness / document validity declaration | Declaration pack | `hr.applicant` | `grc_recruitment_bridge` | Applicant, HR manager | Reusable declaration wording comes from GRC provisions |
 | `0005` | Missing from corpus | Gap | n/a | n/a | n/a | Track as a source inventory gap |
 | `0006` | Task / equipment acceptance | Employee admin / task control | Future employee admin or ops module | Not core bridge | Employee, supervisor | Strong source for the canonical `task_template` layer in `grc_backbone`; not recruitment-core |
-| `0007` | Internal regulations acknowledgment | Declaration / acknowledgment | `hr_recruitment` / onboarding continuation | `grc_recruitment_bridge` | Applicant, HR manager | First-wave bridge template family |
-| `0008` | Training commitment / reimbursement | Declaration / commitment | `hr_recruitment` / onboarding continuation | `grc_recruitment_bridge` | Applicant, HR manager | First-wave bridge template family |
-| `0009` | Confidentiality declaration | Declaration pack | `hr_recruitment` / onboarding continuation | `grc_recruitment_bridge` | Applicant, HR manager | First-wave bridge template family |
-| `0010` | Exclusivity declaration | Declaration pack | `hr_recruitment` / onboarding continuation | `grc_recruitment_bridge` | Applicant, HR manager | First-wave bridge template family |
+| `0007` | Internal regulations acknowledgment | Declaration / acknowledgment | `hr.applicant` | `grc_recruitment_bridge` | Applicant, HR manager | First-wave bridge template family |
+| `0008` | Training commitment / reimbursement | Declaration / commitment | `hr.applicant` | `grc_recruitment_bridge` | Applicant, HR manager | First-wave bridge template family |
+| `0009` | Confidentiality declaration | Declaration pack | `hr.applicant` | `grc_recruitment_bridge` | Applicant, HR manager | First-wave bridge template family |
+| `0010` | Exclusivity declaration | Declaration pack | `hr.applicant` | `grc_recruitment_bridge` | Applicant, HR manager | First-wave bridge template family |
 | `0011` | ID card receipt | Employee admin | Future employee admin module | Optional bridge template only | Employee, HR admin | Not core recruitment bridge |
 | `0012` | Missing from corpus | Gap | n/a | n/a | n/a | Track as a source inventory gap |
-| `0013` | Safety / HSE acknowledgment | Recruitment-to-HSE onboarding | `hr_recruitment` initially, later ops/HSE runtime | `grc_recruitment_bridge` | Applicant, HR, HSE reviewer | Bridge can own the reusable clause pack |
+| `0013` | Safety / HSE acknowledgment | Recruitment-to-HSE onboarding | `hr.applicant` initially, later ops/HSE runtime | `grc_recruitment_bridge` | Applicant, HR, HSE reviewer | Bridge can own the reusable clause pack |
 | `0014` | Permission / absence request | Employee admin | Future employee admin module | Not core bridge | Employee, supervisor, HR | Post-hire workflow |
 | `0015` | Leave request | Employee admin | Future employee admin module | Not core bridge | Employee, supervisor, HR | Post-hire workflow |
 | `0016` | Assignment / secondment | Employee admin / ops | Future employee admin or ops module | Not core bridge | Employee, manager, HR | Post-hire workflow |
@@ -85,6 +85,7 @@ This inventory is the reference point for future work when deciding whether a ne
 - `grc_backbone`
 - `grc_recruitment_bridge`
 - `hr_pool`
-- `hr_recruitment`
+- `hr.job` baseline vacancy
+- `hr.applicant` negotiated runtime
 - a future employee admin module
 - a future ops/HSE module

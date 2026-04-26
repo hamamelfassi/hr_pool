@@ -151,12 +151,14 @@ Status:
 - the native document schema is now partially implemented:
   - `x_hr.pool` has chatter, activity, Documents, intake PDF, and signed PDF hooks
   - `x_grc.hr_interview_evaluation` exists as a governed runtime record with chatter, activities, attachments, and QWeb reporting
-  - `hr.job` now carries TOR / Documents hooks for native report generation and storage
+  - `hr.job` now carries the baseline vacancy / TOR hooks for native report generation and storage
+  - `hr.applicant` remains the runtime home for the negotiated case, document checklist, submissions, declarations, and signed artifacts
 - the remaining work is the operational wiring:
   - conversion handoff
   - actual sign-request routing
   - document-folder provisioning
   - applicant-side continuation and prefill surface
+  - baseline-vacancy versus applicant-negotiated runtime split on the recruitment UI
   - final contract bundle flow
 
 Work:
@@ -171,7 +173,8 @@ Work:
   - interview evaluations
   - document checklists
   - document submissions
-  - TOR/job-description outputs on the job record
+  - negotiated TOR/job-description outputs on the applicant runtime record
+  - baseline TOR/job-description outputs on the job vacancy record
 
 Implementation note:
 
@@ -181,6 +184,7 @@ Implementation note:
 - the live signed PDF is attached to the operational record, while the template source remains in the bridge/resources layer
 - the concrete schema map for this native-document pass is documented in `docs/architecture/07_native_document_schema_implementation.md`
 - the recruitment runtime UI and schema map is pinned in `docs/architecture/08_recruitment_runtime_ui_and_schema_map.md`
+- the strict `hr.job` versus `hr.applicant` gap matrix is pinned in `docs/architecture/09_hr_job_vs_hr_applicant_gap_matrix.md`
 
 ### Phase 4 - Operational governance expansion
 
@@ -244,6 +248,7 @@ Do not ship:
 6. design the HR document generation and signature workflow
 7. design phase-2 enrichment and document completion
 8. extend into operational consumption modules
+9. execute the strict `hr.job` versus `hr.applicant` implementation pass
 
 ## 8. Implementation journal
 
@@ -333,6 +338,34 @@ Open:
 - provision or standardize document folders for runtime records
 - complete Arabic terminology and translation coverage for the new native-document fields
 - realign any bridge-owned runtime records or fields so they live on the recruitment operational surface before the next install cycle
+
+### 2026-04-26 - Recruitment job versus applicant gap matrix
+
+Completed:
+
+- pinned the strict `hr.job` versus `hr.applicant` ownership matrix in `docs/architecture/09_hr_job_vs_hr_applicant_gap_matrix.md`
+- clarified that `hr.job` is the baseline vacancy record and `hr.applicant` is the negotiated runtime record
+- updated the master plan, runtime schema doc, and related references to reflect the baseline-vacancy versus negotiated-runtime split
+
+Open:
+
+- implement the high-priority items in the matrix:
+  - baseline job-vacancy cleanup
+  - applicant-side runtime UI and workflow surfaces
+  - interview runtime ownership on the applicant side
+  - document checklist runtime ownership on the applicant side
+  - document submission writeback flow
+  - baseline TOR versus negotiated TOR split
+  - declaration envelope runtime ownership on the applicant side
+  - sign request actions from runtime records
+- implement the medium-priority items in the matrix:
+  - Documents folder provisioning rules
+  - chatter and activities wiring
+  - Arabic translation completion
+  - role template code sequencing and provenance cleanup
+  - stricter functional area/function filtering on template lines
+  - default template selection and fallback logic
+  - PDF preview / inspector improvements
 
 ## 9. Refactor safety rules
 

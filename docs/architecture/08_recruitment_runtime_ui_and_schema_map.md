@@ -87,7 +87,8 @@ Owns:
 - interview evaluation records
 - document checklist runtime records
 - document submission runtime records
-- TOR / job description runtime output on `hr.job`
+- negotiated TOR / job description runtime output on `hr.applicant`
+- baseline TOR / job description output on `hr.job`
 - document and signature state
 - chatter and activities
 
@@ -173,10 +174,10 @@ This is the structural answer to “one submission per document”.
 The job position form should include:
 
 - governance/template links
-- TOR/job-description generation controls
+- baseline TOR/job-description generation controls
 - documents folder and attachment hooks
 - signature hooks
-- smart buttons for generated TOR and signed TOR
+- smart buttons for baseline TOR and signed baseline TOR
 
 Suggested notebook tabs:
 
@@ -189,12 +190,14 @@ Suggested notebook tabs:
 
 The applicant form should include:
 
+- negotiated role / job composition
 - documents and checklist overview
 - interview evaluation smart button or tab
 - document submission lines
-- signature status
+- declaration envelope / signatures
 - Documents folder reference
 - generated/signed attachment references
+- delta versus baseline job position
 
 Suggested notebook tabs:
 
@@ -202,6 +205,7 @@ Suggested notebook tabs:
 - Notes
 - Details
 - Skills
+- Negotiated Role
 - Documents & Checklists
 - Evaluations
 - Signatures
@@ -270,10 +274,18 @@ The document checklist template line and runtime checklist line should both refe
 ### 7.3 TOR / job description
 
 1. The bridge defines the role template and routing profile.
-2. `hr.job` acts as the runtime job record.
-3. QWeb renders the TOR / job description from `hr.job` plus the linked template lines.
+2. `hr.job` acts as the baseline vacancy record.
+3. QWeb renders the baseline TOR / job description from `hr.job` plus the linked template lines.
 4. The PDF is filed in Documents and attached to the job record.
-5. Odoo Sign can be triggered for approval or countersignature.
+5. If a negotiated final TOR is needed, `hr.applicant` owns the runtime delta and final acceptance artifact.
+6. Odoo Sign can be triggered for approval or countersignature.
+
+### 7.4 Declaration packs
+
+1. The bridge defines the declaration pack and signature routing profile.
+2. `hr.applicant` owns the live declaration envelope.
+3. Odoo Sign requests are routed from the runtime applicant case.
+4. Signed artifacts are filed in Documents and linked back to the applicant record.
 
 ## 8. Structural rule
 
@@ -282,4 +294,3 @@ The bridge owns definitions, not live cases.
 The recruitment domain owns live cases, not the bridge.
 
 This is the correction that prevents architectural drift.
-

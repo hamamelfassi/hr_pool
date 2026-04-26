@@ -50,10 +50,12 @@ Does not own:
 
 ### 1.3 Recruitment runtime surface
 
-Lives in the recruitment domain and should be exposed through `hr.job`, `hr.applicant`, and recruitment-side custom models and views.
+Lives in the recruitment domain and is split across the baseline vacancy record (`hr.job`) and the negotiated runtime case (`hr.applicant`).
 
 The runtime surface owns:
 
+- the vacancy baseline TOR and template mapping on `hr.job`
+- the negotiated applicant-specific composition on `hr.applicant`
 - the actual applicant-specific interview evaluation record
 - the actual applicant-specific document checklist record
 - the actual document submission records, one per uploaded document
@@ -109,7 +111,7 @@ Recommended bridge model names:
 
 ### 4.1 `hr.job`
 
-`hr.job` remains the runtime job record and should hold:
+`hr.job` remains the baseline vacancy record and should hold:
 
 - link to the chosen role / job template
 - link to the chosen interview template
@@ -118,19 +120,25 @@ Recommended bridge model names:
 - link to the chosen declaration pack
 - link to the chosen signature profile
 - documents folder pointer
-- TOR PDF attachment pointer
-- signed TOR attachment pointer
+- baseline TOR PDF attachment pointer
+- signed baseline TOR attachment pointer
+- baseline provenance / source metadata
+
+It should not own applicant-specific negotiation state.
 
 ### 4.2 `hr.applicant`
 
-`hr.applicant` remains the runtime applicant record and should hold:
+`hr.applicant` remains the negotiated runtime applicant record and should hold:
 
 - documents folder pointer
 - interview evaluation pointer
 - document checklist pointer
+- declaration envelope pointer
+- negotiated TOR / role composition pointer
 - signature profile pointer
 - generated PDF attachment pointer
 - signed PDF attachment pointer
+- comparison / delta metadata against the baseline vacancy
 - chatter
 - activities
 
@@ -202,9 +210,13 @@ It is used to preserve the intake snapshot and provenance.
 
 ### 6.2 Job TOR / job description
 
-The TOR / job description report belongs on `hr.job`.
+The baseline TOR / job description report belongs on `hr.job`.
 
-It renders the governed role template lines, job template links, and approved composition metadata.
+It renders the governed role template lines, job template links, and approved baseline composition metadata.
+
+The negotiated final TOR / contracted duties report belongs on `hr.applicant`.
+
+It renders the applicant-specific delta against the baseline vacancy and the final accepted composition.
 
 ### 6.3 Interview evaluation
 
@@ -267,4 +279,3 @@ The target remains:
 
 - bridge = definitions
 - recruitment runtime = live records
-

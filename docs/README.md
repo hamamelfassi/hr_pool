@@ -22,6 +22,8 @@ This folder stores project documentation and non-module implementation assets th
   concrete model, field, report, and storage hooks for native HR documents
 - `architecture/08_recruitment_runtime_ui_and_schema_map.md`
   corrected recruitment runtime ownership, menus, views, and document submission model
+- `architecture/09_hr_job_vs_hr_applicant_gap_matrix.md`
+  strict baseline-vacancy versus negotiated-runtime ownership matrix
 - `modules/hr_pool/`
   HR Pool-specific documentation
 - `modules/grc_backbone/`
