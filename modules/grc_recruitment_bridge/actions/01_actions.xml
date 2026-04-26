@@ -3,69 +3,69 @@
     <record id="action_hr_role_template" model="ir.actions.act_window">
         <field name="name">Role / Job Description Templates</field>
         <field name="res_model">x_grc.hr_role_template</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <record id="action_hr_interview_template" model="ir.actions.act_window">
         <field name="name">Interview Evaluation Templates</field>
         <field name="res_model">x_grc.hr_interview_template</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <record id="action_hr_document_checklist_template" model="ir.actions.act_window">
         <field name="name">Document Checklist Templates</field>
         <field name="res_model">x_grc.hr_document_checklist_template</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <record id="action_hr_onboarding_pack" model="ir.actions.act_window">
         <field name="name">Onboarding Packs</field>
         <field name="res_model">x_grc.hr_onboarding_pack</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <record id="action_hr_declaration_pack" model="ir.actions.act_window">
         <field name="name">Declaration Packs</field>
         <field name="res_model">x_grc.hr_declaration_pack</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <record id="action_hr_signature_profile" model="ir.actions.act_window">
         <field name="name">Signature Profiles</field>
         <field name="res_model">x_grc.hr_signature_profile</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <record id="action_hr_document_type" model="ir.actions.act_window">
         <field name="name">Document Types</field>
         <field name="res_model">x_grc.hr_document_type</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <record id="action_hr_template_review_queue" model="ir.actions.act_window">
         <field name="name">Template Review Queue</field>
         <field name="res_model">x_grc.hr_role_template</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[('x_state','=','under_review')]</field>
     </record>
     <record id="action_hr_template_published" model="ir.actions.act_window">
         <field name="name">Published Templates</field>
         <field name="res_model">x_grc.hr_role_template</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[('x_state','=','active')]</field>
     </record>
     <record id="action_hr_job_bridge" model="ir.actions.act_window">
         <field name="name">Baseline Vacancies</field>
         <field name="res_model">hr.job</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <record id="action_hr_interview_evaluation" model="ir.actions.act_window">
         <field name="name">Interview Evaluations</field>
         <field name="res_model">x_hr.recruitment_interview_evaluation</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <record id="action_hr_document_checklist" model="ir.actions.act_window">
         <field name="name">Document Checklists</field>
         <field name="res_model">x_hr.recruitment_document_checklist</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <record id="action_hr_document_submission" model="ir.actions.act_window">
         <field name="name">Document Submissions</field>
         <field name="res_model">x_hr.recruitment_document_submission</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 </odoo>

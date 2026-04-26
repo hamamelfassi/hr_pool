@@ -4,7 +4,7 @@
         <field name="name">x_hr.recruitment_interview_evaluation.list</field>
         <field name="model">x_hr.recruitment_interview_evaluation</field>
         <field name="arch" type="xml">
-            <tree string="Interview Evaluations">
+            <list string="Interview Evaluations">
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_applicant_id"/>
@@ -14,7 +14,7 @@
                 <field name="x_total_score"/>
                 <field name="x_completion_ratio"/>
                 <field name="x_state"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -102,7 +102,7 @@
         <field name="name">x_hr.recruitment_document_checklist.list</field>
         <field name="model">x_hr.recruitment_document_checklist</field>
         <field name="arch" type="xml">
-            <tree string="Document Checklists">
+            <list string="Document Checklists">
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_applicant_id"/>
@@ -111,7 +111,7 @@
                 <field name="x_completed_line_count"/>
                 <field name="x_completion_ratio"/>
                 <field name="x_state"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -201,7 +201,7 @@
         <field name="name">x_hr.recruitment_document_submission.list</field>
         <field name="model">x_hr.recruitment_document_submission</field>
         <field name="arch" type="xml">
-            <tree string="Document Submissions">
+            <list string="Document Submissions">
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_applicant_id"/>
@@ -210,7 +210,7 @@
                 <field name="x_external_source"/>
                 <field name="x_is_received"/>
                 <field name="x_state"/>
-            </tree>
+            </list>
         </field>
     </record>
 

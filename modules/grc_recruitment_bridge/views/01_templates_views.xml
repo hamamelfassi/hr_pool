@@ -5,13 +5,13 @@
         <field name="name">x_grc.hr_role_template.list</field>
         <field name="model">x_grc.hr_role_template</field>
         <field name="arch" type="xml">
-            <tree string="Role / Job Description Templates">
+            <list string="Role / Job Description Templates">
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_source_form_code"/>
                 <field name="x_version"/>
                 <field name="x_state"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_hr_role_template_search" model="ir.ui.view">
@@ -78,13 +78,13 @@
         <field name="name">x_grc.hr_interview_template.list</field>
         <field name="model">x_grc.hr_interview_template</field>
         <field name="arch" type="xml">
-            <tree string="Interview Evaluation Templates">
+            <list string="Interview Evaluation Templates">
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_source_form_code"/>
                 <field name="x_version"/>
                 <field name="x_state"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_hr_interview_template_search" model="ir.ui.view">
@@ -151,13 +151,13 @@
         <field name="name">x_grc.hr_document_checklist_template.list</field>
         <field name="model">x_grc.hr_document_checklist_template</field>
         <field name="arch" type="xml">
-            <tree string="Document Checklist Templates">
+            <list string="Document Checklist Templates">
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_source_form_code"/>
                 <field name="x_version"/>
                 <field name="x_state"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_hr_document_checklist_template_search" model="ir.ui.view">
@@ -225,13 +225,13 @@
         <field name="name">x_grc.hr_onboarding_pack.list</field>
         <field name="model">x_grc.hr_onboarding_pack</field>
         <field name="arch" type="xml">
-            <tree string="Onboarding Packs">
+            <list string="Onboarding Packs">
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_source_form_code"/>
                 <field name="x_version"/>
                 <field name="x_state"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_hr_onboarding_pack_search" model="ir.ui.view">
@@ -297,13 +297,13 @@
         <field name="name">x_grc.hr_declaration_pack.list</field>
         <field name="model">x_grc.hr_declaration_pack</field>
         <field name="arch" type="xml">
-            <tree string="Declaration Packs">
+            <list string="Declaration Packs">
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_source_form_code"/>
                 <field name="x_version"/>
                 <field name="x_state"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_hr_declaration_pack_search" model="ir.ui.view">
@@ -369,13 +369,13 @@
         <field name="name">x_grc.hr_signature_profile.list</field>
         <field name="model">x_grc.hr_signature_profile</field>
         <field name="arch" type="xml">
-            <tree string="Signature Profiles">
+            <list string="Signature Profiles">
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_source_form_code"/>
                 <field name="x_version"/>
                 <field name="x_state"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_hr_signature_profile_search" model="ir.ui.view">
@@ -444,14 +444,14 @@
         <field name="name">x_grc.hr_document_type.list</field>
         <field name="model">x_grc.hr_document_type</field>
         <field name="arch" type="xml">
-            <tree string="Document Types">
+            <list string="Document Types">
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_category"/>
                 <field name="x_is_mandatory_default"/>
                 <field name="x_requires_expiry_default"/>
                 <field name="x_default_signoff_role"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_hr_document_type_search" model="ir.ui.view">
