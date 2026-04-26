@@ -58,3 +58,39 @@ msgstr "الاختصاصات الوظيفية المرتبطة"
 
 msgid "Linked Clauses"
 msgstr "البنود المرتبطة"
+
+msgid "Documents & Signatures"
+msgstr "المستندات والتواقيع"
+
+msgid "Runtime Records"
+msgstr "السجلات التشغيلية"
+
+msgid "Documents Folder"
+msgstr "مجلد المستندات"
+
+msgid "Generated PDF Attachment"
+msgstr "مرفق PDF المولد"
+
+msgid "Signed PDF Attachment"
+msgstr "مرفق PDF الموقع"
+
+msgid "TOR PDF Attachment"
+msgstr "مرفق PDF للوصف الوظيفي"
+
+msgid "Interview Evaluations"
+msgstr "تقييمات المقابلات"
+
+msgid "Interview Evaluation"
+msgstr "تقييم مقابلة المتقدم للوظيفة"
+
+msgid "Candidate Interview Evaluation"
+msgstr "تقييم مقابلة المتقدم للوظيفة"
+
+msgid "Job Description / TOR"
+msgstr "الوصف الوظيفي / مرجع المهام"
+
+msgid "Scoring Lines"
+msgstr "بنود التقييم"
+
+msgid "Evaluator Notes"
+msgstr "ملاحظات المقيم"

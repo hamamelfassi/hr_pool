@@ -43,6 +43,7 @@
                             <field name="name"/>
                             <field name="x_grc_functional_area_id"/>
                             <field name="x_grc_function_id"/>
+                            <field name="x_documents_folder_id"/>
                         </group>
                         <group>
                             <field name="x_grc_role_template_id"/>
@@ -51,6 +52,7 @@
                             <field name="x_grc_onboarding_pack_id"/>
                             <field name="x_grc_declaration_pack_id"/>
                             <field name="x_grc_signature_profile_id"/>
+                            <field name="x_tor_pdf_attachment_id"/>
                         </group>
                     </group>
                     <notebook>
@@ -58,6 +60,12 @@
                             <group>
                                 <field name="x_grc_functional_area_id"/>
                                 <field name="x_grc_function_id"/>
+                            </group>
+                        </page>
+                        <page string="Documents">
+                            <group>
+                                <field name="x_documents_folder_id"/>
+                                <field name="x_tor_pdf_attachment_id"/>
                             </group>
                         </page>
                         <page string="Template Families">

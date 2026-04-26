@@ -6,6 +6,7 @@ See also:
 
 - `docs/architecture/05_hr_native_first_decision_matrix.md`
 - `docs/architecture/06_hr_native_first_workflow_playbook.md`
+- `docs/architecture/07_native_document_schema_implementation.md`
 
 The rule is:
 

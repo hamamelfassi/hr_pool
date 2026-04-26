@@ -4,6 +4,8 @@
         <field name="name">HR Pool</field>
         <field name="model">x_hr.pool</field>
         <field name="state">manual</field>
+        <field name="is_mail_thread" eval="True"/>
+        <field name="is_mail_activity" eval="True"/>
     </record>
 
     <record id="model_x_hr_pool_education_line" model="ir.model">

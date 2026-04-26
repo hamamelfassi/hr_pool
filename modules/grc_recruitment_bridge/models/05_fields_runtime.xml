@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Shared document hooks -->
+    <record id="field_hr_role_template_x_documents_folder_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template"/>
+        <field name="name">x_documents_folder_id</field>
+        <field name="field_description">Documents Folder</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">documents.folder</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_interview_template_x_documents_folder_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template"/>
+        <field name="name">x_documents_folder_id</field>
+        <field name="field_description">Documents Folder</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">documents.folder</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_document_checklist_template_x_documents_folder_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template"/>
+        <field name="name">x_documents_folder_id</field>
+        <field name="field_description">Documents Folder</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">documents.folder</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_onboarding_pack_x_documents_folder_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack"/>
+        <field name="name">x_documents_folder_id</field>
+        <field name="field_description">Documents Folder</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">documents.folder</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_declaration_pack_x_documents_folder_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack"/>
+        <field name="name">x_documents_folder_id</field>
+        <field name="field_description">Documents Folder</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">documents.folder</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_signature_profile_x_documents_folder_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile"/>
+        <field name="name">x_documents_folder_id</field>
+        <field name="field_description">Documents Folder</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">documents.folder</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_signature_profile_x_sign_template_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile"/>
+        <field name="name">x_sign_template_id</field>
+        <field name="field_description">Default Sign Template</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">sign.template</field>
+        <field name="on_delete">set null</field>
+    </record>
+
+    <record id="field_hr_declaration_pack_x_sign_template_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack"/>
+        <field name="name">x_sign_template_id</field>
+        <field name="field_description">Sign Template</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">sign.template</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_onboarding_pack_x_sign_template_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack"/>
+        <field name="name">x_sign_template_id</field>
+        <field name="field_description">Sign Template</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">sign.template</field>
+        <field name="on_delete">set null</field>
+    </record>
+
+    <!-- HR job hooks -->
+    <record id="field_hr_job_x_documents_folder_id" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','hr.job')]"/>
+        <field name="name">x_documents_folder_id</field>
+        <field name="field_description">Documents Folder</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">documents.folder</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_job_x_tor_pdf_attachment_id" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','hr.job')]"/>
+        <field name="name">x_tor_pdf_attachment_id</field>
+        <field name="field_description">TOR PDF Attachment</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+        <field name="on_delete">set null</field>
+    </record>
+
+    <!-- HR applicant hooks -->
+    <record id="field_hr_applicant_x_documents_folder_id" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','hr.applicant')]"/>
+        <field name="name">x_documents_folder_id</field>
+        <field name="field_description">Documents Folder</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">documents.folder</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_applicant_x_signature_profile_id" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','hr.applicant')]"/>
+        <field name="name">x_signature_profile_id</field>
+        <field name="field_description">Signature Profile</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_signature_profile</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_applicant_x_interview_evaluation_id" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','hr.applicant')]"/>
+        <field name="name">x_interview_evaluation_id</field>
+        <field name="field_description">Interview Evaluation</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_interview_evaluation</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_applicant_x_pdf_attachment_id" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','hr.applicant')]"/>
+        <field name="name">x_pdf_attachment_id</field>
+        <field name="field_description">Generated PDF Attachment</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_applicant_x_signed_pdf_attachment_id" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','hr.applicant')]"/>
+        <field name="name">x_signed_pdf_attachment_id</field>
+        <field name="field_description">Signed PDF Attachment</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+        <field name="on_delete">set null</field>
+    </record>
+
+    <!-- Interview evaluation runtime -->
+    <record id="field_hr_interview_evaluation_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_hr_interview_evaluation_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Evaluation Title</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_interview_evaluation_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_interview_evaluation_x_applicant_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
+        <field name="name">x_applicant_id</field>
+        <field name="field_description">Applicant</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.applicant</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_interview_evaluation_x_job_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
+        <field name="name">x_job_id</field>
+        <field name="field_description">Job</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.job</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_interview_evaluation_x_interviewer_user_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
+        <field name="name">x_interviewer_user_id</field>
+        <field name="field_description">Interviewer</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">res.users</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_interview_evaluation_x_documents_folder_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
+        <field name="name">x_documents_folder_id</field>
+        <field name="field_description">Documents Folder</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">documents.folder</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_interview_evaluation_x_signature_profile_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
+        <field name="name">x_signature_profile_id</field>
+        <field name="field_description">Signature Profile</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_signature_profile</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_interview_evaluation_x_pdf_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
+        <field name="name">x_pdf_attachment_id</field>
+        <field name="field_description">Generated PDF Attachment</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_interview_evaluation_x_signed_pdf_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
+        <field name="name">x_signed_pdf_attachment_id</field>
+        <field name="field_description">Signed PDF Attachment</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_interview_evaluation_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_interview_evaluation_x_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
+        <field name="name">x_line_ids</field>
+        <field name="field_description">Scoring Lines</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.hr_interview_evaluation_line</field>
+        <field name="relation_field">x_evaluation_id</field>
+    </record>
+
+    <record id="field_hr_interview_evaluation_line_x_evaluation_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation_line"/>
+        <field name="name">x_evaluation_id</field>
+        <field name="field_description">Interview Evaluation</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_interview_evaluation</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_interview_evaluation_line_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation_line"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_interview_evaluation_line_x_template_line_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation_line"/>
+        <field name="name">x_template_line_id</field>
+        <field name="field_description">Template Criterion</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_interview_template_line</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_interview_evaluation_line_x_question" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation_line"/>
+        <field name="name">x_question</field>
+        <field name="field_description">Question</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_interview_evaluation_line_x_score" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation_line"/>
+        <field name="name">x_score</field>
+        <field name="field_description">Score</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_hr_interview_evaluation_line_x_max_score" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation_line"/>
+        <field name="name">x_max_score</field>
+        <field name="field_description">Maximum Score</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_hr_interview_evaluation_line_x_weight" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation_line"/>
+        <field name="name">x_weight</field>
+        <field name="field_description">Weight</field>
+        <field name="ttype">float</field>
+    </record>
+    <record id="field_hr_interview_evaluation_line_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation_line"/>
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+</odoo>

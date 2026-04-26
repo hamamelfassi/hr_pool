@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_hr_pool_intake_snapshot_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <style>
+                            .marsellia-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+                            .marsellia-table th, .marsellia-table td { border: 1px solid #222; padding: 4px 6px; vertical-align: top; }
+                            .marsellia-section { margin-top: 14px; }
+                            .marsellia-title { margin-bottom: 6px; font-weight: 700; font-size: 16px; }
+                            .marsellia-subtitle { font-weight: 700; margin: 8px 0 4px 0; }
+                        </style>
+
+                        <div class="marsellia-title">HR Pool Intake Snapshot</div>
+
+                        <table class="marsellia-table">
+                            <tr>
+                                <th>Record</th>
+                                <td><span t-field="o.x_intake_reference"/></td>
+                                <th>Candidate</th>
+                                <td><span t-field="o.x_name"/></td>
+                            </tr>
+                            <tr>
+                                <th>Intake Phase</th>
+                                <td><span t-field="o.x_intake_phase"/></td>
+                                <th>Chairman Decision</th>
+                                <td><span t-field="o.x_chairman_decision"/></td>
+                            </tr>
+                            <tr>
+                                <th>Source System</th>
+                                <td><span t-field="o.x_source_system"/></td>
+                                <th>Source Channel</th>
+                                <td><span t-field="o.x_source_channel"/></td>
+                            </tr>
+                            <tr>
+                                <th>Fillout Submission</th>
+                                <td><span t-field="o.x_fillout_submission_id"/></td>
+                                <th>Submission Time</th>
+                                <td><span t-field="o.x_fillout_submission_time"/></td>
+                            </tr>
+                        </table>
+
+                        <div class="marsellia-section">
+                            <div class="marsellia-subtitle">Identity / الهوية</div>
+                            <table class="marsellia-table">
+                                <tr>
+                                    <th>Arabic Name</th>
+                                    <td><span t-field="o.x_first_name_ar"/> <span t-field="o.x_middle_names_ar"/> <span t-field="o.x_surname_ar"/></td>
+                                    <th>English Name</th>
+                                    <td><span t-field="o.x_first_name_en"/> <span t-field="o.x_middle_names_en"/> <span t-field="o.x_surname_en"/></td>
+                                </tr>
+                                <tr>
+                                    <th>Nationality</th>
+                                    <td><span t-field="o.x_nationality_id"/></td>
+                                    <th>National ID</th>
+                                    <td><span t-field="o.x_national_id"/></td>
+                                </tr>
+                                <tr>
+                                    <th>Date of Birth</th>
+                                    <td><span t-field="o.x_date_of_birth"/></td>
+                                    <th>Marital Status</th>
+                                    <td><span t-field="o.x_marital_status"/></td>
+                                </tr>
+                                <tr>
+                                    <th>Phone</th>
+                                    <td><span t-field="o.x_phone"/></td>
+                                    <th>Email</th>
+                                    <td><span t-field="o.x_email"/></td>
+                                </tr>
+                                <tr>
+                                    <th>Address</th>
+                                    <td colspan="3"><span t-field="o.x_address_text"/></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="marsellia-section">
+                            <div class="marsellia-subtitle">Credentials / المؤهلات</div>
+                            <table class="marsellia-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Institution</th>
+                                        <th>Subject</th>
+                                        <th>Type</th>
+                                        <th>Year</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.x_education_line_ids" t-as="line">
+                                        <tr>
+                                            <td><span t-esc="line.x_sequence"/></td>
+                                            <td><span t-field="line.x_qualifying_institution"/></td>
+                                            <td><span t-field="line.x_qualification_subject"/></td>
+                                            <td><span t-field="line.x_qualification_type"/></td>
+                                            <td><span t-field="line.x_graduation_year"/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="marsellia-section">
+                            <div class="marsellia-subtitle">Employment History</div>
+                            <table class="marsellia-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Employer</th>
+                                        <th>Job Title</th>
+                                        <th>Start</th>
+                                        <th>End</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.x_employment_line_ids" t-as="line">
+                                        <tr>
+                                            <td><span t-esc="line.x_sequence"/></td>
+                                            <td><span t-field="line.x_employer_name"/></td>
+                                            <td><span t-field="line.x_job_title"/></td>
+                                            <td><span t-field="line.x_start_date"/></td>
+                                            <td><span t-field="line.x_end_date"/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="marsellia-section">
+                            <div class="marsellia-subtitle">Skills and Languages</div>
+                            <table class="marsellia-table">
+                                <thead>
+                                    <tr>
+                                        <th>Skill / Language</th>
+                                        <th>Description</th>
+                                        <th>Level</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.x_skill_line_ids" t-as="line">
+                                        <tr>
+                                            <td><span t-field="line.x_skill_type_id"/></td>
+                                            <td><span t-field="line.x_skill_description"/></td>
+                                            <td><span t-field="line.x_proficiency_level"/></td>
+                                        </tr>
+                                    </t>
+                                    <t t-foreach="o.x_language_line_ids" t-as="line">
+                                        <tr>
+                                            <td><span t-field="line.x_language_name"/></td>
+                                            <td><span t-field="line.x_notes"/></td>
+                                            <td><span t-field="line.x_working_level_value"/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="marsellia-section">
+                            <div class="marsellia-subtitle">Declarations and Handoff</div>
+                            <table class="marsellia-table">
+                                <tr>
+                                    <th>Preferred Work Type</th>
+                                    <td><span t-field="o.x_preferred_work_type"/></td>
+                                    <th>Preferred Locations</th>
+                                    <td><span t-field="o.x_preferred_work_locations"/></td>
+                                </tr>
+                                <tr>
+                                    <th>Accuracy Declaration</th>
+                                    <td><span t-field="o.x_accuracy_declaration"/></td>
+                                    <th>Privacy Declaration</th>
+                                    <td><span t-field="o.x_privacy_declaration"/></td>
+                                </tr>
+                                <tr>
+                                    <th>Typed Consent Name</th>
+                                    <td><span t-field="o.x_typed_consent_name"/></td>
+                                    <th>Reviewer</th>
+                                    <td><span t-field="o.x_reviewer_user_id"/></td>
+                                </tr>
+                                <tr>
+                                    <th>Conversion Job</th>
+                                    <td><span t-field="o.x_conversion_job_id"/></td>
+                                    <th>Recruitment Applicant</th>
+                                    <td><span t-field="o.x_applicant_id"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

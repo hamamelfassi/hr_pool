@@ -6,7 +6,10 @@
         "hr",
         "hr_recruitment",
         "hr_pool",
-        "grc_backbone"
+        "grc_backbone",
+        "mail",
+        "documents",
+        "sign"
     ],
     "category": "Human Resources",
     "application": True,
@@ -16,13 +19,22 @@
         "models/02_fields_templates_inverse.xml",
         "models/02_fields_templates.xml",
         "models/03_fields_bridge.xml",
+        "models/04_models_runtime.xml",
+        "models/05_fields_runtime.xml",
         "data/01_selection_values.xml",
         "data/02_sequence.xml",
         "data/03_seed_templates.xml",
+        "report/01_paperformat.xml",
+        "report/02_hr_job_tor_report_templates.xml",
+        "report/03_hr_job_tor_report_actions.xml",
+        "report/04_hr_interview_evaluation_report_templates.xml",
+        "report/05_hr_interview_evaluation_report_actions.xml",
         "actions/01_actions.xml",
         "views/01_templates_views.xml",
         "views/02_bridge_views.xml",
+        "views/03_runtime_views.xml",
         "menus/01_menus.xml",
+        "menus/02_runtime_menus.xml",
         "security/ir.model.access.csv"
     ]
 }

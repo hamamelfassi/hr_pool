@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_recruitment_governance_runtime" name="Runtime Records" parent="grc_recruitment_bridge.menu_recruitment_governance_root" sequence="40" groups="grc_recruitment_bridge.group_recruitment_governance_user"/>
+    <menuitem id="menu_recruitment_governance_interview_evaluations" name="Interview Evaluations" parent="grc_recruitment_bridge.menu_recruitment_governance_runtime" action="grc_recruitment_bridge.action_hr_interview_evaluation" sequence="10" groups="grc_recruitment_bridge.group_recruitment_governance_user"/>
+</odoo>

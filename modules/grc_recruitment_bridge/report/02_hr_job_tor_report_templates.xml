@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_hr_job_tor_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <style>
+                            .marsellia-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+                            .marsellia-table th, .marsellia-table td { border: 1px solid #222; padding: 4px 6px; vertical-align: top; }
+                            .marsellia-title { margin-bottom: 8px; font-weight: 700; font-size: 16px; }
+                            .marsellia-section { margin-top: 14px; }
+                            .marsellia-subtitle { font-weight: 700; margin: 8px 0 4px 0; }
+                        </style>
+                        <div class="marsellia-title">Job Description / TOR</div>
+                        <table class="marsellia-table">
+                            <tr>
+                                <th>Job Name</th>
+                                <td colspan="3"><span t-field="o.name"/></td>
+                            </tr>
+                            <tr>
+                                <th>Functional Area</th>
+                                <td><span t-field="o.x_grc_functional_area_id"/></td>
+                                <th>Function</th>
+                                <td><span t-field="o.x_grc_function_id"/></td>
+                            </tr>
+                            <tr>
+                                <th>Role Template</th>
+                                <td><span t-field="o.x_grc_role_template_id"/></td>
+                                <th>Signature Profile</th>
+                                <td><span t-field="o.x_grc_signature_profile_id"/></td>
+                            </tr>
+                            <tr>
+                                <th>Interview Template</th>
+                                <td><span t-field="o.x_grc_interview_template_id"/></td>
+                                <th>Document Checklist</th>
+                                <td><span t-field="o.x_grc_document_checklist_template_id"/></td>
+                            </tr>
+                            <tr>
+                                <th>Onboarding Pack</th>
+                                <td><span t-field="o.x_grc_onboarding_pack_id"/></td>
+                                <th>Declaration Pack</th>
+                                <td><span t-field="o.x_grc_declaration_pack_id"/></td>
+                            </tr>
+                            <tr>
+                                <th>Documents Folder</th>
+                                <td colspan="3"><span t-field="o.x_documents_folder_id"/></td>
+                            </tr>
+                        </table>
+
+                        <div class="marsellia-section">
+                            <div class="marsellia-subtitle">Role Composition</div>
+                            <t t-if="o.x_grc_role_template_id">
+                                <table class="marsellia-table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Functional Area</th>
+                                            <th>Function</th>
+                                            <th>Minimum Requirement</th>
+                                            <th>Expected Output</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="o.x_grc_role_template_id.x_line_ids" t-as="line">
+                                            <tr>
+                                                <td><span t-esc="line.x_sequence"/></td>
+                                                <td><span t-field="line.x_functional_area_id"/></td>
+                                                <td><span t-field="line.x_function_id"/></td>
+                                                <td><span t-field="line.x_minimum_requirement"/></td>
+                                                <td><span t-field="line.x_expected_output"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </t>
+                            <t t-else="">
+                                <p>No role template is linked to this job.</p>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

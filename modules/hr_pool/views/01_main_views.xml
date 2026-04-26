@@ -240,8 +240,20 @@
                                 <field name="x_source_system" readonly="1"/>
                             </group>
                         </page>
+                        <page string="Documents &amp; Signatures">
+                            <group>
+                                <field name="x_documents_folder_id"/>
+                                <field name="x_intake_pdf_attachment_id"/>
+                                <field name="x_signed_pdf_attachment_id"/>
+                            </group>
+                        </page>
                     </notebook>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
             </form>
         </field>
     </record>

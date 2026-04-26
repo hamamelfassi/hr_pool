@@ -415,4 +415,29 @@
         <field name="name">Completed</field>
         <field name="value">completed</field>
     </record>
+    <record id="field_hr_interview_evaluation_x_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_interview_evaluation_x_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="field_hr_interview_evaluation_x_state_in_review" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_interview_evaluation_x_state"/>
+        <field name="name">In Review</field>
+        <field name="value">in_review</field>
+    </record>
+    <record id="field_hr_interview_evaluation_x_state_completed" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_interview_evaluation_x_state"/>
+        <field name="name">Completed</field>
+        <field name="value">completed</field>
+    </record>
+    <record id="field_hr_interview_evaluation_x_state_signed" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_interview_evaluation_x_state"/>
+        <field name="name">Signed</field>
+        <field name="value">signed</field>
+    </record>
+    <record id="field_hr_interview_evaluation_x_state_archived" model="ir.model.fields.selection">
+        <field name="field_id" ref="grc_recruitment_bridge.field_hr_interview_evaluation_x_state"/>
+        <field name="name">Archived</field>
+        <field name="value">archived</field>
+    </record>
 </odoo>

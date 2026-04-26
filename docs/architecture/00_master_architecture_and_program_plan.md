@@ -146,7 +146,16 @@ Status:
 - the form corpus is mapped to recruitment/onboarding families
 - document generation posture is decided in favor of Odoo-native first
 - external signing posture is decided in favor of Odoo Sign
-- implementation of runtime record flows is still pending
+- the native document schema is now partially implemented:
+  - `x_hr.pool` has chatter, activity, Documents, intake PDF, and signed PDF hooks
+  - `x_grc.hr_interview_evaluation` exists as a governed runtime record with chatter, activities, attachments, and QWeb reporting
+  - `hr.job` now carries TOR / Documents hooks for native report generation and storage
+- the remaining work is the operational wiring:
+  - conversion handoff
+  - actual sign-request routing
+  - document-folder provisioning
+  - applicant-side continuation and prefill surface
+  - final contract bundle flow
 
 Work:
 - interview evaluation
@@ -163,6 +172,7 @@ Implementation note:
 - HTML/CSS-to-PDF is preferred for forms with multi-line rows, repeated sections, or heavy tabular structure
 - Odoo Sign is the default formal signing path for applicants, employees, managers, and chairman-level sign-offs where external signatures are needed
 - the live signed PDF is attached to the operational record, while the template source remains in the bridge/resources layer
+- the concrete schema map for this native-document pass is documented in `docs/architecture/07_native_document_schema_implementation.md`
 
 ### Phase 4 - Operational governance expansion
 
@@ -293,6 +303,23 @@ References:
 
 - `docs/architecture/05_hr_native_first_decision_matrix.md`
 - `docs/architecture/06_hr_native_first_workflow_playbook.md`
+
+### 2026-04-26 - Native document schema implementation
+
+Completed:
+
+- added `Documents` hooks to `hr_pool` intake records and recruitment template/runtime records
+- added `QWeb` PDF actions for HR Pool intake snapshots, `hr.job` TOR outputs, and interview evaluation records
+- added chatter/activity support to the HR Pool intake model and the interview evaluation runtime model
+- added a governed interview evaluation runtime record with score lines, attachment pointers, and signature profile linkage
+- documented the schema in `docs/architecture/07_native_document_schema_implementation.md`
+
+Open:
+
+- route QWeb-generated PDFs into the Documents DMS automatically
+- add signature request actions and record buttons
+- provision or standardize document folders for runtime records
+- complete Arabic terminology and translation coverage for the new native-document fields
 
 ## 9. Refactor safety rules
 

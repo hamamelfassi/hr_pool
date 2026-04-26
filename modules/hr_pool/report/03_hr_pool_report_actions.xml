@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_hr_pool_intake_snapshot" model="ir.actions.report">
+        <field name="name">HR Pool Intake Snapshot</field>
+        <field name="model">x_hr.pool</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hr_pool.report_hr_pool_intake_snapshot_document</field>
+        <field name="report_file">hr_pool.report_hr_pool_intake_snapshot_document</field>
+        <field name="paperformat_id" ref="hr_pool.paperformat_hr_pool_native"/>
+        <field name="binding_model_id" search="[('model','=','x_hr.pool')]"/>
+        <field name="binding_view_types">form</field>
+        <field name="attachment_use" eval="True"/>
+        <field name="attachment">'%s - Intake Snapshot.pdf' % (object.x_intake_reference or object.display_name or 'HR Pool')</field>
+    </record>
+</odoo>

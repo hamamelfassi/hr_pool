@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_interview_evaluation_list" model="ir.ui.view">
+        <field name="name">x_grc.hr_interview_evaluation.list</field>
+        <field name="model">x_grc.hr_interview_evaluation</field>
+        <field name="arch" type="xml">
+            <list string="Interview Evaluations">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_applicant_id"/>
+                <field name="x_job_id"/>
+                <field name="x_interviewer_user_id"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hr_interview_evaluation_search" model="ir.ui.view">
+        <field name="name">x_grc.hr_interview_evaluation.search</field>
+        <field name="model">x_grc.hr_interview_evaluation</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_applicant_id"/>
+                <field name="x_job_id"/>
+                <field name="x_interviewer_user_id"/>
+                <filter name="draft" string="Draft" domain="[('x_state','=','draft')]"/>
+                <filter name="review" string="In Review" domain="[('x_state','=','in_review')]"/>
+                <filter name="completed" string="Completed" domain="[('x_state','=','completed')]"/>
+                <filter name="signed" string="Signed" domain="[('x_state','=','signed')]"/>
+                <filter name="archived" string="Archived" domain="[('x_state','=','archived')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_hr_interview_evaluation_form" model="ir.ui.view">
+        <field name="name">x_grc.hr_interview_evaluation.form</field>
+        <field name="model">x_grc.hr_interview_evaluation</field>
+        <field name="arch" type="xml">
+            <form string="Interview Evaluation">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_state"/>
+                            <field name="x_applicant_id"/>
+                            <field name="x_job_id"/>
+                        </group>
+                        <group>
+                            <field name="x_interviewer_user_id"/>
+                            <field name="x_signature_profile_id"/>
+                            <field name="x_documents_folder_id"/>
+                            <field name="x_pdf_attachment_id"/>
+                            <field name="x_signed_pdf_attachment_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Scoring Lines">
+                            <field name="x_line_ids">
+                                <list editable="bottom">
+                                    <field name="x_sequence" widget="handle"/>
+                                    <field name="x_template_line_id"/>
+                                    <field name="x_question"/>
+                                    <field name="x_score"/>
+                                    <field name="x_max_score"/>
+                                    <field name="x_weight"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="x_notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+</odoo>

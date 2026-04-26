@@ -53,4 +53,5 @@
         <field name="name">Signature Profile Line</field>
         <field name="model">x_grc.hr_signature_profile_line</field>
     </record>
+
 </odoo>

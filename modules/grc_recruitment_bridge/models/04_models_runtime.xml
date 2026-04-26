@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="model_hr_interview_evaluation" model="ir.model">
+        <field name="name">Interview Evaluation</field>
+        <field name="model">x_grc.hr_interview_evaluation</field>
+        <field name="state">manual</field>
+        <field name="is_mail_thread" eval="True"/>
+        <field name="is_mail_activity" eval="True"/>
+    </record>
+    <record id="model_hr_interview_evaluation_line" model="ir.model">
+        <field name="name">Interview Evaluation Line</field>
+        <field name="model">x_grc.hr_interview_evaluation_line</field>
+        <field name="state">manual</field>
+    </record>
+</odoo>
