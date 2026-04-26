@@ -248,7 +248,8 @@ Do not ship:
 6. design the HR document generation and signature workflow
 7. design phase-2 enrichment and document completion
 8. extend into operational consumption modules
-9. execute the strict `hr.job` versus `hr.applicant` implementation pass
+9. execute the strict `hr.job` versus `hr.applicant` high-priority implementation pass
+10. execute the strict `hr.job` versus `hr.applicant` medium-priority implementation pass
 
 ## 8. Implementation journal
 
@@ -366,6 +367,21 @@ Open:
   - stricter functional area/function filtering on template lines
   - default template selection and fallback logic
   - PDF preview / inspector improvements
+
+### 2026-04-26 - Split implementation passes
+
+Completed:
+
+- split the remaining recruitment implementation work into two dedicated passes:
+  - `docs/architecture/10_hr_high_priority_implementation_pass.md`
+  - `docs/architecture/11_hr_medium_priority_implementation_pass.md`
+- moved the high-priority structural work into the first pass
+- moved the cleanup and usability work into the second pass
+
+Open:
+
+- execute the high-priority pass before the medium-priority pass
+- keep the two passes separate so context and implementation scope do not drift
 
 ## 9. Refactor safety rules
 

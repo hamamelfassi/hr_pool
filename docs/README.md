@@ -24,6 +24,10 @@ This folder stores project documentation and non-module implementation assets th
   corrected recruitment runtime ownership, menus, views, and document submission model
 - `architecture/09_hr_job_vs_hr_applicant_gap_matrix.md`
   strict baseline-vacancy versus negotiated-runtime ownership matrix
+- `architecture/10_hr_high_priority_implementation_pass.md`
+  next implementation pass for the structural recruitment/runtime work
+- `architecture/11_hr_medium_priority_implementation_pass.md`
+  follow-on implementation pass for cleanup, translations, and usability refinements
 - `modules/hr_pool/`
   HR Pool-specific documentation
 - `modules/grc_backbone/`
