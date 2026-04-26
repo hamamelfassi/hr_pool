@@ -37,6 +37,15 @@
         <field name="on_delete">restrict</field>
     </record>
 
+    <record id="field_hr_recruitment_role_composition_line_x_composition_id" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','x_hr.recruitment_role_composition_line')]"/>
+        <field name="name">x_composition_id</field>
+        <field name="field_description">Role Composition</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_hr.recruitment_role_composition</field>
+        <field name="on_delete">restrict</field>
+    </record>
+
     <record id="field_hr_recruitment_role_composition_x_applicant_id" model="ir.model.fields">
         <field name="model_id" search="[('model','=','x_hr.recruitment_role_composition')]"/>
         <field name="name">x_applicant_id</field>
