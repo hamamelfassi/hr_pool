@@ -73,7 +73,7 @@
                                     <field name="x_sequence" widget="handle"/>
                                     <field name="x_template_line_id"/>
                                     <field name="x_functional_area_id"/>
-                                    <field name="x_function_id"/>
+                                    <field name="x_function_id" domain="[('x_functional_area_id', '=', x_functional_area_id)]"/>
                                     <field name="x_is_included"/>
                                     <field name="x_minimum_requirement"/>
                                     <field name="x_expected_output"/>

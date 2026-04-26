@@ -61,7 +61,7 @@
                                 <list>
                                     <field name="x_sequence"/>
                                     <field name="x_functional_area_id"/>
-                                    <field name="x_function_id"/>
+                                    <field name="x_function_id" domain="[('x_functional_area_id', '=', x_functional_area_id)]"/>
                                     <field name="x_minimum_requirement"/>
                                     <field name="x_expected_output"/>
                                     <field name="x_required"/>

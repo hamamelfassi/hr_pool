@@ -215,7 +215,6 @@
         <field name="field_description">Function</field>
         <field name="ttype">many2one</field>
         <field name="relation">x_grc.function</field>
-        <field name="domain">[('x_functional_area_id', '=', x_functional_area_id)]</field>
         <field name="on_delete">restrict</field>
     </record>
     <record id="field_hr_recruitment_role_composition_line_x_minimum_requirement" model="ir.model.fields">
