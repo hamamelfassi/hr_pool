@@ -4,7 +4,7 @@
         <field name="name">hr.job.recruitment_governance.list</field>
         <field name="model">hr.job</field>
         <field name="arch" type="xml">
-            <list string="Baseline Vacancies">
+            <tree string="Baseline Vacancies">
                 <field name="name"/>
                 <field name="x_grc_functional_area_id"/>
                 <field name="x_grc_function_id"/>
@@ -13,7 +13,7 @@
                 <field name="x_grc_document_checklist_template_id"/>
                 <field name="x_grc_declaration_pack_id"/>
                 <field name="x_grc_signature_profile_id"/>
-            </list>
+            </tree>
         </field>
     </record>
     <record id="view_hr_job_bridge_search" model="ir.ui.view">

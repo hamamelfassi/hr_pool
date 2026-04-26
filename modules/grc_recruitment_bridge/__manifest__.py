@@ -1,5 +1,6 @@
 {
     "name": "Recruitment Governance",
+    "version": "19.0.1.0.0",
     "summary": "Recruitment-domain governance bridge for Marsellia",
     "depends": [
         "base",
