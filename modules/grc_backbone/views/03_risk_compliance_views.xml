@@ -11,13 +11,13 @@
         <field name="name">x_grc.risk.list</field>
         <field name="model">x_grc.risk</field>
         <field name="arch" type="xml">
-            <tree string="Risks">
+            <list string="Risks">
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_category"/>
                 <field name="x_functional_area_id"/>
                 <field name="x_state"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_risk_search" model="ir.ui.view">
@@ -56,34 +56,34 @@
                         </page>
                         <page string="Assessments">
                             <field name="x_assessment_ids">
-                                <tree>
+                                <list>
                                     <field name="x_date"/>
                                     <field name="x_likelihood"/>
                                     <field name="x_impact"/>
                                     <field name="x_risk_score"/>
                                     <field name="x_status"/>
                                     <field name="x_state"/>
-                                </tree>
+                                </list>
                             </field>
                         </page>
                         <page string="Controls">
                             <field name="x_control_ids">
-                                <tree>
+                                <list>
                                     <field name="x_code"/>
                                     <field name="x_name"/>
                                     <field name="x_control_type"/>
                                     <field name="x_state"/>
-                                </tree>
+                                </list>
                             </field>
                         </page>
                         <page string="Incidents">
                             <field name="x_incident_ids">
-                                <tree>
+                                <list>
                                     <field name="x_name"/>
                                     <field name="x_incident_date"/>
                                     <field name="x_severity"/>
                                     <field name="x_state"/>
-                                </tree>
+                                </list>
                             </field>
                         </page>
                     </notebook>
@@ -95,7 +95,7 @@
         <field name="name">x_grc.risk_assessment.list</field>
         <field name="model">x_grc.risk_assessment</field>
         <field name="arch" type="xml">
-            <tree string="Risk Assessments">
+            <list string="Risk Assessments">
                 <field name="x_risk_id"/>
                 <field name="x_date"/>
                 <field name="x_likelihood"/>
@@ -103,7 +103,7 @@
                 <field name="x_risk_score"/>
                 <field name="x_status"/>
                 <field name="x_state"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_risk_assessment_search" model="ir.ui.view">
@@ -145,14 +145,14 @@
         <field name="name">x_grc.control.list</field>
         <field name="model">x_grc.control</field>
         <field name="arch" type="xml">
-            <tree string="Controls">
+            <list string="Controls">
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_risk_id"/>
                 <field name="x_control_type"/>
                 <field name="x_is_hse_blocker"/>
                 <field name="x_state"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_control_search" model="ir.ui.view">
@@ -192,22 +192,22 @@
                         </page>
                         <page string="Compliance Checks">
                             <field name="x_compliance_check_ids">
-                                <tree>
+                                <list>
                                     <field name="x_name"/>
                                     <field name="x_check_date"/>
                                     <field name="x_result"/>
                                     <field name="x_state"/>
-                                </tree>
+                                </list>
                             </field>
                         </page>
                         <page string="Incidents">
                             <field name="x_incident_ids">
-                                <tree>
+                                <list>
                                     <field name="x_name"/>
                                     <field name="x_incident_date"/>
                                     <field name="x_severity"/>
                                     <field name="x_state"/>
-                                </tree>
+                                </list>
                             </field>
                         </page>
                     </notebook>
@@ -219,14 +219,14 @@
         <field name="name">x_grc.compliance_check.list</field>
         <field name="model">x_grc.compliance_check</field>
         <field name="arch" type="xml">
-            <tree string="Compliance Checks">
+            <list string="Compliance Checks">
                 <field name="x_name"/>
                 <field name="x_check_date"/>
                 <field name="x_provision_id"/>
                 <field name="x_control_id"/>
                 <field name="x_result"/>
                 <field name="x_state"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_compliance_check_search" model="ir.ui.view">
@@ -271,13 +271,13 @@
         <field name="name">x_grc.incident.list</field>
         <field name="model">x_grc.incident</field>
         <field name="arch" type="xml">
-            <tree string="Incidents">
+            <list string="Incidents">
                 <field name="x_name"/>
                 <field name="x_incident_date"/>
                 <field name="x_severity"/>
                 <field name="x_realized_risk_id"/>
                 <field name="x_state"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_incident_search" model="ir.ui.view">

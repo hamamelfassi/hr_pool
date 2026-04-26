@@ -10,14 +10,14 @@
         <field name="name">x_grc.framework.list</field>
         <field name="model">x_grc.framework</field>
         <field name="arch" type="xml">
-            <tree string="Frameworks">
+            <list string="Frameworks">
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_type"/>
                 <field name="x_authority"/>
                 <field name="x_valid_to"/>
                 <field name="x_state"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_framework_search" model="ir.ui.view">
@@ -62,12 +62,12 @@
                             </group>
                             <group>
                                 <field name="x_provision_ids">
-                                    <tree>
+                                    <list>
                                         <field name="x_code"/>
                                         <field name="x_name"/>
                                         <field name="x_metric_type"/>
                                         <field name="x_state"/>
-                                    </tree>
+                                    </list>
                                 </field>
                             </group>
                         </page>
@@ -80,11 +80,11 @@
         <field name="name">x_grc.policy.list</field>
         <field name="model">x_grc.policy</field>
         <field name="arch" type="xml">
-            <tree string="Policies">
+            <list string="Policies">
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_state"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_policy_search" model="ir.ui.view">
@@ -121,12 +121,12 @@
                         </page>
                         <page string="Provisions">
                             <field name="x_provision_ids">
-                                <tree>
+                                <list>
                                     <field name="x_code"/>
                                     <field name="x_name"/>
                                     <field name="x_metric_type"/>
                                     <field name="x_state"/>
-                                </tree>
+                                </list>
                             </field>
                         </page>
                     </notebook>
@@ -138,7 +138,7 @@
         <field name="name">x_grc.provision.list</field>
         <field name="model">x_grc.provision</field>
         <field name="arch" type="xml">
-            <tree string="Provisions">
+            <list string="Provisions">
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_framework_id"/>
@@ -146,7 +146,7 @@
                 <field name="x_metric_type"/>
                 <field name="x_evaluation_frequency"/>
                 <field name="x_state"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_provision_search" model="ir.ui.view">
@@ -190,12 +190,12 @@
                         </page>
                         <page string="Compliance Checks">
                             <field name="x_compliance_check_ids">
-                                <tree>
+                                <list>
                                     <field name="x_name"/>
                                     <field name="x_check_date"/>
                                     <field name="x_result"/>
                                     <field name="x_state"/>
-                                </tree>
+                                </list>
                             </field>
                         </page>
                     </notebook>
@@ -207,13 +207,13 @@
         <field name="name">x_grc.decision.list</field>
         <field name="model">x_grc.decision</field>
         <field name="arch" type="xml">
-            <tree string="Decisions">
+            <list string="Decisions">
                 <field name="x_name"/>
                 <field name="x_decision_date"/>
                 <field name="x_executive_body"/>
                 <field name="x_related_policy_id"/>
                 <field name="x_state"/>
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_decision_search" model="ir.ui.view">
