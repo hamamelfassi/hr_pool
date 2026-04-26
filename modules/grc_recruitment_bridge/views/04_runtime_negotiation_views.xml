@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_recruitment_role_composition_list" model="ir.ui.view">
+        <field name="name">x_hr.recruitment_role_composition.list</field>
+        <field name="model">x_hr.recruitment_role_composition</field>
+        <field name="arch" type="xml">
+            <list string="Negotiated Job Descriptions">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_applicant_id"/>
+                <field name="x_job_id"/>
+                <field name="x_role_template_id"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_hr_recruitment_role_composition_search" model="ir.ui.view">
+        <field name="name">x_hr.recruitment_role_composition.search</field>
+        <field name="model">x_hr.recruitment_role_composition</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_applicant_id"/>
+                <field name="x_job_id"/>
+                <field name="x_role_template_id"/>
+                <filter name="draft" string="Draft" domain="[('x_state','=','draft')]"/>
+                <filter name="review" string="In Review" domain="[('x_state','=','in_review')]"/>
+                <filter name="completed" string="Completed" domain="[('x_state','=','completed')]"/>
+                <filter name="signed" string="Signed" domain="[('x_state','=','signed')]"/>
+                <filter name="archived" string="Archived" domain="[('x_state','=','archived')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_hr_recruitment_role_composition_form" model="ir.ui.view">
+        <field name="name">x_hr.recruitment_role_composition.form</field>
+        <field name="model">x_hr.recruitment_role_composition</field>
+        <field name="arch" type="xml">
+            <form string="Negotiated Job Description / TOR">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_state"/>
+                            <field name="x_applicant_id"/>
+                            <field name="x_job_id"/>
+                            <field name="x_role_template_id"/>
+                        </group>
+                        <group>
+                            <field name="x_signature_profile_id"/>
+                            <field name="x_documents_folder_id"/>
+                            <field name="x_pdf_attachment_id"/>
+                            <field name="x_signed_pdf_attachment_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Negotiated Lines">
+                            <field name="x_line_ids">
+                                <list editable="bottom">
+                                    <field name="x_sequence" widget="handle"/>
+                                    <field name="x_template_line_id"/>
+                                    <field name="x_functional_area_id"/>
+                                    <field name="x_function_id"/>
+                                    <field name="x_is_included"/>
+                                    <field name="x_minimum_requirement"/>
+                                    <field name="x_expected_output"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="x_notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hr_recruitment_declaration_envelope_list" model="ir.ui.view">
+        <field name="name">x_hr.recruitment_declaration_envelope.list</field>
+        <field name="model">x_hr.recruitment_declaration_envelope</field>
+        <field name="arch" type="xml">
+            <list string="Declaration Envelopes">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_applicant_id"/>
+                <field name="x_job_id"/>
+                <field name="x_declaration_pack_id"/>
+                <field name="x_state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_hr_recruitment_declaration_envelope_search" model="ir.ui.view">
+        <field name="name">x_hr.recruitment_declaration_envelope.search</field>
+        <field name="model">x_hr.recruitment_declaration_envelope</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_applicant_id"/>
+                <field name="x_job_id"/>
+                <field name="x_declaration_pack_id"/>
+                <filter name="draft" string="Draft" domain="[('x_state','=','draft')]"/>
+                <filter name="review" string="In Review" domain="[('x_state','=','in_review')]"/>
+                <filter name="completed" string="Completed" domain="[('x_state','=','completed')]"/>
+                <filter name="signed" string="Signed" domain="[('x_state','=','signed')]"/>
+                <filter name="archived" string="Archived" domain="[('x_state','=','archived')]"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_hr_recruitment_declaration_envelope_form" model="ir.ui.view">
+        <field name="name">x_hr.recruitment_declaration_envelope.form</field>
+        <field name="model">x_hr.recruitment_declaration_envelope</field>
+        <field name="arch" type="xml">
+            <form string="Declaration Envelope">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_state"/>
+                            <field name="x_applicant_id"/>
+                            <field name="x_job_id"/>
+                            <field name="x_declaration_pack_id"/>
+                        </group>
+                        <group>
+                            <field name="x_signature_profile_id"/>
+                            <field name="x_documents_folder_id"/>
+                            <field name="x_pdf_attachment_id"/>
+                            <field name="x_signed_pdf_attachment_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Declaration Lines">
+                            <field name="x_line_ids">
+                                <list editable="bottom">
+                                    <field name="x_sequence" widget="handle"/>
+                                    <field name="x_declaration_pack_line_id"/>
+                                    <field name="x_signer_role"/>
+                                    <field name="x_is_signed"/>
+                                    <field name="x_signed_at"/>
+                                    <field name="x_signed_by_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="x_notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+</odoo>

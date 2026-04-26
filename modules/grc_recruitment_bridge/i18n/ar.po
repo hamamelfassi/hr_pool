@@ -94,3 +94,60 @@ msgstr "بنود التقييم"
 
 msgid "Evaluator Notes"
 msgstr "ملاحظات المقيم"
+
+msgid "Baseline Vacancies"
+msgstr "الشواغر الأساسية"
+
+msgid "Baseline Vacancy"
+msgstr "الشاغر الأساسي"
+
+msgid "Baseline Job Description / TOR"
+msgstr "الوصف الوظيفي الأساسي / مرجع المهام"
+
+msgid "Baseline Role Composition"
+msgstr "تركيبة الدور الأساسية"
+
+msgid "Negotiated Job Description / TOR"
+msgstr "الوصف الوظيفي التفاوضي / مرجع المهام"
+
+msgid "Negotiated Job Descriptions"
+msgstr "الأوصاف الوظيفية التفاوضية"
+
+msgid "Negotiated Role"
+msgstr "الدور التفاوضي"
+
+msgid "Negotiated Role Composition"
+msgstr "تركيبة الدور التفاوضية"
+
+msgid "Document Submissions"
+msgstr "تسليمات المستندات"
+
+msgid "Declaration Envelopes"
+msgstr "مظاريف الإقرارات"
+
+msgid "Declaration Envelope"
+msgstr "مظروف الإقرار"
+
+msgid "Declaration Lines"
+msgstr "بنود الإقرار"
+
+msgid "Declarations"
+msgstr "الإقرارات"
+
+msgid "Documents & Checklists"
+msgstr "المستندات وقوائم التحقق"
+
+msgid "Evaluations"
+msgstr "التقييمات"
+
+msgid "Signatures"
+msgstr "التواقيع"
+
+msgid "Included"
+msgstr "مضمن"
+
+msgid "Signed"
+msgstr "موقع"
+
+msgid "Signing Profiles"
+msgstr "مسارات التوقيع"

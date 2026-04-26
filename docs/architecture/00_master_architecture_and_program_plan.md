@@ -153,6 +153,11 @@ Status:
   - `x_grc.hr_interview_evaluation` exists as a governed runtime record with chatter, activities, attachments, and QWeb reporting
   - `hr.job` now carries the baseline vacancy / TOR hooks for native report generation and storage
   - `hr.applicant` remains the runtime home for the negotiated case, document checklist, submissions, declarations, and signed artifacts
+- the high-priority `hr.job` versus `hr.applicant` runtime pass is now under implementation in the source tree:
+  - applicant-side negotiated role composition records are scaffolded
+  - applicant-side declaration envelope records are scaffolded
+  - the applicant notebook has been split into baseline vacancy, negotiated role, evaluations, documents/checklists, declarations, and signatures pages
+  - baseline vacancy labels on `hr.job` have been tightened to distinguish them from negotiated runtime records
 - the remaining work is the operational wiring:
   - conversion handoff
   - actual sign-request routing
@@ -258,6 +263,14 @@ Do not ship:
 Completed:
 
 - scaffolded `modules/grc_recruitment_bridge/` as the recruitment-domain governance bridge
+
+### 2026-04-26 - High-priority recruitment runtime pass started
+
+Completed:
+
+- implemented negotiated applicant-side runtime surfaces for role composition and declaration envelopes
+- split the applicant notebook into baseline vacancy, negotiated role, evaluations, documents/checklists, declarations, and signatures pages
+- tightened baseline vacancy vocabulary on `hr.job` and added applicant-side runtime reporting actions for the negotiated case
 - added XML-only template models, fields, data, actions, menus, security, and views
 - seeded the first-wave recruitment families:
   - `MCEP-HR-F-0001` continuation pack

@@ -16,5 +16,5 @@
     <menuitem id="menu_recruitment_governance_published_templates" name="Published Templates" parent="grc_recruitment_bridge.menu_recruitment_governance_approvals" action="grc_recruitment_bridge.action_hr_template_published" sequence="20" groups="grc_recruitment_bridge.group_recruitment_governance_user"/>
 
     <menuitem id="menu_recruitment_governance_references" name="References" parent="grc_recruitment_bridge.menu_recruitment_governance_root" sequence="30" groups="grc_recruitment_bridge.group_recruitment_governance_user"/>
-    <menuitem id="menu_recruitment_governance_jobs" name="Recruitment Jobs" parent="grc_recruitment_bridge.menu_recruitment_governance_references" action="grc_recruitment_bridge.action_hr_job_bridge" sequence="10" groups="grc_recruitment_bridge.group_recruitment_governance_user"/>
+    <menuitem id="menu_recruitment_governance_jobs" name="Baseline Vacancies" parent="grc_recruitment_bridge.menu_recruitment_governance_references" action="grc_recruitment_bridge.action_hr_job_bridge" sequence="10" groups="grc_recruitment_bridge.group_recruitment_governance_user"/>
 </odoo>

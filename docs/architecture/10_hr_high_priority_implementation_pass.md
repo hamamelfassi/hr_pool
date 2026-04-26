@@ -10,6 +10,25 @@ Canonical rule:
 
 This pass should be implemented before any medium-priority cleanup.
 
+## 0. Current implementation status
+
+Implemented in source:
+
+- negotiated applicant-side role composition scaffolding
+- applicant-side declaration envelope scaffolding
+- applicant notebook separation into baseline vacancy, negotiated role, evaluations, documents/checklists, declarations, and signatures pages
+- baseline vacancy labeling on `hr.job`
+- applicant-side runtime report actions for negotiated TOR and declaration envelopes
+
+Still open:
+
+- baseline-vacancy only cleanup on `hr.job`
+- applicant-side sign-request actions
+- document submission writeback flow
+- checklist completion tracking
+- full chatter/activity wiring on the new negotiated runtime records
+- Arabic translation normalization for the new runtime labels
+
 ## 1. Scope
 
 ### 1.1 `hr.job` baseline vacancy cleanup
@@ -135,4 +154,3 @@ This pass is complete when:
 6. negotiated TOR output renders from the applicant runtime record
 7. declaration envelopes can be generated and signed from the applicant runtime record
 8. Documents and Sign are wired to the runtime records
-

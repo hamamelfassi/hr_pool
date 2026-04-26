@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="action_report_hr_job_tor" model="ir.actions.report">
-        <field name="name">Job Description / TOR</field>
+        <field name="name">Baseline Job Description / TOR</field>
         <field name="model">hr.job</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">grc_recruitment_bridge.report_hr_job_tor_document</field>

@@ -4,7 +4,7 @@
         <field name="name">hr.job.recruitment_governance.list</field>
         <field name="model">hr.job</field>
         <field name="arch" type="xml">
-            <list string="Recruitment Jobs">
+            <list string="Baseline Vacancies">
                 <field name="name"/>
                 <field name="x_grc_functional_area_id"/>
                 <field name="x_grc_function_id"/>
@@ -36,13 +36,11 @@
         <field name="name">hr.job.recruitment_governance.form</field>
         <field name="model">hr.job</field>
         <field name="arch" type="xml">
-            <form string="Recruitment Job Bridge">
+            <form string="Baseline Vacancy">
                 <sheet>
                     <group>
                         <group>
                             <field name="name"/>
-                            <field name="x_grc_functional_area_id"/>
-                            <field name="x_grc_function_id"/>
                             <field name="x_documents_folder_id"/>
                         </group>
                         <group>
@@ -56,7 +54,7 @@
                         </group>
                     </group>
                     <notebook>
-                        <page string="Governance Mapping">
+                        <page string="Baseline Vacancy">
                             <group>
                                 <field name="x_grc_functional_area_id"/>
                                 <field name="x_grc_function_id"/>
@@ -90,13 +88,78 @@
         <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
-                <page string="Recruitment Runtime">
+                <page string="Baseline Vacancy">
                     <group>
                         <group>
+                            <field name="job_id"/>
                             <field name="x_documents_folder_id"/>
+                        </group>
+                        <group>
                             <field name="x_signature_profile_id"/>
-                            <field name="x_interview_evaluation_id"/>
-                            <field name="x_document_checklist_id"/>
+                            <field name="x_pdf_attachment_id"/>
+                            <field name="x_signed_pdf_attachment_id"/>
+                        </group>
+                    </group>
+                </page>
+                <page string="Negotiated Role">
+                    <field name="x_role_composition_ids" context="{'default_x_job_id': job_id}" mode="tree,form">
+                        <list editable="bottom">
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_job_id"/>
+                            <field name="x_role_template_id"/>
+                            <field name="x_state"/>
+                        </list>
+                    </field>
+                </page>
+                <page string="Evaluations">
+                    <field name="x_interview_evaluation_ids" context="{'default_x_job_id': job_id}" mode="tree,form">
+                        <list editable="bottom">
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_job_id"/>
+                            <field name="x_interviewer_user_id"/>
+                            <field name="x_state"/>
+                        </list>
+                    </field>
+                </page>
+                <page string="Documents &amp; Checklists">
+                    <group>
+                        <field name="x_document_checklist_ids" context="{'default_x_job_id': job_id}" mode="tree,form">
+                            <list editable="bottom">
+                                <field name="x_code"/>
+                                <field name="x_name"/>
+                                <field name="x_job_id"/>
+                                <field name="x_state"/>
+                            </list>
+                        </field>
+                        <field name="x_document_submission_ids" context="{'default_x_job_id': job_id}" mode="tree,form">
+                            <list editable="bottom">
+                                <field name="x_code"/>
+                                <field name="x_name"/>
+                                <field name="x_checklist_line_id"/>
+                                <field name="x_document_type_id"/>
+                                <field name="x_state"/>
+                            </list>
+                        </field>
+                    </group>
+                </page>
+                <page string="Declarations">
+                    <field name="x_declaration_envelope_ids" context="{'default_x_job_id': job_id}" mode="tree,form">
+                        <list editable="bottom">
+                            <field name="x_code"/>
+                            <field name="x_name"/>
+                            <field name="x_job_id"/>
+                            <field name="x_declaration_pack_id"/>
+                            <field name="x_state"/>
+                        </list>
+                    </field>
+                </page>
+                <page string="Signatures">
+                    <group>
+                        <group>
+                            <field name="x_signature_profile_id"/>
+                            <field name="x_documents_folder_id"/>
                         </group>
                         <group>
                             <field name="x_pdf_attachment_id"/>

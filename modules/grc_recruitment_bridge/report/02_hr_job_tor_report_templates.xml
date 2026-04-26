@@ -12,7 +12,7 @@
                             .marsellia-section { margin-top: 14px; }
                             .marsellia-subtitle { font-weight: 700; margin: 8px 0 4px 0; }
                         </style>
-                        <div class="marsellia-title">Job Description / TOR</div>
+                        <div class="marsellia-title">Baseline Job Description / TOR</div>
                         <table class="marsellia-table">
                             <tr>
                                 <th>Job Name</th>
@@ -49,7 +49,7 @@
                         </table>
 
                         <div class="marsellia-section">
-                            <div class="marsellia-subtitle">Role Composition</div>
+                            <div class="marsellia-subtitle">Baseline Role Composition</div>
                             <t t-if="o.x_grc_role_template_id">
                                 <table class="marsellia-table">
                                     <thead>

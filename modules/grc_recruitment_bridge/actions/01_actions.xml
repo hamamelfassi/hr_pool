@@ -48,7 +48,7 @@
         <field name="domain">[('x_state','=','active')]</field>
     </record>
     <record id="action_hr_job_bridge" model="ir.actions.act_window">
-        <field name="name">Recruitment Jobs</field>
+        <field name="name">Baseline Vacancies</field>
         <field name="res_model">hr.job</field>
         <field name="view_mode">list,form</field>
     </record>

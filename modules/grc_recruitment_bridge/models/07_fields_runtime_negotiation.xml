@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Applicant runtime surfaces -->
+    <record id="field_hr_applicant_x_role_composition_ids" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','hr.applicant')]"/>
+        <field name="name">x_role_composition_ids</field>
+        <field name="field_description">Role Compositions</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.recruitment_role_composition</field>
+        <field name="relation_field">x_applicant_id</field>
+    </record>
+    <record id="field_hr_applicant_x_interview_evaluation_ids" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','hr.applicant')]"/>
+        <field name="name">x_interview_evaluation_ids</field>
+        <field name="field_description">Interview Evaluations</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.recruitment_interview_evaluation</field>
+        <field name="relation_field">x_applicant_id</field>
+    </record>
+    <record id="field_hr_applicant_x_document_checklist_ids" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','hr.applicant')]"/>
+        <field name="name">x_document_checklist_ids</field>
+        <field name="field_description">Document Checklists</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.recruitment_document_checklist</field>
+        <field name="relation_field">x_applicant_id</field>
+    </record>
+    <record id="field_hr_applicant_x_document_submission_ids" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','hr.applicant')]"/>
+        <field name="name">x_document_submission_ids</field>
+        <field name="field_description">Document Submissions</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.recruitment_document_submission</field>
+        <field name="relation_field">x_applicant_id</field>
+    </record>
+    <record id="field_hr_applicant_x_declaration_envelope_ids" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','hr.applicant')]"/>
+        <field name="name">x_declaration_envelope_ids</field>
+        <field name="field_description">Declaration Envelopes</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.recruitment_declaration_envelope</field>
+        <field name="relation_field">x_applicant_id</field>
+    </record>
+
+    <!-- Negotiated role composition runtime -->
+    <record id="field_hr_recruitment_role_composition_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition"/>
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Composition Title</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition"/>
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_x_applicant_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition"/>
+        <field name="name">x_applicant_id</field>
+        <field name="field_description">Applicant</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.applicant</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_x_job_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition"/>
+        <field name="name">x_job_id</field>
+        <field name="field_description">Job</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.job</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_x_role_template_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition"/>
+        <field name="name">x_role_template_id</field>
+        <field name="field_description">Role Template</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_role_template</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_x_documents_folder_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition"/>
+        <field name="name">x_documents_folder_id</field>
+        <field name="field_description">Documents Folder</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">documents.folder</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_x_signature_profile_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition"/>
+        <field name="name">x_signature_profile_id</field>
+        <field name="field_description">Signature Profile</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_signature_profile</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_x_pdf_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition"/>
+        <field name="name">x_pdf_attachment_id</field>
+        <field name="field_description">Generated PDF Attachment</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_x_signed_pdf_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition"/>
+        <field name="name">x_signed_pdf_attachment_id</field>
+        <field name="field_description">Signed PDF Attachment</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition"/>
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_x_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition"/>
+        <field name="name">x_line_ids</field>
+        <field name="field_description">Composition Lines</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.recruitment_role_composition_line</field>
+        <field name="relation_field">x_composition_id</field>
+    </record>
+
+    <record id="field_hr_recruitment_role_composition_line_x_composition_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition_line"/>
+        <field name="name">x_composition_id</field>
+        <field name="field_description">Role Composition</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_hr.recruitment_role_composition</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_line_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition_line"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_line_x_template_line_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition_line"/>
+        <field name="name">x_template_line_id</field>
+        <field name="field_description">Template Criterion</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_role_template_line</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_line_x_functional_area_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition_line"/>
+        <field name="name">x_functional_area_id</field>
+        <field name="field_description">Functional Area</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.functional_area</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_line_x_function_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition_line"/>
+        <field name="name">x_function_id</field>
+        <field name="field_description">Function</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.function</field>
+        <field name="domain">[('x_functional_area_id', '=', x_functional_area_id)]</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_line_x_minimum_requirement" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition_line"/>
+        <field name="name">x_minimum_requirement</field>
+        <field name="field_description">Minimum Requirement</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_line_x_expected_output" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition_line"/>
+        <field name="name">x_expected_output</field>
+        <field name="field_description">Expected Output</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_line_x_is_included" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition_line"/>
+        <field name="name">x_is_included</field>
+        <field name="field_description">Included</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_line_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition_line"/>
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <!-- Declaration envelope runtime -->
+    <record id="field_hr_recruitment_declaration_envelope_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>
+        <field name="name">x_code</field>
+        <field name="field_description">Code</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Envelope Title</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>
+        <field name="name">x_state</field>
+        <field name="field_description">State</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_x_applicant_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>
+        <field name="name">x_applicant_id</field>
+        <field name="field_description">Applicant</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.applicant</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_x_job_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>
+        <field name="name">x_job_id</field>
+        <field name="field_description">Job</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.job</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_x_declaration_pack_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>
+        <field name="name">x_declaration_pack_id</field>
+        <field name="field_description">Declaration Pack</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_declaration_pack</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_x_documents_folder_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>
+        <field name="name">x_documents_folder_id</field>
+        <field name="field_description">Documents Folder</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">documents.folder</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_x_signature_profile_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>
+        <field name="name">x_signature_profile_id</field>
+        <field name="field_description">Signature Profile</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_signature_profile</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_x_pdf_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>
+        <field name="name">x_pdf_attachment_id</field>
+        <field name="field_description">Generated PDF Attachment</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_x_signed_pdf_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>
+        <field name="name">x_signed_pdf_attachment_id</field>
+        <field name="field_description">Signed PDF Attachment</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_x_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>
+        <field name="name">x_line_ids</field>
+        <field name="field_description">Declaration Lines</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.recruitment_declaration_envelope_line</field>
+        <field name="relation_field">x_envelope_id</field>
+    </record>
+
+    <record id="field_hr_recruitment_declaration_envelope_line_x_envelope_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope_line"/>
+        <field name="name">x_envelope_id</field>
+        <field name="field_description">Declaration Envelope</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_hr.recruitment_declaration_envelope</field>
+        <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_line_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope_line"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+        <field name="required">True</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_line_x_declaration_pack_line_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope_line"/>
+        <field name="name">x_declaration_pack_line_id</field>
+        <field name="field_description">Declaration Line</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_declaration_pack_line</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_line_x_signer_role" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope_line"/>
+        <field name="name">x_signer_role</field>
+        <field name="field_description">Signer Role</field>
+        <field name="ttype">selection</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_line_x_is_signed" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope_line"/>
+        <field name="name">x_is_signed</field>
+        <field name="field_description">Signed</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_line_x_signed_at" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope_line"/>
+        <field name="name">x_signed_at</field>
+        <field name="field_description">Signed At</field>
+        <field name="ttype">datetime</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_line_x_signed_by_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope_line"/>
+        <field name="name">x_signed_by_id</field>
+        <field name="field_description">Signed By</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">res.users</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_line_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope_line"/>
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+</odoo>

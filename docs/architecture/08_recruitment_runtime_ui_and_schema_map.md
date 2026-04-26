@@ -98,11 +98,15 @@ The recruitment-side runtime records should use recruitment-domain names, not br
 
 Recommended target model set:
 
+- `x_hr.recruitment_role_composition`
+- `x_hr.recruitment_role_composition_line`
 - `x_hr.recruitment_interview_evaluation`
 - `x_hr.recruitment_interview_evaluation_line`
 - `x_hr.recruitment_document_checklist`
 - `x_hr.recruitment_document_checklist_line`
 - `x_hr.recruitment_document_submission`
+- `x_hr.recruitment_declaration_envelope`
+- `x_hr.recruitment_declaration_envelope_line`
 
 Existing operational records to extend:
 
@@ -127,7 +131,22 @@ The runtime evaluation record belongs to the recruitment domain and should carry
 - chatter
 - activities
 
-### 4.2 Document checklist
+### 4.2 Negotiated TOR / role composition
+
+The negotiated role composition record belongs to the recruitment domain and should carry:
+
+- applicant reference
+- job reference
+- role template reference
+- negotiated composition lines
+- PDF attachment pointer
+- signed PDF attachment pointer
+- signature profile reference
+- documents folder reference
+- chatter
+- activities
+
+### 4.3 Document checklist
 
 The runtime checklist record belongs to the recruitment domain and should carry:
 
@@ -145,7 +164,7 @@ The runtime checklist record belongs to the recruitment domain and should carry:
 - signature profile reference
 - documents folder reference
 
-### 4.3 Document submission
+### 4.4 Document submission
 
 Each uploaded document should be a separate runtime submission record.
 
@@ -158,6 +177,21 @@ That record should carry:
 - upload timestamp
 - reviewer / approver
 - signature state if the document requires sign-off
+
+### 4.5 Declaration envelope
+
+The declaration envelope record belongs to the recruitment domain and should carry:
+
+- applicant reference
+- job reference
+- declaration pack reference
+- declaration lines
+- PDF attachment pointer
+- signed PDF attachment pointer
+- signature profile reference
+- documents folder reference
+- chatter
+- activities
 
 This is the structural answer to “one submission per document”.
 
@@ -205,18 +239,22 @@ Suggested notebook tabs:
 - Notes
 - Details
 - Skills
+- Baseline Vacancy
 - Negotiated Role
 - Documents & Checklists
 - Evaluations
+- Declarations
 - Signatures
 
 ### 5.4 Runtime menus for recruitment records
 
 Add recruitment-side menus for:
 
+- Negotiated Job Descriptions
 - Interview Evaluations
 - Document Checklists
 - Document Submissions
+- Declaration Envelopes
 
 These menus are for operational records, not for template definition.
 
