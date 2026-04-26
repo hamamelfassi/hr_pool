@@ -151,3 +151,75 @@ msgstr "موقع"
 
 msgid "Signing Profiles"
 msgstr "مسارات التوقيع"
+
+msgid "Prepare Recruitment Runtime"
+msgstr "تهيئة السجل التشغيلي للتوظيف"
+
+msgid "Refresh Progress"
+msgstr "تحديث التقدم"
+
+msgid "Sync Submission"
+msgstr "مزامنة التسليم"
+
+msgid "Sync Submission to Checklist"
+msgstr "مزامنة التسليم مع قائمة التحقق"
+
+msgid "Total Score"
+msgstr "المجموع الكلي"
+
+msgid "Maximum Total Score"
+msgstr "الحد الأقصى للمجموع"
+
+msgid "Completion Ratio"
+msgstr "نسبة الاكتمال"
+
+msgid "Last Refresh At"
+msgstr "آخر تحديث في"
+
+msgid "Answer"
+msgstr "الإجابة"
+
+msgid "Answered"
+msgstr "مجاب"
+
+msgid "Answered At"
+msgstr "تاريخ الإجابة"
+
+msgid "Answered By"
+msgstr "تمت الإجابة بواسطة"
+
+msgid "Required Documents"
+msgstr "المستندات المطلوبة"
+
+msgid "Completed Documents"
+msgstr "المستندات المكتملة"
+
+msgid "Missing Documents"
+msgstr "المستندات الناقصة"
+
+msgid "Complete"
+msgstr "مكتمل"
+
+msgid "Template Line"
+msgstr "بند القالب"
+
+msgid "Latest Submission"
+msgstr "آخر تسليم"
+
+msgid "Submission Count"
+msgstr "عدد التسليمات"
+
+msgid "External Source"
+msgstr "المصدر الخارجي"
+
+msgid "External Reference"
+msgstr "المرجع الخارجي"
+
+msgid "Received At"
+msgstr "تاريخ الاستلام"
+
+msgid "Received By Email"
+msgstr "البريد الإلكتروني للمستلم"
+
+msgid "Received"
+msgstr "مستلم"

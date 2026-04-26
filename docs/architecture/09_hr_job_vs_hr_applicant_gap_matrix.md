@@ -15,19 +15,19 @@ This matrix is the authority for the next implementation pass.
 
 | Artifact / workflow | `grc_recruitment_bridge` | `hr.job` baseline vacancy | `hr.applicant` negotiated runtime | Priority | Gap status |
 |---|---|---|---|---|---|
-| Role / job template | Defines template family, line rubric, provenance, defaulting rules | Selects the chosen template family for the vacancy | Inherits baseline template for negotiation and comparison | High | Template definitions exist; vacancy/runtime split still needs UI cleanup |
-| Functional area / function composition | Defines governed composition lines | Stores baseline mapping only | Stores negotiated final composition and deltas | High | Current source still needs stricter header/line semantics and filtering rules |
-| Baseline TOR / job description | Defines report layout and rendering rules | Owns the vacancy TOR snapshot and attachment | Owns the negotiated final TOR and signed version | High | Scaffolded in source; baseline-vacancy cleanup and applicant-side finalization still need UI and workflow completion |
-| Interview rubric | Defines questions, scoring criteria, weights, and routing profile | Links the vacancy to the rubric template | Creates and owns one or more live interview instances | High | Template exists; runtime UI/flow needs applicant-side final ownership |
-| Interview evaluation record | Does not own the live case | May reference the vacancy baseline | Owns the live evaluation, scores, notes, PDF, signed PDF, chatter, and activities | High | Scaffolded in source; applicant-side UI and sign actions still need completion |
-| Document checklist template | Defines required document types and defaults | Links the vacancy to the checklist template | Creates and owns the applicant-specific checklist instance | High | Template exists; automatic runtime instantiation still needs wiring |
-| Document checklist runtime | Defines document type catalog and line defaults | References baseline checklist policy | Owns the checklist header, lines, completion counter, and signed artifact | High | Scaffolded in source; checklist completion and writeback flow still need completion |
-| Document submission runtime | Defines the typed document catalog | May reference policy but does not own submission case | Owns one submission per uploaded document, with attachment and review state | High | Scaffolded in source; external writeback flow from Fillout/Zite/n8n still needs wiring |
-| Declaration pack | Defines declaration families and signer routing | Links the vacancy to the declaration pack | Owns the applicant-specific declaration envelope(s) and signed outputs | High | Definition exists; applicant-side declaration envelope scaffold is now in source; flow completion still needs wiring |
-| Signature profile | Defines signer roles, order, and defaults | Selects the baseline profile for the vacancy | Applies the profile to the negotiated runtime envelope(s) | High | Definitions exist; record-level signature actions still need finishing |
+| Role / job template | Defines template family, line rubric, provenance, defaulting rules | Selects the chosen template family for the vacancy | Inherits baseline template for negotiation and comparison | High | Implemented in source; verify on install |
+| Functional area / function composition | Defines governed composition lines | Stores baseline mapping only | Stores negotiated final composition and deltas | High | Implemented in source; verify header/line filtering and semantics on install |
+| Baseline TOR / job description | Defines report layout and rendering rules | Owns the vacancy TOR snapshot and attachment | Owns the negotiated final TOR and signed version | High | Implemented in source; verify baseline-vacancy and applicant-side rendering on install |
+| Interview rubric | Defines questions, scoring criteria, weights, and routing profile | Links the vacancy to the rubric template | Creates and owns one or more live interview instances | High | Implemented in source; verify applicant-side runtime ownership on install |
+| Interview evaluation record | Does not own the live case | May reference the vacancy baseline | Owns the live evaluation, scores, notes, PDF, signed PDF, chatter, and activities | High | Implemented in source; verify native sign launch and chatter/activity on install |
+| Document checklist template | Defines required document types and defaults | Links the vacancy to the checklist template | Creates and owns the applicant-specific checklist instance | High | Implemented in source; verify auto-instantiation on install |
+| Document checklist runtime | Defines document type catalog and line defaults | References baseline checklist policy | Owns the checklist header, lines, completion counter, and signed artifact | High | Implemented in source; verify completion counters and writeback on install |
+| Document submission runtime | Defines the typed document catalog | May reference policy but does not own submission case | Owns one submission per uploaded document, with attachment and review state | High | Implemented in source; verify one-submission-per-document writeback on install |
+| Declaration pack | Defines declaration families and signer routing | Links the vacancy to the declaration pack | Owns the applicant-specific declaration envelope(s) and signed outputs | High | Implemented in source; verify applicant-side envelope generation on install |
+| Signature profile | Defines signer roles, order, and defaults | Selects the baseline profile for the vacancy | Applies the profile to the negotiated runtime envelope(s) | High | Implemented in source; verify native record-sign path on install |
 | Documents foldering | Defines family-level folder intent | May hold the vacancy folder pointer | Owns the runtime folder pointer and filed evidence | Medium | Hooks exist; provisioning is still partly manual |
-| Chatter / activities | Not owner | Can participate for baseline vacancy notes | Owns runtime traceability for the live case | Medium | Hooks exist but runtime UI wiring still needs completion |
-| Arabic terminology | Defines canonical bridge vocabulary | Not owner | Not owner | Medium | Translation coverage is partial |
+| Chatter / activities | Not owner | Can participate for baseline vacancy notes | Owns runtime traceability for the live case | Medium | Implemented in source; verify runtime polish on install |
+| Arabic terminology | Defines canonical bridge vocabulary | Not owner | Not owner | Medium | Translation coverage is expanded; verify in-app localization on install |
 | Code / sequence / provenance fields | Defines governance metadata shape | May show baseline source metadata | May show negotiated trace metadata | Medium | `x_code` and provenance behavior still need cleanup |
 
 ## 2. High-priority next implementation pass
@@ -35,25 +35,20 @@ This matrix is the authority for the next implementation pass.
 The next implementation pass must focus on these items first:
 
 1. `hr.job` baseline-vacancy cleanup
-2. `hr.applicant` negotiated-runtime UI and workflow surfaces
-3. interview evaluation runtime ownership on the applicant side
-4. document checklist runtime ownership on the applicant side
-5. document submission writeback flow, one document per submission
-6. baseline TOR versus negotiated TOR split
-7. declaration envelope runtime ownership on the applicant side
-8. sign request actions from runtime records
+2. install/upgrade verification of the negotiated runtime surfaces
+3. document-folder provisioning rules and standardization
+4. final contract bundle flow
+5. native Odoo Sign request verification on runtime records
 
 ## 3. Medium-priority next implementation pass
 
 The next implementation pass should also include:
 
-1. Documents folder provisioning rules and standardization
-2. chatter and activities on the runtime records
-3. Arabic translation completion for the recruitment bridge and runtime labels
-4. role template code sequencing and provenance cleanup
-5. stricter functional area/function filtering on template lines
-6. default template selection and fallback logic
-7. PDF preview / inspector usability improvements
+1. role template code sequencing and provenance cleanup
+2. stricter functional area/function filtering on template lines
+3. default template selection and fallback logic
+4. PDF preview / inspector usability improvements
+5. install-time validation of the Arabic catalog and runtime labels
 
 ## 4. Structural notes
 

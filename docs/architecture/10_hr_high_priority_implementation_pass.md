@@ -23,11 +23,10 @@ Implemented in source:
 Still open:
 
 - baseline-vacancy only cleanup on `hr.job`
-- applicant-side sign-request actions
-- document submission writeback flow
-- checklist completion tracking
-- full chatter/activity wiring on the new negotiated runtime records
-- Arabic translation normalization for the new runtime labels
+- native Odoo Sign request flow verification on the runtime records
+- document-folder provisioning standardization
+- final contract bundle flow
+- install/upgrade verification on the rebuilt zips
 
 ## 1. Scope
 
@@ -57,6 +56,7 @@ Implement the applicant-specific runtime surfaces on `hr.applicant`:
 - signed PDF attachment pointers
 - comparison / delta metadata against the baseline vacancy
 - chatter and activities
+- sign request is handled through the native Odoo record action path, with runtime fields and attachments supplied by the module
 
 ### 1.3 Interview runtime
 
@@ -66,7 +66,7 @@ Implement the live interview evaluation workflow on `hr.applicant`:
 - scores and reviewer notes
 - PDF generation from the runtime record
 - Documents filing
-- sign-request action from the runtime record
+- native Odoo Sign request from the runtime record
 
 ### 1.4 Document checklist runtime
 
@@ -78,7 +78,7 @@ Implement the checklist runtime on `hr.applicant`:
 - completion counter / tracker for mandatory documents
 - PDF generation from the runtime record
 - Documents filing
-- sign-request action from the runtime record
+- native Odoo Sign request from the runtime record
 
 ### 1.5 Negotiated TOR / role composition
 
@@ -96,7 +96,7 @@ Implement the applicant-specific declaration envelope:
 - applicant-specific declaration pack instance
 - static Sign or QWeb + Sign flow as appropriate
 - Documents filing
-- sign-request action from the runtime record
+- native Odoo Sign request from the runtime record
 
 ## 2. Required UI surfaces
 

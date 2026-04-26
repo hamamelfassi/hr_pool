@@ -38,6 +38,7 @@
         "report/09_hr_declaration_envelope_report_actions.xml",
         "actions/01_actions.xml",
         "actions/02_runtime_negotiation_actions.xml",
+        "data/05_runtime_progress_actions.xml",
         "views/01_templates_views.xml",
         "views/02_bridge_views.xml",
         "views/03_runtime_views.xml",

@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_prepare_applicant_recruitment_runtime" model="ir.actions.server">
+        <field name="name">Prepare Recruitment Runtime</field>
+        <field name="model_id" search="[('model','=','hr.applicant')]"/>
+        <field name="binding_model_id" search="[('model','=','hr.applicant')]"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for applicant in records:
+    job = applicant.job_id
+    if not job:
+        continue
+
+    role_template = job.x_grc_role_template_id
+    if role_template:
+        if applicant.x_role_composition_id:
+            composition = applicant.x_role_composition_id
+        elif applicant.x_role_composition_ids:
+            composition = applicant.x_role_composition_ids[0]
+            applicant.write({'x_role_composition_id': composition.id})
+        else:
+            composition = env['x_hr.recruitment_role_composition'].create({
+                'x_code': 'RC-%s-%s' % (applicant.id, job.id),
+                'x_name': '%s / %s' % (job.name or '', applicant.display_name or ''),
+                'x_state': 'draft',
+                'x_applicant_id': applicant.id,
+                'x_job_id': job.id,
+                'x_role_template_id': role_template.id,
+                'x_documents_folder_id': job.x_documents_folder_id.id if job.x_documents_folder_id else False,
+                'x_signature_profile_id': job.x_grc_signature_profile_id.id if job.x_grc_signature_profile_id else False,
+            })
+            applicant.write({'x_role_composition_id': composition.id})
+            for template_line in role_template.x_line_ids.sorted(key=lambda line: (line.x_sequence or 0, line.id)):
+                env['x_hr.recruitment_role_composition_line'].create({
+                    'x_composition_id': composition.id,
+                    'x_sequence': template_line.x_sequence or 0,
+                    'x_template_line_id': template_line.id,
+                    'x_functional_area_id': template_line.x_functional_area_id.id if template_line.x_functional_area_id else False,
+                    'x_function_id': template_line.x_function_id.id if template_line.x_function_id else False,
+                    'x_minimum_requirement': template_line.x_minimum_requirement,
+                    'x_expected_output': template_line.x_expected_output,
+                    'x_is_included': bool(template_line.x_required),
+                    'x_notes': template_line.x_notes,
+                })
+            composition_lines = composition.x_line_ids
+            total_line_count = len(composition_lines)
+            included_line_count = len(composition_lines.filtered(lambda line: line.x_is_included))
+            composition.write({
+                'x_total_line_count': total_line_count,
+                'x_included_line_count': included_line_count,
+                'x_completion_ratio': (float(included_line_count) / float(total_line_count) * 100.0) if total_line_count else 0.0,
+                'x_state': 'completed' if total_line_count and included_line_count == total_line_count else 'in_review' if included_line_count else 'draft',
+                'x_last_refresh_at': datetime.datetime.now(),
+            })
+
+    interview_template = job.x_grc_interview_template_id
+    if interview_template:
+        if applicant.x_interview_evaluation_id:
+            evaluation = applicant.x_interview_evaluation_id
+        elif applicant.x_interview_evaluation_ids:
+            evaluation = applicant.x_interview_evaluation_ids[0]
+            applicant.write({'x_interview_evaluation_id': evaluation.id})
+        else:
+            evaluation = env['x_hr.recruitment_interview_evaluation'].create({
+                'x_code': 'IE-%s-%s' % (applicant.id, job.id),
+                'x_name': '%s / %s' % (job.name or '', applicant.display_name or ''),
+                'x_state': 'draft',
+                'x_applicant_id': applicant.id,
+                'x_job_id': job.id,
+                'x_template_id': interview_template.id,
+                'x_interviewer_user_id': applicant.user_id.id if applicant.user_id else False,
+                'x_documents_folder_id': job.x_documents_folder_id.id if job.x_documents_folder_id else False,
+                'x_signature_profile_id': job.x_grc_signature_profile_id.id if job.x_grc_signature_profile_id else False,
+            })
+            applicant.write({'x_interview_evaluation_id': evaluation.id})
+            for template_line in interview_template.x_line_ids.sorted(key=lambda line: (line.x_sequence or 0, line.id)):
+                env['x_hr.recruitment_interview_evaluation_line'].create({
+                    'x_evaluation_id': evaluation.id,
+                    'x_sequence': template_line.x_sequence or 0,
+                    'x_template_line_id': template_line.id,
+                    'x_question': template_line.x_question,
+                    'x_answer_text': template_line.x_scoring_criterion,
+                    'x_max_score': template_line.x_max_score or 0,
+                    'x_weight': template_line.x_weight or 0.0,
+                    'x_is_answered': False,
+                    'x_notes': template_line.x_notes or template_line.x_internal_notes,
+                })
+            evaluation_lines = evaluation.x_line_ids
+            total_line_count = len(evaluation_lines)
+            answered_lines = evaluation_lines.filtered(lambda line: line.x_is_answered or line.x_answer_text)
+            total_score = sum((line.x_score or 0) for line in evaluation_lines)
+            max_total_score = sum((line.x_max_score or 0) for line in evaluation_lines)
+            evaluation.write({
+                'x_total_score': total_score,
+                'x_max_total_score': max_total_score,
+                'x_completion_ratio': (float(len(answered_lines)) / float(total_line_count) * 100.0) if total_line_count else 0.0,
+                'x_state': 'completed' if total_line_count and len(answered_lines) == total_line_count else 'in_review' if answered_lines else 'draft',
+                'x_last_refresh_at': datetime.datetime.now(),
+            })
+
+    checklist_template = job.x_grc_document_checklist_template_id
+    if checklist_template:
+        if applicant.x_document_checklist_id:
+            checklist = applicant.x_document_checklist_id
+        elif applicant.x_document_checklist_ids:
+            checklist = applicant.x_document_checklist_ids[0]
+            applicant.write({'x_document_checklist_id': checklist.id})
+        else:
+            checklist = env['x_hr.recruitment_document_checklist'].create({
+                'x_code': 'DC-%s-%s' % (applicant.id, job.id),
+                'x_name': '%s / %s' % (job.name or '', applicant.display_name or ''),
+                'x_state': 'draft',
+                'x_applicant_id': applicant.id,
+                'x_job_id': job.id,
+                'x_template_id': checklist_template.id,
+                'x_documents_folder_id': job.x_documents_folder_id.id if job.x_documents_folder_id else False,
+                'x_signature_profile_id': job.x_grc_signature_profile_id.id if job.x_grc_signature_profile_id else False,
+            })
+            applicant.write({'x_document_checklist_id': checklist.id})
+            for template_line in checklist_template.x_line_ids.sorted(key=lambda line: (line.x_sequence or 0, line.id)):
+                env['x_hr.recruitment_document_checklist_line'].create({
+                    'x_checklist_id': checklist.id,
+                    'x_sequence': template_line.x_sequence or 0,
+                    'x_template_line_id': template_line.id,
+                    'x_document_type_id': template_line.x_document_type_id.id if template_line.x_document_type_id else False,
+                    'x_is_required': bool(template_line.x_is_mandatory or template_line.x_required),
+                    'x_state': 'draft',
+                    'x_requires_expiry': template_line.x_requires_expiry,
+                    'x_renewal_period_months': template_line.x_renewal_period_months,
+                    'x_signoff_role': template_line.x_signoff_role,
+                    'x_notes': template_line.x_notes,
+                })
+            checklist_lines = checklist.x_line_ids
+            required_lines = checklist_lines.filtered(lambda line: line.x_is_required)
+            completed_lines = checklist_lines.filtered(lambda line: line.x_is_completed)
+            required_line_count = len(required_lines)
+            completed_line_count = len(completed_lines)
+            missing_line_count = max(required_line_count - completed_line_count, 0)
+            checklist.write({
+                'x_required_line_count': required_line_count,
+                'x_completed_line_count': completed_line_count,
+                'x_missing_line_count': missing_line_count,
+                'x_completion_ratio': (float(completed_line_count) / float(required_line_count) * 100.0) if required_line_count else 0.0,
+                'x_is_complete': bool(required_line_count and missing_line_count == 0),
+                'x_state': 'completed' if required_line_count and missing_line_count == 0 else 'in_progress' if completed_line_count else 'draft',
+                'x_last_refresh_at': datetime.datetime.now(),
+            })
+
+    declaration_pack = job.x_grc_declaration_pack_id
+    if declaration_pack:
+        if applicant.x_declaration_envelope_id:
+            envelope = applicant.x_declaration_envelope_id
+        elif applicant.x_declaration_envelope_ids:
+            envelope = applicant.x_declaration_envelope_ids[0]
+            applicant.write({'x_declaration_envelope_id': envelope.id})
+        else:
+            envelope = env['x_hr.recruitment_declaration_envelope'].create({
+                'x_code': 'DE-%s-%s' % (applicant.id, job.id),
+                'x_name': '%s / %s' % (job.name or '', applicant.display_name or ''),
+                'x_state': 'draft',
+                'x_applicant_id': applicant.id,
+                'x_job_id': job.id,
+                'x_declaration_pack_id': declaration_pack.id,
+                'x_documents_folder_id': job.x_documents_folder_id.id if job.x_documents_folder_id else False,
+                'x_signature_profile_id': job.x_grc_signature_profile_id.id if job.x_grc_signature_profile_id else False,
+            })
+            applicant.write({'x_declaration_envelope_id': envelope.id})
+            for template_line in declaration_pack.x_line_ids.sorted(key=lambda line: (line.x_sequence or 0, line.id)):
+                signer_roles = []
+                if template_line.x_applicant_must_sign:
+                    signer_roles.append('applicant')
+                if template_line.x_hr_must_sign:
+                    signer_roles.append('hr_manager')
+                if not signer_roles:
+                    signer_roles.append('applicant')
+                for signer_role in signer_roles:
+                    env['x_hr.recruitment_declaration_envelope_line'].create({
+                        'x_envelope_id': envelope.id,
+                        'x_sequence': template_line.x_sequence or 0,
+                        'x_declaration_pack_line_id': template_line.id,
+                        'x_signer_role': signer_role,
+                        'x_is_signed': False,
+                        'x_notes': template_line.x_notes,
+                    })
+            envelope_lines = envelope.x_line_ids
+            required_line_count = len(envelope_lines)
+            signed_line_count = len(envelope_lines.filtered(lambda line: line.x_is_signed))
+            pending_line_count = max(required_line_count - signed_line_count, 0)
+            envelope.write({
+                'x_required_line_count': required_line_count,
+                'x_signed_line_count': signed_line_count,
+                'x_pending_line_count': pending_line_count,
+                'x_completion_ratio': (float(signed_line_count) / float(required_line_count) * 100.0) if required_line_count else 0.0,
+                'x_is_complete': bool(required_line_count and pending_line_count == 0),
+                'x_state': 'completed' if required_line_count and pending_line_count == 0 else 'in_review' if signed_line_count else 'draft',
+                'x_last_refresh_at': datetime.datetime.now(),
+            })
+
+    applicant.message_post(body='Recruitment runtime prepared from the baseline vacancy.')
+        ]]></field>
+    </record>
+
+    <record id="action_refresh_hr_recruitment_role_composition" model="ir.actions.server">
+        <field name="name">Refresh Role Composition Progress</field>
+        <field name="model_id" search="[('model','=','x_hr.recruitment_role_composition')]"/>
+        <field name="binding_model_id" search="[('model','=','x_hr.recruitment_role_composition')]"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    total_line_count = len(rec.x_line_ids)
+    included_line_count = len(rec.x_line_ids.filtered(lambda line: line.x_is_included))
+    completion_ratio = (float(included_line_count) / float(total_line_count) * 100.0) if total_line_count else 0.0
+    vals = {
+        'x_total_line_count': total_line_count,
+        'x_included_line_count': included_line_count,
+        'x_completion_ratio': completion_ratio,
+        'x_last_refresh_at': datetime.datetime.now(),
+    }
+    if rec.x_state not in ('signed', 'archived'):
+        if total_line_count and included_line_count == total_line_count:
+            vals['x_state'] = 'completed'
+        elif included_line_count:
+            vals['x_state'] = 'in_review'
+        else:
+            vals['x_state'] = 'draft'
+    rec.write(vals)
+    rec.message_post(body='Role composition progress refreshed.')
+        ]]></field>
+    </record>
+
+    <record id="action_refresh_hr_interview_evaluation" model="ir.actions.server">
+        <field name="name">Refresh Interview Progress</field>
+        <field name="model_id" search="[('model','=','x_hr.recruitment_interview_evaluation')]"/>
+        <field name="binding_model_id" search="[('model','=','x_hr.recruitment_interview_evaluation')]"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    total_line_count = len(rec.x_line_ids)
+    answered_lines = rec.x_line_ids.filtered(lambda line: line.x_is_answered or line.x_answer_text)
+    total_score = sum((line.x_score or 0) for line in rec.x_line_ids)
+    max_total_score = sum((line.x_max_score or 0) for line in rec.x_line_ids)
+    completion_ratio = (float(len(answered_lines)) / float(total_line_count) * 100.0) if total_line_count else 0.0
+    vals = {
+        'x_total_score': total_score,
+        'x_max_total_score': max_total_score,
+        'x_completion_ratio': completion_ratio,
+        'x_last_refresh_at': datetime.datetime.now(),
+    }
+    if rec.x_state not in ('signed', 'archived'):
+        if total_line_count and len(answered_lines) == total_line_count:
+            vals['x_state'] = 'completed'
+        elif answered_lines:
+            vals['x_state'] = 'in_review'
+        else:
+            vals['x_state'] = 'draft'
+    rec.write(vals)
+    rec.message_post(body='Interview evaluation progress refreshed.')
+        ]]></field>
+    </record>
+
+    <record id="action_refresh_hr_document_checklist" model="ir.actions.server">
+        <field name="name">Refresh Checklist Progress</field>
+        <field name="model_id" search="[('model','=','x_hr.recruitment_document_checklist')]"/>
+        <field name="binding_model_id" search="[('model','=','x_hr.recruitment_document_checklist')]"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    for line in rec.x_line_ids:
+        latest_submission = line.x_submission_ids.sorted(key=lambda submission: (submission.x_received_at or submission.x_uploaded_at or submission.create_date or datetime.datetime.min, submission.id))[-1] if line.x_submission_ids else False
+        line_vals = {
+            'x_submission_count': len(line.x_submission_ids),
+        }
+        if latest_submission:
+            line_vals['x_latest_submission_id'] = latest_submission.id
+            received = bool(latest_submission.x_attachment_id or latest_submission.x_is_received)
+            line_vals['x_is_completed'] = received
+            if received:
+                line_vals['x_completed_at'] = latest_submission.x_received_at or latest_submission.x_uploaded_at or datetime.datetime.now()
+                line_vals['x_completed_by_id'] = latest_submission.x_uploaded_by_id.id if latest_submission.x_uploaded_by_id else env.user.id
+            elif line.x_state not in ('signed', 'archived'):
+                line_vals['x_is_completed'] = False
+        elif line.x_state not in ('signed', 'archived'):
+            line_vals['x_is_completed'] = False
+        line.write(line_vals)
+    required_lines = rec.x_line_ids.filtered(lambda line: line.x_is_required)
+    completed_lines = rec.x_line_ids.filtered(lambda line: line.x_is_completed)
+    required_line_count = len(required_lines)
+    completed_line_count = len(completed_lines)
+    missing_line_count = max(required_line_count - completed_line_count, 0)
+    completion_ratio = (float(completed_line_count) / float(required_line_count) * 100.0) if required_line_count else 0.0
+    vals = {
+        'x_required_line_count': required_line_count,
+        'x_completed_line_count': completed_line_count,
+        'x_missing_line_count': missing_line_count,
+        'x_completion_ratio': completion_ratio,
+        'x_is_complete': bool(required_line_count and missing_line_count == 0),
+        'x_last_refresh_at': datetime.datetime.now(),
+    }
+    if rec.x_state not in ('signed', 'archived'):
+        if required_line_count and missing_line_count == 0:
+            vals['x_state'] = 'completed'
+        elif completed_line_count:
+            vals['x_state'] = 'in_progress'
+        else:
+            vals['x_state'] = 'draft'
+    rec.write(vals)
+    rec.message_post(body='Document checklist progress refreshed.')
+        ]]></field>
+    </record>
+
+    <record id="action_sync_hr_document_submission" model="ir.actions.server">
+        <field name="name">Sync Submission to Checklist</field>
+        <field name="model_id" search="[('model','=','x_hr.recruitment_document_submission')]"/>
+        <field name="binding_model_id" search="[('model','=','x_hr.recruitment_document_submission')]"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    vals = {}
+    if not rec.x_received_at and rec.x_attachment_id:
+        vals['x_received_at'] = datetime.datetime.now()
+    if rec.x_attachment_id:
+        vals['x_is_received'] = True
+    elif rec.x_state in ('submitted', 'reviewed', 'approved'):
+        vals['x_is_received'] = True
+    if not rec.x_uploaded_by_id:
+        vals['x_uploaded_by_id'] = env.user.id
+    if vals:
+        rec.write(vals)
+    if rec.x_checklist_line_id:
+        line = rec.x_checklist_line_id
+        line.write({
+            'x_latest_submission_id': rec.id,
+            'x_submission_count': len(line.x_submission_ids),
+            'x_is_completed': bool(rec.x_attachment_id or rec.x_is_received),
+            'x_completed_at': rec.x_received_at or datetime.datetime.now(),
+            'x_completed_by_id': rec.x_uploaded_by_id.id if rec.x_uploaded_by_id else env.user.id,
+        })
+        if line.x_checklist_id:
+            checklist = line.x_checklist_id
+            required_lines = checklist.x_line_ids.filtered(lambda checklist_line: checklist_line.x_is_required)
+            completed_lines = checklist.x_line_ids.filtered(lambda checklist_line: checklist_line.x_is_completed)
+            required_line_count = len(required_lines)
+            completed_line_count = len(completed_lines)
+            missing_line_count = max(required_line_count - completed_line_count, 0)
+            completion_ratio = (float(completed_line_count) / float(required_line_count) * 100.0) if required_line_count else 0.0
+            checklist_vals = {
+                'x_required_line_count': required_line_count,
+                'x_completed_line_count': completed_line_count,
+                'x_missing_line_count': missing_line_count,
+                'x_completion_ratio': completion_ratio,
+                'x_is_complete': bool(required_line_count and missing_line_count == 0),
+                'x_last_refresh_at': datetime.datetime.now(),
+            }
+            if checklist.x_state not in ('signed', 'archived'):
+                if required_line_count and missing_line_count == 0:
+                    checklist_vals['x_state'] = 'completed'
+                elif completed_line_count:
+                    checklist_vals['x_state'] = 'in_progress'
+                else:
+                    checklist_vals['x_state'] = 'draft'
+            checklist.write(checklist_vals)
+            checklist.message_post(body='Document checklist progress refreshed from a submission.')
+    rec.message_post(body='Document submission synchronized with the checklist.')
+        ]]></field>
+    </record>
+
+    <record id="action_refresh_hr_recruitment_declaration_envelope" model="ir.actions.server">
+        <field name="name">Refresh Declaration Progress</field>
+        <field name="model_id" search="[('model','=','x_hr.recruitment_declaration_envelope')]"/>
+        <field name="binding_model_id" search="[('model','=','x_hr.recruitment_declaration_envelope')]"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    required_line_count = len(rec.x_line_ids)
+    signed_line_count = len(rec.x_line_ids.filtered(lambda line: line.x_is_signed))
+    pending_line_count = max(required_line_count - signed_line_count, 0)
+    completion_ratio = (float(signed_line_count) / float(required_line_count) * 100.0) if required_line_count else 0.0
+    vals = {
+        'x_required_line_count': required_line_count,
+        'x_signed_line_count': signed_line_count,
+        'x_pending_line_count': pending_line_count,
+        'x_completion_ratio': completion_ratio,
+        'x_is_complete': bool(required_line_count and pending_line_count == 0),
+        'x_last_refresh_at': datetime.datetime.now(),
+    }
+    if rec.x_state not in ('signed', 'archived'):
+        if required_line_count and pending_line_count == 0:
+            vals['x_state'] = 'completed'
+        elif signed_line_count:
+            vals['x_state'] = 'in_review'
+        else:
+            vals['x_state'] = 'draft'
+    rec.write(vals)
+    rec.message_post(body='Declaration envelope progress refreshed.')
+        ]]></field>
+    </record>
+</odoo>

@@ -152,19 +152,19 @@ Status:
   - `x_hr.pool` has chatter, activity, Documents, intake PDF, and signed PDF hooks
   - `x_grc.hr_interview_evaluation` exists as a governed runtime record with chatter, activities, attachments, and QWeb reporting
   - `hr.job` now carries the baseline vacancy / TOR hooks for native report generation and storage
-  - `hr.applicant` remains the runtime home for the negotiated case, document checklist, submissions, declarations, and signed artifacts
+- `hr.applicant` remains the runtime home for the negotiated case, document checklist, submissions, declarations, and signed artifacts
 - the high-priority `hr.job` versus `hr.applicant` runtime pass is now under implementation in the source tree:
   - applicant-side negotiated role composition records are scaffolded
   - applicant-side declaration envelope records are scaffolded
   - the applicant notebook has been split into baseline vacancy, negotiated role, evaluations, documents/checklists, declarations, and signatures pages
   - baseline vacancy labels on `hr.job` have been tightened to distinguish them from negotiated runtime records
-- the remaining work is the operational wiring:
-  - conversion handoff
-  - actual sign-request routing
+  - runtime progress actions, checklist synchronization, and applicant-side runtime buttons are now wired in source
+- the remaining work is now the final production wiring and verification:
+  - baseline-vacancy cleanup on `hr.job`
   - document-folder provisioning
-  - applicant-side continuation and prefill surface
-  - baseline-vacancy versus applicant-negotiated runtime split on the recruitment UI
+  - native Odoo Sign request verification on runtime records
   - final contract bundle flow
+  - install/upgrade verification on the rebuilt zips
 
 Work:
 - interview evaluation
@@ -348,10 +348,10 @@ Completed:
 Open:
 
 - route QWeb-generated PDFs into the Documents DMS automatically
-- add signature request actions and record buttons
 - provision or standardize document folders for runtime records
+- verify native Odoo Sign request entry points on runtime records
+- finalize the contract bundle flow
 - complete Arabic terminology and translation coverage for the new native-document fields
-- realign any bridge-owned runtime records or fields so they live on the recruitment operational surface before the next install cycle
 
 ### 2026-04-26 - Recruitment job versus applicant gap matrix
 
@@ -365,17 +365,11 @@ Open:
 
 - implement the high-priority items in the matrix:
   - baseline job-vacancy cleanup
-  - applicant-side runtime UI and workflow surfaces
-  - interview runtime ownership on the applicant side
-  - document checklist runtime ownership on the applicant side
-  - document submission writeback flow
-  - baseline TOR versus negotiated TOR split
-  - declaration envelope runtime ownership on the applicant side
-  - sign request actions from runtime records
+  - verify native Odoo Sign request entry points on runtime records
+  - finalize the contract bundle flow
+  - install/upgrade validation on the rebuilt zips
 - implement the medium-priority items in the matrix:
   - Documents folder provisioning rules
-  - chatter and activities wiring
-  - Arabic translation completion
   - role template code sequencing and provenance cleanup
   - stricter functional area/function filtering on template lines
   - default template selection and fallback logic

@@ -41,6 +41,22 @@
         <field name="relation">x_hr.recruitment_declaration_envelope</field>
         <field name="relation_field">x_applicant_id</field>
     </record>
+    <record id="field_hr_applicant_x_role_composition_id" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','hr.applicant')]"/>
+        <field name="name">x_role_composition_id</field>
+        <field name="field_description">Negotiated Role</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_hr.recruitment_role_composition</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_applicant_x_declaration_envelope_id" model="ir.model.fields">
+        <field name="model_id" search="[('model','=','hr.applicant')]"/>
+        <field name="name">x_declaration_envelope_id</field>
+        <field name="field_description">Declaration Envelope</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_hr.recruitment_declaration_envelope</field>
+        <field name="on_delete">set null</field>
+    </record>
 
     <!-- Negotiated role composition runtime -->
     <record id="field_hr_recruitment_role_composition_x_code" model="ir.model.fields">
@@ -128,6 +144,30 @@
         <field name="field_description">Notes</field>
         <field name="ttype">text</field>
         <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_x_total_line_count" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition"/>
+        <field name="name">x_total_line_count</field>
+        <field name="field_description">Total Lines</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_x_included_line_count" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition"/>
+        <field name="name">x_included_line_count</field>
+        <field name="field_description">Included Lines</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_x_completion_ratio" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition"/>
+        <field name="name">x_completion_ratio</field>
+        <field name="field_description">Completion Ratio</field>
+        <field name="ttype">float</field>
+    </record>
+    <record id="field_hr_recruitment_role_composition_x_last_refresh_at" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition"/>
+        <field name="name">x_last_refresh_at</field>
+        <field name="field_description">Last Refresh At</field>
+        <field name="ttype">datetime</field>
     </record>
     <record id="field_hr_recruitment_role_composition_x_line_ids" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition"/>
@@ -292,6 +332,42 @@
         <field name="field_description">Notes</field>
         <field name="ttype">text</field>
         <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_x_required_line_count" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>
+        <field name="name">x_required_line_count</field>
+        <field name="field_description">Required Signatures</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_x_signed_line_count" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>
+        <field name="name">x_signed_line_count</field>
+        <field name="field_description">Signed Signatures</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_x_pending_line_count" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>
+        <field name="name">x_pending_line_count</field>
+        <field name="field_description">Pending Signatures</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_x_completion_ratio" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>
+        <field name="name">x_completion_ratio</field>
+        <field name="field_description">Completion Ratio</field>
+        <field name="ttype">float</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_x_is_complete" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>
+        <field name="name">x_is_complete</field>
+        <field name="field_description">Complete</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_recruitment_declaration_envelope_x_last_refresh_at" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>
+        <field name="name">x_last_refresh_at</field>
+        <field name="field_description">Last Refresh At</field>
+        <field name="ttype">datetime</field>
     </record>
     <record id="field_hr_recruitment_declaration_envelope_x_line_ids" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>

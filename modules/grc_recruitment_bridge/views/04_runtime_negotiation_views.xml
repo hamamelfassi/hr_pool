@@ -10,6 +10,8 @@
                 <field name="x_applicant_id"/>
                 <field name="x_job_id"/>
                 <field name="x_role_template_id"/>
+                <field name="x_included_line_count"/>
+                <field name="x_completion_ratio"/>
                 <field name="x_state"/>
             </list>
         </field>
@@ -37,6 +39,12 @@
         <field name="model">x_hr.recruitment_role_composition</field>
         <field name="arch" type="xml">
             <form string="Negotiated Job Description / TOR">
+                <header>
+                    <button name="%(grc_recruitment_bridge.action_refresh_hr_recruitment_role_composition)d"
+                            type="action"
+                            string="Refresh Progress"
+                            class="btn-primary"/>
+                </header>
                 <sheet>
                     <group>
                         <group>
@@ -50,6 +58,10 @@
                         <group>
                             <field name="x_signature_profile_id"/>
                             <field name="x_documents_folder_id"/>
+                            <field name="x_total_line_count"/>
+                            <field name="x_included_line_count"/>
+                            <field name="x_completion_ratio"/>
+                            <field name="x_last_refresh_at"/>
                             <field name="x_pdf_attachment_id"/>
                             <field name="x_signed_pdf_attachment_id"/>
                         </group>
@@ -92,6 +104,8 @@
                 <field name="x_applicant_id"/>
                 <field name="x_job_id"/>
                 <field name="x_declaration_pack_id"/>
+                <field name="x_signed_line_count"/>
+                <field name="x_completion_ratio"/>
                 <field name="x_state"/>
             </list>
         </field>
@@ -119,6 +133,12 @@
         <field name="model">x_hr.recruitment_declaration_envelope</field>
         <field name="arch" type="xml">
             <form string="Declaration Envelope">
+                <header>
+                    <button name="%(grc_recruitment_bridge.action_refresh_hr_recruitment_declaration_envelope)d"
+                            type="action"
+                            string="Refresh Progress"
+                            class="btn-primary"/>
+                </header>
                 <sheet>
                     <group>
                         <group>
@@ -132,6 +152,12 @@
                         <group>
                             <field name="x_signature_profile_id"/>
                             <field name="x_documents_folder_id"/>
+                            <field name="x_required_line_count"/>
+                            <field name="x_signed_line_count"/>
+                            <field name="x_pending_line_count"/>
+                            <field name="x_completion_ratio"/>
+                            <field name="x_is_complete"/>
+                            <field name="x_last_refresh_at"/>
                             <field name="x_pdf_attachment_id"/>
                             <field name="x_signed_pdf_attachment_id"/>
                         </group>

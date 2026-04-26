@@ -183,6 +183,14 @@
         <field name="relation">hr.job</field>
         <field name="on_delete">restrict</field>
     </record>
+    <record id="field_hr_interview_evaluation_x_template_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
+        <field name="name">x_template_id</field>
+        <field name="field_description">Interview Template</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_interview_template</field>
+        <field name="on_delete">set null</field>
+    </record>
     <record id="field_hr_interview_evaluation_x_interviewer_user_id" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
         <field name="name">x_interviewer_user_id</field>
@@ -230,6 +238,30 @@
         <field name="ttype">text</field>
         <field name="translate">standard</field>
     </record>
+    <record id="field_hr_interview_evaluation_x_total_score" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
+        <field name="name">x_total_score</field>
+        <field name="field_description">Total Score</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_hr_interview_evaluation_x_max_total_score" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
+        <field name="name">x_max_total_score</field>
+        <field name="field_description">Maximum Total Score</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_hr_interview_evaluation_x_completion_ratio" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
+        <field name="name">x_completion_ratio</field>
+        <field name="field_description">Completion Ratio</field>
+        <field name="ttype">float</field>
+    </record>
+    <record id="field_hr_interview_evaluation_x_last_refresh_at" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
+        <field name="name">x_last_refresh_at</field>
+        <field name="field_description">Last Refresh At</field>
+        <field name="ttype">datetime</field>
+    </record>
     <record id="field_hr_interview_evaluation_x_line_ids" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
         <field name="name">x_line_ids</field>
@@ -260,6 +292,33 @@
         <field name="field_description">Template Criterion</field>
         <field name="ttype">many2one</field>
         <field name="relation">x_grc.hr_interview_template_line</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_interview_evaluation_line_x_answer_text" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation_line"/>
+        <field name="name">x_answer_text</field>
+        <field name="field_description">Answer</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_interview_evaluation_line_x_is_answered" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation_line"/>
+        <field name="name">x_is_answered</field>
+        <field name="field_description">Answered</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_interview_evaluation_line_x_answered_at" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation_line"/>
+        <field name="name">x_answered_at</field>
+        <field name="field_description">Answered At</field>
+        <field name="ttype">datetime</field>
+    </record>
+    <record id="field_hr_interview_evaluation_line_x_answered_by_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation_line"/>
+        <field name="name">x_answered_by_id</field>
+        <field name="field_description">Answered By</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">res.users</field>
         <field name="on_delete">set null</field>
     </record>
     <record id="field_hr_interview_evaluation_line_x_question" model="ir.model.fields">
@@ -335,6 +394,14 @@
         <field name="relation">hr.job</field>
         <field name="on_delete">restrict</field>
     </record>
+    <record id="field_hr_document_checklist_x_template_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
+        <field name="name">x_template_id</field>
+        <field name="field_description">Checklist Template</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_document_checklist_template</field>
+        <field name="on_delete">set null</field>
+    </record>
     <record id="field_hr_document_checklist_x_documents_folder_id" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
         <field name="name">x_documents_folder_id</field>
@@ -374,6 +441,42 @@
         <field name="ttype">text</field>
         <field name="translate">standard</field>
     </record>
+    <record id="field_hr_document_checklist_x_required_line_count" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
+        <field name="name">x_required_line_count</field>
+        <field name="field_description">Required Documents</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_hr_document_checklist_x_completed_line_count" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
+        <field name="name">x_completed_line_count</field>
+        <field name="field_description">Completed Documents</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_hr_document_checklist_x_missing_line_count" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
+        <field name="name">x_missing_line_count</field>
+        <field name="field_description">Missing Documents</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id="field_hr_document_checklist_x_completion_ratio" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
+        <field name="name">x_completion_ratio</field>
+        <field name="field_description">Completion Ratio</field>
+        <field name="ttype">float</field>
+    </record>
+    <record id="field_hr_document_checklist_x_is_complete" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
+        <field name="name">x_is_complete</field>
+        <field name="field_description">Complete</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_document_checklist_x_last_refresh_at" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
+        <field name="name">x_last_refresh_at</field>
+        <field name="field_description">Last Refresh At</field>
+        <field name="ttype">datetime</field>
+    </record>
     <record id="field_hr_document_checklist_x_line_ids" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
         <field name="name">x_line_ids</field>
@@ -398,6 +501,14 @@
         <field name="ttype">integer</field>
         <field name="required">True</field>
     </record>
+    <record id="field_hr_document_checklist_line_x_template_line_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_line"/>
+        <field name="name">x_template_line_id</field>
+        <field name="field_description">Template Line</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.hr_document_checklist_template_line</field>
+        <field name="on_delete">set null</field>
+    </record>
     <record id="field_hr_document_checklist_line_x_document_type_id" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_line"/>
         <field name="name">x_document_type_id</field>
@@ -418,6 +529,40 @@
         <field name="field_description">State</field>
         <field name="ttype">selection</field>
         <field name="required">True</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_is_completed" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_line"/>
+        <field name="name">x_is_completed</field>
+        <field name="field_description">Completed</field>
+        <field name="ttype">boolean</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_completed_at" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_line"/>
+        <field name="name">x_completed_at</field>
+        <field name="field_description">Completed At</field>
+        <field name="ttype">datetime</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_completed_by_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_line"/>
+        <field name="name">x_completed_by_id</field>
+        <field name="field_description">Completed By</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">res.users</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_latest_submission_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_line"/>
+        <field name="name">x_latest_submission_id</field>
+        <field name="field_description">Latest Submission</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_hr.recruitment_document_submission</field>
+        <field name="on_delete">set null</field>
+    </record>
+    <record id="field_hr_document_checklist_line_x_submission_count" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_line"/>
+        <field name="name">x_submission_count</field>
+        <field name="field_description">Submission Count</field>
+        <field name="ttype">integer</field>
     </record>
     <record id="field_hr_document_checklist_line_x_requires_expiry" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_line"/>
@@ -515,6 +660,39 @@
         <field name="ttype">many2one</field>
         <field name="relation">x_grc.hr_document_type</field>
         <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_document_submission_x_external_source" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
+        <field name="name">x_external_source</field>
+        <field name="field_description">External Source</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_document_submission_x_external_reference" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
+        <field name="name">x_external_reference</field>
+        <field name="field_description">External Reference</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+    <record id="field_hr_document_submission_x_received_at" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
+        <field name="name">x_received_at</field>
+        <field name="field_description">Received At</field>
+        <field name="ttype">datetime</field>
+    </record>
+    <record id="field_hr_document_submission_x_received_by_email" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
+        <field name="name">x_received_by_email</field>
+        <field name="field_description">Received By Email</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+    <record id="field_hr_document_submission_x_is_received" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
+        <field name="name">x_is_received</field>
+        <field name="field_description">Received</field>
+        <field name="ttype">boolean</field>
     </record>
     <record id="field_hr_document_submission_x_uploaded_by_id" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>

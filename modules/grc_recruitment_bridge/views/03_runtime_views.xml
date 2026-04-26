@@ -9,7 +9,10 @@
                 <field name="x_name"/>
                 <field name="x_applicant_id"/>
                 <field name="x_job_id"/>
+                <field name="x_template_id"/>
                 <field name="x_interviewer_user_id"/>
+                <field name="x_total_score"/>
+                <field name="x_completion_ratio"/>
                 <field name="x_state"/>
             </list>
         </field>
@@ -39,6 +42,12 @@
         <field name="model">x_hr.recruitment_interview_evaluation</field>
         <field name="arch" type="xml">
             <form string="Interview Evaluation">
+                <header>
+                    <button name="%(grc_recruitment_bridge.action_refresh_hr_interview_evaluation)d"
+                            type="action"
+                            string="Refresh Progress"
+                            class="btn-primary"/>
+                </header>
                 <sheet>
                     <group>
                         <group>
@@ -47,11 +56,16 @@
                             <field name="x_state"/>
                             <field name="x_applicant_id"/>
                             <field name="x_job_id"/>
+                            <field name="x_template_id"/>
                         </group>
                         <group>
                             <field name="x_interviewer_user_id"/>
                             <field name="x_signature_profile_id"/>
                             <field name="x_documents_folder_id"/>
+                            <field name="x_total_score"/>
+                            <field name="x_max_total_score"/>
+                            <field name="x_completion_ratio"/>
+                            <field name="x_last_refresh_at"/>
                             <field name="x_pdf_attachment_id"/>
                             <field name="x_signed_pdf_attachment_id"/>
                         </group>
@@ -63,6 +77,8 @@
                                     <field name="x_sequence" widget="handle"/>
                                     <field name="x_template_line_id"/>
                                     <field name="x_question"/>
+                                    <field name="x_answer_text"/>
+                                    <field name="x_is_answered"/>
                                     <field name="x_score"/>
                                     <field name="x_max_score"/>
                                     <field name="x_weight"/>
@@ -92,6 +108,9 @@
                 <field name="x_name"/>
                 <field name="x_applicant_id"/>
                 <field name="x_job_id"/>
+                <field name="x_template_id"/>
+                <field name="x_completed_line_count"/>
+                <field name="x_completion_ratio"/>
                 <field name="x_state"/>
             </list>
         </field>
@@ -120,6 +139,12 @@
         <field name="model">x_hr.recruitment_document_checklist</field>
         <field name="arch" type="xml">
             <form string="Document Checklist">
+                <header>
+                    <button name="%(grc_recruitment_bridge.action_refresh_hr_document_checklist)d"
+                            type="action"
+                            string="Refresh Progress"
+                            class="btn-primary"/>
+                </header>
                 <sheet>
                     <group>
                         <group>
@@ -128,10 +153,17 @@
                             <field name="x_state"/>
                             <field name="x_applicant_id"/>
                             <field name="x_job_id"/>
+                            <field name="x_template_id"/>
                         </group>
                         <group>
                             <field name="x_signature_profile_id"/>
                             <field name="x_documents_folder_id"/>
+                            <field name="x_required_line_count"/>
+                            <field name="x_completed_line_count"/>
+                            <field name="x_missing_line_count"/>
+                            <field name="x_completion_ratio"/>
+                            <field name="x_is_complete"/>
+                            <field name="x_last_refresh_at"/>
                             <field name="x_pdf_attachment_id"/>
                             <field name="x_signed_pdf_attachment_id"/>
                         </group>
@@ -141,9 +173,12 @@
                             <field name="x_line_ids">
                                 <list editable="bottom">
                                     <field name="x_sequence" widget="handle"/>
+                                    <field name="x_template_line_id"/>
                                     <field name="x_document_type_id"/>
                                     <field name="x_is_required"/>
+                                    <field name="x_is_completed"/>
                                     <field name="x_state"/>
+                                    <field name="x_submission_count"/>
                                     <field name="x_requires_expiry"/>
                                     <field name="x_renewal_period_months"/>
                                     <field name="x_signoff_role"/>
@@ -174,6 +209,8 @@
                 <field name="x_applicant_id"/>
                 <field name="x_checklist_line_id"/>
                 <field name="x_document_type_id"/>
+                <field name="x_external_source"/>
+                <field name="x_is_received"/>
                 <field name="x_state"/>
             </list>
         </field>
@@ -203,6 +240,12 @@
         <field name="model">x_hr.recruitment_document_submission</field>
         <field name="arch" type="xml">
             <form string="Document Submission">
+                <header>
+                    <button name="%(grc_recruitment_bridge.action_sync_hr_document_submission)d"
+                            type="action"
+                            string="Sync Submission"
+                            class="btn-primary"/>
+                </header>
                 <sheet>
                     <group>
                         <group>
@@ -216,6 +259,11 @@
                             <field name="x_document_type_id"/>
                         </group>
                         <group>
+                            <field name="x_external_source"/>
+                            <field name="x_external_reference"/>
+                            <field name="x_received_at"/>
+                            <field name="x_received_by_email"/>
+                            <field name="x_is_received"/>
                             <field name="x_uploaded_by_id"/>
                             <field name="x_uploaded_at"/>
                             <field name="x_documents_folder_id"/>
