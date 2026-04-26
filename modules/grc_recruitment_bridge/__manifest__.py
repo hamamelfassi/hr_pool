@@ -20,6 +20,7 @@
         "models/02_fields_templates.xml",
         "models/03_fields_bridge.xml",
         "models/04_models_runtime.xml",
+        "models/04_fields_runtime_inverse.xml",
         "models/05_fields_runtime.xml",
         "models/06_models_runtime_negotiation.xml",
         "models/07_fields_runtime_negotiation.xml",
