@@ -25,7 +25,7 @@ cp "$SOURCE_DIR/__init__.py" "$STAGE_DIR/"
 cp "$SOURCE_DIR/__manifest__.py" "$STAGE_DIR/"
 cp "$SOURCE_DIR/README.md" "$STAGE_DIR/"
 
-for dir in actions data i18n menus models security views; do
+for dir in actions data i18n menus models report security views; do
   if [ -d "$SOURCE_DIR/$dir" ]; then
     cp -R "$SOURCE_DIR/$dir" "$STAGE_DIR/"
   fi
@@ -37,4 +37,3 @@ done
 )
 
 echo "Built $ZIP_PATH"
-
