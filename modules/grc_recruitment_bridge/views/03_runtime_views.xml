@@ -72,7 +72,7 @@
                     <notebook>
                         <page string="Scoring Lines">
                             <field name="x_line_ids">
-                                <list editable="bottom">
+                                <tree editable="bottom">
                                     <field name="x_sequence" widget="handle"/>
                                     <field name="x_template_line_id"/>
                                     <field name="x_question"/>
@@ -81,7 +81,7 @@
                                     <field name="x_score"/>
                                     <field name="x_max_score"/>
                                     <field name="x_weight"/>
-                                </list>
+                                </tree>
                             </field>
                         </page>
                         <page string="Notes">
@@ -169,7 +169,7 @@
                     <notebook>
                         <page string="Checklist Lines">
                             <field name="x_line_ids">
-                                <list editable="bottom">
+                                <tree editable="bottom">
                                     <field name="x_sequence" widget="handle"/>
                                     <field name="x_template_line_id"/>
                                     <field name="x_document_type_id"/>
@@ -180,7 +180,7 @@
                                     <field name="x_requires_expiry"/>
                                     <field name="x_renewal_period_months"/>
                                     <field name="x_signoff_role"/>
-                                </list>
+                                </tree>
                             </field>
                         </page>
                         <page string="Notes">

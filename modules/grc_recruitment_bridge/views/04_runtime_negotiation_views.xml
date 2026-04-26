@@ -68,7 +68,7 @@
                     <notebook>
                         <page string="Negotiated Lines">
                             <field name="x_line_ids">
-                                <list editable="bottom">
+                                <tree editable="bottom">
                                     <field name="x_sequence" widget="handle"/>
                                     <field name="x_template_line_id"/>
                                     <field name="x_functional_area_id"/>
@@ -76,7 +76,7 @@
                                     <field name="x_is_included"/>
                                     <field name="x_minimum_requirement"/>
                                     <field name="x_expected_output"/>
-                                </list>
+                                </tree>
                             </field>
                         </page>
                         <page string="Notes">
@@ -163,14 +163,14 @@
                     <notebook>
                         <page string="Declaration Lines">
                             <field name="x_line_ids">
-                                <list editable="bottom">
+                                <tree editable="bottom">
                                     <field name="x_sequence" widget="handle"/>
                                     <field name="x_declaration_pack_line_id"/>
                                     <field name="x_signer_role"/>
                                     <field name="x_is_signed"/>
                                     <field name="x_signed_at"/>
                                     <field name="x_signed_by_id"/>
-                                </list>
+                                </tree>
                             </field>
                         </page>
                         <page string="Notes">

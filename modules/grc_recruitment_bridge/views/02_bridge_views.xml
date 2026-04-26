@@ -119,19 +119,19 @@
                         <field name="x_role_composition_id"/>
                     </group>
                     <field name="x_role_composition_ids" context="{'default_x_job_id': job_id}" mode="tree,form">
-                        <list editable="bottom">
+                        <tree editable="bottom">
                             <field name="x_code"/>
                             <field name="x_name"/>
                             <field name="x_job_id"/>
                             <field name="x_role_template_id"/>
                             <field name="x_included_line_count"/>
                             <field name="x_state"/>
-                        </list>
+                        </tree>
                     </field>
                 </page>
                 <page string="Evaluations">
                     <field name="x_interview_evaluation_ids" context="{'default_x_job_id': job_id}" mode="tree,form">
-                        <list editable="bottom">
+                        <tree editable="bottom">
                             <field name="x_code"/>
                             <field name="x_name"/>
                             <field name="x_job_id"/>
@@ -140,14 +140,14 @@
                             <field name="x_total_score"/>
                             <field name="x_completion_ratio"/>
                             <field name="x_state"/>
-                        </list>
+                        </tree>
                     </field>
                 </page>
                 <page string="Documents &amp; Checklists">
                     <group>
                         <field name="x_document_checklist_id"/>
                         <field name="x_document_checklist_ids" context="{'default_x_job_id': job_id}" mode="tree,form">
-                            <list editable="bottom">
+                            <tree editable="bottom">
                                 <field name="x_code"/>
                                 <field name="x_name"/>
                                 <field name="x_job_id"/>
@@ -155,10 +155,10 @@
                                 <field name="x_completed_line_count"/>
                                 <field name="x_completion_ratio"/>
                                 <field name="x_state"/>
-                            </list>
+                            </tree>
                         </field>
                         <field name="x_document_submission_ids" context="{'default_x_job_id': job_id}" mode="tree,form">
-                            <list editable="bottom">
+                            <tree editable="bottom">
                                 <field name="x_code"/>
                                 <field name="x_name"/>
                                 <field name="x_checklist_line_id"/>
@@ -166,7 +166,7 @@
                                 <field name="x_external_source"/>
                                 <field name="x_is_received"/>
                                 <field name="x_state"/>
-                            </list>
+                            </tree>
                         </field>
                     </group>
                 </page>
@@ -175,7 +175,7 @@
                         <field name="x_declaration_envelope_id"/>
                     </group>
                     <field name="x_declaration_envelope_ids" context="{'default_x_job_id': job_id}" mode="tree,form">
-                        <list editable="bottom">
+                        <tree editable="bottom">
                             <field name="x_code"/>
                             <field name="x_name"/>
                             <field name="x_job_id"/>
@@ -183,7 +183,7 @@
                             <field name="x_signed_line_count"/>
                             <field name="x_completion_ratio"/>
                             <field name="x_state"/>
-                        </list>
+                        </tree>
                     </field>
                 </page>
                 <page string="Signatures">

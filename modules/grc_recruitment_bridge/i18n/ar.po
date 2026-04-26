@@ -26,6 +26,30 @@ msgstr "المرجعيات"
 msgid "Role / Job Description Templates"
 msgstr "قوالب الوصف الوظيفي"
 
+msgid "Job Positions"
+msgstr "الوظائف الشاغرة"
+
+msgid "Job Position"
+msgstr "الوظيفة الشاغرة"
+
+msgid "Job Page"
+msgstr "صفحة الوظيفة"
+
+msgid "Configure"
+msgstr "تهيئة"
+
+msgid "Details"
+msgstr "التفاصيل"
+
+msgid "Summary"
+msgstr "الملخص"
+
+msgid "Application Info"
+msgstr "معلومات التقديم"
+
+msgid "Trackers"
+msgstr "المتابعات"
+
 msgid "Interview Evaluation Templates"
 msgstr "قوالب تقييم مقابلة المتقدم للوظيفة"
 
@@ -101,6 +125,15 @@ msgstr "الشواغر الأساسية"
 msgid "Baseline Vacancy"
 msgstr "الشاغر الأساسي"
 
+msgid "Baseline Vacancy / Template Mapping"
+msgstr "مطابقة الشاغر الأساسي / القالب"
+
+msgid "Documents"
+msgstr "المستندات"
+
+msgid "Template Families"
+msgstr "عائلات القوالب"
+
 msgid "Baseline Job Description / TOR"
 msgstr "الوصف الوظيفي الأساسي / مرجع المهام"
 
@@ -118,6 +151,9 @@ msgstr "الدور التفاوضي"
 
 msgid "Negotiated Role Composition"
 msgstr "تركيبة الدور التفاوضية"
+
+msgid "Negotiated Role / Composition"
+msgstr "الدور التفاوضي / التركيبة"
 
 msgid "Document Submissions"
 msgstr "تسليمات المستندات"
@@ -137,11 +173,17 @@ msgstr "الإقرارات"
 msgid "Documents & Checklists"
 msgstr "المستندات وقوائم التحقق"
 
+msgid "Documents &amp; Checklists"
+msgstr "المستندات وقوائم التحقق"
+
 msgid "Evaluations"
 msgstr "التقييمات"
 
 msgid "Signatures"
 msgstr "التواقيع"
+
+msgid "Signatures / Attachments"
+msgstr "التواقيع / المرفقات"
 
 msgid "Included"
 msgstr "مضمن"
