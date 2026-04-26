@@ -396,15 +396,6 @@
         <field name="field_description">Last Refresh At</field>
         <field name="ttype">datetime</field>
     </record>
-    <record id="field_hr_document_checklist_x_line_ids" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
-        <field name="name">x_line_ids</field>
-        <field name="field_description">Checklist Lines</field>
-        <field name="ttype">one2many</field>
-        <field name="relation">x_hr.recruitment_document_checklist_line</field>
-        <field name="relation_field">x_checklist_id</field>
-    </record>
-
     <record id="field_hr_document_checklist_line_x_checklist_id" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_line"/>
         <field name="name">x_checklist_id</field>
@@ -412,6 +403,14 @@
         <field name="ttype">many2one</field>
         <field name="relation">x_hr.recruitment_document_checklist</field>
         <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_document_checklist_x_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
+        <field name="name">x_line_ids</field>
+        <field name="field_description">Checklist Lines</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.recruitment_document_checklist_line</field>
+        <field name="relation_field">x_checklist_id</field>
     </record>
     <record id="field_hr_document_checklist_line_x_sequence" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_line"/>
