@@ -24,6 +24,7 @@
         "models/04_fields_runtime_inverse.xml",
         "models/05_fields_runtime.xml",
         "models/07_fields_runtime_negotiation.xml",
+        "models/08_fields_runtime_applicant_relations.xml",
         "data/01_selection_values.xml",
         "data/02_sequence.xml",
         "data/03_seed_templates.xml",

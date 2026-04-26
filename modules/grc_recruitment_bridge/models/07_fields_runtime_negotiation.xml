@@ -1,46 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Applicant runtime surfaces -->
-    <record id="field_hr_applicant_x_role_composition_ids" model="ir.model.fields">
-        <field name="model_id" search="[('model','=','hr.applicant')]"/>
-        <field name="name">x_role_composition_ids</field>
-        <field name="field_description">Role Compositions</field>
-        <field name="ttype">one2many</field>
-        <field name="relation">x_hr.recruitment_role_composition</field>
-        <field name="relation_field">x_applicant_id</field>
-    </record>
-    <record id="field_hr_applicant_x_interview_evaluation_ids" model="ir.model.fields">
-        <field name="model_id" search="[('model','=','hr.applicant')]"/>
-        <field name="name">x_interview_evaluation_ids</field>
-        <field name="field_description">Interview Evaluations</field>
-        <field name="ttype">one2many</field>
-        <field name="relation">x_hr.recruitment_interview_evaluation</field>
-        <field name="relation_field">x_applicant_id</field>
-    </record>
-    <record id="field_hr_applicant_x_document_checklist_ids" model="ir.model.fields">
-        <field name="model_id" search="[('model','=','hr.applicant')]"/>
-        <field name="name">x_document_checklist_ids</field>
-        <field name="field_description">Document Checklists</field>
-        <field name="ttype">one2many</field>
-        <field name="relation">x_hr.recruitment_document_checklist</field>
-        <field name="relation_field">x_applicant_id</field>
-    </record>
-    <record id="field_hr_applicant_x_document_submission_ids" model="ir.model.fields">
-        <field name="model_id" search="[('model','=','hr.applicant')]"/>
-        <field name="name">x_document_submission_ids</field>
-        <field name="field_description">Document Submissions</field>
-        <field name="ttype">one2many</field>
-        <field name="relation">x_hr.recruitment_document_submission</field>
-        <field name="relation_field">x_applicant_id</field>
-    </record>
-    <record id="field_hr_applicant_x_declaration_envelope_ids" model="ir.model.fields">
-        <field name="model_id" search="[('model','=','hr.applicant')]"/>
-        <field name="name">x_declaration_envelope_ids</field>
-        <field name="field_description">Declaration Envelopes</field>
-        <field name="ttype">one2many</field>
-        <field name="relation">x_hr.recruitment_declaration_envelope</field>
-        <field name="relation_field">x_applicant_id</field>
-    </record>
     <record id="field_hr_applicant_x_role_composition_id" model="ir.model.fields">
         <field name="model_id" search="[('model','=','hr.applicant')]"/>
         <field name="name">x_role_composition_id</field>
@@ -81,14 +41,6 @@
         <field name="field_description">State</field>
         <field name="ttype">selection</field>
         <field name="required">True</field>
-    </record>
-    <record id="field_hr_recruitment_role_composition_x_applicant_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition"/>
-        <field name="name">x_applicant_id</field>
-        <field name="field_description">Applicant</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">hr.applicant</field>
-        <field name="on_delete">restrict</field>
     </record>
     <record id="field_hr_recruitment_role_composition_x_job_id" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition"/>
@@ -260,14 +212,6 @@
         <field name="field_description">State</field>
         <field name="ttype">selection</field>
         <field name="required">True</field>
-    </record>
-    <record id="field_hr_recruitment_declaration_envelope_x_applicant_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>
-        <field name="name">x_applicant_id</field>
-        <field name="field_description">Applicant</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">hr.applicant</field>
-        <field name="on_delete">restrict</field>
     </record>
     <record id="field_hr_recruitment_declaration_envelope_x_job_id" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>
