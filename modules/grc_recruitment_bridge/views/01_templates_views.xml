@@ -48,7 +48,6 @@
                             <field name="x_effective_date"/>
                             <field name="x_retired_date"/>
                             <field name="x_is_default"/>
-                            <field name="x_documents_folder_id"/>
                         </group>
                     </group>
                     <notebook>
@@ -122,7 +121,6 @@
                             <field name="x_effective_date"/>
                             <field name="x_retired_date"/>
                             <field name="x_is_default"/>
-                            <field name="x_documents_folder_id"/>
                         </group>
                     </group>
                     <notebook>
@@ -196,7 +194,6 @@
                             <field name="x_effective_date"/>
                             <field name="x_retired_date"/>
                             <field name="x_is_default"/>
-                            <field name="x_documents_folder_id"/>
                         </group>
                     </group>
                     <notebook>
@@ -271,7 +268,6 @@
                             <field name="x_effective_date"/>
                             <field name="x_retired_date"/>
                             <field name="x_is_default"/>
-                            <field name="x_documents_folder_id"/>
                             <field name="x_sign_template_id"/>
                         </group>
                     </group>
@@ -344,7 +340,6 @@
                             <field name="x_effective_date"/>
                             <field name="x_retired_date"/>
                             <field name="x_is_default"/>
-                            <field name="x_documents_folder_id"/>
                             <field name="x_sign_template_id"/>
                         </group>
                     </group>
@@ -417,7 +412,6 @@
                             <field name="x_effective_date"/>
                             <field name="x_retired_date"/>
                             <field name="x_is_default"/>
-                            <field name="x_documents_folder_id"/>
                             <field name="x_sign_template_id"/>
                         </group>
                     </group>

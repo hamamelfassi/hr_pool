@@ -1,54 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Shared document hooks -->
-    <record id="field_hr_role_template_x_documents_folder_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_role_template"/>
-        <field name="name">x_documents_folder_id</field>
-        <field name="field_description">Documents Folder</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">documents.folder</field>
-        <field name="on_delete">restrict</field>
-    </record>
-    <record id="field_hr_interview_template_x_documents_folder_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_template"/>
-        <field name="name">x_documents_folder_id</field>
-        <field name="field_description">Documents Folder</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">documents.folder</field>
-        <field name="on_delete">restrict</field>
-    </record>
-    <record id="field_hr_document_checklist_template_x_documents_folder_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist_template"/>
-        <field name="name">x_documents_folder_id</field>
-        <field name="field_description">Documents Folder</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">documents.folder</field>
-        <field name="on_delete">restrict</field>
-    </record>
-    <record id="field_hr_onboarding_pack_x_documents_folder_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_onboarding_pack"/>
-        <field name="name">x_documents_folder_id</field>
-        <field name="field_description">Documents Folder</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">documents.folder</field>
-        <field name="on_delete">restrict</field>
-    </record>
-    <record id="field_hr_declaration_pack_x_documents_folder_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_declaration_pack"/>
-        <field name="name">x_documents_folder_id</field>
-        <field name="field_description">Documents Folder</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">documents.folder</field>
-        <field name="on_delete">restrict</field>
-    </record>
-    <record id="field_hr_signature_profile_x_documents_folder_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile"/>
-        <field name="name">x_documents_folder_id</field>
-        <field name="field_description">Documents Folder</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">documents.folder</field>
-        <field name="on_delete">restrict</field>
-    </record>
     <record id="field_hr_signature_profile_x_sign_template_id" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_signature_profile"/>
         <field name="name">x_sign_template_id</field>
@@ -76,14 +28,6 @@
     </record>
 
     <!-- HR job hooks -->
-    <record id="field_hr_job_x_documents_folder_id" model="ir.model.fields">
-        <field name="model_id" search="[('model','=','hr.job')]"/>
-        <field name="name">x_documents_folder_id</field>
-        <field name="field_description">Documents Folder</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">documents.folder</field>
-        <field name="on_delete">restrict</field>
-    </record>
     <record id="field_hr_job_x_tor_pdf_attachment_id" model="ir.model.fields">
         <field name="model_id" search="[('model','=','hr.job')]"/>
         <field name="name">x_tor_pdf_attachment_id</field>
@@ -94,14 +38,6 @@
     </record>
 
     <!-- HR applicant hooks -->
-    <record id="field_hr_applicant_x_documents_folder_id" model="ir.model.fields">
-        <field name="model_id" search="[('model','=','hr.applicant')]"/>
-        <field name="name">x_documents_folder_id</field>
-        <field name="field_description">Documents Folder</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">documents.folder</field>
-        <field name="on_delete">restrict</field>
-    </record>
     <record id="field_hr_applicant_x_signature_profile_id" model="ir.model.fields">
         <field name="model_id" search="[('model','=','hr.applicant')]"/>
         <field name="name">x_signature_profile_id</field>
@@ -198,14 +134,6 @@
         <field name="ttype">many2one</field>
         <field name="relation">res.users</field>
         <field name="on_delete">set null</field>
-    </record>
-    <record id="field_hr_interview_evaluation_x_documents_folder_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
-        <field name="name">x_documents_folder_id</field>
-        <field name="field_description">Documents Folder</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">documents.folder</field>
-        <field name="on_delete">restrict</field>
     </record>
     <record id="field_hr_interview_evaluation_x_signature_profile_id" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
@@ -401,14 +329,6 @@
         <field name="ttype">many2one</field>
         <field name="relation">x_grc.hr_document_checklist_template</field>
         <field name="on_delete">set null</field>
-    </record>
-    <record id="field_hr_document_checklist_x_documents_folder_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
-        <field name="name">x_documents_folder_id</field>
-        <field name="field_description">Documents Folder</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">documents.folder</field>
-        <field name="on_delete">restrict</field>
     </record>
     <record id="field_hr_document_checklist_x_signature_profile_id" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
@@ -707,14 +627,6 @@
         <field name="name">x_uploaded_at</field>
         <field name="field_description">Uploaded At</field>
         <field name="ttype">datetime</field>
-    </record>
-    <record id="field_hr_document_submission_x_documents_folder_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
-        <field name="name">x_documents_folder_id</field>
-        <field name="field_description">Documents Folder</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">documents.folder</field>
-        <field name="on_delete">restrict</field>
     </record>
     <record id="field_hr_document_submission_x_attachment_id" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>

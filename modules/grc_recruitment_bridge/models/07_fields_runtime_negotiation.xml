@@ -106,14 +106,6 @@
         <field name="relation">x_grc.hr_role_template</field>
         <field name="on_delete">set null</field>
     </record>
-    <record id="field_hr_recruitment_role_composition_x_documents_folder_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition"/>
-        <field name="name">x_documents_folder_id</field>
-        <field name="field_description">Documents Folder</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">documents.folder</field>
-        <field name="on_delete">restrict</field>
-    </record>
     <record id="field_hr_recruitment_role_composition_x_signature_profile_id" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_role_composition"/>
         <field name="name">x_signature_profile_id</field>
@@ -292,14 +284,6 @@
         <field name="ttype">many2one</field>
         <field name="relation">x_grc.hr_declaration_pack</field>
         <field name="on_delete">set null</field>
-    </record>
-    <record id="field_hr_recruitment_declaration_envelope_x_documents_folder_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>
-        <field name="name">x_documents_folder_id</field>
-        <field name="field_description">Documents Folder</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">documents.folder</field>
-        <field name="on_delete">restrict</field>
     </record>
     <record id="field_hr_recruitment_declaration_envelope_x_signature_profile_id" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_recruitment_declaration_envelope"/>

@@ -61,7 +61,6 @@
                         <group>
                             <field name="x_interviewer_user_id"/>
                             <field name="x_signature_profile_id"/>
-                            <field name="x_documents_folder_id"/>
                             <field name="x_total_score"/>
                             <field name="x_max_total_score"/>
                             <field name="x_completion_ratio"/>
@@ -157,7 +156,6 @@
                         </group>
                         <group>
                             <field name="x_signature_profile_id"/>
-                            <field name="x_documents_folder_id"/>
                             <field name="x_required_line_count"/>
                             <field name="x_completed_line_count"/>
                             <field name="x_missing_line_count"/>
@@ -266,7 +264,6 @@
                             <field name="x_is_received"/>
                             <field name="x_uploaded_by_id"/>
                             <field name="x_uploaded_at"/>
-                            <field name="x_documents_folder_id"/>
                             <field name="x_attachment_id"/>
                             <field name="x_reviewed_by_id"/>
                         </group>

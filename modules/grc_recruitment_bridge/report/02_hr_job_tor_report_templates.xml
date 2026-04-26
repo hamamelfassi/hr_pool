@@ -44,7 +44,6 @@
                             </tr>
                             <tr>
                                 <th>Documents Folder</th>
-                                <td colspan="3"><span t-field="o.x_documents_folder_id"/></td>
                             </tr>
                         </table>
 

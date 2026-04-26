@@ -34,7 +34,6 @@
                             </tr>
                             <tr>
                                 <th>Documents Folder</th>
-                                <td><span t-field="o.x_documents_folder_id"/></td>
                                 <th>Signed Attachment</th>
                                 <td><span t-field="o.x_signed_pdf_attachment_id"/></td>
                             </tr>
@@ -110,7 +109,6 @@
                                 <th>Signature Profile</th>
                                 <td><span t-field="o.x_signature_profile_id"/></td>
                                 <th>Documents Folder</th>
-                                <td><span t-field="o.x_documents_folder_id"/></td>
                             </tr>
                         </table>
                         <div class="marsellia-section">
