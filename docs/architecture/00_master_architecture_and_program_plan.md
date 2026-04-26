@@ -85,7 +85,8 @@ Bridge layers exist where governed vocabulary must be exposed into a live operat
 
 - canonical governance stays in `grc_backbone`
 - operational process ownership stays in the domain module that runs the work
-- bridge fields, inherited views, light mapping helpers, and template routing live with the domain module that needs the governed extension, unless a separate shared bridge is genuinely required later
+- bridge fields, inherited views, light mapping helpers, document-type catalogs, and template routing live with the domain module that needs the governed extension, unless a separate shared bridge is genuinely required later
+- live recruitment runtime records, including interview evaluations, document checklists, document submissions, and signature-triggered record state, belong to the recruitment operational surface, not to the bridge itself
 
 This means the project should stay domain-coherent rather than forcing every bridge concern into a separate generic bridge addon.
 
@@ -132,6 +133,7 @@ Status:
 - recruitment bridge template families are in place
 - live intake continues to write to `hr_pool`
 - the handoff is not yet implemented as a formal conversion workflow
+- the live recruitment runtime objects still need to be aligned so interview evaluation, document checklist, and document submission records live on the recruitment side rather than inside the bridge
 
 Work:
 - conversion request model/action
@@ -165,6 +167,11 @@ Work:
 - contract, declaration, and signature flow
 - PDF generation and attachment handling
 - native Odoo Documents storage and chatter/activity integration
+- recruitment-side runtime record modeling for:
+  - interview evaluations
+  - document checklists
+  - document submissions
+  - TOR/job-description outputs on the job record
 
 Implementation note:
 
@@ -173,6 +180,7 @@ Implementation note:
 - Odoo Sign is the default formal signing path for applicants, employees, managers, and chairman-level sign-offs where external signatures are needed
 - the live signed PDF is attached to the operational record, while the template source remains in the bridge/resources layer
 - the concrete schema map for this native-document pass is documented in `docs/architecture/07_native_document_schema_implementation.md`
+- the recruitment runtime UI and schema map is pinned in `docs/architecture/08_recruitment_runtime_ui_and_schema_map.md`
 
 ### Phase 4 - Operational governance expansion
 
@@ -313,6 +321,8 @@ Completed:
 - added chatter/activity support to the HR Pool intake model and the interview evaluation runtime model
 - added a governed interview evaluation runtime record with score lines, attachment pointers, and signature profile linkage
 - documented the schema in `docs/architecture/07_native_document_schema_implementation.md`
+- clarified the corrected target structure so the bridge owns definitions and the recruitment domain owns live runtime records
+- pinned the recruitment runtime UI / document submission structure in `docs/architecture/08_recruitment_runtime_ui_and_schema_map.md`
 
 Open:
 
@@ -320,6 +330,7 @@ Open:
 - add signature request actions and record buttons
 - provision or standardize document folders for runtime records
 - complete Arabic terminology and translation coverage for the new native-document fields
+- realign any bridge-owned runtime records or fields so they live on the recruitment operational surface before the next install cycle
 
 ## 9. Refactor safety rules
 

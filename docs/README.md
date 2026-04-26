@@ -20,6 +20,8 @@ This folder stores project documentation and non-module implementation assets th
   native-first build sequence for documents, chatter, activities, Sign, and QWeb
 - `architecture/07_native_document_schema_implementation.md`
   concrete model, field, report, and storage hooks for native HR documents
+- `architecture/08_recruitment_runtime_ui_and_schema_map.md`
+  corrected recruitment runtime ownership, menus, views, and document submission model
 - `modules/hr_pool/`
   HR Pool-specific documentation
 - `modules/grc_backbone/`

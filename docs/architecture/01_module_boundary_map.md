@@ -143,6 +143,7 @@ Owns:
 - HR role / job description templates
 - interview evaluation templates
 - document checklist templates
+- recruitment document type catalog
 - declaration packs
 - onboarding continuation packs
 - signature profiles and routing rules
@@ -158,7 +159,9 @@ Should not contain:
 
 - live candidate intake records
 - live applicant records
-- live interview submissions
+- live interview evaluation runtime records
+- live document checklist runtime records
+- live document submission runtime records
 - live offer acceptance records
 - employee admin or HSE runtime forms
 - canonical task-template ownership
@@ -185,7 +188,7 @@ Use this test before placing a feature in a module:
 3. Is it a linkage between the two? Put it in the domain-coherent bridge responsibility of the domain module, unless multiple domains need the same adapter.
 4. Is it a reusable recruitment template family, signer-routing profile, or composition pack for recruitment/onboarding? Put it in `grc_recruitment_bridge`.
 5. Is it a canonical task template used to govern repeatable execution across domains? Put it in `grc_backbone` as a child of `x_grc.function`.
-6. Is it a live submission, a live applicant record, or a live generated document for a specific person? Put it in `hr_pool` or `hr_recruitment`.
+6. Is it a live submission, a live applicant record, a live evaluation record, a live checklist record, or a live generated document for a specific person? Put it in `hr_pool` or `hr_recruitment`.
 7. Is it employee admin, offboarding, leave, attendance, or HSE operations? Keep it out of the recruitment bridge and place it in a future domain module.
 8. Can the change break the live intake workflow? If yes, defer it until the replacement path is proven.
 
@@ -201,6 +204,7 @@ Use this test before placing a feature in a module:
 - the interview process lives in recruitment
 - the criteria it consumes may come from GRC
 - the resulting evaluation record still belongs to recruitment
+- the document checklist and individual document submissions also belong to recruitment
 
 ### Example C: intake conversion requests
 
@@ -212,7 +216,7 @@ Use this test before placing a feature in a module:
 
 - the canonical governed functions and clauses live in `grc_backbone`
 - the HR-specific composition of those items into job description templates, interview rubrics, checklist packs, onboarding packs, declaration packs, and signer profiles lives in `grc_recruitment_bridge`
-- the actual job record, applicant record, interview response, and signed document instance live in the operational HR modules
+- the actual job record, applicant record, interview response, checklist instance, document submission, and signed document instance live in the operational HR modules
 
 ## 6. Packaging rule
 

@@ -7,6 +7,7 @@ See also:
 - `docs/architecture/05_hr_native_first_decision_matrix.md`
 - `docs/architecture/06_hr_native_first_workflow_playbook.md`
 - `docs/architecture/07_native_document_schema_implementation.md`
+- `docs/architecture/08_recruitment_runtime_ui_and_schema_map.md`
 
 The rule is:
 
@@ -75,6 +76,8 @@ The template remains reusable; the signed PDF is evidence.
 7. Upload the PDF to Odoo Documents or as an attachment.
 8. If signatures are required, create the signature workflow using the signature profile.
 9. Store the completed signed PDF back on the runtime record.
+
+For recruitment runtime records, the document instance itself should live on the recruitment-side record, while the Documents app stores the file artifact and the bridge supplies the template/type/routing metadata.
 
 ## 4. Signature profile model
 

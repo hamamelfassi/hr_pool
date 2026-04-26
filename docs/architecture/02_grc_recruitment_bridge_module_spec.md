@@ -27,6 +27,7 @@ The module owns governance composition artifacts for the recruitment lifecycle a
 - pre-employment document checklist templates
 - onboarding continuation packs for the post-intake phase
 - declaration packs
+- recruitment document type catalog
 - signer-routing / signature profiles
 - bridge fields on recruitment operational models
 - inherited views and actions that expose governed recruitment template selection
@@ -193,6 +194,26 @@ Signature profile line:
 - `x_target_state`
 - `x_internal_notes`
 
+### 5.5 Document type catalog
+
+The bridge should define a document type catalog used by recruitment runtime checklist lines.
+
+Recommended model:
+
+- `x_grc.hr_document_type`
+
+Recommended fields:
+
+- `x_code`
+- `x_name`
+- `x_category`
+- `x_is_mandatory_default`
+- `x_requires_expiry_default`
+- `x_default_signoff_role`
+- `x_description`
+
+Runtime checklist lines should reference this catalog so each uploaded file can be typed consistently across the recruitment lifecycle.
+
 ## 6. Exact menus
 
 ### 6.1 Root menu
@@ -290,7 +311,8 @@ The bridge module should also add inherited views to:
 
 - `hr.job`
 - `x_hr.pool`
-- `hr.recruitment` or `hr.applicant` if the recruitment workflow needs direct visibility in the applicant form
+- `hr.applicant` for the recruitment runtime surface
+- `hr.recruitment` if job-stage specific controls or list views are required by the installation
 
 These inherited views should expose:
 
@@ -302,6 +324,7 @@ These inherited views should expose:
 - selected signature profile
 - linked functional area
 - linked governed function
+- document type and checklist linkage on applicant-side runtime views
 
 ## 9. Document generation and signing workflow
 

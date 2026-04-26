@@ -1,179 +1,224 @@
 # Native Document Schema Implementation
 
-This document records the concrete schema changes that implement the native-first document posture:
-
-- `Documents` as the default DMS
-- `Sign` as the external signature engine
-- `QWeb` as the PDF renderer for dynamic / multi-line forms
-- `Chatter` and `Activities` as the operational traceability layer
+This document records the concrete schema needed for the native-first HR document posture.
 
 It complements:
 
 - `05_hr_native_first_decision_matrix.md`
 - `06_hr_native_first_workflow_playbook.md`
+- `08_recruitment_runtime_ui_and_schema_map.md`
 
-## 1. Implemented runtime models
+The rule is:
 
-### 1.1 `x_hr.pool`
+- `Documents` is the default DMS
+- `Sign` is the external signature engine
+- `QWeb` is the PDF renderer for dynamic / multi-line forms
+- `Chatter` and `Activities` are the operational traceability layer
 
-Current role:
+## 1. Corrected ownership model
 
-- frozen intake and prescreening record
-- keeps the live Fillout/Zite/n8n contract intact
-- now carries document hooks and chatter/activity support
+### 1.1 `grc_backbone`
 
-Implemented hooks:
+Owns:
 
-- `x_documents_folder_id` -> `documents.folder`
-- `x_intake_pdf_attachment_id` -> `ir.attachment`
-- `x_signed_pdf_attachment_id` -> `ir.attachment`
+- provisions
+- SOPs
+- functional areas
+- governed functions
+- canonical task templates
+- clause libraries
 
-Workflow support:
+### 1.2 `grc_recruitment_bridge`
 
-- `is_mail_thread = True`
-- `is_mail_activity = True`
+Owns:
 
-### 1.2 `x_grc.hr_interview_evaluation`
+- role / job description template families
+- interview rubric template families
+- document checklist template families
+- onboarding continuation packs
+- declaration packs
+- recruitment document type catalog
+- signature routing profiles
+- report layout definitions
 
-Current role:
+Does not own:
 
-- governed runtime record for candidate interview evaluations
-- owns scoring lines, state, attachments, and chatter/activity tracking
+- live applicant instances
+- live interview records
+- live checklist instances
+- live document submission instances
 
-Implemented hooks:
+### 1.3 Recruitment runtime surface
 
-- `x_code`
-- `x_name`
-- `x_state`
-- `x_applicant_id` -> `hr.applicant`
-- `x_job_id` -> `hr.job`
-- `x_interviewer_user_id` -> `res.users`
-- `x_documents_folder_id` -> `documents.folder`
-- `x_signature_profile_id` -> `x_grc.hr_signature_profile`
-- `x_pdf_attachment_id` -> `ir.attachment`
-- `x_signed_pdf_attachment_id` -> `ir.attachment`
-- `x_notes`
-- `x_line_ids` -> `x_grc.hr_interview_evaluation_line`
+Lives in the recruitment domain and should be exposed through `hr.job`, `hr.applicant`, and recruitment-side custom models and views.
 
-Workflow support:
+The runtime surface owns:
 
-- `is_mail_thread = True`
-- `is_mail_activity = True`
+- the actual applicant-specific interview evaluation record
+- the actual applicant-specific document checklist record
+- the actual document submission records, one per uploaded document
+- generated PDFs for a specific runtime case
+- signed PDFs for that same case
+- chatter
+- activities
+- Documents attachment pointers
 
-### 1.3 `x_grc.hr_interview_evaluation_line`
+### 1.4 `hr_pool`
 
-Current role:
+Owns:
 
-- scoring line for the interview evaluation runtime record
+- intake snapshot records
+- prescreening workflow
+- chairman gating
+- intake attachments
+- intake PDF snapshot
 
-Implemented hooks:
+## 2. Recruitment runtime records
 
-- `x_evaluation_id` -> `x_grc.hr_interview_evaluation`
-- `x_sequence`
-- `x_template_line_id` -> `x_grc.hr_interview_template_line`
-- `x_question`
-- `x_score`
-- `x_max_score`
-- `x_weight`
-- `x_notes`
+Recommended target runtime model names:
 
-## 2. Implemented bridge model hooks
+- `x_hr.recruitment_interview_evaluation`
+- `x_hr.recruitment_interview_evaluation_line`
+- `x_hr.recruitment_document_checklist`
+- `x_hr.recruitment_document_checklist_line`
+- `x_hr.recruitment_document_submission`
 
-### 2.1 `hr.job`
+These are recruitment-side runtime objects, not bridge-owned definitions.
 
-Implemented hooks:
+## 3. Bridge-defined template and type records
 
-- `x_grc_functional_area_id` -> `x_grc.functional_area`
-- `x_grc_function_id` -> `x_grc.function`
-- `x_grc_role_template_id` -> `x_grc.hr_role_template`
-- `x_grc_signature_profile_id` -> `x_grc.hr_signature_profile`
-- `x_grc_interview_template_id` -> `x_grc.hr_interview_template`
-- `x_grc_document_checklist_template_id` -> `x_grc.hr_document_checklist_template`
-- `x_grc_onboarding_pack_id` -> `x_grc.hr_onboarding_pack`
-- `x_grc_declaration_pack_id` -> `x_grc.hr_declaration_pack`
-- `x_documents_folder_id` -> `documents.folder`
-- `x_tor_pdf_attachment_id` -> `ir.attachment`
+The bridge should define the reusable template families and type catalogs that the runtime records consume.
 
-### 2.2 `hr.applicant`
+Recommended bridge model names:
 
-Implemented hooks:
+- `x_grc.hr_role_template`
+- `x_grc.hr_role_template_line`
+- `x_grc.hr_interview_template`
+- `x_grc.hr_interview_template_line`
+- `x_grc.hr_document_checklist_template`
+- `x_grc.hr_document_checklist_template_line`
+- `x_grc.hr_onboarding_pack`
+- `x_grc.hr_onboarding_pack_line`
+- `x_grc.hr_declaration_pack`
+- `x_grc.hr_declaration_pack_line`
+- `x_grc.hr_signature_profile`
+- `x_grc.hr_signature_profile_line`
+- `x_grc.hr_document_type`
 
-- `x_documents_folder_id` -> `documents.folder`
-- `x_signature_profile_id` -> `x_grc.hr_signature_profile`
-- `x_interview_evaluation_id` -> `x_grc.hr_interview_evaluation`
-- `x_pdf_attachment_id` -> `ir.attachment`
-- `x_signed_pdf_attachment_id` -> `ir.attachment`
+## 4. Runtime hooks on operational models
 
-### 2.3 Bridge template roots
+### 4.1 `hr.job`
 
-Implemented hooks:
+`hr.job` remains the runtime job record and should hold:
 
-- `x_documents_folder_id` on:
-  - `x_grc.hr_role_template`
-  - `x_grc.hr_interview_template`
-  - `x_grc.hr_document_checklist_template`
-  - `x_grc.hr_onboarding_pack`
-  - `x_grc.hr_declaration_pack`
-  - `x_grc.hr_signature_profile`
-- `x_sign_template_id` on:
-  - `x_grc.hr_signature_profile`
-  - `x_grc.hr_declaration_pack`
-  - `x_grc.hr_onboarding_pack`
+- link to the chosen role / job template
+- link to the chosen interview template
+- link to the chosen checklist template
+- link to the chosen onboarding pack
+- link to the chosen declaration pack
+- link to the chosen signature profile
+- documents folder pointer
+- TOR PDF attachment pointer
+- signed TOR attachment pointer
 
-## 3. Implemented report actions
+### 4.2 `hr.applicant`
 
-### 3.1 `x_hr.pool` intake snapshot
+`hr.applicant` remains the runtime applicant record and should hold:
 
-Action:
+- documents folder pointer
+- interview evaluation pointer
+- document checklist pointer
+- signature profile pointer
+- generated PDF attachment pointer
+- signed PDF attachment pointer
+- chatter
+- activities
 
-- `action_report_hr_pool_intake_snapshot`
+## 5. Runtime document model responsibilities
 
-Report:
+### 5.1 Interview evaluation
 
-- template: `hr_pool.report_hr_pool_intake_snapshot_document`
-- type: `qweb-pdf`
-- paperformat: `paperformat_hr_pool_native`
+The runtime interview evaluation record should carry:
 
-Storage posture:
+- applicant reference
+- job reference
+- interviewer user
+- state
+- scoring lines
+- notes
+- generated PDF attachment pointer
+- signed PDF attachment pointer
+- signature profile pointer
+- documents folder pointer
+- chatter
+- activities
 
-- attachment reuse is enabled
-- the intake PDF snapshot becomes a durable artifact on the runtime record
+### 5.2 Document checklist
 
-### 3.2 `hr.job` TOR / job description
+The runtime checklist record should carry:
 
-Action:
+- applicant reference
+- job reference
+- state
+- checklist lines
+- documents folder pointer
+- generated PDF attachment pointer
+- signed PDF attachment pointer
+- signature profile pointer
+- chatter
+- activities
 
-- `action_report_hr_job_tor`
+Each checklist line should carry:
 
-Report:
+- a document type reference from `x_grc.hr_document_type`
+- a required/optional flag
+- an uploaded-file / submission pointer
+- an expiry / renewal policy if relevant
+- a review / sign-off status
 
-- template: `grc_recruitment_bridge.report_hr_job_tor_document`
-- type: `qweb-pdf`
-- paperformat: `paperformat_hr_recruitment_native`
+### 5.3 Document submission
 
-Purpose:
+Each uploaded document should be represented by a separate runtime submission record.
 
-- render a paper-like, multi-line TOR / job description from the governed bridge fields and role template lines
+That record should carry:
 
-### 3.3 `x_grc.hr_interview_evaluation`
+- applicant reference
+- checklist line reference
+- document type reference
+- attachment pointer
+- upload timestamp
+- reviewer / approver
+- sign-off state
 
-Action:
+This is the structural answer to “one submission per document”.
 
-- `action_report_hr_interview_evaluation`
+## 6. Report actions
 
-Report:
+### 6.1 HR Pool intake snapshot
 
-- template: `grc_recruitment_bridge.report_hr_interview_evaluation_document`
-- type: `qweb-pdf`
-- paperformat: `paperformat_hr_recruitment_native`
+The intake snapshot report belongs to `hr_pool`.
 
-Purpose:
+It is used to preserve the intake snapshot and provenance.
 
-- render the governed interview evaluation record as a signed or signable PDF
+### 6.2 Job TOR / job description
 
-## 4. Storage rules
+The TOR / job description report belongs on `hr.job`.
 
-The storage rules are:
+It renders the governed role template lines, job template links, and approved composition metadata.
+
+### 6.3 Interview evaluation
+
+The interview evaluation report belongs on the recruitment runtime evaluation record.
+
+It renders the scoring lines and reviewer notes as a paper-like PDF.
+
+### 6.4 Document checklist
+
+The document checklist report belongs on the recruitment runtime checklist record.
+
+It renders the required document types, submission status, expiry state, and reviewer sign-off state.
+
+## 7. Storage rules
 
 1. The runtime record owns the workflow state.
 2. `Documents` owns the file lifecycle and searchable DMS storage.
@@ -181,33 +226,45 @@ The storage rules are:
 4. Sign completion must leave a signed artifact back on the runtime record.
 5. Template source stays separate from generated evidence.
 
-## 5. Operational sequence
+## 8. Operational sequence
 
-### 5.1 Intake
+### 8.1 Intake
 
 1. Fillout/Zite/n8n creates or updates `x_hr.pool`.
 2. The intake snapshot report can be generated from the record.
 3. The PDF is stored in Documents and attached to `x_hr.pool`.
 
-### 5.2 Recruitment evaluation
+### 8.2 Recruitment evaluation
 
-1. The candidate is converted into the recruitment runtime.
-2. `x_grc.hr_interview_evaluation` is created.
-3. QWeb renders the evaluation PDF.
-4. The PDF is stored in Documents and attached to the evaluation record.
-5. Sign is triggered if a signature profile requires it.
+1. The applicant exists in `hr.applicant`.
+2. The bridge defines the evaluation rubric.
+3. Recruitment creates the runtime evaluation record.
+4. QWeb renders the evaluation PDF.
+5. The PDF is stored in Documents and attached to the runtime record.
+6. Sign is triggered if a signature profile requires it.
 
-### 5.3 Job TOR
+### 8.3 Document checklist
+
+1. The bridge defines the checklist template and the document type catalog.
+2. Recruitment creates the runtime checklist record.
+3. Each required document becomes one runtime checklist line.
+4. Each upload becomes one runtime submission record.
+5. QWeb renders the checklist PDF.
+6. The PDF and signed artifact are stored in Documents and attached to the runtime record.
+
+### 8.4 Job TOR
 
 1. `hr.job` carries the governed template links.
 2. QWeb renders the TOR / job description PDF.
 3. The PDF is attached to the job record and filed in Documents.
 4. The same artifact can then be routed to Sign if the workflow requires approval or countersignature.
 
-## 6. Current boundary rule
+## 9. Current correction to keep in mind
 
-- `grc_backbone` owns canonical governance primitives
-- `grc_recruitment_bridge` owns recruitment-domain templates, runtime evaluation, and sign/report routing
-- `hr_pool` stays frozen for intake and prescreening
-- `hr_recruitment` remains the downstream applicant layer
+If any current scaffold still places a live interview evaluation or document runtime record inside the bridge package, that is transitional and should be realigned before the next install cycle.
+
+The target remains:
+
+- bridge = definitions
+- recruitment runtime = live records
 

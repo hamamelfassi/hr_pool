@@ -66,11 +66,17 @@ The bridge should not mirror every PDF as a separate long-lived business object.
 Instead:
 
 - one reusable template family owns the structure
-- one runtime module owns the live instance
+- the recruitment operational surface owns the live instance
 - one signer profile owns the routing
 - one PDF artifact is generated per runtime record
 
 Task templates are a separate canonical GRC primitive, not part of the bridge-owned HR form families. Form `0006` is the main corpus evidence for that layer because it expresses repeatable task/control steps rather than recruitment composition.
+
+For typed document workflows, the runtime checklist must split into:
+
+- one checklist header per applicant
+- one checklist line per required document type
+- one submission record per uploaded document
 
 ## 5. Practical consequence
 
