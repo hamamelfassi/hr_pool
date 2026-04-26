@@ -190,15 +190,6 @@
         <field name="field_description">Last Refresh At</field>
         <field name="ttype">datetime</field>
     </record>
-    <record id="field_hr_interview_evaluation_x_line_ids" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
-        <field name="name">x_line_ids</field>
-        <field name="field_description">Scoring Lines</field>
-        <field name="ttype">one2many</field>
-        <field name="relation">x_hr.recruitment_interview_evaluation_line</field>
-        <field name="relation_field">x_evaluation_id</field>
-    </record>
-
     <record id="field_hr_interview_evaluation_line_x_evaluation_id" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation_line"/>
         <field name="name">x_evaluation_id</field>
@@ -206,6 +197,14 @@
         <field name="ttype">many2one</field>
         <field name="relation">x_hr.recruitment_interview_evaluation</field>
         <field name="on_delete">restrict</field>
+    </record>
+    <record id="field_hr_interview_evaluation_x_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
+        <field name="name">x_line_ids</field>
+        <field name="field_description">Scoring Lines</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.recruitment_interview_evaluation_line</field>
+        <field name="relation_field">x_evaluation_id</field>
     </record>
     <record id="field_hr_interview_evaluation_line_x_sequence" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation_line"/>
