@@ -27,6 +27,7 @@
         "models/08_fields_runtime_applicant_relations.xml",
         "data/01_selection_values.xml",
         "data/02_sequence.xml",
+        "data/03_document_types.xml",
         "data/03_seed_templates.xml",
         "data/04_selection_runtime_negotiation.xml",
         "report/01_paperformat.xml",

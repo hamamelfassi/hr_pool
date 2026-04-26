@@ -103,14 +103,6 @@
         <field name="ttype">selection</field>
         <field name="required">True</field>
     </record>
-    <record id="field_hr_interview_evaluation_x_applicant_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
-        <field name="name">x_applicant_id</field>
-        <field name="field_description">Applicant</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">hr.applicant</field>
-        <field name="on_delete">restrict</field>
-    </record>
     <record id="field_hr_interview_evaluation_x_job_id" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_interview_evaluation"/>
         <field name="name">x_job_id</field>
@@ -296,14 +288,6 @@
         <field name="field_description">State</field>
         <field name="ttype">selection</field>
         <field name="required">True</field>
-    </record>
-    <record id="field_hr_document_checklist_x_applicant_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
-        <field name="name">x_applicant_id</field>
-        <field name="field_description">Applicant</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">hr.applicant</field>
-        <field name="on_delete">restrict</field>
     </record>
     <record id="field_hr_document_checklist_x_job_id" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_checklist"/>
@@ -522,14 +506,6 @@
         <field name="field_description">State</field>
         <field name="ttype">selection</field>
         <field name="required">True</field>
-    </record>
-    <record id="field_hr_document_submission_x_applicant_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
-        <field name="name">x_applicant_id</field>
-        <field name="field_description">Applicant</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">hr.applicant</field>
-        <field name="on_delete">restrict</field>
     </record>
     <record id="field_hr_document_submission_x_job_id" model="ir.model.fields">
         <field name="model_id" ref="grc_recruitment_bridge.model_hr_document_submission"/>
