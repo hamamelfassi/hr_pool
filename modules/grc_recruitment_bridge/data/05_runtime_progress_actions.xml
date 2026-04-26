@@ -1,17 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="action_sync_hr_job_recruitment_baseline" model="ir.actions.server">
+        <field name="name">Sync Vacancy Baseline</field>
+        <field name="model_id" search="[('model','=','hr.job')]"/>
+        <field name="binding_model_id" search="[('model','=','hr.job')]"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+def pick_folder(*folders):
+    for folder in folders:
+        if folder:
+            return folder
+    return False
+
+for job in records:
+    role_template = job.x_grc_role_template_id
+    interview_template = job.x_grc_interview_template_id
+    checklist_template = job.x_grc_document_checklist_template_id
+    onboarding_pack = job.x_grc_onboarding_pack_id
+    declaration_pack = job.x_grc_declaration_pack_id
+    signature_profile = job.x_grc_signature_profile_id
+    folder = pick_folder(
+        job.x_documents_folder_id,
+        role_template.x_documents_folder_id if role_template else False,
+        interview_template.x_documents_folder_id if interview_template else False,
+        checklist_template.x_documents_folder_id if checklist_template else False,
+        onboarding_pack.x_documents_folder_id if onboarding_pack else False,
+        declaration_pack.x_documents_folder_id if declaration_pack else False,
+        signature_profile.x_documents_folder_id if signature_profile else False,
+    )
+    vals = {}
+    if folder and job.x_documents_folder_id != folder:
+        vals['x_documents_folder_id'] = folder.id
+    if vals:
+        job.write(vals)
+    job.message_post(body='Baseline vacancy synchronized from the selected recruitment templates.')
+        ]]></field>
+    </record>
+
     <record id="action_prepare_applicant_recruitment_runtime" model="ir.actions.server">
         <field name="name">Prepare Recruitment Runtime</field>
         <field name="model_id" search="[('model','=','hr.applicant')]"/>
         <field name="binding_model_id" search="[('model','=','hr.applicant')]"/>
         <field name="state">code</field>
         <field name="code"><![CDATA[
+def pick_folder(*folders):
+    for folder in folders:
+        if folder:
+            return folder
+    return False
+
 for applicant in records:
     job = applicant.job_id
     if not job:
         continue
 
     role_template = job.x_grc_role_template_id
+    interview_template = job.x_grc_interview_template_id
+    checklist_template = job.x_grc_document_checklist_template_id
+    declaration_pack = job.x_grc_declaration_pack_id
+    runtime_folder = pick_folder(
+        job.x_documents_folder_id,
+        role_template.x_documents_folder_id if role_template else False,
+        interview_template.x_documents_folder_id if interview_template else False,
+        checklist_template.x_documents_folder_id if checklist_template else False,
+        declaration_pack.x_documents_folder_id if declaration_pack else False,
+    )
     if role_template:
         if applicant.x_role_composition_id:
             composition = applicant.x_role_composition_id
@@ -26,7 +79,7 @@ for applicant in records:
                 'x_applicant_id': applicant.id,
                 'x_job_id': job.id,
                 'x_role_template_id': role_template.id,
-                'x_documents_folder_id': job.x_documents_folder_id.id if job.x_documents_folder_id else False,
+                'x_documents_folder_id': runtime_folder.id if runtime_folder else False,
                 'x_signature_profile_id': job.x_grc_signature_profile_id.id if job.x_grc_signature_profile_id else False,
             })
             applicant.write({'x_role_composition_id': composition.id})
@@ -53,7 +106,6 @@ for applicant in records:
                 'x_last_refresh_at': datetime.datetime.now(),
             })
 
-    interview_template = job.x_grc_interview_template_id
     if interview_template:
         if applicant.x_interview_evaluation_id:
             evaluation = applicant.x_interview_evaluation_id
@@ -69,7 +121,7 @@ for applicant in records:
                 'x_job_id': job.id,
                 'x_template_id': interview_template.id,
                 'x_interviewer_user_id': applicant.user_id.id if applicant.user_id else False,
-                'x_documents_folder_id': job.x_documents_folder_id.id if job.x_documents_folder_id else False,
+                'x_documents_folder_id': runtime_folder.id if runtime_folder else False,
                 'x_signature_profile_id': job.x_grc_signature_profile_id.id if job.x_grc_signature_profile_id else False,
             })
             applicant.write({'x_interview_evaluation_id': evaluation.id})
@@ -98,7 +150,6 @@ for applicant in records:
                 'x_last_refresh_at': datetime.datetime.now(),
             })
 
-    checklist_template = job.x_grc_document_checklist_template_id
     if checklist_template:
         if applicant.x_document_checklist_id:
             checklist = applicant.x_document_checklist_id
@@ -113,7 +164,7 @@ for applicant in records:
                 'x_applicant_id': applicant.id,
                 'x_job_id': job.id,
                 'x_template_id': checklist_template.id,
-                'x_documents_folder_id': job.x_documents_folder_id.id if job.x_documents_folder_id else False,
+                'x_documents_folder_id': runtime_folder.id if runtime_folder else False,
                 'x_signature_profile_id': job.x_grc_signature_profile_id.id if job.x_grc_signature_profile_id else False,
             })
             applicant.write({'x_document_checklist_id': checklist.id})
@@ -146,7 +197,6 @@ for applicant in records:
                 'x_last_refresh_at': datetime.datetime.now(),
             })
 
-    declaration_pack = job.x_grc_declaration_pack_id
     if declaration_pack:
         if applicant.x_declaration_envelope_id:
             envelope = applicant.x_declaration_envelope_id
@@ -161,7 +211,7 @@ for applicant in records:
                 'x_applicant_id': applicant.id,
                 'x_job_id': job.id,
                 'x_declaration_pack_id': declaration_pack.id,
-                'x_documents_folder_id': job.x_documents_folder_id.id if job.x_documents_folder_id else False,
+                'x_documents_folder_id': runtime_folder.id if runtime_folder else False,
                 'x_signature_profile_id': job.x_grc_signature_profile_id.id if job.x_grc_signature_profile_id else False,
             })
             applicant.write({'x_declaration_envelope_id': envelope.id})

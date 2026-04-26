@@ -37,6 +37,12 @@
         <field name="model">hr.job</field>
         <field name="arch" type="xml">
             <form string="Baseline Vacancy">
+                <header>
+                    <button name="%(grc_recruitment_bridge.action_sync_hr_job_recruitment_baseline)d"
+                            type="action"
+                            string="Sync Baseline"
+                            class="btn-primary"/>
+                </header>
                 <sheet>
                     <group>
                         <group>

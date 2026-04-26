@@ -160,8 +160,6 @@ Status:
   - baseline vacancy labels on `hr.job` have been tightened to distinguish them from negotiated runtime records
   - runtime progress actions, checklist synchronization, and applicant-side runtime buttons are now wired in source
 - the remaining work is now the final production wiring and verification:
-  - baseline-vacancy cleanup on `hr.job`
-  - document-folder provisioning
   - native Odoo Sign request verification on runtime records
   - final contract bundle flow
   - install/upgrade verification on the rebuilt zips
@@ -323,7 +321,7 @@ Open:
 
 - define native record schemas for signable and reportable HR workflows
 - decide which form families use static Sign templates versus QWeb PDFs
-- define Documents foldering and attachment lifecycle rules
+- finalize Documents foldering and attachment lifecycle rules
 - decide where Survey is sufficient and where a custom governed record is required
 
 References:

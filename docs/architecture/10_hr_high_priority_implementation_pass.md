@@ -22,9 +22,7 @@ Implemented in source:
 
 Still open:
 
-- baseline-vacancy only cleanup on `hr.job`
 - native Odoo Sign request flow verification on the runtime records
-- document-folder provisioning standardization
 - final contract bundle flow
 - install/upgrade verification on the rebuilt zips
 
@@ -36,10 +34,11 @@ Implement only the baseline vacancy responsibilities on `hr.job`:
 
 - governed template selection
 - baseline TOR / job description snapshot
-- baseline Documents folder pointer
+- baseline Documents folder pointer with template-derived fallback
 - baseline PDF attachment pointers
 - baseline signature profile pointer
 - baseline provenance / source metadata
+- baseline sync action to normalize the vacancy from selected recruitment templates
 
 Do not place applicant-specific negotiation on `hr.job`.
 
@@ -97,6 +96,14 @@ Implement the applicant-specific declaration envelope:
 - static Sign or QWeb + Sign flow as appropriate
 - Documents filing
 - native Odoo Sign request from the runtime record
+
+### 1.7 Foldering standardization
+
+Implement predictable folder inheritance:
+
+- vacancy folders may inherit from the selected recruitment templates
+- applicant runtime folders inherit from the vacancy baseline when present
+- if no vacancy folder exists, use the first relevant template folder as the runtime default
 
 ## 2. Required UI surfaces
 
