@@ -7,7 +7,6 @@
         "mail",
         "documents"
     ],
-    "category": "Human Resources",
     "installable": True,
     "auto_install": False,
     "data": [

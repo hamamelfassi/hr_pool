@@ -1,12 +1,9 @@
 {
     "name": "GRC Backbone",
-    "version": "19.0.1.0.0",
-    "summary": "Centralized Governance, Risk, and Compliance starter backbone for Marsellia",
     "depends": [
         "base",
         "uom"
     ],
-    "category": "Human Resources",
     "installable": True,
     "auto_install": False,
     "data": [
