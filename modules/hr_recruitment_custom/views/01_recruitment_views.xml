@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_job_form_inherit_hr_recruitment_custom" model="ir.ui.view">
+        <field name="name">hr.job.form.inherit.hr.recruitment.custom</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="Governed Baseline">
+                    <group>
+                        <field name="x_baseline_functional_area_id"/>
+                        <field name="x_baseline_function_ids" widget="many2many_tags"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_applicant_form_inherit_hr_recruitment_custom" model="ir.ui.view">
+        <field name="name">hr.applicant.form.inherit.hr.recruitment.custom</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="Negotiated Role">
+                    <group>
+                        <field name="x_negotiated_job_description" placeholder="Record the negotiated duties, scope, and any final role wording here."/>
+                        <field name="x_negotiated_function_ids" widget="many2many_tags"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -837,26 +837,6 @@ msgid "Realized Risk"
 msgstr "خطر متحقق"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.view_hr_job_form_grc
-msgid "Recruitment Job"
-msgstr "الوظيفة الشاغرة"
-
-#. module: grc_backbone
-#: model:ir.actions.act_window,name:grc_backbone.action_recruitment_jobs
-#: model:ir.model.fields,field_description:grc_backbone.field_function_x_hr_job_ids
-#: model:ir.model.fields,field_description:grc_backbone.field_functional_area_x_hr_job_ids
-#: model:ir.ui.menu,name:grc_backbone.menu_recruitment_jobs
-#: model_terms:ir.ui.view,arch_db:grc_backbone.view_function_form
-#: model_terms:ir.ui.view,arch_db:grc_backbone.view_hr_job_list_grc
-msgid "Recruitment Jobs"
-msgstr "الوظائف الشاغرة"
-
-#. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.view_functional_area_form
-msgid "Recruitment Linkage"
-msgstr "الربط بالتوظيف"
-
-#. module: grc_backbone
 #: model:ir.model.fields,field_description:grc_backbone.field_tender_x_reference_code
 msgid "Reference Code"
 msgstr "الرمز المرجعي"

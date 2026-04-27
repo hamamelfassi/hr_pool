@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="field_hr_job_x_baseline_functional_area_id" model="ir.model.fields">
+        <field name="model_id" ref="hr.model_hr_job"/>
+        <field name="name">x_baseline_functional_area_id</field>
+        <field name="field_description">Baseline Functional Area</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.functional_area</field>
+        <field name="on_delete">restrict</field>
+    </record>
+
+    <record id="field_hr_job_x_baseline_function_ids" model="ir.model.fields">
+        <field name="model_id" ref="hr.model_hr_job"/>
+        <field name="name">x_baseline_function_ids</field>
+        <field name="field_description">Baseline Functions</field>
+        <field name="ttype">many2many</field>
+        <field name="relation">x_grc.function</field>
+        <field name="relation_table">hr_recruitment_custom_hr_job_function_rel</field>
+        <field name="column1">x_job_id</field>
+        <field name="column2">x_function_id</field>
+    </record>
+
+    <record id="field_hr_applicant_x_negotiated_job_description" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_negotiated_job_description</field>
+        <field name="field_description">Negotiated Job Description</field>
+        <field name="ttype">html</field>
+    </record>
+
+    <record id="field_hr_applicant_x_negotiated_function_ids" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_negotiated_function_ids</field>
+        <field name="field_description">Negotiated Functions</field>
+        <field name="ttype">many2many</field>
+        <field name="relation">x_grc.function</field>
+        <field name="relation_table">hr_recruitment_custom_hr_applicant_function_rel</field>
+        <field name="column1">x_applicant_id</field>
+        <field name="column2">x_function_id</field>
+    </record>
+</odoo>
+
