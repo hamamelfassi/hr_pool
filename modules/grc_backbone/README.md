@@ -1,11 +1,11 @@
-# GRC Backbone Module Scaffold
+# grc_backbone Module Scaffold
 
 This directory is reserved for the importable `grc_backbone` Odoo module.
 
 Planned use:
 
-- keep canonical GRC data only
-- keep task templates and task template lines here as a canonical GRC primitive
+- copy the current GRC XML module contents here
+- keep only installable module files in this directory
 - keep docs, generated PDFs, and working notes outside the module zip
 
 Recommended module contents once imported:
@@ -18,3 +18,4 @@ Recommended module contents once imported:
 - `security/`
 - `actions/`
 - `i18n/`
+
