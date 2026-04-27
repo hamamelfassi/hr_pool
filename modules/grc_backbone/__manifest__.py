@@ -7,7 +7,8 @@
         "uom"
     ],
     "category": "Human Resources",
-    "application": True,
+    "installable": True,
+    "auto_install": False,
     "data": [
         "security/groups.xml",
         "models/01_models.xml",
