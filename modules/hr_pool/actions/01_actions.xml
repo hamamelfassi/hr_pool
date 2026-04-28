@@ -8,12 +8,50 @@
         <field name="limit">80</field>
     </record>
 
+    <record id="action_hr_pool_view_kanban" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="hr_pool.view_hr_pool_kanban"/>
+        <field name="act_window_id" ref="hr_pool.action_hr_pool"/>
+    </record>
+    <record id="action_hr_pool_view_list" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="hr_pool.view_hr_pool_list"/>
+        <field name="act_window_id" ref="hr_pool.action_hr_pool"/>
+    </record>
+    <record id="action_hr_pool_view_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="hr_pool.view_hr_pool_form"/>
+        <field name="act_window_id" ref="hr_pool.action_hr_pool"/>
+    </record>
+
     <record id="action_hr_pool_by_phase" model="ir.actions.act_window">
         <field name="name">HR Pool Records / By Intake Phase</field>
         <field name="res_model">x_hr.pool</field>
         <field name="view_mode">kanban,list,form</field>
         <field name="mobile_view_mode">kanban</field>
         <field name="limit">80</field>
+    </record>
+
+    <record id="action_hr_pool_by_phase_view_kanban" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="hr_pool.view_hr_pool_kanban_by_phase"/>
+        <field name="act_window_id" ref="hr_pool.action_hr_pool_by_phase"/>
+    </record>
+    <record id="action_hr_pool_by_phase_view_list" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="hr_pool.view_hr_pool_list"/>
+        <field name="act_window_id" ref="hr_pool.action_hr_pool_by_phase"/>
+    </record>
+    <record id="action_hr_pool_by_phase_view_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="hr_pool.view_hr_pool_form"/>
+        <field name="act_window_id" ref="hr_pool.action_hr_pool_by_phase"/>
     </record>
 
     <record id="action_commitment_type" model="ir.actions.act_window">

@@ -3,7 +3,7 @@
     <record id="seq_hr_pool" model="ir.sequence">
         <field name="name">HR Pool</field>
         <field name="code">x_hr.pool</field>
-        <field name="prefix">HRP-</field>
+        <field name="prefix">MCEP-HR-F1-</field>
         <field name="padding">4</field>
         <field name="company_id" eval="False"/>
     </record>

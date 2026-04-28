@@ -2,6 +2,7 @@
     "name": "HR Pool",
     "depends": [
         "base",
+        "base_automation",
         "contacts",
         "hr_recruitment",
         "mail"
@@ -23,6 +24,7 @@
         "data/03_sequence.xml",
         "data/05_conversion_stages.xml",
         "data/07_defaults.xml",
+        "data/08_intake_identity_automation.xml",
         "data/04_server_actions.xml",
         "data/06_conversion_request_server_actions.xml",
         "report/01_paperformat.xml",

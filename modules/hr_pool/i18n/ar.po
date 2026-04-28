@@ -48,6 +48,10 @@ msgstr "متقدم"
 msgid "Approve to Pool"
 msgstr "اعتماد إلى الخزان"
 
+#: model:ir.actions.server,name:hr_pool.action_hr_pool_populate_intake_identity
+msgid "Populate Intake Identity"
+msgstr "تعبئة هوية الاستقبال"
+
 #. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_decision_approved
 msgid "Approved"
