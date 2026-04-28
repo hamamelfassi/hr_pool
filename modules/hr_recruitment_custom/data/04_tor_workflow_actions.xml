@@ -6,7 +6,6 @@
         <field name="state">code</field>
         <field name="code"><![CDATA[
 attachment = False
-report = env.ref('hr_recruitment_custom.action_report_hr_applicant_tor')
 
 for rec in records:
     initial_values = {}
@@ -39,7 +38,10 @@ for rec in records:
             version_number = 2
 
     version_label = 'TOR V%s' % version_number
-    pdf_content, content_type = report.sudo()._render_qweb_pdf([rec.id])
+    pdf_content, content_type = env['ir.actions.report'].sudo()._render_qweb_pdf(
+        'hr_recruitment_custom.action_report_hr_applicant_tor',
+        [rec.id],
+    )
     filename = '%s - %s.pdf' % ((rec.x_tor_recipient_name or rec.display_name or 'Applicant TOR'), version_label)
 
     attachment = env['ir.attachment'].sudo().create({
