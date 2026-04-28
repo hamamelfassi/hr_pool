@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="field_hr_pool_x_documents_folder_id" model="ir.model.fields">
-        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
-        <field name="name">x_documents_folder_id</field>
-        <field name="field_description">Documents Folder</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">documents.folder</field>
-        <field name="on_delete">restrict</field>
-    </record>
-
     <record id="field_hr_pool_x_intake_pdf_attachment_id" model="ir.model.fields">
         <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
         <field name="name">x_intake_pdf_attachment_id</field>

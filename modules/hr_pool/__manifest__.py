@@ -4,8 +4,7 @@
         "base",
         "contacts",
         "hr_recruitment",
-        "mail",
-        "documents"
+        "mail"
     ],
     "installable": True,
     "auto_install": False,
