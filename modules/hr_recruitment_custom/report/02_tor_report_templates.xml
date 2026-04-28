@@ -3,6 +3,7 @@
     <template id="report_hr_applicant_tor_document">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
+                <t t-set="o" t-value="o.with_context(lang='ar_001')"/>
                 <head>
                     <meta charset="UTF-8"/>
                     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -11,10 +12,23 @@
                     <style>
                         .tor-doc {
                             direction: rtl;
-                            font-family: 'DejaVu Sans', sans-serif;
+                            font-family: 'DejaVu Sans', 'Arial Unicode MS', Tahoma, sans-serif;
                             color: #111;
-                            font-size: 12px;
+                            font-size: 13.5px;
+                            line-height: 1.75;
+                        }
+                        .tor-ar {
+                            direction: rtl;
+                            text-align: right;
+                            font-size: 14px;
+                            line-height: 1.9;
+                        }
+                        .tor-en {
+                            direction: ltr;
+                            text-align: left;
+                            font-size: 11px;
                             line-height: 1.55;
+                            color: #333;
                         }
                         .tor-ltr {
                             direction: ltr;
@@ -24,23 +38,24 @@
                             text-align: center;
                         }
                         .tor-title {
-                            font-size: 20px;
+                            font-size: 24px;
                             font-weight: 700;
-                            margin: 6px 0 2px 0;
+                            margin: 8px 0 3px 0;
                         }
                         .tor-subtitle {
-                            font-size: 12px;
+                            font-size: 11px;
                             color: #444;
-                            margin-bottom: 12px;
+                            margin-bottom: 14px;
                         }
                         .tor-meta {
                             width: 100%;
                             border-collapse: collapse;
-                            margin-bottom: 12px;
+                            margin-bottom: 14px;
+                            font-size: 13.5px;
                         }
                         .tor-meta td {
                             border: 1px solid #222;
-                            padding: 6px 8px;
+                            padding: 8px 10px;
                             vertical-align: middle;
                         }
                         .tor-label {
@@ -52,33 +67,34 @@
                             width: 32%;
                         }
                         .tor-section-title {
-                            margin: 14px 0 8px 0;
-                            font-size: 14px;
+                            margin: 18px 0 10px 0;
+                            font-size: 16px;
                             font-weight: 700;
                         }
                         .tor-section-title .en {
                             font-weight: 600;
+                            font-size: 11px;
                         }
                         .tor-list {
-                            margin: 0 0 10px 0;
-                            padding-right: 20px;
+                            margin: 0 0 12px 0;
+                            padding-right: 22px;
                         }
                         .tor-list li {
-                            margin-bottom: 6px;
+                            margin-bottom: 8px;
                         }
                         .tor-para {
-                            margin: 0 0 8px 0;
+                            margin: 0 0 10px 0;
                         }
                         .tor-table {
                             width: 100%;
                             border-collapse: collapse;
-                            margin-top: 8px;
-                            font-size: 11.5px;
+                            margin-top: 10px;
+                            font-size: 13px;
                         }
                         .tor-table th,
                         .tor-table td {
                             border: 1px solid #222;
-                            padding: 6px 8px;
+                            padding: 8px 10px;
                             vertical-align: top;
                         }
                         .tor-table thead th {
@@ -92,16 +108,17 @@
                         .tor-signature {
                             width: 100%;
                             border-collapse: collapse;
-                            margin-top: 18px;
+                            margin-top: 20px;
+                            font-size: 13px;
                         }
                         .tor-signature td {
                             border: 1px solid #222;
-                            padding: 8px 10px;
+                            padding: 10px 12px;
                             vertical-align: top;
                             width: 50%;
                         }
                         .tor-sign-line {
-                            min-height: 28px;
+                            min-height: 32px;
                             display: block;
                         }
                     </style>
@@ -128,7 +145,7 @@
                             <tr>
                                 <td class="tor-label">القسم</td>
                                 <td class="tor-value">
-                                    <span t-field="o.x_tor_department_id"/>
+                                    <span t-esc="o.x_tor_department_id.display_name if o.x_tor_department_id else ''"/>
                                 </td>
                                 <td class="tor-label tor-ltr">Department</td>
                             </tr>
@@ -156,33 +173,33 @@
                         </table>
 
                         <div class="tor-section-title">التعهد الشخصي <span class="en tor-ltr">Personal Commitment</span></div>
-                        <p class="tor-para">
+                        <p class="tor-para tor-ar">
                             أنا الموقع أدناه، <span t-esc="o.x_tor_recipient_name or o.partner_name or ''"/>،
                         </p>
-                        <ul class="tor-list">
+                        <ul class="tor-list tor-ar">
                             <li>أقرّ بأنني قد استلمت المهام المكلّف بها، وأتعهد بتقديم تقرير تفصيلي عن سير المهام شهريًا إلى المدير المباشر، مرفقًا بالصور والإفادات لإثبات تنفيذ العمل، مع توضيح العراقيل في تقريري الأسبوعي.</li>
                             <li>كما أقرّ بأنني قرأت وفهمت جميع التعليمات والإرشادات المتعلقة باستخدام وصيانة المعدات المكلّف بها، وأتعهد بالالتزام بها وتنفيذ الصيانة الدورية وفق الجدول المحدد، والإبلاغ الفوري عن أي أعطال.</li>
                             <li>وأدرك أن عدم الالتزام بهذه التعليمات قد يعرّضني للمساءلة القانونية، والإجراءات التأديبية (تنبيه، إيقاف، أو إنهاء العقد).</li>
                             <li>كما أوافق على تحمّل المسؤولية القانونية الكاملة عن أي حادث ينتج عن إهمالي أو تقصيري.</li>
                         </ul>
 
-                        <p class="tor-para tor-ltr">
+                        <p class="tor-para tor-en">
                             I, the undersigned <span t-esc="o.x_tor_recipient_name or o.partner_name or ''"/>, acknowledge that I have received the assigned tasks and commit to submitting a detailed monthly report to the Chairman of the Board of Directors, attaching evidence (photos, confirmations) to prove the work has been completed, along with highlighting challenges in my weekly report.
                         </p>
-                        <p class="tor-para tor-ltr">
+                        <p class="tor-para tor-en">
                             I also acknowledge that I have read and understood all instructions and guidelines regarding the use and maintenance of the assigned equipment, and I commit to complying with them, conducting regular maintenance as scheduled, and reporting any malfunctions immediately.
                         </p>
-                        <p class="tor-para tor-ltr">
+                        <p class="tor-para tor-en">
                             I understand that failure to comply with these instructions may subject me to legal accountability and disciplinary actions (warning, suspension, or termination of contract). I also accept full legal responsibility for any incident resulting from my negligence or non-compliance.
                         </p>
 
                         <div class="tor-section-title">التعليمات والإرشادات الخاصة بأدوات العمل <span class="en tor-ltr">Instructions and Safety Guidelines for Work Equipment</span></div>
-                        <ol class="tor-list">
-                            <li>يلتزم المستلم بالمحافظة على ادوات العمل وعدم استخدامها لأغراض غير مصرح بها.<div class="tor-ltr">The recipient must maintain the work equipment and not use it for unauthorized purposes.</div></li>
-                            <li>يتحمل المستلم المسؤولية الكاملة عن أي أضرار ناتجة عن الإهمال أو سوء الاستخدام.<div class="tor-ltr">The recipient is fully responsible for any damage caused by negligence or misuse.</div></li>
-                            <li>يلتزم المستلم بإجراء الفحص الدوري وفق الجدول المحدد من قبل إدارة الصيانة.<div class="tor-ltr">Regular inspections must be conducted as per the maintenance schedule.</div></li>
-                            <li>يجب الإبلاغ فورًا عن أي عطل في ادوات العمل للمدير المباشر.<div class="tor-ltr">Any malfunction or defect in work tools must be reported immediately to the direct supervisor.</div></li>
-                            <li>يمنع نقل أو تسليم ادوات العمل المستلمة لشخص آخر دون موافقة الإدارة.<div class="tor-ltr">The transfer or handover of any assigned work tools to another person is strictly prohibited without prior management approval.</div></li>
+                        <ol class="tor-list tor-ar">
+                            <li>يلتزم المستلم بالمحافظة على ادوات العمل وعدم استخدامها لأغراض غير مصرح بها.<div class="tor-en">The recipient must maintain the work equipment and not use it for unauthorized purposes.</div></li>
+                            <li>يتحمل المستلم المسؤولية الكاملة عن أي أضرار ناتجة عن الإهمال أو سوء الاستخدام.<div class="tor-en">The recipient is fully responsible for any damage caused by negligence or misuse.</div></li>
+                            <li>يلتزم المستلم بإجراء الفحص الدوري وفق الجدول المحدد من قبل إدارة الصيانة.<div class="tor-en">Regular inspections must be conducted as per the maintenance schedule.</div></li>
+                            <li>يجب الإبلاغ فورًا عن أي عطل في ادوات العمل للمدير المباشر.<div class="tor-en">Any malfunction or defect in work tools must be reported immediately to the direct supervisor.</div></li>
+                            <li>يمنع نقل أو تسليم ادوات العمل المستلمة لشخص آخر دون موافقة الإدارة.<div class="tor-en">The transfer or handover of any assigned work tools to another person is strictly prohibited without prior management approval.</div></li>
                         </ol>
 
                         <div class="tor-section-title">تفاصيل المهام <span class="en tor-ltr">Detailed Duties</span></div>
