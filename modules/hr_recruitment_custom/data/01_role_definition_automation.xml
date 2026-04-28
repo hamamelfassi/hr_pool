@@ -72,9 +72,10 @@ for rec in records:
                 continue
 
             line_commands.append((0, 0, {
-                'x_name': function.display_name,
+                'x_name': function.with_context(lang='ar_001').display_name or function.display_name,
                 'x_sequence': sequence * 10,
                 'x_functional_area_id': function_area.id,
+                'x_print_functional_area_name': function_area.with_context(lang='ar_001').display_name or function_area.display_name,
                 'x_function_id': function.id,
             }))
 

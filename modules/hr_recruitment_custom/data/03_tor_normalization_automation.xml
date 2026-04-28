@@ -1,5 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="automation_applicant_function_line_normalize_print_values_on_create" model="base.automation">
+        <field name="name">Normalize Applicant Function Print Values on Create</field>
+        <field name="active" eval="True"/>
+        <field name="trigger">on_create</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_function_line"/>
+    </record>
+
+    <record id="action_applicant_function_line_normalize_print_values_on_create" model="ir.actions.server">
+        <field name="name">Normalize Applicant Function Print Values on Create</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_function_line"/>
+        <field name="base_automation_id" ref="hr_recruitment_custom.automation_applicant_function_line_normalize_print_values_on_create"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    values = {}
+    if rec.x_function_id:
+        values['x_name'] = rec.x_function_id.with_context(lang='ar_001').display_name or rec.x_function_id.display_name
+    if rec.x_functional_area_id:
+        values['x_print_functional_area_name'] = rec.x_functional_area_id.with_context(lang='ar_001').display_name or rec.x_functional_area_id.display_name
+    if values:
+        rec.sudo().write(values)
+        ]]></field>
+    </record>
+
+    <record id="automation_applicant_function_line_normalize_print_values_on_change" model="base.automation">
+        <field name="name">Normalize Applicant Function Print Values on Change</field>
+        <field name="active" eval="True"/>
+        <field name="trigger">on_write</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_function_line"/>
+        <field name="trigger_field_ids" eval="[(6, 0, [ref('hr_recruitment_custom.field_applicant_function_line_x_functional_area_id'), ref('hr_recruitment_custom.field_applicant_function_line_x_function_id')])]"/>
+    </record>
+
+    <record id="action_applicant_function_line_normalize_print_values_on_change" model="ir.actions.server">
+        <field name="name">Normalize Applicant Function Print Values on Change</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_function_line"/>
+        <field name="base_automation_id" ref="hr_recruitment_custom.automation_applicant_function_line_normalize_print_values_on_change"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    values = {}
+    if rec.x_function_id:
+        values['x_name'] = rec.x_function_id.with_context(lang='ar_001').display_name or rec.x_function_id.display_name
+    if rec.x_functional_area_id:
+        values['x_print_functional_area_name'] = rec.x_functional_area_id.with_context(lang='ar_001').display_name or rec.x_functional_area_id.display_name
+    if values:
+        rec.sudo().write(values)
+        ]]></field>
+    </record>
+
     <record id="automation_hr_applicant_normalize_tor_header_on_change" model="base.automation">
         <field name="name">Normalize Applicant TOR Header on Change</field>
         <field name="active" eval="True"/>
