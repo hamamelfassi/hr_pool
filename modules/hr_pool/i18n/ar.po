@@ -3,7 +3,12 @@
 # 	* hr_pool
 #
 msgid ""
-msgstr "Project-Id-Version: hr_pool 1.1\nLanguage: ar_001\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
+msgstr ""
+"Project-Id-Version: hr_pool 1.1\n"
+"Language: ar_001\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_accuracy_declaration
@@ -714,13 +719,6 @@ msgid "Working Level"
 msgstr "مستوى الإتقان اللغوي"
 
 #. module: hr_pool
-#: model:ir.actions.act_window,name:hr_pool.action_hr_language
-#: model:ir.ui.menu,name:hr_pool.menu_languages
-#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_language_list
-msgid "Languages"
-msgstr "اللغات"
-
-#. module: hr_pool
 #: model:ir.actions.act_window,name:hr_pool.action_skill_type
 #: model:ir.ui.menu,name:hr_pool.menu_skill_types
 #: model_terms:ir.ui.view,arch_db:hr_pool.view_skill_type_list
@@ -798,45 +796,6 @@ msgstr "اسم اللغة للعرض"
 msgid "Level Value"
 msgstr "قيمة المستوى"
 
-#. module: hr_pool
-#: model:x_hr.skill_type,x_name:hr_pool.skill_type_interpersonal
-msgid "Interpersonal"
-msgstr "شخصية"
-
-#. module: hr_pool
-#: model:x_hr.skill_type,x_name:hr_pool.skill_type_operational
-msgid "Operational"
-msgstr "تشغيلية"
-
-#. module: hr_pool
-#: model:x_hr.skill_type,x_name:hr_pool.skill_type_technical
-msgid "Technical"
-msgstr "فنية"
-
-#. module: hr_pool
-#: model:x_hr.skill_type,x_name:hr_pool.skill_type_administrative
-msgid "Administrative"
-msgstr "إدارية"
-
-#. module: hr_pool
-#: model:x_hr.proficiency_level,x_name:hr_pool.proficiency_level_basic
-msgid "Basic"
-msgstr "أساسي"
-
-#. module: hr_pool
-#: model:x_hr.proficiency_level,x_name:hr_pool.proficiency_level_intermediate
-msgid "Intermediate"
-msgstr "متوسط"
-
-#. module: hr_pool
-#: model:x_hr.proficiency_level,x_name:hr_pool.proficiency_level_advanced
-msgid "Advanced"
-msgstr "متقدم"
-
-#. module: hr_pool
-#: model:x_hr.proficiency_level,x_name:hr_pool.proficiency_level_proficient
-msgid "Proficient"
-msgstr "متمكن"
 msgid "Conversion Request"
 msgstr "طلب تحويل"
 
@@ -858,32 +817,14 @@ msgstr "رفض طلب التحويل"
 msgid "Request Reference"
 msgstr "مرجع الطلب"
 
-msgid "HR Pool"
-msgstr "مخزون المتقدمين"
-
 msgid "Job Position"
 msgstr "المنصب الوظيفي"
 
 msgid "Stage"
 msgstr "المرحلة"
 
-msgid "Notes"
-msgstr "الملاحظات"
-
 msgid "Requested By"
 msgstr "تم الطلب بواسطة"
 
 msgid "Decided By"
 msgstr "تم اتخاذ القرار بواسطة"
-
-msgid "Recruitment Applicant"
-msgstr "المتقدم للتوظيف"
-
-msgid "Pending"
-msgstr "قيد الانتظار"
-
-msgid "Approved"
-msgstr "معتمد"
-
-msgid "Rejected"
-msgstr "مرفوض"
