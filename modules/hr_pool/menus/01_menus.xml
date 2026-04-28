@@ -13,6 +13,12 @@
               action="hr_pool.action_hr_pool"
               sequence="10"/>
 
+    <menuitem id="menu_hr_pool_records_all"
+              name="All Records"
+              parent="hr_pool.menu_hr_pool_records"
+              action="hr_pool.action_hr_pool_all"
+              sequence="15"/>
+
     <menuitem id="menu_hr_pool_records_by_phase"
               name="By Intake Phase"
               parent="hr_pool.menu_hr_pool_records"

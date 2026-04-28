@@ -6,6 +6,7 @@
         <field name="view_mode">kanban,list,form</field>
         <field name="mobile_view_mode">kanban</field>
         <field name="limit">80</field>
+        <field name="context">{'default_x_active': True, 'default_x_intake_phase': 'prescreening', 'default_x_chairman_decision': 'pending', 'group_by': 'x_chairman_decision'}</field>
     </record>
 
     <record id="action_hr_pool_view_kanban" model="ir.actions.act_window.view">
@@ -33,6 +34,7 @@
         <field name="view_mode">kanban,list,form</field>
         <field name="mobile_view_mode">kanban</field>
         <field name="limit">80</field>
+        <field name="context">{'default_x_active': True, 'default_x_intake_phase': 'prescreening', 'default_x_chairman_decision': 'pending', 'group_by': 'x_intake_phase'}</field>
     </record>
 
     <record id="action_hr_pool_by_phase_view_kanban" model="ir.actions.act_window.view">
@@ -58,6 +60,34 @@
         <field name="name">Commitment Types</field>
         <field name="res_model">x_hr.commitment_type</field>
         <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_hr_pool_all" model="ir.actions.act_window">
+        <field name="name">HR Pool Records / All Records</field>
+        <field name="res_model">x_hr.pool</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="mobile_view_mode">list</field>
+        <field name="limit">80</field>
+        <field name="context">{'default_x_active': True, 'default_x_intake_phase': 'prescreening', 'default_x_chairman_decision': 'pending'}</field>
+    </record>
+
+    <record id="action_hr_pool_all_view_list" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="hr_pool.view_hr_pool_list"/>
+        <field name="act_window_id" ref="hr_pool.action_hr_pool_all"/>
+    </record>
+    <record id="action_hr_pool_all_view_kanban" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="hr_pool.view_hr_pool_kanban"/>
+        <field name="act_window_id" ref="hr_pool.action_hr_pool_all"/>
+    </record>
+    <record id="action_hr_pool_all_view_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="hr_pool.view_hr_pool_form"/>
+        <field name="act_window_id" ref="hr_pool.action_hr_pool_all"/>
     </record>
 
     <record id="action_preferred_role_type" model="ir.actions.act_window">

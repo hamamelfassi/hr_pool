@@ -91,15 +91,24 @@
         <field name="arch" type="xml">
             <form string="HR Pool">
                 <header>
+                    <field name="x_intake_phase" widget="statusbar" options="{'clickable': false}"/>
                     <button type="action"
                             name="hr_pool.action_hr_pool_create_conversion_request"
                             string="Convert"
                             class="btn-primary"
-                            groups="hr_pool.group_hr_pool_manager,hr_pool.group_hr_pool_chairman"
-                            invisible="x_intake_phase != 'pooling' or x_chairman_decision not in ['approved', 'on_hold'] or not x_conversion_job_id or x_applicant_id"/>
-                    <button type="action" name="hr_pool.action_hr_pool_approve_to_pool" string="Approve to Pool" groups="hr_pool.group_hr_pool_chairman"/>
-                    <button type="action" name="hr_pool.action_hr_pool_put_on_hold" string="Put on Hold" groups="hr_pool.group_hr_pool_chairman"/>
-                    <button type="action" name="hr_pool.action_hr_pool_reject" string="Reject Pool Candidate" groups="hr_pool.group_hr_pool_chairman"/>
+                            invisible="x_intake_phase != 'pooling' or x_chairman_decision not in ['approved', 'on_hold'] or x_applicant_id"/>
+                    <button type="action"
+                            name="hr_pool.action_hr_pool_approve_to_pool"
+                            string="Approve"
+                            invisible="not ((x_intake_phase == 'prescreening' and x_chairman_decision == 'pending') or (x_intake_phase == 'pooling' and x_chairman_decision == 'rejected'))"/>
+                    <button type="action"
+                            name="hr_pool.action_hr_pool_put_on_hold"
+                            string="On Hold"
+                            invisible="x_intake_phase != 'pooling' or x_chairman_decision != 'approved'"/>
+                    <button type="action"
+                            name="hr_pool.action_hr_pool_reject"
+                            string="Reject"
+                            invisible="x_intake_phase not in ['prescreening', 'pooling'] or x_chairman_decision not in ['pending', 'approved', 'on_hold']"/>
                 </header>
                 <sheet>
                     <group>
@@ -110,14 +119,26 @@
                             <field name="x_source_channel"/>
                         </group>
                         <group>
-                            <field name="x_intake_phase" readonly="1" force_save="1"/>
-                            <field name="x_chairman_decision"
+                            <field name="x_intake_phase"
+                                   readonly="1"
                                    force_save="1"
-                                   readonly="x_intake_phase in ['conversion', 'converted']"/>
+                                   widget="badge"
+                                   class="fs-5 fw-bold"
+                                   decoration-warning="x_intake_phase in ['prescreening', 'conversion']"
+                                   decoration-success="x_intake_phase == 'pooling'"
+                                   decoration-info="x_intake_phase == 'converted'"/>
+                            <field name="x_chairman_decision"
+                                   readonly="1"
+                                   force_save="1"
+                                   widget="badge"
+                                   class="fs-5 fw-bold"
+                                   decoration-info="x_chairman_decision in ['pending', 'conversion_approved']"
+                                   decoration-warning="x_chairman_decision == 'on_hold'"
+                                   decoration-success="x_chairman_decision == 'approved'"
+                                   decoration-danger="x_chairman_decision in ['rejected', 'conversion_rejected']"/>
                             <field name="x_reviewer_recommendation"/>
                             <field name="x_reviewer_user_id"/>
-                            <field name="x_conversion_job_id"
-                                   readonly="x_intake_phase in ['conversion', 'converted']"/>
+                            <field name="x_conversion_job_id" readonly="1" force_save="1"/>
                             <field name="x_applicant_id" readonly="1" force_save="1"/>
                         </group>
                     </group>

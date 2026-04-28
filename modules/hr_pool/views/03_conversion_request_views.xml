@@ -17,13 +17,11 @@
                         name="hr_pool.action_hr_pool_conversion_request_approve"
                         string="Approve"
                         class="btn-primary"
-                        groups="hr_pool.group_hr_pool_chairman"
-                        invisible="x_state != 'pending'"/>
+                        invisible="x_state != 'pending' or not x_job_id"/>
                 <button type="action"
                         name="hr_pool.action_hr_pool_conversion_request_reject"
                         string="Reject"
                         class="btn-secondary"
-                        groups="hr_pool.group_hr_pool_chairman"
                         invisible="x_state != 'pending'"/>
             </list>
         </field>
@@ -87,13 +85,11 @@
                             name="hr_pool.action_hr_pool_conversion_request_approve"
                             string="Approve"
                             class="btn-primary"
-                            groups="hr_pool.group_hr_pool_chairman"
-                            invisible="x_state != 'pending'"/>
+                            invisible="x_state != 'pending' or not x_job_id"/>
                     <button type="action"
                             name="hr_pool.action_hr_pool_conversion_request_reject"
                             string="Reject"
                             class="btn-secondary"
-                            groups="hr_pool.group_hr_pool_chairman"
                             invisible="x_state != 'pending'"/>
                 </header>
                 <sheet>
@@ -101,7 +97,7 @@
                         <group>
                             <field name="x_name"/>
                             <field name="x_pool_id" readonly="1"/>
-                            <field name="x_job_id" readonly="1"/>
+                            <field name="x_job_id" readonly="x_state != 'pending'"/>
                         </group>
                         <group>
                             <field name="x_requested_by" readonly="1"/>

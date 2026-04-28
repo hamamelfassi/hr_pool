@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo noupdate="1">
+    <record id="default_hr_pool_x_active" model="ir.default">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_active"/>
+        <field name="json_value">true</field>
+    </record>
+
     <record id="default_hr_pool_x_intake_phase" model="ir.default">
         <field name="field_id" ref="hr_pool.field_hr_pool_x_intake_phase"/>
         <field name="json_value">"prescreening"</field>

@@ -6,11 +6,15 @@
         <field name="state">code</field>
         <field name="code"><![CDATA[
 for rec in records:
-    if rec.x_intake_phase == 'prescreening' and rec.x_chairman_decision == 'pending':
+    if (
+        (rec.x_intake_phase == 'prescreening' and rec.x_chairman_decision == 'pending')
+        or (rec.x_intake_phase == 'pooling' and rec.x_chairman_decision == 'rejected')
+    ):
         rec.write({
             'x_chairman_decision': 'approved',
             'x_intake_phase': 'pooling',
         })
+        rec.message_post(body='Chairman approved candidate into pooling.')
         ]]></field>
     </record>
 
@@ -20,11 +24,12 @@ for rec in records:
         <field name="state">code</field>
         <field name="code"><![CDATA[
 for rec in records:
-    if rec.x_intake_phase != 'converted':
+    if rec.x_intake_phase == 'pooling' and rec.x_chairman_decision == 'approved':
         rec.write({
             'x_chairman_decision': 'on_hold',
             'x_intake_phase': 'pooling',
         })
+        rec.message_post(body='Chairman put candidate on hold.')
         ]]></field>
     </record>
 
@@ -34,11 +39,12 @@ for rec in records:
         <field name="state">code</field>
         <field name="code"><![CDATA[
 for rec in records:
-    if rec.x_intake_phase != 'converted':
+    if rec.x_intake_phase in ('prescreening', 'pooling') and rec.x_chairman_decision in ('pending', 'approved', 'on_hold'):
         rec.write({
             'x_chairman_decision': 'rejected',
             'x_intake_phase': 'pooling',
         })
+        rec.message_post(body='Chairman rejected candidate.')
         ]]></field>
     </record>
 </odoo>

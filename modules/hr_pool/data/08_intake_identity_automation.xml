@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="automation_hr_pool_populate_intake_identity" model="base.automation">
+        <field name="name">Populate Intake Identity on Create</field>
+        <field name="active" eval="True"/>
+        <field name="trigger">on_create</field>
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+    </record>
+
     <record id="action_hr_pool_populate_intake_identity" model="ir.actions.server">
         <field name="name">Populate Intake Identity</field>
         <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="base_automation_id" ref="hr_pool.automation_hr_pool_populate_intake_identity"/>
         <field name="state">code</field>
-        <field name="binding_model_id" ref="hr_pool.model_x_hr_pool"/>
-        <field name="binding_type">action</field>
         <field name="code"><![CDATA[
 for rec in records:
     values = {}
@@ -14,20 +20,14 @@ for rec in records:
         values['x_intake_reference'] = env['ir.sequence'].next_by_code('x_hr.pool') or 'MCEP-HR-F1-0001'
 
     if not rec.x_name:
-        name_parts = [part for part in [rec.x_first_name_ar, rec.x_surname_ar] if part]
-        if name_parts:
-            values['x_name'] = ' '.join(name_parts).strip()
+        arabic_parts = [part for part in [rec.x_first_name_ar, rec.x_middle_names_ar, rec.x_surname_ar] if part]
+        english_parts = [part for part in [rec.x_first_name_en, rec.x_middle_names_en, rec.x_surname_en] if part]
+        display_parts = arabic_parts or english_parts
+        if display_parts:
+            values['x_name'] = ' '.join(display_parts).strip()
 
     if values:
-        rec.write(values)
+        rec.sudo().write(values)
         ]]></field>
-    </record>
-
-    <record id="automation_hr_pool_populate_intake_identity" model="base.automation">
-        <field name="name">Populate Intake Identity on Create</field>
-        <field name="active" eval="True"/>
-        <field name="trigger">on_create</field>
-        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
-        <field name="action_server_id" ref="hr_pool.action_hr_pool_populate_intake_identity"/>
     </record>
 </odoo>

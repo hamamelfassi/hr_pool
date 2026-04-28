@@ -18,6 +18,7 @@
         "models/05_conversion_request.xml",
 
         "security/ir.model.access.csv",
+        "security/rules.xml",
 
         "data/01_selection_values.xml",
         "data/02_seed_helper_data.xml",

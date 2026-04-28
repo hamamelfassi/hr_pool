@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rule_hr_pool_chairman_all" model="ir.rule">
+        <field name="name">HR Pool Chairman Full Visibility</field>
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('hr_pool.group_hr_pool_chairman'))]"/>
+    </record>
+
+    <record id="rule_hr_pool_non_chairman_hide_rejected" model="ir.rule">
+        <field name="name">HR Pool Hide Rejected For Non-Chairman</field>
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="domain_force">[('x_chairman_decision', '!=', 'rejected')]</field>
+        <field name="groups" eval="[(4, ref('hr_pool.group_hr_pool_manager')), (4, ref('hr_pool.group_hr_pool_reviewer')), (4, ref('hr_pool.group_hr_pool_readonly'))]"/>
+    </record>
+</odoo>

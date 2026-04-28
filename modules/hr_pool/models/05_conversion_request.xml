@@ -31,7 +31,6 @@
         <field name="field_description">Job Position</field>
         <field name="ttype">many2one</field>
         <field name="relation">hr.job</field>
-        <field name="required" eval="True"/>
         <field name="on_delete">restrict</field>
     </record>
 
@@ -41,6 +40,7 @@
         <field name="field_description">Stage</field>
         <field name="ttype">selection</field>
         <field name="required" eval="True"/>
+        <field name="group_expand" eval="True"/>
     </record>
 
     <record id="field_conversion_request_x_notes" model="ir.model.fields">

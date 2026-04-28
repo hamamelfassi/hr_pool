@@ -57,6 +57,9 @@ msgstr "تعبئة هوية الاستقبال"
 msgid "Approved"
 msgstr "معتمد"
 
+msgid "Approve"
+msgstr "اعتماد"
+
 #. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_qualification_bachelors
 msgid "Bachelors"
@@ -448,6 +451,9 @@ msgstr "يحتاج معلومات إضافية"
 #: model:ir.model.fields.selection,name:hr_pool.sel_decision_on_hold
 msgid "On Hold"
 msgstr "قيد الانتظار"
+
+msgid "Reject"
+msgstr "رفض"
 
 #. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_skill_type_operational
@@ -929,6 +935,9 @@ msgstr "طلبات التحويل"
 
 msgid "Convert"
 msgstr "تحويل"
+
+msgid "Integration Metadata"
+msgstr "بيانات التكامل"
 
 msgid "Create Conversion Request"
 msgstr "إنشاء طلب تحويل"
