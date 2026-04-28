@@ -12,7 +12,7 @@
                     <style>
                         .tor-doc {
                             direction: rtl;
-                            font-family: 'DejaVu Sans', 'Arial Unicode MS', Tahoma, sans-serif;
+                            font-family: 'Noto Naskh Arabic', 'Amiri', 'Scheherazade New', 'DejaVu Sans', 'Arial Unicode MS', Tahoma, sans-serif;
                             color: #111;
                             font-size: 13.5px;
                             line-height: 1.75;
@@ -145,7 +145,7 @@
                             <tr>
                                 <td class="tor-label">القسم</td>
                                 <td class="tor-value">
-                                    <span t-esc="o.x_tor_department_id.display_name if o.x_tor_department_id else ''"/>
+                                    <span t-esc="o.x_tor_department_name or (o.x_tor_department_id.display_name if o.x_tor_department_id else '')"/>
                                 </td>
                                 <td class="tor-label tor-ltr">Department</td>
                             </tr>

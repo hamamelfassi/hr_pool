@@ -39,12 +39,13 @@
                             <field name="x_tor_state" widget="statusbar" options="{'clickable': false}" statusbar_visible="draft,generated,sent,signed,superseded" readonly="1"/>
                             <field name="x_tor_recipient_name"/>
                             <field name="x_tor_employee_id"/>
-                            <field name="x_tor_department_id"/>
+                            <field name="x_tor_department_name"/>
                             <field name="x_tor_job_title"/>
                             <field name="x_tor_direct_supervisor_name"/>
                             <field name="x_tor_date_of_receipt"/>
                         </group>
                         <group>
+                            <field name="x_tor_department_id"/>
                             <field name="x_tor_version_label" readonly="1"/>
                             <field name="x_tor_generated_on" readonly="1"/>
                             <field name="x_tor_sent_on" readonly="1"/>

@@ -110,6 +110,11 @@ msgid "TOR Department"
 msgstr "قسم الاختصاصات الوظيفية"
 
 #. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_tor_department_name
+msgid "Printed TOR Department"
+msgstr "القسم المطبوع في الاختصاصات"
+
+#. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_tor_direct_supervisor_name
 msgid "TOR Direct Supervisor"
 msgstr "المسؤول المباشر في الاختصاصات"

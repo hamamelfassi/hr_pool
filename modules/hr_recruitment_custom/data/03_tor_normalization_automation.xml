@@ -22,10 +22,14 @@ for rec in records:
         values['x_tor_recipient_name'] = rec.partner_name
 
     if rec.job_id:
-        if rec.job_id.name and rec.x_tor_job_title != rec.job_id.name:
-            values['x_tor_job_title'] = rec.job_id.name
+        translated_job_title = rec.job_id.with_context(lang='ar_001').name or rec.job_id.name
+        translated_department_name = rec.job_id.department_id.with_context(lang='ar_001').display_name if rec.job_id.department_id else False
+        if translated_job_title and rec.x_tor_job_title != translated_job_title:
+            values['x_tor_job_title'] = translated_job_title
         if rec.job_id.department_id and rec.x_tor_department_id != rec.job_id.department_id:
             values['x_tor_department_id'] = rec.job_id.department_id.id
+        if translated_department_name and rec.x_tor_department_name != translated_department_name:
+            values['x_tor_department_name'] = translated_department_name
 
     if values:
         rec.sudo().write(values)

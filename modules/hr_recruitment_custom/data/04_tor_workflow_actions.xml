@@ -12,9 +12,11 @@ for rec in records:
     if not rec.x_tor_recipient_name and rec.partner_name:
         initial_values['x_tor_recipient_name'] = rec.partner_name
     if not rec.x_tor_job_title and rec.job_id and rec.job_id.name:
-        initial_values['x_tor_job_title'] = rec.job_id.name
+        initial_values['x_tor_job_title'] = rec.job_id.with_context(lang='ar_001').name or rec.job_id.name
     if not rec.x_tor_department_id and rec.job_id and rec.job_id.department_id:
         initial_values['x_tor_department_id'] = rec.job_id.department_id.id
+    if not rec.x_tor_department_name and rec.job_id and rec.job_id.department_id:
+        initial_values['x_tor_department_name'] = rec.job_id.department_id.with_context(lang='ar_001').display_name or rec.job_id.department_id.display_name
     if not rec.x_tor_state:
         initial_values['x_tor_state'] = 'draft'
     if not rec.x_tor_version_label:
@@ -26,6 +28,8 @@ for rec in records:
         raise Warning('Set the TOR recipient name before generating the TOR PDF.')
     if not rec.x_tor_job_title:
         raise Warning('Set the TOR job title before generating the TOR PDF.')
+    if not rec.x_tor_department_name:
+        raise Warning('Set the TOR department name before generating the TOR PDF.')
     if not rec.x_role_and_duty_line_ids:
         raise Warning('Add at least one applicant duty line before generating the TOR PDF.')
 

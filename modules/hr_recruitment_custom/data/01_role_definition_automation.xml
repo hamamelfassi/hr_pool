@@ -58,8 +58,9 @@ for rec in records:
         values['x_tor_recipient_name'] = rec.partner_name
     if rec.job_id and rec.job_id.department_id:
         values['x_tor_department_id'] = rec.job_id.department_id.id
+        values['x_tor_department_name'] = rec.job_id.department_id.with_context(lang='ar_001').display_name or rec.job_id.department_id.display_name
     if rec.job_id and rec.job_id.name:
-        values['x_tor_job_title'] = rec.job_id.name
+        values['x_tor_job_title'] = rec.job_id.with_context(lang='ar_001').name or rec.job_id.name
     values['x_tor_state'] = 'draft'
     values['x_tor_version_label'] = 'TOR V1'
 
