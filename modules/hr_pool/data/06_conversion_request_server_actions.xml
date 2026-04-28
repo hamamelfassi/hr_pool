@@ -102,7 +102,7 @@ for req in records:
     })
     pool.write({
         'x_intake_phase': 'converted',
-        'x_chairman_decision': 'conversion_approved',
+        'x_chairman_decision': 'approved',
         'x_conversion_job_id': req.x_job_id.id,
         'x_applicant_id': applicant.id,
     })
@@ -125,10 +125,12 @@ for req in records:
         'x_state': 'rejected',
         'x_decided_by': env.user.id,
     })
-    if pool.x_intake_phase == 'conversion':
-        pool.write({'x_intake_phase': 'pooling'})
+    pool.write({
+        'x_intake_phase': 'pooling',
+        'x_chairman_decision': 'approved',
+    })
     req.message_post(body='Conversion request rejected.')
-    pool.message_post(body='Conversion request rejected; pool returned to pooling.')
+    pool.message_post(body='Conversion request rejected; pool returned to pooling and remains chairman-approved.')
         ]]></field>
     </record>
 </odoo>

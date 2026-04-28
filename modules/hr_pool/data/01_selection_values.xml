@@ -62,16 +62,20 @@
         <field name="name">Rejected</field>
         <field name="value">rejected</field>
     </record>
-    <record id="sel_decision_conversion_approved" model="ir.model.fields.selection">
-        <field name="field_id" ref="hr_pool.field_hr_pool_x_chairman_decision"/>
-        <field name="name">Conversion Approved</field>
-        <field name="value">conversion_approved</field>
-    </record>
-    <record id="sel_decision_conversion_rejected" model="ir.model.fields.selection">
-        <field name="field_id" ref="hr_pool.field_hr_pool_x_chairman_decision"/>
-        <field name="name">Conversion Rejected</field>
-        <field name="value">conversion_rejected</field>
-    </record>
+
+    <function model="x_hr.pool" name="write">
+        <function model="x_hr.pool" name="search" eval="[[('x_chairman_decision', '=', 'conversion_approved')]]"/>
+        <value eval="{'x_chairman_decision': 'approved', 'x_intake_phase': 'converted'}"/>
+    </function>
+
+    <function model="x_hr.pool" name="write">
+        <function model="x_hr.pool" name="search" eval="[[('x_chairman_decision', '=', 'conversion_rejected')]]"/>
+        <value eval="{'x_chairman_decision': 'approved', 'x_intake_phase': 'pooling'}"/>
+    </function>
+
+    <function model="ir.model.fields.selection" name="unlink">
+        <function model="ir.model.fields.selection" name="search" eval="[[('field_id', '=', ref('hr_pool.field_hr_pool_x_chairman_decision')), ('value', 'in', ['conversion_approved', 'conversion_rejected'])]]"/>
+    </function>
 
     <record id="sel_recommend_qualify" model="ir.model.fields.selection">
         <field name="field_id" ref="hr_pool.field_hr_pool_x_reviewer_recommendation"/>

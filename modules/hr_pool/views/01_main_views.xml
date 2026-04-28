@@ -132,10 +132,10 @@
                                    force_save="1"
                                    widget="badge"
                                    class="fs-5 fw-bold"
-                                   decoration-info="x_chairman_decision in ['pending', 'conversion_approved']"
+                                   decoration-info="x_chairman_decision == 'pending'"
                                    decoration-warning="x_chairman_decision == 'on_hold'"
                                    decoration-success="x_chairman_decision == 'approved'"
-                                   decoration-danger="x_chairman_decision in ['rejected', 'conversion_rejected']"/>
+                                   decoration-danger="x_chairman_decision == 'rejected'"/>
                             <field name="x_reviewer_recommendation"/>
                             <field name="x_reviewer_user_id"/>
                             <field name="x_conversion_job_id" readonly="1" force_save="1"/>
