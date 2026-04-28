@@ -40,13 +40,13 @@
                         string="Approve"
                         class="btn-primary"
                         groups="hr_pool.group_hr_pool_chairman"
-                        attrs="{'invisible': [('x_state', '!=', 'pending')]}"/>
+                        invisible="x_state != 'pending'"/>
                 <button type="action"
                         name="hr_pool.action_hr_pool_conversion_request_reject"
                         string="Reject"
                         class="btn-secondary"
                         groups="hr_pool.group_hr_pool_chairman"
-                        attrs="{'invisible': [('x_state', '!=', 'pending')]}"/>
+                        invisible="x_state != 'pending'"/>
             </list>
         </field>
     </record>
@@ -110,13 +110,13 @@
                             string="Approve"
                             class="btn-primary"
                             groups="hr_pool.group_hr_pool_chairman"
-                            attrs="{'invisible': [('x_state', '!=', 'pending')]}"/>
+                            invisible="x_state != 'pending'"/>
                     <button type="action"
                             name="hr_pool.action_hr_pool_conversion_request_reject"
                             string="Reject"
                             class="btn-secondary"
                             groups="hr_pool.group_hr_pool_chairman"
-                            attrs="{'invisible': [('x_state', '!=', 'pending')]}"/>
+                            invisible="x_state != 'pending'"/>
                 </header>
                 <sheet>
                     <group>

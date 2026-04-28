@@ -96,7 +96,7 @@
                             string="Convert"
                             class="btn-primary"
                             groups="hr_pool.group_hr_pool_manager,hr_pool.group_hr_pool_chairman"
-                            attrs="{'invisible': ['|', '|', '|', ('x_intake_phase', '!=', 'pooling'), ('x_chairman_decision', 'not in', ['approved', 'on_hold']), ('x_conversion_job_id', '=', False), ('x_applicant_id', '!=', False)]}"/>
+                            invisible="x_intake_phase != 'pooling' or x_chairman_decision not in ['approved', 'on_hold'] or not x_conversion_job_id or x_applicant_id"/>
                     <button type="action" name="hr_pool.action_hr_pool_approve_to_pool" string="Approve to Pool" groups="hr_pool.group_hr_pool_chairman"/>
                     <button type="action" name="hr_pool.action_hr_pool_put_on_hold" string="Put on Hold" groups="hr_pool.group_hr_pool_chairman"/>
                     <button type="action" name="hr_pool.action_hr_pool_reject" string="Reject Pool Candidate" groups="hr_pool.group_hr_pool_chairman"/>
@@ -113,7 +113,7 @@
                             <field name="x_intake_phase" readonly="1" force_save="1"/>
                             <field name="x_chairman_decision"
                                    force_save="1"
-                                   attrs="{'readonly': [('x_intake_phase', 'in', ['conversion', 'converted'])]}"/>
+                                   readonly="x_intake_phase in ['conversion', 'converted']"/>
                             <field name="x_reviewer_recommendation"/>
                             <field name="x_reviewer_user_id"/>
                         </group>
@@ -234,7 +234,7 @@
                         <page string="Recruitment Handoff">
                             <group>
                                 <field name="x_conversion_job_id"
-                                       attrs="{'readonly': [('x_intake_phase', 'in', ['conversion', 'converted'])]}"/>
+                                       readonly="x_intake_phase in ['conversion', 'converted']"/>
                                 <field name="x_applicant_id" readonly="1" force_save="1"/>
                             </group>
                         </page>
