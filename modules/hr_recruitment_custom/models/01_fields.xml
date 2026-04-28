@@ -20,15 +20,6 @@
         <field name="column2">x_function_id</field>
     </record>
 
-    <record id="field_hr_applicant_x_role_and_duty_line_ids" model="ir.model.fields">
-        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
-        <field name="name">x_role_and_duty_line_ids</field>
-        <field name="field_description">Applicant Functions</field>
-        <field name="ttype">one2many</field>
-        <field name="relation">x_hr.applicant_function_line</field>
-        <field name="relation_field">x_applicant_id</field>
-    </record>
-
     <record id="field_applicant_function_line_x_name" model="ir.model.fields">
         <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_function_line"/>
         <field name="name">x_name</field>
@@ -73,5 +64,14 @@
         <field name="required" eval="True"/>
         <field name="on_delete">restrict</field>
         <field name="index" eval="True"/>
+    </record>
+
+    <record id="field_hr_applicant_x_role_and_duty_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_role_and_duty_line_ids</field>
+        <field name="field_description">Applicant Functions</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.applicant_function_line</field>
+        <field name="relation_field">x_applicant_id</field>
     </record>
 </odoo>
