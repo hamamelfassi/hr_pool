@@ -6,28 +6,6 @@
         <field name="view_mode">kanban,list,form</field>
         <field name="mobile_view_mode">kanban</field>
         <field name="limit">80</field>
-        <field name="search_view_id" ref="hr_pool.view_hr_pool_conversion_request_search"/>
         <field name="context">{'default_x_state': 'pending'}</field>
-    </record>
-
-    <record id="action_hr_pool_conversion_request_view_kanban" model="ir.actions.act_window.view">
-        <field name="sequence" eval="1"/>
-        <field name="view_mode">kanban</field>
-        <field name="view_id" ref="hr_pool.view_hr_pool_conversion_request_kanban"/>
-        <field name="act_window_id" ref="hr_pool.action_hr_pool_conversion_request"/>
-    </record>
-
-    <record id="action_hr_pool_conversion_request_view_list" model="ir.actions.act_window.view">
-        <field name="sequence" eval="2"/>
-        <field name="view_mode">list</field>
-        <field name="view_id" ref="hr_pool.view_hr_pool_conversion_request_list"/>
-        <field name="act_window_id" ref="hr_pool.action_hr_pool_conversion_request"/>
-    </record>
-
-    <record id="action_hr_pool_conversion_request_view_form" model="ir.actions.act_window.view">
-        <field name="sequence" eval="3"/>
-        <field name="view_mode">form</field>
-        <field name="view_id" ref="hr_pool.view_hr_pool_conversion_request_form"/>
-        <field name="act_window_id" ref="hr_pool.action_hr_pool_conversion_request"/>
     </record>
 </odoo>
