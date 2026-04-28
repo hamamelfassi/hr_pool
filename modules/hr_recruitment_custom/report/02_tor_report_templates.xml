@@ -139,35 +139,35 @@
                             <tr>
                                 <td class="tor-label">اسم المستلم</td>
                                 <td class="tor-value">
-                                    <div class="tor-value-ar"><span t-esc="o.x_tor_recipient_name or ''"/></div>
+                                    <div class="tor-value-ar"><span t-field="o.x_tor_recipient_name"/></div>
                                 </td>
                                 <td class="tor-label tor-ltr">Recipient Name</td>
                             </tr>
                             <tr>
                                 <td class="tor-label">الرقم الوظيفي</td>
                                 <td class="tor-value">
-                                    <div class="tor-value-ar"><span t-esc="o.x_tor_employee_id or ''"/></div>
+                                    <div class="tor-value-ar"><span t-field="o.x_tor_employee_id"/></div>
                                 </td>
                                 <td class="tor-label tor-ltr">Employee ID</td>
                             </tr>
                             <tr>
                                 <td class="tor-label">القسم</td>
                                 <td class="tor-value">
-                                    <div class="tor-value-ar"><span t-esc="o.x_tor_department_name or ''"/></div>
+                                    <div class="tor-value-ar"><span t-field="o.x_tor_department_name"/></div>
                                 </td>
                                 <td class="tor-label tor-ltr">Department</td>
                             </tr>
                             <tr>
                                 <td class="tor-label">الوظيفة</td>
                                 <td class="tor-value">
-                                    <div class="tor-value-ar"><span t-esc="o.x_tor_job_title or ''"/></div>
+                                    <div class="tor-value-ar"><span t-field="o.x_tor_job_title"/></div>
                                 </td>
                                 <td class="tor-label tor-ltr">Job Title</td>
                             </tr>
                             <tr>
                                 <td class="tor-label">المسؤول المباشر</td>
                                 <td class="tor-value">
-                                    <div class="tor-value-ar"><span t-esc="o.x_tor_direct_supervisor_name or ''"/></div>
+                                    <div class="tor-value-ar"><span t-field="o.x_tor_direct_supervisor_name"/></div>
                                 </td>
                                 <td class="tor-label tor-ltr">Direct Supervisor</td>
                             </tr>
@@ -182,7 +182,7 @@
 
                         <div class="tor-section-title">التعهد الشخصي <span class="en tor-ltr">Personal Commitment</span></div>
                         <p class="tor-para tor-ar">
-                            أنا الموقع أدناه، <span t-esc="o.x_tor_recipient_name or ''"/>،
+                            أنا الموقع أدناه، <span t-field="o.x_tor_recipient_name"/>،
                         </p>
                         <ul class="tor-list tor-ar">
                             <li>أقرّ بأنني قد استلمت المهام المكلّف بها، وأتعهد بتقديم تقرير تفصيلي عن سير المهام شهريًا إلى المدير المباشر، مرفقًا بالصور والإفادات لإثبات تنفيذ العمل، مع توضيح العراقيل في تقريري الأسبوعي.</li>
@@ -192,7 +192,7 @@
                         </ul>
 
                         <p class="tor-para tor-en">
-                            I, the undersigned <span t-esc="o.x_tor_recipient_name or ''"/>, acknowledge that I have received the assigned tasks and commit to submitting a detailed monthly report to the Chairman of the Board of Directors, attaching evidence (photos, confirmations) to prove the work has been completed, along with highlighting challenges in my weekly report.
+                            I, the undersigned <span t-field="o.x_tor_recipient_name"/>, acknowledge that I have received the assigned tasks and commit to submitting a detailed monthly report to the Chairman of the Board of Directors, attaching evidence (photos, confirmations) to prove the work has been completed, along with highlighting challenges in my weekly report.
                         </p>
                         <p class="tor-para tor-en">
                             I also acknowledge that I have read and understood all instructions and guidelines regarding the use and maintenance of the assigned equipment, and I commit to complying with them, conducting regular maintenance as scheduled, and reporting any malfunctions immediately.
@@ -225,14 +225,14 @@
                                     <t t-if="line.x_print_functional_area_name and line.x_print_functional_area_name != current_area_name">
                                         <tr class="tor-group">
                                             <td colspan="2">
-                                                <span t-esc="line.x_print_functional_area_name"/>
+                                                <span t-field="line.x_print_functional_area_name"/>
                                             </td>
                                         </tr>
                                         <t t-set="current_area_name" t-value="line.x_print_functional_area_name"/>
                                     </t>
                                     <tr>
                                         <td class="tor-center"><span t-esc="line_index + 1"/></td>
-                                        <td class="tor-ar"><span t-esc="line.x_name or ''"/></td>
+                                        <td class="tor-ar"><span t-field="line.x_name"/></td>
                                     </tr>
                                 </t>
                             </tbody>
@@ -248,7 +248,7 @@
                                 </td>
                                 <td>
                                     <div><strong>الموظف</strong> <span class="tor-ltr">Employee</span></div>
-                                    <div>الاسم / <span class="tor-ltr">Name</span>: <span t-esc="o.x_tor_recipient_name or ''"/></div>
+                                    <div>الاسم / <span class="tor-ltr">Name</span>: <span t-field="o.x_tor_recipient_name"/></div>
                                     <div>التوقيع / <span class="tor-ltr">Signature</span>: <span class="tor-sign-line"/></div>
                                     <div>التاريخ / <span class="tor-ltr">Date</span>: <span class="tor-sign-line"/></div>
                                 </td>

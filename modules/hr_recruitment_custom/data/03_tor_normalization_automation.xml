@@ -49,6 +49,30 @@ for rec in records:
         ]]></field>
     </record>
 
+    <record id="automation_applicant_function_line_reseed_empty_print_values" model="base.automation">
+        <field name="name">Reseed Empty Applicant Function Print Values</field>
+        <field name="active" eval="True"/>
+        <field name="trigger">on_write</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_function_line"/>
+    </record>
+
+    <record id="action_applicant_function_line_reseed_empty_print_values" model="ir.actions.server">
+        <field name="name">Reseed Empty Applicant Function Print Values</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_function_line"/>
+        <field name="base_automation_id" ref="hr_recruitment_custom.automation_applicant_function_line_reseed_empty_print_values"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    values = {}
+    if rec.x_function_id and not rec.x_name:
+        values['x_name'] = rec.x_function_id.with_context(lang='ar_001').display_name or rec.x_function_id.display_name
+    if rec.x_functional_area_id and not rec.x_print_functional_area_name:
+        values['x_print_functional_area_name'] = rec.x_functional_area_id.with_context(lang='ar_001').display_name or rec.x_functional_area_id.display_name
+    if values:
+        rec.sudo().write(values)
+        ]]></field>
+    </record>
+
     <record id="automation_hr_applicant_normalize_tor_header_on_change" model="base.automation">
         <field name="name">Normalize Applicant TOR Header on Change</field>
         <field name="active" eval="True"/>
@@ -110,4 +134,5 @@ for rec in records:
     rec.message_post(body='Signed TOR PDF linked to the applicant record.')
         ]]></field>
     </record>
+
 </odoo>

@@ -9,13 +9,12 @@ attachment = False
 
 for rec in records:
     initial_values = {}
-    if not rec.x_tor_recipient_name and rec.partner_name:
+    if rec.partner_name:
         initial_values['x_tor_recipient_name'] = rec.partner_name
-    if not rec.x_tor_job_title and rec.job_id and rec.job_id.name:
+    if rec.job_id and rec.job_id.name:
         initial_values['x_tor_job_title'] = rec.job_id.with_context(lang='ar_001').name or rec.job_id.name
-    if not rec.x_tor_department_id and rec.job_id and rec.job_id.department_id:
+    if rec.job_id and rec.job_id.department_id:
         initial_values['x_tor_department_id'] = rec.job_id.department_id.id
-    if not rec.x_tor_department_name and rec.job_id and rec.job_id.department_id:
         initial_values['x_tor_department_name'] = rec.job_id.department_id.with_context(lang='ar_001').display_name or rec.job_id.department_id.display_name
     if not rec.x_tor_state:
         initial_values['x_tor_state'] = 'draft'
@@ -23,6 +22,15 @@ for rec in records:
         initial_values['x_tor_version_label'] = 'TOR V1'
     if initial_values:
         rec.sudo().write(initial_values)
+
+    for line in rec.x_role_and_duty_line_ids:
+        line_values = {}
+        if line.x_function_id:
+            line_values['x_name'] = line.x_function_id.with_context(lang='ar_001').display_name or line.x_function_id.display_name
+        if line.x_functional_area_id:
+            line_values['x_print_functional_area_name'] = line.x_functional_area_id.with_context(lang='ar_001').display_name or line.x_functional_area_id.display_name
+        if line_values:
+            line.sudo().write(line_values)
 
     if not rec.x_tor_recipient_name:
         raise Warning('Set the TOR recipient name before generating the TOR PDF.')
