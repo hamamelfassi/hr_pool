@@ -124,7 +124,68 @@ The first slice should not yet implement:
 - document routing
 - final rendered ToR or Job Description outputs
 
-## 6. Delivery rule
+## 6. Second stage-2 slice: TOR document generation and applicant signature
+
+After the schema and UI composition slice is stable, the next slice should formalize the negotiated ToR as a document workflow on `hr.applicant`.
+
+### Canonical document strategy
+
+The negotiated ToR should be generated as a `QWeb` PDF that is visually equivalent to Marsellia form `MCEP-HR-F-0006`.
+
+The original PDF form is the visual reference, but the system-of-record output should be a QWeb-generated document because:
+
+- negotiated duties are dynamic
+- duties should be grouped by functional area
+- Arabic-first layout control matters
+- the generated PDF should remain reproducible from live applicant data
+- the generated PDF can then be routed into native Odoo Sign
+
+### Applicant as printable source of truth
+
+The ToR should be generated from `hr.applicant`, and key printable identity fields should be normalized onto the applicant record so the generated document does not depend on brittle runtime joins.
+
+For this first document slice:
+
+- `partner_name` is the applicant full name source
+- `job_id` provides job title and department
+- `hr.pool` remains only an upstream source where applicant normalization is still incomplete
+
+### First-pass field rules
+
+For the initial generated ToR:
+
+- `Recipient Name`: applicant full name from `partner_name`
+- `Employee ID`: blank
+- `Department`: linked job department
+- `Job Title`: linked job title
+- `Direct Supervisor`: blank
+- `Date of Receipt`: blank in the generated PDF
+- `Duties`: negotiated applicant duties grouped by functional area
+
+### First signing workflow
+
+The first operational workflow should be:
+
+1. recruiter finalizes the negotiated duty lines on `hr.applicant`
+2. recruiter clicks a TOR-generation button on the applicant form
+3. the generated PDF is attached to the applicant record
+4. recruiter sends that generated PDF to the applicant through Odoo Sign
+5. applicant signs digitally
+6. signed copy returns to the applicant record
+7. recruiter or HR later countersigns and backfills any missing values manually outside the automation scope for now
+
+### Deliberate deferrals
+
+This slice should not yet automate:
+
+- manager routing
+- direct-supervisor inference
+- employee ID population
+- final employee handoff gating
+- automatic counter-sign flow
+- broader HR form generation
+
+## 7. Delivery rule
 
 Each stage must be delivered as:
 

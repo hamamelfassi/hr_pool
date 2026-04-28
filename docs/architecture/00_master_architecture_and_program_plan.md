@@ -117,6 +117,11 @@ Work:
 - extend `hr.job` with baseline functional area and function composition
 - extend `hr.applicant` with negotiated ToR function lines inherited from `hr.job`
 - keep the first stage-2 slice to schema and UI composition only, not document generation
+- normalize printable ToR identity and role fields onto `hr.applicant`
+- generate negotiated ToR PDFs from `hr.applicant` through QWeb
+- keep Marsellia form `0006` as the visual reference while allowing dynamic grouped-duty rendering
+- route the generated ToR PDF into native Odoo Sign for applicant signature
+- keep first-pass signature workflow simple: applicant digital signature first, manual recruiter / manager follow-up later
 
 ### Phase 3 - Phase 2 recruitment enrichment
 
