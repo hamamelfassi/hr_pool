@@ -74,4 +74,108 @@
         <field name="relation">x_hr.applicant_function_line</field>
         <field name="relation_field">x_applicant_id</field>
     </record>
+
+    <record id="field_hr_applicant_x_tor_recipient_name" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_tor_recipient_name</field>
+        <field name="field_description">TOR Recipient Name</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_hr_applicant_x_tor_employee_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_tor_employee_id</field>
+        <field name="field_description">TOR Employee ID</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_hr_applicant_x_tor_department_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_tor_department_id</field>
+        <field name="field_description">TOR Department</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.department</field>
+        <field name="on_delete">set null</field>
+    </record>
+
+    <record id="field_hr_applicant_x_tor_job_title" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_tor_job_title</field>
+        <field name="field_description">TOR Job Title</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_hr_applicant_x_tor_direct_supervisor_name" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_tor_direct_supervisor_name</field>
+        <field name="field_description">TOR Direct Supervisor</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_hr_applicant_x_tor_date_of_receipt" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_tor_date_of_receipt</field>
+        <field name="field_description">TOR Date of Receipt</field>
+        <field name="ttype">date</field>
+    </record>
+
+    <record id="field_hr_applicant_x_tor_state" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_tor_state</field>
+        <field name="field_description">TOR State</field>
+        <field name="ttype">selection</field>
+    </record>
+
+    <record id="field_hr_applicant_x_tor_pdf_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_tor_pdf_attachment_id</field>
+        <field name="field_description">Latest TOR PDF</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+        <field name="on_delete">set null</field>
+    </record>
+
+    <record id="field_hr_applicant_x_tor_signed_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_tor_signed_attachment_id</field>
+        <field name="field_description">Signed TOR PDF</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+        <field name="on_delete">set null</field>
+    </record>
+
+    <record id="field_hr_applicant_x_tor_generated_on" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_tor_generated_on</field>
+        <field name="field_description">TOR Generated On</field>
+        <field name="ttype">datetime</field>
+    </record>
+
+    <record id="field_hr_applicant_x_tor_sent_on" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_tor_sent_on</field>
+        <field name="field_description">TOR Sent On</field>
+        <field name="ttype">datetime</field>
+    </record>
+
+    <record id="field_hr_applicant_x_tor_signed_on" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_tor_signed_on</field>
+        <field name="field_description">TOR Signed On</field>
+        <field name="ttype">datetime</field>
+    </record>
+
+    <record id="field_hr_applicant_x_tor_version_label" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_tor_version_label</field>
+        <field name="field_description">TOR Version</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_hr_applicant_x_tor_notes" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_tor_notes</field>
+        <field name="field_description">TOR Notes</field>
+        <field name="ttype">text</field>
+    </record>
 </odoo>

@@ -51,6 +51,11 @@ msgid "Applicant Function Line"
 msgstr "سطر وظيفة المتقدم"
 
 #. module: hr_recruitment_custom
+#: model:ir.actions.report,name:hr_recruitment_custom.action_report_hr_applicant_tor
+msgid "Applicant TOR"
+msgstr "الاختصاصات الوظيفية للمتقدم"
+
+#. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_job_x_baseline_function_ids
 msgid "Functions"
 msgstr "الوظائف"
@@ -65,6 +70,104 @@ msgstr "الوظيفة"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_job_x_baseline_functional_area_id
 msgid "Functional Area"
 msgstr "المجال الوظيفي"
+
+#. module: hr_recruitment_custom
+#: model:ir.actions.server,name:hr_recruitment_custom.action_hr_applicant_generate_tor_pdf
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Generate TOR PDF"
+msgstr "إنشاء ملف الاختصاصات الوظيفية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_hr_applicant_tor_state_generated
+msgid "Generated"
+msgstr "تم الإنشاء"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_tor_pdf_attachment_id
+msgid "Latest TOR PDF"
+msgstr "أحدث ملف PDF للاختصاصات"
+
+#. module: hr_recruitment_custom
+#: model:ir.actions.server,name:hr_recruitment_custom.action_hr_applicant_mark_tor_signed
+#: model:base.automation,name:hr_recruitment_custom.automation_hr_applicant_mark_tor_signed
+msgid "Mark Applicant TOR Signed"
+msgstr "تحديد الاختصاصات الوظيفية كموقعة"
+
+#. module: hr_recruitment_custom
+#: model:ir.actions.server,name:hr_recruitment_custom.action_hr_applicant_normalize_tor_header_on_change
+#: model:base.automation,name:hr_recruitment_custom.automation_hr_applicant_normalize_tor_header_on_change
+msgid "Normalize Applicant TOR Header on Change"
+msgstr "تحديث رأس نموذج الاختصاصات عند التغيير"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_hr_applicant_tor_state_draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_tor_department_id
+msgid "TOR Department"
+msgstr "قسم الاختصاصات الوظيفية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_tor_direct_supervisor_name
+msgid "TOR Direct Supervisor"
+msgstr "المسؤول المباشر في الاختصاصات"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_tor_employee_id
+msgid "TOR Employee ID"
+msgstr "الرقم الوظيفي في الاختصاصات"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_tor_generated_on
+msgid "TOR Generated On"
+msgstr "تاريخ إنشاء الاختصاصات"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_tor_job_title
+msgid "TOR Job Title"
+msgstr "المسمى الوظيفي في الاختصاصات"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_tor_notes
+msgid "TOR Notes"
+msgstr "ملاحظات الاختصاصات"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "TOR Header"
+msgstr "رأس نموذج الاختصاصات"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_tor_recipient_name
+msgid "TOR Recipient Name"
+msgstr "اسم مستلم الاختصاصات"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_tor_sent_on
+msgid "TOR Sent On"
+msgstr "تاريخ إرسال الاختصاصات"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_tor_signed_attachment_id
+msgid "Signed TOR PDF"
+msgstr "ملف PDF للاختصاصات الموقعة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_tor_signed_on
+msgid "TOR Signed On"
+msgstr "تاريخ توقيع الاختصاصات"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_tor_state
+msgid "TOR State"
+msgstr "حالة الاختصاصات"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_tor_version_label
+msgid "TOR Version"
+msgstr "إصدار الاختصاصات"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_job_form_inherit_hr_recruitment_custom
@@ -82,6 +185,27 @@ msgid "Role and Duties"
 msgstr "الدور والمهام"
 
 #. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_hr_applicant_tor_state_sent
+msgid "Sent"
+msgstr "تم الإرسال"
+
+#. module: hr_recruitment_custom
+#: model:ir.actions.server,name:hr_recruitment_custom.action_hr_applicant_send_tor_for_signature
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Send TOR for Signature"
+msgstr "إرسال الاختصاصات للتوقيع"
+
+#. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_function_line_x_sequence
 msgid "Sequence"
 msgstr "التسلسل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_hr_applicant_tor_state_signed
+msgid "Signed"
+msgstr "تم التوقيع"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_hr_applicant_tor_state_superseded
+msgid "Superseded"
+msgstr "تم الاستبدال"

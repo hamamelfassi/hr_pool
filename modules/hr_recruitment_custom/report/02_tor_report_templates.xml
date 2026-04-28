@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_hr_applicant_tor_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <style>
+                        .tor-doc {
+                            direction: rtl;
+                            font-family: 'DejaVu Sans', sans-serif;
+                            color: #111;
+                            font-size: 12px;
+                            line-height: 1.55;
+                        }
+                        .tor-ltr {
+                            direction: ltr;
+                            text-align: left;
+                        }
+                        .tor-center {
+                            text-align: center;
+                        }
+                        .tor-title {
+                            font-size: 20px;
+                            font-weight: 700;
+                            margin: 6px 0 2px 0;
+                        }
+                        .tor-subtitle {
+                            font-size: 12px;
+                            color: #444;
+                            margin-bottom: 12px;
+                        }
+                        .tor-meta {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-bottom: 12px;
+                        }
+                        .tor-meta td {
+                            border: 1px solid #222;
+                            padding: 6px 8px;
+                            vertical-align: middle;
+                        }
+                        .tor-label {
+                            width: 18%;
+                            font-weight: 700;
+                            white-space: nowrap;
+                        }
+                        .tor-value {
+                            width: 32%;
+                        }
+                        .tor-section-title {
+                            margin: 14px 0 8px 0;
+                            font-size: 14px;
+                            font-weight: 700;
+                        }
+                        .tor-section-title .en {
+                            font-weight: 600;
+                        }
+                        .tor-list {
+                            margin: 0 0 10px 0;
+                            padding-right: 20px;
+                        }
+                        .tor-list li {
+                            margin-bottom: 6px;
+                        }
+                        .tor-para {
+                            margin: 0 0 8px 0;
+                        }
+                        .tor-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-top: 8px;
+                            font-size: 11.5px;
+                        }
+                        .tor-table th,
+                        .tor-table td {
+                            border: 1px solid #222;
+                            padding: 6px 8px;
+                            vertical-align: top;
+                        }
+                        .tor-table thead th {
+                            background: #f3f3f3;
+                            font-weight: 700;
+                        }
+                        .tor-group {
+                            background: #ece7e2;
+                            font-weight: 700;
+                        }
+                        .tor-signature {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-top: 18px;
+                        }
+                        .tor-signature td {
+                            border: 1px solid #222;
+                            padding: 8px 10px;
+                            vertical-align: top;
+                            width: 50%;
+                        }
+                        .tor-sign-line {
+                            min-height: 28px;
+                            display: block;
+                        }
+                    </style>
+
+                    <div class="tor-doc">
+                        <div class="tor-center tor-title">نموذج استلام وتعهّد بمهام العمل</div>
+                        <div class="tor-center tor-subtitle">Terms of Reference / Personal Commitment Form - MCEP-HR-F-0006</div>
+
+                        <table class="tor-meta">
+                            <tr>
+                                <td class="tor-label">اسم المستلم</td>
+                                <td class="tor-value">
+                                    <span t-esc="o.x_tor_recipient_name or o.partner_name or ''"/>
+                                </td>
+                                <td class="tor-label tor-ltr">Recipient Name</td>
+                            </tr>
+                            <tr>
+                                <td class="tor-label">الرقم الوظيفي</td>
+                                <td class="tor-value">
+                                    <span t-esc="o.x_tor_employee_id or ''"/>
+                                </td>
+                                <td class="tor-label tor-ltr">Employee ID</td>
+                            </tr>
+                            <tr>
+                                <td class="tor-label">القسم</td>
+                                <td class="tor-value">
+                                    <span t-field="o.x_tor_department_id"/>
+                                </td>
+                                <td class="tor-label tor-ltr">Department</td>
+                            </tr>
+                            <tr>
+                                <td class="tor-label">الوظيفة</td>
+                                <td class="tor-value">
+                                    <span t-esc="o.x_tor_job_title or (o.job_id.name if o.job_id else '')"/>
+                                </td>
+                                <td class="tor-label tor-ltr">Job Title</td>
+                            </tr>
+                            <tr>
+                                <td class="tor-label">المسؤول المباشر</td>
+                                <td class="tor-value">
+                                    <span t-esc="o.x_tor_direct_supervisor_name or ''"/>
+                                </td>
+                                <td class="tor-label tor-ltr">Direct Supervisor</td>
+                            </tr>
+                            <tr>
+                                <td class="tor-label">تاريخ الاستلام</td>
+                                <td class="tor-value">
+                                    <span t-field="o.x_tor_date_of_receipt"/>
+                                </td>
+                                <td class="tor-label tor-ltr">Date of Receipt</td>
+                            </tr>
+                        </table>
+
+                        <div class="tor-section-title">التعهد الشخصي <span class="en tor-ltr">Personal Commitment</span></div>
+                        <p class="tor-para">
+                            أنا الموقع أدناه، <span t-esc="o.x_tor_recipient_name or o.partner_name or ''"/>،
+                        </p>
+                        <ul class="tor-list">
+                            <li>أقرّ بأنني قد استلمت المهام المكلّف بها، وأتعهد بتقديم تقرير تفصيلي عن سير المهام شهريًا إلى المدير المباشر، مرفقًا بالصور والإفادات لإثبات تنفيذ العمل، مع توضيح العراقيل في تقريري الأسبوعي.</li>
+                            <li>كما أقرّ بأنني قرأت وفهمت جميع التعليمات والإرشادات المتعلقة باستخدام وصيانة المعدات المكلّف بها، وأتعهد بالالتزام بها وتنفيذ الصيانة الدورية وفق الجدول المحدد، والإبلاغ الفوري عن أي أعطال.</li>
+                            <li>وأدرك أن عدم الالتزام بهذه التعليمات قد يعرّضني للمساءلة القانونية، والإجراءات التأديبية (تنبيه، إيقاف، أو إنهاء العقد).</li>
+                            <li>كما أوافق على تحمّل المسؤولية القانونية الكاملة عن أي حادث ينتج عن إهمالي أو تقصيري.</li>
+                        </ul>
+
+                        <p class="tor-para tor-ltr">
+                            I, the undersigned <span t-esc="o.x_tor_recipient_name or o.partner_name or ''"/>, acknowledge that I have received the assigned tasks and commit to submitting a detailed monthly report to the Chairman of the Board of Directors, attaching evidence (photos, confirmations) to prove the work has been completed, along with highlighting challenges in my weekly report.
+                        </p>
+                        <p class="tor-para tor-ltr">
+                            I also acknowledge that I have read and understood all instructions and guidelines regarding the use and maintenance of the assigned equipment, and I commit to complying with them, conducting regular maintenance as scheduled, and reporting any malfunctions immediately.
+                        </p>
+                        <p class="tor-para tor-ltr">
+                            I understand that failure to comply with these instructions may subject me to legal accountability and disciplinary actions (warning, suspension, or termination of contract). I also accept full legal responsibility for any incident resulting from my negligence or non-compliance.
+                        </p>
+
+                        <div class="tor-section-title">التعليمات والإرشادات الخاصة بأدوات العمل <span class="en tor-ltr">Instructions and Safety Guidelines for Work Equipment</span></div>
+                        <ol class="tor-list">
+                            <li>يلتزم المستلم بالمحافظة على ادوات العمل وعدم استخدامها لأغراض غير مصرح بها.<div class="tor-ltr">The recipient must maintain the work equipment and not use it for unauthorized purposes.</div></li>
+                            <li>يتحمل المستلم المسؤولية الكاملة عن أي أضرار ناتجة عن الإهمال أو سوء الاستخدام.<div class="tor-ltr">The recipient is fully responsible for any damage caused by negligence or misuse.</div></li>
+                            <li>يلتزم المستلم بإجراء الفحص الدوري وفق الجدول المحدد من قبل إدارة الصيانة.<div class="tor-ltr">Regular inspections must be conducted as per the maintenance schedule.</div></li>
+                            <li>يجب الإبلاغ فورًا عن أي عطل في ادوات العمل للمدير المباشر.<div class="tor-ltr">Any malfunction or defect in work tools must be reported immediately to the direct supervisor.</div></li>
+                            <li>يمنع نقل أو تسليم ادوات العمل المستلمة لشخص آخر دون موافقة الإدارة.<div class="tor-ltr">The transfer or handover of any assigned work tools to another person is strictly prohibited without prior management approval.</div></li>
+                        </ol>
+
+                        <div class="tor-section-title">تفاصيل المهام <span class="en tor-ltr">Detailed Duties</span></div>
+                        <table class="tor-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10%;">الرقم<br/><span class="tor-ltr">NO.</span></th>
+                                    <th>البيان<br/><span class="tor-ltr">Description</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="sorted_lines" t-value="o.x_role_and_duty_line_ids.sorted(key=lambda line: ((line.x_sequence or 0), line.id))"/>
+                                <t t-set="current_area_id" t-value="0"/>
+                                <t t-foreach="sorted_lines" t-as="line">
+                                    <t t-if="line.x_functional_area_id and line.x_functional_area_id.id != current_area_id">
+                                        <tr class="tor-group">
+                                            <td colspan="2">
+                                                <span t-field="line.x_functional_area_id"/>
+                                            </td>
+                                        </tr>
+                                        <t t-set="current_area_id" t-value="line.x_functional_area_id.id"/>
+                                    </t>
+                                    <tr>
+                                        <td class="tor-center"><span t-esc="line_index + 1"/></td>
+                                        <td><span t-field="line.x_function_id"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <table class="tor-signature">
+                            <tr>
+                                <td>
+                                    <div><strong>المدير المسؤول</strong> <span class="tor-ltr">Responsible Manager</span></div>
+                                    <div>الاسم / <span class="tor-ltr">Name</span>: <span class="tor-sign-line"/></div>
+                                    <div>التوقيع / <span class="tor-ltr">Signature</span>: <span class="tor-sign-line"/></div>
+                                    <div>التاريخ / <span class="tor-ltr">Date</span>: <span class="tor-sign-line"/></div>
+                                </td>
+                                <td>
+                                    <div><strong>الموظف</strong> <span class="tor-ltr">Employee</span></div>
+                                    <div>الاسم / <span class="tor-ltr">Name</span>: <span t-esc="o.x_tor_recipient_name or o.partner_name or ''"/></div>
+                                    <div>التوقيع / <span class="tor-ltr">Signature</span>: <span class="tor-sign-line"/></div>
+                                    <div>التاريخ / <span class="tor-ltr">Date</span>: <span class="tor-sign-line"/></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

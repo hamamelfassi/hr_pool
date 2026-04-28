@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sel_hr_applicant_tor_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_recruitment_custom.field_hr_applicant_x_tor_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="sel_hr_applicant_tor_state_generated" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_recruitment_custom.field_hr_applicant_x_tor_state"/>
+        <field name="name">Generated</field>
+        <field name="value">generated</field>
+    </record>
+    <record id="sel_hr_applicant_tor_state_sent" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_recruitment_custom.field_hr_applicant_x_tor_state"/>
+        <field name="name">Sent</field>
+        <field name="value">sent</field>
+    </record>
+    <record id="sel_hr_applicant_tor_state_signed" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_recruitment_custom.field_hr_applicant_x_tor_state"/>
+        <field name="name">Signed</field>
+        <field name="value">signed</field>
+    </record>
+    <record id="sel_hr_applicant_tor_state_superseded" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_recruitment_custom.field_hr_applicant_x_tor_state"/>
+        <field name="name">Superseded</field>
+        <field name="value">superseded</field>
+    </record>
+</odoo>

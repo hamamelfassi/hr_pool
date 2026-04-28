@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="automation_hr_applicant_normalize_tor_header_on_change" model="base.automation">
+        <field name="name">Normalize Applicant TOR Header on Change</field>
+        <field name="active" eval="True"/>
+        <field name="trigger">on_write</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+    </record>
+
+    <record id="action_hr_applicant_normalize_tor_header_on_change" model="ir.actions.server">
+        <field name="name">Normalize Applicant TOR Header on Change</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="base_automation_id" ref="hr_recruitment_custom.automation_hr_applicant_normalize_tor_header_on_change"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    if rec.x_tor_state and rec.x_tor_state != 'draft':
+        continue
+
+    values = {}
+    if rec.partner_name and not rec.x_tor_recipient_name:
+        values['x_tor_recipient_name'] = rec.partner_name
+
+    if rec.job_id:
+        if rec.job_id.name and rec.x_tor_job_title != rec.job_id.name:
+            values['x_tor_job_title'] = rec.job_id.name
+        if rec.job_id.department_id and rec.x_tor_department_id != rec.job_id.department_id:
+            values['x_tor_department_id'] = rec.job_id.department_id.id
+
+    if values:
+        rec.sudo().write(values)
+        ]]></field>
+    </record>
+
+    <record id="automation_hr_applicant_mark_tor_signed" model="base.automation">
+        <field name="name">Mark Applicant TOR Signed</field>
+        <field name="active" eval="True"/>
+        <field name="trigger">on_write</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="trigger_field_ids" eval="[(6, 0, [ref('hr_recruitment_custom.field_hr_applicant_x_tor_signed_attachment_id')])]"/>
+    </record>
+
+    <record id="action_hr_applicant_mark_tor_signed" model="ir.actions.server">
+        <field name="name">Mark Applicant TOR Signed</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="base_automation_id" ref="hr_recruitment_custom.automation_hr_applicant_mark_tor_signed"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    if not rec.x_tor_signed_attachment_id:
+        continue
+
+    rec.sudo().write({
+        'x_tor_state': 'signed',
+        'x_tor_signed_on': datetime.datetime.now(),
+    })
+    rec.message_post(body='Signed TOR PDF linked to the applicant record.')
+        ]]></field>
+    </record>
+</odoo>

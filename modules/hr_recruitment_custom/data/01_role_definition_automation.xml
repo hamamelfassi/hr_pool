@@ -53,24 +53,35 @@ for rec in records:
         <field name="state">code</field>
         <field name="code"><![CDATA[
 for rec in records:
-    if not rec.job_id or rec.x_role_and_duty_line_ids:
-        continue
+    values = {}
+    if rec.partner_name:
+        values['x_tor_recipient_name'] = rec.partner_name
+    if rec.job_id and rec.job_id.department_id:
+        values['x_tor_department_id'] = rec.job_id.department_id.id
+    if rec.job_id and rec.job_id.name:
+        values['x_tor_job_title'] = rec.job_id.name
+    values['x_tor_state'] = 'draft'
+    values['x_tor_version_label'] = 'TOR V1'
 
-    line_commands = []
-    for sequence, function in enumerate(rec.job_id.x_baseline_function_ids, start=1):
-        function_area = function.x_functional_area_id or rec.job_id.x_baseline_functional_area_id
-        if not function_area:
-            continue
+    if rec.job_id and not rec.x_role_and_duty_line_ids:
+        line_commands = []
+        for sequence, function in enumerate(rec.job_id.x_baseline_function_ids, start=1):
+            function_area = function.x_functional_area_id or rec.job_id.x_baseline_functional_area_id
+            if not function_area:
+                continue
 
-        line_commands.append((0, 0, {
-            'x_name': function.display_name,
-            'x_sequence': sequence * 10,
-            'x_functional_area_id': function_area.id,
-            'x_function_id': function.id,
-        }))
+            line_commands.append((0, 0, {
+                'x_name': function.display_name,
+                'x_sequence': sequence * 10,
+                'x_functional_area_id': function_area.id,
+                'x_function_id': function.id,
+            }))
 
-    if line_commands:
-        rec.sudo().write({'x_role_and_duty_line_ids': line_commands})
+        if line_commands:
+            values['x_role_and_duty_line_ids'] = line_commands
+
+    if values:
+        rec.sudo().write(values)
         ]]></field>
     </record>
 </odoo>

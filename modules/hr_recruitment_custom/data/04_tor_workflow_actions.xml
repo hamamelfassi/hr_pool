@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_hr_applicant_generate_tor_pdf" model="ir.actions.server">
+        <field name="name">Generate TOR PDF</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+attachment = False
+report = env.ref('hr_recruitment_custom.action_report_hr_applicant_tor')
+
+for rec in records:
+    initial_values = {}
+    if not rec.x_tor_recipient_name and rec.partner_name:
+        initial_values['x_tor_recipient_name'] = rec.partner_name
+    if not rec.x_tor_job_title and rec.job_id and rec.job_id.name:
+        initial_values['x_tor_job_title'] = rec.job_id.name
+    if not rec.x_tor_department_id and rec.job_id and rec.job_id.department_id:
+        initial_values['x_tor_department_id'] = rec.job_id.department_id.id
+    if not rec.x_tor_state:
+        initial_values['x_tor_state'] = 'draft'
+    if not rec.x_tor_version_label:
+        initial_values['x_tor_version_label'] = 'TOR V1'
+    if initial_values:
+        rec.sudo().write(initial_values)
+
+    if not rec.x_tor_recipient_name:
+        raise Warning('Set the TOR recipient name before generating the TOR PDF.')
+    if not rec.x_tor_job_title:
+        raise Warning('Set the TOR job title before generating the TOR PDF.')
+    if not rec.x_role_and_duty_line_ids:
+        raise Warning('Add at least one applicant duty line before generating the TOR PDF.')
+
+    version_number = 1
+    if rec.x_tor_pdf_attachment_id and rec.x_tor_version_label and rec.x_tor_version_label.startswith('TOR V'):
+        suffix = rec.x_tor_version_label[5:]
+        if suffix.isdigit():
+            version_number = int(suffix) + 1
+        else:
+            version_number = 2
+
+    version_label = 'TOR V%s' % version_number
+    pdf_content, content_type = report.sudo()._render_qweb_pdf([rec.id])
+    filename = '%s - %s.pdf' % ((rec.x_tor_recipient_name or rec.display_name or 'Applicant TOR'), version_label)
+
+    attachment = env['ir.attachment'].sudo().create({
+        'name': filename,
+        'type': 'binary',
+        'raw': pdf_content,
+        'mimetype': 'application/pdf',
+        'res_model': rec._name,
+        'res_id': rec.id,
+    })
+
+    if rec.x_tor_pdf_attachment_id:
+        rec.message_post(body='Previous TOR PDF version superseded by a newer generated copy.')
+
+    rec.sudo().write({
+        'x_tor_pdf_attachment_id': attachment.id,
+        'x_tor_generated_on': datetime.datetime.now(),
+        'x_tor_sent_on': False,
+        'x_tor_signed_on': False,
+        'x_tor_signed_attachment_id': False,
+        'x_tor_state': 'generated',
+        'x_tor_version_label': version_label,
+    })
+    rec.message_post(body='TOR PDF generated and attached to the applicant record.')
+
+if len(records) == 1 and attachment:
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': 'Generated TOR PDF',
+        'res_model': 'ir.attachment',
+        'view_mode': 'form',
+        'res_id': attachment.id,
+        'target': 'new',
+    }
+        ]]></field>
+    </record>
+
+    <record id="action_hr_applicant_send_tor_for_signature" model="ir.actions.server">
+        <field name="name">Send TOR for Signature</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+attachment = False
+
+for rec in records:
+    if not rec.x_tor_pdf_attachment_id:
+        raise Warning('Generate the TOR PDF before sending it for signature.')
+
+    attachment = rec.x_tor_pdf_attachment_id
+    rec.sudo().write({
+        'x_tor_state': 'sent',
+        'x_tor_sent_on': datetime.datetime.now(),
+    })
+
+    signer_email = rec.email_from or 'the applicant email address'
+    rec.message_post(body=(
+        'TOR marked as sent for signature. Manual Sign workflow: '
+        '1) open the generated TOR PDF attachment, '
+        '2) upload it into Odoo Sign, '
+        '3) assign the applicant signer to %s, '
+        '4) once signed, upload the signed PDF to Files/Chatter and select it in the Signed TOR PDF field.'
+    ) % (signer_email,))
+
+if len(records) == 1 and attachment:
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': 'Latest TOR PDF',
+        'res_model': 'ir.attachment',
+        'view_mode': 'form',
+        'res_id': attachment.id,
+        'target': 'new',
+    }
+        ]]></field>
+    </record>
+</odoo>
