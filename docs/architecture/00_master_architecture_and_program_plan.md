@@ -68,11 +68,12 @@ The thin technical recruitment extension layer.
 Owns:
 
 - governed `hr.job` baseline fields
+- baseline job-description composition on `hr.job`
 - governed `hr.applicant` negotiated-role fields
+- negotiated ToR composition on `hr.applicant`
 - conversion execution from intake to applicant
 - applicant backlink creation and read-only references
 - interview / evaluation enrichment helpers
-- negotiated TOR / job-description composition
 - document and Sign orchestration hooks where native Odoo needs extension
 
 ### 3.4 `hr_recruitment`
@@ -113,13 +114,15 @@ Work:
 - read-only back-linking to intake
 - freeze or semi-freeze intake after conversion
 - keep stage-2 enrichment on native recruitment, not on intake
+- extend `hr.job` with baseline functional area and function composition
+- extend `hr.applicant` with negotiated ToR function lines inherited from `hr.job`
+- keep the first stage-2 slice to schema and UI composition only, not document generation
 
 ### Phase 3 - Phase 2 recruitment enrichment
 
 Work:
 - interview evaluation
 - document checklist
-- negotiated TOR / job description generation
 - applicant-side completion surface
 - contract and signature flow
 - Sign / Documents / chatter-native applicant workflows
@@ -177,3 +180,16 @@ Do not ship:
 ## 8. Working rule
 
 When code and docs disagree, the installed module and current repository code take priority over the document text.
+
+## 9. Native-first extension rule
+
+Stage 2 should extend native Odoo Recruitment, HR, Documents, Sign, and contract flows rather than recreate them in custom parallel models.
+
+Custom modules should primarily provide:
+
+- governed taxonomy linkage
+- controlled composition fields and child lines
+- bridge logic from intake into native recruitment
+- automation hooks where native workflow needs augmentation
+
+The first dynamic ToR / Job Description slice is therefore a structured extension of native `hr.job` and `hr.applicant`, not a separate document app.
