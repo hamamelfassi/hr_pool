@@ -23,7 +23,6 @@
         "data/02_seed_helper_data.xml",
         "data/03_sequence.xml",
         "data/05_conversion_stages.xml",
-        "actions/01_actions.xml",
         "data/04_server_actions.xml",
         "data/06_conversion_request_server_actions.xml",
         "report/01_paperformat.xml",
@@ -34,6 +33,7 @@
         "views/02_helper_views.xml",
         "views/03_conversion_request_views.xml",
 
+        "actions/01_actions.xml",
         "actions/02_conversion_request_actions.xml",
         "menus/01_menus.xml",
         "menus/02_conversion_request_menus.xml"
