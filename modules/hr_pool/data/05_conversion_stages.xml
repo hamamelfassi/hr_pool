@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sel_conversion_stage_pending" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_conversion_request_x_state"/>
+        <field name="name">Pending</field>
+        <field name="value">pending</field>
+    </record>
+    <record id="sel_conversion_stage_approved" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_conversion_request_x_state"/>
+        <field name="name">Approved</field>
+        <field name="value">approved</field>
+    </record>
+    <record id="sel_conversion_stage_rejected" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_conversion_request_x_state"/>
+        <field name="name">Rejected</field>
+        <field name="value">rejected</field>
+    </record>
+</odoo>

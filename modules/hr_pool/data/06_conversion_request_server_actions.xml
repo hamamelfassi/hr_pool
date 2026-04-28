@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_hr_pool_create_conversion_request" model="ir.actions.server">
+        <field name="name">Create Conversion Request</field>
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    if rec.x_intake_phase != 'pooling':
+        continue
+    if rec.x_chairman_decision not in ('approved', 'on_hold'):
+        continue
+    if not rec.x_conversion_job_id:
+        continue
+    if any(request.x_state in ('pending', 'approved') for request in rec.x_conversion_request_ids):
+        continue
+
+    pool_label = rec.x_name or rec.x_intake_reference or rec.display_name or 'Conversion Request'
+    job_label = rec.x_conversion_job_id.display_name or rec.x_conversion_job_id.name or 'Job Position'
+    request = env['x_hr.pool_conversion_request'].sudo().create({
+        'x_name': '%s / %s' % (pool_label, job_label),
+        'x_pool_id': rec.id,
+        'x_job_id': rec.x_conversion_job_id.id,
+        'x_state': 'pending',
+        'x_requested_by': env.user.id,
+    })
+    rec.sudo().write({'x_intake_phase': 'conversion'})
+    rec.message_post(body='Conversion request created: %s' % (request.display_name,))
+        ]]></field>
+    </record>
+
+    <record id="action_hr_pool_conversion_request_approve" model="ir.actions.server">
+        <field name="name">Approve Conversion Request</field>
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_conversion_request"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for req in records:
+    if req.x_state != 'pending':
+        continue
+
+    pool = req.x_pool_id.sudo()
+    applicant = pool.x_applicant_id or req.x_applicant_id
+    if not applicant:
+        Applicant = env['hr.applicant'].sudo()
+        applicant_vals = {'job_id': req.x_job_id.id}
+        candidate_label = pool.x_name or pool.x_intake_reference or req.x_name or pool.display_name or 'Converted Candidate'
+        fields_map = Applicant._fields
+
+        if 'name' in fields_map:
+            applicant_vals['name'] = candidate_label
+        if 'partner_name' in fields_map:
+            applicant_vals['partner_name'] = candidate_label
+        if 'email_from' in fields_map and pool.x_email:
+            applicant_vals['email_from'] = pool.x_email
+        if 'partner_phone' in fields_map and pool.x_phone:
+            applicant_vals['partner_phone'] = pool.x_phone
+        if 'company_id' in fields_map and req.x_job_id.company_id:
+            applicant_vals['company_id'] = req.x_job_id.company_id.id
+        if 'department_id' in fields_map and req.x_job_id.department_id:
+            applicant_vals['department_id'] = req.x_job_id.department_id.id
+        if 'description' in fields_map:
+            applicant_vals['description'] = '\n\n'.join([
+                part for part in [
+                    pool.x_commitments_description or '',
+                    req.x_notes or '',
+                ] if part
+            ])
+
+        applicant = Applicant.create(applicant_vals)
+
+    req.sudo().write({
+        'x_state': 'approved',
+        'x_decided_by': env.user.id,
+        'x_applicant_id': applicant.id,
+    })
+    pool.write({
+        'x_intake_phase': 'converted',
+        'x_applicant_id': applicant.id,
+    })
+    req.message_post(body='Conversion request approved.')
+    pool.message_post(body='Pool record converted to applicant.')
+        ]]></field>
+    </record>
+
+    <record id="action_hr_pool_conversion_request_reject" model="ir.actions.server">
+        <field name="name">Reject Conversion Request</field>
+        <field name="model_id" ref="hr_pool.model_x_hr_pool_conversion_request"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for req in records:
+    if req.x_state != 'pending':
+        continue
+
+    pool = req.x_pool_id.sudo()
+    req.sudo().write({
+        'x_state': 'rejected',
+        'x_decided_by': env.user.id,
+    })
+    if pool.x_intake_phase == 'conversion':
+        pool.write({'x_intake_phase': 'pooling'})
+    req.message_post(body='Conversion request rejected.')
+    pool.message_post(body='Conversion request rejected; pool returned to pooling.')
+        ]]></field>
+    </record>
+</odoo>

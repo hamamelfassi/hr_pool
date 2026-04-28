@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_pool_conversion_request_search" model="ir.ui.view">
+        <field name="name">x_hr.pool_conversion_request.search</field>
+        <field name="model">x_hr.pool_conversion_request</field>
+        <field name="arch" type="xml">
+            <search string="Conversion Requests">
+                <field name="x_name"/>
+                <field name="x_pool_id"/>
+                <field name="x_job_id"/>
+                <field name="x_requested_by"/>
+                <field name="x_decided_by"/>
+                <filter string="Pending" name="pending" domain="[('x_state', '=', 'pending')]"/>
+                <filter string="Approved" name="approved" domain="[('x_state', '=', 'approved')]"/>
+                <filter string="Rejected" name="rejected" domain="[('x_state', '=', 'rejected')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Stage" name="group_by_stage" context="{'group_by': 'x_state'}"/>
+                    <filter string="Job Position" name="group_by_job" context="{'group_by': 'x_job_id'}"/>
+                    <filter string="HR Pool" name="group_by_pool" context="{'group_by': 'x_pool_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_hr_pool_conversion_request_list" model="ir.ui.view">
+        <field name="name">x_hr.pool_conversion_request.list</field>
+        <field name="model">x_hr.pool_conversion_request</field>
+        <field name="arch" type="xml">
+            <list string="Conversion Requests" default_order="id desc">
+                <field name="x_name"/>
+                <field name="x_pool_id"/>
+                <field name="x_job_id"/>
+                <field name="x_state"/>
+                <field name="x_requested_by"/>
+                <field name="x_decided_by"/>
+                <field name="x_applicant_id"/>
+                <field name="x_notes" optional="show"/>
+                <button type="action"
+                        name="hr_pool.action_hr_pool_conversion_request_approve"
+                        string="Approve"
+                        class="btn-primary"
+                        groups="hr_pool.group_hr_pool_chairman"
+                        attrs="{'invisible': [('x_state', '!=', 'pending')]}"/>
+                <button type="action"
+                        name="hr_pool.action_hr_pool_conversion_request_reject"
+                        string="Reject"
+                        class="btn-secondary"
+                        groups="hr_pool.group_hr_pool_chairman"
+                        attrs="{'invisible': [('x_state', '!=', 'pending')]}"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hr_pool_conversion_request_kanban" model="ir.ui.view">
+        <field name="name">x_hr.pool_conversion_request.kanban</field>
+        <field name="model">x_hr.pool_conversion_request</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="x_state" highlight_color="id">
+                <field name="x_name"/>
+                <field name="x_pool_id"/>
+                <field name="x_job_id"/>
+                <field name="x_state"/>
+                <field name="x_requested_by"/>
+                <field name="x_decided_by"/>
+                <field name="x_applicant_id"/>
+                <field name="x_notes"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="o_kanban_record">
+                            <div class="fw-bold">
+                                <field name="x_name"/>
+                            </div>
+                            <div>
+                                <field name="x_state"/>
+                            </div>
+                            <div>
+                                <field name="x_pool_id"/>
+                            </div>
+                            <div>
+                                <field name="x_job_id"/>
+                            </div>
+                            <div>
+                                <field name="x_requested_by"/>
+                            </div>
+                            <div>
+                                <field name="x_decided_by"/>
+                            </div>
+                            <div>
+                                <field name="x_applicant_id"/>
+                            </div>
+                            <div class="text-muted">
+                                <field name="x_notes"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_hr_pool_conversion_request_form" model="ir.ui.view">
+        <field name="name">x_hr.pool_conversion_request.form</field>
+        <field name="model">x_hr.pool_conversion_request</field>
+        <field name="arch" type="xml">
+            <form string="Conversion Request">
+                <header>
+                    <field name="x_state" widget="statusbar" statusbar_visible="pending,approved,rejected" readonly="1"/>
+                    <button type="action"
+                            name="hr_pool.action_hr_pool_conversion_request_approve"
+                            string="Approve"
+                            class="btn-primary"
+                            groups="hr_pool.group_hr_pool_chairman"
+                            attrs="{'invisible': [('x_state', '!=', 'pending')]}"/>
+                    <button type="action"
+                            name="hr_pool.action_hr_pool_conversion_request_reject"
+                            string="Reject"
+                            class="btn-secondary"
+                            groups="hr_pool.group_hr_pool_chairman"
+                            attrs="{'invisible': [('x_state', '!=', 'pending')]}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_name"/>
+                            <field name="x_pool_id" readonly="1"/>
+                            <field name="x_job_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="x_requested_by" readonly="1"/>
+                            <field name="x_decided_by" readonly="1"/>
+                            <field name="x_applicant_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="x_notes"/>
+                    </group>
+                </sheet>
+                <chatter open_attachments="True">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </chatter>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_hr_pool_conversion_requests"
+              name="Conversion Requests"
+              parent="hr_pool.menu_hr_pool_records"
+              action="hr_pool.action_hr_pool_conversion_request"
+              sequence="30"/>
+</odoo>

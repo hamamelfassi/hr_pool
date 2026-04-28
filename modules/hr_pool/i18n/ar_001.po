@@ -987,3 +987,53 @@ msgstr "متقدم"
 #: model:x_hr.proficiency_level,x_name:hr_pool.proficiency_level_proficient
 msgid "Proficient"
 msgstr "متمكن"
+msgid "Conversion Request"
+msgstr "طلب تحويل"
+
+msgid "Conversion Requests"
+msgstr "طلبات التحويل"
+
+msgid "Convert"
+msgstr "تحويل"
+
+msgid "Create Conversion Request"
+msgstr "إنشاء طلب تحويل"
+
+msgid "Approve Conversion Request"
+msgstr "اعتماد طلب التحويل"
+
+msgid "Reject Conversion Request"
+msgstr "رفض طلب التحويل"
+
+msgid "Request Reference"
+msgstr "مرجع الطلب"
+
+msgid "HR Pool"
+msgstr "مخزون المتقدمين"
+
+msgid "Job Position"
+msgstr "المنصب الوظيفي"
+
+msgid "Stage"
+msgstr "المرحلة"
+
+msgid "Notes"
+msgstr "الملاحظات"
+
+msgid "Requested By"
+msgstr "تم الطلب بواسطة"
+
+msgid "Decided By"
+msgstr "تم اتخاذ القرار بواسطة"
+
+msgid "Recruitment Applicant"
+msgstr "المتقدم للتوظيف"
+
+msgid "Pending"
+msgstr "قيد الانتظار"
+
+msgid "Approved"
+msgstr "معتمد"
+
+msgid "Rejected"
+msgstr "مرفوض"

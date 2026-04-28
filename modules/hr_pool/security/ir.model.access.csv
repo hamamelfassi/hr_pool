@@ -53,3 +53,8 @@ access_proficiency_level_manager,proficiency level manager,hr_pool.model_x_hr_pr
 access_proficiency_level_chairman,proficiency level chairman,hr_pool.model_x_hr_proficiency_level,hr_pool.group_hr_pool_chairman,1,0,0,0
 access_proficiency_level_reviewer,proficiency level reviewer,hr_pool.model_x_hr_proficiency_level,hr_pool.group_hr_pool_reviewer,1,0,0,0
 access_proficiency_level_readonly,proficiency level readonly,hr_pool.model_x_hr_proficiency_level,hr_pool.group_hr_pool_readonly,1,0,0,0
+
+access_conversion_request_manager,conversion request manager,hr_pool.model_x_hr_pool_conversion_request,hr_pool.group_hr_pool_manager,1,1,1,0
+access_conversion_request_chairman,conversion request chairman,hr_pool.model_x_hr_pool_conversion_request,hr_pool.group_hr_pool_chairman,1,1,1,0
+access_conversion_request_reviewer,conversion request reviewer,hr_pool.model_x_hr_pool_conversion_request,hr_pool.group_hr_pool_reviewer,1,0,0,0
+access_conversion_request_readonly,conversion request readonly,hr_pool.model_x_hr_pool_conversion_request,hr_pool.group_hr_pool_readonly,1,0,0,0
