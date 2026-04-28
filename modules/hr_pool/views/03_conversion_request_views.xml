@@ -1,27 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_hr_pool_conversion_request_search" model="ir.ui.view">
-        <field name="name">x_hr.pool_conversion_request.search</field>
-        <field name="model">x_hr.pool_conversion_request</field>
-        <field name="arch" type="xml">
-            <search string="Conversion Requests">
-                <field name="x_name"/>
-                <field name="x_pool_id"/>
-                <field name="x_job_id"/>
-                <field name="x_requested_by"/>
-                <field name="x_decided_by"/>
-                <filter string="Pending" name="pending" domain="[('x_state', '=', 'pending')]"/>
-                <filter string="Approved" name="approved" domain="[('x_state', '=', 'approved')]"/>
-                <filter string="Rejected" name="rejected" domain="[('x_state', '=', 'rejected')]"/>
-                <group expand="0" string="Group By">
-                    <filter string="Stage" name="group_by_stage" context="{'group_by': 'x_state'}"/>
-                    <filter string="Job Position" name="group_by_job" context="{'group_by': 'x_job_id'}"/>
-                    <filter string="HR Pool" name="group_by_pool" context="{'group_by': 'x_pool_id'}"/>
-                </group>
-            </search>
-        </field>
-    </record>
-
     <record id="view_hr_pool_conversion_request_list" model="ir.ui.view">
         <field name="name">x_hr.pool_conversion_request.list</field>
         <field name="model">x_hr.pool_conversion_request</field>
