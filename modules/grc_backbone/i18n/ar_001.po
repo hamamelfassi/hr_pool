@@ -1063,501 +1063,501 @@ msgid "Weekly"
 msgstr "أسبوعي"
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_corp_gov
+#: model:x_grc.functional_area,x_name:grc_backbone.area_corp_gov
 msgid "Corporate Governance & Regulatory Affairs"
 msgstr "الحوكمة المؤسسية والشؤون التنظيمية"
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_corp_gov
+#: model:x_grc.functional_area,x_description:grc_backbone.area_corp_gov
 msgid "Board and statutory governance, policy management, regulatory alignment, and executive governance records."
 msgstr "حوكمة مجلس الإدارة والحوكمة النظامية وإدارة السياسات والمواءمة التنظيمية وسجلات الحوكمة التنفيذية."
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_admin_support
+#: model:x_grc.functional_area,x_name:grc_backbone.area_admin_support
 msgid "Administration & Corporate Support"
 msgstr "الإدارة والدعم المؤسسي"
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_admin_support
+#: model:x_grc.functional_area,x_description:grc_backbone.area_admin_support
 msgid "Corporate administration, records control, correspondence handling, and office support."
 msgstr "الإدارة المؤسسية وضبط السجلات وإدارة المراسلات والدعم المكتبي."
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_hr_recruitment
+#: model:x_grc.functional_area,x_name:grc_backbone.area_hr_recruitment
 msgid "Human Resources & Recruitment"
 msgstr "الموارد البشرية والاستقطاب"
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_hr_recruitment
+#: model:x_grc.functional_area,x_description:grc_backbone.area_hr_recruitment
 msgid "Candidate intake, recruitment handoff, and governed workforce onboarding."
 msgstr "استقبال المرشحين وتحويلهم إلى التوظيف الرسمي وتهيئة القوى العاملة وفق الضوابط."
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_hse_compliance
+#: model:x_grc.functional_area,x_name:grc_backbone.area_hse_compliance
 msgid "Health, Safety, Environment & Compliance"
 msgstr "الصحة والسلامة والبيئة والامتثال"
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_hse_compliance
+#: model:x_grc.functional_area,x_description:grc_backbone.area_hse_compliance
 msgid "Risk assessment, operational controls, compliance checks, incident governance, and HSE oversight."
 msgstr "تقييم المخاطر والضوابط التشغيلية وفحوصات الامتثال وحوكمة الحوادث والإشراف على الصحة والسلامة والبيئة."
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_medical_waste
+#: model:x_grc.functional_area,x_name:grc_backbone.area_medical_waste
 msgid "Medical Waste Management"
 msgstr "إدارة النفايات الطبية"
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_medical_waste
+#: model:x_grc.functional_area,x_description:grc_backbone.area_medical_waste
 msgid "Collection, transport, treatment, and final disposal of medical and biological waste."
 msgstr "جمع ونقل ومعالجة والتخلص النهائي من النفايات الطبية والبيولوجية."
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_hazardous_waste
+#: model:x_grc.functional_area,x_name:grc_backbone.area_hazardous_waste
 msgid "Hazardous & Industrial Waste Management"
 msgstr "إدارة النفايات الخطرة والصناعية"
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_hazardous_waste
+#: model:x_grc.functional_area,x_description:grc_backbone.area_hazardous_waste
 msgid "Handling, segregation, storage, transport, and treatment of hazardous and industrial waste streams."
 msgstr "مناولة وفرز وتخزين ونقل ومعالجة تدفقات النفايات الخطرة والصناعية."
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_marine_spill
+#: model:x_grc.functional_area,x_name:grc_backbone.area_marine_spill
 msgid "Marine & Oil Spill Response"
 msgstr "الاستجابة البحرية وانسكابات النفط"
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_marine_spill
+#: model:x_grc.functional_area,x_description:grc_backbone.area_marine_spill
 msgid "Containment, response, shoreline remediation, and emergency field mobilization."
 msgstr "الاحتواء والاستجابة ومعالجة الشواطئ والحشد الميداني للطوارئ."
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_cleaning_decon
+#: model:x_grc.functional_area,x_name:grc_backbone.area_cleaning_decon
 msgid "Industrial Cleaning & Decontamination"
 msgstr "التنظيف الصناعي وإزالة التلوث"
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_cleaning_decon
+#: model:x_grc.functional_area,x_description:grc_backbone.area_cleaning_decon
 msgid "Tank cleaning, industrial cleaning, decontamination, and recovery support."
 msgstr "تنظيف الخزانات والتنظيف الصناعي وإزالة التلوث ودعم الاسترداد."
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_env_monitoring
+#: model:x_grc.functional_area,x_name:grc_backbone.area_env_monitoring
 msgid "Environmental Monitoring & Laboratory Coordination"
 msgstr "الرصد البيئي وتنسيق المختبرات"
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_env_monitoring
+#: model:x_grc.functional_area,x_description:grc_backbone.area_env_monitoring
 msgid "Sampling, testing coordination, environmental analysis follow-up, and reporting closure."
 msgstr "أخذ العينات وتنسيق الاختبارات ومتابعة التحاليل البيئية وإقفال التقارير."
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_logistics_fleet
+#: model:x_grc.functional_area,x_name:grc_backbone.area_logistics_fleet
 msgid "Logistics, Fleet & Field Support"
 msgstr "اللوجستيات والأسطول والدعم الميداني"
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_logistics_fleet
+#: model:x_grc.functional_area,x_description:grc_backbone.area_logistics_fleet
 msgid "Fleet readiness, dispatch, site logistics, foreign team movement support, and field coordination."
 msgstr "جاهزية الأسطول والتشغيل واللوجستيات الموقعية ودعم حركة الفرق الأجنبية والتنسيق الميداني."
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_technical_liaison
+#: model:x_grc.functional_area,x_name:grc_backbone.area_technical_liaison
 msgid "Technical Liaison & External Coordination"
 msgstr "الاتصال الفني والتنسيق الخارجي"
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_technical_liaison
+#: model:x_grc.functional_area,x_description:grc_backbone.area_technical_liaison
 msgid "Technical coordination with regulators, oil entities, banks, and external stakeholders."
 msgstr "التنسيق الفني مع الجهات التنظيمية والجهات النفطية والمصارف وأصحاب المصلحة الخارجيين."
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_business_dev
+#: model:x_grc.functional_area,x_name:grc_backbone.area_business_dev
 msgid "Business Development, Tenders & Contracts"
 msgstr "تطوير الأعمال والمناقصات والعقود"
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_business_dev
+#: model:x_grc.functional_area,x_description:grc_backbone.area_business_dev
 msgid "Tender preparation, contractual governance, client response management, and proposal coordination."
 msgstr "إعداد المناقصات وحوكمة العقود وإدارة الردود على العملاء وتنسيق العروض."
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_name:grc_backbone.area_finance_bank
+#: model:x_grc.functional_area,x_name:grc_backbone.area_finance_bank
 msgid "Finance & Banking Coordination"
 msgstr "التنسيق المالي والمصرفي"
 
 #. module: grc_backbone
-#: model_terms:x_grc.functional_area,x_description:grc_backbone.area_finance_bank
+#: model:x_grc.functional_area,x_description:grc_backbone.area_finance_bank
 msgid "Banking coordination, signatory updates, guarantee processing, and procedural financial liaison."
 msgstr "التنسيق المصرفي وتحديث المفوضين ومعالجة الضمانات والاتصال المالي الإجرائي."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_policy_control
+#: model:x_grc.function,x_name:grc_backbone.fn_policy_control
 msgid "Policy & Procedure Control"
 msgstr "ضبط السياسات والإجراءات"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_policy_control
+#: model:x_grc.function,x_description:grc_backbone.fn_policy_control
 msgid "Corporate policy drafting, maintenance, and controlled release."
 msgstr "صياغة السياسات المؤسسية وصيانتها وإصدارها بصورة مضبوطة."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_regulatory_registers
+#: model:x_grc.function,x_name:grc_backbone.fn_regulatory_registers
 msgid "Regulatory Register Management"
 msgstr "إدارة السجل التنظيمي"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_regulatory_registers
+#: model:x_grc.function,x_description:grc_backbone.fn_regulatory_registers
 msgid "Tracking external legal and regulatory governance requirements."
 msgstr "متابعة المتطلبات القانونية والتنظيمية الخارجية الخاصة بالحوكمة."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_executive_decisions
+#: model:x_grc.function,x_name:grc_backbone.fn_executive_decisions
 msgid "Executive Decision Logging"
 msgstr "تسجيل القرارات التنفيذية"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_executive_decisions
+#: model:x_grc.function,x_description:grc_backbone.fn_executive_decisions
 msgid "Recording and maintaining executive governance decisions."
 msgstr "تسجيل قرارات الحوكمة التنفيذية والمحافظة عليها."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_admin_records
+#: model:x_grc.function,x_name:grc_backbone.fn_admin_records
 msgid "Records & Archive Control"
 msgstr "ضبط السجلات والأرشفة"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_admin_records
+#: model:x_grc.function,x_description:grc_backbone.fn_admin_records
 msgid "Maintaining controlled filing, archiving, and administrative records."
 msgstr "الحفاظ على الحفظ المنضبط والأرشفة والسجلات الإدارية."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_official_correspondence
+#: model:x_grc.function,x_name:grc_backbone.fn_official_correspondence
 msgid "Official Correspondence Coordination"
 msgstr "تنسيق المراسلات الرسمية"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_official_correspondence
+#: model:x_grc.function,x_description:grc_backbone.fn_official_correspondence
 msgid "Handling incoming and outgoing official communications."
 msgstr "إدارة المراسلات الرسمية الواردة والصادرة."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_candidate_pooling
+#: model:x_grc.function,x_name:grc_backbone.fn_candidate_pooling
 msgid "Candidate Intake & Pooling"
 msgstr "استقبال المرشحين وتجميعهم"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_candidate_pooling
+#: model:x_grc.function,x_description:grc_backbone.fn_candidate_pooling
 msgid "Capturing and classifying prospective applicant intake."
 msgstr "التقاط طلبات المتقدمين المحتملين وتصنيفها."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_recruitment_handoff
+#: model:x_grc.function,x_name:grc_backbone.fn_recruitment_handoff
 msgid "Formal Recruitment Handoff"
 msgstr "التحويل إلى التوظيف الرسمي"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_recruitment_handoff
+#: model:x_grc.function,x_description:grc_backbone.fn_recruitment_handoff
 msgid "Mapping intake candidates into formal recruitment jobs and workflows."
 msgstr "ربط مرشحي الاستقبال الأولي بوظائف ومسارات التوظيف الرسمية."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_onboarding_governance
+#: model:x_grc.function,x_name:grc_backbone.fn_onboarding_governance
 msgid "Onboarding Governance"
 msgstr "حوكمة التهيئة الوظيفية"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_onboarding_governance
+#: model:x_grc.function,x_description:grc_backbone.fn_onboarding_governance
 msgid "Ensuring required declarations and governance onboarding controls are completed."
 msgstr "ضمان استكمال الإقرارات المطلوبة وضوابط التهيئة المرتبطة بالحوكمة."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_risk_assessment
+#: model:x_grc.function,x_name:grc_backbone.fn_risk_assessment
 msgid "Risk Assessment & Control Design"
 msgstr "تقييم المخاطر وتصميم الضوابط"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_risk_assessment
+#: model:x_grc.function,x_description:grc_backbone.fn_risk_assessment
 msgid "Assessing risks and defining governance controls."
 msgstr "تقييم المخاطر وتحديد ضوابط الحوكمة."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_compliance_inspection
+#: model:x_grc.function,x_name:grc_backbone.fn_compliance_inspection
 msgid "Compliance Inspection & Verification"
 msgstr "فحص الامتثال والتحقق"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_compliance_inspection
+#: model:x_grc.function,x_description:grc_backbone.fn_compliance_inspection
 msgid "Executing and recording compliance checks against controls and provisions."
 msgstr "تنفيذ وتسجيل فحوصات الامتثال مقابل الضوابط والأحكام."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_incident_followup
+#: model:x_grc.function,x_name:grc_backbone.fn_incident_followup
 msgid "Incident Reporting & Corrective Follow-Up"
 msgstr "الإبلاغ عن الحوادث ومتابعة الإجراءات التصحيحية"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_incident_followup
+#: model:x_grc.function,x_description:grc_backbone.fn_incident_followup
 msgid "Logging incidents and coordinating corrective follow-up."
 msgstr "تسجيل الحوادث وتنسيق متابعة الإجراءات التصحيحية."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_medical_collection
+#: model:x_grc.function,x_name:grc_backbone.fn_medical_collection
 msgid "Medical Waste Collection"
 msgstr "جمع النفايات الطبية"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_medical_collection
+#: model:x_grc.function,x_description:grc_backbone.fn_medical_collection
 msgid "Collection of medical and biological waste from source points."
 msgstr "جمع النفايات الطبية والبيولوجية من نقاط المصدر."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_medical_transport
+#: model:x_grc.function,x_name:grc_backbone.fn_medical_transport
 msgid "Medical Waste Transport"
 msgstr "نقل النفايات الطبية"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_medical_transport
+#: model:x_grc.function,x_description:grc_backbone.fn_medical_transport
 msgid "Controlled movement of medical waste under governed handling procedures."
 msgstr "نقل النفايات الطبية بشكل منضبط وفق إجراءات المناولة المعتمدة."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_medical_disposal
+#: model:x_grc.function,x_name:grc_backbone.fn_medical_disposal
 msgid "Medical Waste Treatment & Final Disposal"
 msgstr "معالجة النفايات الطبية والتخلص النهائي منها"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_medical_disposal
+#: model:x_grc.function,x_description:grc_backbone.fn_medical_disposal
 msgid "Treatment and approved final disposal of medical waste."
 msgstr "معالجة النفايات الطبية والتخلص النهائي المعتمد منها."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_haz_storage
+#: model:x_grc.function,x_name:grc_backbone.fn_haz_storage
 msgid "Hazardous Waste Segregation & Storage"
 msgstr "فرز وتخزين النفايات الخطرة"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_haz_storage
+#: model:x_grc.function,x_description:grc_backbone.fn_haz_storage
 msgid "Segregation, controlled storage, and custody of hazardous waste."
 msgstr "فرز النفايات الخطرة وتخزينها بشكل منضبط وحفظ عهدتها."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_haz_transport
+#: model:x_grc.function,x_name:grc_backbone.fn_haz_transport
 msgid "Hazardous & Industrial Waste Transport"
 msgstr "نقل النفايات الخطرة والصناعية"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_haz_transport
+#: model:x_grc.function,x_description:grc_backbone.fn_haz_transport
 msgid "Transport coordination for hazardous and industrial waste operations."
 msgstr "تنسيق النقل لعمليات النفايات الخطرة والصناعية."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_haz_treatment
+#: model:x_grc.function,x_name:grc_backbone.fn_haz_treatment
 msgid "Hazardous Waste Treatment Coordination"
 msgstr "تنسيق معالجة النفايات الخطرة"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_haz_treatment
+#: model:x_grc.function,x_description:grc_backbone.fn_haz_treatment
 msgid "Treatment and controlled processing of hazardous waste streams."
 msgstr "معالجة وتسيير تدفقات النفايات الخطرة بطريقة منضبطة."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_spill_containment
+#: model:x_grc.function,x_name:grc_backbone.fn_spill_containment
 msgid "Marine Spill Containment"
 msgstr "احتواء الانسكابات البحرية"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_spill_containment
+#: model:x_grc.function,x_description:grc_backbone.fn_spill_containment
 msgid "Rapid containment and response for marine spill incidents."
 msgstr "الاحتواء السريع والاستجابة لحوادث الانسكابات البحرية."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_shoreline_remediation
+#: model:x_grc.function,x_name:grc_backbone.fn_shoreline_remediation
 msgid "Shoreline Remediation"
 msgstr "معالجة الشواطئ"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_shoreline_remediation
+#: model:x_grc.function,x_description:grc_backbone.fn_shoreline_remediation
 msgid "Field remediation and contamination recovery onshore/coastal areas."
 msgstr "المعالجة الميدانية واسترداد التلوث في المناطق الساحلية والبرية."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_emergency_mobilization
+#: model:x_grc.function,x_name:grc_backbone.fn_emergency_mobilization
 msgid "Emergency Response Mobilization"
 msgstr "الحشد للاستجابة للطوارئ"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_emergency_mobilization
+#: model:x_grc.function,x_description:grc_backbone.fn_emergency_mobilization
 msgid "Rapid field mobilization for spill and emergency incidents."
 msgstr "الحشد الميداني السريع لحوادث الانسكاب والطوارئ."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_tank_cleaning
+#: model:x_grc.function,x_name:grc_backbone.fn_tank_cleaning
 msgid "Tank Cleaning"
 msgstr "تنظيف الخزانات"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_tank_cleaning
+#: model:x_grc.function,x_description:grc_backbone.fn_tank_cleaning
 msgid "Cleaning and preparation of tanks and confined industrial units."
 msgstr "تنظيف وتجهيز الخزانات والوحدات الصناعية المغلقة."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_site_cleaning
+#: model:x_grc.function,x_name:grc_backbone.fn_site_cleaning
 msgid "Industrial Site Cleaning"
 msgstr "تنظيف المواقع الصناعية"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_site_cleaning
+#: model:x_grc.function,x_description:grc_backbone.fn_site_cleaning
 msgid "Cleaning and recovery support at industrial sites."
 msgstr "تنفيذ أعمال التنظيف ودعم الاسترداد في المواقع الصناعية."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_decontamination
+#: model:x_grc.function,x_name:grc_backbone.fn_decontamination
 msgid "Decontamination & Recovery"
 msgstr "إزالة التلوث والاسترداد"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_decontamination
+#: model:x_grc.function,x_description:grc_backbone.fn_decontamination
 msgid "Decontamination procedures and recovery support activities."
 msgstr "إجراءات إزالة التلوث وأنشطة دعم الاسترداد."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_sampling
+#: model:x_grc.function,x_name:grc_backbone.fn_sampling
 msgid "Environmental Sampling"
 msgstr "أخذ العينات البيئية"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_sampling
+#: model:x_grc.function,x_description:grc_backbone.fn_sampling
 msgid "Sampling of waste, water, soil, or other environmental media."
 msgstr "أخذ عينات من النفايات أو المياه أو التربة أو غيرها من الأوساط البيئية."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_lab_coordination
+#: model:x_grc.function,x_name:grc_backbone.fn_lab_coordination
 msgid "Laboratory Coordination & Analysis Follow-Up"
 msgstr "تنسيق المختبرات ومتابعة التحاليل"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_lab_coordination
+#: model:x_grc.function,x_description:grc_backbone.fn_lab_coordination
 msgid "Coordinating laboratory analysis and results follow-up."
 msgstr "تنسيق التحاليل المخبرية ومتابعة النتائج."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_env_reporting
+#: model:x_grc.function,x_name:grc_backbone.fn_env_reporting
 msgid "Environmental Reporting Closure"
 msgstr "إقفال التقارير البيئية"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_env_reporting
+#: model:x_grc.function,x_description:grc_backbone.fn_env_reporting
 msgid "Closing environmental reports and final analytical submissions."
 msgstr "إقفال التقارير البيئية والتقارير التحليلية النهائية."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_fleet_dispatch
+#: model:x_grc.function,x_name:grc_backbone.fn_fleet_dispatch
 msgid "Fleet Dispatch & Movement Control"
 msgstr "تشغيل الأسطول وضبط الحركة"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_fleet_dispatch
+#: model:x_grc.function,x_description:grc_backbone.fn_fleet_dispatch
 msgid "Dispatching and movement control for vehicles and field assets."
 msgstr "تشغيل المركبات وضبط حركة الأصول الميدانية."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_foreign_team_support
+#: model:x_grc.function,x_name:grc_backbone.fn_foreign_team_support
 msgid "Foreign Team Logistics & Permit Support"
 msgstr "الدعم اللوجستي وتصاريح الفرق الأجنبية"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_foreign_team_support
+#: model:x_grc.function,x_description:grc_backbone.fn_foreign_team_support
 msgid "Coordinating foreign team entry, visits, and movement support."
 msgstr "تنسيق دخول الفرق الأجنبية وزياراتها ودعم حركتها."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_site_support
+#: model:x_grc.function,x_name:grc_backbone.fn_site_support
 msgid "Site Receipt & Field Support Coordination"
 msgstr "تنسيق الاستلام بالموقع والدعم الميداني"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_site_support
+#: model:x_grc.function,x_description:grc_backbone.fn_site_support
 msgid "Coordinating site support, receipt, and field logistics."
 msgstr "تنسيق الدعم الموقعي وأعمال الاستلام واللوجستيات الميدانية."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_regulator_liaison
+#: model:x_grc.function,x_name:grc_backbone.fn_regulator_liaison
 msgid "Regulator & Oil Entity Liaison"
 msgstr "الاتصال مع الجهات التنظيمية والجهات النفطية"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_regulator_liaison
+#: model:x_grc.function,x_description:grc_backbone.fn_regulator_liaison
 msgid "Liaison with regulators, oil companies, and official stakeholders."
 msgstr "الاتصال مع الجهات التنظيمية والشركات النفطية وأصحاب المصلحة الرسميين."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_contract_requirements
+#: model:x_grc.function,x_name:grc_backbone.fn_contract_requirements
 msgid "Contractual Requirement Coordination"
 msgstr "تنسيق المتطلبات التعاقدية"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_contract_requirements
+#: model:x_grc.function,x_description:grc_backbone.fn_contract_requirements
 msgid "Coordinating contract-linked technical and compliance requirements."
 msgstr "تنسيق المتطلبات الفنية ومتطلبات الامتثال المرتبطة بالعقود."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_meeting_coordination
+#: model:x_grc.function,x_name:grc_backbone.fn_meeting_coordination
 msgid "Technical Meeting & Committee Coordination"
 msgstr "تنسيق الاجتماعات الفنية واللجان"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_meeting_coordination
+#: model:x_grc.function,x_description:grc_backbone.fn_meeting_coordination
 msgid "Preparing meetings, committees, and official coordination records."
 msgstr "إعداد الاجتماعات واللجان وسجلات التنسيق الرسمية."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_tender_prep
+#: model:x_grc.function,x_name:grc_backbone.fn_tender_prep
 msgid "Tender Preparation & Submission"
 msgstr "إعداد المناقصات وتقديمها"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_tender_prep
+#: model:x_grc.function,x_description:grc_backbone.fn_tender_prep
 msgid "Preparing and structuring governed tender submissions."
 msgstr "إعداد وتنسيق ملفات تقديم المناقصات وفق الضوابط."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_clause_governance
+#: model:x_grc.function,x_name:grc_backbone.fn_clause_governance
 msgid "Contract Clause Governance"
 msgstr "حوكمة بنود العقود"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_clause_governance
+#: model:x_grc.function,x_description:grc_backbone.fn_clause_governance
 msgid "Selecting and maintaining governed contractual clauses."
 msgstr "اختيار البنود التعاقدية المحكومة وصيانتها."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_client_response
+#: model:x_grc.function,x_name:grc_backbone.fn_client_response
 msgid "Client Proposal & Response Coordination"
 msgstr "تنسيق العروض والردود للعملاء"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_client_response
+#: model:x_grc.function,x_description:grc_backbone.fn_client_response
 msgid "Coordinating proposal responses and commercial follow-up."
 msgstr "تنسيق الردود على العروض والمتابعة التجارية."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_bank_coordination
+#: model:x_grc.function,x_name:grc_backbone.fn_bank_coordination
 msgid "Bank Account & Signatory Coordination"
 msgstr "تنسيق الحسابات المصرفية والمفوضين"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_bank_coordination
+#: model:x_grc.function,x_description:grc_backbone.fn_bank_coordination
 msgid "Coordinating bank account matters and authorized signatory updates."
 msgstr "تنسيق شؤون الحسابات المصرفية وتحديث المفوضين المعتمدين."
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_name:grc_backbone.fn_guarantee_processing
+#: model:x_grc.function,x_name:grc_backbone.fn_guarantee_processing
 msgid "Letters of Guarantee Coordination"
 msgstr "تنسيق خطابات الضمان"
 
 #. module: grc_backbone
-#: model_terms:x_grc.function,x_description:grc_backbone.fn_guarantee_processing
+#: model:x_grc.function,x_description:grc_backbone.fn_guarantee_processing
 msgid "Following guarantee and procedural banking requirements."
 msgstr "متابعة متطلبات خطابات الضمان والمتطلبات المصرفية الإجرائية."
