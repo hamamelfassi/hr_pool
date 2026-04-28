@@ -17,12 +17,12 @@
                         name="hr_pool.action_hr_pool_conversion_request_approve"
                         string="Approve"
                         class="btn-primary"
-                        invisible="x_state != 'pending' or not x_job_id"/>
+                        invisible="x_state not in ['in_progress', 'pending'] or not x_job_id"/>
                 <button type="action"
                         name="hr_pool.action_hr_pool_conversion_request_reject"
                         string="Reject"
                         class="btn-secondary"
-                        invisible="x_state != 'pending'"/>
+                        invisible="x_state not in ['in_progress', 'pending']"/>
             </list>
         </field>
     </record>
@@ -80,24 +80,24 @@
         <field name="arch" type="xml">
             <form string="Conversion Request">
                 <header>
-                    <field name="x_state" widget="statusbar" statusbar_visible="pending,approved,rejected" readonly="1"/>
+                    <field name="x_state" widget="statusbar" statusbar_visible="in_progress,approved,rejected" readonly="1"/>
                     <button type="action"
                             name="hr_pool.action_hr_pool_conversion_request_approve"
                             string="Approve"
                             class="btn-primary"
-                            invisible="x_state != 'pending' or not x_job_id"/>
+                            invisible="x_state not in ['in_progress', 'pending'] or not x_job_id"/>
                     <button type="action"
                             name="hr_pool.action_hr_pool_conversion_request_reject"
                             string="Reject"
                             class="btn-secondary"
-                            invisible="x_state != 'pending'"/>
+                            invisible="x_state not in ['in_progress', 'pending']"/>
                 </header>
                 <sheet>
                     <group>
                         <group>
                             <field name="x_name"/>
                             <field name="x_pool_id" readonly="1"/>
-                            <field name="x_job_id" readonly="x_state != 'pending'"/>
+                            <field name="x_job_id" readonly="x_state not in ['in_progress', 'pending']"/>
                         </group>
                         <group>
                             <field name="x_requested_by" readonly="1"/>

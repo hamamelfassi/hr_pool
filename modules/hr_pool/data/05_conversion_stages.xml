@@ -5,6 +5,11 @@
         <field name="name">Pending</field>
         <field name="value">pending</field>
     </record>
+    <record id="sel_conversion_stage_in_progress" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_conversion_request_x_state"/>
+        <field name="name">In Progress</field>
+        <field name="value">in_progress</field>
+    </record>
     <record id="sel_conversion_stage_approved" model="ir.model.fields.selection">
         <field name="field_id" ref="hr_pool.field_conversion_request_x_state"/>
         <field name="name">Approved</field>

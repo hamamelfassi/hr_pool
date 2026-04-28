@@ -6,7 +6,7 @@
         <field name="view_mode">kanban,list,form</field>
         <field name="mobile_view_mode">kanban</field>
         <field name="limit">80</field>
-        <field name="context">{'default_x_state': 'pending', 'group_by': 'x_state'}</field>
+        <field name="context">{'default_x_state': 'in_progress', 'group_by': 'x_state'}</field>
     </record>
 
     <record id="action_hr_pool_conversion_request_view_kanban" model="ir.actions.act_window.view">

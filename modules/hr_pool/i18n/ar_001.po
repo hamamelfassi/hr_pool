@@ -936,6 +936,9 @@ msgstr "طلبات التحويل"
 msgid "Convert"
 msgstr "تحويل"
 
+msgid "In Progress"
+msgstr "قيد المعالجة"
+
 msgid "Integration Metadata"
 msgstr "بيانات التكامل"
 

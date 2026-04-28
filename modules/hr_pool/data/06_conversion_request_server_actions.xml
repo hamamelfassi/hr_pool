@@ -16,7 +16,7 @@ for rec in records:
 
     existing_request = False
     for item in rec.x_conversion_request_ids:
-        if item.x_state in ('pending', 'approved'):
+        if item.x_state in ('in_progress', 'pending', 'approved'):
             existing_request = item
             break
     if existing_request:
@@ -47,7 +47,7 @@ if len(records) == 1:
             'context': {
                 'default_x_name': pool_label,
                 'default_x_pool_id': pool_for_create.id,
-                'default_x_state': 'pending',
+                'default_x_state': 'in_progress',
                 'default_x_requested_by': env.user.id,
             },
         }
@@ -60,7 +60,7 @@ if len(records) == 1:
         <field name="state">code</field>
         <field name="code"><![CDATA[
 for req in records:
-    if req.x_state != 'pending':
+    if req.x_state not in ('in_progress', 'pending'):
         continue
     if not req.x_job_id:
         continue
@@ -117,7 +117,7 @@ for req in records:
         <field name="state">code</field>
         <field name="code"><![CDATA[
 for req in records:
-    if req.x_state != 'pending':
+    if req.x_state not in ('in_progress', 'pending'):
         continue
 
     pool = req.x_pool_id.sudo()
