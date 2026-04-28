@@ -116,6 +116,9 @@
                                    readonly="x_intake_phase in ['conversion', 'converted']"/>
                             <field name="x_reviewer_recommendation"/>
                             <field name="x_reviewer_user_id"/>
+                            <field name="x_conversion_job_id"
+                                   readonly="x_intake_phase in ['conversion', 'converted']"/>
+                            <field name="x_applicant_id" readonly="1" force_save="1"/>
                         </group>
                     </group>
                     <notebook>
@@ -231,13 +234,6 @@
                                 <field name="x_typed_consent_name"/>
                             </group>
                         </page>
-                        <page string="Recruitment Handoff">
-                            <group>
-                                <field name="x_conversion_job_id"
-                                       readonly="x_intake_phase in ['conversion', 'converted']"/>
-                                <field name="x_applicant_id" readonly="1" force_save="1"/>
-                            </group>
-                        </page>
                         <page string="Conversion Requests">
                             <group>
                                 <field name="x_conversion_request_ids" nolabel="1">
@@ -262,12 +258,6 @@
                             <group>
                                 <field name="x_fillout_last_updated_at" readonly="1"/>
                                 <field name="x_source_system" readonly="1"/>
-                            </group>
-                        </page>
-                        <page string="Attachments &amp; Signatures">
-                            <group>
-                                <field name="x_intake_pdf_attachment_id"/>
-                                <field name="x_signed_pdf_attachment_id"/>
                             </group>
                         </page>
                     </notebook>

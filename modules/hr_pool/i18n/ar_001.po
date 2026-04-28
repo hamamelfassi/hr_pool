@@ -596,11 +596,6 @@ msgid "Recruitment Applicant"
 msgstr "مقدم طلب التوظيف"
 
 #. module: hr_pool
-#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
-msgid "Recruitment Handoff"
-msgstr "الترحيل إلى التوظيف"
-
-#. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_candidate_origin_referral
 msgid "Referral"
 msgstr "إحالة"

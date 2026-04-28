@@ -14,7 +14,6 @@
 
         "models/02_fields_main.xml",
         "models/03_fields_child_and_helper.xml",
-        "models/04_fields_documents.xml",
         "models/05_conversion_request.xml",
 
         "security/ir.model.access.csv",
@@ -23,6 +22,7 @@
         "data/02_seed_helper_data.xml",
         "data/03_sequence.xml",
         "data/05_conversion_stages.xml",
+        "data/07_defaults.xml",
         "data/04_server_actions.xml",
         "data/06_conversion_request_server_actions.xml",
         "report/01_paperformat.xml",
