@@ -6,6 +6,7 @@ This repository is the shared working tree for Marsellia's Odoo SaaS custom modu
 
 - `modules/hr_pool/` - governed HR intake / pooling module
 - `modules/grc_backbone/` - governance, risk, compliance backbone module scaffold
+- `modules/hr_recruitment_custom/` - technical recruitment extension module
 
 ## Supporting structure
 

@@ -8,10 +8,10 @@ It keeps the program aligned across:
 
 - HR intake and public candidate pooling
 - GRC backbone and constitutional governance
-- Recruitment handoff and applicant lifecycle
+- recruitment handoff and applicant lifecycle
 - canonical task-template governance for repeatable operational work
 - future operational and commercial extensions
-- integration layers such as n8n, Fillout, Zite, and document generation
+- integration layers such as n8n, Fillout, Zite, documents, Sign, and report generation
 
 ## 2. Architectural posture
 
@@ -55,12 +55,27 @@ Owns:
 - public and internal intake
 - chairman-gated prescreening
 - reviewer recommendations
-- conversion requests
+- conversion request initiation
 - pool approval / hold / reject
 - linkage to functional area taxonomy
 - applicant backlink and provenance
+- intake-side audit trail and report snapshotting
 
-### 3.3 `hr_recruitment`
+### 3.3 `hr_recruitment_custom`
+
+The thin technical recruitment extension layer.
+
+Owns:
+
+- governed `hr.job` baseline fields
+- governed `hr.applicant` negotiated-role fields
+- conversion execution from intake to applicant
+- applicant backlink creation and read-only references
+- interview / evaluation enrichment helpers
+- negotiated TOR / job-description composition
+- document and Sign orchestration hooks where native Odoo needs extension
+
+### 3.4 `hr_recruitment`
 
 The formal job-bound applicant layer.
 
@@ -91,11 +106,13 @@ Work:
 ### Phase 2 - Controlled recruitment handoff
 
 Work:
-- conversion request model/action
-- chairman approval or rejection of conversion
-- applicant creation
-- back-linking to intake
+- conversion request child model with its own state/stage
+- convert button on `hr_pool` to create the request from an intake record
+- chairman approval or rejection of the request
+- applicant creation in native `hr.applicant`
+- read-only back-linking to intake
 - freeze or semi-freeze intake after conversion
+- keep stage-2 enrichment on native recruitment, not on intake
 
 ### Phase 3 - Phase 2 recruitment enrichment
 
@@ -105,6 +122,7 @@ Work:
 - negotiated TOR / job description generation
 - applicant-side completion surface
 - contract and signature flow
+- Sign / Documents / chatter-native applicant workflows
 
 ### Phase 4 - Operational governance expansion
 
@@ -149,11 +167,12 @@ Do not ship:
 
 1. split canonical GRC data from bridge logic
 2. normalize shared taxonomy and model ownership
-3. finish the HR Pool conversion boundary
-4. seed canonical task templates
-5. add phase-1 PDF snapshotting
-6. design phase-2 enrichment and document completion
-7. extend into operational consumption modules
+3. lock the HR Pool stage-1 conversion boundary
+4. define the stage-2 recruitment extension contract
+5. seed canonical task templates
+6. add phase-1 PDF snapshotting
+7. design phase-2 enrichment, document completion, and signature flows
+8. extend into operational consumption modules
 
 ## 8. Working rule
 
