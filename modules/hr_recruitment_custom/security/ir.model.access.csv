@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_applicant_function_line_user,applicant function line user,hr_recruitment_custom.model_x_hr_applicant_function_line,base.group_user,1,1,1,1

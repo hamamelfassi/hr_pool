@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="model_x_hr_applicant_function_line" model="ir.model">
+        <field name="name">Applicant Function Line</field>
+        <field name="model">x_hr.applicant_function_line</field>
+        <field name="state">manual</field>
+    </record>
+</odoo>

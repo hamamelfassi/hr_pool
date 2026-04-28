@@ -3,7 +3,7 @@
     <record id="field_hr_job_x_baseline_functional_area_id" model="ir.model.fields">
         <field name="model_id" ref="hr.model_hr_job"/>
         <field name="name">x_baseline_functional_area_id</field>
-        <field name="field_description">Baseline Functional Area</field>
+        <field name="field_description">Functional Area</field>
         <field name="ttype">many2one</field>
         <field name="relation">x_grc.functional_area</field>
         <field name="on_delete">restrict</field>
@@ -12,7 +12,7 @@
     <record id="field_hr_job_x_baseline_function_ids" model="ir.model.fields">
         <field name="model_id" ref="hr.model_hr_job"/>
         <field name="name">x_baseline_function_ids</field>
-        <field name="field_description">Baseline Functions</field>
+        <field name="field_description">Functions</field>
         <field name="ttype">many2many</field>
         <field name="relation">x_grc.function</field>
         <field name="relation_table">hr_recruitment_custom_hr_job_function_rel</field>
@@ -20,22 +20,58 @@
         <field name="column2">x_function_id</field>
     </record>
 
-    <record id="field_hr_applicant_x_negotiated_job_description" model="ir.model.fields">
+    <record id="field_hr_applicant_x_role_and_duty_line_ids" model="ir.model.fields">
         <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
-        <field name="name">x_negotiated_job_description</field>
-        <field name="field_description">Negotiated Job Description</field>
-        <field name="ttype">html</field>
+        <field name="name">x_role_and_duty_line_ids</field>
+        <field name="field_description">Applicant Functions</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.applicant_function_line</field>
+        <field name="relation_field">x_applicant_id</field>
     </record>
 
-    <record id="field_hr_applicant_x_negotiated_function_ids" model="ir.model.fields">
-        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
-        <field name="name">x_negotiated_function_ids</field>
-        <field name="field_description">Negotiated Functions</field>
-        <field name="ttype">many2many</field>
+    <record id="field_applicant_function_line_x_name" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_function_line"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Line Label</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_applicant_function_line_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_function_line"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+    </record>
+
+    <record id="field_applicant_function_line_x_applicant_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_function_line"/>
+        <field name="name">x_applicant_id</field>
+        <field name="field_description">Applicant</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.applicant</field>
+        <field name="required" eval="True"/>
+        <field name="on_delete">cascade</field>
+        <field name="index" eval="True"/>
+    </record>
+
+    <record id="field_applicant_function_line_x_functional_area_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_function_line"/>
+        <field name="name">x_functional_area_id</field>
+        <field name="field_description">Functional Area</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.functional_area</field>
+        <field name="required" eval="True"/>
+        <field name="on_delete">restrict</field>
+    </record>
+
+    <record id="field_applicant_function_line_x_function_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_function_line"/>
+        <field name="name">x_function_id</field>
+        <field name="field_description">Function</field>
+        <field name="ttype">many2one</field>
         <field name="relation">x_grc.function</field>
-        <field name="relation_table">hr_recruitment_custom_hr_applicant_function_rel</field>
-        <field name="column1">x_applicant_id</field>
-        <field name="column2">x_function_id</field>
+        <field name="required" eval="True"/>
+        <field name="on_delete">restrict</field>
+        <field name="index" eval="True"/>
     </record>
 </odoo>
-

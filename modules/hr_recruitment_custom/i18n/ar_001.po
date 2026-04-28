@@ -1,0 +1,87 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* hr_recruitment_custom
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server saas~19.2+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-28 20:45+0000\n"
+"PO-Revision-Date: 2026-04-28 20:45+0000\n"
+"Last-Translator: \n"
+"Language-Team: Arabic\n"
+"Language: ar_001\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#. module: hr_recruitment_custom
+#: model:ir.actions.server,name:hr_recruitment_custom.action_hr_applicant_seed_role_and_duties
+#: model:base.automation,name:hr_recruitment_custom.automation_hr_applicant_seed_role_and_duties
+msgid "Seed Applicant Role and Duties on Create"
+msgstr "توريث الدور والمهام للمتقدم عند الإنشاء"
+
+#. module: hr_recruitment_custom
+#: model:ir.actions.server,name:hr_recruitment_custom.action_hr_job_populate_baseline_functions_on_area_change
+#: model:base.automation,name:hr_recruitment_custom.automation_hr_job_populate_baseline_functions_on_area_change
+msgid "Populate Job Functions on Functional Area Change"
+msgstr "تعبئة وظائف المنصب عند تغيير المجال الوظيفي"
+
+#. module: hr_recruitment_custom
+#: model:ir.actions.server,name:hr_recruitment_custom.action_hr_job_populate_baseline_functions_on_create
+#: model:base.automation,name:hr_recruitment_custom.automation_hr_job_populate_baseline_functions_on_create
+msgid "Populate Job Functions on Create"
+msgstr "تعبئة وظائف المنصب عند الإنشاء"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_function_line_x_applicant_id
+msgid "Applicant"
+msgstr "المتقدم"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_role_and_duty_line_ids
+msgid "Applicant Functions"
+msgstr "وظائف المتقدم"
+
+#. module: hr_recruitment_custom
+#: model:ir.model,name:hr_recruitment_custom.model_x_hr_applicant_function_line
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Applicant Function Line"
+msgstr "سطر وظيفة المتقدم"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_job_x_baseline_function_ids
+msgid "Functions"
+msgstr "الوظائف"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_function_line_x_function_id
+msgid "Function"
+msgstr "الوظيفة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_function_line_x_functional_area_id
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_job_x_baseline_functional_area_id
+msgid "Functional Area"
+msgstr "المجال الوظيفي"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_job_form_inherit_hr_recruitment_custom
+msgid "Job Description"
+msgstr "الوصف الوظيفي"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_function_line_x_name
+msgid "Line Label"
+msgstr "عنوان السطر"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Role and Duties"
+msgstr "الدور والمهام"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_function_line_x_sequence
+msgid "Sequence"
+msgstr "التسلسل"

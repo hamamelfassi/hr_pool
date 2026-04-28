@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="automation_hr_job_populate_baseline_functions_on_create" model="base.automation">
+        <field name="name">Populate Job Functions on Create</field>
+        <field name="active" eval="True"/>
+        <field name="trigger">on_create</field>
+        <field name="model_id" ref="hr.model_hr_job"/>
+    </record>
+
+    <record id="action_hr_job_populate_baseline_functions_on_create" model="ir.actions.server">
+        <field name="name">Populate Job Functions on Create</field>
+        <field name="model_id" ref="hr.model_hr_job"/>
+        <field name="base_automation_id" ref="hr_recruitment_custom.automation_hr_job_populate_baseline_functions_on_create"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    function_ids = rec.x_baseline_functional_area_id.x_function_ids.ids if rec.x_baseline_functional_area_id else []
+    rec.sudo().write({'x_baseline_function_ids': [(6, 0, function_ids)]})
+        ]]></field>
+    </record>
+
+    <record id="automation_hr_job_populate_baseline_functions_on_area_change" model="base.automation">
+        <field name="name">Populate Job Functions on Functional Area Change</field>
+        <field name="active" eval="True"/>
+        <field name="trigger">on_write</field>
+        <field name="model_id" ref="hr.model_hr_job"/>
+        <field name="trigger_field_ids" eval="[(6, 0, [ref('hr_recruitment_custom.field_hr_job_x_baseline_functional_area_id')])]"/>
+    </record>
+
+    <record id="action_hr_job_populate_baseline_functions_on_area_change" model="ir.actions.server">
+        <field name="name">Populate Job Functions on Functional Area Change</field>
+        <field name="model_id" ref="hr.model_hr_job"/>
+        <field name="base_automation_id" ref="hr_recruitment_custom.automation_hr_job_populate_baseline_functions_on_area_change"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    function_ids = rec.x_baseline_functional_area_id.x_function_ids.ids if rec.x_baseline_functional_area_id else []
+    rec.sudo().write({'x_baseline_function_ids': [(6, 0, function_ids)]})
+        ]]></field>
+    </record>
+
+    <record id="automation_hr_applicant_seed_role_and_duties" model="base.automation">
+        <field name="name">Seed Applicant Role and Duties on Create</field>
+        <field name="active" eval="True"/>
+        <field name="trigger">on_create</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+    </record>
+
+    <record id="action_hr_applicant_seed_role_and_duties" model="ir.actions.server">
+        <field name="name">Seed Applicant Role and Duties on Create</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="base_automation_id" ref="hr_recruitment_custom.automation_hr_applicant_seed_role_and_duties"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    if not rec.job_id or rec.x_role_and_duty_line_ids:
+        continue
+
+    line_commands = []
+    for sequence, function in enumerate(rec.job_id.x_baseline_function_ids, start=1):
+        function_area = function.x_functional_area_id or rec.job_id.x_baseline_functional_area_id
+        if not function_area:
+            continue
+
+        line_commands.append((0, 0, {
+            'x_name': function.display_name,
+            'x_sequence': sequence * 10,
+            'x_functional_area_id': function_area.id,
+            'x_function_id': function.id,
+        }))
+
+    if line_commands:
+        rec.sudo().write({'x_role_and_duty_line_ids': line_commands})
+        ]]></field>
+    </record>
+</odoo>

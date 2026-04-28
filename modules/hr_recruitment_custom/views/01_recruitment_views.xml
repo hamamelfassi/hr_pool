@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="hr.view_hr_job_form"/>
         <field name="arch" type="xml">
             <xpath expr="//sheet/notebook" position="inside">
-                <page string="Governed Baseline">
+                <page string="Job Description">
                     <group>
                         <field name="x_baseline_functional_area_id"/>
                         <field name="x_baseline_function_ids" widget="many2many_tags"/>
@@ -22,11 +22,21 @@
         <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//sheet/notebook" position="inside">
-                <page string="Negotiated Role">
-                    <group>
-                        <field name="x_negotiated_job_description" placeholder="Record the negotiated duties, scope, and any final role wording here."/>
-                        <field name="x_negotiated_function_ids" widget="many2many_tags"/>
-                    </group>
+                <page string="Role and Duties">
+                    <field name="x_role_and_duty_line_ids" context="{'default_x_applicant_id': id}">
+                        <list editable="bottom">
+                            <field name="x_sequence" widget="handle"/>
+                            <field name="x_functional_area_id"/>
+                            <field name="x_function_id" domain="[('x_functional_area_id', '=', x_functional_area_id)]"/>
+                        </list>
+                        <form string="Applicant Function Line">
+                            <group>
+                                <field name="x_functional_area_id"/>
+                                <field name="x_function_id" domain="[('x_functional_area_id', '=', x_functional_area_id)]"/>
+                                <field name="x_sequence"/>
+                            </group>
+                        </form>
+                    </field>
                 </page>
             </xpath>
         </field>
