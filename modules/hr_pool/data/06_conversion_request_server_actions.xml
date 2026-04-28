@@ -16,7 +16,7 @@ for rec in records:
 
     existing_request = False
     for item in rec.x_conversion_request_ids:
-        if item.x_state in ('in_progress', 'pending', 'approved'):
+        if item.x_state in ('in_progress', 'approved'):
             existing_request = item
             break
     if existing_request:
@@ -60,7 +60,7 @@ if len(records) == 1:
         <field name="state">code</field>
         <field name="code"><![CDATA[
 for req in records:
-    if req.x_state not in ('in_progress', 'pending'):
+    if req.x_state != 'in_progress':
         continue
     if not req.x_job_id:
         continue
@@ -117,7 +117,7 @@ for req in records:
         <field name="state">code</field>
         <field name="code"><![CDATA[
 for req in records:
-    if req.x_state not in ('in_progress', 'pending'):
+    if req.x_state != 'in_progress':
         continue
 
     pool = req.x_pool_id.sudo()

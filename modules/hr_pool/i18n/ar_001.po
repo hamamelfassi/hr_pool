@@ -4,26 +4,37 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: hr_pool 1.1\n"
+"Project-Id-Version: Odoo Server saas~19.2+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-28 15:12+0000\n"
+"PO-Revision-Date: 2026-04-28 15:12+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: ar_001\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_accuracy_declaration
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
 msgid "Accuracy Declaration"
 msgstr "إقرار صحة البيانات"
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_commitment_type_x_active
+#: model:ir.model.fields,field_description:hr_pool.field_hr_language_x_active
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_active
+#: model:ir.model.fields,field_description:hr_pool.field_proficiency_level_x_active
 #: model:ir.model.fields,field_description:hr_pool.field_role_type_x_active
+#: model:ir.model.fields,field_description:hr_pool.field_skill_type_master_x_active
 msgid "Active"
 msgstr "نشط"
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_address_text
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
 msgid "Address"
 msgstr "العنوان"
 
@@ -34,31 +45,58 @@ msgstr "مكتبية"
 
 #. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_skill_type_administrative
+#: model:x_hr.skill_type,x_name:hr_pool.skill_type_administrative
 msgid "Administrative"
 msgstr "إدارية"
 
 #. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_working_level_advanced
+#: model:x_hr.proficiency_level,x_name:hr_pool.proficiency_level_advanced
 msgid "Advanced"
 msgstr "متقدم"
 
 #. module: hr_pool
-#: model:ir.actions.server,name:hr_pool.action_hr_pool_approve_to_pool
+#: model:ir.ui.menu,name:hr_pool.menu_hr_pool_records_all
+msgid "All Records"
+msgstr "كل المتقدمين"
+
+#. module: hr_pool
+#: model:x_hr.language,x_name:hr_pool.lang_12
+msgid "Amharic"
+msgstr "الأمهرية"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_conversion_request_form
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_conversion_request_list
 #: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
+msgid "Approve"
+msgstr "اعتماد"
+
+#. module: hr_pool
+#: model:ir.actions.server,name:hr_pool.action_hr_pool_conversion_request_approve
+msgid "Approve Conversion Request"
+msgstr "اعتماد طلب الترحيل"
+
+#. module: hr_pool
+#: model:ir.actions.server,name:hr_pool.action_hr_pool_approve_to_pool
 msgid "Approve to Pool"
 msgstr "اعتماد إلى الخزان"
 
-#: model:ir.actions.server,name:hr_pool.action_hr_pool_populate_intake_identity
-msgid "Populate Intake Identity"
-msgstr "تعبئة هوية الاستقبال"
-
 #. module: hr_pool
+#: model:ir.model.fields.selection,name:hr_pool.sel_conversion_stage_approved
 #: model:ir.model.fields.selection,name:hr_pool.sel_decision_approved
 msgid "Approved"
 msgstr "معتمد"
 
-msgid "Approve"
-msgstr "اعتماد"
+#. module: hr_pool
+#: model:x_hr.language,x_name:hr_pool.lang_2
+msgid "Arabic"
+msgstr "العربية"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Arabic Name"
+msgstr ""
 
 #. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_qualification_bachelors
@@ -67,8 +105,34 @@ msgstr "بكالوريوس"
 
 #. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_working_level_basic
+#: model:x_hr.proficiency_level,x_name:hr_pool.proficiency_level_basic
 msgid "Basic"
 msgstr "أساسي"
+
+#. module: hr_pool
+#: model:x_hr.language,x_name:hr_pool.lang_17
+msgid "Bengali"
+msgstr "البنغالية"
+
+#. module: hr_pool
+#: model:x_hr.language,x_name:hr_pool.lang_7
+msgid "Berber"
+msgstr "البربرية"
+
+#. module: hr_pool
+#: model:ir.ui.menu,name:hr_pool.menu_hr_pool_records_by_decision
+msgid "By Chairman Decision"
+msgstr "حسب قرار الرئيس"
+
+#. module: hr_pool
+#: model:ir.ui.menu,name:hr_pool.menu_hr_pool_records_by_phase
+msgid "By Intake Phase"
+msgstr "حسب مرحلة الإدخال"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Candidate"
+msgstr ""
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_candidate_origin
@@ -77,6 +141,7 @@ msgstr "مصدر المرشح"
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_chairman_decision
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
 msgid "Chairman Decision"
 msgstr "قرار الرئيس"
 
@@ -87,6 +152,7 @@ msgstr "شهادة كلية"
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_commitment_type_x_name
+#: model:ir.model.fields,field_description:hr_pool.field_commitment_x_commitment_type_id
 #: model_terms:ir.ui.view,arch_db:hr_pool.view_commitment_type_form
 msgid "Commitment Type"
 msgstr "نوع الالتزام"
@@ -99,7 +165,7 @@ msgid "Commitment Types"
 msgstr "أنواع الالتزامات"
 
 #. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_commitment_type_ids
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_commitment_line_ids
 #: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
 msgid "Commitments"
 msgstr "الالتزامات"
@@ -136,6 +202,7 @@ msgstr "تم اعتماد الترحيل"
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_conversion_job_id
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
 msgid "Conversion Job"
 msgstr "وظيفة للترحيل"
 
@@ -145,14 +212,43 @@ msgid "Conversion Rejected"
 msgstr "تم رفض الترحيل"
 
 #. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_conversion_request_form
+msgid "Conversion Request"
+msgstr "طلب الترحيل"
+
+#. module: hr_pool
+#: model:ir.actions.act_window,name:hr_pool.action_hr_pool_conversion_request
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_conversion_request_ids
+#: model:ir.ui.menu,name:hr_pool.menu_hr_pool_conversion_requests
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_conversion_request_list
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
+msgid "Conversion Requests"
+msgstr "طلبات الترحيل"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
+msgid "Convert"
+msgstr "ترحيل"
+
+#. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_phase_converted
 msgid "Converted"
 msgstr "تم الترحيل"
 
 #. module: hr_pool
+#: model:ir.actions.server,name:hr_pool.action_hr_pool_create_conversion_request
+msgid "Create Conversion Request"
+msgstr "إنشاء طلب ترحيل"
+
+#. module: hr_pool
 #: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
 msgid "Credentials"
 msgstr "المؤهلات"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Credentials / المؤهلات"
+msgstr ""
 
 #. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_candidate_origin_current_staff
@@ -161,13 +257,29 @@ msgstr "موظف حالي"
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_date_of_birth
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
 msgid "Date of Birth"
 msgstr "تاريخ الميلاد"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_conversion_request_x_decided_by
+msgid "Decided By"
+msgstr "صاحب القرار"
 
 #. module: hr_pool
 #: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
 msgid "Declarations"
 msgstr "الإقرارات"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Declarations and Handoff"
+msgstr ""
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Description"
+msgstr ""
 
 #. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_qualification_diploma
@@ -178,16 +290,6 @@ msgstr "دبلوم"
 #: model:ir.model.fields.selection,name:hr_pool.sel_qualification_doctorate
 msgid "Doctorate"
 msgstr "دكتوراه"
-
-#. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_id_x_document_number
-msgid "Document Number"
-msgstr "رقم الوثيقة"
-
-#. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_id_x_document_type
-msgid "Document Type"
-msgstr "نوع الوثيقة"
 
 #. module: hr_pool
 #: model:x_hr.preferred_role_type,x_name:hr_pool.preferred_role_driver
@@ -211,8 +313,14 @@ msgstr "رعاية الوالدين / كبار السن"
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_email
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
 msgid "Email"
 msgstr "البريد الإلكتروني"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Employer"
+msgstr ""
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_emp_x_employer_name
@@ -225,9 +333,54 @@ msgid "Employment Credentials"
 msgstr "الخبرات العملية"
 
 #. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Employment History"
+msgstr ""
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "End"
+msgstr ""
+
+#. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_emp_x_end_date
 msgid "End Date"
 msgstr "تاريخ النهاية"
+
+#. module: hr_pool
+#: model:x_hr.language,x_name:hr_pool.lang_1
+msgid "English"
+msgstr "الإنجليزية"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "English Name"
+msgstr ""
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_fillout_form_id
+msgid "Fillout Form ID"
+msgstr "معرّف نموذج Fillout"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_fillout_last_updated_at
+msgid "Fillout Last Updated At"
+msgstr "آخر تحديث في Fillout"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Fillout Submission"
+msgstr ""
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_fillout_submission_id
+msgid "Fillout Submission ID"
+msgstr "معرّف إرسال Fillout"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_fillout_submission_time
+msgid "Fillout Submission Time"
+msgstr "وقت إرسال Fillout"
 
 #. module: hr_pool
 #: model:x_hr.preferred_role_type,x_name:hr_pool.preferred_role_finance
@@ -245,9 +398,24 @@ msgid "First Name (EN)"
 msgstr "الاسم الأول (إنجليزي)"
 
 #. module: hr_pool
+#: model:x_hr.language,x_name:hr_pool.lang_3
+msgid "French"
+msgstr "الفرنسية"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_commitment_x_frequency
+msgid "Frequency"
+msgstr "الدورية"
+
+#. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_work_type_full_time
 msgid "Full-Time"
 msgstr "دوام كامل"
+
+#. module: hr_pool
+#: model:x_hr.language,x_name:hr_pool.lang_5
+msgid "German"
+msgstr "الألمانية"
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_edu_x_graduation_year
@@ -260,10 +428,16 @@ msgid "HR Commitment Type"
 msgstr "نوع الالتزام"
 
 #. module: hr_pool
+#: model:ir.model,name:hr_pool.model_x_hr_language
+msgid "HR Language"
+msgstr ""
+
+#. module: hr_pool
 #: model:ir.model,name:hr_pool.model_x_hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_commitment_x_pool_id
+#: model:ir.model.fields,field_description:hr_pool.field_conversion_request_x_pool_id
 #: model:ir.model.fields,field_description:hr_pool.field_edu_x_pool_id
 #: model:ir.model.fields,field_description:hr_pool.field_emp_x_pool_id
-#: model:ir.model.fields,field_description:hr_pool.field_id_x_pool_id
 #: model:ir.model.fields,field_description:hr_pool.field_lang_x_pool_id
 #: model:ir.model.fields,field_description:hr_pool.field_skill_x_pool_id
 #: model:ir.ui.menu,name:hr_pool.menu_hr_pool_root
@@ -292,6 +466,16 @@ msgid "HR Pool / Reviewer"
 msgstr "خزان الموارد البشرية / صلاحيات مراجعة"
 
 #. module: hr_pool
+#: model:ir.model,name:hr_pool.model_x_hr_pool_commitment_line
+msgid "HR Pool Commitment Line"
+msgstr "سجل التزامات المتقدمين"
+
+#. module: hr_pool
+#: model:ir.model,name:hr_pool.model_x_hr_pool_conversion_request
+msgid "HR Pool Conversion Request"
+msgstr "طلب ترحيل خزان الموارد البشرية"
+
+#. module: hr_pool
 #: model:ir.model,name:hr_pool.model_x_hr_pool_education_line
 msgid "HR Pool Education Line"
 msgstr "سطر المؤهل التعليمي في خزان الموارد البشرية"
@@ -302,9 +486,10 @@ msgid "HR Pool Employment Line"
 msgstr "سطر الخبرة العملية في خزان الموارد البشرية"
 
 #. module: hr_pool
-#: model:ir.model,name:hr_pool.model_x_hr_pool_identity_document_line
-msgid "HR Pool Identity Document Line"
-msgstr "سطر وثيقة الهوية في خزان الموارد البشرية"
+#: model:ir.actions.report,name:hr_pool.action_report_hr_pool_intake_snapshot
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "HR Pool Intake Snapshot"
+msgstr ""
 
 #. module: hr_pool
 #: model:ir.model,name:hr_pool.model_x_hr_pool_language_line
@@ -312,11 +497,25 @@ msgid "HR Pool Language Line"
 msgstr "سطر اللغة في خزان الموارد البشرية"
 
 #. module: hr_pool
-#: model:ir.actions.act_window,name:hr_pool.action_hr_pool
 #: model:ir.ui.menu,name:hr_pool.menu_hr_pool_records
 #: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_list
 msgid "HR Pool Records"
 msgstr "سجلات خزان الموارد البشرية"
+
+#. module: hr_pool
+#: model:ir.actions.act_window,name:hr_pool.action_hr_pool_all
+msgid "HR Pool Records / All Records"
+msgstr "كل سجلات الخزان"
+
+#. module: hr_pool
+#: model:ir.actions.act_window,name:hr_pool.action_hr_pool
+msgid "HR Pool Records / By Chairman Decision"
+msgstr "سجلات خزان الموارد البشرية"
+
+#. module: hr_pool
+#: model:ir.actions.act_window,name:hr_pool.action_hr_pool_by_phase
+msgid "HR Pool Records / By Intake Phase"
+msgstr ""
 
 #. module: hr_pool
 #: model:ir.model,name:hr_pool.model_x_hr_pool_skill_line
@@ -329,9 +528,24 @@ msgid "HR Preferred Role Type"
 msgstr "نوع العمل المفضل"
 
 #. module: hr_pool
+#: model:ir.model,name:hr_pool.model_x_hr_proficiency_level
+msgid "HR Proficiency Level"
+msgstr ""
+
+#. module: hr_pool
+#: model:ir.model,name:hr_pool.model_x_hr_skill_type
+msgid "HR Skill Type"
+msgstr ""
+
+#. module: hr_pool
 #: model:x_hr.preferred_role_type,x_name:hr_pool.preferred_role_hse
 msgid "HSE / Compliance"
 msgstr "الصحة والسلامة والبيئة / الامتثال"
+
+#. module: hr_pool
+#: model:x_hr.language,x_name:hr_pool.lang_6
+msgid "Hausa"
+msgstr "الهوسا"
 
 #. module: hr_pool
 #: model:x_hr.commitment_type,x_name:hr_pool.commitment_type_health
@@ -339,17 +553,38 @@ msgid "Health / treatment commitments"
 msgstr "التزامات صحية / علاجية"
 
 #. module: hr_pool
+#: model:x_hr.language,x_name:hr_pool.lang_16
+msgid "Hindi"
+msgstr "الهندية"
+
+#. module: hr_pool
 #: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
 msgid "Identity"
 msgstr "الهوية"
 
 #. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_identity_document_line_ids
-msgid "Identity Documents"
-msgstr "وثائق الهوية"
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Identity / الهوية"
+msgstr ""
+
+#. module: hr_pool
+#: model:ir.model.fields.selection,name:hr_pool.sel_conversion_stage_in_progress
+msgid "In Progress"
+msgstr "قيد المعالجة"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Institution"
+msgstr ""
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_intake_pdf_attachment_id
+msgid "Intake PDF Attachment"
+msgstr ""
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_intake_phase
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
 msgid "Intake Phase"
 msgstr "حالة الطلب"
 
@@ -359,19 +594,42 @@ msgid "Intake Reference"
 msgstr "إشاري الطلب"
 
 #. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
+msgid "Integration Metadata"
+msgstr "بيانات التكامل"
+
+#. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_working_level_intermediate
+#: model:x_hr.proficiency_level,x_name:hr_pool.proficiency_level_intermediate
 msgid "Intermediate"
 msgstr "متوسط"
 
 #. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_skill_type_interpersonal
+#: model:x_hr.skill_type,x_name:hr_pool.skill_type_interpersonal
 msgid "Interpersonal"
 msgstr "مهارات شخصية"
 
 #. module: hr_pool
+#: model:x_hr.language,x_name:hr_pool.lang_4
+msgid "Italian"
+msgstr "الإيطالية"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_conversion_request_x_job_id
+msgid "Job Position"
+msgstr "المنصب الوظيفي"
+
+#. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_emp_x_job_title
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
 msgid "Job Title"
 msgstr "المسمى الوظيفي"
+
+#. module: hr_pool
+#: model:x_hr.language,x_name:hr_pool.lang_10
+msgid "Kanuri"
+msgstr "الكانورية"
 
 #. module: hr_pool
 #: model:x_hr.commitment_type,x_name:hr_pool.commitment_type_school_home
@@ -384,14 +642,63 @@ msgid "Kids school morning run"
 msgstr "توصيل الأبناء إلى المدرسة صباحاً"
 
 #. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_lang_x_language_name
+#: model:ir.model.fields,field_description:hr_pool.field_lang_x_language_id
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_language_form
 msgid "Language"
 msgstr "اللغة"
 
 #. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_lang_x_language_name
+msgid "Language Display Name"
+msgstr "اسم اللغة للعرض"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_language_x_name
+msgid "Language Name"
+msgstr ""
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_language_x_name_ar
+msgid "Language Name (AR)"
+msgstr "اسم اللغة (عربي)"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_language_x_name_en
+msgid "Language Name (EN)"
+msgstr "اسم اللغة (إنجليزي)"
+
+#. module: hr_pool
+#: model:ir.actions.act_window,name:hr_pool.action_hr_language
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_language_line_ids
+#: model:ir.ui.menu,name:hr_pool.menu_languages
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_language_list
 msgid "Languages"
 msgstr "اللغات"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_lang_x_name
+msgid "Legacy Name"
+msgstr "الاسم"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_skill_x_skill_type
+msgid "Legacy Skill Type"
+msgstr "نوع المهارة"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_lang_x_working_level
+msgid "Legacy Working Level"
+msgstr "مستوى الإتقان اللغوي"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Level"
+msgstr ""
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_proficiency_level_x_level_value
+msgid "Level Value"
+msgstr "قيمة المستوى"
 
 #. module: hr_pool
 #: model:x_hr.preferred_role_type,x_name:hr_pool.preferred_role_management
@@ -405,6 +712,7 @@ msgstr "تقديم عبر الشركة"
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_marital_status
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
 msgid "Marital Status"
 msgstr "الحالة الاجتماعية"
 
@@ -429,16 +737,22 @@ msgid "Middle Names (EN)"
 msgstr "الأسماء الوسطى (إنجليزي)"
 
 #. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_commitment_x_name
 #: model:ir.model.fields,field_description:hr_pool.field_edu_x_name
 #: model:ir.model.fields,field_description:hr_pool.field_emp_x_name
-#: model:ir.model.fields,field_description:hr_pool.field_id_x_name
-#: model:ir.model.fields,field_description:hr_pool.field_lang_x_name
 #: model:ir.model.fields,field_description:hr_pool.field_skill_x_name
 msgid "Name"
 msgstr "الاسم"
 
 #. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_national_id
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "National ID"
+msgstr "الرقم الوطني"
+
+#. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_nationality_id
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
 msgid "Nationality"
 msgstr "الجنسية"
 
@@ -448,15 +762,21 @@ msgid "Needs More Information"
 msgstr "يحتاج معلومات إضافية"
 
 #. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_commitment_x_notes
+#: model:ir.model.fields,field_description:hr_pool.field_conversion_request_x_notes
+#: model:ir.model.fields,field_description:hr_pool.field_lang_x_notes
+msgid "Notes"
+msgstr "ملاحظات"
+
+#. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_decision_on_hold
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
 msgid "On Hold"
 msgstr "قيد الانتظار"
 
-msgid "Reject"
-msgstr "رفض"
-
 #. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_skill_type_operational
+#: model:x_hr.skill_type,x_name:hr_pool.skill_type_operational
 msgid "Operational"
 msgstr "تشغيل وصيانة"
 
@@ -487,6 +807,7 @@ msgstr "المعلومات الشخصية"
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_phone
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
 msgid "Phone"
 msgstr "الهاتف"
 
@@ -496,9 +817,24 @@ msgid "Pooling"
 msgstr "في الخزان"
 
 #. module: hr_pool
+#: model:ir.actions.server,name:hr_pool.action_hr_pool_populate_intake_identity
+msgid "Populate Intake Identity"
+msgstr "تعبئة هوية الاستقبال"
+
+#. module: hr_pool
+#: model:base.automation,name:hr_pool.automation_hr_pool_populate_intake_identity
+msgid "Populate Intake Identity on Create"
+msgstr ""
+
+#. module: hr_pool
 #: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
 msgid "Preferences"
 msgstr "الرغبات الوظيفية"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Preferred Locations"
+msgstr ""
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_role_type_x_name
@@ -521,6 +857,7 @@ msgstr "مواقع العمل المفضلة"
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_preferred_work_type
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
 msgid "Preferred Work Type"
 msgstr "نوع العمل المفضل"
 
@@ -531,16 +868,27 @@ msgstr "فرز أولي"
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_privacy_declaration
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
 msgid "Privacy Declaration"
 msgstr "إقرار الخصوصية"
 
 #. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_proficiency_level_x_name
 #: model:ir.model.fields,field_description:hr_pool.field_skill_x_proficiency_level
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_proficiency_level_form
 msgid "Proficiency Level"
 msgstr "مستوى الإتقان"
 
 #. module: hr_pool
+#: model:ir.actions.act_window,name:hr_pool.action_proficiency_level
+#: model:ir.ui.menu,name:hr_pool.menu_proficiency_levels
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_proficiency_level_list
+msgid "Proficiency Levels"
+msgstr "مستويات الإتقان"
+
+#. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_working_level_proficient
+#: model:x_hr.proficiency_level,x_name:hr_pool.proficiency_level_proficient
 msgid "Proficient"
 msgstr "متمكن"
 
@@ -556,7 +904,6 @@ msgstr "مرشح عام"
 
 #. module: hr_pool
 #: model:ir.actions.server,name:hr_pool.action_hr_pool_put_on_hold
-#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
 msgid "Put on Hold"
 msgstr "وضع قيد الانتظار"
 
@@ -596,12 +943,19 @@ msgid "Recommend Reject"
 msgstr "توصية بالرفض"
 
 #. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Record"
+msgstr ""
+
+#. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_name
 msgid "Record Title"
 msgstr "عنوان السجل"
 
 #. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_conversion_request_x_applicant_id
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_applicant_id
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
 msgid "Recruitment Applicant"
 msgstr "مقدم طلب التوظيف"
 
@@ -611,18 +965,41 @@ msgid "Referral"
 msgstr "إحالة"
 
 #. module: hr_pool
-#: model:ir.actions.server,name:hr_pool.action_hr_pool_reject
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_conversion_request_form
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_conversion_request_list
 #: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
+msgid "Reject"
+msgstr "رفض"
+
+#. module: hr_pool
+#: model:ir.actions.server,name:hr_pool.action_hr_pool_conversion_request_reject
+msgid "Reject Conversion Request"
+msgstr "رفض طلب الترحيل"
+
+#. module: hr_pool
+#: model:ir.actions.server,name:hr_pool.action_hr_pool_reject
 msgid "Reject Pool Candidate"
 msgstr "رفض مرشح الخزان"
 
 #. module: hr_pool
+#: model:ir.model.fields.selection,name:hr_pool.sel_conversion_stage_rejected
 #: model:ir.model.fields.selection,name:hr_pool.sel_decision_rejected
 msgid "Rejected"
 msgstr "مرفوض"
 
 #. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_conversion_request_x_name
+msgid "Request Reference"
+msgstr "مرجع الطلب"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_conversion_request_x_requested_by
+msgid "Requested By"
+msgstr "مقدم الطلب"
+
+#. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_reviewer_user_id
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
 msgid "Reviewer"
 msgstr "المراجع"
 
@@ -630,6 +1007,11 @@ msgstr "المراجع"
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_reviewer_recommendation
 msgid "Reviewer Recommendation"
 msgstr "توصية المراجع"
+
+#. module: hr_pool
+#: model:x_hr.language,x_name:hr_pool.lang_19
+msgid "Russian"
+msgstr "الروسية"
 
 #. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_qualification_school_certificate
@@ -643,11 +1025,14 @@ msgstr "وظيفة ثانية"
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_commitment_type_x_sequence
+#: model:ir.model.fields,field_description:hr_pool.field_commitment_x_sequence
 #: model:ir.model.fields,field_description:hr_pool.field_edu_x_sequence
 #: model:ir.model.fields,field_description:hr_pool.field_emp_x_sequence
-#: model:ir.model.fields,field_description:hr_pool.field_id_x_sequence
+#: model:ir.model.fields,field_description:hr_pool.field_hr_language_x_sequence
 #: model:ir.model.fields,field_description:hr_pool.field_lang_x_sequence
+#: model:ir.model.fields,field_description:hr_pool.field_proficiency_level_x_sequence
 #: model:ir.model.fields,field_description:hr_pool.field_role_type_x_sequence
+#: model:ir.model.fields,field_description:hr_pool.field_skill_type_master_x_sequence
 #: model:ir.model.fields,field_description:hr_pool.field_skill_x_sequence
 msgid "Sequence"
 msgstr "التسلسل"
@@ -658,9 +1043,19 @@ msgid "Side hustle"
 msgstr "عمل جانبي"
 
 #. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_signed_pdf_attachment_id
+msgid "Signed PDF Attachment"
+msgstr ""
+
+#. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_marital_single
 msgid "Single"
 msgstr "أعزب"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Skill / Language"
+msgstr ""
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_skill_x_skill_description
@@ -668,9 +1063,18 @@ msgid "Skill Description"
 msgstr "وصف المهارة"
 
 #. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_skill_x_skill_type
+#: model:ir.model.fields,field_description:hr_pool.field_skill_type_master_x_name
+#: model:ir.model.fields,field_description:hr_pool.field_skill_x_skill_type_id
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_skill_type_form
 msgid "Skill Type"
 msgstr "نوع المهارة"
+
+#. module: hr_pool
+#: model:ir.actions.act_window,name:hr_pool.action_skill_type
+#: model:ir.ui.menu,name:hr_pool.menu_skill_types
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_skill_type_list
+msgid "Skill Types"
+msgstr "أنواع المهارات"
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_skill_line_ids
@@ -678,9 +1082,55 @@ msgid "Skills"
 msgstr "المهارات"
 
 #. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Skills and Languages"
+msgstr ""
+
+#. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_source_channel
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
 msgid "Source Channel"
 msgstr "مصدر الطلب"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_language_x_source_code
+msgid "Source Code"
+msgstr "رمز المصدر"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_commitment_type_x_source_record_id
+#: model:ir.model.fields,field_description:hr_pool.field_commitment_x_source_record_id
+#: model:ir.model.fields,field_description:hr_pool.field_edu_x_source_record_id
+#: model:ir.model.fields,field_description:hr_pool.field_emp_x_source_record_id
+#: model:ir.model.fields,field_description:hr_pool.field_hr_language_x_source_record_id
+#: model:ir.model.fields,field_description:hr_pool.field_lang_x_source_record_id
+#: model:ir.model.fields,field_description:hr_pool.field_proficiency_level_x_source_record_id
+#: model:ir.model.fields,field_description:hr_pool.field_role_type_x_source_record_id
+#: model:ir.model.fields,field_description:hr_pool.field_skill_type_master_x_source_record_id
+#: model:ir.model.fields,field_description:hr_pool.field_skill_x_source_record_id
+msgid "Source Record ID"
+msgstr "معرّف السجل المصدر"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_source_system
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Source System"
+msgstr "النظام المصدر"
+
+#. module: hr_pool
+#: model:x_hr.language,x_name:hr_pool.lang_18
+msgid "Spanish"
+msgstr "الإسبانية"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_conversion_request_x_state
+msgid "Stage"
+msgstr "المرحلة"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Start"
+msgstr ""
 
 #. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_emp_x_start_date
@@ -693,6 +1143,16 @@ msgid "Study / exams"
 msgstr "دراسة / امتحانات"
 
 #. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Subject"
+msgstr ""
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Submission Time"
+msgstr ""
+
+#. module: hr_pool
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_surname_ar
 msgid "Surname (AR)"
 msgstr "اسم العائلة (عربي)"
@@ -703,91 +1163,9 @@ msgid "Surname (EN)"
 msgstr "اسم العائلة (إنجليزي)"
 
 #. module: hr_pool
-#: model:ir.model.fields.selection,name:hr_pool.sel_skill_type_technical
-#: model:x_hr.preferred_role_type,x_name:hr_pool.preferred_role_technical
-msgid "Technical"
-msgstr "فني"
-
-#. module: hr_pool
-#: model:ir.model.fields.selection,name:hr_pool.sel_qualification_training_certificate
-msgid "Training Certificate"
-msgstr "شهادة تدريب"
-
-#. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_typed_consent_name
-msgid "Typed Consent Name"
-msgstr "الاسم المكتوب للموافقة"
-
-#. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_lang_x_working_level
-msgid "Working Level"
-msgstr "مستوى الإتقان اللغوي"
-
-#. module: hr_pool
-#: model:ir.ui.menu,name:hr_pool.menu_hr_pool_records_by_decision
-msgid "HBy Chairman Decision"
-msgstr "حسب قرار الرئيس"
-
-#. module: hr_pool
-#: model:ir.ui.menu,name:hr_pool.menu_hr_pool_records_by_phase
-msgid "By Intake Phase"
-msgstr "حسب مرحلة الإدخال"
-
-#. module: hr_pool
-#: model:ir.model,name:hr_pool.model_x_hr_pool_commitment_line
-msgid "HR Pool Commitment Line"
-msgstr "سجل التزامات المتقدمين"
-
-#. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_national_id
-msgid "National ID"
-msgstr "الرقم الوطني"
-
-#. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_commitment_x_frequency
-msgid "Frequency"
-msgstr "الدورية"
-
-#. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_commitment_x_notes
-#: model:ir.model.fields,field_description:hr_pool.field_lang_x_notes
-msgid "Notes"
-msgstr "ملاحظات"
-
-#. module: hr_pool
-#: model:x_hr.language,x_name:hr_pool.lang_1
-msgid "English"
-msgstr "الإنجليزية"
-
-#. module: hr_pool
-#: model:x_hr.language,x_name:hr_pool.lang_2
-msgid "Arabic"
-msgstr "العربية"
-
-#. module: hr_pool
-#: model:x_hr.language,x_name:hr_pool.lang_3
-msgid "French"
-msgstr "الفرنسية"
-
-#. module: hr_pool
-#: model:x_hr.language,x_name:hr_pool.lang_4
-msgid "Italian"
-msgstr "الإيطالية"
-
-#. module: hr_pool
-#: model:x_hr.language,x_name:hr_pool.lang_5
-msgid "German"
-msgstr "الألمانية"
-
-#. module: hr_pool
-#: model:x_hr.language,x_name:hr_pool.lang_6
-msgid "Hausa"
-msgstr "الهوسا"
-
-#. module: hr_pool
-#: model:x_hr.language,x_name:hr_pool.lang_7
-msgid "Berber"
-msgstr "البربرية"
+#: model:x_hr.language,x_name:hr_pool.lang_11
+msgid "Tagalog Filipino"
+msgstr "اللغة التاغالوغية"
 
 #. module: hr_pool
 #: model:x_hr.language,x_name:hr_pool.lang_8
@@ -795,29 +1173,11 @@ msgid "Tebu"
 msgstr "التبو"
 
 #. module: hr_pool
-#: model:x_hr.language,x_name:hr_pool.lang_9
-msgid "Turkish"
-msgstr "التركية"
-
-#. module: hr_pool
-#: model:x_hr.language,x_name:hr_pool.lang_10
-msgid "Kanuri"
-msgstr "الكانورية"
-
-#. module: hr_pool
-#: model:x_hr.language,x_name:hr_pool.lang_11
-msgid "Tagalog Filipino"
-msgstr "اللغة التاغالوغية"
-
-#. module: hr_pool
-#: model:x_hr.language,x_name:hr_pool.lang_12
-msgid "Amharic"
-msgstr "الأمهرية"
-
-#. module: hr_pool
-#: model:x_hr.language,x_name:hr_pool.lang_13
-msgid "Tigrinya"
-msgstr "التغرينية"
+#: model:ir.model.fields.selection,name:hr_pool.sel_skill_type_technical
+#: model:x_hr.preferred_role_type,x_name:hr_pool.preferred_role_technical
+#: model:x_hr.skill_type,x_name:hr_pool.skill_type_technical
+msgid "Technical"
+msgstr "فني"
 
 #. module: hr_pool
 #: model:x_hr.language,x_name:hr_pool.lang_14
@@ -825,143 +1185,62 @@ msgid "Tedaga"
 msgstr "التيداغا"
 
 #. module: hr_pool
+#: model:x_hr.language,x_name:hr_pool.lang_13
+msgid "Tigrinya"
+msgstr "التغرينية"
+
+#. module: hr_pool
+#: model:ir.model.fields.selection,name:hr_pool.sel_qualification_training_certificate
+msgid "Training Certificate"
+msgstr "شهادة تدريب"
+
+#. module: hr_pool
+#: model:x_hr.language,x_name:hr_pool.lang_9
+msgid "Turkish"
+msgstr "التركية"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Type"
+msgstr ""
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_typed_consent_name
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Typed Consent Name"
+msgstr "الاسم المكتوب للموافقة"
+
+#. module: hr_pool
 #: model:x_hr.language,x_name:hr_pool.lang_15
 msgid "Urdu"
 msgstr "الأوردية"
 
 #. module: hr_pool
-#: model:x_hr.language,x_name:hr_pool.lang_16
-msgid "Hindi"
-msgstr "الهندية"
+#: model:ir.model.fields,field_description:hr_pool.field_lang_x_working_level_value
+msgid "Working Level"
+msgstr "مستوى الإتقان اللغوي"
 
 #. module: hr_pool
-#: model:x_hr.language,x_name:hr_pool.lang_17
-msgid "Bengali"
-msgstr "البنغالية"
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Year"
+msgstr ""
 
 #. module: hr_pool
-#: model:x_hr.language,x_name:hr_pool.lang_18
-msgid "Spanish"
-msgstr "الإسبانية"
+#: model:ir.model.fields.selection,name:hr_pool.sel_freq_weekly
+msgid "أسبوعي"
+msgstr ""
 
 #. module: hr_pool
-#: model:x_hr.language,x_name:hr_pool.lang_19
-msgid "Russian"
-msgstr "الروسية"
+#: model:ir.model.fields.selection,name:hr_pool.sel_freq_annually
+msgid "سنوي"
+msgstr ""
 
 #. module: hr_pool
-#: model:ir.actions.act_window,name:hr_pool.action_skill_type
-#: model:ir.ui.menu,name:hr_pool.menu_skill_types
-#: model_terms:ir.ui.view,arch_db:hr_pool.view_skill_type_list
-msgid "Skill Types"
-msgstr "أنواع المهارات"
+#: model:ir.model.fields.selection,name:hr_pool.sel_freq_monthly
+msgid "شهري"
+msgstr ""
 
 #. module: hr_pool
-#: model:ir.actions.act_window,name:hr_pool.action_proficiency_level
-#: model:ir.ui.menu,name:hr_pool.menu_proficiency_levels
-#: model_terms:ir.ui.view,arch_db:hr_pool.view_proficiency_level_list
-msgid "Proficiency Levels"
-msgstr "مستويات الإتقان"
-
-#. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_fillout_submission_id
-msgid "Fillout Submission ID"
-msgstr "معرّف إرسال Fillout"
-
-#. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_fillout_form_id
-msgid "Fillout Form ID"
-msgstr "معرّف نموذج Fillout"
-
-#. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_fillout_submission_time
-msgid "Fillout Submission Time"
-msgstr "وقت إرسال Fillout"
-
-#. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_fillout_last_updated_at
-msgid "Fillout Last Updated At"
-msgstr "آخر تحديث في Fillout"
-
-#. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_source_system
-msgid "Source System"
-msgstr "النظام المصدر"
-
-#. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_commitment_type_x_source_record_id
-#: model:ir.model.fields,field_description:hr_pool.field_role_type_x_source_record_id
-#: model:ir.model.fields,field_description:hr_pool.field_skill_type_master_x_source_record_id
-#: model:ir.model.fields,field_description:hr_pool.field_proficiency_level_x_source_record_id
-#: model:ir.model.fields,field_description:hr_pool.field_hr_language_x_source_record_id
-#: model:ir.model.fields,field_description:hr_pool.field_edu_x_source_record_id
-#: model:ir.model.fields,field_description:hr_pool.field_emp_x_source_record_id
-#: model:ir.model.fields,field_description:hr_pool.field_skill_x_source_record_id
-#: model:ir.model.fields,field_description:hr_pool.field_lang_x_source_record_id
-#: model:ir.model.fields,field_description:hr_pool.field_commitment_x_source_record_id
-msgid "Source Record ID"
-msgstr "معرّف السجل المصدر"
-
-#. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_hr_language_x_source_code
-msgid "Source Code"
-msgstr "رمز المصدر"
-
-#. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_hr_language_x_name_ar
-msgid "Language Name (AR)"
-msgstr "اسم اللغة (عربي)"
-
-#. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_hr_language_x_name_en
-msgid "Language Name (EN)"
-msgstr "اسم اللغة (إنجليزي)"
-
-#. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_lang_x_language_name
-msgid "Language Display Name"
-msgstr "اسم اللغة للعرض"
-
-#. module: hr_pool
-#: model:ir.model.fields,field_description:hr_pool.field_proficiency_level_x_level_value
-msgid "Level Value"
-msgstr "قيمة المستوى"
-
-msgid "Conversion Request"
-msgstr "طلب تحويل"
-
-msgid "Conversion Requests"
-msgstr "طلبات التحويل"
-
-msgid "Convert"
-msgstr "تحويل"
-
-msgid "In Progress"
-msgstr "قيد المعالجة"
-
-msgid "Integration Metadata"
-msgstr "بيانات التكامل"
-
-msgid "Create Conversion Request"
-msgstr "إنشاء طلب تحويل"
-
-msgid "Approve Conversion Request"
-msgstr "اعتماد طلب التحويل"
-
-msgid "Reject Conversion Request"
-msgstr "رفض طلب التحويل"
-
-msgid "Request Reference"
-msgstr "مرجع الطلب"
-
-msgid "Job Position"
-msgstr "المنصب الوظيفي"
-
-msgid "Stage"
-msgstr "المرحلة"
-
-msgid "Requested By"
-msgstr "تم الطلب بواسطة"
-
-msgid "Decided By"
-msgstr "تم اتخاذ القرار بواسطة"
+#: model:ir.model.fields.selection,name:hr_pool.sel_freq_daily
+msgid "يومي"
+msgstr ""

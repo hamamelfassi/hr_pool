@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="sel_conversion_stage_pending" model="ir.model.fields.selection">
-        <field name="field_id" ref="hr_pool.field_conversion_request_x_state"/>
-        <field name="name">Pending</field>
-        <field name="value">pending</field>
-    </record>
     <record id="sel_conversion_stage_in_progress" model="ir.model.fields.selection">
         <field name="field_id" ref="hr_pool.field_conversion_request_x_state"/>
         <field name="name">In Progress</field>
@@ -20,4 +15,13 @@
         <field name="name">Rejected</field>
         <field name="value">rejected</field>
     </record>
+
+    <function model="x_hr.pool_conversion_request" name="write">
+        <function model="x_hr.pool_conversion_request" name="search" eval="[[('x_state', '=', 'pending')]]"/>
+        <value eval="{'x_state': 'in_progress'}"/>
+    </function>
+
+    <function model="ir.model.fields.selection" name="unlink">
+        <function model="ir.model.fields.selection" name="search" eval="[[('field_id', '=', ref('hr_pool.field_conversion_request_x_state')), ('value', '=', 'pending')]]"/>
+    </function>
 </odoo>

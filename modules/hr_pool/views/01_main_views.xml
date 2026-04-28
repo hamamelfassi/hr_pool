@@ -96,19 +96,19 @@
                             name="hr_pool.action_hr_pool_create_conversion_request"
                             string="Convert"
                             class="btn-primary"
-                            invisible="x_intake_phase != 'pooling' or x_chairman_decision not in ['approved', 'on_hold'] or x_applicant_id"/>
+                            invisible="not id or x_intake_phase != 'pooling' or x_chairman_decision not in ['approved', 'on_hold'] or x_applicant_id"/>
                     <button type="action"
                             name="hr_pool.action_hr_pool_approve_to_pool"
                             string="Approve"
-                            invisible="not ((x_intake_phase == 'prescreening' and x_chairman_decision == 'pending') or (x_intake_phase == 'pooling' and x_chairman_decision == 'rejected'))"/>
+                            invisible="not id or not ((x_intake_phase == 'prescreening' and x_chairman_decision == 'pending') or (x_intake_phase == 'pooling' and x_chairman_decision == 'rejected'))"/>
                     <button type="action"
                             name="hr_pool.action_hr_pool_put_on_hold"
                             string="On Hold"
-                            invisible="x_intake_phase != 'pooling' or x_chairman_decision != 'approved'"/>
+                            invisible="not id or x_intake_phase != 'pooling' or x_chairman_decision != 'approved'"/>
                     <button type="action"
                             name="hr_pool.action_hr_pool_reject"
                             string="Reject"
-                            invisible="x_intake_phase not in ['prescreening', 'pooling'] or x_chairman_decision not in ['pending', 'approved', 'on_hold']"/>
+                            invisible="not id or x_intake_phase not in ['prescreening', 'pooling'] or x_chairman_decision not in ['pending', 'approved', 'on_hold']"/>
                 </header>
                 <sheet>
                     <group>
