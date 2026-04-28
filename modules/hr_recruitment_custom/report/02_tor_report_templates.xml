@@ -22,6 +22,7 @@
                             text-align: right;
                             font-size: 14px;
                             line-height: 1.9;
+                            unicode-bidi: embed;
                         }
                         .tor-en {
                             direction: ltr;
@@ -65,6 +66,15 @@
                         }
                         .tor-value {
                             width: 32%;
+                        }
+                        .tor-value-ar {
+                            direction: rtl;
+                            text-align: center;
+                            font-size: 14px;
+                            line-height: 1.6;
+                            font-weight: 600;
+                            unicode-bidi: plaintext;
+                            white-space: pre-wrap;
                         }
                         .tor-section-title {
                             margin: 18px 0 10px 0;
@@ -124,6 +134,10 @@
                     </style>
 
                     <div class="tor-doc">
+                        <t t-set="recipient_name_ar" t-value="o.x_tor_recipient_name or o.partner_name or ''"/>
+                        <t t-set="department_name_ar" t-value="o.x_tor_department_name or (o.x_tor_department_id.with_context(lang='ar_001').display_name if o.x_tor_department_id else '')"/>
+                        <t t-set="job_title_ar" t-value="o.x_tor_job_title or (o.job_id.with_context(lang='ar_001').name if o.job_id else '')"/>
+                        <t t-set="direct_supervisor_ar" t-value="o.x_tor_direct_supervisor_name or ''"/>
                         <div class="tor-center tor-title">نموذج استلام وتعهّد بمهام العمل</div>
                         <div class="tor-center tor-subtitle">Terms of Reference / Personal Commitment Form - MCEP-HR-F-0006</div>
 
@@ -131,42 +145,42 @@
                             <tr>
                                 <td class="tor-label">اسم المستلم</td>
                                 <td class="tor-value">
-                                    <span t-esc="o.x_tor_recipient_name or o.partner_name or ''"/>
+                                    <div class="tor-value-ar"><span t-esc="recipient_name_ar"/></div>
                                 </td>
                                 <td class="tor-label tor-ltr">Recipient Name</td>
                             </tr>
                             <tr>
                                 <td class="tor-label">الرقم الوظيفي</td>
                                 <td class="tor-value">
-                                    <span t-esc="o.x_tor_employee_id or ''"/>
+                                    <div class="tor-value-ar"><span t-esc="o.x_tor_employee_id or ''"/></div>
                                 </td>
                                 <td class="tor-label tor-ltr">Employee ID</td>
                             </tr>
                             <tr>
                                 <td class="tor-label">القسم</td>
                                 <td class="tor-value">
-                                    <span t-esc="o.x_tor_department_name or (o.x_tor_department_id.display_name if o.x_tor_department_id else '')"/>
+                                    <div class="tor-value-ar"><span t-esc="department_name_ar"/></div>
                                 </td>
                                 <td class="tor-label tor-ltr">Department</td>
                             </tr>
                             <tr>
                                 <td class="tor-label">الوظيفة</td>
                                 <td class="tor-value">
-                                    <span t-esc="o.x_tor_job_title or (o.job_id.name if o.job_id else '')"/>
+                                    <div class="tor-value-ar"><span t-esc="job_title_ar"/></div>
                                 </td>
                                 <td class="tor-label tor-ltr">Job Title</td>
                             </tr>
                             <tr>
                                 <td class="tor-label">المسؤول المباشر</td>
                                 <td class="tor-value">
-                                    <span t-esc="o.x_tor_direct_supervisor_name or ''"/>
+                                    <div class="tor-value-ar"><span t-esc="direct_supervisor_ar"/></div>
                                 </td>
                                 <td class="tor-label tor-ltr">Direct Supervisor</td>
                             </tr>
                             <tr>
                                 <td class="tor-label">تاريخ الاستلام</td>
                                 <td class="tor-value">
-                                    <span t-field="o.x_tor_date_of_receipt"/>
+                                    <div class="tor-value-ar"><span t-field="o.x_tor_date_of_receipt"/></div>
                                 </td>
                                 <td class="tor-label tor-ltr">Date of Receipt</td>
                             </tr>
@@ -174,7 +188,7 @@
 
                         <div class="tor-section-title">التعهد الشخصي <span class="en tor-ltr">Personal Commitment</span></div>
                         <p class="tor-para tor-ar">
-                            أنا الموقع أدناه، <span t-esc="o.x_tor_recipient_name or o.partner_name or ''"/>،
+                            أنا الموقع أدناه، <span t-esc="recipient_name_ar"/>،
                         </p>
                         <ul class="tor-list tor-ar">
                             <li>أقرّ بأنني قد استلمت المهام المكلّف بها، وأتعهد بتقديم تقرير تفصيلي عن سير المهام شهريًا إلى المدير المباشر، مرفقًا بالصور والإفادات لإثبات تنفيذ العمل، مع توضيح العراقيل في تقريري الأسبوعي.</li>
@@ -184,7 +198,7 @@
                         </ul>
 
                         <p class="tor-para tor-en">
-                            I, the undersigned <span t-esc="o.x_tor_recipient_name or o.partner_name or ''"/>, acknowledge that I have received the assigned tasks and commit to submitting a detailed monthly report to the Chairman of the Board of Directors, attaching evidence (photos, confirmations) to prove the work has been completed, along with highlighting challenges in my weekly report.
+                            I, the undersigned <span t-esc="recipient_name_ar"/>, acknowledge that I have received the assigned tasks and commit to submitting a detailed monthly report to the Chairman of the Board of Directors, attaching evidence (photos, confirmations) to prove the work has been completed, along with highlighting challenges in my weekly report.
                         </p>
                         <p class="tor-para tor-en">
                             I also acknowledge that I have read and understood all instructions and guidelines regarding the use and maintenance of the assigned equipment, and I commit to complying with them, conducting regular maintenance as scheduled, and reporting any malfunctions immediately.
@@ -214,17 +228,19 @@
                                 <t t-set="sorted_lines" t-value="o.x_role_and_duty_line_ids.sorted(key=lambda line: ((line.x_sequence or 0), line.id))"/>
                                 <t t-set="current_area_id" t-value="0"/>
                                 <t t-foreach="sorted_lines" t-as="line">
+                                    <t t-set="line_area_name_ar" t-value="line.x_functional_area_id.with_context(lang='ar_001').display_name if line.x_functional_area_id else ''"/>
+                                    <t t-set="line_function_name_ar" t-value="line.x_function_id.with_context(lang='ar_001').display_name if line.x_function_id else ''"/>
                                     <t t-if="line.x_functional_area_id and line.x_functional_area_id.id != current_area_id">
                                         <tr class="tor-group">
                                             <td colspan="2">
-                                                <span t-field="line.x_functional_area_id"/>
+                                                <span t-esc="line_area_name_ar"/>
                                             </td>
                                         </tr>
                                         <t t-set="current_area_id" t-value="line.x_functional_area_id.id"/>
                                     </t>
                                     <tr>
                                         <td class="tor-center"><span t-esc="line_index + 1"/></td>
-                                        <td><span t-field="line.x_function_id"/></td>
+                                        <td class="tor-ar"><span t-esc="line_function_name_ar"/></td>
                                     </tr>
                                 </t>
                             </tbody>
@@ -240,7 +256,7 @@
                                 </td>
                                 <td>
                                     <div><strong>الموظف</strong> <span class="tor-ltr">Employee</span></div>
-                                    <div>الاسم / <span class="tor-ltr">Name</span>: <span t-esc="o.x_tor_recipient_name or o.partner_name or ''"/></div>
+                                    <div>الاسم / <span class="tor-ltr">Name</span>: <span t-esc="recipient_name_ar"/></div>
                                     <div>التوقيع / <span class="tor-ltr">Signature</span>: <span class="tor-sign-line"/></div>
                                     <div>التاريخ / <span class="tor-ltr">Date</span>: <span class="tor-sign-line"/></div>
                                 </td>
