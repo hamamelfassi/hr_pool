@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_assets_common_hr_recruitment_custom" inherit_id="web.report_assets_common">
+        <xpath expr="." position="inside">
+            <style type="text/css">
+                @font-face {
+                    font-family: 'MarselliaArabicHeading';
+                    src: url('/hr_recruitment_custom/static/src/fonts/NeoSansArabicBold.ttf') format('truetype');
+                    font-weight: 700;
+                    font-style: normal;
+                }
+            </style>
+        </xpath>
+    </template>
+</odoo>
