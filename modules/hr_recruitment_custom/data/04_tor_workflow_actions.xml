@@ -20,6 +20,8 @@ for rec in records:
         initial_values['x_tor_state'] = 'draft'
     if not rec.x_tor_version_label:
         initial_values['x_tor_version_label'] = 'TOR V1'
+    if rec.id and not rec.x_tor_document_reference:
+        initial_values['x_tor_document_reference'] = 'MCEP-HR-F-0006-%05d' % rec.id
     if initial_values:
         rec.sudo().write(initial_values)
 

@@ -104,6 +104,9 @@ for rec in records:
         if translated_department_name and rec.x_tor_department_name != translated_department_name:
             values['x_tor_department_name'] = translated_department_name
 
+    if rec.id and not rec.x_tor_document_reference:
+        values['x_tor_document_reference'] = 'MCEP-HR-F-0006-%05d' % rec.id
+
     if values:
         rec.sudo().write(values)
         ]]></field>

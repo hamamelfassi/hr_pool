@@ -186,6 +186,13 @@
         <field name="ttype">char</field>
     </record>
 
+    <record id="field_hr_applicant_x_tor_document_reference" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_tor_document_reference</field>
+        <field name="field_description">TOR Document Reference</field>
+        <field name="ttype">char</field>
+    </record>
+
     <record id="field_hr_applicant_x_tor_notes" model="ir.model.fields">
         <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
         <field name="name">x_tor_notes</field>

@@ -51,6 +51,7 @@
                         <group>
                             <field name="x_tor_department_id"/>
                             <field name="x_tor_version_label" readonly="1"/>
+                            <field name="x_tor_document_reference" readonly="1"/>
                             <field name="x_tor_generated_on" readonly="1"/>
                             <field name="x_tor_sent_on" readonly="1"/>
                             <field name="x_tor_signed_on" readonly="1"/>

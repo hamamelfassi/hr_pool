@@ -185,6 +185,11 @@ msgid "TOR Version"
 msgstr "إصدار الاختصاصات"
 
 #. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_tor_document_reference
+msgid "TOR Document Reference"
+msgstr "مرجع الاختصاصات الوظيفية"
+
+#. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_job_form_inherit_hr_recruitment_custom
 msgid "Job Description"
 msgstr "الوصف الوظيفي"
