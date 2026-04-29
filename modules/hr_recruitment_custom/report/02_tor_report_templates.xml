@@ -38,7 +38,7 @@
                             text-align: center;
                         }
                         .tor-title {
-                            font-family: 'MarselliaArabicHeading', 'Neo Sans Arabic', 'Noto Naskh Arabic', 'Amiri', 'DejaVu Sans', sans-serif;
+                            font-family: 'Noto Naskh Arabic', 'Amiri', 'Scheherazade New', 'Geeza Pro', 'DejaVu Sans', Tahoma, sans-serif;
                             font-size: 24px;
                             font-weight: 700;
                             margin: 8px 0 3px 0;
@@ -60,7 +60,7 @@
                             vertical-align: middle;
                         }
                         .tor-label {
-                            font-family: 'MarselliaArabicHeading', 'Neo Sans Arabic', 'Noto Naskh Arabic', 'Amiri', 'DejaVu Sans', sans-serif;
+                            font-family: 'Noto Naskh Arabic', 'Amiri', 'Scheherazade New', 'Geeza Pro', 'DejaVu Sans', Tahoma, sans-serif;
                             width: 18%;
                             font-weight: 700;
                             white-space: nowrap;
@@ -77,7 +77,7 @@
                             white-space: pre-wrap;
                         }
                         .tor-section-title {
-                            font-family: 'MarselliaArabicHeading', 'Neo Sans Arabic', 'Noto Naskh Arabic', 'Amiri', 'DejaVu Sans', sans-serif;
+                            font-family: 'Noto Naskh Arabic', 'Amiri', 'Scheherazade New', 'Geeza Pro', 'DejaVu Sans', Tahoma, sans-serif;
                             margin: 18px 0 10px 0;
                             font-size: 16px;
                             font-weight: 700;
@@ -114,7 +114,7 @@
                         }
                         .tor-group {
                             background: #ece7e2;
-                            font-family: 'MarselliaArabicHeading', 'Neo Sans Arabic', 'Noto Naskh Arabic', 'Amiri', 'DejaVu Sans', sans-serif;
+                            font-family: 'Noto Naskh Arabic', 'Amiri', 'Scheherazade New', 'Geeza Pro', 'DejaVu Sans', Tahoma, sans-serif;
                             font-weight: 700;
                         }
                         .tor-signature {
