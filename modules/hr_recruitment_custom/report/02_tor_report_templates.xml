@@ -52,6 +52,8 @@
                         .tor-header-table {
                             width: 100%;
                             border-collapse: collapse;
+                            table-layout: fixed;
+                            direction: ltr;
                         }
                         .tor-header-table td {
                             vertical-align: middle;
@@ -88,6 +90,9 @@
                             direction: ltr;
                             unicode-bidi: embed;
                             display: inline-block;
+                        }
+                        .tor-header-meta .pagecount:before {
+                            content: counter(page) " من " counter(pages);
                         }
                         .tor-ar {
                             font-family: 'TORArabicRegularInline', 'Noto Naskh Arabic', 'Amiri', 'Scheherazade New', 'DejaVu Sans', 'Arial Unicode MS', Tahoma, sans-serif;
@@ -237,7 +242,7 @@
                                         </div>
                                         <div class="row">
                                             <span class="label">الصفحة</span>
-                                            <span class="pagecount"><span class="page"/> من <span class="topage"/></span>
+                                            <span class="pagecount"></span>
                                         </div>
                                     </td>
                                     <td class="tor-logo-wrap">
@@ -252,6 +257,7 @@
                         <tbody>
                             <tr>
                                 <td class="tor-body-cell">
+                                    <div class="tor-doc">
                                     <div class="tor-center tor-title">نموذج استلام وتعهّد بمهام العمل</div>
                         <div class="tor-center tor-subtitle">Terms of Reference / Personal Commitment Form - MCEP-HR-F-0006</div>
 
@@ -374,6 +380,7 @@
                                 </td>
                             </tr>
                         </table>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
