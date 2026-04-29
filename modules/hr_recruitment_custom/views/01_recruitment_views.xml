@@ -28,6 +28,10 @@
                         class="btn-primary"
                         invisible="not id"/>
                 <button type="action"
+                        name="%(hr_recruitment_custom.action_report_hr_applicant_tor_font_probe)d"
+                        string="Generate TOR Font Probe"
+                        invisible="not id"/>
+                <button type="action"
                         name="hr_recruitment_custom.action_hr_applicant_send_tor_for_signature"
                         string="Send TOR for Signature"
                         invisible="not id or not x_tor_pdf_attachment_id or x_tor_state != 'generated'"/>

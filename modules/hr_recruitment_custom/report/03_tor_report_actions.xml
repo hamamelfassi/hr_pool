@@ -10,4 +10,15 @@
         <field name="attachment_use" eval="False"/>
         <field name="print_report_name">'TOR - %s' % (object.x_tor_recipient_name or object.partner_name or object.display_name or 'Applicant')</field>
     </record>
+
+    <record id="action_report_hr_applicant_tor_font_probe" model="ir.actions.report">
+        <field name="name">Applicant TOR Font Probe</field>
+        <field name="model">hr.applicant</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hr_recruitment_custom.report_hr_applicant_tor_font_probe_document</field>
+        <field name="report_file">hr_recruitment_custom.report_hr_applicant_tor_font_probe_document</field>
+        <field name="paperformat_id" ref="hr_recruitment_custom.paperformat_hr_applicant_tor"/>
+        <field name="attachment_use" eval="False"/>
+        <field name="print_report_name">'TOR Font Probe - %s' % (object.x_tor_recipient_name or object.partner_name or object.display_name or 'Applicant')</field>
+    </record>
 </odoo>

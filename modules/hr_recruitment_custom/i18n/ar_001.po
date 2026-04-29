@@ -56,6 +56,11 @@ msgid "Applicant TOR"
 msgstr "الاختصاصات الوظيفية للمتقدم"
 
 #. module: hr_recruitment_custom
+#: model:ir.actions.report,name:hr_recruitment_custom.action_report_hr_applicant_tor_font_probe
+msgid "Applicant TOR Font Probe"
+msgstr "تجربة خطوط الاختصاصات الوظيفية"
+
+#. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_job_x_baseline_function_ids
 msgid "Functions"
 msgstr "الوظائف"
@@ -76,6 +81,11 @@ msgstr "المجال الوظيفي"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Generate TOR PDF"
 msgstr "إنشاء ملف الاختصاصات الوظيفية"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Generate TOR Font Probe"
+msgstr "إنشاء تجربة خطوط الاختصاصات"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_hr_applicant_tor_state_generated

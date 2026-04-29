@@ -263,4 +263,175 @@
             </t>
         </t>
     </template>
+
+    <template id="report_hr_applicant_tor_font_probe_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <head>
+                    <meta charset="UTF-8"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                </head>
+                <div class="page">
+                    <style>
+                        .probe-doc {
+                            direction: rtl;
+                            color: #111;
+                            font-size: 13px;
+                            line-height: 1.75;
+                        }
+                        .probe-title {
+                            text-align: center;
+                            font-size: 22px;
+                            font-weight: 700;
+                            margin: 6px 0 4px 0;
+                        }
+                        .probe-subtitle {
+                            text-align: center;
+                            font-size: 11px;
+                            color: #555;
+                            margin-bottom: 12px;
+                        }
+                        .probe-meta {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-bottom: 14px;
+                            font-size: 12.5px;
+                        }
+                        .probe-meta td {
+                            border: 1px solid #444;
+                            padding: 6px 8px;
+                        }
+                        .probe-section {
+                            border: 1px solid #444;
+                            margin-bottom: 14px;
+                            page-break-inside: avoid;
+                        }
+                        .probe-head {
+                            background: #efefef;
+                            padding: 8px 10px;
+                            border-bottom: 1px solid #444;
+                        }
+                        .probe-sample {
+                            padding: 10px 12px;
+                        }
+                        .probe-font-name {
+                            direction: ltr;
+                            text-align: left;
+                            font-size: 11px;
+                            color: #444;
+                            margin-bottom: 6px;
+                        }
+                        .probe-ar-heading {
+                            font-size: 23px;
+                            font-weight: 700;
+                            margin-bottom: 8px;
+                        }
+                        .probe-ar-label {
+                            font-size: 15px;
+                            font-weight: 700;
+                            margin-bottom: 4px;
+                        }
+                        .probe-ar-body {
+                            font-size: 14px;
+                            line-height: 1.95;
+                            margin-bottom: 8px;
+                        }
+                        .probe-ar-duty {
+                            font-size: 14px;
+                            line-height: 1.8;
+                            margin-right: 14px;
+                        }
+                        .probe-en {
+                            direction: ltr;
+                            text-align: left;
+                            font-size: 11px;
+                            line-height: 1.5;
+                            color: #444;
+                        }
+                        .probe-grid {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-top: 8px;
+                        }
+                        .probe-grid td {
+                            border: 1px solid #666;
+                            padding: 5px 7px;
+                            vertical-align: top;
+                        }
+                    </style>
+
+                    <t t-set="sorted_lines" t-value="o.x_role_and_duty_line_ids.sorted(key=lambda line: ((line.x_sequence or 0), line.id))"/>
+                    <t t-set="probe_fonts" t-value="[
+                        ('Noto Naskh Arabic', 'Noto Naskh Arabic'),
+                        ('Amiri', 'Amiri'),
+                        ('Scheherazade New', 'Scheherazade New'),
+                        ('Geeza Pro', 'Geeza Pro'),
+                        ('Tahoma', 'Tahoma'),
+                        ('Arial Unicode MS', 'Arial Unicode MS'),
+                        ('DejaVu Sans', 'DejaVu Sans'),
+                        ('Default Sans Serif', 'sans-serif')
+                    ]"/>
+
+                    <div class="probe-doc">
+                        <div class="probe-title">مقارنة خطوط نموذج الاختصاصات الوظيفية</div>
+                        <div class="probe-subtitle">TOR Arabic Font Probe / wkhtmltopdf Runtime Comparison</div>
+
+                        <table class="probe-meta">
+                            <tr>
+                                <td><strong>الاسم</strong></td>
+                                <td><span t-field="o.x_tor_recipient_name"/></td>
+                                <td><strong>القسم</strong></td>
+                                <td><span t-field="o.x_tor_department_name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>المسمى الوظيفي</strong></td>
+                                <td><span t-field="o.x_tor_job_title"/></td>
+                                <td><strong>المسؤول المباشر</strong></td>
+                                <td><span t-field="o.x_tor_direct_supervisor_name"/></td>
+                            </tr>
+                        </table>
+
+                        <t t-foreach="probe_fonts" t-as="probe_font">
+                            <div class="probe-section">
+                                <div class="probe-head">
+                                    <div class="probe-font-name"><span t-esc="probe_font[0]"/></div>
+                                </div>
+                                <div class="probe-sample" t-att-style="'font-family: %s;' % probe_font[1]">
+                                    <div class="probe-ar-heading">نموذج استلام وتعهّد بمهام العمل</div>
+                                    <div class="probe-ar-label">التعهد الشخصي</div>
+                                    <div class="probe-ar-body">
+                                        أنا الموقع أدناه، <span t-field="o.x_tor_recipient_name"/>، أقرّ بأنني قد استلمت المهام المكلّف بها، وأتعهد بالالتزام بجميع ما ورد في نموذج الاختصاصات الوظيفية وتنفيذ المهام الموكلة إليّ وفق التعليمات المعتمدة.
+                                    </div>
+                                    <table class="probe-grid">
+                                        <tr>
+                                            <td><strong>القسم</strong></td>
+                                            <td><span t-field="o.x_tor_department_name"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>المسمى الوظيفي</strong></td>
+                                            <td><span t-field="o.x_tor_job_title"/></td>
+                                        </tr>
+                                    </table>
+                                    <div class="probe-ar-label" style="margin-top: 8px;">تفاصيل المهام</div>
+                                    <t t-set="current_area_name" t-value="''"/>
+                                    <t t-foreach="sorted_lines" t-as="line">
+                                        <t t-if="line.x_print_functional_area_name and line.x_print_functional_area_name != current_area_name">
+                                            <div class="probe-ar-label" style="margin-top: 8px;">
+                                                <span t-field="line.x_print_functional_area_name"/>
+                                            </div>
+                                            <t t-set="current_area_name" t-value="line.x_print_functional_area_name"/>
+                                        </t>
+                                        <div class="probe-ar-duty">- <span t-field="line.x_name"/></div>
+                                    </t>
+                                    <div class="probe-en" style="margin-top: 10px;">
+                                        Font probe sample for Arabic heading, body text, and duty rows. Choose the variant with the cleanest shaping, weight, and readability.
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
 </odoo>
