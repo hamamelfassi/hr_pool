@@ -169,10 +169,32 @@ The first operational workflow should be:
 1. recruiter finalizes the negotiated duty lines on `hr.applicant`
 2. recruiter clicks a TOR-generation button on the applicant form
 3. the generated PDF is attached to the applicant record
-4. recruiter sends that generated PDF to the applicant through Odoo Sign
-5. applicant signs digitally
-6. signed copy returns to the applicant record
-7. recruiter or HR later countersigns and backfills any missing values manually outside the automation scope for now
+4. recruiter opens the generated TOR PDF from the applicant record
+5. recruiter uploads that exact PDF into Odoo Sign as a one-off document
+6. recruiter places the applicant signature field manually on the final rendered page and assigns the signer email from `hr.applicant.email_from`
+7. applicant receives the Odoo Sign email and signs digitally
+8. recruiter links or uploads the signed copy back to the applicant record
+9. recruiter or HR later countersigns and backfills any missing values manually outside the automation scope for now
+
+### Next signing slice after the guided-manual workflow
+
+The next TOR signing increment should not try to automate the current variable-length PDF directly.
+
+Instead, the canonical next slice should modify the QWeb TOR so that it always ends with a dedicated final signature page containing:
+
+- the applicant printed name
+- a fixed applicant signature block
+- a fixed applicant date block
+- the responsible-manager printed/signature/date placeholders
+
+This is required because Odoo Sign field placement is page-coordinate based. A variable-length duties table makes applicant-signature coordinates unstable unless the signature area is moved to a fixed final page.
+
+Once that fixed signature page exists, the follow-on signing slice should automate:
+
+1. Sign request creation from the applicant form
+2. applicant signer routing from `hr.applicant.email_from`
+3. fixed applicant signature placement on the dedicated final page
+4. signed-document return and attachment to `hr.applicant`
 
 ### Deliberate deferrals
 

@@ -121,7 +121,8 @@ Work:
 - generate negotiated ToR PDFs from `hr.applicant` through QWeb
 - keep Marsellia form `0006` as the visual reference while allowing dynamic grouped-duty rendering
 - route the generated ToR PDF into native Odoo Sign for applicant signature
-- keep first-pass signature workflow simple: applicant digital signature first, manual recruiter / manager follow-up later
+- keep the currently delivered Sign workflow guided-manual: recruiter generates the TOR PDF, uploads that exact PDF into Sign, places the applicant signature field manually, sends it to the applicant, and links the signed PDF back to `hr.applicant`
+- plan the next TOR signing slice around a dedicated fixed final signature page so applicant-signature coordinates become stable enough for automated Sign request creation and signed-document return
 
 ### Phase 3 - Phase 2 recruitment enrichment
 

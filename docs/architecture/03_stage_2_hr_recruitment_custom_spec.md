@@ -226,10 +226,69 @@ The first signing slice should stay deliberately simple:
 1. recruiter finalizes negotiated duties on `hr.applicant`
 2. recruiter clicks a visible applicant-form button to generate the ToR PDF
 3. the generated PDF is attached to the applicant record
-4. recruiter sends the generated document to the applicant through Odoo Sign
-5. applicant signs digitally
-6. the signed copy is returned and attached to the applicant record
-7. recruiter or HR later prints and countersigns manually outside the automation scope for now
+4. recruiter opens the generated PDF from the applicant record
+5. recruiter uploads that exact rendered PDF into Odoo Sign as a one-off document
+6. recruiter places the applicant signature field manually in the final rendered signature block
+7. recruiter assigns the signer from `hr.applicant.email_from`
+8. applicant signs digitally from the Odoo Sign email
+9. recruiter links or uploads the signed copy back to the applicant record
+10. recruiter or HR later prints and countersigns manually outside the automation scope for now
+
+### Recruiter manual Sign steps
+
+The expected recruiter-side manual workflow for the currently delivered slice is:
+
+1. open the applicant record
+2. confirm the `TOR Header` values are correct
+3. click `Generate TOR PDF`
+4. open the latest generated TOR attachment from applicant Files/Chatter
+5. download that PDF if needed, or otherwise use it as the exact source document for Odoo Sign
+6. create a new one-off Sign request in Odoo Sign using that generated TOR PDF
+7. add one signer using the applicant email from `hr.applicant.email_from`
+8. place the applicant signature field and applicant date field manually on the rendered signature block
+9. send the Sign request
+10. once the applicant signs, download or retrieve the signed PDF from Odoo Sign
+11. upload that signed PDF back to the applicant record Files/Chatter
+12. set the `Signed TOR PDF` field on the applicant so the ToR lifecycle can be marked as signed
+
+This manual flow is intentional for the current slice because the ToR document length is dynamic and therefore the final signature area is not yet fixed enough for stable automated Sign field placement.
+
+### Next signing slice: fixed final signature page
+
+The next TOR signing slice should modify the generated QWeb document so that it always ends with a dedicated final signature page.
+
+That final page should contain:
+
+- the printed applicant name
+- a fixed applicant signature block
+- a fixed applicant date block
+- the printed responsible-manager name placeholder
+- a fixed responsible-manager signature block
+- a fixed responsible-manager date block
+- any final declaration text that must remain adjacent to signature acceptance
+
+The applicant duties pages above this final page may continue to grow or shrink, but the final signature page itself must remain layout-stable.
+
+### Why the fixed signature page is necessary
+
+Odoo Sign places fields on a PDF by page and coordinates.
+
+That means:
+
+- a reusable Sign template is reliable only when the target signature area appears on a predictable page in a predictable location
+- the current variable-length ToR body makes direct template-style field placement unreliable
+- a dedicated fixed final signature page solves this by stabilizing the applicant signature geometry
+
+### Target automated signing behavior after the fixed page slice
+
+Once the fixed final signature page exists, the next automation slice should implement:
+
+1. applicant-form action to create a Sign request directly from the latest generated TOR PDF
+2. signer routing from `hr.applicant.email_from`
+3. applicant signature field placement on the dedicated final signature page
+4. applicant date field placement on the same fixed page
+5. signed-document return and attachment to `hr.applicant`
+6. ToR lifecycle update from `generated` or `sent` to `signed`
 
 ### Button and UX expectations
 
@@ -264,8 +323,10 @@ These belong to the next document/sign workflow increments.
 6. normalize printable ToR fields onto `hr.applicant`
 7. add the QWeb-generated TOR PDF
 8. add the applicant-form document generation button
-9. wire the first applicant-side Sign workflow
-10. only then add interview/evaluation and broader document/sign flows
+9. wire the current guided-manual applicant-side Sign workflow
+10. add the fixed final signature page for stable applicant-signature geometry
+11. only then automate Sign request creation and signed-document return
+12. only then add interview/evaluation and broader document/sign flows
 
 ## 11. Translation delivery
 
@@ -303,5 +364,12 @@ After the TOR document slice is installed:
 - department and job title prefill correctly
 - employee ID and direct supervisor remain blank by design
 - duties render grouped by functional area
-- applicant can be sent a Sign request from the generated TOR
-- signed document returns to and remains visible from the applicant record
+- recruiter can execute the guided-manual Sign flow from the generated TOR
+- signed document can be returned to and remains visible from the applicant record
+
+After the fixed-signature-page slice is installed:
+
+- the TOR always ends with a dedicated final signature page
+- applicant signature placement becomes stable enough for automation
+- Sign request creation can be triggered from the applicant form
+- signed-document return can be automated back to the applicant record
