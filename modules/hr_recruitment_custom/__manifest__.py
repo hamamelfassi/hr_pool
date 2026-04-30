@@ -14,6 +14,7 @@
     "data": [
         "models/00_models.xml",
         "models/01_fields.xml",
+        "models/02_interview_relations.xml",
         "security/ir.model.access.csv",
         "data/01_role_definition_automation.xml",
         "data/02_tor_selection_values.xml",
