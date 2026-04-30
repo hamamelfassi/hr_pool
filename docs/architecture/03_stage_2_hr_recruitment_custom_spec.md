@@ -219,6 +219,19 @@ Exact pixel-perfect replication is not required.
 
 The fixed declaration text should stay very close to the original bilingual form, while dynamic data regions may be adjusted where needed for readability and variable-length values.
 
+### Delivered QWeb pattern to preserve
+
+The currently successful TOR generation pattern that should be preserved for future generated HR forms is:
+
+- applicant-side printable snapshot fields on `hr.applicant`
+- explicit reseeding of printable snapshot values immediately before PDF generation
+- grouped duty-line snapshot text stored on child lines instead of relying on live translated relational display at render time
+- Arabic-first QWeb output with embedded inline Arabic font data
+- a visual-reference approach using the legacy Marsellia PDF as a layout guide rather than as the rendering engine
+- generated PDF attachment back to the source applicant record with chatter logging and versioned replacements
+
+Temporary diagnostic utilities such as font-probe reports should not remain exposed in the final recruiter UI once a stable rendering pattern has been confirmed.
+
 ### Applicant-side signing workflow
 
 The first signing slice should stay deliberately simple:
