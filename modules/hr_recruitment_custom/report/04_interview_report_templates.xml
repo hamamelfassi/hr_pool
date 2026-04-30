@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_mcep_interview_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <head>
+                    <meta charset="UTF-8"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                </head>
+                <div class="page">
+                    <style>
+                        .mcep-interview-doc {
+                            direction: rtl;
+                            font-family: sans-serif;
+                            color: #111827;
+                            font-size: 12px;
+                            line-height: 1.6;
+                        }
+                        .mcep-interview-header {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-bottom: 18px;
+                        }
+                        .mcep-interview-header td {
+                            vertical-align: top;
+                        }
+                        .mcep-interview-brand {
+                            width: 32%;
+                            text-align: left;
+                        }
+                        .mcep-interview-brand img {
+                            max-width: 200px;
+                            height: auto;
+                        }
+                        .mcep-interview-meta {
+                            width: 68%;
+                            border: 1px solid #111827;
+                            border-collapse: collapse;
+                            font-size: 11px;
+                        }
+                        .mcep-interview-meta td {
+                            border: 1px solid #111827;
+                            padding: 6px 8px;
+                        }
+                        .mcep-interview-title {
+                            text-align: center;
+                            font-weight: 700;
+                            font-size: 18px;
+                            margin: 10px 0 4px;
+                        }
+                        .mcep-interview-subtitle {
+                            text-align: center;
+                            font-size: 11px;
+                            margin-bottom: 14px;
+                        }
+                        .mcep-interview-section {
+                            font-weight: 700;
+                            margin: 12px 0 8px;
+                            font-size: 13px;
+                        }
+                        .mcep-interview-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-bottom: 14px;
+                        }
+                        .mcep-interview-table th,
+                        .mcep-interview-table td {
+                            border: 1px solid #111827;
+                            padding: 6px 8px;
+                            vertical-align: top;
+                        }
+                        .mcep-interview-table th {
+                            background: #f3f4f6;
+                            font-weight: 700;
+                        }
+                        .mcep-center {
+                            text-align: center;
+                        }
+                        .mcep-muted {
+                            color: #374151;
+                            font-size: 11px;
+                        }
+                        .mcep-sign-box {
+                            height: 54px;
+                        }
+                        .mcep-remarks {
+                            min-height: 80px;
+                            white-space: pre-wrap;
+                        }
+                    </style>
+                    <t t-set="career_label_ar" t-value="'غير واضح' if o.x_career_aspirations == 'unclear' else ('معقول' if o.x_career_aspirations == 'reasonable' else ('مبالغ فيه' if o.x_career_aspirations == 'unrealistic' else ''))"/>
+                    <t t-set="recommend_label_ar" t-value="'نعم' if o.x_recommend_for_employment else 'لا'"/>
+                    <t t-set="long_term_label_ar" t-value="'نعم' if o.x_long_term_employment_expected else 'لا'"/>
+                    <t t-set="gender_label_ar" t-value="'ذكر' if o.x_gender_snapshot == 'male' else ('أنثى' if o.x_gender_snapshot == 'female' else '')"/>
+                    <t t-set="grade_label_ar" t-value="'ممتاز' if o.x_final_grade == 'excellent' else ('جيد جدًا' if o.x_final_grade == 'very_good' else ('جيد' if o.x_final_grade == 'good' else ('مقبول' if o.x_final_grade == 'acceptable' else ('غير مناسب' if o.x_final_grade == 'not_acceptable' else ''))))"/>
+                    <div class="mcep-interview-doc">
+                        <table class="mcep-interview-header">
+                            <tr>
+                                <td class="mcep-interview-meta">
+                                    <table class="mcep-interview-meta">
+                                        <tr>
+                                            <td><strong>رقم النموذج</strong></td>
+                                            <td>MCEP-HR-F-0002</td>
+                                            <td><strong>المرجع</strong></td>
+                                            <td><span t-esc="o.x_document_reference or o.x_name or ''"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>المقابلة</strong></td>
+                                            <td><span t-esc="o.x_name or ''"/></td>
+                                            <td><strong>التاريخ</strong></td>
+                                            <td><span t-field="o.x_interview_datetime"/></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td class="mcep-interview-brand">
+                                    <img src="/hr_recruitment_custom/static/src/img/marsellia_logo_block_v3.png" alt="Marsellia"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div class="mcep-interview-title">نموذج تقييم المقابلة</div>
+                        <div class="mcep-interview-subtitle">Interview Evaluation Form - MCEP-HR-F-0002</div>
+
+                        <div class="mcep-interview-section">أولًا: المعلومات الشخصية Personal Information</div>
+                        <table class="mcep-interview-table">
+                            <tr>
+                                <th>الاسم الكامل</th>
+                                <td><span t-esc="o.x_full_name_snapshot or ''"/></td>
+                                <th>Full Name</th>
+                            </tr>
+                            <tr>
+                                <th>الجنس</th>
+                                <td><span t-esc="gender_label_ar"/></td>
+                                <th>Gender</th>
+                            </tr>
+                            <tr>
+                                <th>رقم الهوية</th>
+                                <td><span t-esc="o.x_national_id_snapshot or ''"/></td>
+                                <th>National ID</th>
+                            </tr>
+                            <tr>
+                                <th>الرقم الوظيفي</th>
+                                <td><span t-esc="o.x_employee_number_snapshot or ''"/></td>
+                                <th>Employee Number</th>
+                            </tr>
+                            <tr>
+                                <th>الوظيفة المقدم عليها</th>
+                                <td><span t-esc="o.x_position_applied_snapshot or ''"/></td>
+                                <th>Position Applied For</th>
+                            </tr>
+                        </table>
+
+                        <div class="mcep-interview-section">ثانيًا: التقييم Evaluation</div>
+                        <table class="mcep-interview-table">
+                            <thead>
+                                <tr>
+                                    <th class="mcep-center">م</th>
+                                    <th>مجال التقييم</th>
+                                    <th class="mcep-center">الدرجة</th>
+                                    <th class="mcep-center">من</th>
+                                    <th class="mcep-center">النسبة</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.x_line_ids.sorted('x_sequence')" t-as="line">
+                                    <td class="mcep-center"><span t-esc="line_index + 1"/></td>
+                                    <td>
+                                        <div><span t-esc="line.x_question_label_ar or ''"/></div>
+                                        <div class="mcep-muted"><span t-esc="line.x_question_label_en or ''"/></div>
+                                    </td>
+                                    <td class="mcep-center"><span t-esc="line.x_actual_score or 0"/></td>
+                                    <td class="mcep-center"><span t-esc="line.x_max_score or 5"/></td>
+                                    <td class="mcep-center">
+                                        <span t-esc="'%.0f%%' % (((line.x_actual_score or 0) * 100.0 / (line.x_max_score or 5)) if (line.x_max_score or 0) else 0.0)"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="mcep-interview-table">
+                            <tr>
+                                <th>الطموحات العملية</th>
+                                <td><span t-esc="career_label_ar"/></td>
+                                <th>Career Aspirations</th>
+                            </tr>
+                            <tr>
+                                <th>هل من المتوقع استمرارية العمل لدى الشركة</th>
+                                <td><span t-esc="long_term_label_ar"/></td>
+                                <th>Is long-term employment expected</th>
+                            </tr>
+                            <tr>
+                                <th>النتيجة النهائية</th>
+                                <td><span t-esc="('%s / %s (%.2f%%)' % (o.x_total_score or 0, o.x_max_score or 0, o.x_percent_score or 0.0))"/></td>
+                                <th>Final Result</th>
+                            </tr>
+                            <tr>
+                                <th>التقدير</th>
+                                <td><span t-esc="grade_label_ar"/></td>
+                                <th>Grade</th>
+                            </tr>
+                            <tr>
+                                <th>التوصية بالتوظيف</th>
+                                <td><span t-esc="recommend_label_ar"/></td>
+                                <th>Recommendation for Employment</th>
+                            </tr>
+                        </table>
+
+                        <div class="mcep-interview-section">ملاحظات Remarks</div>
+                        <table class="mcep-interview-table">
+                            <tr>
+                                <td class="mcep-remarks"><span t-esc="o.x_remarks or ''"/></td>
+                            </tr>
+                        </table>
+
+                        <div class="mcep-interview-section">ثالثًا: التوصيات و الإعتماد Recommendations and Approval</div>
+                        <table class="mcep-interview-table">
+                            <tr>
+                                <th>اسم مجري المقابلة</th>
+                                <td><span t-esc="o.x_interviewer_user_id.name or ''"/></td>
+                                <th>Interviewer Name</th>
+                            </tr>
+                            <tr>
+                                <th>التوقيع</th>
+                                <td class="mcep-sign-box"></td>
+                                <th>Signature</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

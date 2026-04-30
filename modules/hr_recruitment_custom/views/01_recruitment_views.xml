@@ -26,12 +26,6 @@
                         name="hr_recruitment_custom.action_hr_applicant_conduct_interview"
                         string="Conduct Interview"
                         class="btn-secondary"
-                        invisible="not id or uid not in interviewer_ids"/>
-                <button type="action"
-                        name="hr_recruitment_custom.action_hr_applicant_conduct_interview"
-                        string="Conduct Interview"
-                        class="btn-secondary"
-                        groups="base.group_system,hr_recruitment.group_hr_recruitment_manager"
                         invisible="not id"/>
                 <button type="action"
                         name="hr_recruitment_custom.action_hr_applicant_generate_tor_pdf"
@@ -62,6 +56,17 @@
                             <field name="x_recommend_for_employment"/>
                         </list>
                         <form string="Interview Evaluation">
+                            <header>
+                                <button type="action"
+                                        name="hr_recruitment_custom.action_mcep_interview_generate_pdf"
+                                        string="Generate Interview PDF"
+                                        class="btn-primary"
+                                        invisible="not id"/>
+                                <button type="action"
+                                        name="hr_recruitment_custom.action_mcep_interview_send_for_signature"
+                                        string="Send Interview for Signature"
+                                        invisible="not id or not x_pdf_attachment_id or x_document_state != 'generated'"/>
+                            </header>
                             <sheet>
                                 <group>
                                     <group>
@@ -69,6 +74,7 @@
                                         <field name="x_applicant_id" readonly="1"/>
                                         <field name="x_interviewer_user_id"/>
                                         <field name="x_interview_datetime"/>
+                                        <field name="x_document_state" widget="statusbar" options="{'clickable': false}" statusbar_visible="draft,generated,sent,signed" readonly="1"/>
                                     </group>
                                     <group>
                                         <field name="x_total_score" readonly="1"/>
@@ -76,6 +82,7 @@
                                         <field name="x_percent_score" readonly="1"/>
                                         <field name="x_final_grade" readonly="1"/>
                                         <field name="x_visual_star_rating" widget="priority" readonly="1"/>
+                                        <field name="x_document_reference" readonly="1"/>
                                     </group>
                                 </group>
                                 <group string="Interview Snapshot">
@@ -87,6 +94,17 @@
                                     <group>
                                         <field name="x_employee_number_snapshot"/>
                                         <field name="x_position_applied_snapshot"/>
+                                    </group>
+                                </group>
+                                <group string="Interview Document">
+                                    <group>
+                                        <field name="x_generated_on" readonly="1"/>
+                                        <field name="x_sent_on" readonly="1"/>
+                                        <field name="x_signed_on" readonly="1"/>
+                                    </group>
+                                    <group>
+                                        <field name="x_pdf_attachment_id" readonly="1" domain="[('res_model', '=', 'x_hr.applicant_mcep_interview'), ('res_id', '=', id)]"/>
+                                        <field name="x_signed_attachment_id" domain="[('res_model', '=', 'x_hr.applicant_mcep_interview'), ('res_id', '=', id)]" context="{'default_res_model': 'x_hr.applicant_mcep_interview', 'default_res_id': id}"/>
                                     </group>
                                 </group>
                                 <group string="Evaluation Inputs">
@@ -102,20 +120,24 @@
                                 <field name="x_line_ids">
                                     <list editable="bottom" create="false" delete="false">
                                         <field name="x_sequence" widget="handle"/>
-                                        <field name="x_question_id"/>
+                                        <field name="x_question_label_ar" readonly="1"/>
                                         <field name="x_actual_score"/>
                                         <field name="x_note"/>
                                     </list>
                                     <form string="Interview Question">
                                         <group>
                                             <field name="x_sequence"/>
-                                            <field name="x_question_id"/>
+                                            <field name="x_question_label_ar" readonly="1"/>
                                             <field name="x_actual_score"/>
                                             <field name="x_note"/>
                                         </group>
                                     </form>
                                 </field>
                             </sheet>
+                            <footer>
+                                <button string="Save" special="save" class="btn-primary"/>
+                                <button string="Discard" special="cancel" class="btn-secondary"/>
+                            </footer>
                         </form>
                     </field>
                 </page>
@@ -173,6 +195,17 @@
         <field name="model">x_hr.applicant_mcep_interview</field>
         <field name="arch" type="xml">
             <form string="Interview Evaluation">
+                <header>
+                    <button type="action"
+                            name="hr_recruitment_custom.action_mcep_interview_generate_pdf"
+                            string="Generate Interview PDF"
+                            class="btn-primary"
+                            invisible="not id"/>
+                    <button type="action"
+                            name="hr_recruitment_custom.action_mcep_interview_send_for_signature"
+                            string="Send Interview for Signature"
+                            invisible="not id or not x_pdf_attachment_id or x_document_state != 'generated'"/>
+                </header>
                 <sheet>
                     <group>
                         <group>
@@ -180,6 +213,7 @@
                             <field name="x_applicant_id" readonly="1"/>
                             <field name="x_interviewer_user_id"/>
                             <field name="x_interview_datetime"/>
+                            <field name="x_document_state" widget="statusbar" options="{'clickable': false}" statusbar_visible="draft,generated,sent,signed" readonly="1"/>
                         </group>
                         <group>
                             <field name="x_total_score" readonly="1"/>
@@ -187,6 +221,7 @@
                             <field name="x_percent_score" readonly="1"/>
                             <field name="x_final_grade" readonly="1"/>
                             <field name="x_visual_star_rating" widget="priority" readonly="1"/>
+                            <field name="x_document_reference" readonly="1"/>
                         </group>
                     </group>
                     <group string="Interview Snapshot">
@@ -198,6 +233,17 @@
                         <group>
                             <field name="x_employee_number_snapshot"/>
                             <field name="x_position_applied_snapshot"/>
+                        </group>
+                    </group>
+                    <group string="Interview Document">
+                        <group>
+                            <field name="x_generated_on" readonly="1"/>
+                            <field name="x_sent_on" readonly="1"/>
+                            <field name="x_signed_on" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="x_pdf_attachment_id" readonly="1" domain="[('res_model', '=', 'x_hr.applicant_mcep_interview'), ('res_id', '=', id)]"/>
+                            <field name="x_signed_attachment_id" domain="[('res_model', '=', 'x_hr.applicant_mcep_interview'), ('res_id', '=', id)]" context="{'default_res_model': 'x_hr.applicant_mcep_interview', 'default_res_id': id}"/>
                         </group>
                     </group>
                     <group string="Evaluation Inputs">
@@ -213,14 +259,14 @@
                     <field name="x_line_ids">
                         <list editable="bottom" create="false" delete="false">
                             <field name="x_sequence" widget="handle"/>
-                            <field name="x_question_id"/>
+                            <field name="x_question_label_ar" readonly="1"/>
                             <field name="x_actual_score"/>
                             <field name="x_note"/>
                         </list>
                         <form string="Interview Question">
                             <group>
                                 <field name="x_sequence"/>
-                                <field name="x_question_id"/>
+                                <field name="x_question_label_ar" readonly="1"/>
                                 <field name="x_actual_score"/>
                                 <field name="x_note"/>
                             </group>
@@ -228,6 +274,10 @@
                     </field>
                     <chatter/>
                 </sheet>
+                <footer>
+                    <button string="Save" special="save" class="btn-primary"/>
+                    <button string="Discard" special="cancel" class="btn-secondary"/>
+                </footer>
             </form>
         </field>
     </record>

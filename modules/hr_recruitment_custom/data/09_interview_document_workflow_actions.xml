@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_mcep_interview_generate_pdf" model="ir.actions.server">
+        <field name="name">Generate Interview PDF</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+attachment = False
+
+for rec in records:
+    values = {}
+    if rec.id and not rec.x_document_reference:
+        values['x_document_reference'] = 'MCEP-HR-F-0002-%05d' % rec.id
+    if not rec.x_document_state:
+        values['x_document_state'] = 'draft'
+    if rec.x_applicant_id and rec.x_applicant_id.partner_name:
+        values['x_full_name_snapshot'] = rec.x_applicant_id.partner_name
+    if rec.x_applicant_id and rec.x_applicant_id.x_gender:
+        values['x_gender_snapshot'] = rec.x_applicant_id.x_gender
+    if rec.x_applicant_id and rec.x_applicant_id.x_national_id:
+        values['x_national_id_snapshot'] = rec.x_applicant_id.x_national_id
+    if rec.x_applicant_id and rec.x_applicant_id.job_id and rec.x_applicant_id.job_id.name:
+        values['x_position_applied_snapshot'] = rec.x_applicant_id.job_id.with_context(lang='ar_001').name or rec.x_applicant_id.job_id.name
+    if values:
+        rec.sudo().write(values)
+
+    for line in rec.x_line_ids:
+        line_values = {}
+        if line.x_question_id:
+            line_values['x_question_label_ar'] = line.x_question_id.x_label_ar or line.x_question_id.with_context(lang='ar_001').x_name or line.x_question_id.x_name
+            line_values['x_question_label_en'] = line.x_question_id.x_label_en or line.x_question_id.with_context(lang='en_US').x_name or line.x_question_id.x_name
+            line_values['x_max_score'] = line.x_question_id.x_default_max_score or 5
+        if line_values:
+            line.sudo().write(line_values)
+
+    if not rec.x_full_name_snapshot:
+        raise Warning('Set the applicant full name before generating the interview PDF.')
+    if not rec.x_line_ids:
+        raise Warning('Interview lines are required before generating the interview PDF.')
+
+    pdf_content, content_type = env['ir.actions.report'].sudo()._render_qweb_pdf(
+        'hr_recruitment_custom.action_report_mcep_interview',
+        [rec.id],
+    )
+    filename = '%s - Interview.pdf' % (rec.x_full_name_snapshot or rec.x_name or 'Interview')
+    attachment = env['ir.attachment'].sudo().create({
+        'name': filename,
+        'type': 'binary',
+        'raw': pdf_content,
+        'mimetype': 'application/pdf',
+        'res_model': rec._name,
+        'res_id': rec.id,
+    })
+
+    rec.sudo().write({
+        'x_pdf_attachment_id': attachment.id,
+        'x_generated_on': datetime.datetime.now(),
+        'x_document_state': 'generated',
+        'x_sent_on': False,
+        'x_signed_on': False,
+        'x_signed_attachment_id': False,
+    })
+    rec.message_post(body='Interview PDF generated and attached to the interview record.')
+
+if len(records) == 1 and attachment:
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': 'Generated Interview PDF',
+        'res_model': 'ir.attachment',
+        'view_mode': 'form',
+        'res_id': attachment.id,
+        'target': 'new',
+    }
+        ]]></field>
+    </record>
+
+    <record id="action_mcep_interview_send_for_signature" model="ir.actions.server">
+        <field name="name">Send Interview for Signature</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+attachment = False
+
+for rec in records:
+    if not rec.x_pdf_attachment_id:
+        raise Warning('Generate the interview PDF before sending it for signature.')
+
+    attachment = rec.x_pdf_attachment_id
+    signer_email = rec.x_interviewer_user_id.partner_id.email or 'the interviewer email address'
+    rec.sudo().write({
+        'x_document_state': 'sent',
+        'x_sent_on': datetime.datetime.now(),
+    })
+    rec.message_post(body=(
+        'Interview marked as sent for signature. Manual Sign workflow: '
+        '1) open the generated interview PDF attachment, '
+        '2) upload it into Odoo Sign, '
+        '3) assign the interviewer signer to %s, '
+        '4) place the signature field in the interviewer signature block, '
+        '5) once signed, upload the signed PDF to Files/Chatter and select it in the Signed Interview PDF field.'
+    ) % (signer_email,))
+
+if len(records) == 1 and attachment:
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': 'Latest Interview PDF',
+        'res_model': 'ir.attachment',
+        'view_mode': 'form',
+        'res_id': attachment.id,
+        'target': 'new',
+    }
+        ]]></field>
+    </record>
+</odoo>

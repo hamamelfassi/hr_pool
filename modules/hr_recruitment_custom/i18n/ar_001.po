@@ -500,6 +500,67 @@ msgid "Normalize Interview Line on Change"
 msgstr "تطبيع سطر المقابلة عند التغيير"
 
 #. module: hr_recruitment_custom
+#: model:ir.actions.server,name:hr_recruitment_custom.action_mcep_interview_generate_pdf
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Generate Interview PDF"
+msgstr "إنشاء ملف تقييم المقابلة"
+
+#. module: hr_recruitment_custom
+#: model:ir.actions.server,name:hr_recruitment_custom.action_mcep_interview_send_for_signature
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Send Interview for Signature"
+msgstr "إرسال تقييم المقابلة للتوقيع"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_document_state
+msgid "Interview Document State"
+msgstr "حالة مستند المقابلة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_document_reference
+msgid "Interview Document Reference"
+msgstr "مرجع مستند المقابلة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_pdf_attachment_id
+msgid "Latest Interview PDF"
+msgstr "أحدث ملف تقييم المقابلة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_signed_attachment_id
+msgid "Signed Interview PDF"
+msgstr "ملف تقييم المقابلة الموقع"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_generated_on
+msgid "Interview PDF Generated On"
+msgstr "تاريخ إنشاء ملف تقييم المقابلة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_sent_on
+msgid "Interview PDF Sent On"
+msgstr "تاريخ إرسال ملف تقييم المقابلة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_signed_on
+msgid "Interview PDF Signed On"
+msgstr "تاريخ توقيع ملف تقييم المقابلة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Interview Document"
+msgstr "مستند المقابلة"
+
+#. module: hr_recruitment_custom
+#: model:ir.actions.server,name:hr_recruitment_custom.action_interview_mark_signed_on_attachment
+#: model:base.automation,name:hr_recruitment_custom.automation_interview_mark_signed_on_attachment
+msgid "Mark Interview Signed on Attachment Set"
+msgstr "تعيين حالة توقيع المقابلة عند إرفاق الملف"
+
+#. module: hr_recruitment_custom
 #: model:x_mcep.interview_question,x_name:hr_recruitment_custom.mcep_interview_question_01
 msgid "Suitability of Academic Qualification to Job Requirements"
 msgstr "ملائمة المؤهل العلمي لمتطلبات الوظيفة"

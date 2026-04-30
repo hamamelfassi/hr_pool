@@ -391,6 +391,59 @@
         <field name="ttype">selection</field>
     </record>
 
+    <record id="field_applicant_mcep_interview_x_document_state" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_document_state</field>
+        <field name="field_description">Interview Document State</field>
+        <field name="ttype">selection</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_document_reference" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_document_reference</field>
+        <field name="field_description">Interview Document Reference</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_pdf_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_pdf_attachment_id</field>
+        <field name="field_description">Latest Interview PDF</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+        <field name="on_delete">set null</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_signed_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_signed_attachment_id</field>
+        <field name="field_description">Signed Interview PDF</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+        <field name="on_delete">set null</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_generated_on" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_generated_on</field>
+        <field name="field_description">Interview PDF Generated On</field>
+        <field name="ttype">datetime</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_sent_on" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_sent_on</field>
+        <field name="field_description">Interview PDF Sent On</field>
+        <field name="ttype">datetime</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_signed_on" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_signed_on</field>
+        <field name="field_description">Interview PDF Signed On</field>
+        <field name="ttype">datetime</field>
+    </record>
+
     <record id="field_applicant_mcep_interview_line_x_interview_id" model="ir.model.fields">
         <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview_line"/>
         <field name="name">x_interview_id</field>

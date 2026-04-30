@@ -17,10 +17,14 @@ for rec in records:
     values = {}
     if not rec.x_name and rec.id:
         values['x_name'] = 'MCEP-INT-%05d' % rec.id
+    if rec.id and not rec.x_document_reference:
+        values['x_document_reference'] = 'MCEP-HR-F-0002-%05d' % rec.id
     if not rec.x_interviewer_user_id:
         values['x_interviewer_user_id'] = env.user.id
     if not rec.x_interview_datetime:
         values['x_interview_datetime'] = datetime.datetime.now()
+    if not rec.x_document_state:
+        values['x_document_state'] = 'draft'
     if rec.x_applicant_id:
         applicant = rec.x_applicant_id
         if applicant.partner_name:
@@ -55,8 +59,8 @@ for rec in records:
 for rec in records:
     values = {}
     if rec.x_question_id:
-        translated_ar = rec.x_question_id.with_context(lang='ar_001').x_name or rec.x_question_id.x_name
-        translated_en = rec.x_question_id.with_context(lang='en_US').x_name or rec.x_question_id.x_name
+        translated_ar = rec.x_question_id.x_label_ar or rec.x_question_id.with_context(lang='ar_001').x_name or rec.x_question_id.x_name
+        translated_en = rec.x_question_id.x_label_en or rec.x_question_id.with_context(lang='en_US').x_name or rec.x_question_id.x_name
         if rec.x_question_label_ar != translated_ar:
             values['x_question_label_ar'] = translated_ar
         if rec.x_question_label_en != translated_en:
@@ -115,6 +119,25 @@ for rec in records:
         'x_final_grade': final_grade,
         'x_visual_star_rating': stars,
     })
+    applicant = interview.x_applicant_id
+    if applicant:
+        interviews = applicant.x_mcep_interview_ids.filtered(lambda r: r.x_max_score)
+        avg_percent = 0.0
+        if interviews:
+            avg_percent = sum(interviews.mapped('x_percent_score')) / float(len(interviews))
+        if avg_percent < 25.0:
+            applicant_stars = '0'
+        elif avg_percent < 40.0:
+            applicant_stars = '1'
+        elif avg_percent < 55.0:
+            applicant_stars = '2'
+        elif avg_percent < 70.0:
+            applicant_stars = '3'
+        elif avg_percent < 85.0:
+            applicant_stars = '4'
+        else:
+            applicant_stars = '5'
+        applicant.sudo().write({'priority': applicant_stars})
         ]]></field>
     </record>
 
@@ -135,8 +158,8 @@ for rec in records:
 for rec in records:
     values = {}
     if rec.x_question_id:
-        translated_ar = rec.x_question_id.with_context(lang='ar_001').x_name or rec.x_question_id.x_name
-        translated_en = rec.x_question_id.with_context(lang='en_US').x_name or rec.x_question_id.x_name
+        translated_ar = rec.x_question_id.x_label_ar or rec.x_question_id.with_context(lang='ar_001').x_name or rec.x_question_id.x_name
+        translated_en = rec.x_question_id.x_label_en or rec.x_question_id.with_context(lang='en_US').x_name or rec.x_question_id.x_name
         if rec.x_question_label_ar != translated_ar:
             values['x_question_label_ar'] = translated_ar
         if rec.x_question_label_en != translated_en:
@@ -195,6 +218,49 @@ for rec in records:
         'x_final_grade': final_grade,
         'x_visual_star_rating': stars,
     })
+    applicant = interview.x_applicant_id
+    if applicant:
+        interviews = applicant.x_mcep_interview_ids.filtered(lambda r: r.x_max_score)
+        avg_percent = 0.0
+        if interviews:
+            avg_percent = sum(interviews.mapped('x_percent_score')) / float(len(interviews))
+        if avg_percent < 25.0:
+            applicant_stars = '0'
+        elif avg_percent < 40.0:
+            applicant_stars = '1'
+        elif avg_percent < 55.0:
+            applicant_stars = '2'
+        elif avg_percent < 70.0:
+            applicant_stars = '3'
+        elif avg_percent < 85.0:
+            applicant_stars = '4'
+        else:
+            applicant_stars = '5'
+        applicant.sudo().write({'priority': applicant_stars})
+        ]]></field>
+    </record>
+
+    <record id="automation_interview_mark_signed_on_attachment" model="base.automation">
+        <field name="name">Mark Interview Signed on Attachment Set</field>
+        <field name="active" eval="True"/>
+        <field name="trigger">on_write</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="trigger_field_ids" eval="[(6, 0, [ref('hr_recruitment_custom.field_applicant_mcep_interview_x_signed_attachment_id')])]"/>
+    </record>
+
+    <record id="action_interview_mark_signed_on_attachment" model="ir.actions.server">
+        <field name="name">Mark Interview Signed on Attachment Set</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="base_automation_id" ref="hr_recruitment_custom.automation_interview_mark_signed_on_attachment"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    if rec.x_signed_attachment_id:
+        rec.sudo().write({
+            'x_document_state': 'signed',
+            'x_signed_on': datetime.datetime.now(),
+        })
+        rec.message_post(body='Signed interview PDF linked to the interview record.')
         ]]></field>
     </record>
 </odoo>

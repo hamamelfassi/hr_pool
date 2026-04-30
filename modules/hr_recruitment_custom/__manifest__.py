@@ -27,6 +27,9 @@
         "data/06_mcep_interview_questions.xml",
         "data/07_interview_automation.xml",
         "data/08_interview_workflow_actions.xml",
+        "report/04_interview_report_templates.xml",
+        "report/05_interview_report_actions.xml",
+        "data/09_interview_document_workflow_actions.xml",
         "views/01_recruitment_views.xml"
     ]
 }
