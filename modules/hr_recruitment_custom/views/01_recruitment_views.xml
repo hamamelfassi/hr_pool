@@ -52,7 +52,7 @@
                         </group>
                     </group>
                     <field name="x_mcep_interview_ids" context="{'default_x_applicant_id': id}">
-                        <list>
+                        <list create="false" delete="false">
                             <field name="x_interview_datetime"/>
                             <field name="x_interviewer_user_id"/>
                             <field name="x_total_score"/>
@@ -80,7 +80,7 @@
                                 </group>
                                 <group string="Interview Snapshot">
                                     <group>
-                                        <field name="x_full_name_snapshot"/>
+                                        <field name="x_full_name_snapshot" readonly="1"/>
                                         <field name="x_gender_snapshot"/>
                                         <field name="x_national_id_snapshot"/>
                                     </group>
@@ -100,22 +100,17 @@
                                     </group>
                                 </group>
                                 <field name="x_line_ids">
-                                    <list editable="bottom">
+                                    <list editable="bottom" create="false" delete="false">
                                         <field name="x_sequence" widget="handle"/>
-                                        <field name="x_question_label_ar"/>
-                                        <field name="x_question_label_en"/>
+                                        <field name="x_question_id"/>
                                         <field name="x_actual_score"/>
-                                        <field name="x_max_score" readonly="1"/>
                                         <field name="x_note"/>
                                     </list>
                                     <form string="Interview Question">
                                         <group>
                                             <field name="x_sequence"/>
-                                            <field name="x_question_id" readonly="1"/>
-                                            <field name="x_question_label_ar" readonly="1"/>
-                                            <field name="x_question_label_en" readonly="1"/>
+                                            <field name="x_question_id"/>
                                             <field name="x_actual_score"/>
-                                            <field name="x_max_score" readonly="1"/>
                                             <field name="x_note"/>
                                         </group>
                                     </form>
@@ -196,7 +191,7 @@
                     </group>
                     <group string="Interview Snapshot">
                         <group>
-                            <field name="x_full_name_snapshot"/>
+                            <field name="x_full_name_snapshot" readonly="1"/>
                             <field name="x_gender_snapshot"/>
                             <field name="x_national_id_snapshot"/>
                         </group>
@@ -216,22 +211,17 @@
                         </group>
                     </group>
                     <field name="x_line_ids">
-                        <list editable="bottom">
+                        <list editable="bottom" create="false" delete="false">
                             <field name="x_sequence" widget="handle"/>
-                            <field name="x_question_label_ar"/>
-                            <field name="x_question_label_en"/>
+                            <field name="x_question_id"/>
                             <field name="x_actual_score"/>
-                            <field name="x_max_score" readonly="1"/>
                             <field name="x_note"/>
                         </list>
                         <form string="Interview Question">
                             <group>
                                 <field name="x_sequence"/>
-                                <field name="x_question_id" readonly="1"/>
-                                <field name="x_question_label_ar" readonly="1"/>
-                                <field name="x_question_label_en" readonly="1"/>
+                                <field name="x_question_id"/>
                                 <field name="x_actual_score"/>
-                                <field name="x_max_score" readonly="1"/>
                                 <field name="x_note"/>
                             </group>
                         </form>
@@ -267,8 +257,6 @@
             <list string="Interview Questions">
                 <field name="x_sequence"/>
                 <field name="x_name"/>
-                <field name="x_label_ar"/>
-                <field name="x_label_en"/>
                 <field name="x_default_max_score"/>
                 <field name="x_active"/>
             </list>

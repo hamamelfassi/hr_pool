@@ -217,9 +217,10 @@
     <record id="field_interview_question_x_name" model="ir.model.fields">
         <field name="model_id" ref="hr_recruitment_custom.model_x_mcep_interview_question"/>
         <field name="name">x_name</field>
-        <field name="field_description">Question Code</field>
+        <field name="field_description">Question</field>
         <field name="ttype">char</field>
         <field name="required" eval="True"/>
+        <field name="translate" eval="True"/>
     </record>
 
     <record id="field_interview_question_x_sequence" model="ir.model.fields">
@@ -247,7 +248,7 @@
     <record id="field_interview_question_x_default_max_score" model="ir.model.fields">
         <field name="model_id" ref="hr_recruitment_custom.model_x_mcep_interview_question"/>
         <field name="name">x_default_max_score</field>
-        <field name="field_description">Default Max Score</field>
+        <field name="field_description">Max Score</field>
         <field name="ttype">integer</field>
     </record>
 

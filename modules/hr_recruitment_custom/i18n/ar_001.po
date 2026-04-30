@@ -365,6 +365,7 @@ msgstr "مجموع الدرجات"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_max_score
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_interview_question_x_default_max_score
 msgid "Max Score"
 msgstr "الحد الأعلى للدرجات"
 
@@ -450,13 +451,9 @@ msgstr "المقابلة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_line_x_question_id
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_interview_question_x_name
 msgid "Question"
 msgstr "السؤال"
-
-#. module: hr_recruitment_custom
-#: model:ir.model.fields,field_description:hr_recruitment_custom.field_interview_question_x_name
-msgid "Question Code"
-msgstr "رمز السؤال"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_interview_question_x_label_ar
@@ -470,12 +467,6 @@ msgstr "السؤال (عربي)"
 msgid "Question (EN)"
 msgstr "السؤال (إنجليزي)"
 
-#. module: hr_recruitment_custom
-#: model:ir.model.fields,field_description:hr_recruitment_custom.field_interview_question_x_default_max_score
-msgid "Default Max Score"
-msgstr "الحد الأعلى الافتراضي"
-
-#. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_interview_question_x_active
 msgid "Active"
 msgstr "نشط"
@@ -507,3 +498,53 @@ msgstr "تطبيع سطر المقابلة عند الإنشاء"
 #: model:base.automation,name:hr_recruitment_custom.automation_interview_line_normalize_on_change
 msgid "Normalize Interview Line on Change"
 msgstr "تطبيع سطر المقابلة عند التغيير"
+
+#. module: hr_recruitment_custom
+#: model:x_mcep.interview_question,x_name:hr_recruitment_custom.mcep_interview_question_01
+msgid "Suitability of Academic Qualification to Job Requirements"
+msgstr "ملائمة المؤهل العلمي لمتطلبات الوظيفة"
+
+#. module: hr_recruitment_custom
+#: model:x_mcep.interview_question,x_name:hr_recruitment_custom.mcep_interview_question_02
+msgid "Suitability of Practical Experience to Job Requirements"
+msgstr "ملائمة الخبرات العملية لمتطلبات الوظيفة"
+
+#. module: hr_recruitment_custom
+#: model:x_mcep.interview_question,x_name:hr_recruitment_custom.mcep_interview_question_03
+msgid "Understanding Job Requirements"
+msgstr "فهمه لمتطلبات الوظيفة"
+
+#. module: hr_recruitment_custom
+#: model:x_mcep.interview_question,x_name:hr_recruitment_custom.mcep_interview_question_04
+msgid "Commitment and Discipline"
+msgstr "الإلتزام و الإنضباط"
+
+#. module: hr_recruitment_custom
+#: model:x_mcep.interview_question,x_name:hr_recruitment_custom.mcep_interview_question_05
+msgid "Communication Skills"
+msgstr "مهارات التواصل"
+
+#. module: hr_recruitment_custom
+#: model:x_mcep.interview_question,x_name:hr_recruitment_custom.mcep_interview_question_06
+msgid "Attendance and Commitment"
+msgstr "الثقة - الحضور و الإتزان"
+
+#. module: hr_recruitment_custom
+#: model:x_mcep.interview_question,x_name:hr_recruitment_custom.mcep_interview_question_07
+msgid "Teamwork"
+msgstr "العمل ضمن فريق"
+
+#. module: hr_recruitment_custom
+#: model:x_mcep.interview_question,x_name:hr_recruitment_custom.mcep_interview_question_08
+msgid "Arabic & English Language Proficiency"
+msgstr "اللغة العربية و الإنجليزية"
+
+#. module: hr_recruitment_custom
+#: model:x_mcep.interview_question,x_name:hr_recruitment_custom.mcep_interview_question_09
+msgid "Problem Solving"
+msgstr "حل المشاكل"
+
+#. module: hr_recruitment_custom
+#: model:x_mcep.interview_question,x_name:hr_recruitment_custom.mcep_interview_question_10
+msgid "Flexibility and Learning"
+msgstr "المرونة و التعلم"

@@ -36,20 +36,6 @@ for rec in records:
 
     if rec.x_line_ids:
         continue
-
-    commands = []
-    questions = env['x_mcep.interview_question'].sudo().search([('x_active', '=', True)], order='x_sequence asc, id asc')
-    for question in questions:
-        commands.append((0, 0, {
-            'x_sequence': question.x_sequence or 0,
-            'x_question_id': question.id,
-            'x_question_label_ar': question.x_label_ar,
-            'x_question_label_en': question.x_label_en,
-            'x_max_score': question.x_default_max_score or 5,
-            'x_actual_score': 0,
-        }))
-    if commands:
-        rec.sudo().write({'x_line_ids': commands})
         ]]></field>
     </record>
 
@@ -69,10 +55,12 @@ for rec in records:
 for rec in records:
     values = {}
     if rec.x_question_id:
-        if rec.x_question_label_ar != rec.x_question_id.x_label_ar:
-            values['x_question_label_ar'] = rec.x_question_id.x_label_ar
-        if rec.x_question_label_en != rec.x_question_id.x_label_en:
-            values['x_question_label_en'] = rec.x_question_id.x_label_en
+        translated_ar = rec.x_question_id.with_context(lang='ar_001').x_name or rec.x_question_id.x_name
+        translated_en = rec.x_question_id.with_context(lang='en_US').x_name or rec.x_question_id.x_name
+        if rec.x_question_label_ar != translated_ar:
+            values['x_question_label_ar'] = translated_ar
+        if rec.x_question_label_en != translated_en:
+            values['x_question_label_en'] = translated_en
         default_max = rec.x_question_id.x_default_max_score or 5
         if rec.x_max_score != default_max:
             values['x_max_score'] = default_max
@@ -147,10 +135,12 @@ for rec in records:
 for rec in records:
     values = {}
     if rec.x_question_id:
-        if rec.x_question_label_ar != rec.x_question_id.x_label_ar:
-            values['x_question_label_ar'] = rec.x_question_id.x_label_ar
-        if rec.x_question_label_en != rec.x_question_id.x_label_en:
-            values['x_question_label_en'] = rec.x_question_id.x_label_en
+        translated_ar = rec.x_question_id.with_context(lang='ar_001').x_name or rec.x_question_id.x_name
+        translated_en = rec.x_question_id.with_context(lang='en_US').x_name or rec.x_question_id.x_name
+        if rec.x_question_label_ar != translated_ar:
+            values['x_question_label_ar'] = translated_ar
+        if rec.x_question_label_en != translated_en:
+            values['x_question_label_en'] = translated_en
         default_max = rec.x_question_id.x_default_max_score or 5
         if not rec.x_max_score or rec.x_max_score != default_max:
             values['x_max_score'] = default_max
