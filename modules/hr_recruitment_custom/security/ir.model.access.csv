@@ -1,2 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_applicant_function_line_user,applicant function line user,hr_recruitment_custom.model_x_hr_applicant_function_line,base.group_user,1,1,1,1
+access_mcep_interview_user,mcep interview user,hr_recruitment_custom.model_x_hr_applicant_mcep_interview,base.group_user,1,1,1,1
+access_mcep_interview_line_user,mcep interview line user,hr_recruitment_custom.model_x_hr_applicant_mcep_interview_line,base.group_user,1,1,1,1
+access_mcep_interview_question_user,mcep interview question user,hr_recruitment_custom.model_x_mcep_interview_question,base.group_user,1,0,0,0

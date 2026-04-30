@@ -178,6 +178,15 @@
         <field name="tracking" eval="1"/>
     </record>
 
+    <record id="field_hr_pool_x_gender" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_gender</field>
+        <field name="field_description">Gender</field>
+        <field name="ttype">selection</field>
+        <field name="required" eval="True"/>
+        <field name="tracking" eval="1"/>
+    </record>
+
     <record id="field_hr_pool_x_date_of_birth" model="ir.model.fields">
         <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
         <field name="name">x_date_of_birth</field>

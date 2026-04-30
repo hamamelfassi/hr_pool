@@ -119,6 +119,17 @@
         <field name="value">married</field>
     </record>
 
+    <record id="sel_gender_male" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_gender"/>
+        <field name="name">Male</field>
+        <field name="value">male</field>
+    </record>
+    <record id="sel_gender_female" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_gender"/>
+        <field name="name">Female</field>
+        <field name="value">female</field>
+    </record>
+
     <record id="sel_work_type_full_time" model="ir.model.fields.selection">
         <field name="field_id" ref="hr_pool.field_hr_pool_x_preferred_work_type"/>
         <field name="name">Full-Time</field>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mcep_interview_question_01" model="x_mcep.interview_question">
+        <field name="x_name">Q01</field>
+        <field name="x_sequence">10</field>
+        <field name="x_label_ar">ملائمة المؤهل العلمي لمتطلبات الوظيفة</field>
+        <field name="x_label_en">Suitability of Academic Qualification to Job Requirements</field>
+        <field name="x_default_max_score">5</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="mcep_interview_question_02" model="x_mcep.interview_question">
+        <field name="x_name">Q02</field>
+        <field name="x_sequence">20</field>
+        <field name="x_label_ar">ملائمة الخبرات العملية لمتطلبات الوظيفة</field>
+        <field name="x_label_en">Suitability of Practical Experience to Job Requirements</field>
+        <field name="x_default_max_score">5</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="mcep_interview_question_03" model="x_mcep.interview_question">
+        <field name="x_name">Q03</field>
+        <field name="x_sequence">30</field>
+        <field name="x_label_ar">فهمه لمتطلبات الوظيفة</field>
+        <field name="x_label_en">Understanding Job Requirements</field>
+        <field name="x_default_max_score">5</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="mcep_interview_question_04" model="x_mcep.interview_question">
+        <field name="x_name">Q04</field>
+        <field name="x_sequence">40</field>
+        <field name="x_label_ar">الإلتزام و الإنضباط</field>
+        <field name="x_label_en">Commitment and Discipline</field>
+        <field name="x_default_max_score">5</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="mcep_interview_question_05" model="x_mcep.interview_question">
+        <field name="x_name">Q05</field>
+        <field name="x_sequence">50</field>
+        <field name="x_label_ar">مهارات التواصل</field>
+        <field name="x_label_en">Communication Skills</field>
+        <field name="x_default_max_score">5</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="mcep_interview_question_06" model="x_mcep.interview_question">
+        <field name="x_name">Q06</field>
+        <field name="x_sequence">60</field>
+        <field name="x_label_ar">الثقة - الحضور و الإتزان</field>
+        <field name="x_label_en">Attendance and Commitment</field>
+        <field name="x_default_max_score">5</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="mcep_interview_question_07" model="x_mcep.interview_question">
+        <field name="x_name">Q07</field>
+        <field name="x_sequence">70</field>
+        <field name="x_label_ar">العمل ضمن فريق</field>
+        <field name="x_label_en">Teamwork</field>
+        <field name="x_default_max_score">5</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="mcep_interview_question_08" model="x_mcep.interview_question">
+        <field name="x_name">Q08</field>
+        <field name="x_sequence">80</field>
+        <field name="x_label_ar">اللغة العربية و الإنجليزية</field>
+        <field name="x_label_en">Arabic &amp; English Language Proficiency</field>
+        <field name="x_default_max_score">5</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="mcep_interview_question_09" model="x_mcep.interview_question">
+        <field name="x_name">Q09</field>
+        <field name="x_sequence">90</field>
+        <field name="x_label_ar">حل المشاكل</field>
+        <field name="x_label_en">Problem Solving</field>
+        <field name="x_default_max_score">5</field>
+        <field name="x_active" eval="True"/>
+    </record>
+    <record id="mcep_interview_question_10" model="x_mcep.interview_question">
+        <field name="x_name">Q10</field>
+        <field name="x_sequence">100</field>
+        <field name="x_label_ar">المرونة و التعلم</field>
+        <field name="x_label_en">Flexibility and Learning</field>
+        <field name="x_default_max_score">5</field>
+        <field name="x_active" eval="True"/>
+    </record>
+</odoo>

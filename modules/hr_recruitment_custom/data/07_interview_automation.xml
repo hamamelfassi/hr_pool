@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="automation_interview_seed_snapshot_and_lines_on_create" model="base.automation">
+        <field name="name">Seed Interview Snapshot and Lines on Create</field>
+        <field name="active" eval="True"/>
+        <field name="trigger">on_create</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+    </record>
+
+    <record id="action_interview_seed_snapshot_and_lines_on_create" model="ir.actions.server">
+        <field name="name">Seed Interview Snapshot and Lines on Create</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="base_automation_id" ref="hr_recruitment_custom.automation_interview_seed_snapshot_and_lines_on_create"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    values = {}
+    if not rec.x_name and rec.id:
+        values['x_name'] = 'MCEP-INT-%05d' % rec.id
+    if not rec.x_interviewer_user_id:
+        values['x_interviewer_user_id'] = env.user.id
+    if not rec.x_interview_datetime:
+        values['x_interview_datetime'] = datetime.datetime.now()
+    if rec.x_applicant_id:
+        applicant = rec.x_applicant_id
+        if applicant.partner_name:
+            values['x_full_name_snapshot'] = applicant.partner_name
+        if applicant.x_gender:
+            values['x_gender_snapshot'] = applicant.x_gender
+        if applicant.x_national_id:
+            values['x_national_id_snapshot'] = applicant.x_national_id
+        if applicant.job_id and applicant.job_id.name:
+            values['x_position_applied_snapshot'] = applicant.job_id.with_context(lang='ar_001').name or applicant.job_id.name
+    if values:
+        rec.sudo().write(values)
+
+    if rec.x_line_ids:
+        continue
+
+    commands = []
+    questions = env['x_mcep.interview_question'].sudo().search([('x_active', '=', True)], order='x_sequence asc, id asc')
+    for question in questions:
+        commands.append((0, 0, {
+            'x_sequence': question.x_sequence or 0,
+            'x_question_id': question.id,
+            'x_question_label_ar': question.x_label_ar,
+            'x_question_label_en': question.x_label_en,
+            'x_max_score': question.x_default_max_score or 5,
+            'x_actual_score': 0,
+        }))
+    if commands:
+        rec.sudo().write({'x_line_ids': commands})
+        ]]></field>
+    </record>
+
+    <record id="automation_interview_line_normalize_on_create" model="base.automation">
+        <field name="name">Normalize Interview Line on Create</field>
+        <field name="active" eval="True"/>
+        <field name="trigger">on_create</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview_line"/>
+    </record>
+
+    <record id="action_interview_line_normalize_on_create" model="ir.actions.server">
+        <field name="name">Normalize Interview Line on Create</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview_line"/>
+        <field name="base_automation_id" ref="hr_recruitment_custom.automation_interview_line_normalize_on_create"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    values = {}
+    if rec.x_question_id:
+        if rec.x_question_label_ar != rec.x_question_id.x_label_ar:
+            values['x_question_label_ar'] = rec.x_question_id.x_label_ar
+        if rec.x_question_label_en != rec.x_question_id.x_label_en:
+            values['x_question_label_en'] = rec.x_question_id.x_label_en
+        default_max = rec.x_question_id.x_default_max_score or 5
+        if rec.x_max_score != default_max:
+            values['x_max_score'] = default_max
+
+    actual_score = rec.x_actual_score or 0
+    max_score = values.get('x_max_score', rec.x_max_score or 0)
+    if actual_score < 0:
+        actual_score = 0
+    if max_score and actual_score > max_score:
+        actual_score = max_score
+    if rec.x_actual_score != actual_score:
+        values['x_actual_score'] = actual_score
+
+    if values:
+        rec.sudo().write(values)
+
+    interview = rec.x_interview_id
+    total_score = 0
+    max_total = 0
+    for line in interview.x_line_ids:
+        total_score += (line.x_actual_score or 0)
+        max_total += (line.x_max_score or 0)
+    percent = round((float(total_score) / float(max_total)) * 100.0, 2) if max_total else 0.0
+    if percent >= 90.0:
+        final_grade = 'excellent'
+    elif percent >= 80.0:
+        final_grade = 'very_good'
+    elif percent >= 70.0:
+        final_grade = 'good'
+    elif percent >= 50.0:
+        final_grade = 'acceptable'
+    else:
+        final_grade = 'not_acceptable'
+
+    if percent < 25.0:
+        stars = '0'
+    elif percent < 40.0:
+        stars = '1'
+    elif percent < 55.0:
+        stars = '2'
+    elif percent < 70.0:
+        stars = '3'
+    elif percent < 85.0:
+        stars = '4'
+    else:
+        stars = '5'
+
+    interview.sudo().write({
+        'x_total_score': total_score,
+        'x_max_score': max_total,
+        'x_percent_score': percent,
+        'x_final_grade': final_grade,
+        'x_visual_star_rating': stars,
+    })
+        ]]></field>
+    </record>
+
+    <record id="automation_interview_line_normalize_on_change" model="base.automation">
+        <field name="name">Normalize Interview Line on Change</field>
+        <field name="active" eval="True"/>
+        <field name="trigger">on_write</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview_line"/>
+        <field name="trigger_field_ids" eval="[(6, 0, [ref('hr_recruitment_custom.field_applicant_mcep_interview_line_x_question_id'), ref('hr_recruitment_custom.field_applicant_mcep_interview_line_x_actual_score'), ref('hr_recruitment_custom.field_applicant_mcep_interview_line_x_max_score')])]"/>
+    </record>
+
+    <record id="action_interview_line_normalize_on_change" model="ir.actions.server">
+        <field name="name">Normalize Interview Line on Change</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview_line"/>
+        <field name="base_automation_id" ref="hr_recruitment_custom.automation_interview_line_normalize_on_change"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    values = {}
+    if rec.x_question_id:
+        if rec.x_question_label_ar != rec.x_question_id.x_label_ar:
+            values['x_question_label_ar'] = rec.x_question_id.x_label_ar
+        if rec.x_question_label_en != rec.x_question_id.x_label_en:
+            values['x_question_label_en'] = rec.x_question_id.x_label_en
+        default_max = rec.x_question_id.x_default_max_score or 5
+        if not rec.x_max_score or rec.x_max_score != default_max:
+            values['x_max_score'] = default_max
+
+    actual_score = rec.x_actual_score or 0
+    max_score = values.get('x_max_score', rec.x_max_score or 0)
+    if actual_score < 0:
+        actual_score = 0
+    if max_score and actual_score > max_score:
+        actual_score = max_score
+    if rec.x_actual_score != actual_score:
+        values['x_actual_score'] = actual_score
+
+    if values:
+        rec.sudo().write(values)
+
+    interview = rec.x_interview_id
+    total_score = 0
+    max_total = 0
+    for line in interview.x_line_ids:
+        total_score += (line.x_actual_score or 0)
+        max_total += (line.x_max_score or 0)
+    percent = round((float(total_score) / float(max_total)) * 100.0, 2) if max_total else 0.0
+    if percent >= 90.0:
+        final_grade = 'excellent'
+    elif percent >= 80.0:
+        final_grade = 'very_good'
+    elif percent >= 70.0:
+        final_grade = 'good'
+    elif percent >= 50.0:
+        final_grade = 'acceptable'
+    else:
+        final_grade = 'not_acceptable'
+
+    if percent < 25.0:
+        stars = '0'
+    elif percent < 40.0:
+        stars = '1'
+    elif percent < 55.0:
+        stars = '2'
+    elif percent < 70.0:
+        stars = '3'
+    elif percent < 85.0:
+        stars = '4'
+    else:
+        stars = '5'
+
+    interview.sudo().write({
+        'x_total_score': total_score,
+        'x_max_score': max_total,
+        'x_percent_score': percent,
+        'x_final_grade': final_grade,
+        'x_visual_star_rating': stars,
+    })
+        ]]></field>
+    </record>
+</odoo>

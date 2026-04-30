@@ -164,6 +164,7 @@
                             <group>
                                 <field name="x_nationality_id"/>
                                 <field name="x_national_id" invisible="x_nationality_id == False"/>
+                                <field name="x_gender"/>
                                 <field name="x_date_of_birth"/>
                                 <field name="x_marital_status"/>
                             </group>

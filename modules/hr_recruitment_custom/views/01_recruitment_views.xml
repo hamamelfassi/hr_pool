@@ -23,6 +23,17 @@
         <field name="arch" type="xml">
             <xpath expr="//form/header" position="inside">
                 <button type="action"
+                        name="hr_recruitment_custom.action_hr_applicant_conduct_interview"
+                        string="Conduct Interview"
+                        class="btn-secondary"
+                        invisible="not id or uid not in interviewer_ids"/>
+                <button type="action"
+                        name="hr_recruitment_custom.action_hr_applicant_conduct_interview"
+                        string="Conduct Interview"
+                        class="btn-secondary"
+                        groups="base.group_system,hr_recruitment.group_hr_recruitment_manager"
+                        invisible="not id"/>
+                <button type="action"
                         name="hr_recruitment_custom.action_hr_applicant_generate_tor_pdf"
                         string="Generate TOR PDF"
                         class="btn-primary"
@@ -33,6 +44,86 @@
                         invisible="not id or not x_tor_pdf_attachment_id or x_tor_state != 'generated'"/>
             </xpath>
             <xpath expr="//sheet/notebook" position="inside">
+                <page string="Evaluation">
+                    <group>
+                        <group>
+                            <field name="x_gender"/>
+                            <field name="x_national_id"/>
+                        </group>
+                    </group>
+                    <field name="x_mcep_interview_ids" context="{'default_x_applicant_id': id}">
+                        <list>
+                            <field name="x_interview_datetime"/>
+                            <field name="x_interviewer_user_id"/>
+                            <field name="x_total_score"/>
+                            <field name="x_percent_score"/>
+                            <field name="x_final_grade"/>
+                            <field name="x_visual_star_rating" widget="priority"/>
+                            <field name="x_recommend_for_employment"/>
+                        </list>
+                        <form string="Interview Evaluation">
+                            <sheet>
+                                <group>
+                                    <group>
+                                        <field name="x_name" readonly="1"/>
+                                        <field name="x_applicant_id" readonly="1"/>
+                                        <field name="x_interviewer_user_id"/>
+                                        <field name="x_interview_datetime"/>
+                                    </group>
+                                    <group>
+                                        <field name="x_total_score" readonly="1"/>
+                                        <field name="x_max_score" readonly="1"/>
+                                        <field name="x_percent_score" readonly="1"/>
+                                        <field name="x_final_grade" readonly="1"/>
+                                        <field name="x_visual_star_rating" widget="priority" readonly="1"/>
+                                    </group>
+                                </group>
+                                <group string="Interview Snapshot">
+                                    <group>
+                                        <field name="x_full_name_snapshot"/>
+                                        <field name="x_gender_snapshot"/>
+                                        <field name="x_national_id_snapshot"/>
+                                    </group>
+                                    <group>
+                                        <field name="x_employee_number_snapshot"/>
+                                        <field name="x_position_applied_snapshot"/>
+                                    </group>
+                                </group>
+                                <group string="Evaluation Inputs">
+                                    <group>
+                                        <field name="x_career_aspirations"/>
+                                        <field name="x_long_term_employment_expected"/>
+                                        <field name="x_recommend_for_employment"/>
+                                    </group>
+                                    <group>
+                                        <field name="x_remarks"/>
+                                    </group>
+                                </group>
+                                <field name="x_line_ids">
+                                    <list editable="bottom">
+                                        <field name="x_sequence" widget="handle"/>
+                                        <field name="x_question_label_ar"/>
+                                        <field name="x_question_label_en"/>
+                                        <field name="x_actual_score"/>
+                                        <field name="x_max_score" readonly="1"/>
+                                        <field name="x_note"/>
+                                    </list>
+                                    <form string="Interview Question">
+                                        <group>
+                                            <field name="x_sequence"/>
+                                            <field name="x_question_id" readonly="1"/>
+                                            <field name="x_question_label_ar" readonly="1"/>
+                                            <field name="x_question_label_en" readonly="1"/>
+                                            <field name="x_actual_score"/>
+                                            <field name="x_max_score" readonly="1"/>
+                                            <field name="x_note"/>
+                                        </group>
+                                    </form>
+                                </field>
+                            </sheet>
+                        </form>
+                    </field>
+                </page>
                 <page string="TOR Header">
                     <group>
                         <group>
@@ -79,6 +170,108 @@
                     </field>
                 </page>
             </xpath>
+        </field>
+    </record>
+
+    <record id="view_mcep_interview_form" model="ir.ui.view">
+        <field name="name">x.hr.applicant.mcep.interview.form</field>
+        <field name="model">x_hr.applicant_mcep_interview</field>
+        <field name="arch" type="xml">
+            <form string="Interview Evaluation">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_name" readonly="1"/>
+                            <field name="x_applicant_id" readonly="1"/>
+                            <field name="x_interviewer_user_id"/>
+                            <field name="x_interview_datetime"/>
+                        </group>
+                        <group>
+                            <field name="x_total_score" readonly="1"/>
+                            <field name="x_max_score" readonly="1"/>
+                            <field name="x_percent_score" readonly="1"/>
+                            <field name="x_final_grade" readonly="1"/>
+                            <field name="x_visual_star_rating" widget="priority" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Interview Snapshot">
+                        <group>
+                            <field name="x_full_name_snapshot"/>
+                            <field name="x_gender_snapshot"/>
+                            <field name="x_national_id_snapshot"/>
+                        </group>
+                        <group>
+                            <field name="x_employee_number_snapshot"/>
+                            <field name="x_position_applied_snapshot"/>
+                        </group>
+                    </group>
+                    <group string="Evaluation Inputs">
+                        <group>
+                            <field name="x_career_aspirations"/>
+                            <field name="x_long_term_employment_expected"/>
+                            <field name="x_recommend_for_employment"/>
+                        </group>
+                        <group>
+                            <field name="x_remarks"/>
+                        </group>
+                    </group>
+                    <field name="x_line_ids">
+                        <list editable="bottom">
+                            <field name="x_sequence" widget="handle"/>
+                            <field name="x_question_label_ar"/>
+                            <field name="x_question_label_en"/>
+                            <field name="x_actual_score"/>
+                            <field name="x_max_score" readonly="1"/>
+                            <field name="x_note"/>
+                        </list>
+                        <form string="Interview Question">
+                            <group>
+                                <field name="x_sequence"/>
+                                <field name="x_question_id" readonly="1"/>
+                                <field name="x_question_label_ar" readonly="1"/>
+                                <field name="x_question_label_en" readonly="1"/>
+                                <field name="x_actual_score"/>
+                                <field name="x_max_score" readonly="1"/>
+                                <field name="x_note"/>
+                            </group>
+                        </form>
+                    </field>
+                    <chatter/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_mcep_interview_list" model="ir.ui.view">
+        <field name="name">x.hr.applicant.mcep.interview.list</field>
+        <field name="model">x_hr.applicant_mcep_interview</field>
+        <field name="arch" type="xml">
+            <list string="Interview Evaluations">
+                <field name="x_name"/>
+                <field name="x_applicant_id"/>
+                <field name="x_interviewer_user_id"/>
+                <field name="x_interview_datetime"/>
+                <field name="x_total_score"/>
+                <field name="x_percent_score"/>
+                <field name="x_final_grade"/>
+                <field name="x_visual_star_rating" widget="priority"/>
+                <field name="x_recommend_for_employment"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_mcep_interview_question_list" model="ir.ui.view">
+        <field name="name">x.mcep.interview.question.list</field>
+        <field name="model">x_mcep.interview_question</field>
+        <field name="arch" type="xml">
+            <list string="Interview Questions">
+                <field name="x_sequence"/>
+                <field name="x_name"/>
+                <field name="x_label_ar"/>
+                <field name="x_label_en"/>
+                <field name="x_default_max_score"/>
+                <field name="x_active"/>
+            </list>
         </field>
     </record>
 </odoo>

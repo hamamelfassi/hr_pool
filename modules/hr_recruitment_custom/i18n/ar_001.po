@@ -219,3 +219,291 @@ msgstr "تم التوقيع"
 #: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_hr_applicant_tor_state_superseded
 msgid "Superseded"
 msgstr "تم الاستبدال"
+
+#. module: hr_recruitment_custom
+#: model:ir.actions.server,name:hr_recruitment_custom.action_hr_applicant_conduct_interview
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Conduct Interview"
+msgstr "إجراء المقابلة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Evaluation"
+msgstr "التقييم"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_gender
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_gender_snapshot
+msgid "Gender"
+msgstr "الجنس"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_hr_applicant_gender_male
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_gender_snapshot_male
+msgid "Male"
+msgstr "ذكر"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_hr_applicant_gender_female
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_gender_snapshot_female
+msgid "Female"
+msgstr "أنثى"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_national_id
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_national_id_snapshot
+msgid "National ID"
+msgstr "رقم الهوية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_mcep_interview_ids
+msgid "MCEP Interviews"
+msgstr "مقابلات التقييم"
+
+#. module: hr_recruitment_custom
+#: model:ir.model,name:hr_recruitment_custom.model_x_hr_applicant_mcep_interview
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_list
+msgid "Interview Evaluation"
+msgstr "تقييم المقابلة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_list
+msgid "Interview Evaluations"
+msgstr "تقييمات المقابلة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model,name:hr_recruitment_custom.model_x_hr_applicant_mcep_interview_line
+msgid "Interview Line"
+msgstr "سطر التقييم"
+
+#. module: hr_recruitment_custom
+#: model:ir.model,name:hr_recruitment_custom.model_x_mcep_interview_question
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_question_list
+msgid "Interview Questions"
+msgstr "أسئلة المقابلة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_name
+msgid "Interview Reference"
+msgstr "مرجع المقابلة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_interviewer_user_id
+msgid "Interviewer"
+msgstr "مُجري المقابلة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_interview_datetime
+msgid "Interview Date"
+msgstr "تاريخ المقابلة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+msgid "Interview Snapshot"
+msgstr "لقطة بيانات المقابلة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_full_name_snapshot
+msgid "Applicant Full Name"
+msgstr "الاسم الكامل للمتقدم"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_employee_number_snapshot
+msgid "Employee Number"
+msgstr "الرقم الوظيفي"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_position_applied_snapshot
+msgid "Position Applied For"
+msgstr "الوظيفة المقدم عليها"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+msgid "Evaluation Inputs"
+msgstr "مدخلات التقييم"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_career_aspirations
+msgid "Career Aspirations"
+msgstr "الطموحات العملية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_career_unclear
+msgid "Unclear"
+msgstr "غير واضح"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_career_reasonable
+msgid "Reasonable"
+msgstr "معقول"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_career_unrealistic
+msgid "Unrealistic"
+msgstr "مبالغ فيه"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_long_term_employment_expected
+msgid "Long-Term Employment Expected"
+msgstr "استمرارية العمل متوقعة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_recommend_for_employment
+msgid "Recommendation for Employment"
+msgstr "التوصية بالتوظيف"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_remarks
+msgid "Remarks"
+msgstr "ملاحظات"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_total_score
+msgid "Total Score"
+msgstr "مجموع الدرجات"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_max_score
+msgid "Max Score"
+msgstr "الحد الأعلى للدرجات"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_percent_score
+msgid "Percent Score"
+msgstr "النسبة المئوية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_final_grade
+msgid "Final Grade"
+msgstr "التقدير النهائي"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_grade_excellent
+msgid "Excellent"
+msgstr "ممتاز"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_grade_very_good
+msgid "Very Good"
+msgstr "جيد جدًا"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_grade_good
+msgid "Good"
+msgstr "جيد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_grade_acceptable
+msgid "Acceptable"
+msgstr "مقبول"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_grade_not_acceptable
+msgid "Not Acceptable"
+msgstr "غير مناسب"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_visual_star_rating
+msgid "Visual Star Rating"
+msgstr "التقييم بالنجوم"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_star_0
+msgid "0 Stars"
+msgstr "0 نجوم"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_star_1
+msgid "1 Star"
+msgstr "نجمة واحدة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_star_2
+msgid "2 Stars"
+msgstr "نجمتان"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_star_3
+msgid "3 Stars"
+msgstr "3 نجوم"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_star_4
+msgid "4 Stars"
+msgstr "4 نجوم"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_star_5
+msgid "5 Stars"
+msgstr "5 نجوم"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_line_ids
+msgid "Interview Lines"
+msgstr "بنود التقييم"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_line_x_interview_id
+msgid "Interview"
+msgstr "المقابلة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_line_x_question_id
+msgid "Question"
+msgstr "السؤال"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_interview_question_x_name
+msgid "Question Code"
+msgstr "رمز السؤال"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_interview_question_x_label_ar
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_line_x_question_label_ar
+msgid "Question (AR)"
+msgstr "السؤال (عربي)"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_interview_question_x_label_en
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_line_x_question_label_en
+msgid "Question (EN)"
+msgstr "السؤال (إنجليزي)"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_interview_question_x_default_max_score
+msgid "Default Max Score"
+msgstr "الحد الأعلى الافتراضي"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_interview_question_x_active
+msgid "Active"
+msgstr "نشط"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_line_x_actual_score
+msgid "Actual Score"
+msgstr "الدرجة الفعلية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_line_x_note
+msgid "Line Note"
+msgstr "ملاحظة السطر"
+
+#. module: hr_recruitment_custom
+#: model:ir.actions.server,name:hr_recruitment_custom.action_interview_seed_snapshot_and_lines_on_create
+#: model:base.automation,name:hr_recruitment_custom.automation_interview_seed_snapshot_and_lines_on_create
+msgid "Seed Interview Snapshot and Lines on Create"
+msgstr "تعبئة بيانات وسطور المقابلة عند الإنشاء"
+
+#. module: hr_recruitment_custom
+#: model:ir.actions.server,name:hr_recruitment_custom.action_interview_line_normalize_on_create
+#: model:base.automation,name:hr_recruitment_custom.automation_interview_line_normalize_on_create
+msgid "Normalize Interview Line on Create"
+msgstr "تطبيع سطر المقابلة عند الإنشاء"
+
+#. module: hr_recruitment_custom
+#: model:ir.actions.server,name:hr_recruitment_custom.action_interview_line_normalize_on_change
+#: model:base.automation,name:hr_recruitment_custom.automation_interview_line_normalize_on_change
+msgid "Normalize Interview Line on Change"
+msgstr "تطبيع سطر المقابلة عند التغيير"

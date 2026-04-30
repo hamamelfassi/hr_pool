@@ -58,14 +58,18 @@
                                     <td><span t-field="o.x_national_id"/></td>
                                 </tr>
                                 <tr>
+                                    <th>Gender</th>
+                                    <td><span t-field="o.x_gender"/></td>
                                     <th>Date of Birth</th>
                                     <td><span t-field="o.x_date_of_birth"/></td>
-                                    <th>Marital Status</th>
-                                    <td><span t-field="o.x_marital_status"/></td>
                                 </tr>
                                 <tr>
+                                    <th>Marital Status</th>
+                                    <td><span t-field="o.x_marital_status"/></td>
                                     <th>Phone</th>
                                     <td><span t-field="o.x_phone"/></td>
+                                </tr>
+                                <tr>
                                     <th>Email</th>
                                     <td><span t-field="o.x_email"/></td>
                                 </tr>

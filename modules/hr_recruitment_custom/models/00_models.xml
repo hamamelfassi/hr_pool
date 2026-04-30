@@ -5,4 +5,24 @@
         <field name="model">x_hr.applicant_function_line</field>
         <field name="state">manual</field>
     </record>
+
+    <record id="model_x_hr_applicant_mcep_interview" model="ir.model">
+        <field name="name">Applicant MCEP Interview</field>
+        <field name="model">x_hr.applicant_mcep_interview</field>
+        <field name="state">manual</field>
+        <field name="is_mail_thread" eval="True"/>
+        <field name="is_mail_activity" eval="True"/>
+    </record>
+
+    <record id="model_x_hr_applicant_mcep_interview_line" model="ir.model">
+        <field name="name">Applicant MCEP Interview Line</field>
+        <field name="model">x_hr.applicant_mcep_interview_line</field>
+        <field name="state">manual</field>
+    </record>
+
+    <record id="model_x_mcep_interview_question" model="ir.model">
+        <field name="name">MCEP Interview Question</field>
+        <field name="model">x_mcep.interview_question</field>
+        <field name="state">manual</field>
+    </record>
 </odoo>

@@ -82,6 +82,29 @@
         <field name="relation_field">x_applicant_id</field>
     </record>
 
+    <record id="field_hr_applicant_x_gender" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_gender</field>
+        <field name="field_description">Gender</field>
+        <field name="ttype">selection</field>
+    </record>
+
+    <record id="field_hr_applicant_x_national_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_national_id</field>
+        <field name="field_description">National ID</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_hr_applicant_x_mcep_interview_ids" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_mcep_interview_ids</field>
+        <field name="field_description">MCEP Interviews</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.applicant_mcep_interview</field>
+        <field name="relation_field">x_applicant_id</field>
+    </record>
+
     <record id="field_hr_applicant_x_tor_recipient_name" model="ir.model.fields">
         <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
         <field name="name">x_tor_recipient_name</field>
@@ -197,6 +220,253 @@
         <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
         <field name="name">x_tor_notes</field>
         <field name="field_description">TOR Notes</field>
+        <field name="ttype">text</field>
+    </record>
+
+    <record id="field_interview_question_x_name" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_mcep_interview_question"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Question Code</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+    </record>
+
+    <record id="field_interview_question_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_mcep_interview_question"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+    </record>
+
+    <record id="field_interview_question_x_label_ar" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_mcep_interview_question"/>
+        <field name="name">x_label_ar</field>
+        <field name="field_description">Question (AR)</field>
+        <field name="ttype">text</field>
+        <field name="required" eval="True"/>
+    </record>
+
+    <record id="field_interview_question_x_label_en" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_mcep_interview_question"/>
+        <field name="name">x_label_en</field>
+        <field name="field_description">Question (EN)</field>
+        <field name="ttype">text</field>
+    </record>
+
+    <record id="field_interview_question_x_default_max_score" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_mcep_interview_question"/>
+        <field name="name">x_default_max_score</field>
+        <field name="field_description">Default Max Score</field>
+        <field name="ttype">integer</field>
+    </record>
+
+    <record id="field_interview_question_x_active" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_mcep_interview_question"/>
+        <field name="name">x_active</field>
+        <field name="field_description">Active</field>
+        <field name="ttype">boolean</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_name" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Interview Reference</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_applicant_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_applicant_id</field>
+        <field name="field_description">Applicant</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.applicant</field>
+        <field name="required" eval="True"/>
+        <field name="on_delete">cascade</field>
+        <field name="index" eval="True"/>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_interviewer_user_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_interviewer_user_id</field>
+        <field name="field_description">Interviewer</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">res.users</field>
+        <field name="on_delete">set null</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_interview_datetime" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_interview_datetime</field>
+        <field name="field_description">Interview Date</field>
+        <field name="ttype">datetime</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_full_name_snapshot" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_full_name_snapshot</field>
+        <field name="field_description">Applicant Full Name</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_gender_snapshot" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_gender_snapshot</field>
+        <field name="field_description">Applicant Gender</field>
+        <field name="ttype">selection</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_national_id_snapshot" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_national_id_snapshot</field>
+        <field name="field_description">Applicant National ID</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_employee_number_snapshot" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_employee_number_snapshot</field>
+        <field name="field_description">Employee Number</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_position_applied_snapshot" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_position_applied_snapshot</field>
+        <field name="field_description">Position Applied For</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_line_ids</field>
+        <field name="field_description">Interview Lines</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.applicant_mcep_interview_line</field>
+        <field name="relation_field">x_interview_id</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_career_aspirations" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_career_aspirations</field>
+        <field name="field_description">Career Aspirations</field>
+        <field name="ttype">selection</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_long_term_employment_expected" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_long_term_employment_expected</field>
+        <field name="field_description">Long-Term Employment Expected</field>
+        <field name="ttype">boolean</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_recommend_for_employment" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_recommend_for_employment</field>
+        <field name="field_description">Recommendation for Employment</field>
+        <field name="ttype">boolean</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_remarks" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_remarks</field>
+        <field name="field_description">Remarks</field>
+        <field name="ttype">text</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_total_score" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_total_score</field>
+        <field name="field_description">Total Score</field>
+        <field name="ttype">integer</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_max_score" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_max_score</field>
+        <field name="field_description">Max Score</field>
+        <field name="ttype">integer</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_percent_score" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_percent_score</field>
+        <field name="field_description">Percent Score</field>
+        <field name="ttype">float</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_final_grade" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_final_grade</field>
+        <field name="field_description">Final Grade</field>
+        <field name="ttype">selection</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_x_visual_star_rating" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_visual_star_rating</field>
+        <field name="field_description">Visual Star Rating</field>
+        <field name="ttype">selection</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_line_x_interview_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview_line"/>
+        <field name="name">x_interview_id</field>
+        <field name="field_description">Interview</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_hr.applicant_mcep_interview</field>
+        <field name="required" eval="True"/>
+        <field name="on_delete">cascade</field>
+        <field name="index" eval="True"/>
+    </record>
+
+    <record id="field_applicant_mcep_interview_line_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview_line"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_line_x_question_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview_line"/>
+        <field name="name">x_question_id</field>
+        <field name="field_description">Question</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_mcep.interview_question</field>
+        <field name="on_delete">restrict</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_line_x_question_label_ar" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview_line"/>
+        <field name="name">x_question_label_ar</field>
+        <field name="field_description">Question (AR)</field>
+        <field name="ttype">text</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_line_x_question_label_en" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview_line"/>
+        <field name="name">x_question_label_en</field>
+        <field name="field_description">Question (EN)</field>
+        <field name="ttype">text</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_line_x_max_score" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview_line"/>
+        <field name="name">x_max_score</field>
+        <field name="field_description">Max Score</field>
+        <field name="ttype">integer</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_line_x_actual_score" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview_line"/>
+        <field name="name">x_actual_score</field>
+        <field name="field_description">Actual Score</field>
+        <field name="ttype">integer</field>
+    </record>
+
+    <record id="field_applicant_mcep_interview_line_x_note" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview_line"/>
+        <field name="name">x_note</field>
+        <field name="field_description">Line Note</field>
         <field name="ttype">text</field>
     </record>
 </odoo>

@@ -22,6 +22,10 @@
         "report/02_tor_report_templates.xml",
         "report/03_tor_report_actions.xml",
         "data/04_tor_workflow_actions.xml",
+        "data/05_interview_selection_values.xml",
+        "data/06_mcep_interview_questions.xml",
+        "data/07_interview_automation.xml",
+        "data/08_interview_workflow_actions.xml",
         "views/01_recruitment_views.xml"
     ]
 }

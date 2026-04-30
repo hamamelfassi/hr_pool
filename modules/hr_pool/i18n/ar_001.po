@@ -757,6 +757,22 @@ msgid "Nationality"
 msgstr "الجنسية"
 
 #. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_gender
+#: model_terms:ir.ui.view,arch_db:hr_pool.report_hr_pool_intake_snapshot_document
+msgid "Gender"
+msgstr "الجنس"
+
+#. module: hr_pool
+#: model:ir.model.fields.selection,name:hr_pool.sel_gender_male
+msgid "Male"
+msgstr "ذكر"
+
+#. module: hr_pool
+#: model:ir.model.fields.selection,name:hr_pool.sel_gender_female
+msgid "Female"
+msgstr "أنثى"
+
+#. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_recommend_needs_more_information
 msgid "Needs More Information"
 msgstr "يحتاج معلومات إضافية"

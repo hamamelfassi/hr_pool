@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_hr_applicant_conduct_interview" model="ir.actions.server">
+        <field name="name">Conduct Interview</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+interview = False
+Interview = env['x_hr.applicant_mcep_interview'].sudo()
+Question = env['x_mcep.interview_question'].sudo()
+
+for rec in records:
+    allowed = env.user.has_group('base.group_system') or env.user.has_group('hr_recruitment.group_hr_recruitment_manager')
+    if not allowed:
+        allowed = env.user.id in rec.interviewer_ids.ids
+    if not allowed:
+        raise Warning('Only selected interviewers or HR administrators can conduct this interview.')
+    if not Question.search_count([('x_active', '=', True)]):
+        raise Warning('Seed the MCEP interview questions before conducting interviews.')
+
+    interview = Interview.create({
+        'x_applicant_id': rec.id,
+        'x_interviewer_user_id': env.user.id,
+        'x_interview_datetime': datetime.datetime.now(),
+    })
+    rec.message_post(body='Interview evaluation record created for the selected interviewer.')
+
+if len(records) == 1 and interview:
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': 'Conduct Interview',
+        'res_model': 'x_hr.applicant_mcep_interview',
+        'view_mode': 'form',
+        'res_id': interview.id,
+        'view_id': env.ref('hr_recruitment_custom.view_mcep_interview_form').id,
+        'target': 'current',
+    }
+        ]]></field>
+    </record>
+</odoo>
