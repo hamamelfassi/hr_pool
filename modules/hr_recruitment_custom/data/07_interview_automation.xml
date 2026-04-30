@@ -127,16 +127,12 @@ for rec in records:
             avg_percent = sum(interviews.mapped('x_percent_score')) / float(len(interviews))
         if avg_percent < 25.0:
             applicant_stars = '0'
-        elif avg_percent < 40.0:
+        elif avg_percent < 50.0:
             applicant_stars = '1'
-        elif avg_percent < 55.0:
+        elif avg_percent < 75.0:
             applicant_stars = '2'
-        elif avg_percent < 70.0:
-            applicant_stars = '3'
-        elif avg_percent < 85.0:
-            applicant_stars = '4'
         else:
-            applicant_stars = '5'
+            applicant_stars = '3'
         applicant.sudo().write({'priority': applicant_stars})
         ]]></field>
     </record>
@@ -226,16 +222,12 @@ for rec in records:
             avg_percent = sum(interviews.mapped('x_percent_score')) / float(len(interviews))
         if avg_percent < 25.0:
             applicant_stars = '0'
-        elif avg_percent < 40.0:
+        elif avg_percent < 50.0:
             applicant_stars = '1'
-        elif avg_percent < 55.0:
+        elif avg_percent < 75.0:
             applicant_stars = '2'
-        elif avg_percent < 70.0:
-            applicant_stars = '3'
-        elif avg_percent < 85.0:
-            applicant_stars = '4'
         else:
-            applicant_stars = '5'
+            applicant_stars = '3'
         applicant.sudo().write({'priority': applicant_stars})
         ]]></field>
     </record>

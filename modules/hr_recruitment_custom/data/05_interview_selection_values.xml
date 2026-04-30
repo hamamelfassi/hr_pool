@@ -64,17 +64,6 @@
         <field name="value">not_acceptable</field>
     </record>
 
-    <record id="sel_hr_applicant_priority_4" model="ir.model.fields.selection">
-        <field name="field_id" search="[('model', '=', 'hr.applicant'), ('name', '=', 'priority')]"/>
-        <field name="name">4 Stars</field>
-        <field name="value">4</field>
-    </record>
-    <record id="sel_hr_applicant_priority_5" model="ir.model.fields.selection">
-        <field name="field_id" search="[('model', '=', 'hr.applicant'), ('name', '=', 'priority')]"/>
-        <field name="name">5 Stars</field>
-        <field name="value">5</field>
-    </record>
-
     <record id="sel_interview_star_0" model="ir.model.fields.selection">
         <field name="field_id" ref="hr_recruitment_custom.field_applicant_mcep_interview_x_visual_star_rating"/>
         <field name="name">0 Stars</field>
