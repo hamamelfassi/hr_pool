@@ -96,15 +96,6 @@
         <field name="ttype">char</field>
     </record>
 
-    <record id="field_hr_applicant_x_mcep_interview_ids" model="ir.model.fields">
-        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
-        <field name="name">x_mcep_interview_ids</field>
-        <field name="field_description">MCEP Interviews</field>
-        <field name="ttype">one2many</field>
-        <field name="relation">x_hr.applicant_mcep_interview</field>
-        <field name="relation_field">x_applicant_id</field>
-    </record>
-
     <record id="field_hr_applicant_x_tor_recipient_name" model="ir.model.fields">
         <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
         <field name="name">x_tor_recipient_name</field>
@@ -283,6 +274,15 @@
         <field name="required" eval="True"/>
         <field name="on_delete">cascade</field>
         <field name="index" eval="True"/>
+    </record>
+
+    <record id="field_hr_applicant_x_mcep_interview_ids" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_mcep_interview_ids</field>
+        <field name="field_description">MCEP Interviews</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_hr.applicant_mcep_interview</field>
+        <field name="relation_field">x_applicant_id</field>
     </record>
 
     <record id="field_applicant_mcep_interview_x_interviewer_user_id" model="ir.model.fields">
