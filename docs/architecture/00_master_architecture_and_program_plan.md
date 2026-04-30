@@ -56,6 +56,7 @@ Owns:
 - chairman-gated prescreening
 - reviewer recommendations
 - conversion request initiation
+- canonical intake identity fields including `x_national_id` and `x_gender`
 - pool approval / hold / reject
 - linkage to functional area taxonomy
 - applicant backlink and provenance
@@ -70,6 +71,7 @@ Owns:
 - governed `hr.job` baseline fields
 - baseline job-description composition on `hr.job`
 - governed `hr.applicant` negotiated-role fields
+- applicant-side canonical printable identity fields such as `x_gender` and `x_national_id`
 - negotiated ToR composition on `hr.applicant`
 - conversion execution from intake to applicant
 - applicant backlink creation and read-only references
@@ -123,11 +125,14 @@ Work:
 - route the generated ToR PDF into native Odoo Sign for applicant signature
 - keep the currently delivered Sign workflow guided-manual: recruiter generates the TOR PDF, uploads that exact PDF into Sign, places the applicant signature field manually, sends it to the applicant, and links the signed PDF back to `hr.applicant`
 - plan the next TOR signing slice around a dedicated fixed final signature page so applicant-signature coordinates become stable enough for automated Sign request creation and signed-document return
+- add `x_gender` to stage-1 `hr_pool` intake and later wire it through Fillout/Zite/n8n once the Odoo-side workflow remains stable
+- normalize `x_gender` and `x_national_id` onto `hr.applicant` during the conversion handoff so later applicant-side reports prefer applicant-owned printable identity data
 
 ### Phase 3 - Phase 2 recruitment enrichment
 
 Work:
 - interview evaluation
+- dynamic interview evaluation records based on Marsellia form `0002`
 - document checklist
 - applicant-side completion surface
 - contract and signature flow

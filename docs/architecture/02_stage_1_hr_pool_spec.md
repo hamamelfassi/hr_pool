@@ -76,6 +76,7 @@ Recommended UX rules:
 `x_hr.pool` carries:
 
 - identity and contact fields
+- canonical intake identity fields including `x_national_id` and `x_gender`
 - Fillout/Zite metadata
 - candidate origin and phase fields
 - chairman and reviewer decision fields
@@ -143,6 +144,7 @@ Key rules:
 
 - helper-backed selections should resolve to stable Odoo IDs
 - `x_source_record_id` keeps Zite traceability on child/helper rows
+- `x_gender` is now part of the required intake payload and must be written into `hr_pool` by the Fillout/Zite/n8n integration layer in the later integration follow-up
 - the intake payload must include all required stage-1 fields before the workflow is considered complete
 
 ## 8. Translation delivery

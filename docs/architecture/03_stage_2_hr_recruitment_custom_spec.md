@@ -27,6 +27,7 @@ Owns:
 
 - negotiated job description / ToR
 - negotiated applicant functions
+- canonical applicant-side printable identity fields such as `x_gender` and `x_national_id`
 - interview evaluation artifacts
 - signature and declaration records
 - final applicant-side PDF outputs
@@ -62,6 +63,7 @@ The first useful enrichment set is:
 - negotiated job description / ToR support
 - baseline job-description composition on `hr.job`
 - negotiated applicant function lines on `hr.applicant`
+- applicant-side printable identity normalization
 - interview evaluation capture
 - signed declarations
 - applicant-side document attachment and retrieval
@@ -180,6 +182,13 @@ The ToR PDF must be generated from `hr.applicant` as the self-contained source o
 That means key identity and role fields required by the form should be normalized onto `hr.applicant` before or during document generation, rather than being rendered through fragile cross-model lookups at print time.
 
 `hr.job` and `hr_pool` remain upstream sources, but the applicant record should hold the final printable state.
+
+For printable identity fields shared across later forms, `hr.applicant` should canonically own:
+
+- `x_gender`
+- `x_national_id`
+
+`passport number` remains intentionally deferred until the later required-documents slice.
 
 ### Form mapping for first implementation
 
@@ -326,7 +335,167 @@ The first TOR document slice should not yet automate:
 
 These belong to the next document/sign workflow increments.
 
-## 10. Recommended implementation order
+## 10. Interview evaluation slice
+
+### Canonical form
+
+The interview evaluation workflow should be modeled on Marsellia form `MCEP-HR-F-0002`.
+
+This slice should stay structured-first:
+
+- parent interview record
+- child question lines
+- seeded helper questions
+- computed total / percent / grade / stars
+- applicant-side summary tab
+
+QWeb interview rendering and interviewer-sign flows should follow later using the same proven QWeb pattern established for the TOR.
+
+### Data model
+
+Recommended parent model:
+
+- `x_hr.applicant_mcep_interview`
+
+Owns:
+
+- `x_applicant_id`
+- interviewer provenance
+- interview datetime
+- printable header snapshots
+- question lines
+- total score
+- max score
+- percent score
+- final grade
+- visual star rating
+- career aspirations
+- long-term employment expected
+- recommendation for employment
+- remarks
+- chatter and activities
+
+Recommended child model:
+
+- `x_hr.applicant_mcep_interview_line`
+
+Owns:
+
+- parent interview reference
+- sequence
+- helper question
+- max score
+- actual score
+- line note
+
+Recommended helper model:
+
+- `x_mcep.interview_question`
+
+It should seed the 10 fixed questions from form `0002`, each with Arabic and English labels and a default max score of `5`.
+
+### Printable interview snapshots
+
+The interview record should normalize printable header values when it is created so future report generation does not rely on fragile live joins.
+
+Snapshot fields should include:
+
+- applicant full name
+- gender
+- national ID
+- employee number
+- position applied for
+
+Prefill rules:
+
+- full name from `hr.applicant.partner_name`
+- gender from `hr.applicant.x_gender`
+- national ID from `hr.applicant.x_national_id`
+- employee number blank for now
+- position applied for from linked `job_id.name`
+
+`passport number` remains intentionally omitted and deferred to the later required-documents slice.
+
+### Applicant UX and access
+
+`hr.applicant` should gain:
+
+- an `Evaluation` page/tab
+- a `Conduct Interview` action
+
+The `Evaluation` tab should show all interview records for the applicant with at least:
+
+- interview date
+- interviewer
+- total score
+- percent
+- final grade
+- recommendation
+
+The `Conduct Interview` action should:
+
+- open a new interview record linked to the current applicant
+- prefill interviewer provenance and printable header snapshots
+- auto-generate the 10 evaluation question lines
+
+Access policy:
+
+- selected native `interviewer_ids` should be the primary allowed conductors
+- HR manager and system admin override should remain available
+- server-side validation must enforce eligibility even if UI visibility is imperfect
+
+### Scoring and grading
+
+The interview form is scored across 10 questions, each with a maximum score of `5`, for a total maximum of `50`.
+
+The parent interview record should compute:
+
+- `x_total_score`
+- `x_max_score`
+- `x_percent_score`
+
+The official Marsellia grade should be stored in a dedicated selection field:
+
+- `excellent`
+- `very_good`
+- `good`
+- `acceptable`
+- `not_acceptable`
+
+Suggested percent mapping:
+
+- `excellent`: 90% to 100%
+- `very_good`: 80% to less than 90%
+- `good`: 70% to less than 80%
+- `acceptable`: 50% to less than 70%
+- `not_acceptable`: less than 50%
+
+The visual result should be stored separately as a dedicated star value, ideally on a 0 to 5 scale:
+
+- 0 stars: less than 25%
+- 1 star: 25% to less than 40%
+- 2 stars: 40% to less than 55%
+- 3 stars: 55% to less than 70%
+- 4 stars: 70% to less than 85%
+- 5 stars: 85% to 100%
+
+This official interview result should not rely on the native applicant `priority` field as its canonical store, even if a later mirror into native stars is added for convenience.
+
+### Auxiliary parent fields
+
+The parent interview record should also store:
+
+- `career_aspirations`:
+  - `unclear`
+  - `reasonable`
+  - `unrealistic`
+- `long_term_employment_expected`:
+  - yes / no
+- `recommend_for_employment`:
+  - yes / no
+- `remarks`
+
+## 11. Recommended implementation order
 
 1. add baseline Job Description fields and UI on `hr.job`
 2. add the negotiated applicant function line model
@@ -338,10 +507,12 @@ These belong to the next document/sign workflow increments.
 8. add the applicant-form document generation button
 9. wire the current guided-manual applicant-side Sign workflow
 10. add the fixed final signature page for stable applicant-signature geometry
-11. only then automate Sign request creation and signed-document return
-12. only then add interview/evaluation and broader document/sign flows
+11. add applicant-side canonical printable identity fields such as `x_gender` and `x_national_id`
+12. add the structured interview evaluation workflow and applicant `Evaluation` tab
+13. only then automate Sign request creation and signed-document return for later forms
+14. only then add broader document/sign flows
 
-## 11. Translation delivery
+## 12. Translation delivery
 
 For every stage-2 release:
 
@@ -349,7 +520,7 @@ For every stage-2 release:
 - translate all new field labels, view strings, action names, and report strings
 - keep the translation files inside the uploadable module zip
 
-## 12. Install/test checklist
+## 13. Install/test checklist
 
 Before stage-2 install:
 

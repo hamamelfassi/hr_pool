@@ -29,6 +29,7 @@ Owns:
 - governed `hr.job` extensions
 - baseline job-description composition on `hr.job`
 - applicant-specific `hr.applicant` extensions
+- applicant-side canonical printable identity fields such as `x_gender` and `x_national_id`
 - negotiated ToR composition on `hr.applicant`
 - conversion execution from pool to applicant
 - interview and evaluation enrichment
@@ -147,6 +148,7 @@ The ToR should be generated from `hr.applicant`, and key printable identity fiel
 For this first document slice:
 
 - `partner_name` is the applicant full name source
+- `x_gender` and `x_national_id` should be normalized onto `hr.applicant` for later printable HR forms
 - `job_id` provides job title and department
 - `hr.pool` remains only an upstream source where applicant normalization is still incomplete
 
@@ -207,7 +209,42 @@ This slice should not yet automate:
 - automatic counter-sign flow
 - broader HR form generation
 
-## 7. Delivery rule
+## 7. Third stage-2 slice: interview evaluation workflow
+
+After the TOR generation/signing slice is stable, the next recruitment-enrichment slice should implement the structured interview evaluation workflow based on Marsellia form `MCEP-HR-F-0002`.
+
+Recommended scope:
+
+- canonical applicant-side identity normalization for interview printing
+- parent interview record linked to `hr.applicant`
+- child scored question lines
+- helper question master seeded with the 10 Marsellia interview questions
+- applicant `Evaluation` tab with multiple interview summaries
+- interviewer-controlled `Conduct Interview` entry point using native `interviewer_ids`
+- computed total score, percent score, final grade, and visual star result
+
+Key identity rules:
+
+- `x_gender` and `x_national_id` should already exist on `hr.applicant` before interview generation
+- `passport number` remains intentionally blank and deferred to the required-documents slice
+- printable interview header values should be snapshotted onto the interview record at creation time
+
+Recommended scoring rules:
+
+- 10 questions
+- each scored 1 to 5
+- total max score 50
+- official grade selection:
+  - `excellent`
+  - `very_good`
+  - `good`
+  - `acceptable`
+  - `not_acceptable`
+- separate visual star rating on a 0 to 5 scale
+
+The official interview result should live on the custom interview model, not in native applicant `priority`, even if a later mirror into native stars is added.
+
+## 8. Delivery rule
 
 Each stage must be delivered as:
 
