@@ -231,24 +231,6 @@
                         }
                     </style>
 
-                    <t t-set="payload" t-value="data or {}"/>
-                    <t t-set="applicant" t-value="o.x_applicant_id"/>
-                    <t t-set="full_name" t-value="payload.get('full_name') or o.x_full_name_snapshot or ((applicant.partner_name or applicant.name or applicant.display_name) if applicant else '')"/>
-                    <t t-set="gender_snapshot" t-value="payload.get('gender_snapshot') or o.x_gender_snapshot or ''"/>
-                    <t t-set="national_id_snapshot" t-value="payload.get('national_id_snapshot') or o.x_national_id_snapshot or ''"/>
-                    <t t-set="employee_number_snapshot" t-value="payload.get('employee_number_snapshot') or o.x_employee_number_snapshot or ''"/>
-                    <t t-set="position_applied_snapshot" t-value="payload.get('position_applied_snapshot') or o.x_position_applied_snapshot or ''"/>
-                    <t t-set="interviewer_name" t-value="payload.get('interviewer_name') or (o.x_interviewer_user_id.name if o.x_interviewer_user_id else '')"/>
-                    <t t-set="interview_datetime" t-value="payload.get('interview_datetime') or o.x_interview_datetime"/>
-                    <t t-set="career_snapshot" t-value="payload.get('career_aspirations') or o.x_career_aspirations or ''"/>
-                    <t t-set="long_term_snapshot" t-value="payload.get('long_term_employment_expected') if 'long_term_employment_expected' in payload else o.x_long_term_employment_expected"/>
-                    <t t-set="recommend_snapshot" t-value="payload.get('recommend_for_employment') if 'recommend_for_employment' in payload else o.x_recommend_for_employment"/>
-                    <t t-set="remarks_snapshot" t-value="payload.get('remarks') or o.x_remarks or ''"/>
-                    <t t-set="total_score" t-value="payload.get('total_score') if 'total_score' in payload else (o.x_total_score or 0)"/>
-                    <t t-set="max_score" t-value="payload.get('max_score') if 'max_score' in payload else (o.x_max_score or 0)"/>
-                    <t t-set="percent_score" t-value="payload.get('percent_score') if 'percent_score' in payload else (o.x_percent_score or 0.0)"/>
-                    <t t-set="final_grade" t-value="payload.get('final_grade') or o.x_final_grade or ''"/>
-                    <t t-set="payload_lines" t-value="payload.get('lines') or []"/>
                     <t t-set="sorted_lines" t-value="o.x_line_ids.sorted(key=lambda line: ((line.x_sequence or 0), line.id))"/>
 
                     <div class="tor-doc">
@@ -262,11 +244,11 @@
                                         </div>
                                         <div class="row">
                                             <span class="label">مرجع المقابلة</span>
-                                            <span class="value"><span t-esc="o.x_document_reference or o.x_name or ''"/></span>
+                                            <span class="value"><span t-field="o.x_document_reference"/></span>
                                         </div>
                                         <div class="row">
                                             <span class="label">الحالة</span>
-                                            <span class="value"><span t-esc="o.x_document_state or ''"/></span>
+                                            <span class="value"><span t-field="o.x_document_state"/></span>
                                         </div>
                                     </td>
                                     <td class="tor-logo-wrap">
@@ -280,7 +262,7 @@
                                 <tr>
                                     <td class="tor-footer-meta">
                                         <span class="label">مرجع المقابلة</span>
-                                        <span class="value"><span t-esc="o.x_document_reference or o.x_name or ''"/></span>
+                                        <span class="value"><span t-field="o.x_document_reference"/></span>
                                     </td>
                                     <td class="tor-footer-left">
                                         <span class="page"></span> / <span class="topage"></span>
@@ -295,39 +277,39 @@
                         <table class="tor-meta">
                             <tr>
                                 <td class="tor-label">اسم المرشح</td>
-                                <td class="tor-value"><div class="tor-value-ar"><span t-esc="full_name or ''"/></div></td>
+                                <td class="tor-value"><div class="tor-value-ar"><span t-field="o.x_full_name_snapshot"/></div></td>
                                 <td class="tor-label tor-ltr">Candidate Name</td>
-                                <td class="tor-value tor-ltr"><span t-esc="full_name or ''"/></td>
+                                <td class="tor-value tor-ltr"><span t-field="o.x_full_name_snapshot"/></td>
                             </tr>
                             <tr>
                                 <td class="tor-label">الرقم الوطني</td>
-                                <td class="tor-value"><div class="tor-value-ar"><span t-esc="national_id_snapshot or ''"/></div></td>
+                                <td class="tor-value"><div class="tor-value-ar"><span t-field="o.x_national_id_snapshot"/></div></td>
                                 <td class="tor-label tor-ltr">National ID</td>
-                                <td class="tor-value tor-ltr"><span t-esc="national_id_snapshot or ''"/></td>
+                                <td class="tor-value tor-ltr"><span t-field="o.x_national_id_snapshot"/></td>
                             </tr>
                             <tr>
                                 <td class="tor-label">الرقم الوظيفي</td>
-                                <td class="tor-value"><div class="tor-value-ar"><span t-esc="employee_number_snapshot or ''"/></div></td>
+                                <td class="tor-value"><div class="tor-value-ar"><span t-field="o.x_employee_number_snapshot"/></div></td>
                                 <td class="tor-label tor-ltr">Employee Number</td>
-                                <td class="tor-value tor-ltr"><span t-esc="employee_number_snapshot or ''"/></td>
+                                <td class="tor-value tor-ltr"><span t-field="o.x_employee_number_snapshot"/></td>
                             </tr>
                             <tr>
                                 <td class="tor-label">الوظيفة المقدم عليها</td>
-                                <td class="tor-value"><div class="tor-value-ar"><span t-esc="position_applied_snapshot or ''"/></div></td>
+                                <td class="tor-value"><div class="tor-value-ar"><span t-field="o.x_position_applied_snapshot"/></div></td>
                                 <td class="tor-label tor-ltr">Position Applied For</td>
-                                <td class="tor-value tor-ltr"><span t-esc="position_applied_snapshot or ''"/></td>
+                                <td class="tor-value tor-ltr"><span t-field="o.x_position_applied_snapshot"/></td>
                             </tr>
                             <tr>
                                 <td class="tor-label">المقابل</td>
-                                <td class="tor-value"><div class="tor-value-ar"><span t-esc="interviewer_name or ''"/></div></td>
+                                <td class="tor-value"><div class="tor-value-ar"><span t-field="o.x_interviewer_user_id"/></div></td>
                                 <td class="tor-label tor-ltr">Interviewer</td>
-                                <td class="tor-value tor-ltr"><span t-esc="interviewer_name or ''"/></td>
+                                <td class="tor-value tor-ltr"><span t-field="o.x_interviewer_user_id"/></td>
                             </tr>
                             <tr>
                                 <td class="tor-label">تاريخ المقابلة</td>
-                                <td class="tor-value"><div class="tor-value-ar"><span t-esc="interview_datetime or ''"/></div></td>
+                                <td class="tor-value"><div class="tor-value-ar"><span t-field="o.x_interview_datetime"/></div></td>
                                 <td class="tor-label tor-ltr">Interview Date</td>
-                                <td class="tor-value tor-ltr"><span t-esc="interview_datetime or ''"/></td>
+                                <td class="tor-value tor-ltr"><span t-field="o.x_interview_datetime"/></td>
                             </tr>
                         </table>
 
@@ -336,27 +318,27 @@
                             <tbody>
                                 <tr>
                                     <th style="width: 18%;">الجنس</th>
-                                    <td style="width: 32%;"><span t-esc="'ذكر' if gender_snapshot == 'male' else ('أنثى' if gender_snapshot == 'female' else '')"/></td>
+                                    <td style="width: 32%;"><span t-field="o.x_gender_snapshot"/></td>
                                     <th style="width: 18%;">Gender</th>
-                                    <td style="width: 32%;" class="tor-ltr"><span t-esc="gender_snapshot or ''"/></td>
+                                    <td style="width: 32%;" class="tor-ltr"><span t-field="o.x_gender_snapshot"/></td>
                                 </tr>
                                 <tr>
                                     <th>الاسم الكامل</th>
-                                    <td><span t-esc="full_name or ''"/></td>
+                                    <td><span t-field="o.x_full_name_snapshot"/></td>
                                     <th>Full Name</th>
-                                    <td class="tor-ltr"><span t-esc="full_name or ''"/></td>
+                                    <td class="tor-ltr"><span t-field="o.x_full_name_snapshot"/></td>
                                 </tr>
                                 <tr>
                                     <th>الطموحات العملية</th>
-                                    <td><span t-esc="'غير واضح' if career_snapshot == 'unclear' else ('معقول' if career_snapshot == 'reasonable' else ('مبالغ فيه' if career_snapshot == 'unrealistic' else ''))"/></td>
+                                    <td><span t-field="o.x_career_aspirations"/></td>
                                     <th>Career Aspirations</th>
-                                    <td class="tor-ltr"><span t-esc="career_snapshot or ''"/></td>
+                                    <td class="tor-ltr"><span t-field="o.x_career_aspirations"/></td>
                                 </tr>
                                 <tr>
                                     <th>استمرارية العمل</th>
-                                    <td><span t-esc="'نعم' if long_term_snapshot else 'لا'"/></td>
+                                    <td><span t-if="o.x_long_term_employment_expected">نعم</span><span t-if="not o.x_long_term_employment_expected">لا</span></td>
                                     <th>Long-Term Employment Expected</th>
-                                    <td class="tor-ltr"><span t-esc="'yes' if long_term_snapshot else 'no'"/></td>
+                                    <td class="tor-ltr"><span t-if="o.x_long_term_employment_expected">Yes</span><span t-if="not o.x_long_term_employment_expected">No</span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -374,41 +356,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <t t-if="payload_lines">
-                                    <t t-foreach="payload_lines" t-as="line">
-                                        <tr>
-                                            <td class="tor-center"><span t-esc="line.get('sequence') or line_index + 1"/></td>
-                                            <td>
-                                                <div class="tor-ar"><span t-esc="line.get('question_ar') or ''"/></div>
-                                                <div class="tor-en"><span t-esc="line.get('question_en') or ''"/></div>
-                                            </td>
-                                            <td class="tor-center"><span t-esc="line.get('actual_score') if line.get('actual_score') is not None else ''"/></td>
-                                            <td class="tor-center"><span t-esc="line.get('max_score') or 5"/></td>
-                                            <td class="tor-center"><span t-esc="'%.0f%%' % (line.get('percent') or 0.0)"/></td>
-                                            <td>
-                                                <div class="tor-ar"><span t-esc="line.get('question_ar') or ''"/></div>
-                                                <div class="tor-en"><span t-esc="line.get('question_en') or ''"/></div>
-                                            </td>
-                                        </tr>
-                                    </t>
-                                </t>
-                                <t t-if="not payload_lines">
-                                    <t t-foreach="sorted_lines" t-as="line">
-                                        <tr>
-                                            <td class="tor-center"><span t-esc="line_index + 1"/></td>
-                                            <td>
-                                                <div class="tor-ar"><span t-esc="line.x_question_label_ar or (line.x_question_id.x_label_ar if line.x_question_id else '') or (line.x_question_id.x_name if line.x_question_id else '') or ''"/></div>
-                                                <div class="tor-en"><span t-esc="line.x_question_label_en or (line.x_question_id.x_label_en if line.x_question_id else '') or (line.x_question_id.x_name if line.x_question_id else '') or ''"/></div>
-                                            </td>
-                                            <td class="tor-center"><span t-esc="line.x_actual_score if line.x_actual_score not in (False, None) else ''"/></td>
-                                            <td class="tor-center"><span t-esc="line.x_max_score or 5"/></td>
-                                            <td class="tor-center"><span t-esc="'%.0f%%' % (((line.x_actual_score or 0) * 100.0 / (line.x_max_score or 5)) if (line.x_max_score or 0) else 0.0)"/></td>
-                                            <td>
-                                                <div class="tor-ar"><span t-esc="line.x_question_label_ar or ''"/></div>
-                                                <div class="tor-en"><span t-esc="line.x_question_label_en or ''"/></div>
-                                            </td>
-                                        </tr>
-                                    </t>
+                                <t t-foreach="sorted_lines" t-as="line">
+                                    <tr>
+                                        <td class="tor-center"><span t-esc="line_index + 1"/></td>
+                                        <td>
+                                            <div class="tor-ar"><span t-field="line.x_question_label_ar"/></div>
+                                            <div class="tor-en"><span t-field="line.x_question_label_en"/></div>
+                                        </td>
+                                        <td class="tor-center"><span t-field="line.x_actual_score"/></td>
+                                        <td class="tor-center"><span t-field="line.x_max_score"/></td>
+                                        <td class="tor-center"><span t-esc="'%.0f%%' % (((line.x_actual_score or 0) * 100.0 / (line.x_max_score or 5)) if (line.x_max_score or 0) else 0.0)"/></td>
+                                        <td class="tor-ar"><span t-field="line.x_note"/></td>
+                                    </tr>
                                 </t>
                             </tbody>
                         </table>
@@ -418,21 +377,21 @@
                             <tbody>
                                 <tr>
                                     <th style="width: 18%;">النتيجة النهائية</th>
-                                    <td style="width: 32%;"><span t-esc="('%s / %s (%.2f%%)' % (total_score or 0, max_score or 0, percent_score or 0.0))"/></td>
+                                    <td style="width: 32%;"><span t-field="o.x_total_score"/> / <span t-field="o.x_max_score"/> (<span t-field="o.x_percent_score"/>%)</td>
                                     <th style="width: 18%;">Final Score</th>
-                                    <td style="width: 32%;" class="tor-ltr"><span t-esc="('%s / %s (%.2f%%)' % (total_score or 0, max_score or 0, percent_score or 0.0))"/></td>
+                                    <td style="width: 32%;" class="tor-ltr"><span t-field="o.x_total_score"/> / <span t-field="o.x_max_score"/> (<span t-field="o.x_percent_score"/>%)</td>
                                 </tr>
                                 <tr>
                                     <th>التقدير</th>
-                                    <td><span t-esc="'ممتاز' if final_grade == 'excellent' else ('جيد جدًا' if final_grade == 'very_good' else ('جيد' if final_grade == 'good' else ('مقبول' if final_grade == 'acceptable' else ('غير مناسب' if final_grade == 'not_acceptable' else ''))))"/></td>
+                                    <td><span t-field="o.x_final_grade"/></td>
                                     <th>Grade</th>
-                                    <td class="tor-ltr"><span t-esc="final_grade or ''"/></td>
+                                    <td class="tor-ltr"><span t-field="o.x_final_grade"/></td>
                                 </tr>
                                 <tr>
                                     <th>التوصية بالتوظيف</th>
-                                    <td><span t-esc="'نعم' if recommend_snapshot else 'لا'"/></td>
+                                    <td><span t-if="o.x_recommend_for_employment">نعم</span><span t-if="not o.x_recommend_for_employment">لا</span></td>
                                     <th>Recommendation</th>
-                                    <td class="tor-ltr"><span t-esc="'yes' if recommend_snapshot else 'no'"/></td>
+                                    <td class="tor-ltr"><span t-if="o.x_recommend_for_employment">Yes</span><span t-if="not o.x_recommend_for_employment">No</span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -441,7 +400,7 @@
                         <table class="tor-table">
                             <tbody>
                                 <tr>
-                                    <td class="tor-ar" style="min-height: 120px; white-space: pre-wrap;"><span t-esc="remarks_snapshot or ''"/></td>
+                                    <td class="tor-ar" style="min-height: 120px; white-space: pre-wrap;"><span t-field="o.x_remarks"/></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -450,13 +409,13 @@
                             <tr>
                                 <td>
                                     <div><strong>المقابل</strong> <span class="tor-ltr">Interviewer</span></div>
-                                    <div>الاسم / <span class="tor-ltr">Name</span>: <span t-esc="interviewer_name or ''"/></div>
+                                    <div>الاسم / <span class="tor-ltr">Name</span>: <span t-field="o.x_interviewer_user_id"/></div>
                                     <div>التوقيع / <span class="tor-ltr">Signature</span>: <span class="tor-sign-line"/></div>
                                     <div>التاريخ / <span class="tor-ltr">Date</span>: <span class="tor-sign-line"/></div>
                                 </td>
                                 <td>
                                     <div><strong>المرشح</strong> <span class="tor-ltr">Candidate</span></div>
-                                    <div>الاسم / <span class="tor-ltr">Name</span>: <span t-esc="full_name or ''"/></div>
+                                    <div>الاسم / <span class="tor-ltr">Name</span>: <span t-field="o.x_full_name_snapshot"/></div>
                                     <div>التوقيع / <span class="tor-ltr">Signature</span>: <span class="tor-sign-line"/></div>
                                     <div>التاريخ / <span class="tor-ltr">Date</span>: <span class="tor-sign-line"/></div>
                                 </td>

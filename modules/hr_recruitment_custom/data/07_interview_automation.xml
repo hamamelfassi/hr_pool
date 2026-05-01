@@ -37,7 +37,11 @@ for rec in records:
             values['x_national_id_snapshot'] = applicant.x_national_id
         if applicant.job_id and applicant.job_id.name:
             values['x_position_applied_snapshot'] = applicant.job_id.with_context(lang='ar_001').name or applicant.job_id.name
-        employee_number = getattr(applicant, 'x_employee_number', False) or getattr(applicant, 'employee_number', False)
+        employee_number = False
+        if 'x_employee_number' in applicant._fields:
+            employee_number = applicant['x_employee_number']
+        if not employee_number and 'employee_number' in applicant._fields:
+            employee_number = applicant['employee_number']
         if employee_number:
             values['x_employee_number_snapshot'] = employee_number
     if values:

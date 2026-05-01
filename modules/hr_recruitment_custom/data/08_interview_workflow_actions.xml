@@ -30,6 +30,12 @@ for rec in records:
             'x_actual_score': False,
         }))
 
+    employee_number = False
+    if 'x_employee_number' in rec._fields:
+        employee_number = rec['x_employee_number']
+    if not employee_number and 'employee_number' in rec._fields:
+        employee_number = rec['employee_number']
+
     interview = Interview.create({
         'x_applicant_id': rec.id,
         'x_interviewer_user_id': env.user.id,
@@ -38,7 +44,7 @@ for rec in records:
         'x_gender_snapshot': rec.x_gender or False,
         'x_national_id_snapshot': rec.x_national_id or False,
         'x_position_applied_snapshot': (rec.job_id.with_context(lang='ar_001').name or rec.job_id.name or rec.job_id.display_name) if rec.job_id else False,
-        'x_employee_number_snapshot': getattr(rec, 'x_employee_number', False) or getattr(rec, 'employee_number', False) or False,
+        'x_employee_number_snapshot': employee_number or False,
         'x_ready_for_pdf': False,
         'x_line_ids': line_commands,
     })

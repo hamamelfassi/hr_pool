@@ -59,46 +59,9 @@ for rec in records:
     if not rec.x_full_name_snapshot:
         raise Warning('Set the applicant full name before generating the interview PDF.')
 
-    payload_lines = []
-    for line in rec.x_line_ids.sorted(key=lambda item: ((item.x_sequence or 0), item.id)):
-        max_score_value = line.x_max_score or 5
-        actual_score_value = line.x_actual_score if line.x_actual_score not in (False, None) else 0
-        payload_lines.append({
-            'sequence': line.x_sequence or 0,
-            'question_ar': line.x_question_label_ar or (line.x_question_id.x_label_ar if line.x_question_id else '') or (line.x_question_id.x_name if line.x_question_id else '') or '',
-            'question_en': line.x_question_label_en or (line.x_question_id.x_label_en if line.x_question_id else '') or (line.x_question_id.x_name if line.x_question_id else '') or '',
-            'actual_score': line.x_actual_score if line.x_actual_score not in (False, None) else None,
-            'max_score': max_score_value,
-            'percent': round((float(actual_score_value) * 100.0 / float(max_score_value)), 2) if max_score_value else 0.0,
-        })
-
-    applicant_name = ''
-    if rec.x_applicant_id:
-        applicant_name = rec.x_applicant_id.partner_name or rec.x_applicant_id.name or rec.x_applicant_id.display_name or ''
-
-    payload = {
-        'full_name': rec.x_full_name_snapshot or applicant_name,
-        'gender_snapshot': rec.x_gender_snapshot or '',
-        'national_id_snapshot': rec.x_national_id_snapshot or '',
-        'employee_number_snapshot': rec.x_employee_number_snapshot or '',
-        'position_applied_snapshot': rec.x_position_applied_snapshot or '',
-        'interviewer_name': rec.x_interviewer_user_id.name if rec.x_interviewer_user_id else '',
-        'interview_datetime': rec.x_interview_datetime.strftime('%Y-%m-%d %H:%M:%S') if rec.x_interview_datetime else '',
-        'career_aspirations': rec.x_career_aspirations or '',
-        'long_term_employment_expected': bool(rec.x_long_term_employment_expected),
-        'recommend_for_employment': bool(rec.x_recommend_for_employment),
-        'remarks': rec.x_remarks or '',
-        'total_score': rec.x_total_score or 0,
-        'max_score': rec.x_max_score or 0,
-        'percent_score': rec.x_percent_score or 0.0,
-        'final_grade': rec.x_final_grade or '',
-        'lines': payload_lines,
-    }
-
     pdf_content, content_type = env['ir.actions.report'].sudo()._render_qweb_pdf(
         'hr_recruitment_custom.action_report_mcep_interview_tor',
-        [rec.id],
-        data=payload,
+        [rec.id]
     )
     filename = '%s - Interview.pdf' % (rec.x_full_name_snapshot or rec.x_name or 'Interview')
     attachment = env['ir.attachment'].sudo().create({
