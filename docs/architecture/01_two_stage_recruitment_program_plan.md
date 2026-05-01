@@ -211,7 +211,7 @@ This slice should not yet automate:
 
 ## 7. Third stage-2 slice: interview evaluation workflow
 
-After the TOR generation/signing slice is stable, the next recruitment-enrichment slice should implement the structured interview evaluation workflow based on Marsellia form `MCEP-HR-F-0002`.
+The interview evaluation workflow based on Marsellia form `MCEP-HR-F-0002` is now implemented in `hr_recruitment_custom` with the following current behavior.
 
 Recommended scope:
 
@@ -222,6 +222,11 @@ Recommended scope:
 - applicant `Evaluation` tab with multiple interview summaries
 - interviewer-controlled `Conduct Interview` entry point using native `interviewer_ids`
 - computed total score, percent score, final grade, and visual star result
+- strict score validation (`1..5` only)
+- read-only computed interview stars in applicant inline summaries
+- `x_ready_for_pdf` gate before PDF generation is shown
+- interview PDF attached to applicant Files/chatter (same artifact posture as TOR)
+- interviewer-sign guided-manual flow started immediately after generation
 
 Key identity rules:
 
@@ -241,6 +246,13 @@ Recommended scoring rules:
   - `acceptable`
   - `not_acceptable`
 - separate visual star rating on a 0 to 5 scale
+
+Current UX/workflow rules:
+
+- `Conduct Interview` opens the interview form in edit mode
+- generation is visible only when all line scores are valid and saved
+- generation writes interview state to sent/ready-for-signature and logs chatter on both interview and applicant
+- signed interview PDF linkage marks interview state as signed
 
 The official interview result should live on the custom interview model, not in native applicant `priority`, even if a later mirror into native stars is added.
 

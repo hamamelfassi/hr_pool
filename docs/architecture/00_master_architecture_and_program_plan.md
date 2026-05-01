@@ -133,6 +133,10 @@ Work:
 Work:
 - interview evaluation
 - dynamic interview evaluation records based on Marsellia form `0002`
+- strict `1..5` interview score validation with computed-only star aggregates
+- interview PDF rendering aligned to TOR visual pattern
+- interview PDF attachment to applicant Files/chatter with chatter audit trail
+- guided-manual interviewer-sign flow triggered from generated interview PDF
 - document checklist
 - applicant-side completion surface
 - contract and signature flow

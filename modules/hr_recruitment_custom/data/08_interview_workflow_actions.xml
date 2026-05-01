@@ -27,17 +27,19 @@ for rec in records:
             'x_question_label_ar': question.x_label_ar or question.with_context(lang='ar_001').x_name or question.x_name,
             'x_question_label_en': question.x_label_en or question.with_context(lang='en_US').x_name or question.x_name,
             'x_max_score': question.x_default_max_score or 5,
-            'x_actual_score': 0,
+            'x_actual_score': False,
         }))
 
     interview = Interview.create({
         'x_applicant_id': rec.id,
         'x_interviewer_user_id': env.user.id,
         'x_interview_datetime': datetime.datetime.now(),
-        'x_full_name_snapshot': rec.partner_name or False,
+        'x_full_name_snapshot': rec.partner_name or rec.name or rec.display_name or False,
         'x_gender_snapshot': rec.x_gender or False,
         'x_national_id_snapshot': rec.x_national_id or False,
-        'x_position_applied_snapshot': rec.job_id.with_context(lang='ar_001').name if rec.job_id else False,
+        'x_position_applied_snapshot': (rec.job_id.with_context(lang='ar_001').name or rec.job_id.name or rec.job_id.display_name) if rec.job_id else False,
+        'x_employee_number_snapshot': getattr(rec, 'x_employee_number', False) or getattr(rec, 'employee_number', False) or False,
+        'x_ready_for_pdf': False,
         'x_line_ids': line_commands,
     })
     rec.message_post(body='Interview evaluation record created for the selected interviewer.')
@@ -51,6 +53,7 @@ if len(records) == 1 and interview:
         'res_id': interview.id,
         'view_id': env.ref('hr_recruitment_custom.view_mcep_interview_form').id,
         'target': 'current',
+        'context': {'form_view_initial_mode': 'edit'},
     }
         ]]></field>
     </record>

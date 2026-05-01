@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="action_mcep_interview_generate_pdf" model="ir.actions.server">
+    <record id="action_mcep_interview_generate_pdf_tor" model="ir.actions.server">
         <field name="name">Generate Interview PDF</field>
         <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
         <field name="state">code</field>
@@ -8,21 +8,42 @@
 attachment = False
 
 for rec in records:
+    if not rec.x_applicant_id:
+        raise Warning('Link this interview to an applicant before generating the interview PDF.')
+
     values = {}
     if rec.id and not rec.x_document_reference:
         values['x_document_reference'] = 'MCEP-HR-F-0002-%05d' % rec.id
     if not rec.x_document_state:
         values['x_document_state'] = 'draft'
-    if rec.x_applicant_id and rec.x_applicant_id.partner_name:
-        values['x_full_name_snapshot'] = rec.x_applicant_id.partner_name
-    if rec.x_applicant_id and rec.x_applicant_id.x_gender:
-        values['x_gender_snapshot'] = rec.x_applicant_id.x_gender
-    if rec.x_applicant_id and rec.x_applicant_id.x_national_id:
-        values['x_national_id_snapshot'] = rec.x_applicant_id.x_national_id
-    if rec.x_applicant_id and rec.x_applicant_id.job_id and rec.x_applicant_id.job_id.name:
-        values['x_position_applied_snapshot'] = rec.x_applicant_id.job_id.with_context(lang='ar_001').name or rec.x_applicant_id.job_id.name
+    if rec.x_applicant_id:
+        applicant = rec.x_applicant_id
+        if applicant.partner_name or applicant.name or applicant.display_name:
+            values['x_full_name_snapshot'] = applicant.partner_name or applicant.name or applicant.display_name
+        if applicant.x_gender:
+            values['x_gender_snapshot'] = applicant.x_gender
+        if applicant.x_national_id:
+            values['x_national_id_snapshot'] = applicant.x_national_id
+        if applicant.job_id:
+            values['x_position_applied_snapshot'] = applicant.job_id.with_context(lang='ar_001').name or applicant.job_id.name or applicant.job_id.display_name or False
+        employee_number = False
+        if 'x_employee_number' in applicant._fields:
+            employee_number = applicant['x_employee_number']
+        if not employee_number and 'employee_number' in applicant._fields:
+            employee_number = applicant['employee_number']
+        if employee_number:
+            values['x_employee_number_snapshot'] = employee_number
     if values:
         rec.sudo().write(values)
+
+    if not rec.x_line_ids:
+        raise Warning('Interview lines are required before generating the interview PDF.')
+
+    for line in rec.x_line_ids:
+        if line.x_actual_score in (False, None):
+            raise Warning('Complete all interview question scores before generating the interview PDF.')
+        if line.x_actual_score < 1 or line.x_actual_score > 5:
+            raise Warning('Interview question score must be between 1 and 5.')
 
     for line in rec.x_line_ids:
         line_values = {}
@@ -33,14 +54,51 @@ for rec in records:
         if line_values:
             line.sudo().write(line_values)
 
+    rec = env['x_hr.applicant_mcep_interview'].sudo().with_context(prefetch_fields=False).browse(rec.id)
+
     if not rec.x_full_name_snapshot:
         raise Warning('Set the applicant full name before generating the interview PDF.')
-    if not rec.x_line_ids:
-        raise Warning('Interview lines are required before generating the interview PDF.')
+
+    payload_lines = []
+    for line in rec.x_line_ids.sorted(key=lambda item: ((item.x_sequence or 0), item.id)):
+        max_score_value = line.x_max_score or 5
+        actual_score_value = line.x_actual_score if line.x_actual_score not in (False, None) else 0
+        payload_lines.append({
+            'sequence': line.x_sequence or 0,
+            'question_ar': line.x_question_label_ar or (line.x_question_id.x_label_ar if line.x_question_id else '') or (line.x_question_id.x_name if line.x_question_id else '') or '',
+            'question_en': line.x_question_label_en or (line.x_question_id.x_label_en if line.x_question_id else '') or (line.x_question_id.x_name if line.x_question_id else '') or '',
+            'actual_score': line.x_actual_score if line.x_actual_score not in (False, None) else None,
+            'max_score': max_score_value,
+            'percent': round((float(actual_score_value) * 100.0 / float(max_score_value)), 2) if max_score_value else 0.0,
+        })
+
+    applicant_name = ''
+    if rec.x_applicant_id:
+        applicant_name = rec.x_applicant_id.partner_name or rec.x_applicant_id.name or rec.x_applicant_id.display_name or ''
+
+    payload = {
+        'full_name': rec.x_full_name_snapshot or applicant_name,
+        'gender_snapshot': rec.x_gender_snapshot or '',
+        'national_id_snapshot': rec.x_national_id_snapshot or '',
+        'employee_number_snapshot': rec.x_employee_number_snapshot or '',
+        'position_applied_snapshot': rec.x_position_applied_snapshot or '',
+        'interviewer_name': rec.x_interviewer_user_id.name if rec.x_interviewer_user_id else '',
+        'interview_datetime': rec.x_interview_datetime.strftime('%Y-%m-%d %H:%M:%S') if rec.x_interview_datetime else '',
+        'career_aspirations': rec.x_career_aspirations or '',
+        'long_term_employment_expected': bool(rec.x_long_term_employment_expected),
+        'recommend_for_employment': bool(rec.x_recommend_for_employment),
+        'remarks': rec.x_remarks or '',
+        'total_score': rec.x_total_score or 0,
+        'max_score': rec.x_max_score or 0,
+        'percent_score': rec.x_percent_score or 0.0,
+        'final_grade': rec.x_final_grade or '',
+        'lines': payload_lines,
+    }
 
     pdf_content, content_type = env['ir.actions.report'].sudo()._render_qweb_pdf(
-        'hr_recruitment_custom.action_report_mcep_interview',
+        'hr_recruitment_custom.action_report_mcep_interview_tor',
         [rec.id],
+        data=payload,
     )
     filename = '%s - Interview.pdf' % (rec.x_full_name_snapshot or rec.x_name or 'Interview')
     attachment = env['ir.attachment'].sudo().create({
@@ -48,8 +106,8 @@ for rec in records:
         'type': 'binary',
         'raw': pdf_content,
         'mimetype': 'application/pdf',
-        'res_model': rec._name,
-        'res_id': rec.id,
+        'res_model': 'hr.applicant',
+        'res_id': rec.x_applicant_id.id,
     })
 
     rec.sudo().write({
@@ -60,7 +118,8 @@ for rec in records:
         'x_signed_on': False,
         'x_signed_attachment_id': False,
     })
-    rec.message_post(body='Interview PDF generated and attached to the interview record.')
+    rec.message_post(body='Interview PDF generated and attached to applicant Files. Use the send button to begin interviewer signature.')
+    rec.x_applicant_id.message_post(body='Interview PDF generated and attached to applicant Files.')
 
 if len(records) == 1 and attachment:
     action = {
@@ -99,6 +158,8 @@ for rec in records:
         '4) place the signature field in the interviewer signature block, '
         '5) once signed, upload the signed PDF to Files/Chatter and select it in the Signed Interview PDF field.'
     ) % (signer_email,))
+    if rec.x_applicant_id:
+        rec.x_applicant_id.message_post(body=('Interview signature request sent to interviewer (%s) using the generated applicant attachment.') % (signer_email,))
 
 if len(records) == 1 and attachment:
     action = {

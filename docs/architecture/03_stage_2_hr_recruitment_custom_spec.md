@@ -341,15 +341,15 @@ These belong to the next document/sign workflow increments.
 
 The interview evaluation workflow should be modeled on Marsellia form `MCEP-HR-F-0002`.
 
-This slice should stay structured-first:
+This slice is now delivered as a structured + document workflow:
 
 - parent interview record
 - child question lines
 - seeded helper questions
 - computed total / percent / grade / stars
 - applicant-side summary tab
-
-QWeb interview rendering and interviewer-sign flows should follow later using the same proven QWeb pattern established for the TOR.
+- QWeb interview PDF rendering aligned to the TOR visual pattern
+- interviewer-sign workflow initiated immediately after interview PDF generation
 
 ### Data model
 
@@ -369,6 +369,7 @@ Owns:
 - percent score
 - final grade
 - visual star rating
+- ready-for-pdf gate
 - career aspirations
 - long-term employment expected
 - recommendation for employment
@@ -435,6 +436,7 @@ The `Evaluation` tab should show all interview records for the applicant with at
 The `Conduct Interview` action should:
 
 - open a new interview record linked to the current applicant
+- open directly in edit mode so recruiter can save scoring changes immediately
 - prefill interviewer provenance and printable header snapshots
 - auto-generate the 10 evaluation question lines
 
@@ -481,6 +483,12 @@ The visual result should be stored separately as a dedicated star value, ideally
 
 This official interview result should not rely on the native applicant `priority` field as its canonical store, even if a later mirror into native stars is added for convenience.
 
+The interview star field in applicant inline summaries is read-only and only updated by aggregate score computation.
+
+Question score entry is strictly validated to allow only integers from `1` to `5` inclusive. Any value outside this range is rejected.
+
+`x_ready_for_pdf` becomes true only when all interview lines have valid `1..5` scores and is used to control PDF-generation button visibility.
+
 ### Auxiliary parent fields
 
 The parent interview record should also store:
@@ -495,6 +503,22 @@ The parent interview record should also store:
   - yes / no
 - `remarks`
 
+### Interview PDF and signature behavior (current implementation)
+
+Interview PDF generation follows the TOR artifact pattern:
+
+- recruiter triggers generation from the interview row/form once `x_ready_for_pdf` is true
+- the generated interview PDF is attached to the parent `hr.applicant` record so it appears in applicant Files and chatter
+- interview lifecycle timestamps and state are updated on the interview record
+- chatter logs are posted on both the interview and applicant records
+
+Signature workflow for this slice is intentionally guided-manual:
+
+- generation marks the document as ready/sent for interviewer signature
+- recruiter uses the generated applicant attachment as the source PDF in Odoo Sign
+- recruiter assigns the interviewer signer and completes placement manually
+- signed PDF is linked back through `Signed Interview PDF`, which marks the interview as signed
+
 ## 11. Recommended implementation order
 
 1. add baseline Job Description fields and UI on `hr.job`
@@ -508,7 +532,7 @@ The parent interview record should also store:
 9. wire the current guided-manual applicant-side Sign workflow
 10. add the fixed final signature page for stable applicant-signature geometry
 11. add applicant-side canonical printable identity fields such as `x_gender` and `x_national_id`
-12. add the structured interview evaluation workflow and applicant `Evaluation` tab
+12. add the structured interview evaluation workflow and applicant `Evaluation` tab (now delivered)
 13. only then automate Sign request creation and signed-document return for later forms
 14. only then add broader document/sign flows
 

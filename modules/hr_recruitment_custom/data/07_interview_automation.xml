@@ -25,16 +25,21 @@ for rec in records:
         values['x_interview_datetime'] = datetime.datetime.now()
     if not rec.x_document_state:
         values['x_document_state'] = 'draft'
+    if rec.x_ready_for_pdf:
+        values['x_ready_for_pdf'] = False
     if rec.x_applicant_id:
         applicant = rec.x_applicant_id
-        if applicant.partner_name:
-            values['x_full_name_snapshot'] = applicant.partner_name
+        if applicant.partner_name or applicant.name or applicant.display_name:
+            values['x_full_name_snapshot'] = applicant.partner_name or applicant.name or applicant.display_name
         if applicant.x_gender:
             values['x_gender_snapshot'] = applicant.x_gender
         if applicant.x_national_id:
             values['x_national_id_snapshot'] = applicant.x_national_id
         if applicant.job_id and applicant.job_id.name:
             values['x_position_applied_snapshot'] = applicant.job_id.with_context(lang='ar_001').name or applicant.job_id.name
+        employee_number = getattr(applicant, 'x_employee_number', False) or getattr(applicant, 'employee_number', False)
+        if employee_number:
+            values['x_employee_number_snapshot'] = employee_number
     if values:
         rec.sudo().write(values)
 
@@ -69,14 +74,9 @@ for rec in records:
         if rec.x_max_score != default_max:
             values['x_max_score'] = default_max
 
-    actual_score = rec.x_actual_score or 0
-    max_score = values.get('x_max_score', rec.x_max_score or 0)
-    if actual_score < 0:
-        actual_score = 0
-    if max_score and actual_score > max_score:
-        actual_score = max_score
-    if rec.x_actual_score != actual_score:
-        values['x_actual_score'] = actual_score
+    actual_score = rec.x_actual_score
+    if actual_score not in (False, None) and (actual_score < 1 or actual_score > 5):
+        raise Warning('Interview question score must be between 1 and 5.')
 
     if values:
         rec.sudo().write(values)
@@ -84,8 +84,15 @@ for rec in records:
     interview = rec.x_interview_id
     total_score = 0
     max_total = 0
+    ready_for_pdf = True
     for line in interview.x_line_ids:
-        total_score += (line.x_actual_score or 0)
+        line_score = line.x_actual_score
+        if line_score in (False, None):
+            ready_for_pdf = False
+            line_score = 0
+        elif line_score < 1 or line_score > 5:
+            raise Warning('Interview question score must be between 1 and 5.')
+        total_score += line_score
         max_total += (line.x_max_score or 0)
     percent = round((float(total_score) / float(max_total)) * 100.0, 2) if max_total else 0.0
     if percent >= 90.0:
@@ -118,6 +125,7 @@ for rec in records:
         'x_percent_score': percent,
         'x_final_grade': final_grade,
         'x_visual_star_rating': stars,
+        'x_ready_for_pdf': bool(ready_for_pdf and interview.x_line_ids),
     })
     applicant = interview.x_applicant_id
     if applicant:
@@ -164,14 +172,9 @@ for rec in records:
         if not rec.x_max_score or rec.x_max_score != default_max:
             values['x_max_score'] = default_max
 
-    actual_score = rec.x_actual_score or 0
-    max_score = values.get('x_max_score', rec.x_max_score or 0)
-    if actual_score < 0:
-        actual_score = 0
-    if max_score and actual_score > max_score:
-        actual_score = max_score
-    if rec.x_actual_score != actual_score:
-        values['x_actual_score'] = actual_score
+    actual_score = rec.x_actual_score
+    if actual_score not in (False, None) and (actual_score < 1 or actual_score > 5):
+        raise Warning('Interview question score must be between 1 and 5.')
 
     if values:
         rec.sudo().write(values)
@@ -179,8 +182,15 @@ for rec in records:
     interview = rec.x_interview_id
     total_score = 0
     max_total = 0
+    ready_for_pdf = True
     for line in interview.x_line_ids:
-        total_score += (line.x_actual_score or 0)
+        line_score = line.x_actual_score
+        if line_score in (False, None):
+            ready_for_pdf = False
+            line_score = 0
+        elif line_score < 1 or line_score > 5:
+            raise Warning('Interview question score must be between 1 and 5.')
+        total_score += line_score
         max_total += (line.x_max_score or 0)
     percent = round((float(total_score) / float(max_total)) * 100.0, 2) if max_total else 0.0
     if percent >= 90.0:
@@ -213,6 +223,7 @@ for rec in records:
         'x_percent_score': percent,
         'x_final_grade': final_grade,
         'x_visual_star_rating': stars,
+        'x_ready_for_pdf': bool(ready_for_pdf and interview.x_line_ids),
     })
     applicant = interview.x_applicant_id
     if applicant:
@@ -253,6 +264,8 @@ for rec in records:
             'x_signed_on': datetime.datetime.now(),
         })
         rec.message_post(body='Signed interview PDF linked to the interview record.')
+        if rec.x_applicant_id:
+            rec.x_applicant_id.message_post(body='Signed interview PDF linked to applicant Files and interview record marked as signed.')
         ]]></field>
     </record>
 </odoo>

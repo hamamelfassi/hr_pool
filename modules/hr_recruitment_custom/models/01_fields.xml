@@ -391,6 +391,13 @@
         <field name="ttype">selection</field>
     </record>
 
+    <record id="field_applicant_mcep_interview_x_ready_for_pdf" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="name">x_ready_for_pdf</field>
+        <field name="field_description">Ready for PDF</field>
+        <field name="ttype">boolean</field>
+    </record>
+
     <record id="field_applicant_mcep_interview_x_document_state" model="ir.model.fields">
         <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
         <field name="name">x_document_state</field>

@@ -52,19 +52,22 @@
                             <field name="x_total_score"/>
                             <field name="x_percent_score"/>
                             <field name="x_final_grade"/>
-                            <field name="x_visual_star_rating" widget="priority"/>
+                            <field name="x_visual_star_rating" widget="priority" readonly="1"/>
+                            <field name="x_document_state"/>
+                            <field name="x_ready_for_pdf" invisible="1"/>
                             <field name="x_recommend_for_employment"/>
                         </list>
                         <form string="Interview Evaluation">
                             <header>
                                 <button type="action"
-                                        name="hr_recruitment_custom.action_mcep_interview_generate_pdf"
+                                        name="hr_recruitment_custom.action_mcep_interview_generate_pdf_tor"
                                         string="Generate Interview PDF"
                                         class="btn-primary"
-                                        invisible="not id"/>
+                                        invisible="not id or not x_ready_for_pdf"/>
                                 <button type="action"
                                         name="hr_recruitment_custom.action_mcep_interview_send_for_signature"
                                         string="Send Interview for Signature"
+                                        class="btn-secondary"
                                         invisible="not id or not x_pdf_attachment_id or x_document_state != 'generated'"/>
                             </header>
                             <sheet>
@@ -82,6 +85,7 @@
                                         <field name="x_percent_score" readonly="1"/>
                                         <field name="x_final_grade" readonly="1"/>
                                         <field name="x_visual_star_rating" widget="priority" readonly="1"/>
+                                        <field name="x_ready_for_pdf" readonly="1"/>
                                         <field name="x_document_reference" readonly="1"/>
                                     </group>
                                 </group>
@@ -103,8 +107,8 @@
                                         <field name="x_signed_on" readonly="1"/>
                                     </group>
                                     <group>
-                                        <field name="x_pdf_attachment_id" readonly="1" domain="[('res_model', '=', 'x_hr.applicant_mcep_interview'), ('res_id', '=', id)]"/>
-                                        <field name="x_signed_attachment_id" domain="[('res_model', '=', 'x_hr.applicant_mcep_interview'), ('res_id', '=', id)]" context="{'default_res_model': 'x_hr.applicant_mcep_interview', 'default_res_id': id}"/>
+                                        <field name="x_pdf_attachment_id" readonly="1" domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]"/>
+                                        <field name="x_signed_attachment_id" domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]" context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}"/>
                                     </group>
                                 </group>
                                 <group string="Evaluation Inputs">
@@ -121,14 +125,14 @@
                                     <list editable="bottom" create="false" delete="false">
                                         <field name="x_sequence" widget="handle"/>
                                         <field name="x_question_label_ar" readonly="1"/>
-                                        <field name="x_actual_score"/>
+                                        <field name="x_actual_score" options="{'type': 'number', 'min': 1, 'max': 5}"/>
                                         <field name="x_note"/>
                                     </list>
                                     <form string="Interview Question">
                                         <group>
                                             <field name="x_sequence"/>
                                             <field name="x_question_label_ar" readonly="1"/>
-                                            <field name="x_actual_score"/>
+                                            <field name="x_actual_score" options="{'type': 'number', 'min': 1, 'max': 5}"/>
                                             <field name="x_note"/>
                                         </group>
                                     </form>
@@ -197,13 +201,14 @@
             <form string="Interview Evaluation">
                 <header>
                     <button type="action"
-                            name="hr_recruitment_custom.action_mcep_interview_generate_pdf"
+                            name="hr_recruitment_custom.action_mcep_interview_generate_pdf_tor"
                             string="Generate Interview PDF"
                             class="btn-primary"
-                            invisible="not id"/>
+                            invisible="not id or not x_ready_for_pdf"/>
                     <button type="action"
                             name="hr_recruitment_custom.action_mcep_interview_send_for_signature"
                             string="Send Interview for Signature"
+                            class="btn-secondary"
                             invisible="not id or not x_pdf_attachment_id or x_document_state != 'generated'"/>
                 </header>
                 <sheet>
@@ -221,6 +226,7 @@
                             <field name="x_percent_score" readonly="1"/>
                             <field name="x_final_grade" readonly="1"/>
                             <field name="x_visual_star_rating" widget="priority" readonly="1"/>
+                            <field name="x_ready_for_pdf" readonly="1"/>
                             <field name="x_document_reference" readonly="1"/>
                         </group>
                     </group>
@@ -242,8 +248,8 @@
                             <field name="x_signed_on" readonly="1"/>
                         </group>
                         <group>
-                            <field name="x_pdf_attachment_id" readonly="1" domain="[('res_model', '=', 'x_hr.applicant_mcep_interview'), ('res_id', '=', id)]"/>
-                            <field name="x_signed_attachment_id" domain="[('res_model', '=', 'x_hr.applicant_mcep_interview'), ('res_id', '=', id)]" context="{'default_res_model': 'x_hr.applicant_mcep_interview', 'default_res_id': id}"/>
+                            <field name="x_pdf_attachment_id" readonly="1" domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]"/>
+                            <field name="x_signed_attachment_id" domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]" context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}"/>
                         </group>
                     </group>
                     <group string="Evaluation Inputs">
@@ -260,14 +266,14 @@
                         <list editable="bottom" create="false" delete="false">
                             <field name="x_sequence" widget="handle"/>
                             <field name="x_question_label_ar" readonly="1"/>
-                            <field name="x_actual_score"/>
+                            <field name="x_actual_score" options="{'type': 'number', 'min': 1, 'max': 5}"/>
                             <field name="x_note"/>
                         </list>
                         <form string="Interview Question">
                             <group>
                                 <field name="x_sequence"/>
                                 <field name="x_question_label_ar" readonly="1"/>
-                                <field name="x_actual_score"/>
+                                <field name="x_actual_score" options="{'type': 'number', 'min': 1, 'max': 5}"/>
                                 <field name="x_note"/>
                             </group>
                         </form>
@@ -294,7 +300,8 @@
                 <field name="x_total_score"/>
                 <field name="x_percent_score"/>
                 <field name="x_final_grade"/>
-                <field name="x_visual_star_rating" widget="priority"/>
+                <field name="x_visual_star_rating" widget="priority" readonly="1"/>
+                <field name="x_document_state"/>
                 <field name="x_recommend_for_employment"/>
             </list>
         </field>
