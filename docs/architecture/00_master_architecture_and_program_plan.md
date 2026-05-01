@@ -134,9 +134,10 @@ Work:
 - interview evaluation
 - dynamic interview evaluation records based on Marsellia form `0002`
 - strict `1..5` interview score validation with computed-only star aggregates
-- interview PDF rendering aligned to TOR visual pattern
+- interview PDF rendering locked to the successful TOR-style QWeb pattern: inline base64 Arabic font, inline base64 MCEP logo, fixed header/footer, stored snapshot fields rendered with `t-field`, normalized child question lines, applicant Files/chatter attachment, and no ad hoc report payload layer for business data
 - interview PDF attachment to applicant Files/chatter with chatter audit trail
 - guided-manual interviewer-sign flow triggered from generated interview PDF
+- next interview signing slice: one-click/simple Odoo Sign flow for the interviewer only, using the fixed interviewer signature block in the generated interview PDF
 - document checklist
 - applicant-side completion surface
 - contract and signature flow

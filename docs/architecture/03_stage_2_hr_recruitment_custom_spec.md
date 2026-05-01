@@ -519,6 +519,135 @@ Signature workflow for this slice is intentionally guided-manual:
 - recruiter assigns the interviewer signer and completes placement manually
 - signed PDF is linked back through `Signed Interview PDF`, which marks the interview as signed
 
+### Locked interview evaluation PDF generation pattern
+
+The current working interview evaluation PDF is the canonical pattern for future dynamic HR QWeb forms.
+
+It is implemented by:
+
+- `modules/hr_recruitment_custom/report/04_interview_report_templates.xml`
+- `modules/hr_recruitment_custom/report/05_interview_report_actions.xml`
+- `modules/hr_recruitment_custom/data/08_interview_workflow_actions.xml`
+- `modules/hr_recruitment_custom/data/09_interview_document_workflow_actions.xml`
+- `modules/hr_recruitment_custom/data/07_interview_automation.xml`
+
+The active report path intentionally uses refreshed XML IDs so Odoo does not keep rendering a stale legacy QWeb view:
+
+- `action_mcep_interview_generate_pdf_tor`
+- `action_report_mcep_interview_tor`
+- `report_mcep_interview_document_tor`
+- `report_mcep_interview_document` remains only as a compatibility alias to the TOR-style template.
+
+Future dynamic QWeb form generation should preserve these conventions:
+
+- use `web.html_container` and a single `.page` wrapper
+- define all report CSS inline inside the report template
+- embed the Arabic font as inline base64 `@font-face` data, following the successful TOR template pattern
+- use the same Marsellia/MCEP logo asset as an inline base64 `data:image/png;base64,...` value rather than relying on a static URL at render time
+- keep the PDF Arabic-first and bilingual by labels, not by duplicating the same dynamic data value into separate Arabic and English value columns
+- keep the fixed header with logo, form number, document reference, and state
+- keep the footer with document reference and page counters
+- render dynamic data with `t-field` from stored model fields wherever possible
+- avoid passing ad hoc `data=payload` dictionaries into QWeb for business content
+- avoid report-time fragile joins where a printable value can be snapshotted before render
+
+The final interview layout is locked as follows:
+
+- title: Arabic `نموذج تقييم المقابلة`
+- subtitle: English `Interview Evaluation Form`
+- no duplicate form-code subtitle below the title, because the form code already appears in the header as `MCEP-HR-F-0002`
+- one consolidated `Personal Information` section using three columns:
+  - Arabic label
+  - one stored value
+  - English label
+- consolidated fields:
+  - full name / candidate name
+  - national ID
+  - employee number
+  - position applied for
+  - interviewer
+  - interview date
+  - gender
+  - career aspirations
+  - long-term employment expected
+- `Evaluation Questions` table columns:
+  - `م`
+  - evaluation area / question
+  - actual score
+  - max score
+  - question comments
+- the question percent column is intentionally removed to preserve space for comments
+- the sequence column renders the normalized stored `x_sequence` from each line
+- `Final Result` uses three columns:
+  - Arabic label
+  - one stored result value
+  - English label
+- the signature block is interviewer-only; the candidate signature block is intentionally removed
+
+### Interview data normalization and snapshot rules
+
+The report must render from stored interview state, not from runtime report payloads.
+
+Parent interview snapshot fields are populated at creation and reseeded before PDF generation:
+
+- `x_full_name_snapshot`
+- `x_gender_snapshot`
+- `x_national_id_snapshot`
+- `x_employee_number_snapshot`
+- `x_position_applied_snapshot`
+- `x_interviewer_user_id`
+- `x_interview_datetime`
+- `x_career_aspirations`
+- `x_long_term_employment_expected`
+- `x_recommend_for_employment`
+- `x_remarks`
+- computed result fields
+
+Child question lines must store their printable content before render:
+
+- `x_sequence`
+- `x_question_label_ar`
+- `x_question_label_en`
+- `x_actual_score`
+- `x_max_score`
+- `x_note`
+
+The `Generate Interview PDF` server action must normalize existing line sequences to `1, 2, 3...` before rendering. This protects old records whose helper question sequence was blank or not sequential.
+
+Safe-eval server actions must not use unsupported Python helpers such as `getattr`. Optional field access should use Odoo model metadata instead:
+
+- check membership in `record._fields`
+- read with `record['field_name']`
+
+### Interview artifact and chatter rules
+
+Interview PDF generation must remain aligned with the TOR artifact posture:
+
+- only show generation once the record exists and `x_ready_for_pdf` is true
+- validate every line score is present and within `1..5`
+- render the PDF from the active report action
+- create an `ir.attachment` with `mimetype = application/pdf`
+- attach the generated artifact to `hr.applicant`, not only to the child interview record
+- set `x_pdf_attachment_id` on the interview
+- update generated timestamp and document state
+- clear any stale sent/signed state when a new PDF version is generated
+- post chatter on both the interview and applicant records
+
+### Next slice: simple interviewer auto-sign flow
+
+The next implementation slice should replace the guided-manual interviewer signature step with a simple native Odoo Sign flow.
+
+Target behavior:
+
+- after an interview PDF exists, the interviewer sees a `Sign` action on the interview form
+- the action opens or creates a Sign request from the latest generated interview PDF
+- the signer is the interviewer who conducted/generated the interview
+- the signature field is placed in the fixed interviewer signature block
+- because the candidate signature block has been removed, there is only one signer and one signature widget
+- after signature completion, the signed PDF is linked back to `Signed Interview PDF` and the interview state becomes `signed`
+
+If fixed coordinate placement cannot be made reliable in the first pass, the fallback is an explicit one-click Sign request using the generated PDF, followed by manual field placement, but the canonical direction is direct interviewer self-sign from the generated PDF.
+
 ## 11. Recommended implementation order
 
 1. add baseline Job Description fields and UI on `hr.job`

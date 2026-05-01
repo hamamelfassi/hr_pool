@@ -227,6 +227,7 @@ Recommended scope:
 - `x_ready_for_pdf` gate before PDF generation is shown
 - interview PDF attached to applicant Files/chatter (same artifact posture as TOR)
 - interviewer-sign guided-manual flow started immediately after generation
+- final interview evaluation PDF generation is now locked to the successful TOR-style QWeb pattern: inline base64 Arabic font, inline base64 MCEP logo, fixed header/footer, stored snapshot fields rendered with `t-field`, normalized child-line question snapshots, no ad hoc QWeb `data=payload` business content, and attachment to applicant Files/chatter
 
 Key identity rules:
 
@@ -253,8 +254,17 @@ Current UX/workflow rules:
 - generation is visible only when all line scores are valid and saved
 - generation writes interview state to sent/ready-for-signature and logs chatter on both interview and applicant
 - signed interview PDF linkage marks interview state as signed
+- current PDF layout is Arabic-first and bilingual by labels: one consolidated personal-information section, one stored value column, English label column, numbered question rows, no question percent column, final-result section without duplicate data columns, and interviewer-only signature block
 
 The official interview result should live on the custom interview model, not in native applicant `priority`, even if a later mirror into native stars is added.
+
+Next slice:
+
+- replace the guided-manual interviewer-sign step with a simple native Sign flow from the latest generated interview PDF
+- expose a `Sign` action after PDF generation
+- route only to the interviewer signer
+- place the signature widget in the fixed interviewer signature block
+- return the signed PDF to the interview record and applicant Files/chatter
 
 ## 8. Delivery rule
 
