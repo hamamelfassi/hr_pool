@@ -272,75 +272,55 @@
                         </div>
 
                         <div class="tor-center tor-title">نموذج تقييم المقابلة</div>
-                        <div class="tor-center tor-subtitle">Interview Evaluation Form - MCEP-HR-F-0002</div>
+                        <div class="tor-center tor-subtitle">Interview Evaluation Form</div>
 
+                        <div class="tor-section-title">أولًا: المعلومات الشخصية <span class="en tor-ltr">Personal Information</span></div>
                         <table class="tor-meta">
                             <tr>
-                                <td class="tor-label">اسم المرشح</td>
+                                <td class="tor-label" style="width: 22%;">الاسم الكامل</td>
                                 <td class="tor-value"><div class="tor-value-ar"><span t-field="o.x_full_name_snapshot"/></div></td>
-                                <td class="tor-label tor-ltr">Candidate Name</td>
-                                <td class="tor-value tor-ltr"><span t-field="o.x_full_name_snapshot"/></td>
+                                <td class="tor-label tor-ltr" style="width: 24%;">Full Name / Candidate Name</td>
                             </tr>
                             <tr>
                                 <td class="tor-label">الرقم الوطني</td>
                                 <td class="tor-value"><div class="tor-value-ar"><span t-field="o.x_national_id_snapshot"/></div></td>
                                 <td class="tor-label tor-ltr">National ID</td>
-                                <td class="tor-value tor-ltr"><span t-field="o.x_national_id_snapshot"/></td>
                             </tr>
                             <tr>
                                 <td class="tor-label">الرقم الوظيفي</td>
                                 <td class="tor-value"><div class="tor-value-ar"><span t-field="o.x_employee_number_snapshot"/></div></td>
                                 <td class="tor-label tor-ltr">Employee Number</td>
-                                <td class="tor-value tor-ltr"><span t-field="o.x_employee_number_snapshot"/></td>
                             </tr>
                             <tr>
                                 <td class="tor-label">الوظيفة المقدم عليها</td>
                                 <td class="tor-value"><div class="tor-value-ar"><span t-field="o.x_position_applied_snapshot"/></div></td>
                                 <td class="tor-label tor-ltr">Position Applied For</td>
-                                <td class="tor-value tor-ltr"><span t-field="o.x_position_applied_snapshot"/></td>
                             </tr>
                             <tr>
                                 <td class="tor-label">المقابل</td>
                                 <td class="tor-value"><div class="tor-value-ar"><span t-field="o.x_interviewer_user_id"/></div></td>
                                 <td class="tor-label tor-ltr">Interviewer</td>
-                                <td class="tor-value tor-ltr"><span t-field="o.x_interviewer_user_id"/></td>
                             </tr>
                             <tr>
                                 <td class="tor-label">تاريخ المقابلة</td>
                                 <td class="tor-value"><div class="tor-value-ar"><span t-field="o.x_interview_datetime"/></div></td>
                                 <td class="tor-label tor-ltr">Interview Date</td>
-                                <td class="tor-value tor-ltr"><span t-field="o.x_interview_datetime"/></td>
                             </tr>
-                        </table>
-
-                        <div class="tor-section-title">أولًا: المعلومات الشخصية <span class="en tor-ltr">Personal Information</span></div>
-                        <table class="tor-table">
-                            <tbody>
-                                <tr>
-                                    <th style="width: 18%;">الجنس</th>
-                                    <td style="width: 32%;"><span t-field="o.x_gender_snapshot"/></td>
-                                    <th style="width: 18%;">Gender</th>
-                                    <td style="width: 32%;" class="tor-ltr"><span t-field="o.x_gender_snapshot"/></td>
-                                </tr>
-                                <tr>
-                                    <th>الاسم الكامل</th>
-                                    <td><span t-field="o.x_full_name_snapshot"/></td>
-                                    <th>Full Name</th>
-                                    <td class="tor-ltr"><span t-field="o.x_full_name_snapshot"/></td>
-                                </tr>
-                                <tr>
-                                    <th>الطموحات العملية</th>
-                                    <td><span t-field="o.x_career_aspirations"/></td>
-                                    <th>Career Aspirations</th>
-                                    <td class="tor-ltr"><span t-field="o.x_career_aspirations"/></td>
-                                </tr>
-                                <tr>
-                                    <th>استمرارية العمل</th>
-                                    <td><span t-if="o.x_long_term_employment_expected">نعم</span><span t-if="not o.x_long_term_employment_expected">لا</span></td>
-                                    <th>Long-Term Employment Expected</th>
-                                    <td class="tor-ltr"><span t-if="o.x_long_term_employment_expected">Yes</span><span t-if="not o.x_long_term_employment_expected">No</span></td>
-                                </tr>
-                            </tbody>
+                            <tr>
+                                <td class="tor-label">الجنس</td>
+                                <td class="tor-value"><div class="tor-value-ar"><span t-field="o.x_gender_snapshot"/></div></td>
+                                <td class="tor-label tor-ltr">Gender</td>
+                            </tr>
+                            <tr>
+                                <td class="tor-label">الطموحات العملية</td>
+                                <td class="tor-value"><div class="tor-value-ar"><span t-field="o.x_career_aspirations"/></div></td>
+                                <td class="tor-label tor-ltr">Career Aspirations</td>
+                            </tr>
+                            <tr>
+                                <td class="tor-label">استمرارية العمل</td>
+                                <td class="tor-value"><div class="tor-value-ar"><span t-if="o.x_long_term_employment_expected">نعم</span><span t-if="not o.x_long_term_employment_expected">لا</span></div></td>
+                                <td class="tor-label tor-ltr">Long-Term Employment Expected</td>
+                            </tr>
                         </table>
 
                         <div class="tor-section-title">ثانيًا: الأسئلة والتقييم <span class="en tor-ltr">Evaluation Questions</span></div>
@@ -348,24 +328,22 @@
                             <thead>
                                 <tr>
                                     <th style="width: 7%;" class="tor-center">م</th>
-                                    <th style="width: 50%;">مجال التقييم</th>
+                                    <th style="width: 55%;">مجال التقييم</th>
                                     <th style="width: 8%;" class="tor-center">الدرجة</th>
                                     <th style="width: 8%;" class="tor-center">من</th>
-                                    <th style="width: 9%;" class="tor-center">النسبة</th>
-                                    <th style="width: 18%;">ملاحظات السؤال</th>
+                                    <th style="width: 22%;">ملاحظات السؤال</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <t t-foreach="sorted_lines" t-as="line">
                                     <tr>
-                                        <td class="tor-center"><span t-esc="line_index + 1"/></td>
+                                        <td class="tor-center"><span t-field="line.x_sequence"/></td>
                                         <td>
                                             <div class="tor-ar"><span t-field="line.x_question_label_ar"/></div>
                                             <div class="tor-en"><span t-field="line.x_question_label_en"/></div>
                                         </td>
                                         <td class="tor-center"><span t-field="line.x_actual_score"/></td>
                                         <td class="tor-center"><span t-field="line.x_max_score"/></td>
-                                        <td class="tor-center"><span t-esc="'%.0f%%' % (((line.x_actual_score or 0) * 100.0 / (line.x_max_score or 5)) if (line.x_max_score or 0) else 0.0)"/></td>
                                         <td class="tor-ar"><span t-field="line.x_note"/></td>
                                     </tr>
                                 </t>
@@ -376,22 +354,19 @@
                         <table class="tor-table">
                             <tbody>
                                 <tr>
-                                    <th style="width: 18%;">النتيجة النهائية</th>
-                                    <td style="width: 32%;"><span t-field="o.x_total_score"/> / <span t-field="o.x_max_score"/> (<span t-field="o.x_percent_score"/>%)</td>
-                                    <th style="width: 18%;">Final Score</th>
-                                    <td style="width: 32%;" class="tor-ltr"><span t-field="o.x_total_score"/> / <span t-field="o.x_max_score"/> (<span t-field="o.x_percent_score"/>%)</td>
+                                    <th style="width: 22%;">النتيجة النهائية</th>
+                                    <td><span t-field="o.x_total_score"/> / <span t-field="o.x_max_score"/> (<span t-field="o.x_percent_score"/>%)</td>
+                                    <th style="width: 24%;" class="tor-ltr">Final Score</th>
                                 </tr>
                                 <tr>
                                     <th>التقدير</th>
                                     <td><span t-field="o.x_final_grade"/></td>
-                                    <th>Grade</th>
-                                    <td class="tor-ltr"><span t-field="o.x_final_grade"/></td>
+                                    <th class="tor-ltr">Grade</th>
                                 </tr>
                                 <tr>
                                     <th>التوصية بالتوظيف</th>
                                     <td><span t-if="o.x_recommend_for_employment">نعم</span><span t-if="not o.x_recommend_for_employment">لا</span></td>
-                                    <th>Recommendation</th>
-                                    <td class="tor-ltr"><span t-if="o.x_recommend_for_employment">Yes</span><span t-if="not o.x_recommend_for_employment">No</span></td>
+                                    <th class="tor-ltr">Recommendation</th>
                                 </tr>
                             </tbody>
                         </table>
@@ -407,15 +382,9 @@
 
                         <table class="tor-signature">
                             <tr>
-                                <td>
+                                <td style="width: 100%;">
                                     <div><strong>المقابل</strong> <span class="tor-ltr">Interviewer</span></div>
                                     <div>الاسم / <span class="tor-ltr">Name</span>: <span t-field="o.x_interviewer_user_id"/></div>
-                                    <div>التوقيع / <span class="tor-ltr">Signature</span>: <span class="tor-sign-line"/></div>
-                                    <div>التاريخ / <span class="tor-ltr">Date</span>: <span class="tor-sign-line"/></div>
-                                </td>
-                                <td>
-                                    <div><strong>المرشح</strong> <span class="tor-ltr">Candidate</span></div>
-                                    <div>الاسم / <span class="tor-ltr">Name</span>: <span t-field="o.x_full_name_snapshot"/></div>
                                     <div>التوقيع / <span class="tor-ltr">Signature</span>: <span class="tor-sign-line"/></div>
                                     <div>التاريخ / <span class="tor-ltr">Date</span>: <span class="tor-sign-line"/></div>
                                 </td>

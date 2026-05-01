@@ -20,9 +20,11 @@ for rec in records:
 
     line_commands = []
     questions = Question.search([('x_active', '=', True)], order='x_sequence asc, id asc')
+    question_number = 0
     for question in questions:
+        question_number = question_number + 1
         line_commands.append((0, 0, {
-            'x_sequence': question.x_sequence or 0,
+            'x_sequence': question.x_sequence or question_number,
             'x_question_id': question.id,
             'x_question_label_ar': question.x_label_ar or question.with_context(lang='ar_001').x_name or question.x_name,
             'x_question_label_en': question.x_label_en or question.with_context(lang='en_US').x_name or question.x_name,

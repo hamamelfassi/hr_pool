@@ -45,8 +45,12 @@ for rec in records:
         if line.x_actual_score < 1 or line.x_actual_score > 5:
             raise Warning('Interview question score must be between 1 and 5.')
 
-    for line in rec.x_line_ids:
+    sequence_number = 0
+    for line in rec.x_line_ids.sorted(key=lambda item: ((item.x_sequence or 0), item.id)):
+        sequence_number = sequence_number + 1
         line_values = {}
+        if line.x_sequence != sequence_number:
+            line_values['x_sequence'] = sequence_number
         if line.x_question_id:
             line_values['x_question_label_ar'] = line.x_question_id.x_label_ar or line.x_question_id.with_context(lang='ar_001').x_name or line.x_question_id.x_name
             line_values['x_question_label_en'] = line.x_question_id.x_label_en or line.x_question_id.with_context(lang='en_US').x_name or line.x_question_id.x_name
