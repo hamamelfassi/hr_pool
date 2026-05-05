@@ -2,711 +2,506 @@
 
 ## 1. Purpose
 
-`hr_recruitment_custom` is a thin technical extension for native Odoo Recruitment.
+`hr_recruitment_custom` is the Marsellia Stage 2 extension of native Odoo Recruitment.
 
-It exists to connect the governed intake stage to the native applicant stage and to enrich the applicant record without building a parallel recruitment app.
+It connects the Stage 1 candidate pool to the formal `hr.applicant` lifecycle and manages Marsellia-specific recruitment documents, signature gates, contract/preboarding data, and final handover to employment.
 
-## 2. Ownership split
+The module must remain a thin extension of native Odoo workflows, not a parallel recruitment application.
 
-### `hr.job`
-
-Baseline vacancy configuration and baseline Job Description authoring.
-
-Owns:
-
-- baseline functional area
-- baseline function composition
-- job-description template composition
-- vacancy-level recruitment configuration
-
-### `hr.applicant`
-
-Applicant-specific runtime record.
-
-Owns:
-
-- negotiated job description / ToR
-- negotiated applicant functions
-- canonical applicant-side printable identity fields such as `x_gender` and `x_national_id`
-- interview evaluation artifacts
-- signature and declaration records
-- final applicant-side PDF outputs
-
-## 3. Handover contract
-
-The handover from stage 1 should work like this:
-
-1. a conversion request is created from `x_hr.pool`
-2. the request references a target `hr.job`
-3. the request carries `in_progress / approved / rejected` state
-4. a manager or chairman can create the request
-5. chairman approval creates the `hr.applicant`
-6. the new applicant is linked back to the originating intake record
-7. chairman rejection keeps the intake record in stage 1, returns it to `pooling`, and preserves chairman approval on the pool record
-
-The conversion request itself should be auditable and visible, but the actual applicant creation belongs to stage 2 because it touches native recruitment records.
-
-## 4. Module scope
+## 2. Module scope
 
 This module should:
 
-- remain `application = False`
-- avoid dashboard app behavior
-- avoid a separate recruitment menu tree
-- inherit native `hr.job` and `hr.applicant` views
-- keep the bridge logic minimal and explicit
+- remain `application = False`;
+- avoid a separate recruitment dashboard/app;
+- inherit native `hr.job` and `hr.applicant` views;
+- keep applicant operations inside the native applicant form;
+- use native chatter, activities, attachments, Documents, and Sign;
+- use QWeb only where Marsellia forms require controlled Arabic PDF generation;
+- add only missing fields, models, lifecycle registry, and safe automation.
 
-## 5. Enrichment scope
+## 3. Ownership split
 
-The first useful enrichment set is:
+### 3.1 `hr.job`
 
-- negotiated job description / ToR support
-- baseline job-description composition on `hr.job`
-- negotiated applicant function lines on `hr.applicant`
-- applicant-side printable identity normalization
-- interview evaluation capture
-- signed declarations
-- applicant-side document attachment and retrieval
+`hr.job` owns vacancy-level and baseline role configuration.
 
-## 6. Native Odoo features to use
+It owns:
 
-Use these native features as the main path:
+- baseline department;
+- baseline functional area;
+- baseline governed functions;
+- baseline job-description / duty composition;
+- vacancy recruitment configuration.
 
-- chatter and activities for communication and review trail
-- Sign for declaration forms and signature workflows
-- Documents for storage and filing
-- QWeb reports for generated PDFs
-- Recruitment stages for applicant progression
+### 3.2 `hr.applicant`
 
-The module should add only the missing linkage and the applicant/job-specific fields.
+`hr.applicant` is the Stage 2 cockpit and applicant runtime source.
 
-## 7. First-pass technical additions
+It owns or exposes:
 
-The stage-2 first pass should stay narrow:
+- backlink to originating pool record;
+- applicant core identity fields;
+- applicant contact fields;
+- applicant location/residence fields;
+- negotiated role/duty authoring;
+- interview/evaluation workflow;
+- document checklist workflow;
+- declaration workflow;
+- contract/preboarding fields;
+- board decision surface;
+- employment contract artifact surface;
+- handover readiness;
+- link to created employee after onboarding.
 
-- one read-only backlink from `hr.applicant` to the originating pool record
-- one baseline Job Description block on `hr.job`
-- one negotiated ToR line model on `hr.applicant`
-- one conversion action that consumes an approved request
-- optional smart buttons only if they materially improve usability
+### 3.3 `x_hr.recruitment_document`
 
-## 8. Dynamic ToR / Job Description first slice
+`x_hr.recruitment_document` is the formal artifact lifecycle registry.
 
-### `hr.job` authoring surface
+It owns:
 
-The `hr.job` form should gain a `Job Description` tab.
+- generated/uploaded artifact reference;
+- signed artifact reference;
+- document type;
+- state;
+- version;
+- source model and source record;
+- signer lifecycle references where implemented;
+- generated/sent/signed dates;
+- gate status for stage progression.
 
-The first slice should add:
+It is not an operational checklist and not a replacement for Odoo Sign.
 
-- one `many2one` field from `hr.job` to `x_grc.functional_areas`
-- one `many2many` field from `hr.job` to `x_grc.functions`
+### 3.4 Native HR handover models
 
-Behavior:
+Final handover creates or links:
 
-- choosing the functional area should overwrite the `hr.job` function selection with the functions belonging to that area
-- the overwrite is a quick-populate helper
-- users may still manually add more functions afterward
-- the job belongs to one principal functional area but may ultimately reference functions from multiple areas
+- `hr.employee`;
+- `hr.contract`;
+- payroll-relevant fields;
+- `res.partner.bank`;
+- signed document history.
 
-This makes the job-level Job Description a governed baseline template rather than a fully negotiated final role definition.
+The official labor contract PDF and Odoo `hr.contract` are related but distinct.
 
-### `hr.applicant` authoring surface
+## 4. Stage 2 lifecycle
 
-The `hr.applicant` form should gain a `Role and Duties` tab.
+### 4.1 Qualification
 
-The first slice should add a child line model for negotiated applicant functions.
+Triggered by Stage 1 conversion from `hr_pool`.
 
-Each applicant-function line should support:
+Actions:
 
-- one functional area field
-- one function field filtered by the selected functional area
+- create/link native `hr.applicant`;
+- link selected `hr.job`;
+- copy applicant core fields from pool;
+- set stage to Qualification / Initial Qualification;
+- preserve pool backlink.
 
-Future-safe placeholders should be left in the design so the line can later hold:
+No forms are generated in this stage.
 
-- comments
-- task-template or granular-duty lookups
-- additional evaluation or governance metadata
+### 4.2 Evaluation / Interviews
 
-### Inheritance behavior
+Triggered by creating the first interview evaluation or moving the applicant into interview stage.
 
-When an applicant is created from a linked `hr.job`:
+Required signed artifacts:
 
-- the applicant function lines should inherit from the job's selected baseline functions
-- the inherited lines should remain editable for recruiter-side negotiation
-- if the linked job has no configured functional area or functions, applicant creation must still succeed with zero inherited lines
+1. F-0002 Interview Evaluation;
+2. F-0003 Required Documents Checklist;
+3. F-0004 Legal Documents Validity Declaration.
 
-### Out of scope for this slice
+Completion of these artifacts unlocks Contract Proposal / Preboarding.
 
-This first slice should not yet implement:
+### 4.3 Preboarding / Contract Proposal
 
-- QWeb ToR or Job Description rendering
-- Sign routing
-- document lifecycle automation
-- contract or employee downstream automation
+This is the formal contract package stage.
 
-Those belong to later stage-2 increments after the schema and UI composition are stable.
+Required sequence:
 
-## 9. TOR PDF and signing slice
+1. Board Decision signed by Chairman;
+2. Employment Contract signed by Chairman and applicant;
+3. TOR / Role and Duties F-0006 signed by applicant and HR/recruitment manager;
+4. F-0007 Policies Compliance Declaration signed by applicant;
+5. F-0009 Non-Disclosure Agreement signed by applicant.
 
-### Business purpose
+Completion of these artifacts unlocks `Onboard now / ترحيل كموظف`.
 
-The negotiated ToR for an applicant must become a formal document that:
+### 4.4 Contract Signed / Handover Complete
 
-- is generated from `hr.applicant`
-- is prefilled as much as possible from live recruitment data
-- is sent to the applicant for digital signature before employee handoff
-- returns as a signed artifact attached to the applicant record
+The `Onboard now` action creates and links employment records.
 
-This ToR is not just a job description printout.
+After successful handover, the applicant moves to Contract Signed.
 
-It is a bilingual role-acceptance, duties-acknowledgement, and accountability form aligned to Marsellia form `MCEP-HR-F-0006`.
+## 5. Applicant tab framework
 
-### Canonical generation approach
+The final `hr.applicant` operational tabs are locked as follows.
 
-The canonical source document should be a `QWeb`-generated PDF, not a direct fill-in of a legacy static PDF.
+### 5.1 `Role and Duties`
 
-Reasons:
+Purpose:
 
-- the negotiated duties table is dynamic
-- duties should be grouped by functional area
-- Arabic-first rendering needs layout control
-- the generated output should remain reproducible from applicant data
-- the same generated PDF can then be routed into native Odoo Sign
+- TOR authoring;
+- negotiated duty/function composition;
+- duty lines inherited from linked `hr.job` where available;
+- manual adjustment of applicant-specific duties;
+- TOR generation entry point when contract prerequisites are met;
+- TOR document lifecycle summary.
 
-The original PDF form remains the visual reference, not the primary data-rendering engine.
+Shared applicant identity and contract fields should not live only inside this tab.
 
-### Source-of-truth rule
+TOR-specific printable fields may remain here only when they are truly TOR-specific.
 
-The ToR PDF must be generated from `hr.applicant` as the self-contained source of truth.
+### 5.2 `Evaluation`
 
-That means key identity and role fields required by the form should be normalized onto `hr.applicant` before or during document generation, rather than being rendered through fragile cross-model lookups at print time.
+Purpose:
 
-`hr.job` and `hr_pool` remain upstream sources, but the applicant record should hold the final printable state.
+- interview records;
+- interviewer provenance;
+- scoring;
+- recommendation;
+- F-0002 PDF generation;
+- interviewer signature workflow;
+- evaluation document state summary.
 
-For printable identity fields shared across later forms, `hr.applicant` should canonically own:
+### 5.3 `Documents`
 
-- `x_gender`
-- `x_national_id`
+Purpose:
 
-`passport number` remains intentionally deferred until the later required-documents slice.
+- required document checklist;
+- submitted-document collection/review;
+- tokenized Fillout upload URL generation;
+- accept/reject/resubmission workflow;
+- F-0003 checklist PDF generation and signature workflow;
+- supplemental applicant completion data where collected through the document-submission form.
 
-### Form mapping for first implementation
+The checklist is operational data. The signed checklist PDF is a registry artifact.
 
-For the first implementation slice, the form should be prefilled like this:
+### 5.4 `Declarations`
 
-- `Recipient Name`: `hr.applicant.partner_name`
-- `Employee ID`: blank
-- `Department`: linked `hr.job.department_id`
-- `Job Title`: linked `hr.job.name`
-- `Direct Supervisor`: blank
-- `Date of Receipt`: blank in the generated PDF, completed through signing or manual follow-up
-- `Duties Table`: negotiated applicant duty lines from `x_role_and_duty_line_ids`
-- `Responsible Manager`: blank for now
-- `Employee Name / Signature / Date`: applicant sign flow
+Purpose:
 
-### Duties rendering rule
+- F-0004 Legal Documents Validity Declaration;
+- F-0007 Policies Compliance Declaration;
+- F-0009 Non-Disclosure Agreement.
 
-The negotiated duties table should:
+These are generated with QWeb and tracked in the recruitment document registry.
 
-- render from `hr.applicant.x_role_and_duty_line_ids`
-- group rows by functional area
-- print the negotiated function titles under each area
-- remain visually clean even when sections expand
+### 5.5 `Contract`
 
-Future versions may extend each line with comments, granular task-template detail, or richer grouped formatting, but the first document slice should print grouped function titles only.
+Purpose:
 
-### Visual standard
+- board decision;
+- employment contract preparation;
+- contract-support fields;
+- official labor contract PDF/template artifact;
+- employee ID generation after signed contract;
+- downstream `hr.employee` / `hr.contract` / payroll-relevant handover readiness.
 
-The generated PDF should be:
+### 5.6 Smart button: `Recruitment Documents`
 
-- Arabic-first
-- visually equivalent to form `0006`
-- close to the original layout, style, and declaration text
-- flexible enough to render dynamic duty rows cleanly
+Purpose:
 
-Exact pixel-perfect replication is not required.
+- open filtered `x_hr.recruitment_document` records for the current applicant;
+- show all formal generated/uploaded/signed/superseded artifacts;
+- act as the registry dashboard.
 
-The fixed declaration text should stay very close to the original bilingual form, while dynamic data regions may be adjusted where needed for readability and variable-length values.
+It should open list/form first. Kanban can come later.
 
-### Delivered QWeb pattern to preserve
+## 6. Transitional UI rule
 
-The currently successful TOR generation pattern that should be preserved for future generated HR forms is:
+The current `TOR Header` tab is transitional.
 
-- applicant-side printable snapshot fields on `hr.applicant`
-- explicit reseeding of printable snapshot values immediately before PDF generation
-- grouped duty-line snapshot text stored on child lines instead of relying on live translated relational display at render time
-- Arabic-first QWeb output with embedded inline Arabic font data
-- a visual-reference approach using the legacy Marsellia PDF as a layout guide rather than as the rendering engine
-- generated PDF attachment back to the source applicant record with chatter logging and versioned replacements
+It was useful for proving QWeb generation and manual snapshot fields, but it is not a final architectural surface.
 
-Temporary diagnostic utilities such as font-probe reports should not remain exposed in the final recruiter UI once a stable rendering pattern has been confirmed.
+It should be folded into the locked applicant cockpit during the applicant cockpit cleanup pass.
 
-### Applicant-side signing workflow
+## 7. Source-of-truth hierarchy
 
-The first signing slice should stay deliberately simple:
+Use three data layers.
 
-1. recruiter finalizes negotiated duties on `hr.applicant`
-2. recruiter clicks a visible applicant-form button to generate the ToR PDF
-3. the generated PDF is attached to the applicant record
-4. recruiter opens the generated PDF from the applicant record
-5. recruiter uploads that exact rendered PDF into Odoo Sign as a one-off document
-6. recruiter places the applicant signature field manually in the final rendered signature block
-7. recruiter assigns the signer from `hr.applicant.email_from`
-8. applicant signs digitally from the Odoo Sign email
-9. recruiter links or uploads the signed copy back to the applicant record
-10. recruiter or HR later prints and countersigns manually outside the automation scope for now
+### 7.1 Core applicant fields
 
-### Recruiter manual Sign steps
+Reusable fields that multiple documents and handover need.
 
-The expected recruiter-side manual workflow for the currently delivered slice is:
+Examples:
 
-1. open the applicant record
-2. confirm the `TOR Header` values are correct
-3. click `Generate TOR PDF`
-4. open the latest generated TOR attachment from applicant Files/Chatter
-5. download that PDF if needed, or otherwise use it as the exact source document for Odoo Sign
-6. create a new one-off Sign request in Odoo Sign using that generated TOR PDF
-7. add one signer using the applicant email from `hr.applicant.email_from`
-8. place the applicant signature field and applicant date field manually on the rendered signature block
-9. send the Sign request
-10. once the applicant signs, download or retrieve the signed PDF from Odoo Sign
-11. upload that signed PDF back to the applicant record Files/Chatter
-12. set the `Signed TOR PDF` field on the applicant so the ToR lifecycle can be marked as signed
+- Arabic name parts;
+- date of birth;
+- gender;
+- marital status;
+- nationality;
+- national ID;
+- phone;
+- email;
+- canonical residence/location;
+- selected PII document;
+- bank information;
+- academic qualification;
+- specialization;
+- next of kin basics.
 
-This manual flow is intentional for the current slice because the ToR document length is dynamic and therefore the final signature area is not yet fixed enough for stable automated Sign field placement.
+These should be stored on `hr.applicant` or linked applicant-specific helper models, not buried inside one document tab.
 
-### Next signing slice: fixed final signature page
+### 7.2 Operational source records
 
-The next TOR signing slice should modify the generated QWeb document so that it always ends with a dedicated final signature page.
+Each operational tab may have source records.
 
-That final page should contain:
+Examples:
 
-- the printed applicant name
-- a fixed applicant signature block
-- a fixed applicant date block
-- the printed responsible-manager name placeholder
-- a fixed responsible-manager signature block
-- a fixed responsible-manager date block
-- any final declaration text that must remain adjacent to signature acceptance
+- interview record;
+- document checklist;
+- submitted document;
+- declaration source;
+- board decision source;
+- contract/preboarding data.
 
-The applicant duties pages above this final page may continue to grow or shrink, but the final signature page itself must remain layout-stable.
+### 7.3 Printable snapshot fields
 
-### Why the fixed signature page is necessary
+QWeb reports should render from stable stored values.
 
-Odoo Sign places fields on a PDF by page and coordinates.
+When a report depends on linked data, generation actions should snapshot the printable value before rendering.
 
-That means:
+This preserves stable PDFs and avoids fragile live joins.
 
-- a reusable Sign template is reliable only when the target signature area appears on a predictable page in a predictable location
-- the current variable-length ToR body makes direct template-style field placement unreliable
-- a dedicated fixed final signature page solves this by stabilizing the applicant signature geometry
+## 8. Recruitment document registry model target
 
-### Target automated signing behavior after the fixed page slice
+Target model:
 
-Once the fixed final signature page exists, the next automation slice should implement:
+`x_hr.recruitment_document`
 
-1. applicant-form action to create a Sign request directly from the latest generated TOR PDF
-2. signer routing from `hr.applicant.email_from`
-3. applicant signature field placement on the dedicated final signature page
-4. applicant date field placement on the same fixed page
-5. signed-document return and attachment to `hr.applicant`
-6. ToR lifecycle update from `generated` or `sent` to `signed`
+Minimum fields:
 
-### Button and UX expectations
-
-The applicant form should eventually expose a minimal operational workflow such as:
-
-- `Generate TOR PDF`
-- `Send TOR for Signature`
-- access to the latest generated and signed copies from the applicant record
-
-Whether the second button directly scaffolds a Sign request in code or is initially supported by precise manual Sign setup guidance may depend on native Odoo limitations, but the user workflow should remain short and repeatable.
-
-### Explicit deferrals
-
-The first TOR document slice should not yet automate:
-
-- manager signature routing
-- department-manager inference as the authoritative direct supervisor
-- employee ID backfill
-- final `hr.employee` handoff gating
-- automatic counter-signing
-- broader declaration-form automation
-
-These belong to the next document/sign workflow increments.
-
-## 10. Interview evaluation slice
-
-### Canonical form
-
-The interview evaluation workflow should be modeled on Marsellia form `MCEP-HR-F-0002`.
-
-This slice is now delivered as a structured + document workflow:
-
-- parent interview record
-- child question lines
-- seeded helper questions
-- computed total / percent / grade / stars
-- applicant-side summary tab
-- QWeb interview PDF rendering aligned to the TOR visual pattern
-- interviewer-sign workflow initiated immediately after interview PDF generation
-
-### Data model
-
-Recommended parent model:
-
-- `x_hr.applicant_mcep_interview`
-
-Owns:
-
+- `x_name`
 - `x_applicant_id`
-- interviewer provenance
-- interview datetime
-- printable header snapshots
-- question lines
-- total score
-- max score
-- percent score
-- final grade
-- visual star rating
-- ready-for-pdf gate
-- career aspirations
-- long-term employment expected
-- recommendation for employment
-- remarks
-- chatter and activities
+- `x_document_type`
+- `x_state`
+- `x_generated_attachment_id`
+- `x_signed_attachment_id`
+- `x_sign_request_id` if safely available
+- `x_version`
+- `x_generated_on`
+- `x_sent_on`
+- `x_signed_on`
+- `x_responsible_user_id`
+- `x_source_model`
+- `x_source_res_id`
+- `x_notes`
 
-Recommended child model:
+Document type values:
 
-- `x_hr.applicant_mcep_interview_line`
+- `interview_evaluation`
+- `required_documents_checklist`
+- `legal_documents_validity_declaration`
+- `board_decision`
+- `employment_contract`
+- `tor`
+- `policies_compliance_declaration`
+- `non_disclosure_agreement`
+- `other`
+
+State values:
+
+- `draft`
+- `generated`
+- `signature_requested`
+- `partially_signed`
+- `signed`
+- `cancelled`
+- `superseded`
 
-Owns:
+Version rule:
 
-- parent interview reference
-- sequence
-- helper question
-- max score
-- actual score
-- line note
+- each fresh generation may supersede a previous artifact or increment the active record version depending on the safest current implementation pattern;
+- the chosen behavior must be consistent per document type and documented in the implementation summary.
 
-Recommended helper model:
+## 9. Generated form strategy
 
-- `x_mcep.interview_question`
+### 9.1 QWeb-generated forms
 
-It should seed the 10 fixed questions from form `0002`, each with Arabic and English labels and a default max score of `5`.
+Use QWeb for:
 
-### Printable interview snapshots
+- F-0002 Interview Evaluation;
+- F-0003 Required Documents Checklist;
+- F-0004 Legal Documents Validity Declaration;
+- Board Decision, using GRC decision-template source data when available;
+- F-0006 TOR / Role and Duties;
+- F-0007 Policies Compliance Declaration;
+- F-0009 Non-Disclosure Agreement.
 
-The interview record should normalize printable header values when it is created so future report generation does not rely on fragile live joins.
+QWeb forms should preserve the successful established pattern:
 
-Snapshot fields should include:
+- stored snapshot fields;
+- explicit normalization before rendering;
+- Arabic-first layout;
+- Google Al Yamama Arabic font where configured;
+- embedded or reliable static logo/font handling;
+- inline report CSS where needed;
+- fixed page-1 signature geometry;
+- dynamic annex/detail content on page 2+ where needed.
 
-- applicant full name
-- gender
-- national ID
-- employee number
-- position applied for
+### 9.2 Static/uploaded PDF artifact
 
-Prefill rules:
+The official labor contract is not QWeb-generated.
 
-- full name from `hr.applicant.partner_name`
-- gender from `hr.applicant.x_gender`
-- national ID from `hr.applicant.x_national_id`
-- employee number blank for now
-- position applied for from linked `job_id.name`
+It is handled as a static PDF/template/uploaded artifact and tracked through the registry.
 
-`passport number` remains intentionally omitted and deferred to the later required-documents slice.
+The Contract tab stores and prepares the values needed for:
 
-### Applicant UX and access
+- filling the official labor contract;
+- signing;
+- employee ID generation;
+- `hr.employee` / `hr.contract` handover.
 
-`hr.applicant` should gain:
+## 10. Evaluation stage documents
 
-- an `Evaluation` page/tab
-- a `Conduct Interview` action
+### 10.1 F-0002 Interview Evaluation
 
-The `Evaluation` tab should show all interview records for the applicant with at least:
+- source: Evaluation tab / interview record;
+- signer: interviewer only;
+- applicant does not sign;
+- should be one page if possible with fixed bottom signature block;
+- updated/simplified question set comes from the current source form.
 
-- interview date
-- interviewer
-- total score
-- percent
-- final grade
-- recommendation
+### 10.2 F-0003 Required Documents Checklist
 
-The `Conduct Interview` action should:
+- source: Documents tab / checklist model;
+- generated only after required checklist lines are accepted;
+- signer: HR/recruitment manager or authorized manager;
+- required document types must be defined by the source F-0003 form, not vague “etc.” language.
 
-- open a new interview record linked to the current applicant
-- open directly in edit mode so recruiter can save scoring changes immediately
-- prefill interviewer provenance and printable header snapshots
-- auto-generate the 10 evaluation question lines
+### 10.3 F-0004 Legal Documents Validity Declaration
 
-Access policy:
+- source: Declarations tab;
+- signed by applicant and authorized recruitment/HR manager;
+- single-page QWeb form with fixed signature block.
 
-- selected native `interviewer_ids` should be the primary allowed conductors
-- HR manager and system admin override should remain available
-- server-side validation must enforce eligibility even if UI visibility is imperfect
+## 11. Preboarding documents
 
-### Scoring and grading
+### 11.1 Board Decision
 
-The interview form is scored across 10 questions, each with a maximum score of `5`, for a total maximum of `50`.
+- source: Contract tab;
+- template source: `grc_backbone` decision template foundation once implemented;
+- signer: Chairman;
+- signed decision unlocks employment contract preparation.
 
-The parent interview record should compute:
+### 11.2 Employment Contract
 
-- `x_total_score`
-- `x_max_score`
-- `x_percent_score`
+- source: Contract tab;
+- artifact type: official labor contract PDF/template/upload;
+- signers: Chairman and applicant;
+- signed contract generates employee ID;
+- signed contract unlocks TOR generation/signing.
 
-The official Marsellia grade should be stored in a dedicated selection field:
+### 11.3 TOR / F-0006
 
-- `excellent`
-- `very_good`
-- `good`
-- `acceptable`
-- `not_acceptable`
+- source: Role and Duties tab;
+- authored from governed job functions and applicant-negotiated duty lines;
+- generation/signing gated by signed employment contract;
+- signers: applicant and HR/recruitment manager;
+- page 1 fixed signature block;
+- page 2+ duties annex;
+- uses generated employee ID.
 
-Suggested percent mapping:
-
-- `excellent`: 90% to 100%
-- `very_good`: 80% to less than 90%
-- `good`: 70% to less than 80%
-- `acceptable`: 50% to less than 70%
-- `not_acceptable`: less than 50%
-
-The visual result should be stored separately as a dedicated star value, ideally on a 0 to 5 scale:
-
-- 0 stars: less than 25%
-- 1 star: 25% to less than 40%
-- 2 stars: 40% to less than 55%
-- 3 stars: 55% to less than 70%
-- 4 stars: 70% to less than 85%
-- 5 stars: 85% to 100%
-
-This official interview result should not rely on the native applicant `priority` field as its canonical store, even if a later mirror into native stars is added for convenience.
-
-The interview star field in applicant inline summaries is read-only and only updated by aggregate score computation.
-
-Question score entry is strictly validated to allow only integers from `1` to `5` inclusive. Any value outside this range is rejected.
-
-`x_ready_for_pdf` becomes true only when all interview lines have valid `1..5` scores and is used to control PDF-generation button visibility.
-
-### Auxiliary parent fields
-
-The parent interview record should also store:
-
-- `career_aspirations`:
-  - `unclear`
-  - `reasonable`
-  - `unrealistic`
-- `long_term_employment_expected`:
-  - yes / no
-- `recommend_for_employment`:
-  - yes / no
-- `remarks`
-
-### Interview PDF and signature behavior (current implementation)
-
-Interview PDF generation follows the TOR artifact pattern:
-
-- recruiter triggers generation from the interview row/form once `x_ready_for_pdf` is true
-- the generated interview PDF is attached to the parent `hr.applicant` record so it appears in applicant Files and chatter
-- interview lifecycle timestamps and state are updated on the interview record
-- chatter logs are posted on both the interview and applicant records
-
-Signature workflow for this slice is intentionally guided-manual:
-
-- generation marks the document as ready/sent for interviewer signature
-- recruiter uses the generated applicant attachment as the source PDF in Odoo Sign
-- recruiter assigns the interviewer signer and completes placement manually
-- signed PDF is linked back through `Signed Interview PDF`, which marks the interview as signed
-
-### Locked interview evaluation PDF generation pattern
-
-The current working interview evaluation PDF is the canonical pattern for future dynamic HR QWeb forms.
-
-It is implemented by:
-
-- `modules/hr_recruitment_custom/report/04_interview_report_templates.xml`
-- `modules/hr_recruitment_custom/report/05_interview_report_actions.xml`
-- `modules/hr_recruitment_custom/data/08_interview_workflow_actions.xml`
-- `modules/hr_recruitment_custom/data/09_interview_document_workflow_actions.xml`
-- `modules/hr_recruitment_custom/data/07_interview_automation.xml`
-
-The active report path intentionally uses refreshed XML IDs so Odoo does not keep rendering a stale legacy QWeb view:
-
-- `action_mcep_interview_generate_pdf_tor`
-- `action_report_mcep_interview_tor`
-- `report_mcep_interview_document_tor`
-- `report_mcep_interview_document` remains only as a compatibility alias to the TOR-style template.
-
-Future dynamic QWeb form generation should preserve these conventions:
-
-- use `web.html_container` and a single `.page` wrapper
-- define all report CSS inline inside the report template
-- embed the Arabic font as inline base64 `@font-face` data, following the successful TOR template pattern
-- use the same Marsellia/MCEP logo asset as an inline base64 `data:image/png;base64,...` value rather than relying on a static URL at render time
-- keep the PDF Arabic-first and bilingual by labels, not by duplicating the same dynamic data value into separate Arabic and English value columns
-- keep the fixed header with logo, form number, document reference, and state
-- keep the footer with document reference and page counters
-- render dynamic data with `t-field` from stored model fields wherever possible
-- avoid passing ad hoc `data=payload` dictionaries into QWeb for business content
-- avoid report-time fragile joins where a printable value can be snapshotted before render
-
-The final interview layout is locked as follows:
-
-- title: Arabic `نموذج تقييم المقابلة`
-- subtitle: English `Interview Evaluation Form`
-- no duplicate form-code subtitle below the title, because the form code already appears in the header as `MCEP-HR-F-0002`
-- one consolidated `Personal Information` section using three columns:
-  - Arabic label
-  - one stored value
-  - English label
-- consolidated fields:
-  - full name / candidate name
-  - national ID
-  - employee number
-  - position applied for
-  - interviewer
-  - interview date
-  - gender
-  - career aspirations
-  - long-term employment expected
-- `Evaluation Questions` table columns:
-  - `م`
-  - evaluation area / question
-  - actual score
-  - max score
-  - question comments
-- the question percent column is intentionally removed to preserve space for comments
-- the sequence column renders the normalized stored `x_sequence` from each line
-- `Final Result` uses three columns:
-  - Arabic label
-  - one stored result value
-  - English label
-- the signature block is interviewer-only; the candidate signature block is intentionally removed
-
-### Interview data normalization and snapshot rules
-
-The report must render from stored interview state, not from runtime report payloads.
-
-Parent interview snapshot fields are populated at creation and reseeded before PDF generation:
-
-- `x_full_name_snapshot`
-- `x_gender_snapshot`
-- `x_national_id_snapshot`
-- `x_employee_number_snapshot`
-- `x_position_applied_snapshot`
-- `x_interviewer_user_id`
-- `x_interview_datetime`
-- `x_career_aspirations`
-- `x_long_term_employment_expected`
-- `x_recommend_for_employment`
-- `x_remarks`
-- computed result fields
-
-Child question lines must store their printable content before render:
-
-- `x_sequence`
-- `x_question_label_ar`
-- `x_question_label_en`
-- `x_actual_score`
-- `x_max_score`
-- `x_note`
-
-The `Generate Interview PDF` server action must normalize existing line sequences to `1, 2, 3...` before rendering. This protects old records whose helper question sequence was blank or not sequential.
-
-Safe-eval server actions must not use unsupported Python helpers such as `getattr`. Optional field access should use Odoo model metadata instead:
-
-- check membership in `record._fields`
-- read with `record['field_name']`
-
-### Interview artifact and chatter rules
-
-Interview PDF generation must remain aligned with the TOR artifact posture:
-
-- only show generation once the record exists and `x_ready_for_pdf` is true
-- validate every line score is present and within `1..5`
-- render the PDF from the active report action
-- create an `ir.attachment` with `mimetype = application/pdf`
-- attach the generated artifact to `hr.applicant`, not only to the child interview record
-- set `x_pdf_attachment_id` on the interview
-- update generated timestamp and document state
-- clear any stale sent/signed state when a new PDF version is generated
-- post chatter on both the interview and applicant records
-
-### Next slice: simple interviewer auto-sign flow
-
-The next implementation slice should replace the guided-manual interviewer signature step with a simple native Odoo Sign flow.
-
-Target behavior:
-
-- after an interview PDF exists, the interviewer sees a `Sign` action on the interview form
-- the action opens or creates a Sign request from the latest generated interview PDF
-- the signer is the interviewer who conducted/generated the interview
-- the signature field is placed in the fixed interviewer signature block
-- because the candidate signature block has been removed, there is only one signer and one signature widget
-- after signature completion, the signed PDF is linked back to `Signed Interview PDF` and the interview state becomes `signed`
-
-If fixed coordinate placement cannot be made reliable in the first pass, the fallback is an explicit one-click Sign request using the generated PDF, followed by manual field placement, but the canonical direction is direct interviewer self-sign from the generated PDF.
-
-## 11. Recommended implementation order
-
-1. add baseline Job Description fields and UI on `hr.job`
-2. add the negotiated applicant function line model
-3. add `hr.applicant` inheritance logic from linked `hr.job`
-4. add the `Role and Duties` authoring surface on `hr.applicant`
-5. verify conversion still creates a native applicant cleanly
-6. normalize printable ToR fields onto `hr.applicant`
-7. add the QWeb-generated TOR PDF
-8. add the applicant-form document generation button
-9. wire the current guided-manual applicant-side Sign workflow
-10. add the fixed final signature page for stable applicant-signature geometry
-11. add applicant-side canonical printable identity fields such as `x_gender` and `x_national_id`
-12. add the structured interview evaluation workflow and applicant `Evaluation` tab (now delivered)
-13. only then automate Sign request creation and signed-document return for later forms
-14. only then add broader document/sign flows
-
-## 12. Translation delivery
-
-For every stage-2 release:
-
-- add or update Arabic PO files in the module
-- translate all new field labels, view strings, action names, and report strings
-- keep the translation files inside the uploadable module zip
-
-## 13. Install/test checklist
-
-Before stage-2 install:
-
-- stage-1 intake is already installed and working
-- `hr_recruitment` is installed
-- `grc_backbone` is installed
-- translation files are present
-
-After stage-2 install:
-
-- `hr.job` form shows the `Job Description` tab
-- functional area overwrite correctly quick-populates baseline functions
-- `hr.applicant` form shows the `Role and Duties` tab
-- applicant function lines inherit from the linked job when available
-- applicant creation still succeeds when the linked job has zero configured functions
-- conversion creates a real applicant
-- applicant points back to the pool record
-- native chatter and activities remain intact
-
-After the TOR document slice is installed:
-
-- applicant form exposes a clear TOR generation action
-- generated PDF is attached to the applicant
-- generated PDF is visually close to form `0006`
-- department and job title prefill correctly
-- employee ID and direct supervisor remain blank by design
-- duties render grouped by functional area
-- recruiter can execute the guided-manual Sign flow from the generated TOR
-- signed document can be returned to and remains visible from the applicant record
-
-After the fixed-signature-page slice is installed:
-
-- the TOR always ends with a dedicated final signature page
-- applicant signature placement becomes stable enough for automation
-- Sign request creation can be triggered from the applicant form
-- signed-document return can be automated back to the applicant record
+### 11.4 F-0007 Policies Compliance Declaration
+
+- source: Declarations tab;
+- QWeb-generated;
+- signer: applicant.
+
+### 11.5 F-0009 Non-Disclosure Agreement
+
+- source: Declarations tab;
+- QWeb-generated;
+- signer: applicant.
+
+## 12. Required documents workflow
+
+The required documents workflow should use separate models:
+
+- required document type;
+- applicant document checklist;
+- applicant document line;
+- applicant submitted document.
+
+The Fillout upload URL should be tokenized.
+
+The token is the authority for applicant/checklist/allowed lines. Raw URL parameters are not trusted.
+
+New uploads never overwrite previous uploads.
+
+Rejected or superseded submissions remain part of the audit trail.
+
+## 13. Location taxonomy dependency
+
+Libya location hierarchy belongs in `grc_backbone`, not `hr_pool` or `hr_recruitment_custom`.
+
+`hr_pool` and `hr.applicant` should reference the canonical location model.
+
+Hierarchy:
+
+- region;
+- district;
+- city;
+- municipality;
+- locality.
+
+Stage 1 may ask for the narrowest practical value, then derive parents.
+
+## 14. Stage 1 field uplift dependency
+
+Stage 1 workflow remains stable.
+
+Only additive fields and mapping are added where later Stage 2 needs them.
+
+Examples:
+
+- expanded Arabic name parts;
+- gender;
+- location reference;
+- municipality/city/district/region;
+- identity/residence fields needed for contract handover.
+
+## 15. Employment handover target
+
+`Onboard now / ترحيل كموظف` appears only after required recruitment documents are signed.
+
+The action should:
+
+- create/link `hr.employee`;
+- link applicant to employee;
+- create/link `hr.contract`;
+- write payroll-relevant values;
+- create/link `res.partner.bank`;
+- write employee ID;
+- transfer core applicant data;
+- link signed artifact history.
+
+Detailed employment lifecycle after handover is a separate future architecture track.
+
+## 16. Locked sequential implementation order
+
+1. Pass 0 — Documentation harmonisation.
+2. Pass 1 — Recruitment document registry spine.
+3. Pass 2 — Applicant cockpit cleanup.
+4. Pass 3 — GRC Libya location taxonomy.
+5. Pass 4 — Stage 1 intake field uplift.
+6. Pass 5 — Evaluation stage gate.
+7. Pass 6 — Required document upload flow.
+8. Pass 7 — GRC decision template foundation.
+9. Pass 8 — Contract tab and Board Decision.
+10. Pass 9 — Employment contract workflow.
+11. Pass 10 — TOR reposition and update.
+12. Pass 11 — Final declarations.
+13. Pass 12 — Onboard now handover.
+14. Pass 13 — Employment lifecycle architecture.
+
+## 17. Current pass constraints
+
+Until the relevant pass is reached:
+
+- do not redesign Stage 1 workflow;
+- do not build document checklist before the registry and cockpit are stable;
+- do not build GRC decision templates before the location/intake prerequisites are handled;
+- do not build employment handover before all recruitment gates are stable;
+- do not merge declarations into Documents tab;
+- do not restore the old final-signature-page doctrine.

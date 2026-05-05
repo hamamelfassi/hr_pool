@@ -22,5 +22,12 @@ This folder stores project documentation and non-module implementation assets th
   GRC-specific documentation
 - `resources/n8n/`
   n8n code-node scripts and mapping helpers
+- `resources/unified lifecycle + remaining recruitment phase 2 plan.md`
+  canonical pass tracker for the recruitment document lifecycle work
+
+Documentation workflow:
+
+- before any future pass, create a separate pass-specific plan/spec file in `docs/` for confirmation
+- after completing a pass, create a separate implementation summary file in `docs/`
 
 Add future integration notes, field maps, webhook payload examples, and deployment notes here.

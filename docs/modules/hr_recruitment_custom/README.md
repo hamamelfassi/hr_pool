@@ -1,12 +1,48 @@
 # HR Recruitment Custom Module Docs
 
-Documentation for the `hr_recruitment_custom` module lives here.
+This folder stores module-specific documentation for `hr_recruitment_custom`.
 
-Suggested contents:
+`hr_recruitment_custom` is the Marsellia Stage 2 extension of native Odoo Recruitment.
 
-- stage-2 recruitment extension design
-- `hr.job` baseline field notes
-- `hr.applicant` negotiated-role notes
-- conversion request / approval flow notes
-- Sign / Documents / report integration notes
-- generated applicant-side PDF specifications
+It should remain a thin recruitment extension, not a separate recruitment application.
+
+## Authoritative docs
+
+Read these first:
+
+1. `docs/architecture/00_master_architecture_and_program_plan.md`
+2. `docs/architecture/01_two_stage_recruitment_program_plan.md`
+3. `docs/architecture/03_stage_2_hr_recruitment_custom_spec.md`
+4. `docs/resources/current_phase_2_execution_plan.md`
+
+## Supporting docs
+
+Supporting resource docs may explain rationale, gap analysis, old decisions, or concepts.
+
+They are not authoritative if they conflict with the architecture docs above.
+
+## Current Stage 2 cockpit
+
+The final `hr.applicant` cockpit tabs are:
+
+- `Role and Duties`
+- `Evaluation`
+- `Documents`
+- `Declarations`
+- `Contract`
+
+The smart button `Recruitment Documents` opens the applicant-filtered lifecycle registry.
+
+## Current lifecycle spine
+
+The formal artifact lifecycle model is:
+
+`x_hr.recruitment_document`
+
+It tracks generated, uploaded, signed, cancelled, and superseded recruitment artifacts.
+
+## Working rule
+
+Do not implement from old discussion notes alone.
+
+Before each code pass, use the current pass execution plan and confirm that the architecture docs still match the intended implementation.
