@@ -167,7 +167,7 @@
                         </form>
                     </field>
                 </page>
-                <page string="TOR Header">
+                <page string="Role and Duties">
                     <group>
                         <group>
                             <field name="x_tor_state" widget="statusbar"
@@ -203,8 +203,8 @@
                         Upload the signed TOR PDF to the applicant Files/Chatter first, then select
                         it in the Signed TOR PDF field to mark the TOR as signed.
                     </div>
-                </page>
-                <page string="Role and Duties">
+
+                    <separator string="Negotiated Duties" />
                     <field name="x_role_and_duty_line_ids" context="{'default_x_applicant_id': id}">
                         <list editable="bottom">
                             <field name="x_sequence" widget="handle" />
@@ -221,6 +221,37 @@
                             </group>
                         </form>
                     </field>
+                </page>
+                <page string="Documents">
+                    <group>
+                        <div class="text-muted">
+                            Required document checklist, submitted document review, Fillout upload
+                            links,
+                            and F-0003 checklist PDF generation will be implemented in a later pass.
+                        </div>
+                    </group>
+                </page>
+
+                <page string="Declarations">
+                    <group>
+                        <div class="text-muted">
+                            F-0004, F-0007, and F-0009 declaration generation and signature
+                            workflows
+                            will be implemented in later passes.
+                        </div>
+                    </group>
+                </page>
+
+                <page string="Contract">
+                    <group>
+                        <div class="text-muted">
+                            Board decision, official labor contract artifact tracking,
+                            contract-support
+                            fields, employee ID generation, and handover readiness will be
+                            implemented
+                            in later passes.
+                        </div>
+                    </group>
                 </page>
             </xpath>
         </field>
