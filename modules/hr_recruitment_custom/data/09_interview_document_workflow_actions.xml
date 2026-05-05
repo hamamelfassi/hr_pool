@@ -2,7 +2,7 @@
 <odoo>
     <record id="action_mcep_interview_generate_pdf_tor" model="ir.actions.server">
         <field name="name">Generate Interview PDF</field>
-        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview" />
         <field name="state">code</field>
         <field name="code"><![CDATA[
 attachment = False
@@ -77,16 +77,66 @@ for rec in records:
         'res_id': rec.x_applicant_id.id,
     })
 
+    generated_on = datetime.datetime.now()
+
     rec.sudo().write({
         'x_pdf_attachment_id': attachment.id,
-        'x_generated_on': datetime.datetime.now(),
+        'x_generated_on': generated_on,
         'x_document_state': 'generated',
         'x_sent_on': False,
         'x_signed_on': False,
         'x_signed_attachment_id': False,
     })
-    rec.message_post(body='Interview PDF generated and attached to applicant Files. Use the send button to begin interviewer signature.')
-    rec.x_applicant_id.message_post(body='Interview PDF generated and attached to applicant Files.')
+
+    registry_model = env['x_hr.recruitment_document'].sudo()
+    registry_doc = registry_model.search([
+        ('x_document_type', '=', 'interview_evaluation'),
+        ('x_source_model', '=', 'x_hr.applicant_mcep_interview'),
+        ('x_source_res_id', '=', rec.id),
+    ], limit=1)
+
+    if registry_doc:
+        registry_version = (registry_doc.x_version or 1) + 1
+        registry_doc.write({
+            'x_name': 'Interview Evaluation - %s - v%s' % (
+                rec.x_full_name_snapshot or rec.x_applicant_id.partner_name or rec.x_applicant_id.name or rec.display_name,
+                registry_version,
+            ),
+            'x_applicant_id': rec.x_applicant_id.id,
+            'x_state': 'generated',
+            'x_generated_attachment_id': attachment.id,
+            'x_signed_attachment_id': False,
+            'x_version': registry_version,
+            'x_generated_on': generated_on,
+            'x_sent_on': False,
+            'x_signed_on': False,
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'x_hr.applicant_mcep_interview',
+            'x_source_res_id': rec.id,
+            'x_notes': 'Interview PDF regenerated from the interview workflow. Previous signed/sent registry state was cleared for the new version.',
+        })
+    else:
+        registry_doc = registry_model.create({
+            'x_name': 'Interview Evaluation - %s - v1' % (
+                rec.x_full_name_snapshot or rec.x_applicant_id.partner_name or rec.x_applicant_id.name or rec.display_name,
+            ),
+            'x_applicant_id': rec.x_applicant_id.id,
+            'x_document_type': 'interview_evaluation',
+            'x_state': 'generated',
+            'x_generated_attachment_id': attachment.id,
+            'x_signed_attachment_id': False,
+            'x_version': 1,
+            'x_generated_on': generated_on,
+            'x_sent_on': False,
+            'x_signed_on': False,
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'x_hr.applicant_mcep_interview',
+            'x_source_res_id': rec.id,
+            'x_notes': 'Interview PDF generated from the interview workflow.',
+        })
+
+    rec.message_post(body='Interview PDF generated and attached to applicant Files. Recruitment document registry updated. Use the send button to begin interviewer signature.')
+    rec.x_applicant_id.message_post(body='Interview PDF generated and attached to applicant Files. Recruitment document registry updated.')
 
 if len(records) == 1 and attachment:
     action = {
@@ -102,7 +152,7 @@ if len(records) == 1 and attachment:
 
     <record id="action_mcep_interview_send_for_signature" model="ir.actions.server">
         <field name="name">Send Interview for Signature</field>
-        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview"/>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview" />
         <field name="state">code</field>
         <field name="code"><![CDATA[
 attachment = False
@@ -113,10 +163,48 @@ for rec in records:
 
     attachment = rec.x_pdf_attachment_id
     signer_email = rec.x_interviewer_user_id.partner_id.email or 'the interviewer email address'
+    sent_on = datetime.datetime.now()
+
     rec.sudo().write({
         'x_document_state': 'sent',
-        'x_sent_on': datetime.datetime.now(),
+        'x_sent_on': sent_on,
     })
+
+    registry_model = env['x_hr.recruitment_document'].sudo()
+    registry_doc = registry_model.search([
+        ('x_document_type', '=', 'interview_evaluation'),
+        ('x_source_model', '=', 'x_hr.applicant_mcep_interview'),
+        ('x_source_res_id', '=', rec.id),
+    ], limit=1)
+
+    if registry_doc:
+        registry_doc.write({
+            'x_state': 'signature_requested',
+            'x_sent_on': sent_on,
+            'x_responsible_user_id': env.user.id,
+            'x_generated_attachment_id': attachment.id,
+            'x_notes': 'Interview marked as sent for signature through the guided-manual Sign workflow.',
+        })
+    else:
+        registry_doc = registry_model.create({
+            'x_name': 'Interview Evaluation - %s - v1' % (
+                rec.x_full_name_snapshot or rec.x_applicant_id.partner_name or rec.x_applicant_id.name or rec.display_name,
+            ),
+            'x_applicant_id': rec.x_applicant_id.id,
+            'x_document_type': 'interview_evaluation',
+            'x_state': 'signature_requested',
+            'x_generated_attachment_id': attachment.id,
+            'x_signed_attachment_id': False,
+            'x_version': 1,
+            'x_generated_on': rec.x_generated_on or sent_on,
+            'x_sent_on': sent_on,
+            'x_signed_on': False,
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'x_hr.applicant_mcep_interview',
+            'x_source_res_id': rec.id,
+            'x_notes': 'Interview registry row was created during send-for-signature because no generated registry row was found.',
+        })
+
     rec.message_post(body=(
         'Interview marked as sent for signature. Manual Sign workflow: '
         '1) open the generated interview PDF attachment, '

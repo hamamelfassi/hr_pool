@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="view_x_hr_recruitment_document_list" model="ir.ui.view">
+            <field name="name">x.hr.recruitment.document.list</field>
+            <field name="model">x_hr.recruitment_document</field>
+            <field name="arch" type="xml">
+                <list string="Recruitment Documents">
+                    <field name="x_name" />
+                    <field name="x_document_type" />
+                    <field name="x_state" />
+                    <field name="x_applicant_id" />
+                    <field name="x_generated_attachment_id" />
+                    <field name="x_signed_attachment_id" />
+                    <field name="x_version" />
+                    <field name="x_generated_on" />
+                    <field name="x_sent_on" />
+                    <field name="x_signed_on" />
+                </list>
+            </field>
+        </record>
+
+        <record id="view_x_hr_recruitment_document_form" model="ir.ui.view">
+            <field name="name">x.hr.recruitment.document.form</field>
+            <field name="model">x_hr.recruitment_document</field>
+            <field name="arch" type="xml">
+                <form string="Recruitment Document">
+                    <header>
+                        <field name="x_state"
+                            widget="statusbar"
+                            statusbar_visible="draft,generated,signature_requested,partially_signed,signed,cancelled,superseded" />
+                    </header>
+                    <sheet>
+                        <group>
+                            <group string="Document">
+                                <field name="x_name" />
+                                <field name="x_document_type" />
+                                <field name="x_applicant_id" />
+                                <field name="x_version" />
+                                <field name="x_responsible_user_id" />
+                            </group>
+                            <group string="Lifecycle Dates">
+                                <field name="x_generated_on" />
+                                <field name="x_sent_on" />
+                                <field name="x_signed_on" />
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page string="Artifacts">
+                                <group>
+                                    <field name="x_generated_attachment_id" />
+                                    <field name="x_signed_attachment_id" />
+                                </group>
+                            </page>
+
+                            <page string="Source">
+                                <group>
+                                    <field name="x_source_model" />
+                                    <field name="x_source_res_id" />
+                                </group>
+                            </page>
+
+                            <page string="Notes">
+                                <field name="x_notes" placeholder="Document lifecycle notes..." />
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_x_hr_recruitment_document_search" model="ir.ui.view">
+            <field name="name">x.hr.recruitment.document.search</field>
+            <field name="model">x_hr.recruitment_document</field>
+            <field name="arch" type="xml">
+                <search string="Recruitment Documents">
+                    <field name="x_name" />
+                    <field name="x_applicant_id" />
+                </search>
+            </field>
+        </record>
+
+        <record id="action_hr_recruitment_document_for_applicant" model="ir.actions.act_window">
+            <field name="name">Recruitment Documents</field>
+            <field name="res_model">x_hr.recruitment_document</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_x_hr_recruitment_document_search" />
+            <field name="domain">[('x_applicant_id', '=', active_id)]</field>
+            <field name="context">{'default_x_applicant_id': active_id, 'default_x_state': 'draft',
+                'default_x_version': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No recruitment documents have been registered for this applicant yet.
+                </p>
+                <p>
+                    Generated, uploaded, signed, and superseded recruitment artifacts will appear
+                    here.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

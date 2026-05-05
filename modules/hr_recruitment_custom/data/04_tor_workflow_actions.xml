@@ -2,7 +2,7 @@
 <odoo>
     <record id="action_hr_applicant_generate_tor_pdf" model="ir.actions.server">
         <field name="name">Generate TOR PDF</field>
-        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
         <field name="state">code</field>
         <field name="code"><![CDATA[
 attachment = False
@@ -70,16 +70,66 @@ for rec in records:
     if rec.x_tor_pdf_attachment_id:
         rec.message_post(body='Previous TOR PDF version superseded by a newer generated copy.')
 
+    generated_on = datetime.datetime.now()
+
     rec.sudo().write({
         'x_tor_pdf_attachment_id': attachment.id,
-        'x_tor_generated_on': datetime.datetime.now(),
+        'x_tor_generated_on': generated_on,
         'x_tor_sent_on': False,
         'x_tor_signed_on': False,
         'x_tor_signed_attachment_id': False,
         'x_tor_state': 'generated',
         'x_tor_version_label': version_label,
     })
-    rec.message_post(body='TOR PDF generated and attached to the applicant record.')
+
+    registry_model = env['x_hr.recruitment_document'].sudo()
+    registry_doc = registry_model.search([
+        ('x_document_type', '=', 'tor'),
+        ('x_source_model', '=', 'hr.applicant'),
+        ('x_source_res_id', '=', rec.id),
+    ], limit=1)
+
+    if registry_doc:
+        registry_doc.write({
+            'x_name': 'TOR - %s - v%s' % (
+                rec.x_tor_recipient_name or rec.partner_name or rec.name or rec.display_name,
+                version_number,
+            ),
+            'x_applicant_id': rec.id,
+            'x_state': 'generated',
+            'x_generated_attachment_id': attachment.id,
+            'x_signed_attachment_id': False,
+            'x_version': version_number,
+            'x_generated_on': generated_on,
+            'x_sent_on': False,
+            'x_signed_on': False,
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'hr.applicant',
+            'x_source_res_id': rec.id,
+            'x_notes': 'TOR PDF regenerated from the applicant TOR workflow. Previous sent/signed registry state was cleared for the new version.',
+        })
+    else:
+        registry_doc = registry_model.create({
+            'x_name': 'TOR - %s - v%s' % (
+                rec.x_tor_recipient_name or rec.partner_name or rec.name or rec.display_name,
+                version_number,
+            ),
+            'x_applicant_id': rec.id,
+            'x_document_type': 'tor',
+            'x_state': 'generated',
+            'x_generated_attachment_id': attachment.id,
+            'x_signed_attachment_id': False,
+            'x_version': version_number,
+            'x_generated_on': generated_on,
+            'x_sent_on': False,
+            'x_signed_on': False,
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'hr.applicant',
+            'x_source_res_id': rec.id,
+            'x_notes': 'TOR PDF generated from the applicant TOR workflow.',
+        })
+
+    rec.message_post(body='TOR PDF generated and attached to the applicant record. Recruitment document registry updated.')
 
 if len(records) == 1 and attachment:
     action = {
@@ -95,7 +145,7 @@ if len(records) == 1 and attachment:
 
     <record id="action_hr_applicant_send_tor_for_signature" model="ir.actions.server">
         <field name="name">Send TOR for Signature</field>
-        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
         <field name="state">code</field>
         <field name="code"><![CDATA[
 attachment = False
@@ -105,10 +155,54 @@ for rec in records:
         raise Warning('Generate the TOR PDF before sending it for signature.')
 
     attachment = rec.x_tor_pdf_attachment_id
+    sent_on = datetime.datetime.now()
+
     rec.sudo().write({
         'x_tor_state': 'sent',
-        'x_tor_sent_on': datetime.datetime.now(),
+        'x_tor_sent_on': sent_on,
     })
+
+    registry_model = env['x_hr.recruitment_document'].sudo()
+    registry_doc = registry_model.search([
+        ('x_document_type', '=', 'tor'),
+        ('x_source_model', '=', 'hr.applicant'),
+        ('x_source_res_id', '=', rec.id),
+    ], limit=1)
+
+    if registry_doc:
+        registry_doc.write({
+            'x_state': 'signature_requested',
+            'x_sent_on': sent_on,
+            'x_responsible_user_id': env.user.id,
+            'x_generated_attachment_id': attachment.id,
+            'x_notes': 'TOR marked as sent for signature through the guided-manual Sign workflow.',
+        })
+    else:
+        registry_version = 1
+        if rec.x_tor_version_label and rec.x_tor_version_label.startswith('TOR V'):
+            suffix = rec.x_tor_version_label[5:]
+            if suffix.isdigit():
+                registry_version = int(suffix)
+
+        registry_doc = registry_model.create({
+            'x_name': 'TOR - %s - v%s' % (
+                rec.x_tor_recipient_name or rec.partner_name or rec.name or rec.display_name,
+                registry_version,
+            ),
+            'x_applicant_id': rec.id,
+            'x_document_type': 'tor',
+            'x_state': 'signature_requested',
+            'x_generated_attachment_id': attachment.id,
+            'x_signed_attachment_id': False,
+            'x_version': registry_version,
+            'x_generated_on': rec.x_tor_generated_on or sent_on,
+            'x_sent_on': sent_on,
+            'x_signed_on': False,
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'hr.applicant',
+            'x_source_res_id': rec.id,
+            'x_notes': 'TOR registry row was created during send-for-signature because no generated registry row was found.',
+        })
 
     signer_email = rec.email_from or 'the applicant email address'
     rec.message_post(body=(

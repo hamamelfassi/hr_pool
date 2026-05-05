@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="model_x_hr_recruitment_document" model="ir.model">
+            <field name="name">Recruitment Document</field>
+            <field name="model">x_hr.recruitment_document</field>
+            <field name="state">manual</field>
+        </record>
+
+        <record id="field_x_hr_recruitment_document__x_name" model="ir.model.fields">
+            <field name="name">x_name</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Document Name</field>
+            <field name="ttype">char</field>
+            <field name="required" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_recruitment_document__x_applicant_id" model="ir.model.fields">
+            <field name="name">x_applicant_id</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Applicant</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.applicant</field>
+            <field name="required" eval="True"/>
+            <field name="on_delete">cascade</field>
+        </record>
+
+        <record id="field_x_hr_recruitment_document__x_document_type" model="ir.model.fields">
+            <field name="name">x_document_type</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Document Type</field>
+            <field name="ttype">selection</field>
+            <field name="required" eval="True" />
+            <field name="selection">[
+                ('interview_evaluation', 'Interview Evaluation (F-0002)'),
+                ('required_documents_checklist', 'Required Documents Checklist (F-0003)'),
+                ('legal_documents_validity_declaration', 'Legal Documents Validity Declaration (F-0004)'),
+                ('board_decision', 'Board Decision'),
+                ('employment_contract', 'Employment Contract'),
+                ('tor', 'TOR / Role and Duties (F-0006)'),
+                ('policies_compliance_declaration', 'Policies Compliance Declaration (F-0007)'),
+                ('non_disclosure_agreement', 'Non-Disclosure Agreement (F-0009)'),
+                ('other', 'Other')
+                ]</field>
+        </record>
+
+        <record id="field_x_hr_recruitment_document__x_state" model="ir.model.fields">
+            <field name="name">x_state</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">State</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('draft', 'Draft'),
+                ('generated', 'Generated'),
+                ('signature_requested', 'Signature Requested'),
+                ('partially_signed', 'Partially Signed'),
+                ('signed', 'Signed'),
+                ('cancelled', 'Cancelled'),
+                ('superseded', 'Superseded')
+                ]</field>
+        </record>
+
+        <record id="field_x_hr_recruitment_document__x_generated_attachment_id"
+            model="ir.model.fields">
+            <field name="name">x_generated_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Generated / Uploaded Artifact</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+        </record>
+
+        <record id="field_x_hr_recruitment_document__x_signed_attachment_id" model="ir.model.fields">
+            <field name="name">x_signed_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Signed Artifact</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+        </record>
+
+        <!--
+            x_sign_request_id is intentionally deferred in Pass 1.
+
+            Reason:
+            Referencing sign.request is only safe once the native Sign model dependency
+            and module manifest dependency are confirmed in the target SaaS database.
+            Pass 1 tracks generated/signed artifacts without attempting Sign automation.
+        -->
+
+        <record id="field_x_hr_recruitment_document__x_version" model="ir.model.fields">
+            <field name="name">x_version</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Version</field>
+            <field name="ttype">integer</field>
+        </record>
+
+        <record id="field_x_hr_recruitment_document__x_generated_on" model="ir.model.fields">
+            <field name="name">x_generated_on</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Generated On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_x_hr_recruitment_document__x_sent_on" model="ir.model.fields">
+            <field name="name">x_sent_on</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Sent On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_x_hr_recruitment_document__x_signed_on" model="ir.model.fields">
+            <field name="name">x_signed_on</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Signed On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_x_hr_recruitment_document__x_responsible_user_id" model="ir.model.fields">
+            <field name="name">x_responsible_user_id</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Responsible User</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+        </record>
+
+        <record id="field_x_hr_recruitment_document__x_source_model" model="ir.model.fields">
+            <field name="name">x_source_model</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Source Model</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_x_hr_recruitment_document__x_source_res_id" model="ir.model.fields">
+            <field name="name">x_source_res_id</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Source Record ID</field>
+            <field name="ttype">integer</field>
+        </record>
+
+        <record id="field_x_hr_recruitment_document__x_notes" model="ir.model.fields">
+            <field name="name">x_notes</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Notes</field>
+            <field name="ttype">text</field>
+        </record>
+
+        <record id="field_hr_applicant__x_recruitment_document_ids" model="ir.model.fields">
+            <field name="name">x_recruitment_document_ids</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
+            <field name="field_description">Recruitment Documents</field>
+            <field name="ttype">one2many</field>
+            <field name="relation">x_hr.recruitment_document</field>
+            <field name="relation_field">x_applicant_id</field>
+        </record>
+
+    </data>
+</odoo>
