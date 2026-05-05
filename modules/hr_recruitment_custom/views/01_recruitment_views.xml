@@ -50,14 +50,14 @@
                     </div>
                 </button>
             </xpath>
+
+            <xpath expr="//field[@name='partner_phone']" position="after">
+                <field name="x_gender" />
+                <field name="x_national_id" />
+            </xpath>
+
             <xpath expr="//sheet/notebook" position="inside">
                 <page string="Evaluation">
-                    <group>
-                        <group>
-                            <field name="x_gender" />
-                            <field name="x_national_id" />
-                        </group>
-                    </group>
                     <field name="x_mcep_interview_ids" context="{'default_x_applicant_id': id}">
                         <list create="false" delete="false">
                             <field name="x_interview_datetime" />
