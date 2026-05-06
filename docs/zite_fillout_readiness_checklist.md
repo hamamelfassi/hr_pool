@@ -2,87 +2,71 @@
 
 This checklist aligns your Fillout/Zite payload with the currently installed Odoo `hr_pool` schema.
 
-## 1) Required Odoo Fields vs Current Payload Baseline
+## Required Odoo Fields vs Current Payload Baseline
 
 ## Main model `x_hr.pool`
 
-Provided today (from payload + constants in n8n):
+Required or expected from the simplified public payload:
+
 - `x_first_name_ar`
+- `x_father_name_ar`
+- `x_grandfather_name_ar`
 - `x_surname_ar`
-- `x_nationality_id` (from `odoo_id` in country picker)
+- `x_gender`
+- `x_nationality_id`
+- `x_national_id`
 - `x_date_of_birth`
-- `x_marital_status` (mapped)
+- `x_marital_status`
 - `x_phone`
 - `x_email`
+- `x_residence_municipality_id`
+- `x_preferred_role_type_ids`
+- `x_preferred_work_type`
+- `x_preferred_work_municipality_ids`
+- `x_accuracy_declaration`
+- `x_privacy_declaration`
+
+Optional / legacy:
+
+- `x_profile_photo`
+- `x_first_name_en`
+- `x_surname_en`
 - `x_address_text`
-- `x_candidate_origin` (constant)
-- `x_intake_phase` (constant)
-- `x_chairman_decision` (constant)
+- `x_preferred_work_locations`
 
-Missing in current payload baseline (must be added or defaulted in n8n):
-- `x_preferred_work_type` (required selection)
-- `x_residence_municipality_id` from a municipality picker linked to `x_grc.location`
-- `x_preferred_work_municipality_ids` from a multi-select municipality picker linked to `x_grc.location`
-- `x_preferred_work_locations` is legacy free text and should not be required for the initial public intake
-- `x_accuracy_declaration` (required boolean)
-- `x_privacy_declaration` (required boolean)
-- `x_typed_consent_name` (required char)
+Retired from initial intake:
 
-Conditionally risky:
-- `x_preferred_role_type_ids` is required and must be non-empty.
+- `x_typed_consent_name`
 
 ## Child lines
 
-For the simplified initial public employment application, the following child lines are not required and should not be emitted by the first intake payload:
+The initial public intake payload should not emit:
 
-- education
-- employment history
+- education lines
+- employment history lines
 - skills
 - languages
 
-The matching Odoo child models remain available for manual/internal enrichment and future prefilled candidate-enrichment forms.
+The matching Odoo child models remain available for manual/internal enrichment and future prefilled enrichment forms.
 
-Commitment lines may remain if they are part of the simplified first intake declarations/availability requirements.
+Commitment lines may still be emitted by the public form.
 
-Education line `x_hr.pool_education_line` required:
-- `x_qualifying_institution`
-- `x_qualification_subject`
-- `x_qualification_type`
-- `x_graduation_year`
-
-Employment line `x_hr.pool_employment_line` required:
-- `x_employer_name`
-- `x_job_title`
-
-Skill line `x_hr.pool_skill_line` required:
-- `x_skill_description`
-
-Language line `x_hr.pool_language_line` required:
-- `x_language_id`
-- `x_language_name`
-
-Commitment line `x_hr.pool_commitment_line` required:
-- `x_commitment_type_id`
-
-## 2) Zite Helper Tables to Maintain (ID-first)
+## Zite Helper Tables to Maintain
 
 Keep helper rows authoritative by Odoo IDs:
-- Countries (`res.country.id`) -> already in payload as `odoo_id`
+
+- Countries (`res.country.id`) -> `odoo_id`
 - Preferred Roles (`x_hr.preferred_role_type.id`) -> `Odoo Id`
-- Languages (`x_hr.language.id`) -> `Odoo Id (from language_names)`
+- Municipalities (`x_grc.location.id`, filtered to `x_location_type = municipality`) -> `odoo_id_int`
 - Commitment Types (`x_hr.commitment_type.id`) -> `Commitment_type_id.value[0]`
-- Skill Types (`x_hr.skill_type.id`) -> add lookup and output Odoo ID
-- Proficiency Levels (`x_hr.proficiency_level.id`) -> optional ID, keep numeric value required
-- Municipalities (`x_grc.location.id`, filtered to `x_location_type = municipality`) -> used for residence municipality and preferred work municipalities.
 
-Recommended columns per helper table:
-- `recordID` (Zite UUID)
-- `odoo_id` (integer, unique)
-- `name_ar`
-- `name_en`
-- `active`
+Legacy/deferred helper tables:
 
-## 3) Fillout Form Changes Required Before n8n Finalization
+- Languages
+- Skill Types
+- Proficiency Levels
+
+## Fillout Form Changes Required Before n8n Finalization
 
 Add these questions to the public form and webhook payload:
 - Preferred work type (single select)
@@ -108,7 +92,7 @@ Future enrichment forms may reintroduce validation for:
 - languages
 - skills
 
-## 4) Payload Contract to Target (Starting Baseline + Additions)
+## Payload Contract to Target (Starting Baseline + Additions)
 
 Keep current baseline keys and add the following top-level question outputs:
 - `preferred_work_type_key` (or lookup containing key)
@@ -122,15 +106,21 @@ For ID-first child lookups, prefer these fields in each row:
 - Languages row: `language_odoo_id`, `language_name_snapshot`, `working_level_value`
 - Commitments row: `commitment_type_odoo_id`
 
-## 5) Known Upstream Data Note
+## Known Upstream Data Note
 
 Current payload still indicates language lookups are swapped (`language_ar_lookup`/`language_en_lookup`).
 Keep this documented until corrected upstream in Zite.
 
-## 6) Go/No-Go Before n8n Build
+## Go/No-Go Before n8n Activation
 
 Go only when all are true:
-- Required main-form fields listed in section 1 are present in webhook payload.
-- Every helper-backed selection emits Odoo IDs.
-- Language lines emit `language_odoo_id` and numeric working level but the initial intake payload does not emit education, employment, skills, or language child-line arrays.
-- Preferred roles emits at least one Odoo ID.
+
+- Gender emits `Male` or `Female` and n8n maps it to `male` or `female`.
+- Residence municipality emits a valid `x_grc.location` Odoo integer ID.
+- Preferred work municipalities emit one or more valid `x_grc.location` Odoo integer IDs.
+- Preferred roles emit at least one valid Odoo ID.
+- Accuracy declaration is true.
+- Privacy declaration is true.
+- The payload does not emit education, employment, skills, or language arrays.
+- Typed consent is not required.
+- Commitment type IDs match the live Odoo helper records.

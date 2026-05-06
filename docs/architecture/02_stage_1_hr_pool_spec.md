@@ -28,6 +28,42 @@ Those child models may remain in the module for backward compatibility and futur
 
 Later, `hr_pool` may introduce a second prefilled enrichment form, using tokenized/prefilled URL patterns, to collect education, experience, language, and credential details from selected candidates.
 
+### Initial intake payload contract
+
+The simplified public Stage 1 intake form is Arabic-first and should collect only the minimum data needed to create a usable `x_hr.pool` record.
+
+The current initial intake payload should include:
+
+- profile photo where provided;
+- Arabic first name;
+- Arabic father name;
+- Arabic grandfather name;
+- Arabic surname;
+- nationality;
+- national ID;
+- gender;
+- date of birth;
+- marital status;
+- phone;
+- email;
+- residence municipality;
+- preferred role types;
+- preferred work type;
+- preferred work municipalities;
+- personal/social commitments where provided;
+- accuracy declaration;
+- privacy declaration.
+
+The initial public intake payload should not include:
+
+- education line records;
+- employment history line records;
+- skill line records;
+- language line records;
+- typed consent name.
+
+The previous typed consent name field is retired for initial intake. The accuracy and privacy checkboxes are sufficient at this stage. Formal declarations and signatures are handled later in Stage 2 recruitment.
+
 ## 3. Workflow
 
 The current stage 1 lifecycle is:

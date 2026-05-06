@@ -172,6 +172,40 @@ Purpose:
 
 - improve Stage 1 data quality while making the first employment application shorter and easier to submit.
 
+Pass 4 also aligns the live Fillout/Zite/n8n intake payload with the simplified public form.
+
+The current public intake form:
+
+- adds Arabic father and grandfather name fields;
+- makes English name parts optional/hidden;
+- writes gender from the Fillout `tGfg` field;
+- writes residence municipality from the Fillout `dZ9v` field;
+- writes preferred work municipalities from the Fillout `8wZ5` field;
+- no longer emits education, employment history, skills, or languages child arrays;
+- no longer requires typed consent name.
+
+Deferred beyond Pass 4:
+
+- `hr.applicant` landing fields for full Arabic name parts;
+- contract-stage use of father/grandfather names;
+- formal declaration/signature replacement for typed consent;
+- native Odoo Skills migration;
+- employee-side education/experience handover.
+
+Pass 4D — HR Pool + n8n live intake compatibility
+
+Main code changes:
+
+- add Arabic father/grandfather fields to `x_hr.pool`;
+- make English name fields optional;
+- remove typed consent as a required field and from public intake validation;
+- map gender from `tGfg`;
+- map residence municipality from `dZ9v`;
+- map preferred work municipalities from `8wZ5`;
+- stop normalizing/writing credential/history/skill/language child arrays during initial intake;
+- add missing “No Other Commitments” helper row;
+- keep conversion handover guarded by destination-field existence checks.
+
 ### Pass 5 — Evaluation stage gate
 
 Module: `hr_recruitment_custom`.
