@@ -1,0 +1,983 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="loc_municipality_001" model="x_grc.location">
+        <field name="x_name">Abu Salim</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_005"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_002" model="x_grc.location">
+        <field name="x_name">Ubari</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_008"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_003" model="x_grc.location">
+        <field name="x_name">Awjila</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_016"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_004" model="x_grc.location">
+        <field name="x_name">Jikharra</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_016"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_005" model="x_grc.location">
+        <field name="x_name">Ajdabiya</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_014"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_006" model="x_grc.location">
+        <field name="x_name">Edri Al Shati</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_013"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_007" model="x_grc.location">
+        <field name="x_name">Asbi&#x27;a</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_023"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_008" model="x_grc.location">
+        <field name="x_name">Al Abraq</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_020"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_009" model="x_grc.location">
+        <field name="x_name">Al Abyar</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_017"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_010" model="x_grc.location">
+        <field name="x_name">Al Asabaa</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_011" model="x_grc.location">
+        <field name="x_name">Al Bardiyah</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_018"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_012" model="x_grc.location">
+        <field name="x_name">Brega</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_014"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_013" model="x_grc.location">
+        <field name="x_name">Bayda</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_020"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_014" model="x_grc.location">
+        <field name="x_name">Al Jufra</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_011"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_015" model="x_grc.location">
+        <field name="x_name">Al Jamil</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_001"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_016" model="x_grc.location">
+        <field name="x_name">Al Haraba</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_017" model="x_grc.location">
+        <field name="x_name">Al Hawamid</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_018" model="x_grc.location">
+        <field name="x_name">Al Khums</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_006"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_019" model="x_grc.location">
+        <field name="x_name">Ar Rajban</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_020" model="x_grc.location">
+        <field name="x_name">Al-Rahibat</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_021" model="x_grc.location">
+        <field name="x_name">Al Rayayina</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_022" model="x_grc.location">
+        <field name="x_name">Zawiya</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_002"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_023" model="x_grc.location">
+        <field name="x_name">Southern Zawiya</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_002"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_024" model="x_grc.location">
+        <field name="x_name">Zawiya West</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_002"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_025" model="x_grc.location">
+        <field name="x_name">Zintan</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_026" model="x_grc.location">
+        <field name="x_name">Al-Zahra</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_004"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_027" model="x_grc.location">
+        <field name="x_name">Zueitina Sultan</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_014"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_028" model="x_grc.location">
+        <field name="x_name">As-Saeh</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_023"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_029" model="x_grc.location">
+        <field name="x_name">Eshargia</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_001"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_030" model="x_grc.location">
+        <field name="x_name">Al Shaqiqa</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_031" model="x_grc.location">
+        <field name="x_name">Ash Shwayrif</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_032" model="x_grc.location">
+        <field name="x_name">Al Amriyah</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_004"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_033" model="x_grc.location">
+        <field name="x_name">Ajaylat</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_001"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_034" model="x_grc.location">
+        <field name="x_name">Al Urban</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_035" model="x_grc.location">
+        <field name="x_name">&#x27;Aziziya</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_004"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_036" model="x_grc.location">
+        <field name="x_name">Al-Awata</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_004"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_037" model="x_grc.location">
+        <field name="x_name">Al Ghurayfah</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_013"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_038" model="x_grc.location">
+        <field name="x_name">Al Qubbah</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_021"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_039" model="x_grc.location">
+        <field name="x_name">Garabulli</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_005"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_040" model="x_grc.location">
+        <field name="x_name">Al Qardhah Ash Shati</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_013"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_041" model="x_grc.location">
+        <field name="x_name">Al Qatrun</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_009"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_042" model="x_grc.location">
+        <field name="x_name">Al Qala</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_043" model="x_grc.location">
+        <field name="x_name">Al-Qawalish</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_044" model="x_grc.location">
+        <field name="x_name">Al Qayqab</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_022"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_045" model="x_grc.location">
+        <field name="x_name">Al Kufra</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_015"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_046" model="x_grc.location">
+        <field name="x_name">Al Maya</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_002"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_047" model="x_grc.location">
+        <field name="x_name">Al Marj</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_019"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_048" model="x_grc.location">
+        <field name="x_name">Al-Awaynat</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_009"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_049" model="x_grc.location">
+        <field name="x_name">Al Maamora</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_004"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_050" model="x_grc.location">
+        <field name="x_name">Al Militaniya</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_018"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_051" model="x_grc.location">
+        <field name="x_name">Al Manshiya Al Jameel</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_001"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_052" model="x_grc.location">
+        <field name="x_name">An-Nasiriyah</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_004"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_053" model="x_grc.location">
+        <field name="x_name">Musaid</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_001"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_054" model="x_grc.location">
+        <field name="x_name">Antelat Al Baydan</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_020"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_055" model="x_grc.location">
+        <field name="x_name">Bi&#x27;r al Ashhab</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_022"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_056" model="x_grc.location">
+        <field name="x_name">Batin al-Jabal</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_057" model="x_grc.location">
+        <field name="x_name">Brak Al-Shati</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_013"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_058" model="x_grc.location">
+        <field name="x_name">Bint Bayyah</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_013"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_059" model="x_grc.location">
+        <field name="x_name">Benghazi</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_017"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_060" model="x_grc.location">
+        <field name="x_name">Bani Walid</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_007"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_061" model="x_grc.location">
+        <field name="x_name">Tajoura</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_005"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_062" model="x_grc.location">
+        <field name="x_name">Tazerbu</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_015"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_063" model="x_grc.location">
+        <field name="x_name">Tawergha</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_007"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_064" model="x_grc.location">
+        <field name="x_name">Traghan</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_009"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_065" model="x_grc.location">
+        <field name="x_name">Tarhuna</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_006"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_066" model="x_grc.location">
+        <field name="x_name">Tocra</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_017"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_067" model="x_grc.location">
+        <field name="x_name">Jadu</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_068" model="x_grc.location">
+        <field name="x_name">Jalu</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_016"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_069" model="x_grc.location">
+        <field name="x_name">Jardas al-Abid</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_018"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_070" model="x_grc.location">
+        <field name="x_name">Janzour</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_005"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_071" model="x_grc.location">
+        <field name="x_name">South Jabal al Akhdar</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_018"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_072" model="x_grc.location">
+        <field name="x_name">Hayy al-Andalus</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_005"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_073" model="x_grc.location">
+        <field name="x_name">Gulf of Sidra</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_010"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_074" model="x_grc.location">
+        <field name="x_name">Daraj</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_075" model="x_grc.location">
+        <field name="x_name">Derna</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_021"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_076" model="x_grc.location">
+        <field name="x_name">Rebiana</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_021"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_077" model="x_grc.location">
+        <field name="x_name">Regdalin</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_001"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_078" model="x_grc.location">
+        <field name="x_name">Zliten</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_001"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_079" model="x_grc.location">
+        <field name="x_name">Zliten</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_007"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_080" model="x_grc.location">
+        <field name="x_name">Zamzam</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_010"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_081" model="x_grc.location">
+        <field name="x_name">Zuwarah</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_001"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_082" model="x_grc.location">
+        <field name="x_name">Sahel al-Jabal</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_083" model="x_grc.location">
+        <field name="x_name">Sabha</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_012"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_084" model="x_grc.location">
+        <field name="x_name">Sirte</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_010"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_085" model="x_grc.location">
+        <field name="x_name">Suluq</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_017"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_086" model="x_grc.location">
+        <field name="x_name">Swani Bin Adam</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_005"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_087" model="x_grc.location">
+        <field name="x_name">Susa</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_018"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_088" model="x_grc.location">
+        <field name="x_name">Souq al-Juma&#x27;a</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_005"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_089" model="x_grc.location">
+        <field name="x_name">Suuq El-Khamis</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_023"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_090" model="x_grc.location">
+        <field name="x_name">Shahhat</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_018"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_091" model="x_grc.location">
+        <field name="x_name">Sabratha</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_002"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_092" model="x_grc.location">
+        <field name="x_name">Surman</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_002"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_093" model="x_grc.location">
+        <field name="x_name">Tobruk</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_022"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_094" model="x_grc.location">
+        <field name="x_name">Tripoli Center</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_005"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_095" model="x_grc.location">
+        <field name="x_name">Zahir al Jabal</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_096" model="x_grc.location">
+        <field name="x_name">Omar Al-Mukhtar</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_022"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_097" model="x_grc.location">
+        <field name="x_name">Ain Zara</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_005"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_098" model="x_grc.location">
+        <field name="x_name">Ein Ghazala</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_018"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_099" model="x_grc.location">
+        <field name="x_name">Ghat</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_009"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_100" model="x_grc.location">
+        <field name="x_name">Ghadames</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_101" model="x_grc.location">
+        <field name="x_name">Gharyan</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_102" model="x_grc.location">
+        <field name="x_name">Qasr bin Ghashir</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_005"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_103" model="x_grc.location">
+        <field name="x_name">Qasr Khiar</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_006"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_104" model="x_grc.location">
+        <field name="x_name">Qaminis</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_017"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_105" model="x_grc.location">
+        <field name="x_name">Kabaw</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_106" model="x_grc.location">
+        <field name="x_name">Kikla</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_107" model="x_grc.location">
+        <field name="x_name">Marada</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_014"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_108" model="x_grc.location">
+        <field name="x_name">Murzuq</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_009"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_109" model="x_grc.location">
+        <field name="x_name">Marsa Dafna</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_110" model="x_grc.location">
+        <field name="x_name">Mizdah</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_111" model="x_grc.location">
+        <field name="x_name">Msallata</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_006"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_112" model="x_grc.location">
+        <field name="x_name">Misrata</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_007"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_113" model="x_grc.location">
+        <field name="x_name">Nalut</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_114" model="x_grc.location">
+        <field name="x_name">Nesma</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_115" model="x_grc.location">
+        <field name="x_name">Harawa</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_010"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_116" model="x_grc.location">
+        <field name="x_name">Wadi al-Bawanis</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_008"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_117" model="x_grc.location">
+        <field name="x_name">Wadi Utba</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_008"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_118" model="x_grc.location">
+        <field name="x_name">Wazzin</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_119" model="x_grc.location">
+        <field name="x_name">Wardama</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_120" model="x_grc.location">
+        <field name="x_name">Yafran</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_121" model="x_grc.location">
+        <field name="x_name">Umm al Rizam</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_021"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_122" model="x_grc.location">
+        <field name="x_name">Al Jalidah</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_018"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_123" model="x_grc.location">
+        <field name="x_name">Al Jadaida</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_004"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_124" model="x_grc.location">
+        <field name="x_name">Mduwar al-Zaytun</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_018"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_125" model="x_grc.location">
+        <field name="x_name">Al Awaynat</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_009"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_126" model="x_grc.location">
+        <field name="x_name">Tajarhi</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_009"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_127" model="x_grc.location">
+        <field name="x_name">Al-Mardoum</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_007"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_128" model="x_grc.location">
+        <field name="x_name">Tninay</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_007"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_129" model="x_grc.location">
+        <field name="x_name">Al Qrayat</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_130" model="x_grc.location">
+        <field name="x_name">Zella</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_010"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_131" model="x_grc.location">
+        <field name="x_name">Bergen</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_013"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_132" model="x_grc.location">
+        <field name="x_name">Awal</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_133" model="x_grc.location">
+        <field name="x_name">Tahala</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_009"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_134" model="x_grc.location">
+        <field name="x_name">Barkat</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_009"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_135" model="x_grc.location">
+        <field name="x_name">Sinawan</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_136" model="x_grc.location">
+        <field name="x_name">Zawila</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_009"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_137" model="x_grc.location">
+        <field name="x_name">Ras al Tabbal</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_138" model="x_grc.location">
+        <field name="x_name">Germa</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_008"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_139" model="x_grc.location">
+        <field name="x_name">Al Qararah</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_007"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_municipality_140" model="x_grc.location">
+        <field name="x_name">Reguiba</field>
+        <field name="x_location_type">municipality</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_district_008"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+</odoo>

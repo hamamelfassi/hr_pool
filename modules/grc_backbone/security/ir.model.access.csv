@@ -50,3 +50,6 @@ access_task_template_reader,Task Template reader,grc_backbone.model_task_templat
 access_task_template_line_admin,Task Template Line admin,grc_backbone.model_task_template_line,base.group_user,1,1,1,1
 access_task_template_line_contributor,Task Template Line contributor,grc_backbone.model_task_template_line,base.group_user,1,1,1,1
 access_task_template_line_reader,Task Template Line reader,grc_backbone.model_task_template_line,base.group_user,1,1,1,1
+access_location_admin,Location admin,grc_backbone.model_location,base.group_user,1,1,1,1
+access_location_contributor,Location contributor,grc_backbone.model_location,base.group_user,1,1,1,1
+access_location_reader,Location reader,grc_backbone.model_location,base.group_user,1,1,1,1

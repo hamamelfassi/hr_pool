@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_locations"
+              name="Locations"
+              parent="grc_backbone.menu_grc_taxonomy"
+              action="grc_backbone.action_location"
+              sequence="30"/>
+
+    <record id="view_location_list" model="ir.ui.view">
+        <field name="name">x_grc.location.list</field>
+        <field name="model">x_grc.location</field>
+        <field name="arch" type="xml">
+            <list string="Locations">
+                <field name="x_name"/>
+                <field name="x_location_type"/>
+                <field name="x_parent_id"/>
+                <field name="x_active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_location_search" model="ir.ui.view">
+        <field name="name">x_grc.location.search</field>
+        <field name="model">x_grc.location</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_parent_id"/>
+                <filter name="type_region" string="Regions" domain="[('x_location_type','=','region')]"/>
+                <filter name="type_district" string="Districts" domain="[('x_location_type','=','district')]"/>
+                <filter name="type_municipality" string="Municipalities" domain="[('x_location_type','=','municipality')]"/>
+                <filter name="type_locality" string="Localities" domain="[('x_location_type','=','locality')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_location_form" model="ir.ui.view">
+        <field name="name">x_grc.location.form</field>
+        <field name="model">x_grc.location</field>
+        <field name="arch" type="xml">
+            <form string="Location">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_name"/>
+                            <field name="x_location_type"/>
+                        </group>
+                        <group>
+                            <field name="x_parent_id"/>
+                            <field name="x_active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Child Locations">
+                            <field name="x_child_ids">
+                                <list>
+                                    <field name="x_name"/>
+                                    <field name="x_location_type"/>
+                                    <field name="x_active"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="x_notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

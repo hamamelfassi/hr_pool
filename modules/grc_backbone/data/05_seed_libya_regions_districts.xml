@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="loc_region_001" model="x_grc.location">
+        <field name="x_name">Tripoli</field>
+        <field name="x_location_type">region</field>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_region_002" model="x_grc.location">
+        <field name="x_name">Fezzan</field>
+        <field name="x_location_type">region</field>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_region_003" model="x_grc.location">
+        <field name="x_name">Cyrenaica</field>
+        <field name="x_location_type">region</field>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_001" model="x_grc.location">
+        <field name="x_name">Aniqat Alkhams</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_001"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_002" model="x_grc.location">
+        <field name="x_name">Alzawiyah</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_001"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_003" model="x_grc.location">
+        <field name="x_name">Jabal al Gharbi</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_001"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_004" model="x_grc.location">
+        <field name="x_name">Al Aziziyah</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_001"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_005" model="x_grc.location">
+        <field name="x_name">Tripoli</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_001"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_006" model="x_grc.location">
+        <field name="x_name">Al Marqab</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_001"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_007" model="x_grc.location">
+        <field name="x_name">Misrata</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_001"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_008" model="x_grc.location">
+        <field name="x_name">Awbari</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_002"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_009" model="x_grc.location">
+        <field name="x_name">Murzuq</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_002"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_010" model="x_grc.location">
+        <field name="x_name">Sirte</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_001"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_011" model="x_grc.location">
+        <field name="x_name">Al Jufrah</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_001"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_012" model="x_grc.location">
+        <field name="x_name">Sabha</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_002"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_013" model="x_grc.location">
+        <field name="x_name">Wadi Shatti</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_002"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_014" model="x_grc.location">
+        <field name="x_name">Ajdabiya</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_015" model="x_grc.location">
+        <field name="x_name">Al Kufra</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_016" model="x_grc.location">
+        <field name="x_name">Al Wahat</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_017" model="x_grc.location">
+        <field name="x_name">Benghazi</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_018" model="x_grc.location">
+        <field name="x_name">Jabal al Akhdar</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_019" model="x_grc.location">
+        <field name="x_name">Al Marj</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_020" model="x_grc.location">
+        <field name="x_name">Al Bayda</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_021" model="x_grc.location">
+        <field name="x_name">Derna</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_022" model="x_grc.location">
+        <field name="x_name">Tubruq</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_003"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+    <record id="loc_district_023" model="x_grc.location">
+        <field name="x_name">Nawahi Al Arbaa</field>
+        <field name="x_location_type">district</field>
+        <field name="x_parent_id" ref="grc_backbone.loc_region_001"/>
+        <field name="x_active" eval="True"/>
+    </record>
+
+</odoo>

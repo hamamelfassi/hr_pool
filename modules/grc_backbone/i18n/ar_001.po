@@ -1561,3 +1561,4856 @@ msgstr "تنسيق خطابات الضمان"
 #: model:x_grc.function,x_description:grc_backbone.fn_guarantee_processing
 msgid "Following guarantee and procedural banking requirements."
 msgstr "متابعة متطلبات خطابات الضمان والمتطلبات المصرفية الإجرائية."
+
+
+# -----------------------------------------------------------------------------
+# Pass 3B — GRC Libya location taxonomy Arabic translations
+# Append this block to modules/grc_backbone/i18n/ar_001.po
+# Generated from Locations - Districts/Municipalities/Localities CSV files.
+# Conflict policy: English source names with multiple Arabic translations are
+# intentionally excluded and listed in grc_location_translation_conflicts.csv.
+# -----------------------------------------------------------------------------
+
+#. module: grc_backbone
+#: model:ir.model,name:grc_backbone.model_location
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_form
+msgid "Location"
+msgstr "الموقع"
+
+#. module: grc_backbone
+#: model:ir.actions.act_window,name:grc_backbone.action_location
+#: model:ir.ui.menu,name:grc_backbone.menu_locations
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_list
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_search
+msgid "Locations"
+msgstr "المواقع"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_location_x_name
+msgid "Location Name"
+msgstr "اسم الموقع"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_location_x_location_type
+msgid "Location Type"
+msgstr "نوع الموقع"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_location_x_parent_id
+msgid "Parent Location"
+msgstr "الموقع الأصل"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_location_x_child_ids
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_form
+msgid "Child Locations"
+msgstr "المواقع الفرعية"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.selection__x_grc_location__x_location_type__region
+msgid "Region"
+msgstr "إقليم"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_search
+msgid "Regions"
+msgstr "الأقاليم"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.selection__x_grc_location__x_location_type__district
+msgid "District"
+msgstr "منطقة"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_search
+msgid "Districts"
+msgstr "المناطق"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.selection__x_grc_location__x_location_type__city
+msgid "City"
+msgstr "مدينة"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.selection__x_grc_location__x_location_type__municipality
+msgid "Municipality"
+msgstr "بلدية"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_search
+msgid "Municipalities"
+msgstr "البلديات"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.selection__x_grc_location__x_location_type__locality
+msgid "Locality"
+msgstr "محلة"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_search
+msgid "Localities"
+msgstr "المحلات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_035
+msgid "'Aziziya"
+msgstr "العزيزية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0001
+msgid "Abbad"
+msgstr "عباد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0003
+msgid "Abdel Moneim Riad"
+msgstr "عبد المنعم رياض"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0002
+msgid "Abdul Rahman al-Dakhil An-Najila"
+msgstr "عبد الرحمن الداخل النجيلة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0513
+msgid "Abdullah bin Sarh"
+msgstr "عبد الله بن سرح"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0004
+msgid "Abdurrahman Azzam As Swani"
+msgstr "عبد الرحمب عزام السواني"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0005
+msgid "Abi Aisha"
+msgstr "ابي عائشة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0757
+msgid "Abi al-Rish"
+msgstr "ابي الريش"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0903
+msgid "Abu al-Farayis"
+msgstr "ابو الفرايس"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0881
+msgid "Abu al-Gharb"
+msgstr "ابوالغرب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0781
+msgid "Abu al-Jawabi al-Janubi"
+msgstr "ابو الجوابي الجنوبي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0006
+msgid "Abu Al-Jawabi Al-Shamali"
+msgstr "ابو الجوابي الشمالي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0007
+msgid "Abu Arqub"
+msgstr "ابو عرقوب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0008
+msgid "Abu Attaf"
+msgstr "ابو عطاف"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0009
+msgid "Abu Ayyad"
+msgstr "ابو عياد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0634
+msgid "Abu Bakr al-Siddiq"
+msgstr "ابوبكر الصديق"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0639
+msgid "Abu Ghardaqah"
+msgstr "ابو غردقة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0759
+msgid "Abu Hilal"
+msgstr "ابوهلال"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0804
+msgid "Abu Ja'far"
+msgstr "ابو جعفر"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0701
+msgid "Abu Kammash"
+msgstr "ابي كماش"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0835
+msgid "Abu Madi"
+msgstr "ابو ماضي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0010
+msgid "Abu Maqar"
+msgstr "ابو مقر"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0767
+msgid "Abu Meliana"
+msgstr "ابو مليانة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0847
+msgid "Abu Musa"
+msgstr "أبو موسى"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0011
+msgid "Abu Naim"
+msgstr "ابونعيم"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0012
+msgid "Abu Qadqud"
+msgstr "ابو قدقود"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0872
+msgid "Abu Qarin"
+msgstr "ابوقرين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0013
+msgid "Abu Ruqayyah"
+msgstr "ابورقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_001
+msgid "Abu Salim"
+msgstr "أبوسليم"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0413
+msgid "Abu Salim Martyrs"
+msgstr "شهداء ابو سليم"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0567
+msgid "Abu Shamata"
+msgstr "ابو شماطة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0697
+msgid "Abu Surra"
+msgstr "ابوصرة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0014
+msgid "Abu Zayan"
+msgstr "ابو زيان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0526
+msgid "Abyar"
+msgstr "الأبيار"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0015
+msgid "Abyar Maji"
+msgstr "ابيار مجي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0372
+msgid "Ad Dafinīyah ash Shamālīyah"
+msgstr "الدافنية الشمالية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0017
+msgid "Ad Dafniya"
+msgstr "الدافنية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0019
+msgid "Ad Dayasir"
+msgstr "الدياسير"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0602
+msgid "Ad Disah ash Sharqiyah"
+msgstr "الديسة الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0020
+msgid "Ad-Dreybi"
+msgstr "الدريبي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0021
+msgid "Adh Dhwah"
+msgstr "الضوه"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0717
+msgid "Adwaw al Gharbiya"
+msgstr "ادواو الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0716
+msgid "Adwaw al Sharqiyah"
+msgstr "ادواو الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0605
+msgid "Ahwaidi"
+msgstr "اهويدى"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0769
+msgid "Ain al-Dawwara"
+msgstr "عين الدوارة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0783
+msgid "Ain al-Ghazala"
+msgstr "عين غزالة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0024
+msgid "Ain al-Mashashiya"
+msgstr "عين المشاشية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0025
+msgid "Ain Kaam"
+msgstr "عين كعام"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0026
+msgid "Ain Talib"
+msgstr "عين طالب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0774
+msgid "Ain Zara Al Jadida"
+msgstr "عين زارره الجديدة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0777
+msgid "Ain Zara Al Shamali"
+msgstr "عين زاره الشمالي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0782
+msgid "Ain Zara South"
+msgstr "عين زاره الجنوبي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_033
+msgid "Ajaylat"
+msgstr "العجيلات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_014
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0515
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_005
+msgid "Ajdabiya"
+msgstr "اجدابيا"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0647
+msgid "Akhlif"
+msgstr "اخليف"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0595
+msgid "Al 'Aziziyah"
+msgstr "العزيزية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0525
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_008
+msgid "Al Abraq"
+msgstr "الأبرق"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0646
+msgid "Al Abyad"
+msgstr "الابيض"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_009
+msgid "Al Abyar"
+msgstr "الأبيار"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0028
+msgid "Al Abyat"
+msgstr "العبيات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0548
+msgid "Al Afadil"
+msgstr "الافاضل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0029
+msgid "Al Afiyah"
+msgstr "العافية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0030
+msgid "Al Ain"
+msgstr "العين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0027
+msgid "Al Ajaylat"
+msgstr "العجيلات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0031
+msgid "Al Akwam"
+msgstr "الاكوام"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0032
+msgid "Al Alous"
+msgstr "العلوص"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0034
+msgid "Al Amouriyen"
+msgstr "العموريين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0033
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_032
+msgid "Al Amriyah"
+msgstr "العامرية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0552
+msgid "Al Aqaybah"
+msgstr "العقيبة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0837
+msgid "Al Aqib"
+msgstr "العاقيب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0035
+msgid "Al Ardam"
+msgstr "الاردام"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_010
+msgid "Al Asabaa"
+msgstr "الاصابعة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0695
+msgid "Al Assa"
+msgstr "العسة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0600
+msgid "Al Ataya"
+msgstr "العطايا"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0037
+msgid "Al Awanin"
+msgstr "العوانين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0038
+msgid "Al Awatah"
+msgstr "العواته"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0039
+msgid "Al Awayna"
+msgstr "العوينة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0904
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_125
+msgid "Al Awaynat"
+msgstr "العوينات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0173
+msgid "Al Awaynat Center"
+msgstr "العوينات المركز"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_004
+msgid "Al Aziziyah"
+msgstr "العزيزية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0043
+msgid "Al Badarnah ash Sharqiyah"
+msgstr "البدارنة الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0045
+msgid "Al Bahriyah"
+msgstr "البحرية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0891
+msgid "Al Bakhakhikhah"
+msgstr "البخابخة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0052
+msgid "Al Bakhi"
+msgstr "البخي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0046
+msgid "Al Barakat"
+msgstr "البركات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0807
+msgid "Al Barashish"
+msgstr "البراشيش"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_011
+msgid "Al Bardiyah"
+msgstr "البردي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0852
+msgid "Al Bawaish"
+msgstr "البواعيش"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_020
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0048
+msgid "Al Bayda"
+msgstr "البيضاء"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0051
+msgid "Al Bazah"
+msgstr "البازة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0053
+msgid "Al Budair"
+msgstr "البدير"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0702
+msgid "Al Buhayrah"
+msgstr "البحيرة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0054
+msgid "Al Burj"
+msgstr "البرج"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0047
+msgid "Al Bushayrat"
+msgstr "البشيرات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0055
+msgid "Al Disah"
+msgstr "الديسة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0056
+msgid "Al Fardah"
+msgstr "الفرضة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0670
+msgid "Al Farjan Ad Dawun"
+msgstr "الفرجان الداوون"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0654
+msgid "Al Fateh District"
+msgstr "حي الفاتح"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0058
+msgid "Al Fawatir"
+msgstr "الفواتير"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0059
+msgid "Al Fejeij"
+msgstr "الفجيج"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0586
+msgid "Al Ghalalba"
+msgstr "الغلالبة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0062
+msgid "Al Ghamalin"
+msgstr "الغمالين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0064
+msgid "Al Ghanayimah"
+msgstr "الغنايمة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0495
+msgid "Al Gharbia"
+msgstr "الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0489
+msgid "Al Gharbiya Zintan"
+msgstr "الغربية الزنتان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0540
+msgid "Al Ghazaya"
+msgstr "الغزايا"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_037
+msgid "Al Ghurayfah"
+msgstr "الغريفة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0067
+msgid "Al Ghut"
+msgstr "الغوط"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0715
+msgid "Al Ghwaylat al Gharbiyah"
+msgstr "الغويلات الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0069
+msgid "Al Ghwaylat ash Sharqiyah"
+msgstr "الغويلات الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0072
+msgid "Al Habaliyah and Al Qarar"
+msgstr "الهبلية والقرار"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0074
+msgid "Al Halalibah"
+msgstr "الحلالبه"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0660
+msgid "Al Hamidiyah"
+msgstr "الحميدية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0649
+msgid "Al Hamra"
+msgstr "الحمراء"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0736
+msgid "Al Hanashir / West Al Najiliyah"
+msgstr "الهناشير / النجلية الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_016
+msgid "Al Haraba"
+msgstr "الحرابة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0075
+msgid "Al Haraba Al Dhahir"
+msgstr "الحرابة الضاهر"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0745
+msgid "Al Harat"
+msgstr "الحارات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0076
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0077
+msgid "Al Harsha Al Jadida"
+msgstr "الحرشة الجديدة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0078
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0747
+msgid "Al Hashan"
+msgstr "الحشان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0517
+msgid "Al Hattiyah"
+msgstr "الحطية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0080
+msgid "Al Hawai'im Ras al Ayn"
+msgstr "الحوائم راس العين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_017
+msgid "Al Hawamid"
+msgstr "الحوامد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0079
+msgid "Al Hayshah"
+msgstr "الحسي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0375
+msgid "Al Humayrah al Qadimah"
+msgstr "حميرة القديمة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0825
+msgid "Al Jabal"
+msgstr "الجبل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0086
+msgid "Al Jabbar"
+msgstr "الجبار"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_123
+msgid "Al Jadaida"
+msgstr "الجديدة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0087
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0088
+msgid "Al Jadid"
+msgstr "الجديد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0089
+msgid "Al Jadidah"
+msgstr "الجديدة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0743
+msgid "Al Jalaa"
+msgstr "الجلاء"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_122
+msgid "Al Jalidah"
+msgstr "الجليدة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_015
+msgid "Al Jamil"
+msgstr "الجميل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0091
+msgid "Al Jammari"
+msgstr "الجماري"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0092
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0440
+msgid "Al Janubiyah"
+msgstr "الجنوبية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0094
+msgid "Al Jawsh"
+msgstr "الجوش"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0663
+msgid "Al Jazeera"
+msgstr "حي الجزيرة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0095
+msgid "Al Jazira"
+msgstr "الجزيزة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0571
+msgid "Al Jihad"
+msgstr "- الجهاد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_014
+msgid "Al Jufra"
+msgstr "الجفرة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_011
+msgid "Al Jufrah"
+msgstr "الجفرة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0097
+msgid "Al Juhayshah"
+msgstr "الجحيشة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0098
+msgid "Al Julaida"
+msgstr "الجليدة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0862
+msgid "Al Jumaa"
+msgstr "الجموع"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0100
+msgid "Al Karawah"
+msgstr "الكراوة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0110
+msgid "Al Karimiyah al Sharqiyah"
+msgstr "الكريمية الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0802
+msgid "Al Kashalfah"
+msgstr "الكشالفة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0112
+msgid "Al Kawarghliya"
+msgstr "الكوار غلية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0841
+msgid "Al Khasharba"
+msgstr "الخشاربة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0108
+msgid "Al Khazan"
+msgstr "-- الخزان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_018
+msgid "Al Khums"
+msgstr "الخمس"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0105
+msgid "Al Khushsh"
+msgstr "الخشش"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0107
+msgid "Al Khuzur"
+msgstr "الخزور"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0651
+msgid "Al Kish"
+msgstr "الكيش"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_015
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_045
+msgid "Al Kufra"
+msgstr "الكفرة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0111
+msgid "Al Kulaibah"
+msgstr "الكليبة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0115
+msgid "Al Lethma"
+msgstr "اللثامة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0118
+msgid "Al Ma'bus"
+msgstr "المعبوص"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_049
+msgid "Al Maamora"
+msgstr "المعمورة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0627
+msgid "Al Maamoura"
+msgstr "المعمورة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0843
+msgid "Al Maanifa"
+msgstr "المعانفة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0797
+msgid "Al Magharba"
+msgstr "-- المغاربة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0120
+msgid "Al Maghariba"
+msgstr "المغاربة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0122
+msgid "Al Majd"
+msgstr "المجد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0883
+msgid "Al Makmura"
+msgstr "المكمورة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0734
+msgid "Al Manar / Al Sawani al Sharqiya"
+msgstr "المنار / السواني الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0126
+msgid "Al Manqub"
+msgstr "المنقوب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0127
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0128
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0129
+msgid "Al Manshiya"
+msgstr "المنشية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_051
+msgid "Al Manshiya Al Jameel"
+msgstr "المنشية الجميل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0350
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0351
+msgid "Al Mansoura"
+msgstr "المنصورة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0130
+msgid "Al Mantarah ash Sharqiyah"
+msgstr "المنطرحة الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0875
+msgid "Al Maqasibah"
+msgstr "المقاصبة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0131
+msgid "Al Maqta"
+msgstr "المقطع"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0132
+msgid "Al Mardum"
+msgstr "المردوم"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0133
+msgid "Al Marghani"
+msgstr "المرغني"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0579
+msgid "Al Marhan"
+msgstr "المرحان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_019
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_047
+msgid "Al Marj"
+msgstr "المرج"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0135
+msgid "Al Markaz"
+msgstr "المركز"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_006
+msgid "Al Marqab"
+msgstr "المرقب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0808
+msgid "Al Masabih"
+msgstr "المصابيح"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0141
+msgid "Al Masawfin"
+msgstr "المسوفين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0137
+msgid "Al Mashay"
+msgstr "المشاي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0813
+msgid "Al Mathanin"
+msgstr "المثانين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0622
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_046
+msgid "Al Maya"
+msgstr "الماية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0185
+msgid "Al Midan"
+msgstr "الميدان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0628
+msgid "Al Milaytaniyah"
+msgstr "المليطانية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_050
+msgid "Al Militaniya"
+msgstr "المليطانية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0831
+msgid "Al Mujabirah al Jadidah"
+msgstr "المجابرة الجديدة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0140
+msgid "Al Muqawba"
+msgstr "المقاوبة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0640
+msgid "Al Musalli"
+msgstr "المصلي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0142
+msgid "Al Mushushiyin"
+msgstr "المشوشيين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0143
+msgid "Al Mutarrad Ash Sharqiyah"
+msgstr "المطرد الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0559
+msgid "Al Mutarrid al Gharbiyah"
+msgstr "المطرد الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0563
+msgid "Al Mutarrid al Janubi"
+msgstr "المطرد الجنوبي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0834
+msgid "Al Muzaydah"
+msgstr "المزايدة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0752
+msgid "Al Nahda"
+msgstr "النهضة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0792
+msgid "Al Nakhliyyin"
+msgstr "النخليين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0145
+msgid "Al Othmania"
+msgstr "العثمانية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0484
+msgid "Al Qa'ah al Gharbiyah"
+msgstr "القاعة الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0147
+msgid "Al Qa'rah"
+msgstr "القعرة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0148
+msgid "Al Qahhasat"
+msgstr "القحاصات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0151
+msgid "Al Qal'a"
+msgstr "القلعة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0889
+msgid "Al Qal'ah"
+msgstr "القلعة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_042
+msgid "Al Qala"
+msgstr "القلعة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0150
+msgid "Al Qala'a Al Jadidah"
+msgstr "القلعة الجديدة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0867
+msgid "Al Qalaa"
+msgstr "القلعة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0149
+msgid "Al Qalaa Center"
+msgstr "القلعة المركز"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0516
+msgid "Al Qalaah"
+msgstr "-- القلعة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0152
+msgid "Al Qalil"
+msgstr "القليل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0153
+msgid "Al Qaradiyin"
+msgstr "القراديين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0614
+msgid "Al Qarah Al Markaz"
+msgstr "حي القارة المركز"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_139
+msgid "Al Qararah"
+msgstr "قرارة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0154
+msgid "Al Qarayyah"
+msgstr "القراية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0608
+msgid "Al Qardah al Gharbiyah"
+msgstr "القرضة الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_040
+msgid "Al Qardhah Ash Shati"
+msgstr "القرضة الشاطئ"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0773
+msgid "Al Qaryah Al Sharqiyah"
+msgstr "٢  الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0158
+msgid "Al Qasbah ash Shamaliyah"
+msgstr "القصبة الشمالية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0159
+msgid "Al Qasbah Qarnaz"
+msgstr "القصبة قرناز"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0389
+msgid "Al Qasr"
+msgstr "- القصر"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_041
+msgid "Al Qatrun"
+msgstr "القطرون"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0186
+msgid "Al Qawalish"
+msgstr "القواليش"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_044
+msgid "Al Qayqab"
+msgstr "القيقب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0162
+msgid "Al Qazzahiyah"
+msgstr "القزاحية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_129
+msgid "Al Qrayat"
+msgstr "القريات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0596
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_038
+msgid "Al Qubbah"
+msgstr "القبة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0163
+msgid "Al Qulaib"
+msgstr "القليب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0726
+msgid "Al Qurda"
+msgstr "القرضة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0165
+msgid "Al Qusay'at"
+msgstr "القصيعة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0187
+msgid "Al Qusayr"
+msgstr "القصير"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0487
+msgid "Al Rabita al Gharbiya"
+msgstr "الرابطة الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0561
+msgid "Al Raqouba"
+msgstr "الراقوبة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_021
+msgid "Al Rayayina"
+msgstr "الرياينة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0204
+msgid "Al Salahat"
+msgstr "الصلاحات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0211
+msgid "Al Sarim"
+msgstr "الصريم"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0838
+msgid "Al Sawadna"
+msgstr "السوادنة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0864
+msgid "Al Shaba'na"
+msgstr "الشباعنه"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0217
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_030
+msgid "Al Shaqiqa"
+msgstr "الشقيقة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0223
+msgid "Al Shayyab"
+msgstr "الشياب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0755
+msgid "Al Souq"
+msgstr "السوق"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0851
+msgid "Al Sudaniya"
+msgstr "السودانية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0729
+msgid "Al Tahrir District"
+msgstr "حي التحرير"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0869
+msgid "Al Tayyash"
+msgstr "الطياش"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0730
+msgid "Al Thanuniyah"
+msgstr "الثانونية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_034
+msgid "Al Urban"
+msgstr "العربان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0367
+msgid "Al Wadi"
+msgstr "الوادي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0175
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0661
+msgid "Al Wadi al Sharqi"
+msgstr "الوادي الشرقي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_016
+msgid "Al Wahat"
+msgstr "الواحات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0190
+msgid "Al Wasat"
+msgstr ". الوسط"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0584
+msgid "Al Wusta"
+msgstr "الوسط"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0803
+msgid "Al Ya'aqib"
+msgstr "اليعاقيب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0582
+msgid "Al Zahra"
+msgstr "الزهراء المدينة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0437
+msgid "Al Zahra al Janubiyah"
+msgstr "الزهراء الجنوبية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0257
+msgid "Al Zahra al Sharqiya"
+msgstr "الزهراء الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0177
+msgid "Al Zahra Al Wusta"
+msgstr "الزهراء الوسطة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0581
+msgid "Al Zahra Ash Sharqiyah Al Janubiyah"
+msgstr "الزهراء الشرقية الجنوبية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0178
+msgid "Al Zahra North of the City"
+msgstr "الزهراء شمال المدينة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0699
+msgid "Al Zawiyah Al Gharbiyah"
+msgstr "الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0562
+msgid "Al-Amouri"
+msgstr "العموري"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0806
+msgid "Al-Arayfa"
+msgstr "العرايفة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0036
+msgid "Al-Atf and Al-Ajamiya"
+msgstr "العطف والعجمية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_036
+msgid "Al-Awata"
+msgstr "العواته"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_048
+msgid "Al-Awaynat"
+msgstr "العوينة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0040
+msgid "Al-Awtad"
+msgstr "الاوتاد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0042
+msgid "Al-Badarna al-Gharbiya"
+msgstr "البدارنة الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0898
+msgid "Al-Barahimah"
+msgstr "البراهمة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0788
+msgid "Al-Barkat Al-Markaz"
+msgstr "البركت المركز"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0050
+msgid "Al-Baydan"
+msgstr "البيضان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0181
+msgid "Al-Berka"
+msgstr "البركة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0659
+msgid "Al-Burhaniyah"
+msgstr "البرهانية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0772
+msgid "Al-Farnaj"
+msgstr "الفرناج"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0057
+msgid "Al-Fateh"
+msgstr "الفتح"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0060
+msgid "Al-Firdaws"
+msgstr "الفردوس"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0061
+msgid "Al-Fuqaha"
+msgstr "الفقهاء"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0650
+msgid "Al-Fuwayhat"
+msgstr "الفويهات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0784
+msgid "Al-Fuyut"
+msgstr "الفيوت"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0063
+msgid "Al-Ghnani"
+msgstr "الغناني"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0068
+msgid "Al-Ghurayfah"
+msgstr "الغريفة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0658
+msgid "Al-Guwarsha"
+msgstr "القوارشة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0566
+msgid "Al-Hadara"
+msgstr "الحضارة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0182
+msgid "Al-Hadba Agricultural Project"
+msgstr "مشروع الهضبة الزراعي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0510
+msgid "Al-Hadba Al-Khadra"
+msgstr "الهضبة الخضراء"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0746
+msgid "Al-Hani"
+msgstr "الهاني"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0679
+msgid "Al-Hawatem Abu Salma"
+msgstr "الحواتم ابو سالمة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0083
+msgid "Al-Hussein"
+msgstr "الحسين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0735
+msgid "Al-Intisar An-Najila"
+msgstr "الانتصار النجيلة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0084
+msgid "Al-Intisar District"
+msgstr "حي الانتصار"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0085
+msgid "Al-Jabarna"
+msgstr "الجبارنة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0096
+msgid "Al-Jabour"
+msgstr "الجبور"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0093
+msgid "Al-Jarwah"
+msgstr "الجروة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0102
+msgid "Al-Kashaf"
+msgstr "الكشاف"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0597
+msgid "Al-Khawaliq"
+msgstr "الخوالق"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0099
+msgid "Al-Kmishat"
+msgstr "الكميشات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0101
+msgid "Al-Krimiya Al-Wusta"
+msgstr "الكريمية الوسط"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0114
+msgid "Al-Kuwafi"
+msgstr "الكوافي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0113
+msgid "Al-Kuwayfiyah"
+msgstr "الكويفية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0116
+msgid "Al-Le'abiyah"
+msgstr "اللعابية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0124
+msgid "Al-Maamoura"
+msgstr "المعمورة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0117
+msgid "Al-Maaniyin"
+msgstr "المعانيين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0652
+msgid "Al-Majouri"
+msgstr "الماجوري"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0123
+msgid "Al-Mamamish"
+msgstr "اللماميش"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0125
+msgid "Al-Mana'a"
+msgstr "المنعة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0184
+msgid "Al-Manshiya Al-Jumayl"
+msgstr "المنشية الجميل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_127
+msgid "Al-Mardoum"
+msgstr "المردوم"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0665
+msgid "Al-Markaz District"
+msgstr "حي المركز"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0136
+msgid "Al-Masa'id"
+msgstr "المساعيد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0817
+msgid "Al-Matar"
+msgstr "المطار"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0737
+msgid "Al-Mayamin / At-Tughar"
+msgstr "الميامين / التوغار"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0139
+msgid "Al-Muhaishi"
+msgstr "المحيشي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0829
+msgid "Al-Mujabira"
+msgstr "المجابرة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0706
+msgid "Al-Muntarahah"
+msgstr "المنطرحة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0763
+msgid "Al-Murassas"
+msgstr "المرصص"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0197
+msgid "Al-Najila"
+msgstr "النجيلة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0712
+msgid "Al-Nashia"
+msgstr "النشيع"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0146
+msgid "Al-Qa'ah ash-Sharqiyah"
+msgstr "القاعة الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0609
+msgid "Al-Qara District"
+msgstr "حي القارة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0913
+msgid "Al-Qararah"
+msgstr "قرارة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0765
+msgid "Al-Qardabah"
+msgstr "القرضبة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0155
+msgid "Al-Qarya al-Damaniyya"
+msgstr "القرية الضمانية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0157
+msgid "Al-Qasba Al-Janubiyah"
+msgstr "القصبة الجنوبية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0161
+msgid "Al-Qawaidah"
+msgstr "القوائده"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_043
+msgid "Al-Qawalish"
+msgstr "القواليش"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0164
+msgid "Al-Qurayyat"
+msgstr "القريات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0576
+msgid "Al-Qurayyat al-Gharbiyah"
+msgstr "القريات الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0156
+msgid "Al-Qurayyat al-Sharqiyah"
+msgstr "القريات الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0071
+msgid "Al-Quway'ah"
+msgstr "القويعة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_020
+msgid "Al-Rahibat"
+msgstr "الرحيبات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0169
+msgid "Al-Sabri"
+msgstr "الصابري"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0188
+msgid "Al-Salmani al-Gharbi"
+msgstr "السلماني الغربي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0690
+msgid "Al-Sarraj"
+msgstr "السراج"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0218
+msgid "Al-Sharaf"
+msgstr "الشرف"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0409
+msgid "Al-Sharqia"
+msgstr "الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0410
+msgid "Al-Sheikh"
+msgstr "الشيخ"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0633
+msgid "Al-Shuhada"
+msgstr "الشهداء"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0189
+msgid "Al-Tayyana"
+msgstr "الطيانية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0172
+msgid "Al-Urban"
+msgstr "العربان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0786
+msgid "Al-Uruba"
+msgstr "العروبة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0569
+msgid "Al-Wasat"
+msgstr "الوسط"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0873
+msgid "Al-Washka"
+msgstr "الوشكه"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0779
+msgid "Al-Wasta"
+msgstr "- الوسط"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_026
+msgid "Al-Zahra"
+msgstr "الزهراء"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0580
+msgid "Al-Zahra Al-Gharbiya"
+msgstr "الزهراء الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0192
+msgid "Al-Zahra Center"
+msgstr "الزهراء المركز"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_002
+msgid "Alzawiyah"
+msgstr "الزاوية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0193
+msgid "Amkhatin"
+msgstr "امخاتن"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0744
+msgid "Amr ibn al-Aas"
+msgstr "عمروبن العاص"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0545
+msgid "Amsin"
+msgstr "امسين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0195
+msgid "Amzir"
+msgstr "امزير"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0594
+msgid "An Nahr"
+msgstr "النهر"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0728
+msgid "An Nasiriyah"
+msgstr "الناصرية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_052
+msgid "An-Nasiriyah"
+msgstr "الناصرية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_001
+msgid "Aniqat Alkhams"
+msgstr "النقاط الخمس"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0794
+msgid "Antatat"
+msgstr "انطاطات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_054
+msgid "Antelat Al Baydan"
+msgstr "انتلات البيضان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0198
+msgid "Antelat al-Baydan"
+msgstr "انتلات البيضان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0313
+msgid "Aqzeer"
+msgstr "اقزير"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0293
+msgid "Ar Rabita al Sharqiya"
+msgstr "الرابطة الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0166
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0167
+msgid "Ar Rahba"
+msgstr "الرحبة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_019
+msgid "Ar Rajban"
+msgstr "الرجبان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0402
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0914
+msgid "Ar Raqibah"
+msgstr "الرقيبة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0611
+msgid "Ar Rass"
+msgstr "الرس"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0598
+msgid "Ar Rawajih"
+msgstr "الرواجح"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0201
+msgid "Ar Rayayina"
+msgstr "الرياينة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0895
+msgid "Ar Rumiyah"
+msgstr "الرومية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0168
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0876
+msgid "Ar Ruwaysat"
+msgstr "الرويسات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0200
+msgid "Ar-Rabta"
+msgstr "الرابطة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0741
+msgid "Arada"
+msgstr "عرادة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0778
+msgid "As Sab'ah"
+msgstr "السبعة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0213
+msgid "As Sab'ah al Sharqiyah"
+msgstr "السبعة الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0560
+msgid "As Sabriyah ash Sharqiyah"
+msgstr "الصابرية الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0739
+msgid "As Sahla An Najilah Al Gharbiyah"
+msgstr "السهلة النجيلة الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0205
+msgid "As Salam"
+msgstr "السلام"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0816
+msgid "As Saqayif"
+msgstr "السقايف"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0206
+msgid "As Saqiyah"
+msgstr "الساقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0170
+msgid "As Sawa'idiyah"
+msgstr "السواعدية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0207
+msgid "As Sawani"
+msgstr "السواني"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0210
+msgid "As Sbeitat"
+msgstr "السبيطات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0209
+msgid "As Sinaniyin"
+msgstr "السنانيين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0866
+msgid "As Souq"
+msgstr "السوق"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0212
+msgid "As Suwayda"
+msgstr "السويدة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0208
+msgid "As Swati"
+msgstr "السواطي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0202
+msgid "As-Sab'ah al-Gharbiyah"
+msgstr "السبعة الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_028
+msgid "As-Saeh"
+msgstr "السائح"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0203
+msgid "As-Sahel"
+msgstr "الساحل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0604
+msgid "As-Salam"
+msgstr "السلام"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0657
+msgid "As-Salmani al-Sharqi"
+msgstr "السلماني الشرقي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0692
+msgid "As-Siraaj Ash-Sharqiyah"
+msgstr "السراج الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_007
+msgid "Asbi'a"
+msgstr "اسبيعة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0214
+msgid "Ash Sha'afiyyin"
+msgstr "الشعافيين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0215
+msgid "Ash Sha'alil"
+msgstr "الشعاليـل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0535
+msgid "Ash Shabiyah"
+msgstr "الشعبية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0216
+msgid "Ash Shafarah"
+msgstr "الشفارة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0543
+msgid "Ash Shafi"
+msgstr "الشفي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0572
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0721
+msgid "Ash Shamaliyah"
+msgstr "الشمالية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0669
+msgid "Ash Shaqiqah"
+msgstr "الشقيقة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0219
+msgid "Ash Shari' al Kabir"
+msgstr "الشارع الكبير"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0599
+msgid "Ash Sharqiyah"
+msgstr "-- الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0221
+msgid "Ash Sharshara"
+msgstr "الشرشارة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0761
+msgid "Ash Shati'"
+msgstr "الشاطئ"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0821
+msgid "Ash Shatt al Gharbiyah"
+msgstr "الشط الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0824
+msgid "Ash Shatt ash Sharqiyah"
+msgstr "الشط الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0225
+msgid "Ash Shawariz"
+msgstr "الشوراز"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0171
+msgid "Ash Shawk"
+msgstr "الشوك"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0890
+msgid "Ash Shiqarnah"
+msgstr "الشقارنة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0226
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_031
+msgid "Ash Shwayrif"
+msgstr "الشويرف"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0638
+msgid "Ashkiddah"
+msgstr "اشكدة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0228
+msgid "At Tawila"
+msgstr "الطويلة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0229
+msgid "At Tuwaybah"
+msgstr "الطويبة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0756
+msgid "At-Tawilah"
+msgstr "اطويلة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0625
+msgid "At-Tina"
+msgstr "الطينة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0575
+msgid "Ata Allah"
+msgstr "عطاء الله"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0822
+msgid "Ath Thamanin"
+msgstr "الثمانين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0231
+msgid "Ath Thanawiyah"
+msgstr "الثانوية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0230
+msgid "Attaf"
+msgstr "عطاف"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0907
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_132
+msgid "Awal"
+msgstr "اوال"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_008
+msgid "Awbari"
+msgstr "أوباري"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_003
+msgid "Awjila"
+msgstr "أوجلة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0232
+msgid "Awla Muhalhil"
+msgstr "اولا مهلهل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0551
+msgid "Awlad Abd al Aziz"
+msgstr "اولاد عبد العزيز"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0542
+msgid "Awlad Abd al-Jalil"
+msgstr "اولاد عبد الجيل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0791
+msgid "Awlad Abi Ras"
+msgstr "اولاد ابي راس"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0523
+msgid "Awlad Abu Aisha"
+msgstr "اولاد ابو عائشة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0570
+msgid "Awlad Abu al-Hawl"
+msgstr "اولاد ابو الهول"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0795
+msgid "Awlad Abu Salamah"
+msgstr "اولاد ابوسلامة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0233
+msgid "Awlad Abu Ziri"
+msgstr "اولاد ابو زيري"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0524
+msgid "Awlad Ahmad"
+msgstr "اولاد احمد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0380
+msgid "Awlad al Barahimah"
+msgstr "اولاد البراهمة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0527
+msgid "Awlad al-Hajj"
+msgstr "اولاد الحاج"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0234
+msgid "Awlad al-Majdub"
+msgstr "اولاالمجدوب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0547
+msgid "Awlad Amer"
+msgstr "اولاد عامر"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0549
+msgid "Awlad Annan"
+msgstr "اولاد عنان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0863
+msgid "Awlad Arhuma"
+msgstr "اولاد ارحومة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0896
+msgid "Awlad Attiya"
+msgstr "أولاد عطية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0238
+msgid "Awlad Ba'ayu"
+msgstr "أولاد بعيو"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0239
+msgid "Awlad Bani Yaqub"
+msgstr "اولاد بني يعقوب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0270
+msgid "Awlad Benina"
+msgstr "اولاد بنينة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0241
+msgid "Awlad Hamad and Awlad Omar"
+msgstr "اولاد حمد واولاد عمر"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0854
+msgid "Awlad Hamid"
+msgstr "اولاد حامد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0814
+msgid "Awlad Hizam"
+msgstr "اولاد حزام"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0530
+msgid "Awlad Idris"
+msgstr "اولاد ادريس"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0242
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0839
+msgid "Awlad Issa"
+msgstr "اولاد عيسى"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0246
+msgid "Awlad Mansour"
+msgstr "اولاد منصور"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0247
+msgid "Awlad Margham"
+msgstr "اولاد مرغم"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0248
+msgid "Awlad Mas'ud"
+msgstr "اولاد مسعود"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0529
+msgid "Awlad Mbarek"
+msgstr "اولاد مباوك"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0846
+msgid "Awlad Na'im"
+msgstr "اولاد ناعم"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0250
+msgid "Awlad Obeid"
+msgstr "اولاد اعبيد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0251
+msgid "Awlad Oushah"
+msgstr "اولاد اوشاح"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0553
+msgid "Awlad Rayan"
+msgstr "اولاد ريان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0844
+msgid "Awlad Said"
+msgstr "اولاد سعيد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0252
+msgid "Awlad Salim"
+msgstr "اولاد سالم"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0857
+msgid "Awlad Shukr"
+msgstr "اولاد شكر"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0253
+msgid "Awlad Sultan"
+msgstr "اولاد سلطان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0631
+msgid "Awlad Talib"
+msgstr "اولاد طالب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0254
+msgid "Awlad Yahya"
+msgstr "أولاد يحيى"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0612
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0836
+msgid "Awlad Yusuf"
+msgstr "اولاد يوسف"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0675
+msgid "Ayoun Dougha"
+msgstr "ععيون دوغة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0568
+msgid "Az Zahir"
+msgstr "الظاهر"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0256
+msgid "Az Zahirah ash Shamaliyah"
+msgstr "الظهيرة الشمالية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0191
+msgid "Az Zahra'"
+msgstr "الزهراء"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0260
+msgid "Az Zamlah"
+msgstr "الزملة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0258
+msgid "Az Zarqan"
+msgstr "الزرقان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0179
+msgid "Az Zarruq"
+msgstr "الزروق"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0668
+msgid "Az Zaytunah"
+msgstr "الزتيونة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0259
+msgid "Az Zighan"
+msgstr "الزيغن"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0180
+msgid "Az Ziyadin"
+msgstr "الزيادين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0507
+msgid "Az Zubayr"
+msgstr "الزبير"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0261
+msgid "Az Zurayri'iyah"
+msgstr "الزريريعية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0673
+msgid "Az Zuway"
+msgstr "الزوي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0496
+msgid "Az Zuwayyah"
+msgstr "- الزوية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0441
+msgid "Azdu al Janubiyah"
+msgstr "ازدو الجنوبية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0713
+msgid "Azdu ash Shamaliyah"
+msgstr "ازدو الشمالية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0263
+msgid "Bab Akkara"
+msgstr "باب عكارة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0504
+msgid "Bab al-Salam"
+msgstr "باب السلام"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0509
+msgid "Bab Ben Ghashir"
+msgstr "باب بن غشير"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0264
+msgid "Bab Zaytun"
+msgstr "باب الزيتون"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0491
+msgid "Badr"
+msgstr "يدر"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0632
+msgid "Badr Center"
+msgstr "بدر المركز"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0766
+msgid "Balkhather"
+msgstr "بالخاثر"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0265
+msgid "Bani Layth"
+msgstr "بني ليث"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0853
+msgid "Bani Muslim"
+msgstr "بني مسلم"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0266
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_060
+msgid "Bani Walid"
+msgstr "بني وليد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0267
+msgid "Bani Wazir"
+msgstr "بني وزير"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0268
+msgid "Bani Yahya"
+msgstr "بني يحي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0909
+msgid "Barakat"
+msgstr "بركت"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_134
+msgid "Barkat"
+msgstr "بركت"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0518
+msgid "Barqin"
+msgstr "برقن"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0574
+msgid "Barwin"
+msgstr "بروين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_056
+msgid "Batin al-Jabal"
+msgstr "باطن الجبل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0049
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_013
+msgid "Bayda"
+msgstr "البيضاء"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0269
+msgid "Belkhir"
+msgstr "بلخير"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_017
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_059
+msgid "Benghazi"
+msgstr "بنغازي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_131
+msgid "Bergen"
+msgstr "برقن"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0271
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_055
+msgid "Bi'r al Ashhab"
+msgstr "بئر الأشهب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0583
+msgid "Bi'r at-Tuba"
+msgstr "بئر الطوبة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0585
+msgid "Bi'r Diyab"
+msgstr "بئر دياب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0386
+msgid "Bil Ashhar"
+msgstr "بالاشهر"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0521
+msgid "Bin Atiya al-Gharbiya"
+msgstr "بن عطية الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0522
+msgid "Bin Atiya Ash Sharqiyah"
+msgstr "بن عطية الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0272
+msgid "Bin Harith"
+msgstr "بن حارث"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0666
+msgid "Bindalif"
+msgstr "بندليف"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0273
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_058
+msgid "Bint Bayyah"
+msgstr "بنت بية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0555
+msgid "Bir al Asal"
+msgstr "بئر العسل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0606
+msgid "Bir al Shirk"
+msgstr "بئر الشرك"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0818
+msgid "Bir Al-Tutah"
+msgstr "بئر التوتة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0775
+msgid "Bir al-Usta Milad"
+msgstr "بئر الاسطى ميلاد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0565
+msgid "Bir Izz al-Din"
+msgstr "بئر عز الدين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0276
+msgid "Bir Matoug"
+msgstr "بئر معتوق"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0278
+msgid "Blouse"
+msgstr "بلوزة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0282
+msgid "Bouhdeima"
+msgstr "بوهديمة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0279
+msgid "Brak"
+msgstr "برقن"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_057
+msgid "Brak Al-Shati"
+msgstr "براك الشاطئ"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0280
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_012
+msgid "Brega"
+msgstr "البريقة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0277
+msgid "Brish"
+msgstr "بريش"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0281
+msgid "Bu Atni"
+msgstr "بو عطني"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0536
+msgid "Buqayqilah"
+msgstr "بقيقيلة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0283
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0284
+msgid "Cairo"
+msgstr "القاهرة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0874
+msgid "Circassians"
+msgstr "الشراكسة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0109
+msgid "Cordon"
+msgstr "الكردون"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_region_003
+msgid "Cyrenaica"
+msgstr "برقة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0287
+msgid "Dahman Ash Sharqiyah"
+msgstr "دحمان الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0018
+msgid "Dahra"
+msgstr "الظهرة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0454
+msgid "Daminah al-Sharqiyah"
+msgstr "تندميرة الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0288
+msgid "Danun"
+msgstr "دنون"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0289
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_074
+msgid "Daraj"
+msgstr "درج"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0644
+msgid "Debdeb"
+msgstr "دبدب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_021
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0290
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_075
+msgid "Derna"
+msgstr "درنة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0771
+msgid "Dhahir al-Jabal"
+msgstr "ظاهر الجبل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0871
+msgid "Dhat ar-Rimal"
+msgstr "ذات الرمال"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0731
+msgid "Downtown City Center"
+msgstr "وسط المدينة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0291
+msgid "Dujal"
+msgstr "دوجال"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0689
+msgid "East Janzour"
+msgstr "جنزور الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0292
+msgid "Eastern Agricultural Project"
+msgstr "الشروع الزراعي الشرقي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0391
+msgid "Eastern Qira"
+msgstr "قيرة الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_006
+msgid "Edri Al Shati"
+msgstr "إدري الشاطئ"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_098
+msgid "Ein Ghazala"
+msgstr "عين غزالة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0613
+msgid "El Aaiún"
+msgstr "العيون"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0294
+msgid "El Ezzeiat"
+msgstr "العزيات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0144
+msgid "En-Nofliyin"
+msgstr "النوفليين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0295
+msgid "Enzo"
+msgstr "انزو"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0512
+msgid "Esbaek"
+msgstr "اسباخ"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_029
+msgid "Eshargia"
+msgstr "الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0678
+msgid "Fam Malgha"
+msgstr "فم ملغة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0300
+msgid "Fanqal"
+msgstr "فنقل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0770
+msgid "Fashloom"
+msgstr "فشلوم"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0297
+msgid "Fassano"
+msgstr "فسانو"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0298
+msgid "Filalan"
+msgstr "فيلالن"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0299
+msgid "Fitrah"
+msgstr "فطرة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0319
+msgid "Former Shacks District"
+msgstr "حي الاكواخ سابقاً"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0296
+msgid "Fursata"
+msgstr "فرسطاء"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0645
+msgid "Gabr Oun and Munzahra"
+msgstr "قبر عون ومنذرة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0301
+msgid "Gabès"
+msgstr "قابس"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_039
+msgid "Garabulli"
+msgstr "القره بوللي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0303
+msgid "Gargaresh"
+msgstr "قرقارش"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0302
+msgid "Gargaresh Al-Tadamun"
+msgstr "قرجي التضامن"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0304
+msgid "Garyounis"
+msgstr "قاريونس"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0912
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_138
+msgid "Germa"
+msgstr "جرمة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0790
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_100
+msgid "Ghadames"
+msgstr "غدامس"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0306
+msgid "Ghadduwah"
+msgstr "غدوة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0387
+msgid "Ghashir"
+msgstr "غاسرو"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0308
+msgid "Ghat Center"
+msgstr "غات المركز"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0311
+msgid "Ghoot Al-Shaal (Al-Qadisiya)"
+msgstr "غوط الشعال ( القادسية )"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0815
+msgid "Ghout Al-Rih"
+msgstr "غوط الريح"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0312
+msgid "Ghut al-Sha'al (Independence)"
+msgstr "غوط الشعال ( الاستقلال)"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0310
+msgid "Ghut Busaq/ At Tughar"
+msgstr "غوط بوساق/ التوغار"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0693
+msgid "Gowt Al Sha'al (Al-Wakhim)"
+msgstr "غوط الشعال (الوخيم)"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0537
+msgid "Grocery store"
+msgstr "بقالة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0902
+msgid "Gulf of Bomba"
+msgstr "خليج البمبة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0694
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_073
+msgid "Gulf of Sidra"
+msgstr "خليج السدرة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0073
+msgid "Hai Al-Hada'iq"
+msgstr "حي الحدائق"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0656
+msgid "Hai al-Salam"
+msgstr "حي السلام"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0505
+msgid "Hai Bab Tripoli"
+msgstr "حي باب طرابلس"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0320
+msgid "Hai Dimashq"
+msgstr "حي دمشق"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0696
+msgid "Hamdun"
+msgstr "حمدون"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0314
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_115
+msgid "Harawa"
+msgstr "هراوة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0183
+msgid "Hawari"
+msgstr "الهواري"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0315
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0316
+msgid "Hay Abdul Kafi"
+msgstr "حي عبد الكافي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0041
+msgid "Hay Al Azma"
+msgstr "حي العزمة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0318
+msgid "Hay Al-Andalus Center"
+msgstr "حى الاندلس المركز"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0662
+msgid "Hay al-Ayn"
+msgstr "حي العين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0506
+msgid "Hay Al-Mujahideen"
+msgstr "حي المجاهدين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0727
+msgid "Hay al-Tahrir"
+msgstr "حي التحرير"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0317
+msgid "Hay al-Zuhour"
+msgstr "حي الزهور"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_072
+msgid "Hayy al-Andalus"
+msgstr "حي الأندلس"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0321
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0725
+msgid "Hijara"
+msgstr "حجارة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0591
+msgid "Humayrat al Qaryah"
+msgstr "حميرة القرية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0322
+msgid "Hun"
+msgstr "هون"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0520
+msgid "Idri"
+msgstr "ادري"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0023
+msgid "Ighram"
+msgstr "اغرم"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0887
+msgid "Immi Suwaff"
+msgstr "ايمي سوف"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0194
+msgid "Imsayhel"
+msgstr "امسيحل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0323
+msgid "Industrial Area"
+msgstr "الحي الصناعي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0324
+msgid "Injaren"
+msgstr "انجارن"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0785
+msgid "Isin"
+msgstr "ايسين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0789
+msgid "Isol"
+msgstr "ايسول"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_018
+msgid "Jabal al Akhdar"
+msgstr "الجبل الأخضر"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_003
+msgid "Jabal al Gharbi"
+msgstr "الجبل الغربي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0676
+msgid "Jabal Ma'ruf"
+msgstr "جبل معروف"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0325
+msgid "Jabir"
+msgstr "جابر"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_067
+msgid "Jadu"
+msgstr "جادو"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0326
+msgid "Jadu Center"
+msgstr "جادو المركز"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0090
+msgid "Jaghbub"
+msgstr "الجغبوب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0686
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_068
+msgid "Jalu"
+msgstr "جالو"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0682
+msgid "Janawn"
+msgstr "جناون"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_070
+msgid "Janzour"
+msgstr "جنزور"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0327
+msgid "Janzour Al-wasat"
+msgstr "جنزور الوسط"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0688
+msgid "Janzour Center"
+msgstr "جنزور المركز"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0687
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_069
+msgid "Jardas al-Abid"
+msgstr "جردس العبيد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0840
+msgid "Jarif"
+msgstr "جارفت"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0307
+msgid "Jarigan"
+msgstr "- جريجن"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0330
+msgid "Jiash"
+msgstr "جحيش"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0329
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_004
+msgid "Jikharra"
+msgstr "اجخرة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0653
+msgid "Juliana"
+msgstr "جليانة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0331
+msgid "July 9 District"
+msgstr "حي 9 يوليو"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0534
+msgid "Jumayl"
+msgstr "الجميل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0332
+msgid "Jurayjan"
+msgstr "جريجن"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0798
+msgid "Ka'am"
+msgstr "كعام"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0486
+msgid "Kaam Al Gharbia"
+msgstr "كعام الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0708
+msgid "Kaam Al Sharqiya"
+msgstr "كعام الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0828
+msgid "Kabao al Jadida"
+msgstr "كاباو الجديدة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0334
+msgid "Kaf Makhlouf"
+msgstr "كاف مخلوف"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0335
+msgid "Kalala"
+msgstr "كالالة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0764
+msgid "Kambut"
+msgstr "كمبوت"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0336
+msgid "Kamun"
+msgstr "كمون"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0780
+msgid "Khalat al Furjan"
+msgstr "خلة الفرجان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0738
+msgid "Khalat al-Saadi al-Najila"
+msgstr "خلة السعادي النجيلة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0338
+msgid "Khalid bin al-Walid"
+msgstr "خالد بن الوليد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0339
+msgid "Khiyar Al Gharbiya"
+msgstr "خيار الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0823
+msgid "Khiyar al Janubiyah"
+msgstr "خيار الجنوبية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0340
+msgid "Khuwaylid"
+msgstr "خويلد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_106
+msgid "Kikla"
+msgstr "ككلة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0621
+msgid "Kufra"
+msgstr "الكفرة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0341
+msgid "Larko"
+msgstr "لاركو"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0342
+msgid "Lawatah"
+msgstr "لواته"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0353
+msgid "Libyan Martyrs"
+msgstr "شهداء ليبيا"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0344
+msgid "Ma'fan"
+msgstr "معفن"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0345
+msgid "Madrousa"
+msgstr "مدروسة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0714
+msgid "Magher al Gharbia"
+msgstr "ماجر الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0346
+msgid "Magwah"
+msgstr "مغوة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0610
+msgid "Mahruqa"
+msgstr "محروقة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0587
+msgid "Majdul"
+msgstr "مجدول"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0348
+msgid "Majen al-Qarush"
+msgstr "ماجن القروش"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0760
+msgid "Makhlouf"
+msgstr "مخلوف"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0705
+msgid "Mallaha"
+msgstr "المالحة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0848
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_107
+msgid "Marada"
+msgstr "مرادة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0451
+msgid "Marawa"
+msgstr "تمروة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0886
+msgid "Marhaba"
+msgstr "مرحبا"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0134
+msgid "Marj"
+msgstr "المرج"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0352
+msgid "Marqus"
+msgstr "مرقس"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0850
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_109
+msgid "Marsa Dafna"
+msgstr "مرسى دفنة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0361
+msgid "Marsit"
+msgstr "مرسيط"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0900
+msgid "Martuba"
+msgstr "مرتوبة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0421
+msgid "Martyrs of Regdalin"
+msgstr "شهداء رقدالين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0354
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0619
+msgid "Martyrs' Square"
+msgstr "ميدان الشهداء"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0590
+msgid "Masquin"
+msgstr "مسقوين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0528
+msgid "Massah"
+msgstr "مسكة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0684
+msgid "Mazghurah"
+msgstr "مزغورة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0681
+msgid "Mazu"
+msgstr "مزو"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_124
+msgid "Mduwar al-Zaytun"
+msgstr "مدور الزيتون"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0356
+msgid "Mellitah"
+msgstr "مليته"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_007
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_112
+msgid "Misrata"
+msgstr "مصراتة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0870
+msgid "Misrata Center"
+msgstr "مصراته المركز"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0359
+msgid "Mizda Al Markaz"
+msgstr "مزدة المركز"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0357
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_110
+msgid "Mizdah"
+msgstr "مزدة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0358
+msgid "Mizdah Al Olia"
+msgstr "مزدة العليا"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0138
+msgid "Mohandessin"
+msgstr "حي المهندسين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_111
+msgid "Msallata"
+msgstr "مسلاتة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0355
+msgid "Mudawwar al-Zaytun"
+msgstr "مدور الزيتون"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0674
+msgid "Municipality"
+msgstr "البلدية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0360
+msgid "Murad"
+msgstr "مراد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_009
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0849
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_108
+msgid "Murzuq"
+msgstr "مرزق"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0362
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_053
+msgid "Musaid"
+msgstr "امساعد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0363
+msgid "Nadbas"
+msgstr "ندباس"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0617
+msgid "Nagr Kanmah"
+msgstr "نقركنمه"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_113
+msgid "Nalut"
+msgstr "نالوت"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0196
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0364
+msgid "Nasiriyah"
+msgstr "الناصرية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0365
+msgid "Nasser"
+msgstr "ناصر"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_023
+msgid "Nawahi Al Arbaa"
+msgstr "النواحي الأربعة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_114
+msgid "Nesma"
+msgstr "نسمة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0366
+msgid "Nesma Al Markaz"
+msgstr "نسمة المركز"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0882
+msgid "Nessma El Jadida"
+msgstr "نسمة الجديدة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0369
+msgid "North Central Middle"
+msgstr "الوسط الشمالي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0370
+msgid "North Sabriyah"
+msgstr "الصابرية الشمالية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0368
+msgid "North Zahra"
+msgstr "الزهراء الشمالية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0827
+msgid "Northern Kabaw"
+msgstr "الشمالية كاباو"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0333
+msgid "Northern Kadush"
+msgstr "كادوش الشمالية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0710
+msgid "Northern Majer"
+msgstr "ماجر الشمالية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0371
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0700
+msgid "Northern State"
+msgstr "الشمالية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0374
+msgid "Northwestern Street"
+msgstr "الشارع الغربي الشمالي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0768
+msgid "Old City"
+msgstr "المدنية القديمة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0376
+msgid "Old Kabaw"
+msgstr "كاباو القديمة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0453
+msgid "Old Tamzawa"
+msgstr "تامزاوة القديمة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0603
+msgid "Old Tarot"
+msgstr "تاروت القديمة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0637
+msgid "Old Zalwaz"
+msgstr "زلواز القديمة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0377
+msgid "Omar Al Mukhtar"
+msgstr "عمر المختار"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0379
+msgid "Omar al-Mukhtar"
+msgstr "عمر المختار"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0255
+msgid "Ossaden"
+msgstr "اوسادن"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0236
+msgid "Ouled Annan"
+msgstr "اولاد عنان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0237
+msgid "Ouled Attia"
+msgstr "اولاد عطية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0240
+msgid "Ouled Faraj"
+msgstr "اولاد فرج"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0244
+msgid "Ouled M'hammed"
+msgstr "اولاد امحمد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0514
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0593
+msgid "Project"
+msgstr "المشروع"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0754
+msgid "Qalil"
+msgstr "قاليل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0826
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_104
+msgid "Qaminis"
+msgstr "قمينس"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0607
+msgid "Qaqam Ash Sharqiyah"
+msgstr "ققم الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0623
+msgid "Qarqouza"
+msgstr "قرقوزة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0383
+msgid "Qarqouza al-Sharqiya"
+msgstr "قرقوزة الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0337
+msgid "Qasbat Madi"
+msgstr "قصبة مادي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0160
+msgid "Qasr"
+msgstr "القصر"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0384
+msgid "Qasr Ahmed"
+msgstr "قصر أحمد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_102
+msgid "Qasr bin Ghashir"
+msgstr "قصر بن غشير"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0388
+msgid "Qasr Dallah"
+msgstr "قصر دله"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_103
+msgid "Qasr Khiar"
+msgstr "قصر الأخيار"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0642
+msgid "Qasr Libya"
+msgstr "القصر"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0618
+msgid "Qasr Masoud"
+msgstr "قصر مسعود"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0855
+msgid "Qasr Sam ad Dis"
+msgstr "قصر سم الديس"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0616
+msgid "Qatrun"
+msgstr "القطرون"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0620
+msgid "Qayqab"
+msgstr "القيقب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0392
+msgid "Qira Ku"
+msgstr "قيرة كو"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0643
+msgid "Qirat ar Ras"
+msgstr "قيرة الراس"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0393
+msgid "Qurtuba"
+msgstr "قرطبة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0394
+msgid "Ramla"
+msgstr "الرملة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0680
+msgid "Raqraq"
+msgstr "رقرق"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0395
+msgid "Ras Abu Ghaylan"
+msgstr "راس ابو غيلان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0396
+msgid "Ras Ajdir"
+msgstr "راس اجدير"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_137
+msgid "Ras al Tabbal"
+msgstr "راس الطبل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0398
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0399
+msgid "Ras al-Tabal"
+msgstr "راس الطبل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0400
+msgid "Ras Atiya"
+msgstr "راس عطية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0397
+msgid "Ras El Tin"
+msgstr "راس التين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0749
+msgid "Ras Hassan"
+msgstr "راس حسن"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0655
+msgid "Ras Obeida"
+msgstr "راس اعبيدة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0401
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_076
+msgid "Rebiana"
+msgstr "ربيانة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_077
+msgid "Regdalin"
+msgstr "رقدالين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_140
+msgid "Reguiba"
+msgstr "الرقيبة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0819
+msgid "Rudud al-Zawiyah"
+msgstr "ردود الزاوية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0718
+msgid "Rumaya"
+msgstr "رومايا"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_012
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_083
+msgid "Sabha"
+msgstr "سبها"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_091
+msgid "Sabratha"
+msgstr "صبراتة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0723
+msgid "Sahel al Jabal"
+msgstr "ساحل الجبل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_082
+msgid "Sahel al-Jabal"
+msgstr "ساحل الجبل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0403
+msgid "Saif al-Nasr"
+msgstr "سيف النصر"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0624
+msgid "Salah al-Din"
+msgstr "صلاح الدين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0776
+msgid "Salah Al-Din"
+msgstr "- صلاح الدين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0404
+msgid "Salah al-Din / Al-Krimiya"
+msgstr "صلاح الدين / الكريمية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0508
+msgid "Salah Aldin"
+msgstr "صلاح الدين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0884
+msgid "Samnu"
+msgstr "سمنو"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0405
+msgid "Sayyad"
+msgstr "صياد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0406
+msgid "Sbikha"
+msgstr "السبيخة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0407
+msgid "Shabna"
+msgstr "شبنة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0408
+msgid "Shaddad"
+msgstr "شداد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0762
+msgid "Shaher Ruha"
+msgstr "شاهر روحه"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0751
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_090
+msgid "Shahhat"
+msgstr "شحات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0683
+msgid "Shakshuk"
+msgstr "شكشوك"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0557
+msgid "Shalgouda"
+msgstr "شلغودة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0222
+msgid "Shar al-Shatt"
+msgstr "الشط"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0698
+msgid "Sharqia"
+msgstr "الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0412
+msgid "Shuhada Abdul Jalil"
+msgstr "شهداء عبد الجليل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0414
+msgid "Shuhada Ain Zara"
+msgstr "شهداء عين زاره"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0415
+msgid "Shuhada Al-Khalisa Al-Najila Al-Gharbiya"
+msgstr "شهداء الخالصة النجيلة الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0416
+msgid "Shuhada al-Manshiya (Bin Ashour)"
+msgstr "شهداء المنشية (بن عاشور )"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0554
+msgid "Shuhada al-Qannah"
+msgstr "شهداء القنة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0418
+msgid "Shuhada al-Rumaila"
+msgstr "شهداء الرميلة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0417
+msgid "Shuhada al-Umyan"
+msgstr "شهداء العميان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0419
+msgid "Shuhada al-Wajib / At-Tughar"
+msgstr "شهداء الواجب/ التوغار"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0558
+msgid "Shuhada Amdakom"
+msgstr "شهداء أمداكـم"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0573
+msgid "Shuhada Frootan"
+msgstr "شهداء فروتن"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0411
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0556
+msgid "Shuhada Libya"
+msgstr "شهداء ليبيا"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0420
+msgid "Shuhada Ras al-Tuba"
+msgstr "شهداء رأس الطوبة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0422
+msgid "Shuhada Swani Bin Adam"
+msgstr "شهداء سواني بن ادم"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0742
+msgid "Shurfat al-Mallahah"
+msgstr "شرفة الملاحة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0423
+msgid "Sidi Ahmaid"
+msgstr "سيدي احميد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0750
+msgid "Sidi al-Jilani"
+msgstr "سيدي الجيلاني"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0425
+msgid "Sidi Essid Ash Shamaliyah"
+msgstr "سيدي الصيد الشمالية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0671
+msgid "Sidi Essid South"
+msgstr "سيدي الصيد الجنوبية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0426
+msgid "Sidi Fitrah"
+msgstr "سيدي فطرة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0427
+msgid "Sidi Gaber"
+msgstr "سيدي جابر"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0428
+msgid "Sidi Hussein"
+msgstr "سيدي حسين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0429
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0430
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0877
+msgid "Sidi Khalifa"
+msgstr "سيدي خليفة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0424
+msgid "Sidi Khrebish"
+msgstr "سيدي اخريبيش"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0431
+msgid "Sidi Maarouf"
+msgstr "سيدي معروف"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0503
+msgid "Sidi Salem"
+msgstr "سيدي سليم"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0432
+msgid "Sidi Younis"
+msgstr "سيدي يونس"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0910
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_135
+msgid "Sinawan"
+msgstr "سيناون"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0858
+msgid "Sindara"
+msgstr "سيندارة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_010
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0732
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_084
+msgid "Sirte"
+msgstr "سرت"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0433
+msgid "Sokna"
+msgstr "سوكنة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0435
+msgid "Souq"
+msgstr "السوق"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0672
+msgid "Souq Al Ahad"
+msgstr "سوق الاحد"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0436
+msgid "Souq al Jum'aa"
+msgstr "سوق الجمعة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0434
+msgid "Souq Al-Ajjaj"
+msgstr "سوق العجاج"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0811
+msgid "Souq al-Ithnayn"
+msgstr "سوق الاثنين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_088
+msgid "Souq al-Juma'a"
+msgstr "سوق الجمعة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0820
+msgid "Souq al-Sabt"
+msgstr "السوق السبت"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0444
+msgid "Sousse"
+msgstr "سوسة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0550
+msgid "South Central"
+msgstr "الوسط الجنوبي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_071
+msgid "South Jabal al Akhdar"
+msgstr "جنوب الجبل الأخضر"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0711
+msgid "South Kaam"
+msgstr "كعام الجنوبية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0707
+msgid "South Kadosh"
+msgstr "كادوش الجنوبية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0349
+msgid "South Majer"
+msgstr "ماجر الجنوبية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0438
+msgid "South of Jebel Akhdar"
+msgstr "جنوب الجبل الأخضر"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0544
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0722
+msgid "Southern"
+msgstr "الجنوبية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0704
+msgid "Southern Al Dhahira"
+msgstr "الظهيرة الجنوبية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0016
+msgid "Southern Dafniya"
+msgstr "الدافنية الجنوبية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0830
+msgid "Southern Kabaw"
+msgstr "الجنوبية كاباو"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0626
+msgid "Southern Qarguzah"
+msgstr "قرقوزة الجنوبية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0630
+msgid "Southern Tiji"
+msgstr "تيجي الجنوبية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0439
+msgid "Southern West Al-Zahra"
+msgstr "الزهراء الغربية الجنونية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_023
+msgid "Southern Zawiya"
+msgstr "الزاوية الجنوب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0442
+msgid "Southwest Street"
+msgstr "الشارع الغربي الجنوبي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0443
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0724
+msgid "Sukrah"
+msgstr "سكرة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0733
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_085
+msgid "Suluq"
+msgstr "سلوق"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0860
+msgid "Summ al Dis al Jabal"
+msgstr "سم الديس الجبل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_092
+msgid "Surman"
+msgstr "صرمان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_087
+msgid "Susa"
+msgstr "سوسة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_089
+msgid "Suuq El-Khamis"
+msgstr "سوق الخميس"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_086
+msgid "Swani Bin Adam"
+msgstr "سواني بن أدم"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0801
+msgid "Tabadut"
+msgstr "تبادوث"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0577
+msgid "Tabaqa"
+msgstr "طبقة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0445
+msgid "Tablino"
+msgstr "طابلينو"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0893
+msgid "Taghma"
+msgstr "تاغمة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0892
+msgid "Taghrubust"
+msgstr "تاقربوست"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0809
+msgid "Taghsat"
+msgstr "تغسات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0908
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_133
+msgid "Tahala"
+msgstr "تهالة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0787
+msgid "Tahala Center"
+msgstr "تهالا المركز"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0615
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0905
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_126
+msgid "Tajarhi"
+msgstr "تجرهي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_061
+msgid "Tajoura"
+msgstr "تاجوراء"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0648
+msgid "Takarkori"
+msgstr "تكركيبة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0842
+msgid "Takbal"
+msgstr "تكبال"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0880
+msgid "Takut"
+msgstr "تاكوت"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0446
+msgid "Tala'i' al-Nasr / Al-Tughar"
+msgstr "طلائع النصر / التوغار"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0447
+msgid "Talat Nimwan"
+msgstr "تالات نيموان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0448
+msgid "Talil"
+msgstr "تليل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0449
+msgid "Tamanhint"
+msgstr "تمنهنت"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0450
+msgid "Taminah"
+msgstr "طمينة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0833
+msgid "Tamlushayt"
+msgstr "تملوشايت"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0452
+msgid "Tamzawa Ash Sharqiyah"
+msgstr "تامزاوة الشرقية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0538
+msgid "Tamzin"
+msgstr "طمزين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0832
+msgid "Tandmira al Gharbiya"
+msgstr "تندميرة الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0888
+msgid "Tanfawit"
+msgstr "تنفاويت"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0455
+msgid "Tanzaght"
+msgstr "تنزغت"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0456
+msgid "Taqrutin"
+msgstr "تقروطين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0588
+msgid "Tarbu"
+msgstr "تربو"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0457
+msgid "Tardiyah"
+msgstr "تاردية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0458
+msgid "Targhalat"
+msgstr "ترغلات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0328
+msgid "Targhat Mountains"
+msgstr "جبال ترغت"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_065
+msgid "Tarhuna"
+msgstr "ترهونة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0459
+msgid "Tarmisa"
+msgstr "طرميسة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0812
+msgid "Tarsin"
+msgstr "تارسين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0460
+msgid "Tarut Al Mukhattat Al Shaabi"
+msgstr "تاروت المخطط الشعبي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0885
+msgid "Tasawah"
+msgstr "تساوة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0461
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_063
+msgid "Tawergha"
+msgstr "تاورغاء"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0463
+msgid "Tawila"
+msgstr "طويلة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_062
+msgid "Tazerbu"
+msgstr "تازربو"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0464
+msgid "Tazmrait"
+msgstr "تازمرايت"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0465
+msgid "Temezda"
+msgstr "تمزدة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0119
+msgid "The City"
+msgstr "المدينة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0224
+msgid "The Martyrs"
+msgstr "-الشهداء"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0385
+msgid "The Pilgrim's Castle"
+msgstr "قصر الحاج"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0174
+msgid "The West Valley"
+msgstr "الوادي الغربي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0664
+msgid "The Western Valley"
+msgstr "الوادي الغربي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0720
+msgid "Tibuda"
+msgstr "تيبودا"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0805
+msgid "Tighrina"
+msgstr "تغرنة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0373
+msgid "Tiji North"
+msgstr "تيجي الشمالية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0901
+msgid "Timimi"
+msgstr "التميمي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0519
+msgid "Timsan"
+msgstr "تمسان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0467
+msgid "Tinjirayn"
+msgstr "تينجراين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0466
+msgid "Tinnay"
+msgstr "تنيناي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0589
+msgid "Tmassa"
+msgstr "تمسة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_128
+msgid "Tninay"
+msgstr "تنيناي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_093
+msgid "Tobruk"
+msgstr "طبرق"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_066
+msgid "Tocra"
+msgstr "توكرة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0691
+msgid "Tourist City"
+msgstr "المدينة السياحية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0469
+msgid "Toywi"
+msgstr "تويوى"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0667
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_064
+msgid "Traghan"
+msgstr "تراغن"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_005
+#: model:x_grc.location,x_name:grc_backbone.loc_region_001
+msgid "Tripoli"
+msgstr "طرابلس"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_094
+msgid "Tripoli Center"
+msgstr "طرابلس المركز"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_022
+msgid "Tubruq"
+msgstr "طبرق"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0468
+msgid "Tukrah"
+msgstr "توكرة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0879
+msgid "Tunin"
+msgstr "تونين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0470
+msgid "Uglen"
+msgstr "يوجلين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0475
+msgid "Um Saffar"
+msgstr "ام صفار"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0472
+msgid "Umm al Arā'ib"
+msgstr "ام الارائب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0474
+msgid "Umm al Khafayn"
+msgstr "ام الخفين"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0471
+msgid "Umm al Khayl"
+msgstr "ام الخيل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0629
+msgid "Umm al-Far"
+msgstr "ام الفار"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0894
+msgid "Umm al-Garsan"
+msgstr "أم الجرسان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0473
+msgid "Umm al-Hammam"
+msgstr "ام الحمام"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0476
+msgid "Uqba bin Nafi"
+msgstr "عقبة بن نافع"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0533
+msgid "Waddan"
+msgstr "ودان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0477
+msgid "Wadi al Hayaa"
+msgstr "الوادي الحي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_116
+msgid "Wadi al-Bawanis"
+msgstr "وادي البوانيس"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0799
+msgid "Wadi al-Qawasim (al-Arba')"
+msgstr "وادي القواسم (الارباع)"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0478
+msgid "Wadi al-Rabi"
+msgstr "وادي الربيع"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0480
+msgid "Wadi al-Rabie"
+msgstr "وادي الربيع"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0479
+msgid "Wadi al-Sidr (Northern Tandamira)"
+msgstr "وادي السدر ( تندميرة الشمالية )"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_district_013
+msgid "Wadi Shatti"
+msgstr "وادي الشاطئ"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0677
+msgid "Wadi Targhat"
+msgstr "وادي ترغت"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_117
+msgid "Wadi Utba"
+msgstr "وادي عتبة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0865
+msgid "Wadinah"
+msgstr "وادنة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0481
+msgid "Wanzarik"
+msgstr "ونزريك"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0482
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_119
+msgid "Wardama"
+msgstr "وردامة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0740
+msgid "Warima"
+msgstr "وريمة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0490
+msgid "Wasaia Abdairi"
+msgstr "وسعاية ابديري"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0592
+msgid "Waw an Namus"
+msgstr "واو"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_118
+msgid "Wazzin"
+msgstr "وازن"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0274
+msgid "Well of the Goat"
+msgstr "بئر الغنم"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0485
+msgid "West Janzour"
+msgstr "جنزور الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0641
+msgid "Western Agricultural Project"
+msgstr "الشروع الزراعي الغربي"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0601
+msgid "Western Al Disah"
+msgstr "الديسة الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0381
+msgid "Western Qaqam"
+msgstr "ققم الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0382
+msgid "Western Qarquzah"
+msgstr "قرقوزة الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0635
+msgid "Western Qira"
+msgstr "قيرة الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0564
+msgid "Western Sabriya"
+msgstr "الصابرية الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0488
+msgid "Western Tamzawa"
+msgstr "تمزاوة الغربية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0176
+msgid "Wifat"
+msgstr "ويفات"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0483
+msgid "Wras al Diwan"
+msgstr "وراس الديوان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_120
+msgid "Yafran"
+msgstr "يفرن"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0859
+msgid "Zaafran"
+msgstr "زعفران"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0878
+msgid "Zafzaf"
+msgstr "زفزف"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_095
+msgid "Zahir al Jabal"
+msgstr "ظاهر الجبل"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0758
+msgid "Zakaria"
+msgstr "زكرياء"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0499
+msgid "Zalzas"
+msgstr "زلزاز"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0719
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_080
+msgid "Zamzam"
+msgstr "زمزم"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0492
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0911
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_136
+msgid "Zawila"
+msgstr "زويلة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0636
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_022
+msgid "Zawiya"
+msgstr "الزاوية"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_024
+msgid "Zawiya West"
+msgstr "الزاوية الغرب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0497
+msgid "Zawiyat al Mahjub"
+msgstr "زاوية المحجوب"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0856
+msgid "Zawiyat as Samah"
+msgstr "زاوية السماح"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0861
+msgid "Zawiyat Sidi Atiya"
+msgstr "زاوية سيدي عطيه"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0532
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0906
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_130
+msgid "Zella"
+msgstr "زلة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0748
+msgid "Zenata"
+msgstr "زناتة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0220
+msgid "Zintan East"
+msgstr "الشرقية الزنتان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0500
+msgid "Ziqzaw"
+msgstr "زقزاو"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_027
+msgid "Zueitina Sultan"
+msgstr "الزويتينة سلطان"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0501
+msgid "Zureiq"
+msgstr "زريق"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_municipality_081
+msgid "Zuwarah"
+msgstr "زوارة"
+
+#. module: grc_backbone
+#: model:x_grc.location,x_name:grc_backbone.loc_locality_0502
+msgid "Zuwetina Sultan"
+msgstr "الزويتينة سلطان"

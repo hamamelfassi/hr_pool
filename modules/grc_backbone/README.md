@@ -1,21 +1,33 @@
-# grc_backbone Module Scaffold
+# grc_backbone
 
-This directory is reserved for the importable `grc_backbone` Odoo module.
+`grc_backbone` is the reusable governance, risk, compliance, taxonomy, and master-data backbone for the Marsellia / MCEP Odoo SaaS IMS program.
 
-Planned use:
+It is an installable Odoo SaaS custom module. Keep this folder limited to files that belong inside the uploadable Odoo module zip.
 
-- copy the current GRC XML module contents here
-- keep only installable module files in this directory
-- keep docs, generated PDFs, and working notes outside the module zip
+## Current purpose
 
-Recommended module contents once imported:
+The module provides reusable governance primitives and reference libraries for other custom and native Odoo workflows.
 
-- `__manifest__.py`
-- `__init__.py`
-- `models/`
-- `views/`
-- `data/`
-- `security/`
-- `actions/`
-- `i18n/`
+Current implemented areas include:
 
+- governance frameworks
+- policies
+- provisions / rules
+- functional areas
+- governed functions
+- SOP/task-template structures
+- risk and compliance primitives
+- commercial/tender governance primitives
+- Libya location taxonomy
+
+## Libya location taxonomy
+
+The module now owns the canonical location taxonomy model:
+
+`x_grc.location`
+
+The hierarchy is:
+
+```text
+region → district → municipality → locality
+```

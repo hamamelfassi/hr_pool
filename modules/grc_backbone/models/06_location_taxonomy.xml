@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="model_location" model="ir.model">
+        <field name="name">Location</field>
+        <field name="model">x_grc.location</field>
+    </record>
+
+    <record id="field_location_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_location"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Location Name</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+        <field name="index" eval="True"/>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_location_x_location_type" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_location"/>
+        <field name="name">x_location_type</field>
+        <field name="field_description">Location Type</field>
+        <field name="ttype">selection</field>
+        <field name="required" eval="True"/>
+        <field name="selection">[
+            ('region', 'Region'),
+            ('district', 'District'),
+            ('city', 'City'),
+            ('municipality', 'Municipality'),
+            ('locality', 'Locality')
+        ]</field>
+        <field name="index" eval="True"/>
+    </record>
+
+    <record id="field_location_x_parent_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_location"/>
+        <field name="name">x_parent_id</field>
+        <field name="field_description">Parent Location</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.location</field>
+        <field name="on_delete">set null</field>
+        <field name="index" eval="True"/>
+    </record>
+
+    <record id="field_location_x_child_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_location"/>
+        <field name="name">x_child_ids</field>
+        <field name="field_description">Child Locations</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.location</field>
+        <field name="relation_field">x_parent_id</field>
+    </record>
+
+    <record id="field_location_x_active" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_location"/>
+        <field name="name">x_active</field>
+        <field name="field_description">Active</field>
+        <field name="ttype">boolean</field>
+        <field name="index" eval="True"/>
+    </record>
+
+    <record id="field_location_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_location"/>
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+    </record>
+</odoo>
