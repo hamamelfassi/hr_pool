@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="automation_location_validate_hierarchy_on_create" model="base.automation">
+        <field name="name">Validate Location Hierarchy on Create</field>
+        <field name="active" eval="True" />
+        <field name="trigger">on_create</field>
+        <field name="model_id" ref="grc_backbone.model_location" />
+    </record>
+
+    <record id="action_location_validate_hierarchy_on_create" model="ir.actions.server">
+        <field name="name">Validate Location Hierarchy on Create</field>
+        <field name="model_id" ref="grc_backbone.model_location" />
+        <field name="base_automation_id"
+            ref="grc_backbone.automation_location_validate_hierarchy_on_create" />
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    location_type = rec.x_location_type
+    parent = rec.x_parent_id
+
+    if location_type == 'region' and parent:
+        raise Warning('A region must not have a parent location.')
+
+    if location_type == 'district':
+        if not parent or parent.x_location_type != 'region':
+            raise Warning('A district must have a region as its parent.')
+
+    if location_type == 'city':
+        if not parent or parent.x_location_type != 'district':
+            raise Warning('A city must have a district as its parent.')
+
+    if location_type == 'municipality':
+        if not parent or parent.x_location_type != 'district':
+            raise Warning('A municipality must have a district as its parent.')
+
+    if location_type == 'locality':
+        if not parent or parent.x_location_type != 'municipality':
+            raise Warning('A locality must have a municipality as its parent.')
+        ]]></field>
+    </record>
+
+    <record id="automation_location_validate_hierarchy_on_write" model="base.automation">
+        <field name="name">Validate Location Hierarchy on Update</field>
+        <field name="active" eval="True" />
+        <field name="trigger">on_write</field>
+        <field name="model_id" ref="grc_backbone.model_location" />
+    </record>
+
+    <record id="action_location_validate_hierarchy_on_write" model="ir.actions.server">
+        <field name="name">Validate Location Hierarchy on Update</field>
+        <field name="model_id" ref="grc_backbone.model_location" />
+        <field name="base_automation_id"
+            ref="grc_backbone.automation_location_validate_hierarchy_on_write" />
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    location_type = rec.x_location_type
+    parent = rec.x_parent_id
+
+    if location_type == 'region' and parent:
+        raise Warning('A region must not have a parent location.')
+
+    if location_type == 'district':
+        if not parent or parent.x_location_type != 'region':
+            raise Warning('A district must have a region as its parent.')
+
+    if location_type == 'city':
+        if not parent or parent.x_location_type != 'district':
+            raise Warning('A city must have a district as its parent.')
+
+    if location_type == 'municipality':
+        if not parent or parent.x_location_type != 'district':
+            raise Warning('A municipality must have a district as its parent.')
+
+    if location_type == 'locality':
+        if not parent or parent.x_location_type != 'municipality':
+            raise Warning('A locality must have a municipality as its parent.')
+        ]]></field>
+    </record>
+</odoo>

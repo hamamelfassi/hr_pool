@@ -4,6 +4,7 @@
         "base",
         "base_automation",
         "contacts",
+        "grc_backbone",
         "hr_recruitment",
         "mail"
     ],

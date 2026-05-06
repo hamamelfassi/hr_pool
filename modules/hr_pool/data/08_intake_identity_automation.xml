@@ -2,15 +2,15 @@
 <odoo>
     <record id="automation_hr_pool_populate_intake_identity" model="base.automation">
         <field name="name">Populate Intake Identity on Create</field>
-        <field name="active" eval="True"/>
+        <field name="active" eval="True" />
         <field name="trigger">on_create</field>
-        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="model_id" ref="hr_pool.model_x_hr_pool" />
     </record>
 
     <record id="action_hr_pool_populate_intake_identity" model="ir.actions.server">
         <field name="name">Populate Intake Identity</field>
-        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
-        <field name="base_automation_id" ref="hr_pool.automation_hr_pool_populate_intake_identity"/>
+        <field name="model_id" ref="hr_pool.model_x_hr_pool" />
+        <field name="base_automation_id" ref="hr_pool.automation_hr_pool_populate_intake_identity" />
         <field name="state">code</field>
         <field name="code"><![CDATA[
 for rec in records:
@@ -30,4 +30,106 @@ for rec in records:
         rec.sudo().write(values)
         ]]></field>
     </record>
+
+    <record id="automation_hr_pool_fill_residence_hierarchy_on_create" model="base.automation">
+        <field name="name">Fill Residence Hierarchy on Create</field>
+        <field name="active" eval="True" />
+        <field name="trigger">on_create</field>
+        <field name="model_id" ref="hr_pool.model_x_hr_pool" />
+    </record>
+
+    <record id="action_hr_pool_fill_residence_hierarchy_on_create" model="ir.actions.server">
+        <field name="name">Fill Residence Hierarchy on Create</field>
+        <field name="model_id" ref="hr_pool.model_x_hr_pool" />
+        <field name="base_automation_id"
+            ref="hr_pool.automation_hr_pool_fill_residence_hierarchy_on_create" />
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    values = {}
+
+    selected = rec.x_residence_location_id
+    municipality = False
+    district = False
+    region = False
+
+    if selected:
+        if selected.x_location_type == 'locality':
+            municipality = selected.x_parent_id
+        elif selected.x_location_type == 'municipality':
+            municipality = selected
+
+        if municipality and municipality.x_location_type == 'municipality':
+            district = municipality.x_parent_id
+
+        if district and district.x_location_type == 'district':
+            region = district.x_parent_id
+
+    new_municipality_id = municipality.id if municipality and municipality.x_location_type == 'municipality' else False
+    new_district_id = district.id if district and district.x_location_type == 'district' else False
+    new_region_id = region.id if region and region.x_location_type == 'region' else False
+
+    if rec.x_residence_municipality_id.id != new_municipality_id:
+        values['x_residence_municipality_id'] = new_municipality_id
+    if rec.x_residence_district_id.id != new_district_id:
+        values['x_residence_district_id'] = new_district_id
+    if rec.x_residence_region_id.id != new_region_id:
+        values['x_residence_region_id'] = new_region_id
+
+    if values:
+        rec.sudo().write(values)
+        ]]></field>
+
+    </record>
+
+    <record id="automation_hr_pool_fill_residence_hierarchy_on_write" model="base.automation">
+        <field name="name">Fill Residence Hierarchy on Update</field>
+        <field name="active" eval="True" />
+        <field name="trigger">on_write</field>
+        <field name="model_id" ref="hr_pool.model_x_hr_pool" />
+    </record>
+
+    <record id="action_hr_pool_fill_residence_hierarchy_on_write" model="ir.actions.server">
+        <field name="name">Fill Residence Hierarchy on Update</field>
+        <field name="model_id" ref="hr_pool.model_x_hr_pool" />
+        <field name="base_automation_id"
+            ref="hr_pool.automation_hr_pool_fill_residence_hierarchy_on_write" />
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+for rec in records:
+    values = {}
+
+    selected = rec.x_residence_location_id
+    municipality = False
+    district = False
+    region = False
+
+    if selected:
+        if selected.x_location_type == 'locality':
+            municipality = selected.x_parent_id
+        elif selected.x_location_type == 'municipality':
+            municipality = selected
+
+        if municipality and municipality.x_location_type == 'municipality':
+            district = municipality.x_parent_id
+
+        if district and district.x_location_type == 'district':
+            region = district.x_parent_id
+
+    new_municipality_id = municipality.id if municipality and municipality.x_location_type == 'municipality' else False
+    new_district_id = district.id if district and district.x_location_type == 'district' else False
+    new_region_id = region.id if region and region.x_location_type == 'region' else False
+
+    if rec.x_residence_municipality_id.id != new_municipality_id:
+        values['x_residence_municipality_id'] = new_municipality_id
+    if rec.x_residence_district_id.id != new_district_id:
+        values['x_residence_district_id'] = new_district_id
+    if rec.x_residence_region_id.id != new_region_id:
+        values['x_residence_region_id'] = new_region_id
+
+    if values:
+        rec.sudo().write(values)
+        ]]></field>
+    </record>
+
 </odoo>

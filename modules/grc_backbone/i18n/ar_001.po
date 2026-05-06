@@ -6414,3 +6414,104 @@ msgstr "زوارة"
 #: model:x_grc.location,x_name:grc_backbone.loc_locality_0502
 msgid "Zuwetina Sultan"
 msgstr "الزويتينة سلطان"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.selection__x_grc_location__x_location_type__region
+msgid "Region"
+msgstr "ولاية"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.selection__x_grc_location__x_location_type__district
+msgid "District"
+msgstr "منطقة"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.selection__x_grc_location__x_location_type__city
+msgid "City"
+msgstr "مدينة"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.selection__x_grc_location__x_location_type__municipality
+msgid "Municipality"
+msgstr "بلدية"
+
+#. module: grc_backbone
+#: model:ir.model.fields.selection,name:grc_backbone.selection__x_grc_location__x_location_type__locality
+msgid "Locality"
+msgstr "محلة"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_location_x_name
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_form
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_list
+msgid "Location Name"
+msgstr "اسم الموقع"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_location_x_location_type
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_form
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_list
+msgid "Location Type"
+msgstr "نوع الموقع"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_location_x_parent_id
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_form
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_list
+msgid "Parent Location"
+msgstr "يتبع"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_form
+msgid "Parent Region"
+msgstr "الولاية"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_form
+msgid "Parent District"
+msgstr "المنطقة"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_form
+msgid "Parent Municipality"
+msgstr "البلدية"
+
+#. module: grc_backbone
+#: model:ir.model.fields,field_description:grc_backbone.field_location_x_child_ids
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_form
+msgid "Child Locations"
+msgstr "المواقع الفرعية"
+
+#. module: grc_backbone
+#: model:ir.actions.act_window,name:grc_backbone.action_location
+#: model:ir.ui.menu,name:grc_backbone.menu_locations
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_list
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_search
+msgid "Locations"
+msgstr "المواقع"
+
+#. module: grc_backbone
+#: model:ir.model,name:grc_backbone.model_location
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_form
+msgid "Location"
+msgstr "الموقع"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_search
+msgid "Regions"
+msgstr "الولايات"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_search
+msgid "Districts"
+msgstr "المناطق"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_search
+msgid "Municipalities"
+msgstr "البلديات"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_search
+msgid "Localities"
+msgstr "المحلات"

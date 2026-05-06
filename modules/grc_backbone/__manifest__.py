@@ -2,6 +2,7 @@
     "name": "GRC Backbone",
     "depends": [
         "base",
+        "base_automation",        
         "uom"
     ],
     "installable": True,
@@ -21,6 +22,7 @@
         "data/05_seed_libya_regions_districts.xml",
         "data/06_seed_libya_municipalities.xml",
         "data/07_seed_libya_localities.xml",
+        "data/08_location_hierarchy_automation.xml",
         "actions/01_actions.xml",
         "actions/02_actions_task_templates.xml",
         "actions/03_location_actions.xml",

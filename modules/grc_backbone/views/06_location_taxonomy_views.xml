@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <menuitem id="menu_locations"
-              name="Locations"
-              parent="grc_backbone.menu_grc_taxonomy"
-              action="grc_backbone.action_location"
-              sequence="30"/>
+        name="Locations"
+        parent="grc_backbone.menu_grc_taxonomy"
+        action="grc_backbone.action_location"
+        sequence="30" />
 
     <record id="view_location_list" model="ir.ui.view">
         <field name="name">x_grc.location.list</field>
         <field name="model">x_grc.location</field>
         <field name="arch" type="xml">
             <list string="Locations">
-                <field name="x_name"/>
-                <field name="x_location_type"/>
-                <field name="x_parent_id"/>
-                <field name="x_active"/>
+                <field name="x_name" />
+                <field name="x_location_type" />
+                <field name="x_parent_id" />
+                <field name="x_active" />
             </list>
         </field>
     </record>
@@ -24,12 +24,16 @@
         <field name="model">x_grc.location</field>
         <field name="arch" type="xml">
             <search>
-                <field name="x_name"/>
-                <field name="x_parent_id"/>
-                <filter name="type_region" string="Regions" domain="[('x_location_type','=','region')]"/>
-                <filter name="type_district" string="Districts" domain="[('x_location_type','=','district')]"/>
-                <filter name="type_municipality" string="Municipalities" domain="[('x_location_type','=','municipality')]"/>
-                <filter name="type_locality" string="Localities" domain="[('x_location_type','=','locality')]"/>
+                <field name="x_name" />
+                <field name="x_parent_id" />
+                <filter name="type_region" string="Regions"
+                    domain="[('x_location_type','=','region')]" />
+                <filter name="type_district" string="Districts"
+                    domain="[('x_location_type','=','district')]" />
+                <filter name="type_municipality" string="Municipalities"
+                    domain="[('x_location_type','=','municipality')]" />
+                <filter name="type_locality" string="Localities"
+                    domain="[('x_location_type','=','locality')]" />
             </search>
         </field>
     </record>
@@ -42,26 +46,41 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="x_name"/>
-                            <field name="x_location_type"/>
+                            <field name="x_name" />
+                            <field name="x_location_type" />
                         </group>
                         <group>
-                            <field name="x_parent_id"/>
-                            <field name="x_active"/>
+                            <field name="x_parent_id"
+                                string="Parent Region"
+                                domain="[('x_location_type', '=', 'region')]"
+                                invisible="x_location_type != 'district'" />
+                            <field name="x_parent_id"
+                                string="Parent District"
+                                domain="[('x_location_type', '=', 'district')]"
+                                invisible="x_location_type not in ['city', 'municipality']" />
+                            <field name="x_parent_id"
+                                string="Parent Municipality"
+                                domain="[('x_location_type', '=', 'municipality')]"
+                                invisible="x_location_type != 'locality'" />
+                            <field name="x_parent_id"
+                                string="Parent Location"
+                                readonly="1"
+                                invisible="x_location_type != 'region'" />
+                            <field name="x_active" />
                         </group>
                     </group>
                     <notebook>
-                        <page string="Child Locations">
+                        <page string="Child Locations" invisible="x_location_type == 'locality'">
                             <field name="x_child_ids">
-                                <list>
-                                    <field name="x_name"/>
-                                    <field name="x_location_type"/>
-                                    <field name="x_active"/>
+                                <list create="false" delete="false">
+                                    <field name="x_name" />
+                                    <field name="x_location_type" />
+                                    <field name="x_active" />
                                 </list>
                             </field>
                         </page>
                         <page string="Notes">
-                            <field name="x_notes"/>
+                            <field name="x_notes" />
                         </page>
                     </notebook>
                 </sheet>

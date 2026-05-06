@@ -5,16 +5,16 @@
         <field name="model">x_hr.pool</field>
         <field name="arch" type="xml">
             <list string="HR Pool Records">
-                <field name="x_intake_reference"/>
-                <field name="x_name"/>
-                <field name="x_fillout_submission_id" optional="show"/>
-                <field name="x_candidate_origin"/>
-                <field name="x_intake_phase"/>
-                <field name="x_chairman_decision"/>
-                <field name="x_reviewer_recommendation"/>
-                <field name="x_reviewer_user_id"/>
-                <field name="x_conversion_job_id"/>
-                <field name="x_applicant_id"/>
+                <field name="x_intake_reference" />
+                <field name="x_name" />
+                <field name="x_fillout_submission_id" optional="show" />
+                <field name="x_candidate_origin" />
+                <field name="x_intake_phase" />
+                <field name="x_chairman_decision" />
+                <field name="x_reviewer_recommendation" />
+                <field name="x_reviewer_user_id" />
+                <field name="x_conversion_job_id" />
+                <field name="x_applicant_id" />
             </list>
         </field>
     </record>
@@ -24,25 +24,38 @@
         <field name="model">x_hr.pool</field>
         <field name="arch" type="xml">
             <kanban default_group_by="x_chairman_decision" highlight_color="id">
-                <field name="x_profile_photo"/>
-                <field name="x_name"/>
-                <field name="x_intake_reference"/>
-                <field name="x_candidate_origin"/>
-                <field name="x_intake_phase"/>
-                <field name="x_chairman_decision"/>
-                <field name="x_reviewer_recommendation"/>
+                <field name="x_profile_photo" />
+                <field name="x_name" />
+                <field name="x_intake_reference" />
+                <field name="x_candidate_origin" />
+                <field name="x_intake_phase" />
+                <field name="x_chairman_decision" />
+                <field name="x_reviewer_recommendation" />
                 <templates>
                     <t t-name="card">
                         <div class="o_kanban_record">
                             <div class="d-flex gap-2 align-items-start">
-                                <field name="x_profile_photo" widget="image" options="{'size':[0,90]}"/>
+                                <field name="x_profile_photo" widget="image"
+                                    options="{'size':[0,90]}" />
                                 <div>
-                                    <div class="fw-bold"><field name="x_name"/></div>
-                                    <div><field name="x_intake_reference"/></div>
-                                    <div><field name="x_candidate_origin"/></div>
-                                    <div><field name="x_intake_phase"/></div>
-                                    <div><field name="x_chairman_decision"/></div>
-                                    <div><field name="x_reviewer_recommendation"/></div>
+                                    <div class="fw-bold">
+                                        <field name="x_name" />
+                                    </div>
+                                    <div>
+                                        <field name="x_intake_reference" />
+                                    </div>
+                                    <div>
+                                        <field name="x_candidate_origin" />
+                                    </div>
+                                    <div>
+                                        <field name="x_intake_phase" />
+                                    </div>
+                                    <div>
+                                        <field name="x_chairman_decision" />
+                                    </div>
+                                    <div>
+                                        <field name="x_reviewer_recommendation" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -57,25 +70,38 @@
         <field name="model">x_hr.pool</field>
         <field name="arch" type="xml">
             <kanban default_group_by="x_intake_phase" highlight_color="id">
-                <field name="x_profile_photo"/>
-                <field name="x_name"/>
-                <field name="x_intake_reference"/>
-                <field name="x_candidate_origin"/>
-                <field name="x_intake_phase"/>
-                <field name="x_chairman_decision"/>
-                <field name="x_reviewer_recommendation"/>
+                <field name="x_profile_photo" />
+                <field name="x_name" />
+                <field name="x_intake_reference" />
+                <field name="x_candidate_origin" />
+                <field name="x_intake_phase" />
+                <field name="x_chairman_decision" />
+                <field name="x_reviewer_recommendation" />
                 <templates>
                     <t t-name="card">
                         <div class="o_kanban_record">
                             <div class="d-flex gap-2 align-items-start">
-                                <field name="x_profile_photo" widget="image" options="{'size':[0,90]}"/>
+                                <field name="x_profile_photo" widget="image"
+                                    options="{'size':[0,90]}" />
                                 <div>
-                                    <div class="fw-bold"><field name="x_name"/></div>
-                                    <div><field name="x_intake_reference"/></div>
-                                    <div><field name="x_candidate_origin"/></div>
-                                    <div><field name="x_intake_phase"/></div>
-                                    <div><field name="x_chairman_decision"/></div>
-                                    <div><field name="x_reviewer_recommendation"/></div>
+                                    <div class="fw-bold">
+                                        <field name="x_name" />
+                                    </div>
+                                    <div>
+                                        <field name="x_intake_reference" />
+                                    </div>
+                                    <div>
+                                        <field name="x_candidate_origin" />
+                                    </div>
+                                    <div>
+                                        <field name="x_intake_phase" />
+                                    </div>
+                                    <div>
+                                        <field name="x_chairman_decision" />
+                                    </div>
+                                    <div>
+                                        <field name="x_reviewer_recommendation" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -91,203 +117,214 @@
         <field name="arch" type="xml">
             <form string="HR Pool">
                 <header>
-                    <field name="x_intake_phase" widget="statusbar" options="{'clickable': false}"/>
+                    <field name="x_intake_phase" widget="statusbar" options="{'clickable': false}" />
                     <button type="action"
-                            name="hr_pool.action_hr_pool_create_conversion_request"
-                            string="Convert"
-                            class="btn-primary"
-                            invisible="not id or x_intake_phase != 'pooling' or x_chairman_decision not in ['approved', 'on_hold'] or x_applicant_id"/>
+                        name="hr_pool.action_hr_pool_create_conversion_request"
+                        string="Convert"
+                        class="btn-primary"
+                        invisible="not id or x_intake_phase != 'pooling' or x_chairman_decision not in ['approved', 'on_hold'] or x_applicant_id" />
                     <button type="action"
-                            name="hr_pool.action_hr_pool_approve_to_pool"
-                            string="Approve"
-                            invisible="not id or not ((x_intake_phase == 'prescreening' and x_chairman_decision == 'pending') or (x_intake_phase == 'pooling' and x_chairman_decision == 'rejected'))"/>
+                        name="hr_pool.action_hr_pool_approve_to_pool"
+                        string="Approve"
+                        invisible="not id or not ((x_intake_phase == 'prescreening' and x_chairman_decision == 'pending') or (x_intake_phase == 'pooling' and x_chairman_decision == 'rejected'))" />
                     <button type="action"
-                            name="hr_pool.action_hr_pool_put_on_hold"
-                            string="On Hold"
-                            invisible="not id or x_intake_phase != 'pooling' or x_chairman_decision != 'approved'"/>
+                        name="hr_pool.action_hr_pool_put_on_hold"
+                        string="On Hold"
+                        invisible="not id or x_intake_phase != 'pooling' or x_chairman_decision != 'approved'" />
                     <button type="action"
-                            name="hr_pool.action_hr_pool_reject"
-                            string="Reject"
-                            invisible="not id or x_intake_phase not in ['prescreening', 'pooling'] or x_chairman_decision not in ['pending', 'approved', 'on_hold']"/>
+                        name="hr_pool.action_hr_pool_reject"
+                        string="Reject"
+                        invisible="not id or x_intake_phase not in ['prescreening', 'pooling'] or x_chairman_decision not in ['pending', 'approved', 'on_hold']" />
                 </header>
                 <sheet>
                     <group>
                         <group>
-                            <field name="x_intake_reference" readonly="1" force_save="1"/>
-                            <field name="x_name" readonly="1" force_save="1"/>
-                            <field name="x_candidate_origin"/>
-                            <field name="x_source_channel"/>
+                            <field name="x_intake_reference" readonly="1" force_save="1" />
+                            <field name="x_name" readonly="1" force_save="1" />
+                            <field name="x_candidate_origin" />
+                            <field name="x_source_channel" />
                         </group>
                         <group>
                             <field name="x_intake_phase"
-                                   readonly="1"
-                                   force_save="1"
-                                   widget="badge"
-                                   class="fs-5 fw-bold"
-                                   decoration-warning="x_intake_phase in ['prescreening', 'conversion']"
-                                   decoration-success="x_intake_phase == 'pooling'"
-                                   decoration-info="x_intake_phase == 'converted'"/>
+                                readonly="1"
+                                force_save="1"
+                                widget="badge"
+                                class="fs-5 fw-bold"
+                                decoration-warning="x_intake_phase in ['prescreening', 'conversion']"
+                                decoration-success="x_intake_phase == 'pooling'"
+                                decoration-info="x_intake_phase == 'converted'" />
                             <field name="x_chairman_decision"
-                                   readonly="1"
-                                   force_save="1"
-                                   widget="badge"
-                                   class="fs-5 fw-bold"
-                                   decoration-info="x_chairman_decision == 'pending'"
-                                   decoration-warning="x_chairman_decision == 'on_hold'"
-                                   decoration-success="x_chairman_decision == 'approved'"
-                                   decoration-danger="x_chairman_decision == 'rejected'"/>
-                            <field name="x_reviewer_recommendation"/>
-                            <field name="x_reviewer_user_id"/>
-                            <field name="x_conversion_job_id" readonly="1" force_save="1"/>
-                            <field name="x_applicant_id" readonly="1" force_save="1"/>
+                                readonly="1"
+                                force_save="1"
+                                widget="badge"
+                                class="fs-5 fw-bold"
+                                decoration-info="x_chairman_decision == 'pending'"
+                                decoration-warning="x_chairman_decision == 'on_hold'"
+                                decoration-success="x_chairman_decision == 'approved'"
+                                decoration-danger="x_chairman_decision == 'rejected'" />
+                            <field name="x_reviewer_recommendation" />
+                            <field name="x_reviewer_user_id" />
+                            <field name="x_conversion_job_id" readonly="1" force_save="1" />
+                            <field name="x_applicant_id" readonly="1" force_save="1" />
                         </group>
                     </group>
                     <notebook>
                         <page string="Identity">
                             <group>
-                                <field name="x_profile_photo" widget="image"/>
+                                <field name="x_profile_photo" widget="image" />
                             </group>
                             <group>
                                 <group>
-                                    <field name="x_first_name_ar"/>
-                                    <field name="x_middle_names_ar"/>
-                                    <field name="x_surname_ar"/>
+                                    <field name="x_first_name_ar" />
+                                    <field name="x_middle_names_ar" />
+                                    <field name="x_surname_ar" />
                                 </group>
                                 <group>
-                                    <field name="x_first_name_en"/>
-                                    <field name="x_middle_names_en"/>
-                                    <field name="x_surname_en"/>
+                                    <field name="x_first_name_en" />
+                                    <field name="x_middle_names_en" />
+                                    <field name="x_surname_en" />
                                 </group>
                             </group>
                         </page>
                         <page string="Personal Information">
                             <group>
-                                <field name="x_nationality_id"/>
-                                <field name="x_national_id" invisible="x_nationality_id == False"/>
-                                <field name="x_gender"/>
-                                <field name="x_date_of_birth"/>
-                                <field name="x_marital_status"/>
+                                <field name="x_nationality_id" />
+                                <field name="x_national_id" invisible="x_nationality_id == False" />
+                                <field name="x_gender" />
+                                <field name="x_date_of_birth" />
+                                <field name="x_marital_status" />
                             </group>
                         </page>
                         <page string="Contact Information">
                             <group>
-                                <field name="x_phone"/>
-                                <field name="x_email"/>
-                                <field name="x_address_text"/>
+                                <group string="Contact">
+                                    <field name="x_phone" />
+                                    <field name="x_email" />
+                                    <field name="x_address_text" />
+                                </group>
+                                <group string="Location">
+                                    <field name="x_residence_location_id"
+                                        domain="[('x_location_type', '=', 'locality')]"
+                                        options="{'no_create': True, 'no_create_edit': True, 'no_open': True}" />
+                                    <field name="x_residence_municipality_id" readonly="1" />
+                                    <field name="x_residence_district_id" readonly="1" />
+                                    <field name="x_residence_region_id" readonly="1" />
+                                </group>
                             </group>
                         </page>
                         <page string="Credentials">
                             <group>
                                 <field name="x_education_line_ids">
                                     <list editable="bottom">
-                                        <field name="x_sequence" widget="handle"/>
-                                        <field name="x_qualifying_institution"/>
-                                        <field name="x_qualification_subject"/>
-                                        <field name="x_qualification_type"/>
-                                        <field name="x_graduation_year"/>
-                                        <field name="x_source_record_id" optional="show"/>
+                                        <field name="x_sequence" widget="handle" />
+                                        <field name="x_qualifying_institution" />
+                                        <field name="x_qualification_subject" />
+                                        <field name="x_qualification_type" />
+                                        <field name="x_graduation_year" />
+                                        <field name="x_source_record_id" optional="show" />
                                     </list>
                                 </field>
                             </group>
                             <group>
                                 <field name="x_employment_line_ids">
                                     <list editable="bottom">
-                                        <field name="x_sequence" widget="handle"/>
-                                        <field name="x_employer_name"/>
-                                        <field name="x_job_title"/>
-                                        <field name="x_start_date"/>
-                                        <field name="x_end_date"/>
-                                        <field name="x_source_record_id" optional="show"/>
+                                        <field name="x_sequence" widget="handle" />
+                                        <field name="x_employer_name" />
+                                        <field name="x_job_title" />
+                                        <field name="x_start_date" />
+                                        <field name="x_end_date" />
+                                        <field name="x_source_record_id" optional="show" />
                                     </list>
                                 </field>
                             </group>
                             <group>
                                 <field name="x_skill_line_ids">
                                     <list editable="bottom">
-                                        <field name="x_sequence" widget="handle"/>
-                                        <field name="x_skill_type_id"/>
-                                        <field name="x_skill_description"/>
-                                        <field name="x_proficiency_level"/>
-                                        <field name="x_source_record_id" optional="show"/>
+                                        <field name="x_sequence" widget="handle" />
+                                        <field name="x_skill_type_id" />
+                                        <field name="x_skill_description" />
+                                        <field name="x_proficiency_level" />
+                                        <field name="x_source_record_id" optional="show" />
                                     </list>
                                 </field>
                             </group>
                             <group>
                                 <field name="x_language_line_ids">
                                     <list editable="bottom">
-                                        <field name="x_sequence" widget="handle"/>
-                                        <field name="x_language_id"/>
-                                        <field name="x_language_name"/>
-                                        <field name="x_working_level_value"/>
-                                        <field name="x_working_level" optional="hide"/>
-                                        <field name="x_notes" optional="show"/>
-                                        <field name="x_source_record_id" optional="show"/>
+                                        <field name="x_sequence" widget="handle" />
+                                        <field name="x_language_id" />
+                                        <field name="x_language_name" />
+                                        <field name="x_working_level_value" />
+                                        <field name="x_working_level" optional="hide" />
+                                        <field name="x_notes" optional="show" />
+                                        <field name="x_source_record_id" optional="show" />
                                     </list>
                                 </field>
                             </group>
                         </page>
                         <page string="Preferences">
                             <group>
-                                <field name="x_preferred_role_type_ids" widget="many2many_tags"/>
-                                <field name="x_preferred_work_type"/>
-                                <field name="x_preferred_work_locations"/>
+                                <field name="x_preferred_role_type_ids" widget="many2many_tags" />
+                                <field name="x_preferred_work_type" />
+                                <field name="x_preferred_work_locations" />
                             </group>
                         </page>
                         <page string="Commitments">
                             <group>
                                 <field name="x_commitment_line_ids">
                                     <list editable="bottom">
-                                        <field name="x_sequence" widget="handle"/>
-                                        <field name="x_commitment_type_id"/>
-                                        <field name="x_frequency"/>
-                                        <field name="x_notes"/>
-                                        <field name="x_source_record_id" optional="show"/>
+                                        <field name="x_sequence" widget="handle" />
+                                        <field name="x_commitment_type_id" />
+                                        <field name="x_frequency" />
+                                        <field name="x_notes" />
+                                        <field name="x_source_record_id" optional="show" />
                                     </list>
                                 </field>
                             </group>
                             <group>
-                                <field name="x_commitments_description"/>
+                                <field name="x_commitments_description" />
                             </group>
                         </page>
                         <page string="Declarations">
                             <group>
-                                <field name="x_accuracy_declaration"/>
-                                <field name="x_privacy_declaration"/>
-                                <field name="x_typed_consent_name"/>
+                                <field name="x_accuracy_declaration" />
+                                <field name="x_privacy_declaration" />
+                                <field name="x_typed_consent_name" />
                             </group>
                         </page>
                         <page string="Conversion Requests">
                             <group>
                                 <field name="x_conversion_request_ids" nolabel="1">
                                     <list create="0" delete="0" default_order="id desc">
-                                        <field name="x_name"/>
-                                        <field name="x_state"/>
-                                        <field name="x_job_id"/>
-                                        <field name="x_requested_by"/>
-                                        <field name="x_decided_by"/>
-                                        <field name="x_applicant_id"/>
-                                        <field name="x_notes" optional="show"/>
+                                        <field name="x_name" />
+                                        <field name="x_state" />
+                                        <field name="x_job_id" />
+                                        <field name="x_requested_by" />
+                                        <field name="x_decided_by" />
+                                        <field name="x_applicant_id" />
+                                        <field name="x_notes" optional="show" />
                                     </list>
                                 </field>
                             </group>
                         </page>
                         <page string="Integration Metadata">
                             <group>
-                                <field name="x_fillout_submission_id" readonly="1"/>
-                                <field name="x_fillout_form_id" readonly="1"/>
-                                <field name="x_fillout_submission_time" readonly="1"/>
+                                <field name="x_fillout_submission_id" readonly="1" />
+                                <field name="x_fillout_form_id" readonly="1" />
+                                <field name="x_fillout_submission_time" readonly="1" />
                             </group>
                             <group>
-                                <field name="x_fillout_last_updated_at" readonly="1"/>
-                                <field name="x_source_system" readonly="1"/>
+                                <field name="x_fillout_last_updated_at" readonly="1" />
+                                <field name="x_source_system" readonly="1" />
                             </group>
                         </page>
                     </notebook>
                 </sheet>
                 <chatter open_attachments="True">
-                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
-                    <field name="activity_ids" widget="mail_activity"/>
-                    <field name="message_ids" widget="mail_thread"/>
+                    <field name="message_follower_ids" widget="mail_followers"
+                        groups="base.group_user" />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" />
                 </chatter>
             </form>
         </field>

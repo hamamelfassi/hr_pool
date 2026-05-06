@@ -1260,3 +1260,28 @@ msgstr ""
 #: model:ir.model.fields.selection,name:hr_pool.sel_freq_daily
 msgid "يومي"
 msgstr ""
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_residence_location_id
+msgid "Selected Residence Location"
+msgstr "المحلة"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_residence_municipality_id
+msgid "Residence Municipality"
+msgstr "البلدية"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_residence_district_id
+msgid "Residence District"
+msgstr "المنطقة"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_residence_region_id
+msgid "Residence Region"
+msgstr "الولاية"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
+msgid "Location"
+msgstr "الإقامة"
