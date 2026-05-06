@@ -1295,3 +1295,23 @@ msgstr "بلديات العمل المرغوبة"
 #: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_preferred_work_locations
 msgid "Preferred Work Locations"
 msgstr "مواقع العمل المرغوبة"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_father_name_ar
+msgid "Father Name (AR)"
+msgstr "اسم الأب"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_grandfather_name_ar
+msgid "Grandfather Name (AR)"
+msgstr "اسم الجد"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_typed_consent_name
+msgid "Typed Consent Name"
+msgstr "اسم الموافقة المكتوب"
+
+#. module: hr_pool
+#: model:x_hr.commitment_type,x_name:hr_pool.commitment_type_no_other
+msgid "No Other Commitments"
+msgstr "لا توجد التزامات أخرى"
