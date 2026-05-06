@@ -145,10 +145,12 @@ const questionMap = getQuestionMap(questions);
 
 const photo = asArray(getQuestionValue(questionMap, "iuY1"))[0] ?? null;
 const nationality = asArray(getQuestionValue(questionMap, "1wFk"))[0] ?? null;
-const education = asArray(getQuestionValue(questionMap, "crsx"));
-const experience = asArray(getQuestionValue(questionMap, "1MsN"));
-const languages = asArray(getQuestionValue(questionMap, "a4cy"));
-const skills = asArray(getQuestionValue(questionMap, "69tX"));
+// Initial intake simplification:
+// credentials/history/skills/languages are no longer collected by the first public intake form.
+const education = [];
+const experience = [];
+const languages = [];
+const skills = [];
 const preferredRoles = asArray(getQuestionValue(questionMap, "3J6p"));
 const commitments = asArray(getQuestionValue(questionMap, "mWVi"));
 
@@ -190,40 +192,6 @@ const odooPayload = compactObject({
   x_email: requireValue("x_email", cleanString(getQuestionValue(questionMap, "jbUY"))),
   x_address_text: requireValue("x_address_text", cleanString(getQuestionValue(questionMap, "8Qvt"))),
   x_preferred_role_type_ids: commandSet(preferredRoles.map((row) => row?.["Odoo Id"])),
-  x_education_line_ids: education.map((row, index) => commandCreate({
-    x_sequence: index + 1,
-    x_source_record_id: cleanString(row.recordID),
-    x_qualifying_institution: cleanString(row.Institution),
-    x_qualification_subject: cleanString(row.Subject),
-    x_qualification_type: QUALIFICATION_TYPE_MAP[cleanString(row.Qualification_type)] ?? null,
-    x_graduation_year: toInt(row["Graduation Year"]),
-  })).filter(Boolean),
-  x_employment_line_ids: experience.map((row, index) => commandCreate({
-    x_sequence: index + 1,
-    x_source_record_id: cleanString(row.recordID),
-    x_employer_name: cleanString(row["Employer Name"]),
-    x_job_title: cleanString(row["Job Title"]),
-    x_start_date: normalizeDate(row.From),
-    x_end_date: normalizeDate(row.To),
-  })).filter(Boolean),
-  x_skill_line_ids: skills.map((row, index) => commandCreate({
-    x_sequence: index + 1,
-    x_source_record_id: cleanString(row.recordID),
-    x_skill_type_id: toInt(SKILL_TYPE_ID_BY_LABEL[cleanString(row.Type)]),
-    x_skill_description: cleanString(row.Notes),
-    x_proficiency_level: toInt(
-      pickFirstLookupValue(row, "skills_proficiency_level_lookup") ??
-      pickFirstLookupValue(row, "proficiency_level_value_lookup"),
-    ),
-  })).filter(Boolean),
-  x_language_line_ids: languages.map((row, index) => commandCreate({
-    x_sequence: index + 1,
-    x_source_record_id: cleanString(row.recordID),
-    x_language_id: requireValue(`x_language_line_ids[${index}].x_language_id`, toInt(pickFirstLookupValue(row, "Odoo Id (from language_names)"))),
-    x_language_name: requireValue(`x_language_line_ids[${index}].x_language_name`, x_language_name_from_payload(row)),
-    x_working_level_value: requireValue(`x_language_line_ids[${index}].x_working_level_value`, toInt(pickFirstLookupValue(row, "language_working_level"))),
-    x_notes: cleanString(row.Notes),
-  })).filter(Boolean),
   x_commitment_line_ids: commitments.map((row, index) => commandCreate({
     x_sequence: index + 1,
     x_source_record_id: cleanString(row.recordID),

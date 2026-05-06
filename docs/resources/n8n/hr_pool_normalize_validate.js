@@ -213,10 +213,13 @@ const warnings = [];
 
 const photo = asArray(getQuestionValue(questionMap, "iuY1"))[0] ?? null;
 const nationality = asArray(getQuestionValue(questionMap, "1wFk"))[0] ?? null;
-const educationRows = normalizeRecordPickerRows(getQuestionValue(questionMap, "crsx"));
-const experienceRows = normalizeRecordPickerRows(getQuestionValue(questionMap, "1MsN"));
-const languageRows = normalizeRecordPickerRows(getQuestionValue(questionMap, "a4cy"));
-const skillRows = normalizeRecordPickerRows(getQuestionValue(questionMap, "69tX"));
+// Initial intake simplification:
+// education, employment history, skills, and languages are no longer collected
+// by the first public employment application. Keep child models for later enrichment.
+const educationRows = [];
+const experienceRows = [];
+const languageRows = [];
+const skillRows = [];
 const roleRows = normalizeRecordPickerRows(getQuestionValue(questionMap, "3J6p"));
 const commitmentRows = normalizeRecordPickerRows(getQuestionValue(questionMap, "mWVi"));
 
@@ -227,6 +230,18 @@ if (!preferredWorkType && cleanString(preferredWorkTypeRaw)) {
     buildError("amrf", "Unsupported preferred work type", preferredWorkTypeRaw),
   );
 }
+
+const residenceLocationRaw = firstQuestionValue(questionMap, [
+  "residence_location_odoo_id",
+  "x_residence_location_id",
+  "المحلة",
+  "الإقامة",
+]);
+const residenceLocationId = toInt(
+  Array.isArray(residenceLocationRaw)
+    ? residenceLocationRaw[0]?.odoo_id ?? residenceLocationRaw[0]?.id ?? residenceLocationRaw[0]
+    : residenceLocationRaw?.odoo_id ?? residenceLocationRaw?.id ?? residenceLocationRaw
+);
 
 const nationalityId = toInt(nationality?.odoo_id);
 if (nationality && nationalityId === null) {
@@ -266,6 +281,7 @@ const candidate = {
   x_phone: cleanString(getQuestionValue(questionMap, "foYg")),
   x_email: cleanString(getQuestionValue(questionMap, "jbUY")),
   x_address_text: cleanString(getQuestionValue(questionMap, "8Qvt")),
+  x_residence_location_id: residenceLocationId,
   x_preferred_work_type: preferredWorkType,
   x_preferred_work_locations: cleanString(getQuestionValue(questionMap, "rQCn")),
   x_accuracy_declaration: Boolean(getQuestionValue(questionMap, "7yMN")),
@@ -339,103 +355,13 @@ if (preferredRoleTypeIds.length === 0) {
   errors.push(buildError("3J6p", "Preferred roles must contain at least one Odoo id"));
 }
 
-const normalizedEducation = educationRows.map((row, index) => {
-  const item = {
-    x_sequence: index + 1,
-    x_source_record_id: cleanString(row.recordID),
-    x_qualifying_institution: cleanString(row.Institution),
-    x_qualification_subject: cleanString(row.Subject),
-    x_qualification_type: mapSelection(QUALIFICATION_TYPE_MAP, row.Qualification_type),
-    x_graduation_year: toInt(row["Graduation Year"]),
-  };
+const normalizedEducation = [];
 
-  if (!item.x_qualifying_institution) {
-    errors.push(buildError(`crsx[${index}].Institution`, "Missing education institution"));
-  }
-  if (!item.x_qualification_subject) {
-    errors.push(buildError(`crsx[${index}].Subject`, "Missing education subject"));
-  }
-  if (!item.x_qualification_type) {
-    errors.push(buildError(`crsx[${index}].Qualification_type`, "Unsupported education qualification type", row.Qualification_type));
-  }
-  if (item.x_graduation_year === null) {
-    errors.push(buildError(`crsx[${index}].Graduation Year`, "Missing or invalid education graduation year", row["Graduation Year"]));
-  }
+const normalizedEmployment = [];
 
-  return compactObject(item);
-}).filter((row) => Object.keys(row).length > 0);
+const normalizedSkills = [];
 
-const normalizedEmployment = experienceRows.map((row, index) => {
-  const item = {
-    x_sequence: index + 1,
-    x_source_record_id: cleanString(row.recordID),
-    x_employer_name: cleanString(row["Employer Name"]),
-    x_job_title: cleanString(row["Job Title"]),
-    x_start_date: normalizeDate(row.From),
-    x_end_date: normalizeDate(row.To),
-  };
-
-  if (!item.x_employer_name) {
-    errors.push(buildError(`1MsN[${index}].Employer Name`, "Missing employer name"));
-  }
-  if (!item.x_job_title) {
-    errors.push(buildError(`1MsN[${index}].Job Title`, "Missing job title"));
-  }
-
-  return compactObject(item);
-}).filter((row) => Object.keys(row).length > 0);
-
-const normalizedSkills = skillRows.map((row, index) => {
-  const item = {
-    x_sequence: index + 1,
-    x_source_record_id: cleanString(row.recordID),
-    x_skill_type_id: toInt(pickFirstLookupValue(row, "skill_type_id")),
-    x_skill_type_name: cleanString(pickFirstLookupValue(row, "skill_type_ar_lookup")) || cleanString(row.Type),
-    x_skill_description: cleanString(row.Notes),
-    x_proficiency_level: toInt(
-      pickFirstLookupValue(row, "skills_proficiency_level_lookup") ??
-      pickFirstLookupValue(row, "proficiency_level_value_lookup"),
-    ),
-    x_skill_type_source_ids: asArray(row.skill_types).map(cleanString).filter(Boolean),
-  };
-
-  if (item.x_skill_type_id === null) {
-    errors.push(buildError(`69tX[${index}].skill_type_id`, "Missing or invalid skill type Odoo id", pickFirstLookupValue(row, "skill_type_id")));
-  }
-  if (!item.x_skill_description) {
-    errors.push(buildError(`69tX[${index}].Notes`, "Missing skill description"));
-  }
-  if (item.x_proficiency_level === null) {
-    errors.push(buildError(`69tX[${index}].proficiency_level`, "Missing or invalid skill proficiency value"));
-  }
-
-  return compactObject(item);
-}).filter((row) => Object.keys(row).length > 0);
-
-const normalizedLanguages = languageRows.map((row, index) => {
-  const item = {
-    x_sequence: index + 1,
-    x_source_record_id: cleanString(row.recordID),
-    x_language_id: toInt(pickFirstLookupValue(row, "Odoo Id (from language_names)")),
-    x_language_name: cleanString(pickFirstLookupValue(row, "language_ar_lookup")) ||
-      cleanString(pickFirstLookupValue(row, "language_en_lookup")),
-    x_working_level_value: toInt(pickFirstLookupValue(row, "language_working_level")),
-    x_language_source_ids: asArray(row.language).map(cleanString).filter(Boolean),
-    x_proficiency_source_ids: asArray(row.proficiency_level).map(cleanString).filter(Boolean),
-  };
-
-  if (item.x_language_id === null) {
-    errors.push(buildError(`a4cy[${index}].Odoo Id (from language_names)`, "Missing or invalid language Odoo id"));
-  }
-  if (!item.x_language_name) {
-    errors.push(buildError(`a4cy[${index}].language_ar_lookup`, "Missing language display snapshot"));
-  }
-  if (item.x_working_level_value === null) {
-    errors.push(buildError(`a4cy[${index}].language_working_level`, "Missing or invalid working level"));
-  }
-
-  return compactObject(item);
-}).filter((row) => Object.keys(row).length > 0);
+const normalizedLanguages = [];
 
 const normalizedCommitments = commitmentRows.map((row, index) => {
   const item = {

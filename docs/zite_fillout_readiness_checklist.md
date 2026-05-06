@@ -31,6 +31,17 @@ Conditionally risky:
 
 ## Child lines
 
+For the simplified initial public employment application, the following child lines are not required and should not be emitted by the first intake payload:
+
+- education
+- employment history
+- skills
+- languages
+
+The matching Odoo child models remain available for manual/internal enrichment and future prefilled candidate-enrichment forms.
+
+Commitment lines may remain if they are part of the simplified first intake declarations/availability requirements.
+
 Education line `x_hr.pool_education_line` required:
 - `x_qualifying_institution`
 - `x_qualification_subject`
@@ -78,12 +89,15 @@ Add these questions to the public form and webhook payload:
 - Privacy declaration checkbox (must be true)
 - Typed consent name (short answer)
 
-Strengthen subform validations:
-- Education: institution, subject, qualification type, graduation year all required.
-- Employment: employer name, job title required.
-- Skills: if `Notes` is used for `x_skill_description`, make it required or provide fallback text.
-- Languages: ensure `Odoo Id (from language_names)` and `language_working_level` are always present.
-- Preferred role picker: require at least one selected record.
+Do not require the old credentials subforms for initial intake.
+
+Future enrichment forms may reintroduce validation for:
+
+- education
+- employment history
+- credentials
+- languages
+- skills
 
 ## 4) Payload Contract to Target (Starting Baseline + Additions)
 
@@ -109,5 +123,5 @@ Keep this documented until corrected upstream in Zite.
 Go only when all are true:
 - Required main-form fields listed in section 1 are present in webhook payload.
 - Every helper-backed selection emits Odoo IDs.
-- Language lines emit `language_odoo_id` and numeric working level.
+- Language lines emit `language_odoo_id` and numeric working level but the initial intake payload does not emit education, employment, skills, or language child-line arrays.
 - Preferred roles emits at least one Odoo ID.
