@@ -246,7 +246,19 @@
         <field name="name">x_preferred_work_locations</field>
         <field name="field_description">Preferred Work Locations</field>
         <field name="ttype">char</field>
-        <field name="required" eval="True" />
+        <field name="required" eval="False" />
+        <field name="tracking" eval="1" />
+    </record>
+
+    <record id="field_hr_pool_x_preferred_work_municipality_ids" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool" />
+        <field name="name">x_preferred_work_municipality_ids</field>
+        <field name="field_description">Preferred Work Municipalities</field>
+        <field name="ttype">many2many</field>
+        <field name="relation">x_grc.location</field>
+        <field name="relation_table">hr_pool_preferred_work_municipality_rel</field>
+        <field name="column1">x_pool_id</field>
+        <field name="column2">x_location_id</field>
         <field name="tracking" eval="1" />
     </record>
 

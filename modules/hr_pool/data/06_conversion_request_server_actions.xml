@@ -93,6 +93,8 @@ for req in records:
             applicant_vals['x_residence_district_id'] = pool.x_residence_district_id.id
         if 'x_residence_region_id' in fields_map and pool.x_residence_region_id:
             applicant_vals['x_residence_region_id'] = pool.x_residence_region_id.id
+        if 'x_preferred_work_municipality_ids' in fields_map and pool.x_preferred_work_municipality_ids:
+            applicant_vals['x_preferred_work_municipality_ids'] = [(6, 0, pool.x_preferred_work_municipality_ids.ids)]
         if 'company_id' in fields_map and req.x_job_id.company_id:
             applicant_vals['company_id'] = req.x_job_id.company_id.id
         if 'department_id' in fields_map and req.x_job_id.department_id:

@@ -21,7 +21,9 @@ Provided today (from payload + constants in n8n):
 
 Missing in current payload baseline (must be added or defaulted in n8n):
 - `x_preferred_work_type` (required selection)
-- `x_preferred_work_locations` (required char)
+- `x_residence_municipality_id` from a municipality picker linked to `x_grc.location`
+- `x_preferred_work_municipality_ids` from a multi-select municipality picker linked to `x_grc.location`
+- `x_preferred_work_locations` is legacy free text and should not be required for the initial public intake
 - `x_accuracy_declaration` (required boolean)
 - `x_privacy_declaration` (required boolean)
 - `x_typed_consent_name` (required char)
@@ -71,6 +73,7 @@ Keep helper rows authoritative by Odoo IDs:
 - Commitment Types (`x_hr.commitment_type.id`) -> `Commitment_type_id.value[0]`
 - Skill Types (`x_hr.skill_type.id`) -> add lookup and output Odoo ID
 - Proficiency Levels (`x_hr.proficiency_level.id`) -> optional ID, keep numeric value required
+- Municipalities (`x_grc.location.id`, filtered to `x_location_type = municipality`) -> used for residence municipality and preferred work municipalities.
 
 Recommended columns per helper table:
 - `recordID` (Zite UUID)
@@ -88,6 +91,12 @@ Add these questions to the public form and webhook payload:
 - Accuracy declaration checkbox (must be true)
 - Privacy declaration checkbox (must be true)
 - Typed consent name (short answer)
+- Residence municipality picker:
+  - required;
+  - emits the Odoo ID of an `x_grc.location` municipality.
+- Preferred work municipalities picker:
+  - required or strongly recommended;
+  - emits one or more Odoo IDs of `x_grc.location` municipality records.
 
 Do not require the old credentials subforms for initial intake.
 

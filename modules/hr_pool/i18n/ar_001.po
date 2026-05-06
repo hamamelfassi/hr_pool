@@ -1285,3 +1285,13 @@ msgstr "الولاية"
 #: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
 msgid "Location"
 msgstr "الإقامة"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_preferred_work_municipality_ids
+msgid "Preferred Work Municipalities"
+msgstr "بلديات العمل المرغوبة"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_preferred_work_locations
+msgid "Preferred Work Locations"
+msgstr "مواقع العمل المرغوبة"

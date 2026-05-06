@@ -12,6 +12,11 @@ This file is the integration source of truth for the `Fillout -> n8n -> Odoo hr_
 - Initial public intake no longer collects education, employment history, skills, or language lines.
 - Those child models remain in Odoo for later enrichment/manual use.
 - If the public form includes a canonical residence/locality picker, it should emit an Odoo `x_grc.location` ID for `x_residence_location_id`.
+- Initial public intake uses municipality-level location selection, not locality-level selection.
+- Residence municipality should emit an Odoo `x_grc.location` ID where `x_location_type = municipality`.
+- Preferred work locations should emit one or more Odoo `x_grc.location` IDs where `x_location_type = municipality`.
+- The old free-text `x_preferred_work_locations` field is legacy compatibility only and should not be the primary initial-intake field.
+
 
 ## Parent Record
 
@@ -35,6 +40,9 @@ This file is the integration source of truth for the `Fillout -> n8n -> Odoo hr_
 | `jbUY`              | البريد الالكتروني     | `value`                          | `x_email`                   | direct                                 |
 | `8Qvt`              | العنوان               | `value`                          | `x_address_text`            | direct                                 |
 | `3J6p`              | مجال العمل المرغوب به | `value[].Odoo Id`                | `x_preferred_role_type_ids` | many2many set command                  |
+| TBD | بلدية السكن / Residence Municipality | `value.odoo_id` or `value[0].odoo_id` | `x_residence_municipality_id` | integer Odoo ID for `x_grc.location` municipality |
+| TBD | البلديات المرغوبة للعمل / Preferred Work Municipalities | `value[].odoo_id` | `x_preferred_work_municipality_ids` | many2many set command |
+| legacy | Preferred work locations text | legacy/free text | `x_preferred_work_locations` | legacy only; not primary initial intake |
 
 ## Child Lines
 

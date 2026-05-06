@@ -203,12 +203,12 @@
                                     <field name="x_address_text" />
                                 </group>
                                 <group string="Location">
-                                    <field name="x_residence_location_id"
-                                        domain="[('x_location_type', '=', 'locality')]"
+                                    <field name="x_residence_municipality_id"
+                                        domain="[('x_location_type', '=', 'municipality')]"
                                         options="{'no_create': True, 'no_create_edit': True, 'no_open': True}" />
-                                    <field name="x_residence_municipality_id" readonly="1" />
                                     <field name="x_residence_district_id" readonly="1" />
                                     <field name="x_residence_region_id" readonly="1" />
+                                    <field name="x_residence_location_id" invisible="1" />
                                 </group>
                             </group>
                         </page>
@@ -266,7 +266,11 @@
                             <group>
                                 <field name="x_preferred_role_type_ids" widget="many2many_tags" />
                                 <field name="x_preferred_work_type" />
-                                <field name="x_preferred_work_locations" />
+                                <field name="x_preferred_work_municipality_ids"
+                                    widget="many2many_tags"
+                                    domain="[('x_location_type', '=', 'municipality')]"
+                                    options="{'no_create': True, 'no_create_edit': True, 'no_open': True}" />
+                                <field name="x_preferred_work_locations" invisible="1" />
                             </group>
                         </page>
                         <page string="Commitments">
