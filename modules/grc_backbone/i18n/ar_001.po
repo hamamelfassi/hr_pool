@@ -1607,11 +1607,6 @@ msgid "Child Locations"
 msgstr "المواقع الفرعية"
 
 #. module: grc_backbone
-#: model:ir.model.fields.selection,name:grc_backbone.selection__x_grc_location__x_location_type__region
-msgid "Region"
-msgstr "إقليم"
-
-#. module: grc_backbone
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_search
 msgid "Regions"
 msgstr "الأقاليم"
@@ -1640,11 +1635,6 @@ msgstr "بلدية"
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_search
 msgid "Municipalities"
 msgstr "البلديات"
-
-#. module: grc_backbone
-#: model:ir.model.fields.selection,name:grc_backbone.selection__x_grc_location__x_location_type__locality
-msgid "Locality"
-msgstr "محلة"
 
 #. module: grc_backbone
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_location_search
@@ -5038,11 +5028,6 @@ msgid "Mudawwar al-Zaytun"
 msgstr "مدور الزيتون"
 
 #. module: grc_backbone
-#: model:x_grc.location,x_name:grc_backbone.loc_locality_0674
-msgid "Municipality"
-msgstr "البلدية"
-
-#. module: grc_backbone
 #: model:x_grc.location,x_name:grc_backbone.loc_locality_0360
 msgid "Murad"
 msgstr "مراد"
@@ -6421,19 +6406,9 @@ msgid "Region"
 msgstr "ولاية"
 
 #. module: grc_backbone
-#: model:ir.model.fields.selection,name:grc_backbone.selection__x_grc_location__x_location_type__district
-msgid "District"
-msgstr "منطقة"
-
-#. module: grc_backbone
 #: model:ir.model.fields.selection,name:grc_backbone.selection__x_grc_location__x_location_type__city
 msgid "City"
 msgstr "مدينة"
-
-#. module: grc_backbone
-#: model:ir.model.fields.selection,name:grc_backbone.selection__x_grc_location__x_location_type__municipality
-msgid "Municipality"
-msgstr "بلدية"
 
 #. module: grc_backbone
 #: model:ir.model.fields.selection,name:grc_backbone.selection__x_grc_location__x_location_type__locality
