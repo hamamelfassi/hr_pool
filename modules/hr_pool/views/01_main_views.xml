@@ -176,13 +176,15 @@
                             <group>
                                 <group>
                                     <field name="x_first_name_ar" />
-                                    <field name="x_middle_names_ar" />
+                                    <field name="x_father_name_ar" />
+                                    <field name="x_grandfather_name_ar" />
                                     <field name="x_surname_ar" />
+                                    <field name="x_middle_names_ar" invisible="1" />
                                 </group>
                                 <group>
                                     <field name="x_first_name_en" />
-                                    <field name="x_middle_names_en" />
                                     <field name="x_surname_en" />
+                                    <field name="x_middle_names_en" invisible="1" />
                                 </group>
                             </group>
                         </page>
@@ -293,7 +295,7 @@
                             <group>
                                 <field name="x_accuracy_declaration" />
                                 <field name="x_privacy_declaration" />
-                                <field name="x_typed_consent_name" />
+                                <field name="x_typed_consent_name" invisible="1" />
                             </group>
                         </page>
                         <page string="Conversion Requests">
