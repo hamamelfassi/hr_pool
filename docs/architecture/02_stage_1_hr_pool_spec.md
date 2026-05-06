@@ -18,6 +18,16 @@ It exists to normalize candidate data before conversion into Odoo Recruitment.
 
 It does not own the native applicant lifecycle.
 
+### 2.1 Initial intake simplification
+
+The public Stage 1 employment application should remain short enough for quick candidate submission.
+
+The initial Fillout/Zite intake should not require or collect detailed education, employment history, languages, or skills line data.
+
+Those child models may remain in the module for backward compatibility and future enrichment workflows, but they should not be treated as required input for the first public employment application.
+
+Later, `hr_pool` may introduce a second prefilled enrichment form, using tokenized/prefilled URL patterns, to collect education, experience, language, and credential details from selected candidates.
+
 ## 3. Workflow
 
 The current stage 1 lifecycle is:
@@ -87,13 +97,24 @@ Recommended UX rules:
 
 ### Child lines
 
-The intake record contains separate one2many collections for:
+The module contains separate one2many collections for:
 
 - education history
 - employment history
 - skills
 - languages
 - commitments
+
+For the simplified initial intake, education, employment history, skills, and languages should not be required and should not be populated by the first public application form.
+
+They remain available for:
+
+- legacy data preservation;
+- internal/manual enrichment;
+- future prefilled candidate-enrichment forms;
+- later handover/mapping to native employee-side qualification, history, and skills structures.
+
+Commitment lines may still be used where they represent required initial declarations or availability commitments, but the initial intake should stay lightweight.
 
 ### Helper masters
 
@@ -143,9 +164,11 @@ The intake module depends on the external Fillout/Zite -> n8n payload contract i
 Key rules:
 
 - helper-backed selections should resolve to stable Odoo IDs
-- `x_source_record_id` keeps Zite traceability on child/helper rows
-- `x_gender` is now part of the required intake payload and must be written into `hr_pool` by the Fillout/Zite/n8n integration layer in the later integration follow-up
-- the intake payload must include all required stage-1 fields before the workflow is considered complete
+- `x_gender` is part of the required intake payload and must be written into `hr_pool`
+- canonical residence/location should resolve to `x_grc.location`
+- the initial public intake payload should not include education, employment history, skills, or languages line payloads
+- `x_source_record_id` remains useful for future child/helper enrichment rows, but child credential/history rows are not required for initial intake
+- the intake payload must include only the required lightweight Stage 1 fields before the workflow is considered complete
 
 ## 8. Translation delivery
 

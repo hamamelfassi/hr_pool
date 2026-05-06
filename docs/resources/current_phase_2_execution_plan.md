@@ -149,25 +149,28 @@ Purpose:
 
 - provide one canonical location source for `hr_pool`, `hr.applicant`, contract, and future modules.
 
-### Pass 4 — Stage 1 intake field uplift
+### Pass 4 — Stage 1 intake field uplift and initial intake simplification
 
 Module: `hr_pool` plus Fillout/Zite/n8n.
 
 Main code changes:
 
+- keep the existing Stage 1 workflow stable;
 - add additive fields only:
-  - expanded Arabic name parts;
+  - expanded Arabic name parts where needed;
   - gender;
-  - canonical location reference;
+  - canonical residence/location reference to `x_grc.location`;
   - derived location parents if needed;
   - minimal identity/residence fields required for Stage 2.
-- update Fillout/Zite payload;
-- update n8n mapping;
-- update handover to `hr.applicant`.
+- simplify the initial public intake payload by removing education, employment history, skills, and languages line collection from the first application form;
+- keep existing child models for backward compatibility and later enrichment;
+- update Fillout/Zite payload expectations;
+- update n8n mapping to stop expecting or writing credential/history/skill/language lines during initial intake;
+- update handover to `hr.applicant` with the lightweight Stage 1 fields.
 
 Purpose:
 
-- improve Stage 1 data payload without changing the locked pool workflow.
+- improve Stage 1 data quality while making the first employment application shorter and easier to submit.
 
 ### Pass 5 — Evaluation stage gate
 
@@ -315,6 +318,18 @@ Main work:
 Purpose:
 
 - design post-recruitment employment operations separately.
+
+## 6.1 Future Stage 1 enrichment cleanup
+
+After the current locked recruitment-to-employment pass sequence is complete, revisit Stage 1 enrichment.
+
+Future work may include:
+
+- a second prefilled Fillout/Zite enrichment form from `hr_pool`;
+- controlled collection of education, employment history, credentials, languages, and skills after initial candidate submission;
+- handover of education and experience data into native employee-side qualification/history structures;
+- replacement of custom skills/language intake models with Odoo-native Skills where practical;
+- use of native job/applicant skill matching instead of custom skill scoring.
 
 ## 7. Pass discipline
 
