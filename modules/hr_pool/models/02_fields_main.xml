@@ -128,6 +128,22 @@
         <field name="ttype">char</field>
         <field name="tracking" eval="1" />
     </record>
+    <record id="field_hr_pool_x_father_name_ar" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool" />
+        <field name="name">x_father_name_ar</field>
+        <field name="field_description">Father Name (AR)</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True" />
+        <field name="tracking" eval="1" />
+    </record>
+    <record id="field_hr_pool_x_grandfather_name_ar" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool" />
+        <field name="name">x_grandfather_name_ar</field>
+        <field name="field_description">Grandfather Name (AR)</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True" />
+        <field name="tracking" eval="1" />
+    </record>
     <record id="field_hr_pool_x_surname_ar" model="ir.model.fields">
         <field name="model_id" ref="hr_pool.model_x_hr_pool" />
         <field name="name">x_surname_ar</field>
@@ -228,7 +244,7 @@
         <field name="name">x_address_text</field>
         <field name="field_description">Address</field>
         <field name="ttype">text</field>
-        <field name="required" eval="True" />
+        <field name="required" eval="False" />
         <field name="tracking" eval="1" />
     </record>
 
@@ -293,7 +309,7 @@
         <field name="name">x_typed_consent_name</field>
         <field name="field_description">Typed Consent Name</field>
         <field name="ttype">char</field>
-        <field name="required" eval="True" />
+        <field name="required" eval="False" />
         <field name="tracking" eval="1" />
     </record>
 
