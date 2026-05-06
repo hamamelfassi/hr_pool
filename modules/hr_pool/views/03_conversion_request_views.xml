@@ -5,24 +5,31 @@
         <field name="model">x_hr.pool_conversion_request</field>
         <field name="arch" type="xml">
             <list string="Conversion Requests" default_order="id desc">
-                <field name="x_name"/>
-                <field name="x_pool_id"/>
-                <field name="x_job_id"/>
-                <field name="x_state"/>
-                <field name="x_requested_by"/>
-                <field name="x_decided_by"/>
-                <field name="x_applicant_id"/>
-                <field name="x_notes" optional="show"/>
+                <field name="x_name" />
+                <field name="x_pool_id" />
+                <field name="x_job_id" />
+                <field name="x_state" />
+                <field name="x_requested_by" />
+                <field name="x_decided_by" />
+                <field name="x_applicant_id" />
+                <field name="x_notes" optional="show" />
                 <button type="action"
-                        name="hr_pool.action_hr_pool_conversion_request_approve"
-                        string="Approve"
-                        class="btn-primary"
-                        invisible="x_state != 'in_progress' or not x_job_id"/>
+                    name="hr_pool.action_hr_pool_conversion_request_submit"
+                    string="Request Conversion"
+                    class="btn-primary"
+                    invisible="x_state != 'draft' or not x_job_id" />
                 <button type="action"
-                        name="hr_pool.action_hr_pool_conversion_request_reject"
-                        string="Reject"
-                        class="btn-secondary"
-                        invisible="x_state != 'in_progress'"/>
+                    name="hr_pool.action_hr_pool_conversion_request_approve"
+                    string="Approve"
+                    class="btn-primary"
+                    groups="hr_pool.group_hr_pool_chairman"
+                    invisible="x_state != 'in_progress' or not x_job_id" />
+                <button type="action"
+                    name="hr_pool.action_hr_pool_conversion_request_reject"
+                    string="Reject"
+                    class="btn-secondary"
+                    groups="hr_pool.group_hr_pool_chairman"
+                    invisible="x_state != 'in_progress'" />
             </list>
         </field>
     </record>
@@ -32,40 +39,40 @@
         <field name="model">x_hr.pool_conversion_request</field>
         <field name="arch" type="xml">
             <kanban default_group_by="x_state" highlight_color="id">
-                <field name="x_name"/>
-                <field name="x_pool_id"/>
-                <field name="x_job_id"/>
-                <field name="x_state"/>
-                <field name="x_requested_by"/>
-                <field name="x_decided_by"/>
-                <field name="x_applicant_id"/>
-                <field name="x_notes"/>
+                <field name="x_name" />
+                <field name="x_pool_id" />
+                <field name="x_job_id" />
+                <field name="x_state" />
+                <field name="x_requested_by" />
+                <field name="x_decided_by" />
+                <field name="x_applicant_id" />
+                <field name="x_notes" />
                 <templates>
                     <t t-name="card">
                         <div class="o_kanban_record">
                             <div class="fw-bold">
-                                <field name="x_name"/>
+                                <field name="x_name" />
                             </div>
                             <div>
-                                <field name="x_state"/>
+                                <field name="x_state" />
                             </div>
                             <div>
-                                <field name="x_pool_id"/>
+                                <field name="x_pool_id" />
                             </div>
                             <div>
-                                <field name="x_job_id"/>
+                                <field name="x_job_id" />
                             </div>
                             <div>
-                                <field name="x_requested_by"/>
+                                <field name="x_requested_by" />
                             </div>
                             <div>
-                                <field name="x_decided_by"/>
+                                <field name="x_decided_by" />
                             </div>
                             <div>
-                                <field name="x_applicant_id"/>
+                                <field name="x_applicant_id" />
                             </div>
                             <div class="text-muted">
-                                <field name="x_notes"/>
+                                <field name="x_notes" />
                             </div>
                         </div>
                     </t>
@@ -80,39 +87,49 @@
         <field name="arch" type="xml">
             <form string="Conversion Request">
                 <header>
-                    <field name="x_state" widget="statusbar" statusbar_visible="in_progress,approved,rejected" readonly="1"/>
+                    <field name="x_state" widget="statusbar"
+                        statusbar_visible="draft,in_progress,approved,rejected" readonly="1" />
                     <button type="action"
-                            name="hr_pool.action_hr_pool_conversion_request_approve"
-                            string="Approve"
-                            class="btn-primary"
-                            invisible="x_state != 'in_progress' or not x_job_id"/>
+                        name="hr_pool.action_hr_pool_conversion_request_submit"
+                        string="Request Conversion"
+                        class="btn-primary"
+                        invisible="x_state != 'draft' or not x_job_id" />
                     <button type="action"
-                            name="hr_pool.action_hr_pool_conversion_request_reject"
-                            string="Reject"
-                            class="btn-secondary"
-                            invisible="x_state != 'in_progress'"/>
+                        name="hr_pool.action_hr_pool_conversion_request_approve"
+                        string="Approve"
+                        class="btn-primary"
+                        groups="hr_pool.group_hr_pool_chairman"
+                        invisible="x_state != 'in_progress' or not x_job_id" />
+                    <button type="action"
+                        name="hr_pool.action_hr_pool_conversion_request_reject"
+                        string="Reject"
+                        class="btn-secondary"
+                        groups="hr_pool.group_hr_pool_chairman"
+                        invisible="x_state != 'in_progress'" />
                 </header>
                 <sheet>
                     <group>
                         <group>
-                            <field name="x_name"/>
-                            <field name="x_pool_id" readonly="1"/>
-                            <field name="x_job_id" readonly="x_state != 'in_progress'"/>
+                            <field name="x_name" />
+                            <field name="x_pool_id" readonly="1" />
+                            <field name="x_job_id"
+                                readonly="x_state not in ['draft', 'in_progress']" />
                         </group>
                         <group>
-                            <field name="x_requested_by" readonly="1"/>
-                            <field name="x_decided_by" readonly="1"/>
-                            <field name="x_applicant_id" readonly="1"/>
+                            <field name="x_requested_by" readonly="1" />
+                            <field name="x_decided_by" readonly="1" />
+                            <field name="x_applicant_id" readonly="1" />
                         </group>
                     </group>
                     <group>
-                        <field name="x_notes"/>
+                        <field name="x_notes" />
                     </group>
                 </sheet>
                 <chatter open_attachments="True">
-                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
-                    <field name="activity_ids" widget="mail_activity"/>
-                    <field name="message_ids" widget="mail_thread"/>
+                    <field name="message_follower_ids" widget="mail_followers"
+                        groups="base.group_user" />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" />
                 </chatter>
             </form>
         </field>

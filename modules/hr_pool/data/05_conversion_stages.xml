@@ -1,27 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="sel_conversion_stage_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_conversion_request_x_state" />
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
     <record id="sel_conversion_stage_in_progress" model="ir.model.fields.selection">
-        <field name="field_id" ref="hr_pool.field_conversion_request_x_state"/>
+        <field name="field_id" ref="hr_pool.field_conversion_request_x_state" />
         <field name="name">In Progress</field>
         <field name="value">in_progress</field>
     </record>
     <record id="sel_conversion_stage_approved" model="ir.model.fields.selection">
-        <field name="field_id" ref="hr_pool.field_conversion_request_x_state"/>
+        <field name="field_id" ref="hr_pool.field_conversion_request_x_state" />
         <field name="name">Approved</field>
         <field name="value">approved</field>
     </record>
     <record id="sel_conversion_stage_rejected" model="ir.model.fields.selection">
-        <field name="field_id" ref="hr_pool.field_conversion_request_x_state"/>
+        <field name="field_id" ref="hr_pool.field_conversion_request_x_state" />
         <field name="name">Rejected</field>
         <field name="value">rejected</field>
     </record>
 
     <function model="x_hr.pool_conversion_request" name="write">
-        <function model="x_hr.pool_conversion_request" name="search" eval="[[('x_state', '=', 'pending')]]"/>
-        <value eval="{'x_state': 'in_progress'}"/>
+        <function model="x_hr.pool_conversion_request" name="search"
+            eval="[[('x_state', '=', 'pending')]]" />
+        <value eval="{'x_state': 'in_progress'}" />
     </function>
 
     <function model="ir.model.fields.selection" name="unlink">
-        <function model="ir.model.fields.selection" name="search" eval="[[('field_id', '=', ref('hr_pool.field_conversion_request_x_state')), ('value', '=', 'pending')]]"/>
+        <function model="ir.model.fields.selection" name="search"
+            eval="[[('field_id', '=', ref('hr_pool.field_conversion_request_x_state')), ('value', '=', 'pending')]]" />
     </function>
 </odoo>

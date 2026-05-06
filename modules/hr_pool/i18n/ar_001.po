@@ -1315,3 +1315,25 @@ msgstr "اسم الموافقة المكتوب"
 #: model:x_hr.commitment_type,x_name:hr_pool.commitment_type_no_other
 msgid "No Other Commitments"
 msgstr "لا توجد التزامات أخرى"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
+msgid "Arabic Name Parts"
+msgstr "الاسم العربي"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
+msgid "English Name Parts"
+msgstr "الاسم الإنجليزي"
+
+#. module: hr_pool
+#: model:ir.model.fields.selection,name:hr_pool.sel_conversion_stage_draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: hr_pool
+#: model:ir.actions.server,name:hr_pool.action_hr_pool_conversion_request_submit
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_conversion_request_form
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_conversion_request_list
+msgid "Request Conversion"
+msgstr "طلب الترحيل"

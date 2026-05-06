@@ -174,14 +174,14 @@
                                 <field name="x_profile_photo" widget="image" />
                             </group>
                             <group>
-                                <group>
+                                <group string="Arabic Name Parts">
                                     <field name="x_first_name_ar" />
                                     <field name="x_father_name_ar" />
                                     <field name="x_grandfather_name_ar" />
                                     <field name="x_surname_ar" />
                                     <field name="x_middle_names_ar" invisible="1" />
                                 </group>
-                                <group>
+                                <group string="English Name Parts">
                                     <field name="x_first_name_en" />
                                     <field name="x_surname_en" />
                                     <field name="x_middle_names_en" invisible="1" />
@@ -202,7 +202,7 @@
                                 <group string="Contact">
                                     <field name="x_phone" />
                                     <field name="x_email" />
-                                    <field name="x_address_text" />
+                                    <field name="x_address_text" invisible="1" />
                                 </group>
                                 <group string="Location">
                                     <field name="x_residence_municipality_id"
