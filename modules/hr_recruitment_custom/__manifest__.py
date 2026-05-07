@@ -31,9 +31,12 @@
         "data/08_interview_workflow_actions.xml",
         "report/04_interview_report_templates.xml",
         "report/05_interview_report_actions.xml",
+        "report/06_required_document_checklist_report_templates.xml",
+        "report/07_required_document_checklist_report_actions.xml",
         "data/09_interview_document_workflow_actions.xml",
         "data/10_required_document_types.xml",
         "data/11_required_document_checklist_actions.xml",
+        "data/12_required_document_checklist_pdf_actions.xml",
         "views/02_recruitment_document_views.xml",
         "views/01_recruitment_views.xml"
     ],

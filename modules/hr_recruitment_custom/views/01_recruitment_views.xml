@@ -254,6 +254,11 @@
                                     string="Validate Readiness"
                                     class="btn-primary"
                                     invisible="not id" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_required_document_checklist_generate_pdf"
+                                    string="Generate F-0003 PDF"
+                                    class="btn-secondary"
+                                    invisible="x_state != 'ready_for_pdf' and x_state != 'generated'" />
                                 <field name="x_state"
                                     widget="statusbar"
                                     options="{'clickable': false}"

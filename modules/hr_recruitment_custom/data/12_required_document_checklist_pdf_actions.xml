@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="action_required_document_checklist_generate_pdf" model="ir.actions.server">
+            <field name="name">Generate F-0003 PDF</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_required_document_checklist"/>
+            <field name="binding_model_id" ref="hr_recruitment_custom.model_x_hr_applicant_required_document_checklist"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+registry_model = env['x_hr.recruitment_document'].sudo()
+attachment_model = env['ir.attachment'].sudo()
+report_service = env['ir.actions.report'].sudo()
+
+for rec in records:
+    if rec.x_state not in ['ready_for_pdf', 'generated']:
+        raise Warning('F-0003 checklist must be Ready for PDF before generating the checklist PDF.')
+
+    required_lines = rec.x_line_ids.filtered(lambda line: line.x_required)
+    if not required_lines:
+        raise Warning('This F-0003 checklist has no required document lines.')
+
+    missing_lines = required_lines.filtered(lambda line: line.x_status != 'accepted')
+    if missing_lines:
+        raise Warning('Cannot generate F-0003 PDF. All required document lines must be Accepted first.')
+
+    generated_on = datetime.datetime.now()
+    applicant = rec.x_applicant_id
+    applicant_name = applicant.partner_name or applicant.name or applicant.display_name
+    reference = rec.x_document_reference or ('MCEP-HR-F-0003-%05d' % applicant.id)
+
+    pdf_content, _content_type = report_service._render_qweb_pdf(
+        'hr_recruitment_custom.action_report_mcep_required_document_checklist',
+        [rec.id]
+    )
+
+    filename = '%s - F-0003 Required Documents Checklist.pdf' % applicant_name
+
+    attachment = attachment_model.create({
+        'name': filename,
+        'type': 'binary',
+        'raw': pdf_content,
+        'res_model': 'hr.applicant',
+        'res_id': applicant.id,
+        'mimetype': 'application/pdf',
+    })
+
+    rec.sudo().write({
+        'x_state': 'generated',
+        'x_document_reference': reference,
+        'x_generated_on': generated_on,
+        'x_pdf_attachment_id': attachment.id,
+        'x_reviewer_user_id': rec.x_reviewer_user_id.id or env.user.id,
+    })
+
+    latest_any = registry_model.search([
+        ('x_document_type', '=', 'required_documents_checklist'),
+        ('x_applicant_id', '=', applicant.id),
+    ], order='x_version desc, id desc', limit=1)
+
+    registry_doc = registry_model.search([
+        ('x_document_type', '=', 'required_documents_checklist'),
+        ('x_source_model', '=', 'x_hr.applicant_required_document_checklist'),
+        ('x_source_res_id', '=', rec.id),
+        ('x_state', '!=', 'signed'),
+    ], order='x_version desc, id desc', limit=1)
+
+    if registry_doc:
+        registry_doc.write({
+            'x_name': 'Required Documents Checklist - %s - v%s' % (applicant_name, registry_doc.x_version or 1),
+            'x_applicant_id': applicant.id,
+            'x_state': 'generated',
+            'x_generated_attachment_id': attachment.id,
+            'x_generated_on': generated_on,
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'x_hr.applicant_required_document_checklist',
+            'x_source_res_id': rec.id,
+            'x_notes': 'F-0003 Required Documents Checklist PDF regenerated from accepted checklist lines.',
+        })
+    else:
+        next_version = (latest_any.x_version or 0) + 1 if latest_any else 1
+        registry_model.create({
+            'x_name': 'Required Documents Checklist - %s - v%s' % (applicant_name, next_version),
+            'x_applicant_id': applicant.id,
+            'x_document_type': 'required_documents_checklist',
+            'x_state': 'generated',
+            'x_generated_attachment_id': attachment.id,
+            'x_version': next_version,
+            'x_generated_on': generated_on,
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'x_hr.applicant_required_document_checklist',
+            'x_source_res_id': rec.id,
+            'x_notes': 'F-0003 Required Documents Checklist PDF generated from accepted checklist lines.',
+        })
+
+    rec.message_post(body='F-0003 Required Documents Checklist PDF generated and recruitment document registry marked as Generated.')
+    applicant.message_post(body='F-0003 Required Documents Checklist PDF generated and linked to the recruitment document registry.')
+
+    action = {
+        'type': 'ir.actions.act_url',
+        'url': '/web/content/%s?download=true' % attachment.id,
+        'target': 'new',
+    }
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>
