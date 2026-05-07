@@ -1,13 +1,13 @@
 {
     "name": "HR Recruitment Custom",
-    "depends": [
-        "base",
-        "base_automation",
-        "mail",
-        "hr",
-        "hr_recruitment",
-        "grc_backbone"
-    ],
+"depends": [
+    "base",
+    "base_automation",
+    "mail",
+    "hr",
+    "hr_recruitment",
+    "grc_backbone"
+],
     "application": False,
     "installable": True,
     "auto_install": False,
@@ -33,5 +33,5 @@
         "data/09_interview_document_workflow_actions.xml",
         "views/02_recruitment_document_views.xml",
         "views/01_recruitment_views.xml"
-    ]
+    ],
 }
