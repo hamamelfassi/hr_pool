@@ -16,6 +16,7 @@
         "models/01_fields.xml",
         "models/02_interview_relations.xml",
         "models/03_recruitment_document.xml",
+        "models/04_required_document_checklist.xml",
         "security/ir.model.access.csv",
         "data/01_role_definition_automation.xml",
         "data/02_tor_selection_values.xml",
@@ -31,6 +32,7 @@
         "report/04_interview_report_templates.xml",
         "report/05_interview_report_actions.xml",
         "data/09_interview_document_workflow_actions.xml",
+        "data/10_required_document_types.xml",
         "views/02_recruitment_document_views.xml",
         "views/01_recruitment_views.xml"
     ],

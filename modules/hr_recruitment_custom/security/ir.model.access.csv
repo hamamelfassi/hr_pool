@@ -5,3 +5,7 @@ access_mcep_interview_line_user,mcep interview line user,hr_recruitment_custom.m
 access_mcep_interview_question_user,mcep interview question user,hr_recruitment_custom.model_x_mcep_interview_question,base.group_user,1,0,0,0
 
 access_recruitment_document_user,recruitment document user,hr_recruitment_custom.model_x_hr_recruitment_document,base.group_user,1,1,1,1
+
+access_required_document_type_user,required document type user,hr_recruitment_custom.model_x_hr_recruitment_required_document_type,base.group_user,1,0,0,0
+access_required_document_checklist_user,required document checklist user,hr_recruitment_custom.model_x_hr_applicant_required_document_checklist,base.group_user,1,1,1,1
+access_required_document_line_user,required document line user,hr_recruitment_custom.model_x_hr_applicant_required_document_line,base.group_user,1,1,1,1
