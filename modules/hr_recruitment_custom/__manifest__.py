@@ -33,6 +33,7 @@
         "report/05_interview_report_actions.xml",
         "data/09_interview_document_workflow_actions.xml",
         "data/10_required_document_types.xml",
+        "data/11_required_document_checklist_actions.xml",
         "views/02_recruitment_document_views.xml",
         "views/01_recruitment_views.xml"
     ],

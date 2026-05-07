@@ -224,12 +224,116 @@
                 </page>
                 <page string="Documents">
                     <group>
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_prepare_required_document_checklist"
+                            string="Prepare F-0003 Checklist"
+                            class="btn-primary"
+                            invisible="not id" />
                         <div class="text-muted">
-                            Required document checklist, submitted document review, Fillout upload
-                            links,
-                            and F-0003 checklist PDF generation will be implemented in a later pass.
+                            Prepare and review the F-0003 required documents checklist here.
+                            Upload/resubmission flow and PDF signature lifecycle are handled in
+                            later subpasses.
                         </div>
                     </group>
+
+                    <field name="x_required_document_checklist_ids"
+                        context="{'default_x_applicant_id': id}">
+                        <list create="false" delete="false">
+                            <field name="x_document_reference" />
+                            <field name="x_state" />
+                            <field name="x_prepared_by_user_id" />
+                            <field name="x_prepared_on" />
+                            <field name="x_reviewer_user_id" />
+                            <field name="x_generated_on" />
+                            <field name="x_signed_on" />
+                        </list>
+                        <form string="F-0003 Required Documents Checklist">
+                            <header>
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_required_document_checklist_refresh_readiness"
+                                    string="Validate Readiness"
+                                    class="btn-primary"
+                                    invisible="not id" />
+                                <field name="x_state"
+                                    widget="statusbar"
+                                    options="{'clickable': false}"
+                                    statusbar_visible="draft,in_review,ready_for_pdf,generated,signature_requested,signed"
+                                    readonly="1" />
+                            </header>
+                            <sheet>
+                                <group>
+                                    <group>
+                                        <field name="x_name" />
+                                        <field name="x_applicant_id" readonly="1" />
+                                        <field name="x_document_reference" readonly="1" />
+                                        <field name="x_prepared_by_user_id" readonly="1" />
+                                        <field name="x_prepared_on" readonly="1" />
+                                    </group>
+                                    <group>
+                                        <field name="x_reviewer_user_id" />
+                                        <field name="x_generated_on" readonly="1" />
+                                        <field name="x_sent_on" readonly="1" />
+                                        <field name="x_signed_on" readonly="1" />
+                                        <field name="x_pdf_attachment_id" readonly="1"
+                                            domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]" />
+                                        <field name="x_signed_attachment_id"
+                                            domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]"
+                                            context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}" />
+                                    </group>
+                                </group>
+                                <div class="alert alert-info" role="alert">
+                                    Save checklist line changes before validating readiness. The
+                                    checklist becomes Ready for PDF only when all required lines are
+                                    Accepted.
+                                </div>
+                                <separator string="Required Document Lines" />
+                                <field name="x_line_ids">
+                                    <list editable="bottom" create="false" delete="false">
+                                        <field name="x_sequence" widget="handle" />
+                                        <field name="x_document_name_ar" readonly="1" />
+                                        <field name="x_document_name_en" readonly="1" />
+                                        <field name="x_required" />
+                                        <field name="x_status" />
+                                        <field name="x_capture_scope" readonly="1" />
+                                        <field name="x_document_number" />
+                                        <field name="x_issuing_authority" />
+                                        <field name="x_issue_date" />
+                                        <field name="x_expiry_date" />
+                                        <field name="x_reviewed_by_user_id" readonly="1" />
+                                        <field name="x_reviewed_on" readonly="1" />
+                                    </list>
+                                    <form string="Required Document Line">
+                                        <group>
+                                            <group>
+                                                <field name="x_sequence" />
+                                                <field name="x_document_type_id" readonly="1" />
+                                                <field name="x_document_name_ar" readonly="1" />
+                                                <field name="x_document_name_en" readonly="1" />
+                                                <field name="x_required" />
+                                                <field name="x_status" />
+                                                <field name="x_capture_scope" readonly="1" />
+                                            </group>
+                                            <group>
+                                                <field name="x_document_number" />
+                                                <field name="x_issuing_authority" />
+                                                <field name="x_issue_date" />
+                                                <field name="x_expiry_date" />
+                                                <field name="x_reviewed_by_user_id" readonly="1" />
+                                                <field name="x_reviewed_on" readonly="1" />
+                                            </group>
+                                        </group>
+                                        <field name="x_notes"
+                                            placeholder="Reviewer notes, rejection reason, or structured capture notes." />
+                                    </form>
+                                </field>
+
+                                <group>
+                                    <field name="x_notes"
+                                        placeholder="Checklist-level notes for HR/recruitment review." />
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
                 </page>
 
                 <page string="Declarations">

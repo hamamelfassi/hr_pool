@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ========================================================= -->
+        <!-- F-0003 Checklist Preparation from Applicant               -->
+        <!-- ========================================================= -->
+
+        <record id="action_hr_applicant_prepare_required_document_checklist"
+            model="ir.actions.server">
+            <field name="name">Prepare F-0003 Required Documents Checklist</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
+            <field name="binding_model_id" ref="hr_recruitment.model_hr_applicant" />
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+doc_type_model = env['x_hr.recruitment_required_document_type'].sudo()
+checklist_model = env['x_hr.applicant_required_document_checklist'].sudo()
+line_model = env['x_hr.applicant_required_document_line'].sudo()
+
+active_types = doc_type_model.search([
+    ('x_active', '=', True),
+], order='x_sequence asc, id asc')
+
+if not active_types:
+    raise Warning('No active F-0003 required document types were found. Please check the required document type seed data.')
+
+now = datetime.datetime.now()
+
+for applicant in records:
+    checklist = checklist_model.search([
+        ('x_applicant_id', '=', applicant.id),
+        ('x_state', 'not in', ['cancelled', 'signed']),
+    ], order='id desc', limit=1)
+
+    created_checklist = False
+
+    if not checklist:
+        applicant_name = applicant.partner_name or applicant.name or applicant.display_name
+        checklist = checklist_model.create({
+            'x_name': 'Required Documents Checklist - %s' % applicant_name,
+            'x_applicant_id': applicant.id,
+            'x_state': 'draft',
+            'x_document_reference': 'MCEP-HR-F-0003-%05d' % applicant.id,
+            'x_prepared_by_user_id': env.user.id,
+            'x_prepared_on': now,
+            'x_reviewer_user_id': env.user.id,
+            'x_notes': 'F-0003 checklist prepared from the active required document type library.',
+        })
+        created_checklist = True
+
+    existing_type_ids = checklist.x_line_ids.mapped('x_document_type_id').ids
+    added_count = 0
+
+    for doc_type in active_types:
+        if doc_type.id not in existing_type_ids:
+            line_model.create({
+                'x_name': doc_type.x_name,
+                'x_checklist_id': checklist.id,
+                'x_document_type_id': doc_type.id,
+                'x_sequence': doc_type.x_sequence or 0,
+                'x_document_name_ar': doc_type.x_name_ar,
+                'x_document_name_en': doc_type.x_name_en,
+                'x_required': doc_type.x_required,
+                'x_status': 'missing',
+                'x_capture_scope': doc_type.x_capture_scope or 'none',
+                'x_notes': doc_type.x_notes,
+            })
+            added_count += 1
+
+    if created_checklist:
+        applicant.message_post(
+            body='F-0003 Required Documents Checklist prepared with %s required document lines.' % added_count
+        )
+    elif added_count:
+        applicant.message_post(
+            body='F-0003 Required Documents Checklist normalized. %s missing required document line(s) were added.' % added_count
+        )
+    else:
+        applicant.message_post(
+            body='F-0003 Required Documents Checklist already exists and is up to date.'
+        )
+
+action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+
+        <!-- ========================================================= -->
+        <!-- F-0003 Checklist Readiness Check                          -->
+        <!-- ========================================================= -->
+
+        <record id="action_required_document_checklist_refresh_readiness" model="ir.actions.server">
+            <field name="name">Refresh F-0003 Checklist Readiness</field>
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_checklist" />
+            <field name="binding_model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_checklist" />
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+for rec in records:
+    required_lines = rec.x_line_ids.filtered(lambda line: line.x_required)
+
+    if not required_lines:
+        raise Warning('This F-0003 checklist has no required document lines.')
+
+    missing_lines = required_lines.filtered(lambda line: line.x_status != 'accepted')
+
+    if missing_lines:
+        rec.sudo().write({
+            'x_state': 'in_review',
+            'x_reviewer_user_id': env.user.id,
+        })
+        rec.message_post(
+            body='F-0003 checklist remains In Review. %s required document line(s) are not accepted yet.' % len(missing_lines)
+        )
+    else:
+        rec.sudo().write({
+            'x_state': 'ready_for_pdf',
+            'x_reviewer_user_id': env.user.id,
+        })
+        rec.message_post(
+            body='F-0003 checklist is ready for PDF generation. All required document lines are accepted.'
+        )
+
+action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>
