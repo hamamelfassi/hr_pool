@@ -64,7 +64,9 @@
                                     <field name="x_sign_request_reference" readonly="1" />
                                     <field name="x_sign_request_state" readonly="1" />
                                     <field name="x_sign_request_url" readonly="1" />
-                                </group>
+                                    <field name="x_sign_completed_on" readonly="1" />
+                                    <field name="x_sign_completed_attachment_id" readonly="1" />
+                                    <field name="x_sign_certificate_attachment_id" readonly="1" />                                </group>
                             </page>
 
                             <page string="Source">

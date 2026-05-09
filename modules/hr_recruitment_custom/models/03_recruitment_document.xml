@@ -123,6 +123,29 @@
             <field name="field_description">Sign Request URL</field>
             <field name="ttype">char</field>
         </record>
+        
+        <record id="field_x_hr_recruitment_document__x_sign_completed_on" model="ir.model.fields">
+            <field name="name">x_sign_completed_on</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Sign Completed On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_x_hr_recruitment_document__x_sign_completed_attachment_id" model="ir.model.fields">
+            <field name="name">x_sign_completed_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Odoo Sign Completed Artifact</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+        </record>
+
+        <record id="field_x_hr_recruitment_document__x_sign_certificate_attachment_id" model="ir.model.fields">
+            <field name="name">x_sign_certificate_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Odoo Sign Certificate</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+        </record>
 
         <record id="field_x_hr_recruitment_document__x_version" model="ir.model.fields">
             <field name="name">x_version</field>

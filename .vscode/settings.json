@@ -1,0 +1,6 @@
+{
+    "[xml]": {
+        "editor.formatOnSave": false
+    },
+    "xml.format.enabled": false
+}

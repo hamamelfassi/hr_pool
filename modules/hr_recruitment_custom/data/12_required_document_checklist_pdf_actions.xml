@@ -320,5 +320,150 @@ for rec in records:
             ]]></field>
         </record>
 
+        <record id="action_required_document_checklist_sync_native_sign_completion" model="ir.actions.server">
+            <field name="name">Sync F-0003 Odoo Sign Completion</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_required_document_checklist"/>
+            <field name="binding_model_id" ref="hr_recruitment_custom.model_x_hr_applicant_required_document_checklist"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+registry_model = env['x_hr.recruitment_document'].sudo()
+sign_request_model = env['sign.request'].sudo()
+
+for rec in records:
+    applicant = rec.x_applicant_id
+    if not applicant:
+        raise Warning('F-0003 checklist is not linked to an applicant.')
+
+    registry_doc = registry_model.search([
+        ('x_document_type', '=', 'required_documents_checklist'),
+        ('x_source_model', '=', 'x_hr.applicant_required_document_checklist'),
+        ('x_source_res_id', '=', rec.id),
+        ('x_signature_mode', '=', 'native_sign'),
+    ], order='x_version desc, id desc', limit=1)
+
+    if not registry_doc:
+        registry_doc = registry_model.search([
+            ('x_document_type', '=', 'required_documents_checklist'),
+            ('x_applicant_id', '=', applicant.id),
+            ('x_signature_mode', '=', 'native_sign'),
+            ('x_sign_request_res_id', '!=', False),
+        ], order='x_version desc, id desc', limit=1)
+
+    if not registry_doc:
+        raise Warning('No native Odoo Sign recruitment document registry row was found for this F-0003 checklist.')
+
+    if not registry_doc.x_sign_request_res_id:
+        raise Warning('The F-0003 recruitment document registry row has no linked Odoo Sign request ID.')
+
+    sign_request = sign_request_model.browse(registry_doc.x_sign_request_res_id)
+    if not sign_request.exists():
+        raise Warning('The linked Odoo Sign request no longer exists or cannot be accessed.')
+
+    request_state = sign_request.state or 'unknown'
+    registry_doc.write({
+        'x_sign_request_state': request_state,
+        'x_sign_request_reference': sign_request.reference or registry_doc.x_sign_request_reference,
+    })
+
+    if request_state not in ['signed']:
+        rec.message_post(body='F-0003 native Odoo Sign request is not fully signed yet. Current Sign request state: %s.' % request_state)
+        applicant.message_post(body='F-0003 native Odoo Sign completion sync checked request %s. Current state: %s.' % (sign_request.id, request_state))
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'F-0003 not fully signed yet',
+                'message': 'Odoo Sign request state is currently %s. Registry was not closed.' % request_state,
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    completed_attachments = sign_request.completed_document_attachment_ids
+    if not completed_attachments:
+        registry_doc.write({
+            'x_sign_request_state': 'signed_no_completed_attachment_found',
+            'x_notes': ((registry_doc.x_notes or '') + '\nOdoo Sign request %s is signed, but no completed document attachments were found during sync on %s.' % (sign_request.id, datetime.datetime.now())).strip(),
+        })
+        raise Warning('Odoo Sign request is signed, but no completed document attachments were found. Registry was not closed.')
+
+    signed_native = False
+    certificate_native = False
+    for attachment in completed_attachments:
+        attachment_name = (attachment.name or '').lower()
+        if not certificate_native and ('certificate' in attachment_name or 'completion' in attachment_name or 'history' in attachment_name):
+            certificate_native = attachment
+        elif not signed_native:
+            signed_native = attachment
+
+    if not signed_native:
+        signed_native = completed_attachments[0]
+
+    signed_copy = registry_doc.x_signed_attachment_id
+    if not signed_copy:
+        signed_copy = signed_native.copy({
+            'name': signed_native.name or ('Signed F-0003 - %s.pdf' % (applicant.partner_name or applicant.name or applicant.display_name)),
+            'res_model': 'hr.applicant',
+            'res_id': applicant.id,
+        })
+
+    certificate_copy = registry_doc.x_sign_certificate_attachment_id
+    if certificate_native and not certificate_copy:
+        certificate_copy = certificate_native.copy({
+            'name': certificate_native.name or ('Certificate of completion - F-0003 - %s.pdf' % (applicant.partner_name or applicant.name or applicant.display_name)),
+            'res_model': 'hr.applicant',
+            'res_id': applicant.id,
+        })
+
+    signed_on = datetime.datetime.now()
+    signer_items = sign_request.request_item_ids.filtered(lambda item: item.state == 'completed' and item.signing_date)
+    latest_signing_date = False
+    for signer_item in signer_items:
+        if not latest_signing_date or signer_item.signing_date > latest_signing_date:
+            latest_signing_date = signer_item.signing_date
+    if latest_signing_date:
+        signed_on = datetime.datetime.combine(latest_signing_date, datetime.time.min)
+
+    registry_values = {
+        'x_state': 'signed',
+        'x_signed_attachment_id': signed_copy.id,
+        'x_sign_completed_attachment_id': signed_copy.id,
+        'x_sign_completed_on': signed_on,
+        'x_signed_on': signed_on,
+        'x_sign_request_state': request_state,
+        'x_sign_request_reference': sign_request.reference or registry_doc.x_sign_request_reference,
+        'x_responsible_user_id': env.user.id,
+        'x_source_model': 'x_hr.applicant_required_document_checklist',
+        'x_source_res_id': rec.id,
+        'x_notes': ((registry_doc.x_notes or '') + '\nNative Odoo Sign completion synced for F-0003 on %s. Sign request ID: %s. Signed artifact: %s.' % (datetime.datetime.now(), sign_request.id, signed_copy.name)).strip(),
+    }
+    if certificate_copy:
+        registry_values['x_sign_certificate_attachment_id'] = certificate_copy.id
+
+    registry_doc.write(registry_values)
+
+    rec.sudo().write({
+        'x_state': 'signed',
+        'x_signed_on': signed_on,
+        'x_signed_attachment_id': signed_copy.id,
+    })
+
+    rec.message_post(body='F-0003 native Odoo Sign completion synced. Signed artifact linked: %s.' % signed_copy.name)
+    applicant.message_post(body='F-0003 Required Documents Checklist signed through native Odoo Sign. Signed artifact linked to the recruitment document registry.')
+
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': 'F-0003 signed',
+            'message': 'Native Odoo Sign completion synced and registry marked Signed.',
+            'type': 'success',
+            'sticky': False,
+        }
+    }
+            ]]></field>
+        </record>        
+
     </data>
 </odoo>

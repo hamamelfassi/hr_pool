@@ -815,7 +815,7 @@ git commit -m "pass5e3b: sync F-0003 native Sign completion to registry" \
 
 ## 20. Lessons learned log
 
-Append updates here after implementation.
+5E-3A PASSED — functionally locked and committed.
 
 ### Lesson 1 — Pending
 

@@ -263,6 +263,11 @@
                                     string="Send F-0003 via Odoo Sign"
                                     class="btn-primary"
                                     invisible="x_state != 'generated' or not x_pdf_attachment_id" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_required_document_checklist_sync_native_sign_completion"
+                                    string="Sync Odoo Sign Completion"
+                                    class="btn-secondary"
+                                    invisible="x_state != 'signature_requested'" />
                                 <field name="x_state"
                                     widget="statusbar"
                                     options="{'clickable': false}"

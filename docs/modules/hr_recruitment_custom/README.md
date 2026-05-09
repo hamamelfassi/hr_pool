@@ -14,6 +14,7 @@ Read these first:
 2. `docs/architecture/01_two_stage_recruitment_program_plan.md`
 3. `docs/architecture/03_stage_2_hr_recruitment_custom_spec.md`
 4. `docs/resources/current_phase_2_execution_plan.md`
+5. `pass_5e_f0003_native_sign_lifecycle_plan.md` — locked Pass 5E F-0003 checklist/PDF/native Sign lifecycle plan.
 
 ## Supporting docs
 
