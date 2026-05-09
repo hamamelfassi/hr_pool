@@ -231,8 +231,7 @@
                             invisible="not id" />
                         <div class="text-muted">
                             Prepare and review the F-0003 required documents checklist here.
-                            Upload/resubmission flow and PDF signature lifecycle are handled in
-                            later subpasses.
+                            Generate the F-0003 PDF here, then send it through native Odoo Sign when ready..
                         </div>
                     </group>
 
@@ -259,6 +258,11 @@
                                     string="Generate F-0003 PDF"
                                     class="btn-secondary"
                                     invisible="x_state != 'ready_for_pdf' and x_state != 'generated'" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_required_document_checklist_send_native_sign"
+                                    string="Send F-0003 via Odoo Sign"
+                                    class="btn-primary"
+                                    invisible="x_state != 'generated' or not x_pdf_attachment_id" />
                                 <field name="x_state"
                                     widget="statusbar"
                                     options="{'clickable': false}"

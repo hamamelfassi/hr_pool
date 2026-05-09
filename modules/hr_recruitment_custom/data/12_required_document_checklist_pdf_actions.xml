@@ -104,5 +104,221 @@ for rec in records:
             ]]></field>
         </record>
 
+                <record id="action_required_document_checklist_send_native_sign" model="ir.actions.server">
+            <field name="name">Send F-0003 via Odoo Sign</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_required_document_checklist"/>
+            <field name="binding_model_id" ref="hr_recruitment_custom.model_x_hr_applicant_required_document_checklist"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+registry_model = env['x_hr.recruitment_document'].sudo()
+sign_template_model = env['sign.template'].sudo()
+sign_document_model = env['sign.document'].sudo()
+sign_item_model = env['sign.item'].sudo()
+sign_role_model = env['sign.item.role'].sudo()
+sign_send_model = env['sign.send.request'].sudo()
+sign_send_signer_model = env['sign.send.request.signer'].sudo()
+sign_request_model = env['sign.request'].sudo()
+
+signature_type = env.ref('sign.sign_item_type_signature', raise_if_not_found=False)
+if not signature_type:
+    raise Warning('Odoo Sign signature field type could not be found: sign.sign_item_type_signature.')
+
+reviewer_role = sign_role_model.search([('name', '=', 'Reviewer')], order='id asc', limit=1)
+if not reviewer_role:
+    raise Warning('Odoo Sign role "Reviewer" was not found. Create a Reviewer role in Sign before sending F-0003 through native Sign.')
+
+for rec in records:
+    if rec.x_state != 'generated':
+        raise Warning('F-0003 checklist must be Generated before it can be sent through Odoo Sign.')
+
+    if not rec.x_pdf_attachment_id:
+        raise Warning('F-0003 generated PDF attachment is missing. Generate the F-0003 PDF before sending through Odoo Sign.')
+
+    applicant = rec.x_applicant_id
+    if not applicant:
+        raise Warning('F-0003 checklist is not linked to an applicant.')
+
+    reviewer_user = rec.x_reviewer_user_id or env.user
+    reviewer_partner = reviewer_user.partner_id
+    if not reviewer_partner:
+        raise Warning('Reviewer user has no linked contact/partner and cannot be used as an Odoo Sign signer.')
+
+    reviewer_email = reviewer_partner.email or reviewer_user.email
+    if not reviewer_email:
+        raise Warning('Reviewer contact has no email address. Add an email before sending F-0003 through Odoo Sign.')
+
+    applicant_name = applicant.partner_name or applicant.name or applicant.display_name
+    reference = rec.x_document_reference or ('MCEP-HR-F-0003-%05d' % applicant.id)
+    pdf_attachment = rec.x_pdf_attachment_id
+    filename = pdf_attachment.name or ('%s - F-0003 Required Documents Checklist.pdf' % applicant_name)
+
+    registry_doc = registry_model.search([
+        ('x_document_type', '=', 'required_documents_checklist'),
+        ('x_source_model', '=', 'x_hr.applicant_required_document_checklist'),
+        ('x_source_res_id', '=', rec.id),
+        ('x_state', '!=', 'signed'),
+    ], order='x_version desc, id desc', limit=1)
+
+    if not registry_doc:
+        registry_doc = registry_model.search([
+            ('x_document_type', '=', 'required_documents_checklist'),
+            ('x_applicant_id', '=', applicant.id),
+            ('x_generated_attachment_id', '=', pdf_attachment.id),
+            ('x_state', '!=', 'signed'),
+        ], order='x_version desc, id desc', limit=1)
+
+    if not registry_doc:
+        latest_any = registry_model.search([
+            ('x_document_type', '=', 'required_documents_checklist'),
+            ('x_applicant_id', '=', applicant.id),
+        ], order='x_version desc, id desc', limit=1)
+        next_version = (latest_any.x_version or 0) + 1 if latest_any else 1
+        registry_doc = registry_model.create({
+            'x_name': 'Required Documents Checklist - %s - v%s' % (applicant_name, next_version),
+            'x_applicant_id': applicant.id,
+            'x_document_type': 'required_documents_checklist',
+            'x_state': 'generated',
+            'x_generated_attachment_id': pdf_attachment.id,
+            'x_version': next_version,
+            'x_generated_on': rec.x_generated_on or datetime.datetime.now(),
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'x_hr.applicant_required_document_checklist',
+            'x_source_res_id': rec.id,
+            'x_notes': 'F-0003 registry row recovered during native Odoo Sign send probe.',
+        })
+
+    if registry_doc.x_sign_request_res_id and registry_doc.x_state in ['signature_requested', 'partially_signed', 'signed']:
+        existing_request = sign_request_model.browse(registry_doc.x_sign_request_res_id)
+        if existing_request.exists() and existing_request.state not in ['cancelled', 'canceled']:
+            raise Warning('This F-0003 registry row already has a linked Odoo Sign request. Do not create a duplicate request.')
+
+    sent_on = datetime.datetime.now()
+    validity_date = datetime.date.today() + datetime.timedelta(days=60)
+
+    sign_template = sign_template_model.create({
+        'name': filename,
+        'user_id': env.user.id,
+        'signature_request_validity': 60,
+    })
+
+    sign_document = sign_document_model.create({
+        'template_id': sign_template.id,
+        'attachment_id': pdf_attachment.id,
+        'name': filename,
+        'sequence': 1,
+    })
+
+    sign_item_model.create({
+        'document_id': sign_document.id,
+        'type_id': signature_type.id,
+        'responsible_id': reviewer_role.id,
+        'page': 1,
+        'posX': 0.073,
+        'posY': 0.591,
+        'width': 0.565,
+        'height': 0.075,
+        'required': True,
+        'name': 'Signature',
+        'alignment': 'left',
+        'constant': False,
+    })
+
+    subject = 'Signature Request - %s' % filename
+    body = '<p>Please review and sign the attached F-0003 Required Documents Checklist.</p>'
+
+    send_request = sign_send_model.create({
+        'template_id': sign_template.id,
+        'signer_id': reviewer_partner.id,
+        'subject': subject,
+        'body': body,
+        'validity': validity_date,
+        'certificate_reference': False,
+        'reminder_enabled': False,
+        'model': 'x_hr.applicant_required_document_checklist',
+        'res_ids': str([rec.id]),
+    })
+
+    if send_request.signer_ids:
+        signer_line = send_request.signer_ids.filtered(lambda line: line.role_id.id == reviewer_role.id)[:1]
+        if not signer_line:
+            signer_line = send_request.signer_ids[:1]
+        signer_line.sudo().write({
+            'partner_id': reviewer_partner.id,
+            'mail_sent_order': 1,
+        })
+    else:
+        sign_send_signer_model.create({
+            'sign_send_request_id': send_request.id,
+            'role_id': reviewer_role.id,
+            'partner_id': reviewer_partner.id,
+            'mail_sent_order': 1,
+        })
+
+    send_request.send_request()
+
+    generated_request = sign_request_model.search([
+        ('template_id', '=', sign_template.id),
+        ('request_item_ids.partner_id', '=', reviewer_partner.id),
+    ], order='create_date desc, id desc', limit=1)
+
+    if generated_request:
+        registry_doc.write({
+            'x_state': 'signature_requested',
+            'x_sent_on': sent_on,
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'x_hr.applicant_required_document_checklist',
+            'x_source_res_id': rec.id,
+            'x_signature_mode': 'native_sign',
+            'x_sign_request_model': 'sign.request',
+            'x_sign_request_res_id': generated_request.id,
+            'x_sign_request_reference': generated_request.reference or filename,
+            'x_sign_request_state': generated_request.state or 'sent',
+            'x_sign_request_url': '/odoo/sign/%s' % generated_request.id,
+            'x_notes': ((registry_doc.x_notes or '') + '\nNative Odoo Sign request created for F-0003 on %s. Request ID: %s. Reviewer: %s.' % (sent_on, generated_request.id, reviewer_partner.display_name)).strip(),
+        })
+        rec.sudo().write({
+            'x_state': 'signature_requested',
+            'x_sent_on': sent_on,
+            'x_reviewer_user_id': reviewer_user.id,
+        })
+        rec.message_post(body='F-0003 sent through native Odoo Sign to %s. Sign request ID: %s.' % (reviewer_partner.display_name, generated_request.id))
+        applicant.message_post(body='F-0003 Required Documents Checklist sent through native Odoo Sign to %s.' % reviewer_partner.display_name)
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'F-0003 sent through Odoo Sign',
+                'message': 'Native Odoo Sign request created and sent to %s.' % reviewer_partner.display_name,
+                'type': 'success',
+                'sticky': False,
+            }
+        }
+    else:
+        registry_doc.write({
+            'x_state': 'generated',
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'x_hr.applicant_required_document_checklist',
+            'x_source_res_id': rec.id,
+            'x_signature_mode': 'native_sign',
+            'x_sign_request_model': 'sign.request',
+            'x_sign_request_reference': filename,
+            'x_sign_request_state': 'lookup_failed_after_send_request',
+            'x_notes': ((registry_doc.x_notes or '') + '\nNative Odoo Sign send_request() executed for F-0003 on %s, but the generated sign.request could not be located automatically. Dynamic template ID: %s. Reviewer: %s.' % (sent_on, sign_template.id, reviewer_partner.display_name)).strip(),
+        })
+        rec.message_post(body='Native Odoo Sign send_request() executed for F-0003, but the generated sign.request could not be located automatically. Check Sign app template/request created from template ID %s.' % sign_template.id)
+        applicant.message_post(body='Native Odoo Sign send_request() executed for F-0003, but the generated sign.request could not be located automatically. Check Sign app template/request created from template ID %s.' % sign_template.id)
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'F-0003 Sign request lookup failed',
+                'message': 'send_request() executed, but the generated sign.request was not found automatically. Check Sign app before retrying.',
+                'type': 'warning',
+                'sticky': True,
+            }
+        }
+            ]]></field>
+        </record>
+
     </data>
 </odoo>

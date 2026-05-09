@@ -13,6 +13,8 @@
                     <field name="x_applicant_id" />
                     <field name="x_generated_attachment_id" />
                     <field name="x_signed_attachment_id" />
+                    <field name="x_signature_mode" />
+                    <field name="x_sign_request_state" />
                     <field name="x_version" />
                     <field name="x_generated_on" />
                     <field name="x_sent_on" />
@@ -52,6 +54,16 @@
                                 <group>
                                     <field name="x_generated_attachment_id" />
                                     <field name="x_signed_attachment_id" />
+                                </group>
+                            </page>
+                            <page string="Native Sign">
+                                <group>
+                                    <field name="x_signature_mode" readonly="1" />
+                                    <field name="x_sign_request_model" readonly="1" />
+                                    <field name="x_sign_request_res_id" readonly="1" />
+                                    <field name="x_sign_request_reference" readonly="1" />
+                                    <field name="x_sign_request_state" readonly="1" />
+                                    <field name="x_sign_request_url" readonly="1" />
                                 </group>
                             </page>
 

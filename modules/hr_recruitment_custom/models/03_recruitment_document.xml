@@ -78,14 +78,51 @@
             <field name="relation">ir.attachment</field>
         </record>
 
-        <!--
-            x_sign_request_id is intentionally deferred in Pass 1.
+                <record id="field_x_hr_recruitment_document__x_signature_mode" model="ir.model.fields">
+            <field name="name">x_signature_mode</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Signature Mode</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('manual_attachment', 'Manual Signed Attachment'),
+                ('native_sign', 'Native Odoo Sign')
+                ]</field>
+        </record>
 
-            Reason:
-            Referencing sign.request is only safe once the native Sign model dependency
-            and module manifest dependency are confirmed in the target SaaS database.
-            Pass 1 tracks generated/signed artifacts without attempting Sign automation.
-        -->
+        <record id="field_x_hr_recruitment_document__x_sign_request_model" model="ir.model.fields">
+            <field name="name">x_sign_request_model</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Sign Request Model</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_x_hr_recruitment_document__x_sign_request_res_id" model="ir.model.fields">
+            <field name="name">x_sign_request_res_id</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Sign Request Record ID</field>
+            <field name="ttype">integer</field>
+        </record>
+
+        <record id="field_x_hr_recruitment_document__x_sign_request_reference" model="ir.model.fields">
+            <field name="name">x_sign_request_reference</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Sign Request Reference</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_x_hr_recruitment_document__x_sign_request_state" model="ir.model.fields">
+            <field name="name">x_sign_request_state</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Sign Request State</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_x_hr_recruitment_document__x_sign_request_url" model="ir.model.fields">
+            <field name="name">x_sign_request_url</field>
+            <field name="model_id" ref="model_x_hr_recruitment_document" />
+            <field name="field_description">Sign Request URL</field>
+            <field name="ttype">char</field>
+        </record>
 
         <record id="field_x_hr_recruitment_document__x_version" model="ir.model.fields">
             <field name="name">x_version</field>
