@@ -15,6 +15,7 @@ Read these first:
 3. `docs/architecture/03_stage_2_hr_recruitment_custom_spec.md`
 4. `docs/resources/current_phase_2_execution_plan.md`
 5. `pass_5e_f0003_native_sign_lifecycle_plan.md` — locked Pass 5E F-0003 checklist/PDF/native Sign lifecycle plan.
+6. `native_odoo_sign_workflow_wiki.md` — reusable native Odoo Sign send/sync workflow pattern proven on F-0003.
 
 ## Supporting docs
 

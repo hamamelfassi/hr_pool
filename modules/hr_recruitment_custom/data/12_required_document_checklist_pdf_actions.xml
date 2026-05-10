@@ -120,32 +120,109 @@ sign_send_signer_model = env['sign.send.request.signer'].sudo()
 sign_request_model = env['sign.request'].sudo()
 
 signature_type = env.ref('sign.sign_item_type_signature', raise_if_not_found=False)
-if not signature_type:
-    raise Warning('Odoo Sign signature field type could not be found: sign.sign_item_type_signature.')
-
 reviewer_role = sign_role_model.search([('name', '=', 'Reviewer')], order='id asc', limit=1)
-if not reviewer_role:
-    raise Warning('Odoo Sign role "Reviewer" was not found. Create a Reviewer role in Sign before sending F-0003 through native Sign.')
+
+setup_error = False
+if not signature_type:
+    setup_error = 'Odoo Sign signature field type could not be found: sign.sign_item_type_signature.'
+elif not reviewer_role:
+    setup_error = 'Odoo Sign role "Reviewer" was not found. Create a Reviewer role in Sign before sending F-0003 through native Sign.'
 
 for rec in records:
+    if setup_error:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'F-0003 Odoo Sign setup incomplete',
+                'message': setup_error,
+                'type': 'warning',
+                'sticky': True,
+            }
+        }
+        continue
+
+    if rec.x_state == 'signed':
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'F-0003 already signed',
+                'message': 'This F-0003 checklist is already signed. No duplicate Odoo Sign request was created.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
     if rec.x_state != 'generated':
-        raise Warning('F-0003 checklist must be Generated before it can be sent through Odoo Sign.')
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'F-0003 is not ready to send',
+                'message': 'F-0003 checklist must be Generated before it can be sent through Odoo Sign.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
 
     if not rec.x_pdf_attachment_id:
-        raise Warning('F-0003 generated PDF attachment is missing. Generate the F-0003 PDF before sending through Odoo Sign.')
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'F-0003 PDF missing',
+                'message': 'Generate the F-0003 PDF before sending through Odoo Sign.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
 
     applicant = rec.x_applicant_id
     if not applicant:
-        raise Warning('F-0003 checklist is not linked to an applicant.')
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Applicant missing',
+                'message': 'F-0003 checklist is not linked to an applicant.',
+                'type': 'warning',
+                'sticky': True,
+            }
+        }
+        continue
 
     reviewer_user = rec.x_reviewer_user_id or env.user
     reviewer_partner = reviewer_user.partner_id
     if not reviewer_partner:
-        raise Warning('Reviewer user has no linked contact/partner and cannot be used as an Odoo Sign signer.')
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Reviewer contact missing',
+                'message': 'Reviewer user has no linked contact/partner and cannot be used as an Odoo Sign signer.',
+                'type': 'warning',
+                'sticky': True,
+            }
+        }
+        continue
 
     reviewer_email = reviewer_partner.email or reviewer_user.email
     if not reviewer_email:
-        raise Warning('Reviewer contact has no email address. Add an email before sending F-0003 through Odoo Sign.')
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Reviewer email missing',
+                'message': 'Reviewer contact has no email address. Add an email before sending F-0003 through Odoo Sign.',
+                'type': 'warning',
+                'sticky': True,
+            }
+        }
+        continue
 
     applicant_name = applicant.partner_name or applicant.name or applicant.display_name
     reference = rec.x_document_reference or ('MCEP-HR-F-0003-%05d' % applicant.id)
@@ -187,10 +264,40 @@ for rec in records:
             'x_notes': 'F-0003 registry row recovered during native Odoo Sign send probe.',
         })
 
-    if registry_doc.x_sign_request_res_id and registry_doc.x_state in ['signature_requested', 'partially_signed', 'signed']:
+    if registry_doc.x_state == 'signed':
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'F-0003 already signed',
+                'message': 'This F-0003 registry document is already signed. No duplicate Odoo Sign request was created.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    if registry_doc.x_sign_request_res_id:
         existing_request = sign_request_model.browse(registry_doc.x_sign_request_res_id)
-        if existing_request.exists() and existing_request.state not in ['cancelled', 'canceled']:
-            raise Warning('This F-0003 registry row already has a linked Odoo Sign request. Do not create a duplicate request.')
+        if existing_request.exists():
+            existing_state = existing_request.state or registry_doc.x_sign_request_state or 'unknown'
+            if existing_state not in ['cancelled', 'canceled']:
+                if existing_state == 'signed':
+                    message = 'The linked Odoo Sign request is already signed. Use Sync Signed Result to close the F-0003 registry/checklist instead of creating a duplicate request.'
+                else:
+                    message = 'This F-0003 already has an active linked Odoo Sign request in state "%s". Ask the signer to complete it, or sync the signed result after completion. Duplicate requests are blocked.' % existing_state
+
+                action = {
+                    'type': 'ir.actions.client',
+                    'tag': 'display_notification',
+                    'params': {
+                        'title': 'Duplicate Sign request blocked',
+                        'message': message,
+                        'type': 'warning',
+                        'sticky': True,
+                    }
+                }
+                continue
 
     sent_on = datetime.datetime.now()
     validity_date = datetime.date.today() + datetime.timedelta(days=60)
@@ -208,6 +315,23 @@ for rec in records:
         'sequence': 1,
     })
 
+    # F-0003 native Sign profile contract.
+    #
+    # Document type: required_documents_checklist
+    # Source model: x_hr.applicant_required_document_checklist
+    # Generated attachment: x_pdf_attachment_id
+    # Signed attachment: x_signed_attachment_id
+    #
+    # Role profile:
+    # - role_key: reviewer
+    # - Odoo Sign role name: Reviewer
+    # - signer source: x_reviewer_user_id.partner_id
+    # - sequence: 1
+    # - required: true
+    # - geometry: page=1, posX=0.073, posY=0.591, width=0.565, height=0.075
+    #
+    # Later F-0002/F-0004 reuse should promote this contract into a generic
+    # signature profile registry instead of hardcoding per-document coordinates.
     sign_item_model.create({
         'document_id': sign_document.id,
         'type_id': signature_type.id,
@@ -366,14 +490,14 @@ for rec in records:
     })
 
     if request_state not in ['signed']:
-        rec.message_post(body='F-0003 native Odoo Sign request is not fully signed yet. Current Sign request state: %s.' % request_state)
-        applicant.message_post(body='F-0003 native Odoo Sign completion sync checked request %s. Current state: %s.' % (sign_request.id, request_state))
+        rec.message_post(body='F-0003 native Odoo Sign request is not fully signed yet. Current Sign request state: %s. Ask the signer to complete signing, then sync again.' % request_state)
+        applicant.message_post(body='F-0003 native Odoo Sign completion sync checked request %s. Current state: %s. Registry was not closed.' % (sign_request.id, request_state))
         action = {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
                 'title': 'F-0003 not fully signed yet',
-                'message': 'Odoo Sign request state is currently %s. Registry was not closed.' % request_state,
+                'message': 'Odoo Sign request is still in state: %s. Ask the signer to complete signing, then sync again.' % request_state,
                 'type': 'warning',
                 'sticky': False,
             }
@@ -416,14 +540,20 @@ for rec in records:
             'res_id': applicant.id,
         })
 
-    signed_on = datetime.datetime.now()
-    signer_items = sign_request.request_item_ids.filtered(lambda item: item.state == 'completed' and item.signing_date)
-    latest_signing_date = False
+    # Prefer real datetime fields over sign.request.item.signing_date because
+    # signing_date is date-only in this SaaS schema and causes midnight timestamps.
+    signed_on = sign_request.write_date or datetime.datetime.now()
+
+    signer_items = sign_request.request_item_ids.filtered(lambda item: item.state == 'completed')
     for signer_item in signer_items:
-        if not latest_signing_date or signer_item.signing_date > latest_signing_date:
-            latest_signing_date = signer_item.signing_date
-    if latest_signing_date:
-        signed_on = datetime.datetime.combine(latest_signing_date, datetime.time.min)
+        if signer_item.write_date and signer_item.write_date > signed_on:
+            signed_on = signer_item.write_date
+
+    if not signed_on and sign_request.completion_date:
+        signed_on = datetime.datetime.combine(sign_request.completion_date, datetime.time(12, 0, 0))
+
+    if not signed_on:
+        signed_on = datetime.datetime.now()
 
     registry_values = {
         'x_state': 'signed',
@@ -450,20 +580,158 @@ for rec in records:
     })
 
     rec.message_post(body='F-0003 native Odoo Sign completion synced. Signed artifact linked: %s.' % signed_copy.name)
-    applicant.message_post(body='F-0003 Required Documents Checklist signed through native Odoo Sign. Signed artifact linked to the recruitment document registry.')
+    applicant.message_post(body='F-0003 Required Documents Checklist signed through native Odoo Sign. Signed F-0003 artifact and certificate, where available, were linked to the recruitment document registry.')
 
     action = {
         'type': 'ir.actions.client',
         'tag': 'display_notification',
         'params': {
             'title': 'F-0003 signed',
-            'message': 'Native Odoo Sign completion synced and registry marked Signed.',
+            'message': 'Signed F-0003 result synced. Signed artifact and certificate, where available, were linked to the recruitment registry.',
             'type': 'success',
             'sticky': False,
         }
     }
             ]]></field>
         </record>        
+        <record id="action_required_document_checklist_download_generated_pdf" model="ir.actions.server">
+            <field name="name">Download F-0003 Generated PDF</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_required_document_checklist"/>
+            <field name="binding_model_id" ref="hr_recruitment_custom.model_x_hr_applicant_required_document_checklist"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+for rec in records:
+    if rec.x_pdf_attachment_id:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % rec.x_pdf_attachment_id.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'No generated PDF',
+                'message': 'No generated F-0003 PDF is linked to this checklist.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+            ]]></field>
+        </record>
 
+        <record id="action_required_document_checklist_download_signed_pdf" model="ir.actions.server">
+            <field name="name">Download F-0003 Signed PDF</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_required_document_checklist"/>
+            <field name="binding_model_id" ref="hr_recruitment_custom.model_x_hr_applicant_required_document_checklist"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+for rec in records:
+    if rec.x_signed_attachment_id:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % rec.x_signed_attachment_id.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'No signed PDF',
+                'message': 'No signed F-0003 PDF is linked to this checklist.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+            ]]></field>
+        </record>
+
+        <record id="action_recruitment_document_download_generated_artifact" model="ir.actions.server">
+            <field name="name">Download Generated Artifact</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_recruitment_document"/>
+            <field name="binding_model_id" ref="hr_recruitment_custom.model_x_hr_recruitment_document"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+for rec in records:
+    if rec.x_generated_attachment_id:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % rec.x_generated_attachment_id.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'No generated artifact',
+                'message': 'No generated artifact is linked to this recruitment document.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+            ]]></field>
+        </record>
+
+        <record id="action_recruitment_document_download_signed_artifact" model="ir.actions.server">
+            <field name="name">Download Signed Artifact</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_recruitment_document"/>
+            <field name="binding_model_id" ref="hr_recruitment_custom.model_x_hr_recruitment_document"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+for rec in records:
+    if rec.x_signed_attachment_id:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % rec.x_signed_attachment_id.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'No signed artifact',
+                'message': 'No signed artifact is linked to this recruitment document.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+            ]]></field>
+        </record>
+
+        <record id="action_recruitment_document_download_sign_certificate" model="ir.actions.server">
+            <field name="name">Download Odoo Sign Certificate</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_recruitment_document"/>
+            <field name="binding_model_id" ref="hr_recruitment_custom.model_x_hr_recruitment_document"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+for rec in records:
+    if rec.x_sign_certificate_attachment_id:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % rec.x_sign_certificate_attachment_id.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'No certificate',
+                'message': 'No Odoo Sign certificate is linked to this recruitment document.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+            ]]></field>
+        </record>
     </data>
 </odoo>

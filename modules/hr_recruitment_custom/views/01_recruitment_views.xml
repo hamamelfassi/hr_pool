@@ -126,7 +126,7 @@
                                     <group>
                                         <field name="x_pdf_attachment_id" readonly="1"
                                             domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]" />
-                                        <field name="x_signed_attachment_id"
+                                        <field name="x_signed_attachment_id" readonly="1"
                                             domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]"
                                             context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}" />
                                     </group>
@@ -189,8 +189,10 @@
                             <field name="x_tor_sent_on" readonly="1" />
                             <field name="x_tor_signed_on" readonly="1" />
                             <field name="x_tor_pdf_attachment_id" readonly="1"
+                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
                                 domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', id)]" />
                             <field name="x_tor_signed_attachment_id"
+                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
                                 domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', id)]"
                                 context="{'default_res_model': 'hr.applicant', 'default_res_id': id}" />
                         </group>
@@ -231,7 +233,7 @@
                             invisible="not id" />
                         <div class="text-muted">
                             Prepare and review the F-0003 required documents checklist here.
-                            Generate the F-0003 PDF here, then send it through native Odoo Sign when ready..
+                            Generate the F-0003 PDF, send it through Odoo Sign, then sync the signed result once the signer completes the request.
                         </div>
                     </group>
 
@@ -260,12 +262,12 @@
                                     invisible="x_state != 'ready_for_pdf' and x_state != 'generated'" />
                                 <button type="action"
                                     name="hr_recruitment_custom.action_required_document_checklist_send_native_sign"
-                                    string="Send F-0003 via Odoo Sign"
+                                    string="Send via Odoo Sign"
                                     class="btn-primary"
                                     invisible="x_state != 'generated' or not x_pdf_attachment_id" />
                                 <button type="action"
                                     name="hr_recruitment_custom.action_required_document_checklist_sync_native_sign_completion"
-                                    string="Sync Odoo Sign Completion"
+                                    string="Sync Signed Result"
                                     class="btn-secondary"
                                     invisible="x_state != 'signature_requested'" />
                                 <field name="x_state"
@@ -289,10 +291,26 @@
                                         <field name="x_sent_on" readonly="1" />
                                         <field name="x_signed_on" readonly="1" />
                                         <field name="x_pdf_attachment_id" readonly="1"
+                                            options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
                                             domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]" />
+                                        <button type="action"
+                                            name="hr_recruitment_custom.action_required_document_checklist_download_generated_pdf"
+                                            string="Download Generated PDF"
+                                            icon="fa-download"
+                                            class="btn-link"
+                                            invisible="not x_pdf_attachment_id" />
+
                                         <field name="x_signed_attachment_id"
+                                            readonly="x_state == 'signed'"
+                                            options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
                                             domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]"
                                             context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}" />
+                                        <button type="action"
+                                            name="hr_recruitment_custom.action_required_document_checklist_download_signed_pdf"
+                                            string="Download Signed PDF"
+                                            icon="fa-download"
+                                            class="btn-link"
+                                            invisible="not x_signed_attachment_id" />
                                     </group>
                                 </group>
                                 <div class="alert alert-info" role="alert">
@@ -432,8 +450,11 @@
                         </group>
                         <group>
                             <field name="x_pdf_attachment_id" readonly="1"
+                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
                                 domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]" />
                             <field name="x_signed_attachment_id"
+                                readonly="x_document_state == 'signed'"
+                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
                                 domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]"
                                 context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}" />
                         </group>

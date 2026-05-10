@@ -815,16 +815,76 @@ git commit -m "pass5e3b: sync F-0003 native Sign completion to registry" \
 
 ## 20. Lessons learned log
 
-5E-3A PASSED — functionally locked and committed.
+### Lesson 1 — 5E-3A native Sign send probe succeeded
 
-### Lesson 1 — Pending
+5E-3A passed without traceback on Odoo.com Enterprise SaaS 19.2.
 
-To be filled after 5E-3A traceback loop.
+The working send pattern is:
 
-### Lesson 2 — Pending
+Generated F-0003 PDF attachment
+→ dynamic sign.template
+→ sign.document from generated PDF attachment
+→ sign.item using F-0003 reviewer signature geometry
+→ sign.send.request + sign.send.request.signer
+→ send_request()
+→ generated sign.request located
+→ x_hr.recruitment_document stores sign.request linkage
 
-To be filled after 5E-3B completion sync test.
+The F-0003 reviewer geometry is locked as:
 
-### Lesson 3 — Pending
+page = 1
+posX = 0.073
+posY = 0.591
+width = 0.565
+height = 0.075
 
-To be filled after F-0002 reuse or F-0004 two-signer extension.
+
+### Lesson 2 - 5E-3B native Sign completion sync succeeded
+
+5E-3B passed.
+
+**The working completion pattern is:**
+
+Linked sign.request
+→ sync action reads sign.request.state
+→ full request state signed required before closure
+→ completed signed PDF/certificate copied to applicant attachments
+→ x_hr.recruitment_document marked signed
+→ F-0003 checklist marked signed
+
+Manual sync is intentionally retained as a controlled lifecycle import step. Native Odoo Sign signs and stores its own request artifacts; the recruitment registry only changes when HR explicitly syncs the official signed outcome.
+
+### Lesson 3 — timestamp hardening
+
+Do not use sign.request.item.signing\_date as the primary signed datetime because it is date-only in this SaaS schema and can create midnight/timezone artifacts.
+
+**Preferred signed timestamp order:**
+
+1. sign.request.write_date when request is signed
+2. latest completed sign.request.item.write_date
+3. sign.request.completion_date only as fallback
+4. current datetime as final fallback
+
+### **Signature profile contract note**
+
+The F-0003 profile is currently hardcoded in the server action as a proven one-signer pattern.
+
+**Future reusable profile registry should model:**
+
+document_type
+source_model
+generated_attachment_field
+signed_attachment_field
+registry_document_type
+roles:
+ - role_key
+ - sign_role_name
+ - signer_source
+ - sequence
+ - required
+ - page
+ - posX
+ - posY
+ - width
+ - height
+signing_order
