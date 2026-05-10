@@ -230,6 +230,24 @@ Use this hierarchy:
 
 When code and docs disagree, inspect the installed module and current repository code before deciding. Then update the docs or code deliberately.
 
+## 9.1 Implementation status override — Pass 5E
+
+As of Pass 5E, the QWeb/native Odoo Sign lifecycle is proven on Marsellia Odoo SaaS 19.2.
+
+The proven pattern is:
+
+```text
+Generated QWeb PDF
+→ dynamic sign.template
+→ sign.document from generated PDF attachment
+→ sign.item with fixed geometry
+→ sign.send.request + sign.send.request.signer
+→ send_request()
+→ linked sign.request
+→ manual Sync Signed Result
+→ signed PDF/certificate copied to applicant
+→ x_hr.recruitment_document and source record close as signed
+
 ## 10. Locked sequential pass plan
 
 No parallel tracks.

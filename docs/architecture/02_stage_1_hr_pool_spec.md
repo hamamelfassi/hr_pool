@@ -28,6 +28,10 @@ Those child models may remain in the module for backward compatibility and futur
 
 Later, `hr_pool` may introduce a second prefilled enrichment form, using tokenized/prefilled URL patterns, to collect education, experience, language, and credential details from selected candidates.
 
+Stage 2 public continuation and required-document submissions are not part of the initial Stage 1 public intake.
+
+They belong to `hr_recruitment_custom` after conversion to native `hr.applicant`, because they depend on checklist lines, recruitment document registry state, and Stage 2 document gates.
+
 ### Initial intake payload contract
 
 The simplified public Stage 1 intake form is Arabic-first and should collect only the minimum data needed to create a usable `x_hr.pool` record.

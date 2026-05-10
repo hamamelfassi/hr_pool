@@ -1,3 +1,14 @@
+> Historical/concept note:
+> This concept document is retained for rationale.
+>
+> Pass 6A should use the current Stage 2 model names and implementation state:
+> - `x_hr.recruitment_required_document_type`
+> - `x_hr.applicant_required_document_checklist`
+> - `x_hr.applicant_required_document_line`
+> - `x_hr.applicant_required_document_submission`
+>
+> The checklist is the control sheet. The submission model is the evidence store.
+
 ## **Required documents submission/checklist model**
 
 Your proposed model is broadly right. I would sharpen it like this.

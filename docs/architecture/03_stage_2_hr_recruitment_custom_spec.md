@@ -167,16 +167,32 @@ Purpose:
 
 Purpose:
 
-- required document checklist;
-- submitted-document collection/review;
-- tokenized Fillout upload URL generation;
+- required document checklist control;
+- F-0003 checklist readiness validation;
+- F-0003 PDF generation;
+- F-0003 native Odoo Sign send/sync lifecycle;
+- checklist lifecycle summary.
+
+The checklist is the control sheet. It is not the submitted-document evidence store.
+
+The signed checklist PDF is a registry artifact.
+
+### 5.4 `Submissions`
+
+Purpose:
+
+- candidate-submitted required-document evidence;
+- manual/internal submission creation during Pass 6A;
+- later tokenized Fillout/n8n writeback during Pass 6B;
 - accept/reject/resubmission workflow;
-- F-0003 checklist PDF generation and signature workflow;
-- supplemental applicant completion data where collected through the document-submission form.
+- latest accepted artifact per required document type;
+- submission audit trail.
 
-The checklist is operational data. The signed checklist PDF is a registry artifact.
+Accepted submissions update the relevant F-0003 checklist lines.
 
-### 5.4 `Declarations`
+Rejected submissions remain in the audit trail and do not overwrite earlier submissions.
+
+### 5.5 `Declarations`
 
 Purpose:
 
@@ -186,7 +202,7 @@ Purpose:
 
 These are generated with QWeb and tracked in the recruitment document registry.
 
-### 5.5 `Contract`
+### 5.6 `Contract`
 
 Purpose:
 
@@ -197,7 +213,7 @@ Purpose:
 - employee ID generation after signed contract;
 - downstream `hr.employee` / `hr.contract` / payroll-relevant handover readiness.
 
-### 5.6 Smart button: `Recruitment Documents`
+### 5.7 Smart button: `Recruitment Documents`
 
 Purpose:
 
@@ -416,18 +432,20 @@ The Contract tab stores and prepares the values needed for:
 
 ## 12. Required documents workflow
 
-The required documents workflow should use separate models:
+The required documents workflow should use:
 
-- required document type;
-- applicant document checklist;
-- applicant document line;
-- applicant submitted document.
+- `x_hr.recruitment_required_document_type`;
+- `x_hr.applicant_required_document_checklist`;
+- `x_hr.applicant_required_document_line`;
+- `x_hr.applicant_required_document_submission` (Pass 6A target).
 
-The Fillout upload URL should be tokenized.
+The checklist controls readiness and PDF/signature lifecycle.
 
-The token is the authority for applicant/checklist/allowed lines. Raw URL parameters are not trusted.
+The submission model stores evidence files and review outcomes.
 
-New uploads never overwrite previous uploads.
+The Fillout upload URL should be tokenized. Raw applicant/checklist IDs are not trusted as authority.
+
+New submision uploads never overwrite previous uploads.
 
 Rejected or superseded submissions remain part of the audit trail.
 

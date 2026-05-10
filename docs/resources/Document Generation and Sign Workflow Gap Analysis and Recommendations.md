@@ -1,4 +1,12 @@
-							
+> Historical note:
+> This document was written before Pass 5E proved the native Odoo Sign automation pattern and before the recruitment document registry was fully operational.
+>
+> It remains useful as rationale, but it is no longer the active implementation authority.
+>
+> Current authority:
+> - `docs/modules/hr_recruitment_custom/native_odoo_sign_workflow_wiki.md`
+> - `docs/modules/hr_recruitment_custom/pass_5e_f0003_native_sign_lifecycle_plan.md`
+> - current repo code.							
 
 # Document Generation and Sign Workflow Gap Analysis and Recommendations
 
@@ -86,23 +94,23 @@ Each record represents one document lifecycle for one applicant.
 
 Suggested fields:
 
-| Field | Purpose |
-| ----- | ----- |
-| `x_applicant_id` | parent `hr.applicant` |
-| `x_document_type` | `tor`, `interview_evaluation`, `nda`, `declaration_accuracy`, `declaration_privacy`, etc. |
-| `x_interview_id` | optional link when document belongs to an interview |
-| `x_state` | `draft`, `generated`, `signature_requested`, `partially_signed`, `signed`, `cancelled`, `superseded` |
-| `x_generated_attachment_id` | latest generated PDF |
-| `x_signed_attachment_id` | final signed PDF |
-| `x_sign_request_id` | native Odoo Sign request, if available |
-| `x_template_mode` | `dynamic_qweb`, `static_sign_template`, `manual_upload` |
-| `x_version` | integer version |
-| `x_generated_on` | timestamp |
-| `x_sent_on` | timestamp |
-| `x_signed_on` | timestamp |
-| `x_responsible_user_id` | recruiter/owner |
-| `x_primary_signer_partner_id` | candidate/interviewer/manager |
-| `x_notes` | operational notes |
+| Field                         | Purpose                                                                                              |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `x_applicant_id`              | parent `hr.applicant`                                                                                |
+| `x_document_type`             | `tor`, `interview_evaluation`, `nda`, `declaration_accuracy`, `declaration_privacy`, etc.            |
+| `x_interview_id`              | optional link when document belongs to an interview                                                  |
+| `x_state`                     | `draft`, `generated`, `signature_requested`, `partially_signed`, `signed`, `cancelled`, `superseded` |
+| `x_generated_attachment_id`   | latest generated PDF                                                                                 |
+| `x_signed_attachment_id`      | final signed PDF                                                                                     |
+| `x_sign_request_id`           | native Odoo Sign request, if available                                                               |
+| `x_template_mode`             | `dynamic_qweb`, `static_sign_template`, `manual_upload`                                              |
+| `x_version`                   | integer version                                                                                      |
+| `x_generated_on`              | timestamp                                                                                            |
+| `x_sent_on`                   | timestamp                                                                                            |
+| `x_signed_on`                 | timestamp                                                                                            |
+| `x_responsible_user_id`       | recruiter/owner                                                                                      |
+| `x_primary_signer_partner_id` | candidate/interviewer/manager                                                                        |
+| `x_notes`                     | operational notes                                                                                    |
 
 Optional child model:
 
@@ -190,11 +198,11 @@ So the next TOR slice should be:
 
 Recommended TOR signer phases:
 
-| Phase | Signers |
-| ----- | ----- |
-| Now | applicant only, manual field placement |
-| Next | applicant only, fixed final page |
-| Then | applicant \+ department manager |
+| Phase | Signers                                             |
+| ----- | --------------------------------------------------- |
+| Now   | applicant only, manual field placement              |
+| Next  | applicant only, fixed final page                    |
+| Then  | applicant \+ department manager                     |
 | Later | signing order, countersign, employee handoff gating |
 
 Do not mix manager routing into the next slice. That will reintroduce churn.
@@ -222,15 +230,15 @@ Declarations and NDAs should **not** use the same QWeb strategy as TOR/interview
 
 Use this split:
 
-| Document type | Best engine |
-| ----- | ----- |
-| TOR | QWeb dynamic PDF |
-| Interview Evaluation | structured model \+ QWeb PDF |
-| NDA | Odoo Sign template |
-| Accuracy declaration | Odoo Sign template |
-| Privacy declaration | Odoo Sign template |
-| Required-doc acknowledgment | Odoo Sign template or simple generated checklist PDF |
-| Job-specific custom declaration | QWeb if dynamic, Sign template if fixed |
+| Document type                   | Best engine                                          |
+| ------------------------------- | ---------------------------------------------------- |
+| TOR                             | QWeb dynamic PDF                                     |
+| Interview Evaluation            | structured model \+ QWeb PDF                         |
+| NDA                             | Odoo Sign template                                   |
+| Accuracy declaration            | Odoo Sign template                                   |
+| Privacy declaration             | Odoo Sign template                                   |
+| Required-doc acknowledgment     | Odoo Sign template or simple generated checklist PDF |
+| Job-specific custom declaration | QWeb if dynamic, Sign template if fixed              |
 
 This avoids overengineering.
 
@@ -431,13 +439,13 @@ Create expected document rows automatically when the `hr.applicant` is created o
 
 Example default rows:
 
-| Document | Create when? | Why |
-| ----- | ----- | ----- |
-| TOR | applicant created / job assigned | always expected for formal recruitment |
-| Interview Evaluation | when interview record is created | one applicant may have multiple interviews |
-| NDA | when applicant enters formal stage | standardized document |
-| Declarations | when applicant enters formal stage | standardized document |
-| Required Documents Checklist | when checklist is initialized | depends on required-doc policy |
+| Document                     | Create when?                       | Why                                        |
+| ---------------------------- | ---------------------------------- | ------------------------------------------ |
+| TOR                          | applicant created / job assigned   | always expected for formal recruitment     |
+| Interview Evaluation         | when interview record is created   | one applicant may have multiple interviews |
+| NDA                          | when applicant enters formal stage | standardized document                      |
+| Declarations                 | when applicant enters formal stage | standardized document                      |
+| Required Documents Checklist | when checklist is initialized      | depends on required-doc policy             |
 
 So:
 
@@ -519,12 +527,12 @@ So use native Odoo Sign as the signing engine, but do not rely on the native but
 
 Recommended split:
 
-| Layer | Responsibility |
-| ----- | ----- |
-| Native Odoo Sign | send request, collect signature, manage signer status, store signed result |
-| `x_hr.recruitment_document` | recruitment-specific document lifecycle |
-| Applicant tab buttons | generate/send the right document from the right workflow |
-| Native chatter | audit visibility and file trail |
+| Layer                       | Responsibility                                                             |
+| --------------------------- | -------------------------------------------------------------------------- |
+| Native Odoo Sign            | send request, collect signature, manage signer status, store signed result |
+| `x_hr.recruitment_document` | recruitment-specific document lifecycle                                    |
+| Applicant tab buttons       | generate/send the right document from the right workflow                   |
+| Native chatter              | audit visibility and file trail                                            |
 
 The native `Request Signature` action is still useful as a fallback/manual route. Your custom buttons should make the repeatable recruitment flows cleaner.
 

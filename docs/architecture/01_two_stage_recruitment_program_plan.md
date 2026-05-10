@@ -97,6 +97,14 @@ The block is complete only when these artifacts are signed:
 
 Only after all three are signed may the applicant move to Contract Proposal / Preboarding.
 
+### 6.1 Implementation sequencing note
+
+The Evaluation gate still requires signed F-0002, F-0003, and F-0004 before Contract Proposal.
+
+However, after Pass 5E, F-0003 has proven the reusable QWeb/native Sign/registry pattern. The next implementation slice is Pass 6A, because the required-document submission/writeback loop is now the most important unproven reusable pattern.
+
+F-0004 remains required for the Evaluation gate, but its implementation is intentionally deferred until the required-document submission foundation is proven.
+
 ## 7. Preboarding / Contract Proposal gate
 
 Contract Proposal is the Marsellia preboarding contract package stage.

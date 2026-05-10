@@ -57,3 +57,14 @@ After install, validate that:
 - form and report labels are translated
 - selection values are readable in Arabic
 - no important stage-specific field is left in English unless intentionally technical
+
+## 6. Pass 6A reminder
+
+Pass 6A introduces user-facing submission labels, states, buttons, and tab titles.
+
+The implementation pass is not closed until `hr_recruitment_custom` Arabic translations are updated for:
+- Submissions tab;
+- submission model fields;
+- submission states;
+- accept/reject/resubmission actions;
+- public continuation/token labels where introduced.
