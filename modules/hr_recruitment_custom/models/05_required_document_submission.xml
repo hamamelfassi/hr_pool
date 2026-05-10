@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ========================================================= -->
+        <!-- Applicant Required Document Submissions                   -->
+        <!-- Internal evidence/submission foundation for F-0003 lines.  -->
+        <!-- Public continuation/token writeback is intentionally out   -->
+        <!-- of scope for Pass 6A-1.                                   -->
+        <!-- ========================================================= -->
+
+        <record id="model_x_hr_applicant_required_document_submission" model="ir.model">
+            <field name="name">Applicant Required Document Submission</field>
+            <field name="model">x_hr.applicant_required_document_submission</field>
+            <field name="state">manual</field>
+            <field name="is_mail_thread" eval="True" />
+            <field name="is_mail_activity" eval="True" />
+        </record>
+
+        <record id="field_required_document_submission_x_name" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_name</field>
+            <field name="field_description">Submission Name</field>
+            <field name="ttype">char</field>
+            <field name="required" eval="False" />
+        </record>
+
+        <record id="field_required_document_submission_x_submission_sequence" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_submission_sequence</field>
+            <field name="field_description">Submission Sequence</field>
+            <field name="ttype">integer</field>
+            <field name="readonly" eval="True" />
+        </record>
+
+        <record id="field_required_document_submission_x_applicant_id" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_applicant_id</field>
+            <field name="field_description">Applicant</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.applicant</field>
+            <field name="required" eval="True" />
+            <field name="on_delete">cascade</field>
+            <field name="index" eval="True" />
+        </record>
+
+        <record id="field_required_document_submission_x_checklist_id" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_checklist_id</field>
+            <field name="field_description">Required Document Checklist</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.applicant_required_document_checklist</field>
+            <field name="required" eval="True" />
+            <field name="on_delete">restrict</field>
+            <field name="index" eval="True" />
+        </record>
+
+        <record id="field_required_document_submission_x_line_id" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_line_id</field>
+            <field name="field_description">Required Document Line</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.applicant_required_document_line</field>
+            <field name="required" eval="True" />
+            <field name="on_delete">restrict</field>
+            <field name="index" eval="True" />
+        </record>
+
+        <record id="field_required_document_submission_x_document_type_id" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_document_type_id</field>
+            <field name="field_description">Required Document Type</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.recruitment_required_document_type</field>
+            <field name="required" eval="False" />
+            <field name="on_delete">restrict</field>
+            <field name="index" eval="True" />
+        </record>
+
+        <record id="field_required_document_submission_x_attachment_id" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_attachment_id</field>
+            <field name="field_description">Submitted Attachment</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+        </record>
+
+        <record id="field_required_document_submission_x_source" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_source</field>
+            <field name="field_description">Submission Source</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('manual', 'Manual Internal Upload'),
+                ('fillout_zite', 'Fillout / Zite'),
+                ('n8n', 'n8n Writeback'),
+                ('other', 'Other')
+                ]</field>
+        </record>
+
+        <record id="field_required_document_submission_x_state" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_state</field>
+            <field name="field_description">Submission State</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('submitted', 'Submitted'),
+                ('accepted', 'Accepted'),
+                ('rejected', 'Rejected'),
+                ('superseded', 'Superseded')
+                ]</field>
+            <field name="index" eval="True" />
+        </record>
+
+        <record id="field_required_document_submission_x_submitted_by_user_id" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_submitted_by_user_id</field>
+            <field name="field_description">Submitted By</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+        </record>
+
+        <record id="field_required_document_submission_x_submitted_on" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_submitted_on</field>
+            <field name="field_description">Submitted On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_required_document_submission_x_reviewed_by_user_id" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_reviewed_by_user_id</field>
+            <field name="field_description">Reviewed By</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+        </record>
+
+        <record id="field_required_document_submission_x_reviewed_on" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_reviewed_on</field>
+            <field name="field_description">Reviewed On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_required_document_submission_x_reviewer_note" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_reviewer_note</field>
+            <field name="field_description">Reviewer Note / Rejection Reason</field>
+            <field name="ttype">text</field>
+        </record>
+
+        <record id="field_required_document_submission_x_source_submission_id" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_source_submission_id</field>
+            <field name="field_description">Source Submission ID</field>
+            <field name="ttype">char</field>
+            <field name="index" eval="True" />
+        </record>
+
+        <record id="field_required_document_submission_x_source_reference" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_source_reference</field>
+            <field name="field_description">Source Reference</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_required_document_submission_x_document_number" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_document_number</field>
+            <field name="field_description">Document Number / Code</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_required_document_submission_x_issuing_authority" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_issuing_authority</field>
+            <field name="field_description">Issuing Authority</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_required_document_submission_x_issuing_place_id" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_issuing_place_id</field>
+            <field name="field_description">Issuing Place / Municipality</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_grc.location</field>
+            <field name="on_delete">restrict</field>
+        </record>
+
+        <record id="field_required_document_submission_x_issue_date" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_issue_date</field>
+            <field name="field_description">Issue Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_required_document_submission_x_expiry_date" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_expiry_date</field>
+            <field name="field_description">Expiry Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_required_document_submission_x_notes" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="name">x_notes</field>
+            <field name="field_description">Submission Notes</field>
+            <field name="ttype">text</field>
+        </record>
+
+        <!-- ========================================================= -->
+        <!-- Backlinks from applicant, checklist, and checklist line    -->
+        <!-- ========================================================= -->
+
+        <record id="field_hr_applicant_x_required_document_submission_ids" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
+            <field name="name">x_required_document_submission_ids</field>
+            <field name="field_description">Required Document Submissions</field>
+            <field name="ttype">one2many</field>
+            <field name="relation">x_hr.applicant_required_document_submission</field>
+            <field name="relation_field">x_applicant_id</field>
+        </record>
+
+        <record id="field_required_document_checklist_x_submission_ids" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_checklist" />
+            <field name="name">x_submission_ids</field>
+            <field name="field_description">Required Document Submissions</field>
+            <field name="ttype">one2many</field>
+            <field name="relation">x_hr.applicant_required_document_submission</field>
+            <field name="relation_field">x_checklist_id</field>
+        </record>
+
+        <record id="field_required_document_line_x_submission_ids" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_submission_ids</field>
+            <field name="field_description">Submissions</field>
+            <field name="ttype">one2many</field>
+            <field name="relation">x_hr.applicant_required_document_submission</field>
+            <field name="relation_field">x_line_id</field>
+        </record>
+
+        <record id="field_required_document_line_x_latest_accepted_submission_id" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_latest_accepted_submission_id</field>
+            <field name="field_description">Latest Accepted Submission</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.applicant_required_document_submission</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_required_document_line_x_latest_accepted_attachment_id" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_latest_accepted_attachment_id</field>
+            <field name="field_description">Latest Accepted Attachment</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+    </data>
+</odoo>

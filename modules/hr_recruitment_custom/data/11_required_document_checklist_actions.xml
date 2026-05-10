@@ -35,12 +35,21 @@ for applicant in records:
     created_checklist = False
 
     if not checklist:
-        applicant_name = applicant.partner_name or applicant.name or applicant.display_name
+        applicant_name = applicant.partner_name or applicant.name or applicant.display_name or 'Applicant'
+        checklist_sequence = checklist_model.search_count([
+            ('x_applicant_id', '=', applicant.id),
+        ]) + 1
+        checklist_reference = 'MCEP-HR-F-0003-%05d-%02d' % (applicant.id, checklist_sequence)
         checklist = checklist_model.create({
-            'x_name': 'Required Documents Checklist - %s' % applicant_name,
+            'x_name': '%s / F-0003 Checklist #%s / %s / Draft' % (
+                applicant_name,
+                checklist_sequence,
+                checklist_reference,
+            ),
             'x_applicant_id': applicant.id,
+            'x_checklist_sequence': checklist_sequence,
             'x_state': 'draft',
-            'x_document_reference': 'MCEP-HR-F-0003-%05d' % applicant.id,
+            'x_document_reference': checklist_reference,
             'x_prepared_by_user_id': env.user.id,
             'x_prepared_on': now,
             'x_reviewer_user_id': env.user.id,

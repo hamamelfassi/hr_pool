@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ========================================================= -->
+        <!-- Pass 6A-2B: Submission identity cleanup and hardening       -->
+        <!-- Adds a robust second normalization layer after 6A-2A.       -->
+        <!-- ========================================================= -->
+
+        <record id="automation_required_document_submission_cleanup_on_create"
+            model="base.automation">
+            <field name="name">Cleanup Required Document Submission Identity on Create</field>
+            <field name="active" eval="True" />
+            <field name="trigger">on_create</field>
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+        </record>
+
+        <record id="action_required_document_submission_cleanup_on_create"
+            model="ir.actions.server">
+            <field name="name">Cleanup Required Document Submission Identity on Create</field>
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="base_automation_id"
+                ref="hr_recruitment_custom.automation_required_document_submission_cleanup_on_create" />
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+submission_model = env['x_hr.applicant_required_document_submission'].sudo()
+
+for rec in records.sudo():
+    values = {}
+
+    line = rec.x_line_id
+    checklist = rec.x_checklist_id or (line.x_checklist_id if line else False)
+    applicant = rec.x_applicant_id or (checklist.x_applicant_id if checklist else False)
+    document_type = (line.x_document_type_id if line else False) or rec.x_document_type_id
+
+    if applicant and rec.x_applicant_id != applicant:
+        values['x_applicant_id'] = applicant.id
+
+    if checklist and rec.x_checklist_id != checklist:
+        values['x_checklist_id'] = checklist.id
+
+    # The checklist line controls the document type. This prevents conflict
+    # between selected line and manually selected type.
+    if document_type and rec.x_document_type_id != document_type:
+        values['x_document_type_id'] = document_type.id
+
+    if not rec.x_source:
+        values['x_source'] = 'manual'
+
+    if not rec.x_state:
+        values['x_state'] = 'submitted'
+
+    if not rec.x_submitted_by_user_id:
+        values['x_submitted_by_user_id'] = env.user.id
+
+    if not rec.x_submitted_on and rec.create_date:
+        values['x_submitted_on'] = rec.create_date
+
+    if applicant and checklist and line:
+        siblings = submission_model.search([
+            ('x_applicant_id', '=', applicant.id),
+            ('x_checklist_id', '=', checklist.id),
+            ('x_line_id', '=', line.id),
+        ], order='id asc')
+
+        sequence = 1
+        if rec.id in siblings.ids:
+            sequence = siblings.ids.index(rec.id) + 1
+        else:
+            sequence = submission_model.search_count([
+                ('x_applicant_id', '=', applicant.id),
+                ('x_checklist_id', '=', checklist.id),
+                ('x_line_id', '=', line.id),
+                ('id', '<', rec.id),
+            ]) + 1
+
+        if rec.x_submission_sequence != sequence:
+            values['x_submission_sequence'] = sequence
+
+        applicant_name = applicant.partner_name or applicant.name or applicant.display_name or 'Applicant'
+        checklist_label = checklist.x_document_reference or checklist.x_name or ('Checklist %s' % checklist.id)
+
+        document_label = False
+        if document_type:
+            document_label = (
+                document_type.x_name_en
+                or document_type.x_name_ar
+                or document_type.x_name
+                or document_type.display_name
+            )
+        if not document_label and line:
+            document_label = (
+                line.x_document_name_en
+                or line.x_document_name_ar
+                or line.x_name
+                or line.display_name
+            )
+        if not document_label:
+            document_label = 'Required Document'
+
+        normalized_name = '%s / %s / %s / Submission #%s' % (
+            applicant_name,
+            checklist_label,
+            document_label,
+            sequence,
+        )
+
+        if rec.x_name != normalized_name:
+            values['x_name'] = normalized_name
+
+    elif not rec.x_name:
+        values['x_name'] = 'Required Document Submission'
+
+    if values:
+        rec.sudo().write(values)
+            ]]></field>
+        </record>
+
+        <record id="automation_required_document_submission_cleanup_on_line_or_checklist_change"
+            model="base.automation">
+            <field name="name">Cleanup Required Document Submission Identity on Linkage Change</field>
+            <field name="active" eval="True" />
+            <field name="trigger">on_write</field>
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="trigger_field_ids"
+                eval="[(6, 0, [
+                    ref('hr_recruitment_custom.field_required_document_submission_x_applicant_id'),
+                    ref('hr_recruitment_custom.field_required_document_submission_x_checklist_id'),
+                    ref('hr_recruitment_custom.field_required_document_submission_x_line_id'),
+                    ref('hr_recruitment_custom.field_required_document_submission_x_document_type_id')
+                ])]" />
+        </record>
+
+        <record id="action_required_document_submission_cleanup_on_line_or_checklist_change"
+            model="ir.actions.server">
+            <field name="name">Cleanup Required Document Submission Identity on Linkage Change</field>
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="base_automation_id"
+                ref="hr_recruitment_custom.automation_required_document_submission_cleanup_on_line_or_checklist_change" />
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+submission_model = env['x_hr.applicant_required_document_submission'].sudo()
+
+for rec in records.sudo():
+    values = {}
+
+    line = rec.x_line_id
+    checklist = rec.x_checklist_id or (line.x_checklist_id if line else False)
+    applicant = rec.x_applicant_id or (checklist.x_applicant_id if checklist else False)
+    document_type = (line.x_document_type_id if line else False) or rec.x_document_type_id
+
+    if applicant and rec.x_applicant_id != applicant:
+        values['x_applicant_id'] = applicant.id
+
+    if checklist and rec.x_checklist_id != checklist:
+        values['x_checklist_id'] = checklist.id
+
+    if document_type and rec.x_document_type_id != document_type:
+        values['x_document_type_id'] = document_type.id
+
+    if not rec.x_source:
+        values['x_source'] = 'manual'
+
+    if not rec.x_state:
+        values['x_state'] = 'submitted'
+
+    if not rec.x_submitted_by_user_id:
+        values['x_submitted_by_user_id'] = env.user.id
+
+    if not rec.x_submitted_on and rec.create_date:
+        values['x_submitted_on'] = rec.create_date
+
+    if applicant and checklist and line:
+        siblings = submission_model.search([
+            ('x_applicant_id', '=', applicant.id),
+            ('x_checklist_id', '=', checklist.id),
+            ('x_line_id', '=', line.id),
+        ], order='id asc')
+
+        sequence = 1
+        if rec.id in siblings.ids:
+            sequence = siblings.ids.index(rec.id) + 1
+        else:
+            sequence = submission_model.search_count([
+                ('x_applicant_id', '=', applicant.id),
+                ('x_checklist_id', '=', checklist.id),
+                ('x_line_id', '=', line.id),
+                ('id', '<', rec.id),
+            ]) + 1
+
+        if rec.x_submission_sequence != sequence:
+            values['x_submission_sequence'] = sequence
+
+        applicant_name = applicant.partner_name or applicant.name or applicant.display_name or 'Applicant'
+        checklist_label = checklist.x_document_reference or checklist.x_name or ('Checklist %s' % checklist.id)
+
+        document_label = False
+        if document_type:
+            document_label = (
+                document_type.x_name_en
+                or document_type.x_name_ar
+                or document_type.x_name
+                or document_type.display_name
+            )
+        if not document_label and line:
+            document_label = (
+                line.x_document_name_en
+                or line.x_document_name_ar
+                or line.x_name
+                or line.display_name
+            )
+        if not document_label:
+            document_label = 'Required Document'
+
+        normalized_name = '%s / %s / %s / Submission #%s' % (
+            applicant_name,
+            checklist_label,
+            document_label,
+            sequence,
+        )
+
+        if rec.x_name != normalized_name:
+            values['x_name'] = normalized_name
+
+    elif not rec.x_name:
+        values['x_name'] = 'Required Document Submission'
+
+    if values:
+        rec.sudo().write(values)
+            ]]></field>
+        </record>
+
+        <record id="action_hr_applicant_cleanup_required_document_submission_identities"
+            model="ir.actions.server">
+            <field name="name">Normalize Checklist / Submission Names</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
+            <field name="binding_model_id" ref="hr_recruitment.model_hr_applicant" />
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+checklist_model = env['x_hr.applicant_required_document_checklist'].sudo()
+submission_model = env['x_hr.applicant_required_document_submission'].sudo()
+
+state_labels = {
+    'draft': 'Draft',
+    'in_review': 'In Review',
+    'ready_for_pdf': 'Ready for PDF',
+    'generated': 'Generated',
+    'signature_requested': 'Signature Requested',
+    'signed': 'Signed',
+    'cancelled': 'Cancelled',
+}
+
+for applicant in records.sudo():
+    applicant_name = applicant.partner_name or applicant.name or applicant.display_name or 'Applicant'
+
+    checklists = checklist_model.search([
+        ('x_applicant_id', '=', applicant.id),
+    ], order='id asc')
+
+    for index, checklist in enumerate(checklists, start=1):
+        reference = checklist.x_document_reference or ('MCEP-HR-F-0003-%05d-%02d' % (applicant.id, index))
+        state_label = state_labels.get(checklist.x_state or 'draft', checklist.x_state or 'Draft')
+        normalized_name = '%s / F-0003 Checklist #%s / %s / %s' % (
+            applicant_name,
+            index,
+            reference,
+            state_label,
+        )
+
+        values = {}
+        if checklist.x_checklist_sequence != index:
+            values['x_checklist_sequence'] = index
+        if not checklist.x_document_reference:
+            values['x_document_reference'] = reference
+        if checklist.x_name != normalized_name:
+            values['x_name'] = normalized_name
+        if values:
+            checklist.sudo().write(values)
+
+    submissions = submission_model.search([
+        ('x_applicant_id', '=', applicant.id),
+    ], order='x_checklist_id asc, x_line_id asc, id asc')
+
+    for submission in submissions:
+        values = {}
+
+        line = submission.x_line_id
+        checklist = submission.x_checklist_id or (line.x_checklist_id if line else False)
+        document_type = (line.x_document_type_id if line else False) or submission.x_document_type_id
+
+        if checklist and submission.x_checklist_id != checklist:
+            values['x_checklist_id'] = checklist.id
+
+        if document_type and submission.x_document_type_id != document_type:
+            values['x_document_type_id'] = document_type.id
+
+        if not submission.x_source:
+            values['x_source'] = 'manual'
+
+        if not submission.x_state:
+            values['x_state'] = 'submitted'
+
+        if not submission.x_submitted_by_user_id:
+            values['x_submitted_by_user_id'] = env.user.id
+
+        if not submission.x_submitted_on and submission.create_date:
+            values['x_submitted_on'] = submission.create_date
+
+        if checklist and line:
+            siblings = submission_model.search([
+                ('x_applicant_id', '=', applicant.id),
+                ('x_checklist_id', '=', checklist.id),
+                ('x_line_id', '=', line.id),
+            ], order='id asc')
+
+            sequence = 1
+            if submission.id in siblings.ids:
+                sequence = siblings.ids.index(submission.id) + 1
+
+            if submission.x_submission_sequence != sequence:
+                values['x_submission_sequence'] = sequence
+
+            checklist_label = checklist.x_document_reference or checklist.x_name or ('Checklist %s' % checklist.id)
+
+            document_label = False
+            if document_type:
+                document_label = (
+                    document_type.x_name_en
+                    or document_type.x_name_ar
+                    or document_type.x_name
+                    or document_type.display_name
+                )
+            if not document_label and line:
+                document_label = (
+                    line.x_document_name_en
+                    or line.x_document_name_ar
+                    or line.x_name
+                    or line.display_name
+                )
+            if not document_label:
+                document_label = 'Required Document'
+
+            normalized_name = '%s / %s / %s / Submission #%s' % (
+                applicant_name,
+                checklist_label,
+                document_label,
+                sequence,
+            )
+
+            if submission.x_name != normalized_name:
+                values['x_name'] = normalized_name
+
+        elif not submission.x_name:
+            values['x_name'] = 'Required Document Submission'
+
+        if values:
+            submission.sudo().write(values)
+
+    applicant.message_post(
+        body='F-0003 checklist and required document submission identities normalized.'
+    )
+
+action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>

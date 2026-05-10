@@ -168,6 +168,15 @@
             <field name="index" eval="True" />
         </record>
 
+        <record id="field_required_document_checklist_x_checklist_sequence" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_checklist" />
+            <field name="name">x_checklist_sequence</field>
+            <field name="field_description">Applicant Checklist Sequence</field>
+            <field name="ttype">integer</field>
+            <field name="readonly" eval="True" />
+        </record>        
+
         <record id="field_required_document_checklist_x_state" model="ir.model.fields">
             <field name="model_id"
                 ref="hr_recruitment_custom.model_x_hr_applicant_required_document_checklist" />
@@ -356,6 +365,7 @@
                 ('submitted', 'Submitted'),
                 ('accepted', 'Accepted'),
                 ('rejected', 'Rejected'),
+                ('resubmission_requested', 'Resubmission Requested'),
                 ('not_applicable', 'Not Applicable')
                 ]</field>
         </record>
