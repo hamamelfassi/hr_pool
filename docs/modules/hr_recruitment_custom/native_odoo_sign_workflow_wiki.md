@@ -518,6 +518,16 @@ action = {
 
 For layout stability, prefer icon-only or short download buttons near artifact fields.
 
+### Related SaaS server-action guard pattern
+
+Native Sign lifecycle actions and required-document review actions use SaaS-safe server-action guards.
+
+For reusable validation, toast notification, and reload patterns, see:
+
+- `docs/modules/hr_recruitment_custom/server_action_saas_patterns_wiki.md`
+
+Important rule: do not use `raise Warning(...)` in Odoo.com SaaS 19.2 server actions. Use `display_notification` for recoverable validation guards.
+
 ---
 
 ## 10. Button and label conventions

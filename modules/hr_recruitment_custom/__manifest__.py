@@ -40,6 +40,7 @@
         "data/12_required_document_checklist_pdf_actions.xml",
         "data/13_required_document_submission_identity_actions.xml",
         "data/14_required_document_submission_cleanup_actions.xml",
+        "data/15_required_document_submission_review_actions.xml",
         "views/02_recruitment_document_views.xml",
         "views/01_recruitment_views.xml"
     ],

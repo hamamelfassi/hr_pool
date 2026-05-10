@@ -16,6 +16,8 @@ Read these first:
 4. `docs/resources/current_phase_2_execution_plan.md`
 5. `pass_5e_f0003_native_sign_lifecycle_plan.md` — locked Pass 5E F-0003 checklist/PDF/native Sign lifecycle plan.
 6. `native_odoo_sign_workflow_wiki.md` — reusable native Odoo Sign send/sync workflow pattern proven on F-0003.
+7. `docs/modules/hr_recruitment_custom/server_action_saas_patterns_wiki.md`
+
 
 ## Supporting docs
 
@@ -48,3 +50,11 @@ It tracks generated, uploaded, signed, cancelled, and superseded recruitment art
 Do not implement from old discussion notes alone.
 
 Before each code pass, use the current pass execution plan and confirm that the architecture docs still match the intended implementation.
+
+## Server action SaaS patterns
+
+Server actions in this module must follow the SaaS-safe guard pattern documented in:
+
+- `docs/modules/hr_recruitment_custom/server_action_saas_patterns_wiki.md`
+
+Key rule: do not use `raise Warning(...)` inside Odoo.com SaaS 19.2 server actions. Use `display_notification` toast guards and preserve them by avoiding unconditional reload overwrites.

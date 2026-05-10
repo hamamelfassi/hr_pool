@@ -58,3 +58,16 @@ Create the internal Odoo foundation for applicant required-document submissions 
 - n8n writeback.
 - Candidate upload.
 - Resubmission loop.
+
+### Pass 6A server-action guard pattern
+
+Pass 6A-3 confirmed the SaaS-safe error handling pattern for guarded server actions:
+
+- recoverable validation failures use `display_notification` toast actions;
+- successful actions return reload;
+- final reload must not overwrite toast actions;
+- `raise Warning(...)` is not valid in Odoo.com SaaS 19.2 safe-eval context.
+
+Reference:
+
+- `docs/modules/hr_recruitment_custom/server_action_saas_patterns_wiki.md`

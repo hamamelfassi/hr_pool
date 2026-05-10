@@ -401,8 +401,18 @@
             <field name="model_id"
                 ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
             <field name="name">x_issuing_authority</field>
-            <field name="field_description">Issuing Authority / Place</field>
+            <field name="field_description">Issuing Authority</field>
             <field name="ttype">char</field>
+        </record>
+
+        <record id="field_required_document_line_x_issuing_place_id" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_issuing_place_id</field>
+            <field name="field_description">Issuing Place / Municipality</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_grc.location</field>
+            <field name="on_delete">restrict</field>
         </record>
 
         <record id="field_required_document_line_x_issue_date" model="ir.model.fields">

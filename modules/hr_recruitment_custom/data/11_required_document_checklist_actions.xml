@@ -105,30 +105,72 @@ action = {'type': 'ir.actions.client', 'tag': 'reload'}
             <field name="binding_model_id"
                 ref="hr_recruitment_custom.model_x_hr_applicant_required_document_checklist" />
             <field name="state">code</field>
-            <field name="code"><![CDATA[
-for rec in records:
+                        <field name="code"><![CDATA[
+submission_model = env['x_hr.applicant_required_document_submission'].sudo()
+
+for rec in records.sudo():
     required_lines = rec.x_line_ids.filtered(lambda line: line.x_required)
 
     if not required_lines:
         raise Warning('This F-0003 checklist has no required document lines.')
 
-    missing_lines = required_lines.filtered(lambda line: line.x_status != 'accepted')
+    missing_lines = env['x_hr.applicant_required_document_line'].sudo()
+
+    for line in required_lines:
+        accepted = submission_model.search([
+            ('x_line_id', '=', line.id),
+            ('x_state', '=', 'accepted'),
+            ('x_attachment_id', '!=', False),
+        ], order='x_reviewed_on desc, id desc', limit=1)
+
+        if accepted:
+            line_values = {
+                'x_status': 'accepted',
+                'x_latest_accepted_submission_id': accepted.id,
+                'x_latest_accepted_attachment_id': accepted.x_attachment_id.id,
+                'x_document_number': accepted.x_document_number or False,
+                'x_issuing_authority': accepted.x_issuing_authority or False,
+                'x_issuing_place_id': accepted.x_issuing_place_id.id if accepted.x_issuing_place_id else False,
+                'x_issue_date': accepted.x_issue_date or False,
+                'x_expiry_date': accepted.x_expiry_date or False,
+                'x_reviewed_by_user_id': accepted.x_reviewed_by_user_id.id or env.user.id,
+                'x_reviewed_on': accepted.x_reviewed_on or datetime.datetime.now(),
+            }
+            line.write(line_values)
+        else:
+            latest_submission = submission_model.search([
+                ('x_line_id', '=', line.id),
+            ], order='id desc', limit=1)
+
+            if latest_submission and latest_submission.x_state == 'rejected':
+                target_status = 'resubmission_requested'
+            elif latest_submission and latest_submission.x_state == 'submitted':
+                target_status = 'submitted'
+            else:
+                target_status = 'missing'
+
+            line.write({
+                'x_status': target_status,
+                'x_latest_accepted_submission_id': False,
+                'x_latest_accepted_attachment_id': False,
+            })
+            missing_lines |= line
 
     if missing_lines:
-        rec.sudo().write({
+        rec.write({
             'x_state': 'in_review',
             'x_reviewer_user_id': env.user.id,
         })
         rec.message_post(
-            body='F-0003 checklist remains In Review. %s required document line(s) are not accepted yet.' % len(missing_lines)
+            body='F-0003 checklist remains In Review. %s required document line(s) do not have accepted evidence submissions yet.' % len(missing_lines)
         )
     else:
-        rec.sudo().write({
+        rec.write({
             'x_state': 'ready_for_pdf',
             'x_reviewer_user_id': env.user.id,
         })
         rec.message_post(
-            body='F-0003 checklist is ready for PDF generation. All required document lines are accepted.'
+            body='F-0003 checklist is ready for PDF generation. All required document lines have accepted evidence submissions.'
         )
 
 action = {'type': 'ir.actions.client', 'tag': 'reload'}

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ========================================================= -->
+        <!-- Pass 6A-3: Required Document Submission Review Actions     -->
+        <!-- Internal accept/reject/writeback foundation.               -->
+        <!-- Public continuation and n8n writeback remain out of scope.  -->
+        <!-- ========================================================= -->
+
+        <record id="action_required_document_submission_accept" model="ir.actions.server">
+            <field name="name">Accept Required Document Submission</field>
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="binding_model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+submission_model = env['x_hr.applicant_required_document_submission'].sudo()
+action = False
+
+for rec in records.sudo():
+    line = rec.x_line_id
+    checklist = rec.x_checklist_id or (line.x_checklist_id if line else False)
+    applicant = rec.x_applicant_id or (checklist.x_applicant_id if checklist else False)
+    document_type = (line.x_document_type_id if line else False) or rec.x_document_type_id
+
+    if not applicant:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Applicant missing',
+                'message': 'Cannot accept this submission because it is not linked to an applicant.',
+                'type': 'warning',
+                'sticky': True,
+            }
+        }
+        continue
+
+    if not checklist:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Checklist missing',
+                'message': 'Cannot accept this submission because it is not linked to a required document checklist.',
+                'type': 'warning',
+                'sticky': True,
+            }
+        }
+        continue
+
+    if not line:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Checklist line missing',
+                'message': 'Cannot accept this submission because it is not linked to a required document checklist line.',
+                'type': 'warning',
+                'sticky': True,
+            }
+        }
+        continue
+
+    if not rec.x_attachment_id:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Submitted attachment missing',
+                'message': 'Cannot accept this submission because no submitted attachment is linked.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    reviewed_on = datetime.datetime.now()
+
+    # Supersede earlier accepted evidence for the same checklist line.
+    prior_accepted = submission_model.search([
+        ('x_line_id', '=', line.id),
+        ('x_state', '=', 'accepted'),
+        ('id', '!=', rec.id),
+    ])
+    if prior_accepted:
+        prior_accepted.write({
+            'x_state': 'superseded',
+        })
+
+    submission_values = {
+        'x_state': 'accepted',
+        'x_reviewed_by_user_id': env.user.id,
+        'x_reviewed_on': reviewed_on,
+        'x_applicant_id': applicant.id,
+        'x_checklist_id': checklist.id,
+        'x_line_id': line.id,
+    }
+
+    if document_type:
+        submission_values['x_document_type_id'] = document_type.id
+
+    if not rec.x_source:
+        submission_values['x_source'] = 'manual'
+
+    if not rec.x_submitted_by_user_id:
+        submission_values['x_submitted_by_user_id'] = env.user.id
+
+    if not rec.x_submitted_on:
+        submission_values['x_submitted_on'] = rec.create_date or reviewed_on
+
+    rec.write(submission_values)
+
+    line_values = {
+        'x_status': 'accepted',
+        'x_latest_accepted_submission_id': rec.id,
+        'x_latest_accepted_attachment_id': rec.x_attachment_id.id,
+        'x_document_number': rec.x_document_number or False,
+        'x_issuing_authority': rec.x_issuing_authority or False,
+        'x_issuing_place_id': rec.x_issuing_place_id.id if rec.x_issuing_place_id else False,
+        'x_issue_date': rec.x_issue_date or False,
+        'x_expiry_date': rec.x_expiry_date or False,
+        'x_reviewed_by_user_id': env.user.id,
+        'x_reviewed_on': reviewed_on,
+    }
+
+    line.write(line_values)
+
+    if checklist.x_state in ('draft', 'in_review', 'ready_for_pdf'):
+        checklist.write({
+            'x_state': 'in_review',
+            'x_reviewer_user_id': env.user.id,
+        })
+
+    rec.message_post(
+        body='Required document submission accepted. The linked F-0003 checklist line was updated.'
+    )
+    checklist.message_post(
+        body='Accepted evidence for required document line: %s.' % (
+            line.x_document_name_en or line.x_document_name_ar or line.display_name
+        )
+    )
+    applicant.message_post(
+        body='Required document submission accepted for F-0003 checklist: %s.' % (
+            line.x_document_name_en or line.x_document_name_ar or line.display_name
+        )
+    )
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+
+        <record id="action_required_document_submission_reject" model="ir.actions.server">
+            <field name="name">Reject Required Document Submission</field>
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="binding_model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+submission_model = env['x_hr.applicant_required_document_submission'].sudo()
+action = False
+
+for rec in records.sudo():
+    line = rec.x_line_id
+    checklist = rec.x_checklist_id or (line.x_checklist_id if line else False)
+    applicant = rec.x_applicant_id or (checklist.x_applicant_id if checklist else False)
+
+    if not applicant:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Applicant missing',
+                'message': 'Cannot reject this submission because it is not linked to an applicant.',
+                'type': 'warning',
+                'sticky': True,
+            }
+        }
+        continue
+
+    if not checklist:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Checklist missing',
+                'message': 'Cannot reject this submission because it is not linked to a required document checklist.',
+                'type': 'warning',
+                'sticky': True,
+            }
+        }
+        continue
+
+    if not line:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Checklist line missing',
+                'message': 'Cannot reject this submission because it is not linked to a required document checklist line.',
+                'type': 'warning',
+                'sticky': True,
+            }
+        }
+        continue
+
+    if not rec.x_reviewer_note:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Reviewer note required',
+                'message': 'Please enter a reviewer note / rejection reason before rejecting this submission.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    reviewed_on = datetime.datetime.now()
+
+    rec.write({
+        'x_state': 'rejected',
+        'x_reviewed_by_user_id': env.user.id,
+        'x_reviewed_on': reviewed_on,
+        'x_submitted_on': rec.x_submitted_on or rec.create_date or reviewed_on,
+    })
+
+    accepted = submission_model.search([
+        ('x_line_id', '=', line.id),
+        ('x_state', '=', 'accepted'),
+        ('x_attachment_id', '!=', False),
+    ], order='x_reviewed_on desc, id desc', limit=1)
+
+    if accepted:
+        line.write({
+            'x_status': 'accepted',
+            'x_latest_accepted_submission_id': accepted.id,
+            'x_latest_accepted_attachment_id': accepted.x_attachment_id.id,
+            'x_reviewed_by_user_id': env.user.id,
+            'x_reviewed_on': reviewed_on,
+        })
+    else:
+        note = line.x_notes or ''
+        rejection_note = rec.x_reviewer_note or ''
+        if rejection_note and rejection_note not in note:
+            note = (note + '\n\nRejected submission note: ' + rejection_note).strip()
+
+        line.write({
+            'x_status': 'resubmission_requested',
+            'x_latest_accepted_submission_id': False,
+            'x_latest_accepted_attachment_id': False,
+            'x_reviewed_by_user_id': env.user.id,
+            'x_reviewed_on': reviewed_on,
+            'x_notes': note,
+        })
+
+    if checklist.x_state in ('draft', 'in_review', 'ready_for_pdf'):
+        checklist.write({
+            'x_state': 'in_review',
+            'x_reviewer_user_id': env.user.id,
+        })
+
+    rec.message_post(
+        body='Required document submission rejected. Rejection reason: %s' % rec.x_reviewer_note
+    )
+    checklist.message_post(
+        body='Rejected evidence for required document line: %s.' % (
+            line.x_document_name_en or line.x_document_name_ar or line.display_name
+        )
+    )
+    applicant.message_post(
+        body='Required document submission rejected for F-0003 checklist: %s.' % (
+            line.x_document_name_en or line.x_document_name_ar or line.display_name
+        )
+    )
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>
