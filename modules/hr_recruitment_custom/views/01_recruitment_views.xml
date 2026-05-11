@@ -398,7 +398,30 @@
                             icon="fa-refresh"
                             class="btn-secondary"
                             invisible="not id" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_create_required_document_submission_request"
+                            string="Create Submission Request"
+                            icon="fa-link"
+                            class="btn-primary"
+                            invisible="not id" />
                     </group>
+
+                    <separator string="Submission Requests" />
+                    <field name="x_required_document_submission_request_ids"
+                        context="{'default_x_applicant_id': id}">
+                        <list string="Submission Requests" create="false" delete="false">
+                            <field name="x_sequence" string="#" readonly="1" />
+                            <field name="x_request_reference" readonly="1" />
+                            <field name="x_checklist_id" readonly="1" />
+                            <field name="x_state" />
+                            <field name="x_candidate_email_snapshot" readonly="1" />
+                            <field name="x_expires_at" readonly="1" />
+                            <field name="x_sent_on" readonly="1" />
+                            <field name="x_last_response_at" readonly="1" />
+                        </list>
+                    </field>
+
+                    <separator string="Submitted Evidence" />
 
                     <field name="x_required_document_submission_ids"
                         context="{

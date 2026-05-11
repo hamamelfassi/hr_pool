@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ========================================================= -->
+    <!-- Pass 6B-4                                                 -->
+    <!-- Controlled request/request-line views                      -->
+    <!-- ========================================================= -->
+
+    <record id="view_required_document_submission_request_list_controlled" model="ir.ui.view">
+        <field name="name">x.hr.applicant.required.document.submission.request.list.controlled</field>
+        <field name="model">x_hr.applicant_required_document_submission_request</field>
+        <field name="priority" eval="5" />
+        <field name="arch" type="xml">
+            <list string="Required Document Submission Requests" create="false" delete="false">
+                <field name="x_sequence" string="#" readonly="1" />
+                <field name="x_request_reference" readonly="1" />
+                <field name="x_name" readonly="1" />
+                <field name="x_applicant_id" readonly="1" />
+                <field name="x_checklist_id" readonly="1" />
+                <field name="x_state" />
+                <field name="x_candidate_email_snapshot" readonly="1" />
+                <field name="x_expires_at" readonly="1" />
+                <field name="x_sent_on" readonly="1" />
+                <field name="x_last_response_at" readonly="1" />
+            </list>
+        </field>
+    </record>
+
+    <record id="view_required_document_submission_request_form_controlled" model="ir.ui.view">
+        <field name="name">x.hr.applicant.required.document.submission.request.form.controlled</field>
+        <field name="model">x_hr.applicant_required_document_submission_request</field>
+        <field name="priority" eval="5" />
+        <field name="arch" type="xml">
+            <form string="Required Document Submission Request" create="false" delete="false">
+                <header>
+                    <button type="action"
+                        name="hr_recruitment_custom.action_required_document_submission_request_generate_lines"
+                        string="Generate Request Lines"
+                        class="btn-primary"
+                        invisible="not id or x_state in ('cancelled', 'completed')" />
+                    <button type="action"
+                        name="hr_recruitment_custom.action_required_document_submission_request_generate_url"
+                        string="Generate Continuation URL"
+                        class="btn-secondary"
+                        invisible="not id or x_state in ('cancelled', 'completed')" />
+                    <field name="x_state"
+                        widget="statusbar"
+                        options="{'clickable': false}"
+                        statusbar_visible="draft,prepared,sent,expired,completed,cancelled"
+                        readonly="1" />
+                </header>
+
+                <sheet>
+                    <group>
+                        <group string="Request Identity">
+                            <field name="x_name" readonly="1" />
+                            <field name="x_request_reference" readonly="1" />
+                            <field name="x_sequence" readonly="1" />
+                            <field name="x_applicant_id" readonly="1" />
+                            <field name="x_checklist_id" readonly="1" />
+                        </group>
+                        <group string="Candidate / Token">
+                            <field name="x_candidate_name_snapshot" readonly="1" />
+                            <field name="x_candidate_email_snapshot" readonly="1" />
+                            <field name="x_token_reference" readonly="1" />
+                            <field name="x_expires_at" readonly="1" />
+                        </group>
+                    </group>
+
+                    <group string="Fillout Continuation URL">
+                        <field name="x_form_base_url"
+                            readonly="x_state not in ('draft', 'prepared')" />
+                        <field name="x_generated_url" readonly="1" />
+                    </group>
+
+                    <separator string="Request Lines" />
+                    <field name="x_line_ids">
+                        <list create="false" delete="false">
+                            <field name="x_sequence" widget="handle" />
+                            <field name="x_name" readonly="1" />
+                            <field name="x_document_code" readonly="1" />
+                            <field name="x_fillout_prefix" readonly="1" />
+                            <field name="x_state" />
+                            <field name="x_checklist_line_id" readonly="1" />
+                            <field name="x_document_type_id" readonly="1" />
+                            <field name="x_show_param_name" readonly="1" />
+                            <field name="x_request_line_param_name" readonly="1" />
+                            <field name="x_checklist_line_param_name" readonly="1" />
+                            <field name="x_document_type_param_name" readonly="1" />
+                            <field name="x_document_code_param_name" readonly="1" />
+                        </list>
+                        <form string="Required Document Request Line" create="false" delete="false">
+                            <group>
+                                <group string="Line Identity">
+                                    <field name="x_name" readonly="1" />
+                                    <field name="x_sequence" readonly="1" />
+                                    <field name="x_state" />
+                                    <field name="x_applicant_id" readonly="1" />
+                                    <field name="x_checklist_id" readonly="1" />
+                                    <field name="x_checklist_line_id" readonly="1" />
+                                    <field name="x_document_type_id" readonly="1" />
+                                </group>
+                                <group string="Fillout Routing">
+                                    <field name="x_document_code" readonly="1" />
+                                    <field name="x_fillout_prefix" readonly="1" />
+                                    <field name="x_public_request_enabled" readonly="1" />
+                                    <field name="x_requires_attachment" readonly="1" />
+                                    <field name="x_structured_data_required" readonly="1" />
+                                    <field name="x_manual_review_expected" readonly="1" />
+                                </group>
+                            </group>
+                            <group string="URL Parameter Names">
+                                <group>
+                                    <field name="x_show_param_name" readonly="1" />
+                                    <field name="x_request_line_param_name" readonly="1" />
+                                    <field name="x_checklist_line_param_name" readonly="1" />
+                                </group>
+                                <group>
+                                    <field name="x_document_type_param_name" readonly="1" />
+                                    <field name="x_document_code_param_name" readonly="1" />
+                                </group>
+                            </group>
+                            <group string="Submission Linkage">
+                                <field name="x_latest_submission_id" readonly="1" />
+                            </group>
+                            <group string="Notes">
+                                <field name="x_notes" />
+                            </group>
+                        </form>
+                    </field>
+
+                    <group>
+                        <group string="Request Audit">
+                            <field name="x_requested_by_user_id" readonly="1" />
+                            <field name="x_requested_on" readonly="1" />
+                            <field name="x_sent_by_user_id" readonly="1" />
+                            <field name="x_sent_on" readonly="1" />
+                            <field name="x_last_response_at" readonly="1" />
+                        </group>
+                        <group string="Notes">
+                            <field name="x_notes" />
+                        </group>
+                    </group>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+</odoo>
