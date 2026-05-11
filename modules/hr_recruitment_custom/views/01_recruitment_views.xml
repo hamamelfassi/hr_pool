@@ -327,9 +327,12 @@
                                         <field name="x_sequence" widget="handle" />
                                         <field name="x_document_name_ar" readonly="1" />
                                         <field name="x_document_name_en" readonly="1" />
+                                        <field name="x_document_code" readonly="1" />
                                         <field name="x_required" />
                                         <field name="x_status" />
                                         <field name="x_capture_scope" readonly="1" />
+                                        <field name="x_public_request_enabled" readonly="1" />
+                                        <field name="x_requires_attachment" readonly="1" />
                                         <field name="x_latest_accepted_submission_id" readonly="1" />
                                         <field name="x_latest_accepted_attachment_id"
                                             readonly="1"
@@ -351,9 +354,15 @@
                                                 <field name="x_document_type_id" readonly="1" />
                                                 <field name="x_document_name_ar" readonly="1" />
                                                 <field name="x_document_name_en" readonly="1" />
+                                                <field name="x_document_code" readonly="1" />
+                                                <field name="x_fillout_prefix" readonly="1" />
                                                 <field name="x_required" />
                                                 <field name="x_status" />
                                                 <field name="x_capture_scope" readonly="1" />
+                                                <field name="x_public_request_enabled" readonly="1" />
+                                                <field name="x_requires_attachment" readonly="1" />
+                                                <field name="x_manual_review_expected" readonly="1" />
+                                                <field name="x_structured_data_required" readonly="1" />
                                             </group>
                                             <group>
                                                 <field name="x_latest_accepted_submission_id" readonly="1" />

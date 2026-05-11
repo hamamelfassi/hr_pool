@@ -8,7 +8,7 @@
                     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
                 </head>
                 <div class="page">
-                    <t t-set="lines" t-value="o.x_line_ids.sorted(key=lambda line: ((line.x_sequence or 0), line.id))"/>
+                    <t t-set="lines" t-value="o.x_line_ids.filtered(lambda line: line.x_status != 'not_applicable').sorted(key=lambda line: ((line.x_sequence or 0), line.id))"/>
                     <style>
                         @font-face {
                                                     font-family: 'TORArabicRegularInline';
@@ -184,7 +184,9 @@
                         }
 
                         .f0003-checklist-table tbody td {
-                            height: 37px;
+                            height: 25px;
+                            padding-top: 2px;
+                            padding-bottom: 2px;
                         }
 
                         .f0003-no {
@@ -193,26 +195,21 @@
                         }
 
                         .f0003-doc {
-                            width: 47%;
+                            width: 62%;
                         }
 
                         .f0003-required {
-                            width: 9%;
+                            width: 10%;
                             text-align: center;
                         }
 
                         .f0003-status {
-                            width: 9%;
-                            text-align: center;
-                        }
-
-                        .f0003-docno {
-                            width: 14%;
+                            width: 10%;
                             text-align: center;
                         }
 
                         .f0003-notes {
-                            width: 15%;
+                            width: 12%;
                             text-align: center;
                         }
 
@@ -337,8 +334,7 @@
                                     <th class="f0003-no">ت<br/><span class="tor-ltr">No.</span></th>
                                     <th class="f0003-doc">المستند المطلوب<br/><span class="tor-ltr">Required Document</span></th>
                                     <th class="f0003-required">مطلوب<br/><span class="tor-ltr">Required</span></th>
-                                    <th class="f0003-status">الحالة<br/><span class="tor-ltr">Status</span></th>
-                                    <th class="f0003-docno">رقم / كود المستند<br/><span class="tor-ltr">Document No.</span></th>
+                                    <th class="f0003-status">مقبول<br/><span class="tor-ltr">Accepted</span></th>
                                     <th class="f0003-notes">ملاحظات<br/><span class="tor-ltr">Notes</span></th>
                                 </tr>
                             </thead>
@@ -358,9 +354,6 @@
                                             <span class="f0003-box"><span t-if="line.x_required">X</span></span>
                                         </td>
                                         <td class="f0003-check"><span class="f0003-box"><span t-if="line.x_status == 'accepted'">X</span></span></td>
-                                        <td class="tor-center">
-                                            <span t-field="line.x_document_number"/>
-                                        </td>
                                         <td></td>
                                     </tr>
                                 </t>

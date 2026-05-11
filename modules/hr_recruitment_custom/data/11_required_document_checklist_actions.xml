@@ -69,12 +69,67 @@ for applicant in records:
                 'x_sequence': doc_type.x_sequence or 0,
                 'x_document_name_ar': doc_type.x_name_ar,
                 'x_document_name_en': doc_type.x_name_en,
+                'x_document_code': doc_type.x_code,
+                'x_fillout_prefix': doc_type.x_fillout_prefix or doc_type.x_code,
                 'x_required': doc_type.x_required,
                 'x_status': 'missing',
                 'x_capture_scope': doc_type.x_capture_scope or 'none',
+                'x_public_request_enabled': doc_type.x_public_request_enabled,
+                'x_requires_attachment': doc_type.x_requires_attachment,
+                'x_manual_review_expected': doc_type.x_manual_review_expected,
+                'x_structured_data_required': doc_type.x_structured_data_required,
                 'x_notes': doc_type.x_notes,
             })
             added_count += 1
+            
+    # Normalize checklist-line snapshots from the current document type library.
+    # This is intentionally additive/non-destructive: it updates snapshot metadata
+    # but does not delete historical lines.
+    for line in checklist.x_line_ids:
+        doc_type = line.x_document_type_id
+        if not doc_type:
+            continue
+
+        line_values = {}
+        if line.x_sequence != (doc_type.x_sequence or 0):
+            line_values['x_sequence'] = doc_type.x_sequence or 0
+        if line.x_document_name_ar != doc_type.x_name_ar:
+            line_values['x_document_name_ar'] = doc_type.x_name_ar
+        if line.x_document_name_en != doc_type.x_name_en:
+            line_values['x_document_name_en'] = doc_type.x_name_en
+        if line.x_document_code != doc_type.x_code:
+            line_values['x_document_code'] = doc_type.x_code
+        if line.x_fillout_prefix != (doc_type.x_fillout_prefix or doc_type.x_code):
+            line_values['x_fillout_prefix'] = doc_type.x_fillout_prefix or doc_type.x_code
+        if line.x_capture_scope != (doc_type.x_capture_scope or 'none'):
+            line_values['x_capture_scope'] = doc_type.x_capture_scope or 'none'
+        if line.x_public_request_enabled != doc_type.x_public_request_enabled:
+            line_values['x_public_request_enabled'] = doc_type.x_public_request_enabled
+        if line.x_requires_attachment != doc_type.x_requires_attachment:
+            line_values['x_requires_attachment'] = doc_type.x_requires_attachment
+        if line.x_manual_review_expected != doc_type.x_manual_review_expected:
+            line_values['x_manual_review_expected'] = doc_type.x_manual_review_expected
+        if line.x_structured_data_required != doc_type.x_structured_data_required:
+            line_values['x_structured_data_required'] = doc_type.x_structured_data_required
+
+        # Retire the old combined identity row on editable checklists only.
+        # The row is kept for upgrade safety but should not remain a required
+        # public or signed checklist line after the split into passport/id card/license.
+        if doc_type.x_code == 'identity_document_copy' and line.x_status != 'accepted':
+            line_values.update({
+                'x_required': False,
+                'x_status': 'not_applicable',
+                'x_public_request_enabled': False,
+                'x_requires_attachment': False,
+                'x_manual_review_expected': False,
+                'x_structured_data_required': False,
+            })
+            legacy_note = 'Legacy combined identity row replaced by separate passport, ID card, and driving license lines.'
+            if legacy_note not in (line.x_notes or ''):
+                line_values['x_notes'] = ((line.x_notes or '') + '\n' + legacy_note).strip()
+
+        if line_values:
+            line.write(line_values)
 
     if created_checklist:
         applicant.message_post(

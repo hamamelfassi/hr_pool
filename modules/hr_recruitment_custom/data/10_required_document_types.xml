@@ -5,24 +5,37 @@
         <record id="required_document_type_cv" model="x_hr.recruitment_required_document_type">
             <field name="x_name">Curriculum Vitae (CV)</field>
             <field name="x_code">cv</field>
+            <field name="x_fillout_prefix">cv</field>
             <field name="x_sequence">10</field>
             <field name="x_name_ar">السيرة الذاتية</field>
             <field name="x_name_en">Curriculum Vitae (CV)</field>
             <field name="x_required" eval="True" />
             <field name="x_capture_scope">none</field>
+            <field name="x_public_request_enabled" eval="True" />
+            <field name="x_requires_attachment" eval="True" />
+            <field name="x_manual_review_expected" eval="False" />
+            <field name="x_structured_data_required" eval="False" />
             <field name="x_active" eval="True" />
         </record>
 
         <record id="required_document_type_academic_qualification"
             model="x_hr.recruitment_required_document_type">
-            <field name="x_name">Academic Qualification</field>
-            <field name="x_code">academic_qualification</field>
+            <field name="x_name">Qualification</field>
+            <field name="x_code">qualification</field>
+            <field name="x_fillout_prefix">qualification</field>
             <field name="x_sequence">20</field>
             <field name="x_name_ar">المؤهل العلمي (أصل أو صورة معتمدة)</field>
-            <field name="x_name_en">Academic Qualification</field>
+            <field name="x_name_en">Qualification</field>
             <field name="x_required" eval="True" />
             <field name="x_capture_scope">academic</field>
+            <field name="x_requires_document_number" eval="True" />
             <field name="x_requires_issuing_authority" eval="True" />
+            <field name="x_requires_issue_date" eval="True" />
+            <field name="x_requires_expiry_date" eval="False" />
+            <field name="x_public_request_enabled" eval="True" />
+            <field name="x_requires_attachment" eval="True" />
+            <field name="x_manual_review_expected" eval="False" />
+            <field name="x_structured_data_required" eval="True" />
             <field name="x_active" eval="True" />
         </record>
 
@@ -30,25 +43,41 @@
             model="x_hr.recruitment_required_document_type">
             <field name="x_name">Birth Certificate</field>
             <field name="x_code">birth_certificate</field>
+            <field name="x_fillout_prefix">birth_certificate</field>
             <field name="x_sequence">30</field>
             <field name="x_name_ar">شهادة ميلاد</field>
             <field name="x_name_en">Birth Certificate</field>
             <field name="x_required" eval="True" />
             <field name="x_capture_scope">civil_status</field>
             <field name="x_requires_document_number" eval="True" />
+            <field name="x_requires_issuing_authority" eval="True" />
+            <field name="x_requires_issue_date" eval="True" />
+            <field name="x_requires_expiry_date" eval="False" />
+            <field name="x_public_request_enabled" eval="True" />
+            <field name="x_requires_attachment" eval="True" />
+            <field name="x_manual_review_expected" eval="False" />
+            <field name="x_structured_data_required" eval="True" />
             <field name="x_active" eval="True" />
         </record>
 
         <record id="required_document_type_marital_status"
             model="x_hr.recruitment_required_document_type">
-            <field name="x_name">Marital Status</field>
-            <field name="x_code">marital_status</field>
+            <field name="x_name">Family Status</field>
+            <field name="x_code">family_status</field>
+            <field name="x_fillout_prefix">family_status</field>
             <field name="x_sequence">40</field>
             <field name="x_name_ar">الوضع العائلي</field>
-            <field name="x_name_en">Marital Status</field>
+            <field name="x_name_en">Family Status</field>
             <field name="x_required" eval="True" />
             <field name="x_capture_scope">civil_status</field>
             <field name="x_requires_document_number" eval="True" />
+            <field name="x_requires_issuing_authority" eval="True" />
+            <field name="x_requires_issue_date" eval="True" />
+            <field name="x_requires_expiry_date" eval="True" />
+            <field name="x_public_request_enabled" eval="True" />
+            <field name="x_requires_attachment" eval="True" />
+            <field name="x_manual_review_expected" eval="False" />
+            <field name="x_structured_data_required" eval="True" />
             <field name="x_active" eval="True" />
         </record>
 
@@ -56,100 +85,226 @@
             model="x_hr.recruitment_required_document_type">
             <field name="x_name">Residence Certificate</field>
             <field name="x_code">residence_certificate</field>
+            <field name="x_fillout_prefix">residence_certificate</field>
             <field name="x_sequence">50</field>
             <field name="x_name_ar">شهادة الإقامة</field>
             <field name="x_name_en">Residence Certificate</field>
             <field name="x_required" eval="True" />
             <field name="x_capture_scope">residence</field>
+            <field name="x_requires_document_number" eval="True" />
             <field name="x_requires_issuing_authority" eval="True" />
             <field name="x_requires_issue_date" eval="True" />
+            <field name="x_requires_expiry_date" eval="True" />
+            <field name="x_public_request_enabled" eval="True" />
+            <field name="x_requires_attachment" eval="True" />
+            <field name="x_manual_review_expected" eval="False" />
+            <field name="x_structured_data_required" eval="False" />
             <field name="x_active" eval="True" />
         </record>
 
         <record id="required_document_type_national_id_copy"
             model="x_hr.recruitment_required_document_type">
             <field name="x_name">Copy of National ID Number</field>
-            <field name="x_code">national_id_copy</field>
+            <field name="x_code">national_id</field>
+            <field name="x_fillout_prefix">national_id</field>
             <field name="x_sequence">60</field>
             <field name="x_name_ar">صورة من الرقم الوطني</field>
             <field name="x_name_en">Copy of National ID Number</field>
             <field name="x_required" eval="True" />
             <field name="x_capture_scope">identity</field>
             <field name="x_requires_document_number" eval="True" />
+            <field name="x_requires_issuing_authority" eval="True" />
+            <field name="x_requires_issue_date" eval="True" />
+            <field name="x_requires_expiry_date" eval="False" />
+            <field name="x_public_request_enabled" eval="True" />
+            <field name="x_requires_attachment" eval="True" />
+            <field name="x_manual_review_expected" eval="False" />
+            <field name="x_structured_data_required" eval="False" />
             <field name="x_active" eval="True" />
         </record>
 
         <record id="required_document_type_criminal_record_certificate"
             model="x_hr.recruitment_required_document_type">
             <field name="x_name">Criminal Record Certificate</field>
-            <field name="x_code">criminal_record_certificate</field>
+            <field name="x_code">criminal_record</field>
+            <field name="x_fillout_prefix">criminal_record</field>
             <field name="x_sequence">70</field>
             <field name="x_name_ar">شهادة الحالة الجنائية</field>
             <field name="x_name_en">Criminal Record Certificate</field>
             <field name="x_required" eval="True" />
             <field name="x_capture_scope">criminal_record</field>
+            <field name="x_requires_document_number" eval="True" />
             <field name="x_requires_issuing_authority" eval="True" />
             <field name="x_requires_issue_date" eval="True" />
+            <field name="x_requires_expiry_date" eval="True" />
+            <field name="x_public_request_enabled" eval="True" />
+            <field name="x_requires_attachment" eval="True" />
+            <field name="x_manual_review_expected" eval="False" />
+            <field name="x_structured_data_required" eval="False" />
             <field name="x_active" eval="True" />
         </record>
 
         <record id="required_document_type_medical_certificate"
             model="x_hr.recruitment_required_document_type">
-            <field name="x_name">Medical Certificate from an Approved Laboratory</field>
-            <field name="x_code">medical_certificate</field>
+            <field name="x_name">Health Certificate</field>
+            <field name="x_code">health_certificate</field>
+            <field name="x_fillout_prefix">health_certificate</field>
             <field name="x_sequence">80</field>
             <field name="x_name_ar">شهادة صحية من المختبر المرجعي</field>
-            <field name="x_name_en">Medical Certificate from an Approved Laboratory</field>
+            <field name="x_name_en">Health Certificate</field>
             <field name="x_required" eval="True" />
             <field name="x_capture_scope">medical</field>
+            <field name="x_requires_document_number" eval="True" />
             <field name="x_requires_issuing_authority" eval="True" />
             <field name="x_requires_issue_date" eval="True" />
+            <field name="x_requires_expiry_date" eval="True" />
+            <field name="x_public_request_enabled" eval="True" />
+            <field name="x_requires_attachment" eval="True" />
+            <field name="x_manual_review_expected" eval="False" />
+            <field name="x_structured_data_required" eval="True" />
             <field name="x_active" eval="True" />
-            <field name="x_notes">Future Pass 6 structured capture should support tri-test medical
-                evidence such as Hepatitis B, Hepatitis C, and HIV where operationally required.</field>
+            <field name="x_notes">Structured capture supports blood type and later medical-test detail where operationally required.</field>
         </record>
 
         <record id="required_document_type_identity_document_copy"
             model="x_hr.recruitment_required_document_type">
-            <field name="x_name">Copy of ID Card / Passport / Driving License</field>
+            <field name="x_name">Legacy Combined ID Card / Passport / Driving License</field>
             <field name="x_code">identity_document_copy</field>
+            <field name="x_fillout_prefix">identity_document_copy</field>
+            <field name="x_sequence">900</field>
+            <field name="x_name_ar">سطر قديم مدمج: البطاقة الشخصية / جواز السفر / رخصة القيادة</field>
+            <field name="x_name_en">Legacy Combined ID Card / Passport / Driving License</field>
+            <field name="x_required" eval="False" />
+            <field name="x_capture_scope">identity</field>
+            <field name="x_requires_document_number" eval="False" />
+            <field name="x_requires_issuing_authority" eval="False" />
+            <field name="x_requires_issue_date" eval="False" />
+            <field name="x_requires_expiry_date" eval="False" />
+            <field name="x_public_request_enabled" eval="False" />
+            <field name="x_requires_attachment" eval="False" />
+            <field name="x_manual_review_expected" eval="False" />
+            <field name="x_structured_data_required" eval="False" />
+            <field name="x_active" eval="False" />
+            <field name="x_notes">Legacy combined row retained for upgrade safety only. Replaced by separate passport, ID card, and driving license rows.</field>
+        </record>
+
+        <record id="required_document_type_passport"
+            model="x_hr.recruitment_required_document_type">
+            <field name="x_name">Passport Copy</field>
+            <field name="x_code">passport</field>
+            <field name="x_fillout_prefix">passport</field>
             <field name="x_sequence">90</field>
-            <field name="x_name_ar">صورة من: البطاقة الشخصية / جواز السفر / رخصة القيادة</field>
-            <field name="x_name_en">Copy of ID Card / Passport / Driving License</field>
+            <field name="x_name_ar">صورة من جواز السفر</field>
+            <field name="x_name_en">Passport Copy</field>
             <field name="x_required" eval="True" />
             <field name="x_capture_scope">identity</field>
             <field name="x_requires_document_number" eval="True" />
             <field name="x_requires_issuing_authority" eval="True" />
             <field name="x_requires_issue_date" eval="True" />
             <field name="x_requires_expiry_date" eval="True" />
+            <field name="x_public_request_enabled" eval="True" />
+            <field name="x_requires_attachment" eval="True" />
+            <field name="x_manual_review_expected" eval="False" />
+            <field name="x_structured_data_required" eval="False" />
+            <field name="x_active" eval="True" />
+        </record>
+
+        <record id="required_document_type_id_card"
+            model="x_hr.recruitment_required_document_type">
+            <field name="x_name">Personal ID Card Copy</field>
+            <field name="x_code">id_card</field>
+            <field name="x_fillout_prefix">id_card</field>
+            <field name="x_sequence">100</field>
+            <field name="x_name_ar">صورة من البطاقة الشخصية</field>
+            <field name="x_name_en">Personal ID Card Copy</field>
+            <field name="x_required" eval="True" />
+            <field name="x_capture_scope">identity</field>
+            <field name="x_requires_document_number" eval="True" />
+            <field name="x_requires_issuing_authority" eval="True" />
+            <field name="x_requires_issue_date" eval="True" />
+            <field name="x_requires_expiry_date" eval="True" />
+            <field name="x_public_request_enabled" eval="True" />
+            <field name="x_requires_attachment" eval="True" />
+            <field name="x_manual_review_expected" eval="False" />
+            <field name="x_structured_data_required" eval="False" />
+            <field name="x_active" eval="True" />
+        </record>
+
+        <record id="required_document_type_driving_license"
+            model="x_hr.recruitment_required_document_type">
+            <field name="x_name">Driving License Copy</field>
+            <field name="x_code">driving_license</field>
+            <field name="x_fillout_prefix">driving_license</field>
+            <field name="x_sequence">110</field>
+            <field name="x_name_ar">صورة من رخصة القيادة</field>
+            <field name="x_name_en">Driving License Copy</field>
+            <field name="x_required" eval="True" />
+            <field name="x_capture_scope">identity</field>
+            <field name="x_requires_document_number" eval="True" />
+            <field name="x_requires_issuing_authority" eval="True" />
+            <field name="x_requires_issue_date" eval="True" />
+            <field name="x_requires_expiry_date" eval="True" />
+            <field name="x_public_request_enabled" eval="True" />
+            <field name="x_requires_attachment" eval="True" />
+            <field name="x_manual_review_expected" eval="False" />
+            <field name="x_structured_data_required" eval="False" />
             <field name="x_active" eval="True" />
         </record>
 
         <record id="required_document_type_photos" model="x_hr.recruitment_required_document_type">
             <field name="x_name">Eight Passport-Size Photographs (White Background)</field>
-            <field name="x_code">passport_photos_white_background</field>
-            <field name="x_sequence">100</field>
+            <field name="x_code">passport_photos</field>
+            <field name="x_fillout_prefix">passport_photos</field>
+            <field name="x_sequence">120</field>
             <field name="x_name_ar">عدد (8) ثماني صور شمسية بخلفية بيضاء</field>
             <field name="x_name_en">Eight Passport-Size Photographs (White Background)</field>
             <field name="x_required" eval="True" />
             <field name="x_capture_scope">photos</field>
+            <field name="x_public_request_enabled" eval="False" />
+            <field name="x_requires_attachment" eval="False" />
+            <field name="x_manual_review_expected" eval="True" />
+            <field name="x_structured_data_required" eval="False" />
             <field name="x_active" eval="True" />
+            <field name="x_notes">Hardcopy passport-size photos. Not shown in the public Fillout form.</field>
         </record>
 
         <record id="required_document_type_non_duplication_certificate"
             model="x_hr.recruitment_required_document_type">
-            <field name="x_name">Non-Duplication Certificate from the Documentation and Information
-                Office</field>
+            <field name="x_name">Non-Duplication Certificate</field>
             <field name="x_code">non_duplication_certificate</field>
-            <field name="x_sequence">110</field>
+            <field name="x_fillout_prefix">non_duplication_certificate</field>
+            <field name="x_sequence">130</field>
             <field name="x_name_ar">إفادة بعدم الازدواجية من مكتب التوثيق والمعلومات</field>
-            <field name="x_name_en">Non-Duplication Certificate from the Documentation and
-                Information Office</field>
+            <field name="x_name_en">Non-Duplication Certificate</field>
             <field name="x_required" eval="True" />
             <field name="x_capture_scope">other</field>
+            <field name="x_requires_document_number" eval="True" />
             <field name="x_requires_issuing_authority" eval="True" />
             <field name="x_requires_issue_date" eval="True" />
+            <field name="x_requires_expiry_date" eval="True" />
+            <field name="x_public_request_enabled" eval="True" />
+            <field name="x_requires_attachment" eval="True" />
+            <field name="x_manual_review_expected" eval="False" />
+            <field name="x_structured_data_required" eval="False" />
             <field name="x_active" eval="True" />
+        </record>
+
+        <record id="required_document_type_bank_information"
+            model="x_hr.recruitment_required_document_type">
+            <field name="x_name">Bank Information</field>
+            <field name="x_code">bank_information</field>
+            <field name="x_fillout_prefix">bank_information</field>
+            <field name="x_sequence">140</field>
+            <field name="x_name_ar">بيانات الحساب المصرفي</field>
+            <field name="x_name_en">Bank Information</field>
+            <field name="x_required" eval="True" />
+            <field name="x_capture_scope">other</field>
+            <field name="x_public_request_enabled" eval="True" />
+            <field name="x_requires_attachment" eval="False" />
+            <field name="x_manual_review_expected" eval="False" />
+            <field name="x_structured_data_required" eval="True" />
+            <field name="x_active" eval="True" />
+            <field name="x_notes">Structured bank data. No attachment required.</field>
         </record>
 
     </data>

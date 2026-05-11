@@ -32,6 +32,47 @@
             <field name="index" eval="True" />
         </record>
 
+        <record id="field_required_document_type_x_fillout_prefix" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_recruitment_required_document_type" />
+            <field name="name">x_fillout_prefix</field>
+            <field name="field_description">Fillout Prefix</field>
+            <field name="ttype">char</field>
+            <field name="index" eval="True" />
+        </record>
+
+        <record id="field_required_document_type_x_public_request_enabled" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_recruitment_required_document_type" />
+            <field name="name">x_public_request_enabled</field>
+            <field name="field_description">Public Request Enabled</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_required_document_type_x_requires_attachment" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_recruitment_required_document_type" />
+            <field name="name">x_requires_attachment</field>
+            <field name="field_description">Requires Attachment</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_required_document_type_x_manual_review_expected" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_recruitment_required_document_type" />
+            <field name="name">x_manual_review_expected</field>
+            <field name="field_description">Manual Review Expected</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_required_document_type_x_structured_data_required" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_recruitment_required_document_type" />
+            <field name="name">x_structured_data_required</field>
+            <field name="field_description">Structured Data Required</field>
+            <field name="ttype">boolean</field>
+        </record>
+
         <record id="field_required_document_type_x_sequence" model="ir.model.fields">
             <field name="model_id"
                 ref="hr_recruitment_custom.model_x_hr_recruitment_required_document_type" />
@@ -344,6 +385,56 @@
             <field name="name">x_document_name_en</field>
             <field name="field_description">Document Name EN Snapshot</field>
             <field name="ttype">char</field>
+        </record>
+
+        <record id="field_required_document_line_x_document_code" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_document_code</field>
+            <field name="field_description">Document Code Snapshot</field>
+            <field name="ttype">char</field>
+            <field name="index" eval="True" />
+        </record>
+
+        <record id="field_required_document_line_x_fillout_prefix" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_fillout_prefix</field>
+            <field name="field_description">Fillout Prefix Snapshot</field>
+            <field name="ttype">char</field>
+            <field name="index" eval="True" />
+        </record>
+
+        <record id="field_required_document_line_x_public_request_enabled" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_public_request_enabled</field>
+            <field name="field_description">Public Request Enabled</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_required_document_line_x_requires_attachment" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_requires_attachment</field>
+            <field name="field_description">Requires Attachment</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_required_document_line_x_manual_review_expected" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_manual_review_expected</field>
+            <field name="field_description">Manual Review Expected</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_required_document_line_x_structured_data_required" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_structured_data_required</field>
+            <field name="field_description">Structured Data Required</field>
+            <field name="ttype">boolean</field>
         </record>
 
         <record id="field_required_document_line_x_required" model="ir.model.fields">
