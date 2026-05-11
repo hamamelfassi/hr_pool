@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ========================================================= -->
+    <!-- Pass 6B-1A                                                -->
+    <!-- Controlled standalone fallback views for F-0003 checklist  -->
+    <!-- Prevents Odoo from opening the generic machine/generated    -->
+    <!-- form view with mail/activity internals exposed.             -->
+    <!-- ========================================================= -->
+
+    <record id="view_required_document_checklist_list_controlled" model="ir.ui.view">
+        <field name="name">x.hr.applicant.required.document.checklist.list.controlled</field>
+        <field name="model">x_hr.applicant_required_document_checklist</field>
+        <field name="priority" eval="5" />
+        <field name="arch" type="xml">
+            <list string="Required Document Checklists" create="false" delete="false">
+                <field name="x_checklist_sequence" string="#" readonly="1" />
+                <field name="x_name" readonly="1" />
+                <field name="x_applicant_id" readonly="1" />
+                <field name="x_document_reference" readonly="1" />
+                <field name="x_state" />
+                <field name="x_prepared_by_user_id" readonly="1" />
+                <field name="x_prepared_on" readonly="1" />
+                <field name="x_reviewer_user_id" />
+                <field name="x_generated_on" readonly="1" />
+                <field name="x_signed_on" readonly="1" />
+            </list>
+        </field>
+    </record>
+
+    <record id="view_required_document_checklist_form_controlled" model="ir.ui.view">
+        <field name="name">x.hr.applicant.required.document.checklist.form.controlled</field>
+        <field name="model">x_hr.applicant_required_document_checklist</field>
+        <field name="priority" eval="5" />
+        <field name="arch" type="xml">
+            <form string="F-0003 Required Documents Checklist" create="false" delete="false">
+                <header>
+                    <button type="action"
+                        name="hr_recruitment_custom.action_required_document_checklist_refresh_readiness"
+                        string="Validate Readiness"
+                        class="btn-primary"
+                        invisible="not id" />
+                    <button type="action"
+                        name="hr_recruitment_custom.action_required_document_checklist_generate_pdf"
+                        string="Generate F-0003 PDF"
+                        class="btn-secondary"
+                        invisible="x_state != 'ready_for_pdf' and x_state != 'generated'" />
+                    <button type="action"
+                        name="hr_recruitment_custom.action_required_document_checklist_send_native_sign"
+                        string="Send via Odoo Sign"
+                        class="btn-primary"
+                        invisible="x_state != 'generated' or not x_pdf_attachment_id" />
+                    <button type="action"
+                        name="hr_recruitment_custom.action_required_document_checklist_sync_native_sign_completion"
+                        string="Sync Signed Result"
+                        class="btn-secondary"
+                        invisible="x_state != 'signature_requested'" />
+                    <field name="x_state"
+                        widget="statusbar"
+                        options="{'clickable': false}"
+                        statusbar_visible="draft,in_review,ready_for_pdf,generated,signature_requested,signed"
+                        readonly="1" />
+                </header>
+
+                <sheet>
+                    <group>
+                        <group string="Checklist Identity">
+                            <field name="x_name" readonly="1" />
+                            <field name="x_applicant_id" readonly="1" />
+                            <field name="x_checklist_sequence" readonly="1" />
+                            <field name="x_document_reference" readonly="1" />
+                            <field name="x_prepared_by_user_id" readonly="1" />
+                            <field name="x_prepared_on" readonly="1" />
+                        </group>
+                        <group string="Lifecycle">
+                            <field name="x_reviewer_user_id" />
+                            <field name="x_generated_on" readonly="1" />
+                            <field name="x_sent_on" readonly="1" />
+                            <field name="x_signed_on" readonly="1" />
+                            <field name="x_pdf_attachment_id" readonly="1"
+                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
+                                domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]" />
+                            <field name="x_signed_attachment_id"
+                                readonly="x_state == 'signed'"
+                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
+                                domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]"
+                                context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}" />
+                        </group>
+                    </group>
+
+                    <div class="alert alert-info" role="alert">
+                        This is the controlled standalone F-0003 checklist view. Edit checklist
+                        status only through evidence review and readiness validation wherever possible.
+                    </div>
+
+                    <separator string="Required Document Lines" />
+
+                    <field name="x_line_ids">
+                        <list editable="bottom" create="false" delete="false">
+                            <field name="x_sequence" widget="handle" />
+                            <field name="x_document_name_ar" readonly="1" />
+                            <field name="x_document_name_en" readonly="1" />
+                            <field name="x_document_code" readonly="1" />
+                            <field name="x_required" />
+                            <field name="x_status" />
+                            <field name="x_capture_scope" readonly="1" />
+                            <field name="x_public_request_enabled" readonly="1" />
+                            <field name="x_requires_attachment" readonly="1" />
+                            <field name="x_latest_accepted_submission_id" readonly="1" />
+                            <field name="x_latest_accepted_attachment_id"
+                                readonly="1"
+                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}" />
+                            <field name="x_reviewed_by_user_id" readonly="1" />
+                            <field name="x_reviewed_on" readonly="1" />
+                        </list>
+
+                        <form string="Required Document Line" create="false" delete="false">
+                            <group>
+                                <group string="Document">
+                                    <field name="x_sequence" readonly="1" />
+                                    <field name="x_document_type_id" readonly="1" />
+                                    <field name="x_document_name_ar" readonly="1" />
+                                    <field name="x_document_name_en" readonly="1" />
+                                    <field name="x_document_code" readonly="1" />
+                                    <field name="x_fillout_prefix" readonly="1" />
+                                </group>
+                                <group string="Review">
+                                    <field name="x_required" />
+                                    <field name="x_status" />
+                                    <field name="x_capture_scope" readonly="1" />
+                                    <field name="x_public_request_enabled" readonly="1" />
+                                    <field name="x_requires_attachment" readonly="1" />
+                                    <field name="x_manual_review_expected" readonly="1" />
+                                    <field name="x_structured_data_required" readonly="1" />
+                                </group>
+                            </group>
+
+                            <group string="Accepted Evidence">
+                                <group>
+                                    <field name="x_latest_accepted_submission_id" readonly="1" />
+                                    <field name="x_latest_accepted_attachment_id"
+                                        readonly="1"
+                                        options="{'no_open': True, 'no_create': True, 'no_create_edit': True}" />
+                                </group>
+                                <group>
+                                    <field name="x_reviewed_by_user_id" readonly="1" />
+                                    <field name="x_reviewed_on" readonly="1" />
+                                </group>
+                            </group>
+
+                            <field name="x_notes"
+                                placeholder="Reviewer notes, rejection reason, or structured capture notes." />
+                        </form>
+                    </field>
+
+                    <group string="Checklist Notes">
+                        <field name="x_notes"
+                            placeholder="Checklist-level notes for HR/recruitment review." />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
