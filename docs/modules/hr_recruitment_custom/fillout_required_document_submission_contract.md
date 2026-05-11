@@ -99,10 +99,15 @@ The generated Fillout URL must include these top-level request parameters:
 `token_reference`
 `expires_at`
 `form_base_url`
-`generated_url`
 `state`
 `sent_at`
 `last_response_at`
+
+Note:
+
+`generated_url` is stored in Odoo as `x_generated_url` for HR open/copy/send convenience.
+
+It is not included as a URL parameter after Pass 6B-5 because it creates a self-referential long URL and is not needed by n8n.
 
 n8n must validate at least:
 
