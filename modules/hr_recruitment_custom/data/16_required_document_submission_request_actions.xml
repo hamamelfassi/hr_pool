@@ -87,6 +87,58 @@ for applicant in records.sudo():
             ]]></field>
         </record>
 
+
+        <record id="action_required_document_submission_request_refresh_candidate_snapshot" model="ir.actions.server">
+            <field name="name">Refresh Candidate Snapshot</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission_request" />
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+for request in records.sudo():
+    if request.x_state not in ('draft', 'prepared'):
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Request snapshot locked',
+                'message': 'Candidate snapshot can only be refreshed while the request is Draft or Prepared.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    applicant = request.x_applicant_id
+    if not applicant:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Applicant missing',
+                'message': 'Cannot refresh candidate snapshot because the request is not linked to an applicant.',
+                'type': 'warning',
+                'sticky': True,
+            }
+        }
+        continue
+
+    candidate_name = applicant.partner_name or applicant.name or applicant.display_name or ''
+    candidate_email = applicant.email_from or ''
+
+    request.write({
+        'x_candidate_name_snapshot': candidate_name,
+        'x_candidate_email_snapshot': candidate_email,
+        'x_generated_url': False,
+    })
+
+    request.message_post(body='Candidate snapshot refreshed from applicant. Generated URL cleared and should be regenerated before sending.')
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
         <record id="action_required_document_submission_request_generate_lines" model="ir.actions.server">
             <field name="name">Generate Request Lines</field>
             <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission_request" />
@@ -99,6 +151,19 @@ action = False
 for request in records.sudo():
     applicant = request.x_applicant_id
     checklist = request.x_checklist_id
+
+    if request.x_state not in ('draft', 'prepared'):
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Request locked',
+                'message': 'Request lines can only be regenerated while the request is Draft or Prepared.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
 
     if not applicant:
         action = {
@@ -261,6 +326,19 @@ for request in records.sudo():
     applicant = request.x_applicant_id
     checklist = request.x_checklist_id
 
+    if request.x_state not in ('draft', 'prepared'):
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Request locked',
+                'message': 'Continuation URLs can only be regenerated while the request is Draft or Prepared.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
     if not applicant or not checklist:
         action = {
             'type': 'ir.actions.client',
@@ -294,8 +372,12 @@ for request in records.sudo():
     now = datetime.datetime.now()
     reference = request.x_request_reference or ('MCEP-HR-F-0003-REQ-%05d' % request.id)
     base_url = request.x_form_base_url or 'https://forms.fillout.com/t/sZFxwo2u1bus'
-    candidate_name = request.x_candidate_name_snapshot or applicant.partner_name or applicant.name or applicant.display_name or ''
-    candidate_email = request.x_candidate_email_snapshot or applicant.email_from or ''
+
+    # Draft/prepared requests intentionally refresh the candidate snapshot
+    # so corrected applicant email/name values are reflected before send.
+    candidate_name = applicant.partner_name or applicant.name or applicant.display_name or ''
+    candidate_email = applicant.email_from or ''
+
     expires_at = request.x_expires_at or (now + datetime.timedelta(days=14))
     token = request.x_token_reference or ('MCEP-F0003-%05d-%s-%s' % (
         request.id,
@@ -353,8 +435,7 @@ for request in records.sudo():
         add_param(params, '%s_document_code' % prefix, request_line.x_document_code if request_line else doc_type.x_code)
 
     separator = '&' if '?' in base_url else '?'
-    url_without_self = base_url + separator + '&'.join(params)
-    final_url = url_without_self + '&generated_url=' + url_escape(url_without_self)
+    final_url = base_url + separator + '&'.join(params)
 
     request.write({
         'x_generated_url': final_url,
@@ -362,6 +443,217 @@ for request in records.sudo():
     })
 
     request.message_post(body='Generated Fillout continuation URL for required document submission request.')
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+
+        <record id="action_required_document_submission_request_open_url" model="ir.actions.server">
+            <field name="name">Open Continuation URL</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission_request" />
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+for request in records.sudo():
+    if not request.x_generated_url:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'URL missing',
+                'message': 'Generate the continuation URL before opening it.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    action = {
+        'type': 'ir.actions.act_url',
+        'url': request.x_generated_url,
+        'target': 'new',
+    }
+            ]]></field>
+        </record>
+
+        <record id="action_required_document_submission_request_send_email" model="ir.actions.server">
+            <field name="name">Send Submission Request Email</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission_request" />
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+mail_model = env['mail.mail'].sudo()
+action = False
+
+for request in records.sudo():
+    if request.x_state not in ('draft', 'prepared'):
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Request already locked',
+                'message': 'Only Draft or Prepared requests can be sent.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    active_lines = request.x_line_ids.filtered(lambda line: line.x_state == 'requested' and line.x_public_request_enabled)
+
+    if not active_lines:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'No active request lines',
+                'message': 'Generate request lines before sending this request.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    if not request.x_generated_url:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Continuation URL missing',
+                'message': 'Generate the continuation URL before sending this request.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    if not request.x_candidate_email_snapshot:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Candidate email missing',
+                'message': 'Refresh the candidate snapshot or add an applicant email before sending.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    safe_url = request.x_generated_url.replace('&', '&amp;')
+    candidate_name = request.x_candidate_name_snapshot or request.x_applicant_id.partner_name or request.x_applicant_id.display_name or ''
+
+    subject = 'Required recruitment documents submission request'
+    body_html = """
+<div dir="rtl" style="font-family: Arial, Tahoma, sans-serif;">
+    <p>مرحباً %s،</p>
+    <p>يرجى استخدام الرابط التالي لتقديم المستندات والبيانات المطلوبة لاستكمال إجراءات التوظيف:</p>
+    <p><a href="%s">%s</a></p>
+    <p>يرجى عدم مشاركة هذا الرابط مع أي طرف آخر.</p>
+</div>
+<hr/>
+<div dir="ltr" style="font-family: Arial, Tahoma, sans-serif;">
+    <p>Hello %s,</p>
+    <p>Please use the following link to submit the requested recruitment documents and information:</p>
+    <p><a href="%s">%s</a></p>
+    <p>Please do not share this link with anyone else.</p>
+</div>
+""" % (candidate_name, safe_url, safe_url, candidate_name, safe_url, safe_url)
+
+    mail_values = {
+        'subject': subject,
+        'body_html': body_html,
+        'email_to': request.x_candidate_email_snapshot,
+        'auto_delete': False,
+    }
+
+    if env.user.email:
+        mail_values['email_from'] = env.user.email
+
+    mail = mail_model.create(mail_values)
+    mail.send()
+
+    sent_on = datetime.datetime.now()
+    request.write({
+        'x_state': 'sent',
+        'x_sent_by_user_id': env.user.id,
+        'x_sent_on': sent_on,
+    })
+
+    request.message_post(body='Required document submission request email sent to %s.' % request.x_candidate_email_snapshot)
+    if request.x_checklist_id:
+        request.x_checklist_id.message_post(body='Required document submission request sent: %s.' % (request.x_request_reference or request.x_name))
+    if request.x_applicant_id:
+        request.x_applicant_id.message_post(body='Required document submission request sent: %s.' % (request.x_request_reference or request.x_name))
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+        <record id="action_required_document_submission_request_mark_manual_sent" model="ir.actions.server">
+            <field name="name">Mark Request Manually Sent</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission_request" />
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+for request in records.sudo():
+    if request.x_state not in ('draft', 'prepared'):
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Request already locked',
+                'message': 'Only Draft or Prepared requests can be marked as manually sent.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    active_lines = request.x_line_ids.filtered(lambda line: line.x_state == 'requested' and line.x_public_request_enabled)
+
+    if not active_lines:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'No active request lines',
+                'message': 'Generate request lines before marking this request as sent.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    if not request.x_generated_url:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Continuation URL missing',
+                'message': 'Generate the continuation URL before marking this request as sent.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    sent_on = datetime.datetime.now()
+    request.write({
+        'x_state': 'sent',
+        'x_sent_by_user_id': env.user.id,
+        'x_sent_on': sent_on,
+    })
+
+    request.message_post(body='Required document submission request marked as manually sent. URL should be shared through the chosen external channel.')
+    if request.x_checklist_id:
+        request.x_checklist_id.message_post(body='Required document submission request marked as manually sent: %s.' % (request.x_request_reference or request.x_name))
+    if request.x_applicant_id:
+        request.x_applicant_id.message_post(body='Required document submission request marked as manually sent: %s.' % (request.x_request_reference or request.x_name))
 
 if not action:
     action = {'type': 'ir.actions.client', 'tag': 'reload'}
