@@ -16,7 +16,8 @@ Read these first:
 4. `docs/resources/current_phase_2_execution_plan.md`
 5. `pass_5e_f0003_native_sign_lifecycle_plan.md` — locked Pass 5E F-0003 checklist/PDF/native Sign lifecycle plan.
 6. `native_odoo_sign_workflow_wiki.md` — reusable native Odoo Sign send/sync workflow pattern proven on F-0003.
-7. `docs/modules/hr_recruitment_custom/server_action_saas_patterns_wiki.md`
+7. `server_action_saas_patterns_wiki.md` — Odoo.com SaaS-safe server-action guard and toast patterns.
+8. `fillout_required_document_submission_contract.md` — Fillout/Zite/n8n payload contract for Pass 6B/6C public required-document submissions.
 
 
 ## Supporting docs
