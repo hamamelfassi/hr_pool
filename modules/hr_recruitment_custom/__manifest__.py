@@ -18,6 +18,7 @@
         "models/03_recruitment_document.xml",
         "models/04_required_document_checklist.xml",
         "models/05_required_document_submission.xml",
+        "models/06_required_document_submission_request.xml",
         "security/ir.model.access.csv",
         "data/01_role_definition_automation.xml",
         "data/02_tor_selection_values.xml",
