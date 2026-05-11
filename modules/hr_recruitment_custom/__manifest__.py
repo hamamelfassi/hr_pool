@@ -43,6 +43,7 @@
         "data/14_required_document_submission_cleanup_actions.xml",
         "data/15_required_document_submission_review_actions.xml",
         "data/16_required_document_submission_request_actions.xml",
+        "data/17_required_document_writeback_safety_actions.xml",
         "views/01_recruitment_views.xml",
         "views/02_recruitment_document_views.xml",
         "views/03_required_document_checklist_views.xml",

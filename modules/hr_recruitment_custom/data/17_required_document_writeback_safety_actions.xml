@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ========================================================= -->
+        <!-- Pass 6C-1                                                 -->
+        <!-- Odoo-side writeback safety / repair action                 -->
+        <!-- Syncs submission request lines from existing Odoo           -->
+        <!-- required-document submission records.                      -->
+        <!-- ========================================================= -->
+
+        <record id="action_required_document_submission_request_sync_lines_from_submissions" model="ir.actions.server">
+            <field name="name">Sync Request Lines from Submissions</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission_request" />
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+submission_model = env['x_hr.applicant_required_document_submission'].sudo()
+action = False
+
+for request in records.sudo():
+    if not request.x_line_ids:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'No request lines',
+                'message': 'This request has no request lines to sync.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    synced_count = 0
+    linked_count = 0
+    missing_count = 0
+    latest_response_at = False
+
+    for request_line in request.x_line_ids:
+        if request_line.x_state == 'cancelled':
+            continue
+
+        submission = submission_model.search([
+            ('x_submission_request_line_id', '=', request_line.id),
+            ('x_state', 'in', ['submitted', 'accepted', 'rejected', 'superseded']),
+        ], order='x_reviewed_on desc, create_date desc, id desc', limit=1)
+
+        if not submission and request_line.x_checklist_line_id:
+            submission = submission_model.search([
+                ('x_submission_request_id', '=', request.id),
+                ('x_line_id', '=', request_line.x_checklist_line_id.id),
+                ('x_state', 'in', ['submitted', 'accepted', 'rejected', 'superseded']),
+            ], order='x_reviewed_on desc, create_date desc, id desc', limit=1)
+
+        if not submission and request_line.x_checklist_line_id:
+            submission = submission_model.search([
+                ('x_source_reference', '=', str(request_line.id)),
+                ('x_line_id', '=', request_line.x_checklist_line_id.id),
+                ('x_state', 'in', ['submitted', 'accepted', 'rejected', 'superseded']),
+            ], order='x_reviewed_on desc, create_date desc, id desc', limit=1)
+
+        if not submission:
+            missing_count += 1
+            continue
+
+        submission_values = {}
+        if not submission.x_submission_request_id:
+            submission_values['x_submission_request_id'] = request.id
+        if not submission.x_submission_request_line_id:
+            submission_values['x_submission_request_line_id'] = request_line.id
+
+        if submission_values:
+            submission.write(submission_values)
+            linked_count += 1
+
+        line_state = 'submitted'
+        if submission.x_state == 'accepted':
+            line_state = 'accepted'
+        elif submission.x_state == 'rejected':
+            line_state = 'rejected'
+        elif submission.x_state == 'superseded':
+            line_state = 'submitted'
+
+        request_line_values = {
+            'x_state': line_state,
+            'x_latest_submission_id': submission.id,
+        }
+
+        request_line.write(request_line_values)
+        synced_count += 1
+
+        response_at = submission.create_date or submission.x_reviewed_on
+        if response_at and (not latest_response_at or response_at > latest_response_at):
+            latest_response_at = response_at
+
+    request_values = {}
+    if latest_response_at:
+        request_values['x_last_response_at'] = latest_response_at
+
+    if request_values:
+        request.write(request_values)
+
+    request.message_post(
+        body='Synced request lines from submissions. Synced: %s. Linked orphan submissions: %s. Missing submissions: %s.' % (
+            synced_count,
+            linked_count,
+            missing_count,
+        )
+    )
+
+    if synced_count:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Request lines synced',
+                'message': 'Synced %s request line(s) from existing submissions.' % synced_count,
+                'type': 'success',
+                'sticky': False,
+            }
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'No submissions found',
+                'message': 'No matching submitted, accepted, or rejected evidence records were found for active request lines.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>

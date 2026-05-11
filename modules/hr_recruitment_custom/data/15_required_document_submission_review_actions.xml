@@ -170,6 +170,20 @@ for rec in records.sudo():
 
     line.write(line_values)
 
+    request_line = rec.x_submission_request_line_id
+    request = rec.x_submission_request_id or (request_line.x_request_id if request_line else False)
+
+    if request_line:
+        request_line.write({
+            'x_state': 'accepted',
+            'x_latest_submission_id': rec.id,
+        })
+
+    if request:
+        request.write({
+            'x_last_response_at': rec.create_date or reviewed_on,
+        })
+
     if checklist.x_state in ('draft', 'in_review', 'ready_for_pdf'):
         checklist.write({
             'x_state': 'in_review',
@@ -273,17 +287,35 @@ for rec in records.sudo():
         'x_submitted_on': rec.x_submitted_on or rec.create_date or reviewed_on,
     })
 
-    accepted = submission_model.search([
+    request_line = rec.x_submission_request_line_id
+    request = rec.x_submission_request_id or (request_line.x_request_id if request_line else False)
+
+    if request_line:
+        request_line.write({
+            'x_state': 'rejected',
+            'x_latest_submission_id': rec.id,
+        })
+
+    if request:
+        request.write({
+            'x_last_response_at': rec.create_date or reviewed_on,
+        })
+
+    accepted_domain = [
         ('x_line_id', '=', line.id),
         ('x_state', '=', 'accepted'),
-        ('x_attachment_id', '!=', False),
-    ], order='x_reviewed_on desc, id desc', limit=1)
+    ]
+
+    if line.x_requires_attachment:
+        accepted_domain.append(('x_attachment_id', '!=', False))
+
+    accepted = submission_model.search(accepted_domain, order='x_reviewed_on desc, id desc', limit=1)
 
     if accepted:
         line.write({
             'x_status': 'accepted',
             'x_latest_accepted_submission_id': accepted.id,
-            'x_latest_accepted_attachment_id': accepted.x_attachment_id.id,
+            'x_latest_accepted_attachment_id': accepted.x_attachment_id.id if accepted.x_attachment_id else False,
             'x_reviewed_by_user_id': env.user.id,
             'x_reviewed_on': reviewed_on,
         })

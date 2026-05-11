@@ -159,7 +159,7 @@ Interpretation:
 * `<prefix>_document_type_id`: Odoo required document type ID.  
 * `<prefix>_document_code`: stable integration code.
 
-  ## **7. Canonical public section prefixes**
+## **7. Canonical public section prefixes**
 
 Public Fillout/n8n section prefixes:
 
