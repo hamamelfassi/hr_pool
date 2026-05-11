@@ -44,5 +44,6 @@
         "views/01_recruitment_views.xml",
         "views/02_recruitment_document_views.xml",
         "views/03_required_document_checklist_views.xml",
+        "views/04_required_document_submission_views.xml",
     ],
 }

@@ -148,6 +148,40 @@
                                 </group>
                             </group>
 
+                            <group string="Accepted Structured Values">
+                                <group string="Generic">
+                                    <field name="x_document_number" readonly="1" />
+                                    <field name="x_issuing_authority" readonly="1" />
+                                    <field name="x_place_of_issue" readonly="1" />
+                                    <field name="x_issue_date" readonly="1" />
+                                    <field name="x_expiry_date" readonly="1" />
+                                </group>
+                                <group string="Qualification">
+                                    <field name="x_qualification_type" readonly="1" />
+                                    <field name="x_qualification_subject" readonly="1" />
+                                </group>
+                                <group string="Birth Certificate">
+                                    <field name="x_date_of_birth" readonly="1" />
+                                    <field name="x_place_of_birth" readonly="1" />
+                                    <field name="x_country_of_birth_id" readonly="1" />
+                                </group>
+                                <group string="Family / Next of Kin">
+                                    <field name="x_family_paper_number" readonly="1" />
+                                    <field name="x_family_reference_number" readonly="1" />
+                                    <field name="x_next_of_kin_name" readonly="1" />
+                                    <field name="x_next_of_kin_phone" readonly="1" />
+                                </group>
+                                <group string="Health">
+                                    <field name="x_blood_type" readonly="1" />
+                                </group>
+                                <group string="Bank Information">
+                                    <field name="x_bank_name" readonly="1" />
+                                    <field name="x_bank_branch" readonly="1" />
+                                    <field name="x_account_number" readonly="1" />
+                                    <field name="x_iban" readonly="1" />
+                                </group>
+                            </group>
+
                             <field name="x_notes"
                                 placeholder="Reviewer notes, rejection reason, or structured capture notes." />
                         </form>

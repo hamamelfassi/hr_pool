@@ -172,22 +172,40 @@ for rec in records.sudo():
     missing_lines = env['x_hr.applicant_required_document_line'].sudo()
 
     for line in required_lines:
-        accepted = submission_model.search([
+        accepted_domain = [
             ('x_line_id', '=', line.id),
             ('x_state', '=', 'accepted'),
-            ('x_attachment_id', '!=', False),
-        ], order='x_reviewed_on desc, id desc', limit=1)
+        ]
+
+        if line.x_requires_attachment:
+            accepted_domain.append(('x_attachment_id', '!=', False))
+
+        accepted = submission_model.search(accepted_domain, order='x_reviewed_on desc, id desc', limit=1)
 
         if accepted:
             line_values = {
                 'x_status': 'accepted',
                 'x_latest_accepted_submission_id': accepted.id,
-                'x_latest_accepted_attachment_id': accepted.x_attachment_id.id,
+                'x_latest_accepted_attachment_id': accepted.x_attachment_id.id if accepted.x_attachment_id else False,
                 'x_document_number': accepted.x_document_number or False,
                 'x_issuing_authority': accepted.x_issuing_authority or False,
-                'x_issuing_place_id': accepted.x_issuing_place_id.id if accepted.x_issuing_place_id else False,
+                'x_place_of_issue': accepted.x_place_of_issue or False,
                 'x_issue_date': accepted.x_issue_date or False,
                 'x_expiry_date': accepted.x_expiry_date or False,
+                'x_qualification_type': accepted.x_qualification_type or False,
+                'x_qualification_subject': accepted.x_qualification_subject or False,
+                'x_date_of_birth': accepted.x_date_of_birth or False,
+                'x_place_of_birth': accepted.x_place_of_birth or False,
+                'x_country_of_birth_id': accepted.x_country_of_birth_id.id if accepted.x_country_of_birth_id else False,
+                'x_family_paper_number': accepted.x_family_paper_number or False,
+                'x_family_reference_number': accepted.x_family_reference_number or False,
+                'x_next_of_kin_name': accepted.x_next_of_kin_name or False,
+                'x_next_of_kin_phone': accepted.x_next_of_kin_phone or False,
+                'x_blood_type': accepted.x_blood_type or False,
+                'x_bank_name': accepted.x_bank_name or False,
+                'x_bank_branch': accepted.x_bank_branch or False,
+                'x_account_number': accepted.x_account_number or False,
+                'x_iban': accepted.x_iban or False,
                 'x_reviewed_by_user_id': accepted.x_reviewed_by_user_id.id or env.user.id,
                 'x_reviewed_on': accepted.x_reviewed_on or datetime.datetime.now(),
             }

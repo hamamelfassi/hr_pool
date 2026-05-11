@@ -506,6 +506,128 @@
             <field name="on_delete">restrict</field>
         </record>
 
+        <record id="field_required_document_line_x_place_of_issue" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_place_of_issue</field>
+            <field name="field_description">Place of Issue</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_required_document_line_x_qualification_type" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_qualification_type</field>
+            <field name="field_description">Qualification Type</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_required_document_line_x_qualification_subject" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_qualification_subject</field>
+            <field name="field_description">Qualification Subject</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_required_document_line_x_date_of_birth" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_date_of_birth</field>
+            <field name="field_description">Date of Birth</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_required_document_line_x_place_of_birth" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_place_of_birth</field>
+            <field name="field_description">Place of Birth</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_required_document_line_x_country_of_birth_id" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_country_of_birth_id</field>
+            <field name="field_description">Country of Birth</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.country</field>
+            <field name="on_delete">restrict</field>
+        </record>
+
+        <record id="field_required_document_line_x_family_paper_number" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_family_paper_number</field>
+            <field name="field_description">Family Paper Number</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_required_document_line_x_family_reference_number" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_family_reference_number</field>
+            <field name="field_description">Family Reference Number</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_required_document_line_x_next_of_kin_name" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_next_of_kin_name</field>
+            <field name="field_description">Next of Kin Name</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_required_document_line_x_next_of_kin_phone" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_next_of_kin_phone</field>
+            <field name="field_description">Next of Kin Phone</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_required_document_line_x_blood_type" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_blood_type</field>
+            <field name="field_description">Blood Type</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_required_document_line_x_bank_name" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_bank_name</field>
+            <field name="field_description">Bank Name</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_required_document_line_x_bank_branch" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_bank_branch</field>
+            <field name="field_description">Bank Branch</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_required_document_line_x_account_number" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_account_number</field>
+            <field name="field_description">Account Number</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_required_document_line_x_iban" model="ir.model.fields">
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="name">x_iban</field>
+            <field name="field_description">IBAN</field>
+            <field name="ttype">char</field>
+        </record>
+
         <record id="field_required_document_line_x_issue_date" model="ir.model.fields">
             <field name="model_id"
                 ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />

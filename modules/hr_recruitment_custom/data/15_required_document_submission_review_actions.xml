@@ -64,18 +64,46 @@ for rec in records.sudo():
         }
         continue
 
-    if not rec.x_attachment_id:
+    requires_attachment = True
+    if line and line.x_requires_attachment is not None:
+        requires_attachment = bool(line.x_requires_attachment)
+    elif document_type and document_type.x_requires_attachment is not None:
+        requires_attachment = bool(document_type.x_requires_attachment)
+
+    if requires_attachment and not rec.x_attachment_id:
         action = {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
                 'title': 'Submitted attachment missing',
-                'message': 'Cannot accept this submission because no submitted attachment is linked.',
+                'message': 'Cannot accept this submission because this checklist line requires an attachment.',
                 'type': 'warning',
                 'sticky': False,
             }
         }
         continue
+
+    if line and line.x_document_code == 'bank_information':
+        missing_bank_fields = []
+        if not rec.x_bank_name:
+            missing_bank_fields.append('Bank Name')
+        if not rec.x_bank_branch:
+            missing_bank_fields.append('Bank Branch')
+        if not rec.x_account_number:
+            missing_bank_fields.append('Account Number')
+
+        if missing_bank_fields:
+            action = {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': 'Bank information incomplete',
+                    'message': 'Please complete required bank information before accepting: %s.' % ', '.join(missing_bank_fields),
+                    'type': 'warning',
+                    'sticky': False,
+                }
+            }
+            continue
 
     reviewed_on = datetime.datetime.now()
 
@@ -116,12 +144,26 @@ for rec in records.sudo():
     line_values = {
         'x_status': 'accepted',
         'x_latest_accepted_submission_id': rec.id,
-        'x_latest_accepted_attachment_id': rec.x_attachment_id.id,
+        'x_latest_accepted_attachment_id': rec.x_attachment_id.id if rec.x_attachment_id else False,
         'x_document_number': rec.x_document_number or False,
         'x_issuing_authority': rec.x_issuing_authority or False,
-        'x_issuing_place_id': rec.x_issuing_place_id.id if rec.x_issuing_place_id else False,
+        'x_place_of_issue': rec.x_place_of_issue or False,
         'x_issue_date': rec.x_issue_date or False,
         'x_expiry_date': rec.x_expiry_date or False,
+        'x_qualification_type': rec.x_qualification_type or False,
+        'x_qualification_subject': rec.x_qualification_subject or False,
+        'x_date_of_birth': rec.x_date_of_birth or False,
+        'x_place_of_birth': rec.x_place_of_birth or False,
+        'x_country_of_birth_id': rec.x_country_of_birth_id.id if rec.x_country_of_birth_id else False,
+        'x_family_paper_number': rec.x_family_paper_number or False,
+        'x_family_reference_number': rec.x_family_reference_number or False,
+        'x_next_of_kin_name': rec.x_next_of_kin_name or False,
+        'x_next_of_kin_phone': rec.x_next_of_kin_phone or False,
+        'x_blood_type': rec.x_blood_type or False,
+        'x_bank_name': rec.x_bank_name or False,
+        'x_bank_branch': rec.x_bank_branch or False,
+        'x_account_number': rec.x_account_number or False,
+        'x_iban': rec.x_iban or False,
         'x_reviewed_by_user_id': env.user.id,
         'x_reviewed_on': reviewed_on,
     }

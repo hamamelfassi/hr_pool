@@ -46,6 +46,15 @@ for rec in records.sudo():
     if document_type and rec.x_document_type_id != document_type:
         values['x_document_type_id'] = document_type.id
 
+    document_code = False
+    if line and line.x_document_code:
+        document_code = line.x_document_code
+    elif document_type and document_type.x_code:
+        document_code = document_type.x_code
+
+    if document_code and rec.x_document_code != document_code:
+        values['x_document_code'] = document_code
+
     if not rec.x_source:
         values['x_source'] = 'manual'
 
@@ -161,6 +170,15 @@ for rec in records.sudo():
 
     if document_type and rec.x_document_type_id != document_type:
         values['x_document_type_id'] = document_type.id
+
+    document_code = False
+    if line and line.x_document_code:
+        document_code = line.x_document_code
+    elif document_type and document_type.x_code:
+        document_code = document_type.x_code
+
+    if document_code and rec.x_document_code != document_code:
+        values['x_document_code'] = document_code
 
     if not rec.x_source:
         values['x_source'] = 'manual'
@@ -297,6 +315,15 @@ for applicant in records.sudo():
 
         if document_type and submission.x_document_type_id != document_type:
             values['x_document_type_id'] = document_type.id
+
+        document_code = False
+        if line and line.x_document_code:
+            document_code = line.x_document_code
+        elif document_type and document_type.x_code:
+            document_code = document_type.x_code
+
+        if document_code and submission.x_document_code != document_code:
+            values['x_document_code'] = document_code
 
         if not submission.x_source:
             values['x_source'] = 'manual'
