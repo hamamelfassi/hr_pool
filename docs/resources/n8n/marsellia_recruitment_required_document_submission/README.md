@@ -68,29 +68,17 @@ body.submission.urlParameters
 
 * ### **2\. Parse Fillout Payload**
 
-* Type:
+* Type: `Code`
 
-```
-Code
-```
+* Source file: `required_document_writeback_parse_payload.js`
 
-* Source file:
+* Purpose: Normalizes Fillout webhook data into request envelope, URL parameters, question indexes, requested section objects, file references, structured data, and validation hints.
 
-```
-required_document_writeback_parse_payload.js
-```
+* Status: Implemented in Pass 6C-2.
 
-* Purpose:
+* Field ID map: `required_document_writeback_field_id_map.md`
 
-```
-Normalizes Fillout webhook data into request envelope, URL parameters, question indexes, requested section objects, file references, structured data, and validation hints.
-```
-
-* Status:
-
-```
-Implemented in Pass 6C-2.
-```
+The parser uses stable Fillout question IDs to map applicant-filled values/files into canonical integration field names. Arabic visible labels are not used as integration keys.
 
 * ### **3\. Validate Odoo Envelope**
 
@@ -235,17 +223,20 @@ questions = authoritative for applicant-filled values and file uploads
 
 * For Pass 6C-2:
 
-```
-Webhook receives Fillout payload.
-Parse Fillout Payload node runs without error.
-form.isExpectedForm = true.
-request.odooRequestId is populated.
-request.odooApplicantId is populated.
-request.odooChecklistId is populated.
-request.tokenReference is populated.
-summary.requestedSectionCount > 0 for a generated URL.
-summary.validationHintCount = 0 for a valid request URL.
-sections include all public prefixes.
-bank_information is parsed as structured-only.
-passport_photos is not treated as public.
-```
+- Webhook receives Fillout payload.
+- Parse Fillout Payload node runs without error.
+- form.isExpectedForm = true.
+- request.odooRequestId is populated.
+- request.odooApplicantId is populated.
+- request.odooChecklistId is populated.
+- request.tokenReference is populated.
+- summary.requestedSectionCount > 0 for a generated URL.
+- summary.validationHintCount = 0 for a valid request URL.
+- sections include all public prefixes.
+- bank_information is parsed as structured-only.
+- passport_photos is not treated as public.
+- Question IDs map to canonical names.
+- Arabic labels do not affect writeback parsing.
+- Document identifiers remain text.
+- form_notes is captured separately from bank_notes.
+- country_of_birth resolves to Odoo country ID from RecordPicker odoo_id.
