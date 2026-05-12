@@ -570,3 +570,68 @@ For the first writeback probe, keep the process deliberately slow and observable
 - Update the matching request line to `submitted` and link the latest submission.
 - Do not accept/reject evidence from n8n.
 - HR accepts/rejects inside Odoo after writeback.
+
+## Pass 6C-4 — Single-Section Writeback Probe
+
+Status: locked.
+
+Pass 6C-4 proves the first complete Fillout-to-Odoo writeback lane using the `qualification` section only.
+
+Runtime path:
+
+```text
+Validate Odoo Envelope
+→ Build Writeback Items
+→ Wait Before Duplicate Check
+→ Check Existing Submission Count
+→ Normalize Duplicate Count
+→ IF Not Duplicate
+→ Download Submitted File
+→ Build Attachment Payload
+→ Wait Before Create Attachment
+→ Create Odoo Attachment
+→ Build Submission Payload
+→ Wait Before Create Submission
+→ Create Odoo Submission
+→ Build Request Line Update
+→ Wait Before Update Request Line
+→ Update Request Line
+```
+
+## Implemented source files:
+
+```
+required_document_writeback_build_section_items.js
+required_document_writeback_normalize_duplicate_count.js
+required_document_writeback_build_attachment_payload.js
+required_document_writeback_build_submission_payload.js
+required_document_writeback_build_request_line_update.js
+```
+
+## Locked result from probe:
+
+```
+section = qualification
+request_id = 1
+request_line_id = 1
+checklist_id = 2
+checklist_line_id = 13
+document_type_id = 2
+attachment_id = 1917
+submission_id = 9
+request_line_update = true
+```
+
+## Lifecycle rule:
+
+- n8n creates submitted evidence only.
+- n8n updates request line to Submitted and links latest submission.
+- HR Accept/Reject remains inside Odoo.
+- F-0003 checklist line is updated only by Odoo HR review actions.
+
+## Duplicate/retry rule:
+
+- same Fillout submissionId + same request line = duplicate retry, skip
+- new Fillout submissionId + same request line = allowed new evidence submission
+
+The qualification-only filter remains temporary. Pass 6C-5 removes the probe filter and wraps the same writeback lane in a Loop Over Items node with batch size 1.
