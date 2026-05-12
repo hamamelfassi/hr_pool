@@ -24,6 +24,12 @@
 
 const EXPECTED_FORM_ID = "sZFxwo2u1bus";
 
+const CONFIG = {
+    parserVersion: "6C-5A",
+    workflow: "Marsellia | Recruitment | Required Document Submission",
+    includeDebugPayload: false,
+};
+
 const PUBLIC_SECTION_PREFIXES = [
     "cv",
     "qualification",
@@ -43,6 +49,21 @@ const PUBLIC_SECTION_PREFIXES = [
 const NON_PUBLIC_SECTION_PREFIXES = [
     "passport_photos",
 ];
+
+const SECTION_ROUTING_FIELD_SUFFIXES = new Set([
+    "show",
+    "request_line_id",
+    "checklist_line_id",
+    "document_type_id",
+    "document_code",
+]);
+
+function isSectionRoutingField(prefix, fieldName) {
+    if (!fieldName || !fieldName.startsWith(`${prefix}_`)) return false;
+
+    const suffix = fieldName.slice(prefix.length + 1);
+    return SECTION_ROUTING_FIELD_SUFFIXES.has(suffix);
+}
 
 const IGNORED_URL_PARAMETER_NAMES = new Set([
     "generated_url",
@@ -310,33 +331,36 @@ function normalizeFileEntries(value) {
     return rawEntries
         .filter((entry) => entry !== undefined && entry !== null && entry !== "")
         .map((entry) => {
+            let normalized;
+
             if (typeof entry === "string") {
-                return {
+                normalized = {
                     url: entry,
                     fileName: null,
                     mimeType: null,
                     size: null,
-                    raw: entry,
                 };
-            }
-
-            if (isObject(entry)) {
-                return {
+            } else if (isObject(entry)) {
+                normalized = {
                     url: firstNonEmpty(entry.url, entry.downloadUrl, entry.href, entry.link),
                     fileName: firstNonEmpty(entry.filename, entry.fileName, entry.name),
                     mimeType: firstNonEmpty(entry.mimeType, entry.mimetype, entry.type),
                     size: firstNonEmpty(entry.size, entry.sizeBytes, entry.fileSize),
-                    raw: entry,
+                };
+            } else {
+                normalized = {
+                    url: null,
+                    fileName: null,
+                    mimeType: null,
+                    size: null,
                 };
             }
 
-            return {
-                url: null,
-                fileName: null,
-                mimeType: null,
-                size: null,
-                raw: entry,
-            };
+            if (CONFIG.includeDebugPayload) {
+                normalized.raw = entry;
+            }
+
+            return normalized;
         });
 }
 
@@ -433,6 +457,8 @@ function collectPrefixedScalarFields(prefix, questionIndex, uploadFieldName) {
 
     for (const fieldName of names) {
         if (fieldName === uploadFieldName) continue;
+        if (isSectionRoutingField(prefix, fieldName)) continue;
+
         scalarFields[fieldName] = getQuestionScalar(questionIndex, fieldName);
     }
 
@@ -601,13 +627,14 @@ function parseItem(item, itemIndex) {
     const sectionsWithPayload = sections.filter((section) => section.hasPayload);
     const validationHints = buildValidationHints(payload, submission, request);
 
-    return {
+    const parsed = {
         parser: {
             module: "required_document_writeback_parse_payload.js",
-            version: "6C-2A",
-            workflow: "Marsellia | Recruitment | Required Document Submission",
+            version: CONFIG.parserVersion,
+            workflow: CONFIG.workflow,
             itemIndex,
             parsedAt: new Date().toISOString(),
+            compactOutput: !CONFIG.includeDebugPayload,
         },
         form: {
             id: payload.formId || null,
@@ -623,12 +650,12 @@ function parseItem(item, itemIndex) {
         request,
         formNotes,
         urlParameters,
-        questionIndex,
         sections,
         constants: {
             publicSectionPrefixes: PUBLIC_SECTION_PREFIXES,
             nonPublicSectionPrefixes: NON_PUBLIC_SECTION_PREFIXES,
             fieldIdMapVersion: "6C-2A",
+            compactParserVersion: CONFIG.parserVersion,
         },
         summary: {
             questionCount: questionIndex.raw.length,
@@ -641,10 +668,16 @@ function parseItem(item, itemIndex) {
             validationHintCount: validationHints.length,
         },
         validationHints,
-        raw: {
-            payload,
-        },
     };
+
+    if (CONFIG.includeDebugPayload) {
+        parsed.questionIndex = questionIndex;
+        parsed.raw = {
+            payload,
+        };
+    }
+
+    return parsed;
 }
 
 const inputItems = $input.all();

@@ -635,3 +635,52 @@ request_line_update = true
 - new Fillout submissionId + same request line = allowed new evidence submission
 
 The qualification-only filter remains temporary. Pass 6C-5 removes the probe filter and wraps the same writeback lane in a Loop Over Items node with batch size 1.
+
+## Pass 6C-5A — Compact Parser Output
+
+Status: implemented.
+
+The `Parse Fillout Payload` node now uses compact output by default.
+
+The parser keeps only the downstream fields required for validation and writeback:
+
+```text
+form
+submission
+request
+formNotes
+urlParameters
+sections
+constants
+summary
+validationHints
+```
+
+The parser no longer emits these large debug objects during normal runtime:
+
+```
+raw.payload
+questionIndex.raw
+questionIndex.byId
+questionIndex.byName
+questionIndex.byCanonicalName
+questionIndex.byOriginalName
+questionIndex.byLabel
+raw question copies
+file.raw
+```
+
+Debug mode can be restored inside required_document_writeback_parse_payload.js by setting:
+
+```js
+includeDebugPayload: true
+```
+Default production/probe setting:
+
+```js
+includeDebugPayload: false
+```
+
+Purpose:
+
+- Reduce payload size before Pass 6C-5 loops over all valid requested sections.
