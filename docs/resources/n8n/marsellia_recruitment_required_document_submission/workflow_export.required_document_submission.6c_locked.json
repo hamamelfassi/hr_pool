@@ -1,0 +1,1076 @@
+{
+    "name": "Marsellia | Recruitment | Required Document Submission",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "55b45875-8b0a-4906-8d93-28a916e7c74f",
+                "responseMode": "responseNode",
+                "options": {}
+            },
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2.1,
+            "position": [
+                96,
+                -128
+            ],
+            "id": "3a51980f-c8b6-417f-8390-8e711d1809c5",
+            "name": "Receive Fillout Submission",
+            "webhookId": "55b45875-8b0a-4906-8d93-28a916e7c74f"
+        },
+        {
+            "parameters": {
+                "jsCode": "/**\n * MCEP / Marsellia — Required Document Writeback\n * Workflow: Marsellia | Recruitment | Required Document Submission\n * Node: Parse Fillout Payload\n * Module: required_document_writeback_parse_payload.js\n *\n * Input:\n * - n8n Webhook node item(s)\n * - Expected Fillout payload shape:\n *   body.formId\n *   body.formName\n *   body.submission.submissionId\n *   body.submission.submissionTime\n *   body.submission.lastUpdatedAt\n *   body.submission.questions\n *   body.submission.urlParameters\n *\n * Output:\n * - One normalized JSON item per webhook item.\n *\n * Related contract:\n * docs/modules/hr_recruitment_custom/n8n_required_document_writeback_contract.md\n */\n\nconst EXPECTED_FORM_ID = \"sZFxwo2u1bus\";\n\nconst CONFIG = {\n    parserVersion: \"6C-5A\",\n    workflow: \"Marsellia | Recruitment | Required Document Submission\",\n    includeDebugPayload: false,\n};\n\nconst PUBLIC_SECTION_PREFIXES = [\n    \"cv\",\n    \"qualification\",\n    \"birth_certificate\",\n    \"family_status\",\n    \"residence_certificate\",\n    \"national_id\",\n    \"criminal_record\",\n    \"health_certificate\",\n    \"passport\",\n    \"id_card\",\n    \"driving_license\",\n    \"non_duplication_certificate\",\n    \"bank_information\",\n];\n\nconst NON_PUBLIC_SECTION_PREFIXES = [\n    \"passport_photos\",\n];\n\nconst SECTION_ROUTING_FIELD_SUFFIXES = new Set([\n    \"show\",\n    \"request_line_id\",\n    \"checklist_line_id\",\n    \"document_type_id\",\n    \"document_code\",\n]);\n\nfunction isSectionRoutingField(prefix, fieldName) {\n    if (!fieldName || !fieldName.startsWith(`${prefix}_`)) return false;\n\n    const suffix = fieldName.slice(prefix.length + 1);\n    return SECTION_ROUTING_FIELD_SUFFIXES.has(suffix);\n}\n\nconst IGNORED_URL_PARAMETER_NAMES = new Set([\n    \"generated_url\",\n]);\n\nconst FIELD_ID_TO_CANONICAL_NAME = {\n    \"4qDA\": \"form_base_url\",\n    \"9jDc\": \"request_reference\",\n    \"jU4d\": \"token_reference\",\n    \"11E1\": \"state\",\n    \"m3pV\": \"candidate_name\",\n    \"ukoR\": \"candidate_email\",\n    \"hgtH\": \"odoo_request_id\",\n    \"6h4X\": \"odoo_applicant_id\",\n    \"rKQf\": \"odoo_checklist_id\",\n    \"e538\": \"odoo_request_id\",\n    \"qamX\": \"expires_at\",\n    \"ioYz\": \"sent_at\",\n    \"12mB\": \"last_response_at\",\n\n    \"iEoh\": \"cv_file_upload\",\n    \"66uF\": \"cv_notes\",\n\n    \"jzWb\": \"qualification_file_upload\",\n    \"rfRH\": \"qualification_document_number\",\n    \"dvmD\": \"qualification_subject\",\n    \"pnZ3\": \"qualification_type\",\n    \"jSpv\": \"qualification_issuing_authority\",\n    \"wXi5\": \"qualification_place_of_issue\",\n    \"5UjP\": \"qualification_date_of_issue\",\n    \"sDDB\": \"qualification_date_of_expiry\",\n    \"ewg6\": \"qualification_notes\",\n\n    \"c7Fa\": \"birth_certificate_file_upload\",\n    \"eXE9\": \"date_of_birth\",\n    \"jman\": \"place_of_birth\",\n    \"tdTT\": \"country_of_birth\",\n    \"kzKV\": \"birth_certificate_document_number\",\n    \"gNr5\": \"birth_certificate_issuing_authority\",\n    \"e4ef\": \"birth_certificate_place_of_issue\",\n    \"uxFt\": \"birth_certificate_date_of_issue\",\n    \"jUCa\": \"birth_certificate_date_of_expiry\",\n    \"mz3F\": \"birth_certificate_notes\",\n\n    \"1KXp\": \"family_status_file_upload\",\n    \"c8Jz\": \"family_reference_number\",\n    \"gLB5\": \"family_paper_number\",\n    \"c1hW\": \"next_of_kin_phone\",\n    \"epgD\": \"next_of_kin_name\",\n    \"qDRY\": \"family_status_document_number\",\n    \"9vz5\": \"family_status_issuing_authority\",\n    \"4JR6\": \"family_status_place_of_issue\",\n    \"22QV\": \"family_status_date_of_issue\",\n    \"vxXB\": \"family_status_date_of_expiry\",\n    \"tjsQ\": \"family_status_notes\",\n\n    \"hyYw\": \"residence_certificate_file_upload\",\n    \"ksVL\": \"residence_certificate_document_number\",\n    \"ifcA\": \"residence_certificate_issuing_authority\",\n    \"u1dZ\": \"residence_certificate_place_of_issue\",\n    \"1QHD\": \"residence_certificate_date_of_issue\",\n    \"pC8G\": \"residence_certificate_date_of_expiry\",\n    \"4ny8\": \"residence_certificate_notes\",\n\n    \"poLi\": \"national_id_file_upload\",\n    \"xuPR\": \"national_id_document_number\",\n    \"2enp\": \"national_id_issuing_authority\",\n    \"uPi7\": \"national_id_place_of_issue\",\n    \"cdaF\": \"national_id_date_of_issue\",\n    \"bzXp\": \"national_id_date_of_expiry\",\n    \"tXhc\": \"national_id_notes\",\n\n    \"tyRF\": \"criminal_record_file_upload\",\n    \"4432\": \"criminal_record_document_number\",\n    \"iTuG\": \"criminal_record_issuing_authority\",\n    \"6XRN\": \"criminal_record_place_of_issue\",\n    \"gU6k\": \"criminal_record_date_of_issue\",\n    \"1WFQ\": \"criminal_record_date_of_expiry\",\n    \"82VC\": \"criminal_record_notes\",\n\n    \"9QRg\": \"health_certificate_file_upload\",\n    \"jqxu\": \"blood_type\",\n    \"oeaH\": \"health_certificate_document_number\",\n    \"qire\": \"health_certificate_issuing_authority\",\n    \"m6sx\": \"health_certificate_place_of_issue\",\n    \"mTnb\": \"health_certificate_date_of_issue\",\n    \"rLtb\": \"health_certificate_date_of_expiry\",\n    \"6Lxr\": \"health_certificate_notes\",\n\n    \"couc\": \"passport_file_upload\",\n    \"8P7s\": \"passport_document_number\",\n    \"nuRr\": \"passport_issuing_authority\",\n    \"2A52\": \"passport_place_of_issue\",\n    \"4Jsq\": \"passport_date_of_issue\",\n    \"gho6\": \"passport_date_of_expiry\",\n    \"s1Xy\": \"passport_notes\",\n\n    \"fmfU\": \"id_card_file_upload\",\n    \"9HJb\": \"id_card_document_number\",\n    \"xjzj\": \"id_card_issuing_authority\",\n    \"gdEy\": \"id_card_place_of_issue\",\n    \"ssVb\": \"id_card_date_of_issue\",\n    \"iqUf\": \"id_card_date_of_expiry\",\n    \"aakM\": \"id_card_notes\",\n\n    \"iMXW\": \"driving_license_file_upload\",\n    \"vfQj\": \"driving_license_document_number\",\n    \"mGdT\": \"driving_license_issuing_authority\",\n    \"bMYb\": \"driving_license_place_of_issue\",\n    \"uKdZ\": \"driving_license_date_of_issue\",\n    \"cCiZ\": \"driving_license_date_of_expiry\",\n    \"9Rzj\": \"driving_license_notes\",\n\n    \"c7Z2\": \"non_duplication_certificate_file_upload\",\n    \"18YW\": \"non_duplication_certificate_document_number\",\n    \"jDfS\": \"non_duplication_certificate_issuing_authority\",\n    \"qFjp\": \"non_duplication_certificate_place_of_issue\",\n    \"jsEL\": \"non_duplication_certificate_date_of_issue\",\n    \"miDH\": \"non_duplication_certificate_date_of_expiry\",\n    \"gwFN\": \"non_duplication_certificate_notes\",\n\n    \"5U3s\": \"account_number\",\n    \"32uF\": \"bank_branch\",\n    \"tJF4\": \"bank_name\",\n    \"pvXT\": \"iban\",\n    \"7jUn\": \"bank_notes\",\n    \"jpNf\": \"form_notes\",\n};\n\nfunction isObject(value) {\n    return value !== null && typeof value === \"object\" && !Array.isArray(value);\n}\n\nfunction firstNonEmpty(...values) {\n    for (const value of values) {\n        if (value !== undefined && value !== null && value !== \"\") {\n            return value;\n        }\n    }\n    return null;\n}\n\nfunction normalizeScalar(value) {\n    if (Array.isArray(value)) {\n        return value.length ? normalizeScalar(value[0]) : null;\n    }\n\n    if (isObject(value)) {\n        if (\"odoo_id\" in value) return normalizeScalar(value.odoo_id);\n        if (\"value\" in value) return normalizeScalar(value.value);\n        if (\"answer\" in value) return normalizeScalar(value.answer);\n        if (\"text\" in value) return normalizeScalar(value.text);\n        if (\"label\" in value) return normalizeScalar(value.label);\n        if (\"id\" in value) return normalizeScalar(value.id);\n        if (\"recordID\" in value) return normalizeScalar(value.recordID);\n    }\n\n    if (value === undefined || value === null || value === \"\") return null;\n\n    return String(value);\n}\n\nfunction normalizeBooleanFlag(value) {\n    const scalar = normalizeScalar(value);\n    if (scalar === null) return false;\n\n    return [\"1\", \"true\", \"yes\", \"y\", \"on\"].includes(\n        String(scalar).trim().toLowerCase()\n    );\n}\n\nfunction normalizeUrlParameters(raw) {\n    if (!raw) return {};\n\n    if (isObject(raw)) {\n        const result = {};\n        for (const [key, value] of Object.entries(raw)) {\n            if (!IGNORED_URL_PARAMETER_NAMES.has(String(key))) {\n                result[key] = normalizeScalar(value);\n            }\n        }\n        return result;\n    }\n\n    if (Array.isArray(raw)) {\n        const result = {};\n\n        for (const item of raw) {\n            if (!isObject(item)) continue;\n\n            const key = firstNonEmpty(\n                item.name,\n                item.key,\n                item.id,\n                item.field,\n                item.parameter\n            );\n\n            if (!key) continue;\n\n            if (IGNORED_URL_PARAMETER_NAMES.has(String(key))) continue;\n\n            result[String(key)] = normalizeScalar(\n                firstNonEmpty(item.value, item.answer, item.text)\n            );\n        }\n\n        return result;\n    }\n\n    return {};\n}\n\nfunction getQuestionValue(question) {\n    if (!isObject(question)) return null;\n\n    return firstNonEmpty(\n        question.value,\n        question.answer,\n        question.answers,\n        question.response,\n        question.text,\n        question.files,\n        question.file,\n        question.url\n    );\n}\n\nfunction questionLooksLikeFile(question) {\n    if (!isObject(question)) return false;\n\n    const type = normalizeScalar(question.type);\n    if (type && type.toLowerCase().includes(\"file\")) return true;\n\n    const value = getQuestionValue(question);\n\n    if (Array.isArray(value)) {\n        return value.some((entry) => isObject(entry) && (\n            \"url\" in entry ||\n            \"downloadUrl\" in entry ||\n            \"filename\" in entry ||\n            \"fileName\" in entry ||\n            \"name\" in entry\n        ));\n    }\n\n    if (isObject(value)) {\n        return (\n            \"url\" in value ||\n            \"downloadUrl\" in value ||\n            \"filename\" in value ||\n            \"fileName\" in value ||\n            \"name\" in value\n        );\n    }\n\n    return false;\n}\n\nfunction normalizeFileEntries(value) {\n    if (!value) return [];\n\n    const rawEntries = Array.isArray(value) ? value : [value];\n\n    return rawEntries\n        .filter((entry) => entry !== undefined && entry !== null && entry !== \"\")\n        .map((entry) => {\n            let normalized;\n\n            if (typeof entry === \"string\") {\n                normalized = {\n                    url: entry,\n                    fileName: null,\n                    mimeType: null,\n                    size: null,\n                };\n            } else if (isObject(entry)) {\n                normalized = {\n                    url: firstNonEmpty(entry.url, entry.downloadUrl, entry.href, entry.link),\n                    fileName: firstNonEmpty(entry.filename, entry.fileName, entry.name),\n                    mimeType: firstNonEmpty(entry.mimeType, entry.mimetype, entry.type),\n                    size: firstNonEmpty(entry.size, entry.sizeBytes, entry.fileSize),\n                };\n            } else {\n                normalized = {\n                    url: null,\n                    fileName: null,\n                    mimeType: null,\n                    size: null,\n                };\n            }\n\n            if (CONFIG.includeDebugPayload) {\n                normalized.raw = entry;\n            }\n\n            return normalized;\n        });\n}\n\nfunction normalizeQuestions(rawQuestions) {\n    const questions = Array.isArray(rawQuestions) ? rawQuestions : [];\n\n    const byId = {};\n    const byName = {};\n    const byCanonicalName = {};\n    const byOriginalName = {};\n    const byLabel = {};\n    const filesByName = {};\n\n    for (const question of questions) {\n        if (!isObject(question)) continue;\n\n        const id = firstNonEmpty(question.id, question.questionId, question.fieldId);\n        const originalName = firstNonEmpty(question.name, question.key, question.slug);\n        const canonicalName = id && FIELD_ID_TO_CANONICAL_NAME[id]\n            ? FIELD_ID_TO_CANONICAL_NAME[id]\n            : originalName;\n\n        const label = firstNonEmpty(question.label, question.question, question.title);\n        const value = getQuestionValue(question);\n        const normalizedValue = normalizeScalar(value);\n        const isFile = questionLooksLikeFile(question);\n\n        const normalizedQuestion = {\n            id,\n            name: canonicalName,\n            canonicalName,\n            originalName,\n            label,\n            type: firstNonEmpty(question.type, question.fieldType),\n            value,\n            normalizedValue,\n            isFile,\n            files: isFile ? normalizeFileEntries(value) : [],\n            raw: question,\n        };\n\n        if (id) byId[String(id)] = normalizedQuestion;\n        if (canonicalName) {\n            byName[String(canonicalName)] = normalizedQuestion;\n            byCanonicalName[String(canonicalName)] = normalizedQuestion;\n        }\n        if (originalName) byOriginalName[String(originalName)] = normalizedQuestion;\n        if (label) byLabel[String(label)] = normalizedQuestion;\n\n        if (canonicalName && normalizedQuestion.isFile) {\n            filesByName[String(canonicalName)] = normalizedQuestion.files;\n        }\n    }\n\n    return {\n        raw: questions,\n        byId,\n        byName,\n        byCanonicalName,\n        byOriginalName,\n        byLabel,\n        filesByName,\n    };\n}\n\nfunction getQuestionByName(questionIndex, name) {\n    if (!questionIndex) return null;\n\n    if (questionIndex.byCanonicalName && questionIndex.byCanonicalName[name]) {\n        return questionIndex.byCanonicalName[name];\n    }\n\n    if (questionIndex.byName && questionIndex.byName[name]) {\n        return questionIndex.byName[name];\n    }\n\n    return null;\n}\n\nfunction getQuestionScalar(questionIndex, name) {\n    const question = getQuestionByName(questionIndex, name);\n    return question ? question.normalizedValue : null;\n}\n\nfunction getQuestionFiles(questionIndex, name) {\n    const question = getQuestionByName(questionIndex, name);\n    return question && Array.isArray(question.files) ? question.files : [];\n}\n\nfunction collectPrefixedScalarFields(prefix, questionIndex, uploadFieldName) {\n    const scalarFields = {};\n    const names = Object.keys(questionIndex.byName || {})\n        .filter((key) => key === prefix || key.startsWith(`${prefix}_`));\n\n    for (const fieldName of names) {\n        if (fieldName === uploadFieldName) continue;\n        if (isSectionRoutingField(prefix, fieldName)) continue;\n\n        scalarFields[fieldName] = getQuestionScalar(questionIndex, fieldName);\n    }\n\n    return scalarFields;\n}\n\nfunction addKnownNonPrefixedFields(prefix, questionIndex, scalarFields) {\n    if (prefix === \"birth_certificate\") {\n        for (const fieldName of [\"date_of_birth\", \"place_of_birth\", \"country_of_birth\"]) {\n            scalarFields[fieldName] = getQuestionScalar(questionIndex, fieldName);\n        }\n    }\n\n    if (prefix === \"family_status\") {\n        for (const fieldName of [\n            \"family_paper_number\",\n            \"family_reference_number\",\n            \"next_of_kin_name\",\n            \"next_of_kin_phone\",\n        ]) {\n            scalarFields[fieldName] = getQuestionScalar(questionIndex, fieldName);\n        }\n    }\n\n    if (prefix === \"health_certificate\") {\n        scalarFields.blood_type = getQuestionScalar(questionIndex, \"blood_type\");\n    }\n\n    if (prefix === \"bank_information\") {\n        for (const fieldName of [\n            \"bank_name\",\n            \"bank_branch\",\n            \"account_number\",\n            \"iban\",\n            \"bank_notes\",\n        ]) {\n            scalarFields[fieldName] = getQuestionScalar(questionIndex, fieldName);\n        }\n    }\n\n    return scalarFields;\n}\n\nfunction buildSection(prefix, urlParams, questionIndex) {\n    const show = normalizeBooleanFlag(urlParams[`${prefix}_show`]);\n\n    const routing = {\n        show,\n        requestLineId: normalizeScalar(urlParams[`${prefix}_request_line_id`]),\n        checklistLineId: normalizeScalar(urlParams[`${prefix}_checklist_line_id`]),\n        documentTypeId: normalizeScalar(urlParams[`${prefix}_document_type_id`]),\n        documentCode: normalizeScalar(urlParams[`${prefix}_document_code`]),\n    };\n\n    const uploadFieldName = prefix === \"bank_information\"\n        ? null\n        : `${prefix}_file_upload`;\n\n    const files = uploadFieldName\n        ? getQuestionFiles(questionIndex, uploadFieldName)\n        : [];\n\n    let scalarFields = collectPrefixedScalarFields(prefix, questionIndex, uploadFieldName);\n    scalarFields = addKnownNonPrefixedFields(prefix, questionIndex, scalarFields);\n\n    const hasStructuredData = Object.values(scalarFields).some((value) => {\n        return value !== undefined && value !== null && value !== \"\";\n    });\n\n    return {\n        prefix,\n        routing,\n        uploadFieldName,\n        files,\n        scalarFields,\n        hasFiles: files.length > 0,\n        hasStructuredData,\n        hasPayload: files.length > 0 || hasStructuredData,\n        rawStatus: show ? \"requested\" : \"skipped_not_requested\",\n    };\n}\n\nfunction getPayloadFromItem(item) {\n    const json = item && item.json ? item.json : {};\n\n    if (json.body && isObject(json.body)) return json.body;\n\n    return json;\n}\n\nfunction buildRequestEnvelope(urlParameters) {\n    return {\n        odooRequestId: normalizeScalar(urlParameters.odoo_request_id),\n        odooApplicantId: normalizeScalar(urlParameters.odoo_applicant_id),\n        odooChecklistId: normalizeScalar(urlParameters.odoo_checklist_id),\n        requestReference: normalizeScalar(urlParameters.request_reference),\n        candidateName: normalizeScalar(urlParameters.candidate_name),\n        candidateEmail: normalizeScalar(urlParameters.candidate_email),\n        tokenReference: normalizeScalar(urlParameters.token_reference),\n        expiresAt: normalizeScalar(urlParameters.expires_at),\n        formBaseUrl: normalizeScalar(urlParameters.form_base_url),\n        state: normalizeScalar(urlParameters.state),\n        sentAt: normalizeScalar(urlParameters.sent_at),\n        lastResponseAt: normalizeScalar(urlParameters.last_response_at),\n    };\n}\n\nfunction buildValidationHints(payload, submission, request) {\n    const validationHints = [];\n\n    if (payload.formId !== EXPECTED_FORM_ID) {\n        validationHints.push({\n            level: \"error\",\n            code: \"unexpected_form_id\",\n            message: `Expected formId ${EXPECTED_FORM_ID}, received ${payload.formId || \"empty\"}.`,\n        });\n    }\n\n    if (!submission.submissionId) {\n        validationHints.push({\n            level: \"error\",\n            code: \"missing_submission_id\",\n            message: \"Fillout submissionId is missing.\",\n        });\n    }\n\n    if (!submission.urlParameters) {\n        validationHints.push({\n            level: \"error\",\n            code: \"missing_url_parameters\",\n            message: \"Fillout urlParameters object is missing.\",\n        });\n    }\n\n    for (const key of [\n        \"odooRequestId\",\n        \"odooApplicantId\",\n        \"odooChecklistId\",\n        \"tokenReference\",\n    ]) {\n        if (!request[key]) {\n            validationHints.push({\n                level: \"error\",\n                code: `missing_${key}`,\n                message: `Request envelope value is missing: ${key}.`,\n            });\n        }\n    }\n\n    return validationHints;\n}\n\nfunction parseItem(item, itemIndex) {\n    const payload = getPayloadFromItem(item);\n    const submission = payload.submission || {};\n    const urlParameters = normalizeUrlParameters(submission.urlParameters);\n    const questionIndex = normalizeQuestions(submission.questions);\n    const request = buildRequestEnvelope(urlParameters);\n    const formNotes = getQuestionScalar(questionIndex, \"form_notes\");\n\n    const sections = PUBLIC_SECTION_PREFIXES.map((prefix) => {\n        return buildSection(prefix, urlParameters, questionIndex);\n    });\n\n    const requestedSections = sections.filter((section) => section.routing.show);\n    const sectionsWithPayload = sections.filter((section) => section.hasPayload);\n    const validationHints = buildValidationHints(payload, submission, request);\n\n    const parsed = {\n        parser: {\n            module: \"required_document_writeback_parse_payload.js\",\n            version: CONFIG.parserVersion,\n            workflow: CONFIG.workflow,\n            itemIndex,\n            parsedAt: new Date().toISOString(),\n            compactOutput: !CONFIG.includeDebugPayload,\n        },\n        form: {\n            id: payload.formId || null,\n            name: payload.formName || null,\n            expectedFormId: EXPECTED_FORM_ID,\n            isExpectedForm: payload.formId === EXPECTED_FORM_ID,\n        },\n        submission: {\n            id: submission.submissionId || null,\n            submissionTime: submission.submissionTime || null,\n            lastUpdatedAt: submission.lastUpdatedAt || null,\n        },\n        request,\n        formNotes,\n        urlParameters,\n        sections,\n        constants: {\n            publicSectionPrefixes: PUBLIC_SECTION_PREFIXES,\n            nonPublicSectionPrefixes: NON_PUBLIC_SECTION_PREFIXES,\n            fieldIdMapVersion: \"6C-2A\",\n            compactParserVersion: CONFIG.parserVersion,\n        },\n        summary: {\n            questionCount: questionIndex.raw.length,\n            urlParameterCount: Object.keys(urlParameters).length,\n            sectionCount: sections.length,\n            requestedSectionCount: requestedSections.length,\n            sectionsWithPayloadCount: sectionsWithPayload.length,\n            requestedPrefixes: requestedSections.map((section) => section.prefix),\n            payloadPrefixes: sectionsWithPayload.map((section) => section.prefix),\n            validationHintCount: validationHints.length,\n        },\n        validationHints,\n    };\n\n    if (CONFIG.includeDebugPayload) {\n        parsed.questionIndex = questionIndex;\n        parsed.raw = {\n            payload,\n        };\n    }\n\n    return parsed;\n}\n\nconst inputItems = $input.all();\n\nreturn inputItems.map((item, index) => {\n    return {\n        json: parseItem(item, index),\n    };\n});"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                304,
+                -128
+            ],
+            "id": "0b420ddd-2917-4d23-abff-84d57d2f1ed7",
+            "name": "Parse Fillout Payload"
+        },
+        {
+            "parameters": {
+                "jsCode": "/**\n * MCEP / Marsellia — Required Document Writeback\n * Workflow: Marsellia | Recruitment | Required Document Submission\n * Node: Validate Odoo Envelope\n * Module: required_document_writeback_validate_envelope.js\n *\n * Pass 6C-3A rate-limit-safe variant:\n * - Uses only two Odoo HTTP lookups:\n *   1) Lookup Odoo Request\n *   2) Lookup Odoo Request Lines\n * - Does not call checklist lines separately.\n *\n * Related contract:\n * docs/modules/hr_recruitment_custom/n8n_required_document_writeback_contract.md\n */\n\nconst CONFIG = {\n  moduleVersion: \"6C-3A\",\n  probeModeAllowPrepared: true,\n  nodeNames: {\n    parsePayload: \"Parse Fillout Payload\",\n    lookupRequest: \"Lookup Odoo Request\",\n    lookupRequestLines: \"Lookup Odoo Request Lines\",\n  },\n  allowedRequestStatesForProbe: [\"sent\", \"prepared\"],\n  allowedRequestStatesProduction: [\"sent\"],\n  allowedRequestLineStates: [\"requested\", \"submitted\"],\n};\n\nfunction isObject(value) {\n  return value !== null && typeof value === \"object\" && !Array.isArray(value);\n}\n\nfunction normalizeScalar(value) {\n  if (Array.isArray(value)) {\n    return value.length ? normalizeScalar(value[0]) : null;\n  }\n\n  if (isObject(value)) {\n    if (\"id\" in value) return normalizeScalar(value.id);\n    if (\"value\" in value) return normalizeScalar(value.value);\n    if (\"odoo_id\" in value) return normalizeScalar(value.odoo_id);\n  }\n\n  if (value === undefined || value === null || value === \"\") return null;\n\n  return String(value);\n}\n\nfunction extractOdooId(value) {\n  return normalizeScalar(value);\n}\n\nfunction sameId(left, right) {\n  const a = extractOdooId(left);\n  const b = extractOdooId(right);\n  return a !== null && b !== null && String(a) === String(b);\n}\n\nfunction normalizeBoolean(value) {\n  if (value === true) return true;\n  if (value === false) return false;\n\n  const scalar = normalizeScalar(value);\n  if (scalar === null) return false;\n\n  return [\"1\", \"true\", \"yes\", \"y\", \"on\"].includes(\n    String(scalar).trim().toLowerCase()\n  );\n}\n\nfunction getNodeItems(nodeName) {\n  try {\n    if (typeof $items === \"function\") {\n      return $items(nodeName) || [];\n    }\n  } catch (error) {\n    return [];\n  }\n\n  return [];\n}\n\nfunction normalizeRecord(record) {\n  if (!isObject(record)) return null;\n\n  if (record.json && isObject(record.json)) return normalizeRecord(record.json);\n  if (record.record && isObject(record.record)) return normalizeRecord(record.record);\n\n  return record;\n}\n\nfunction flattenRecordsFromItems(items) {\n  const records = [];\n\n  for (const item of items || []) {\n    const json = item && item.json ? item.json : item;\n\n    if (Array.isArray(json)) {\n      for (const entry of json) {\n        const normalized = normalizeRecord(entry);\n        if (normalized) records.push(normalized);\n      }\n      continue;\n    }\n\n    if (isObject(json) && Array.isArray(json.records)) {\n      for (const entry of json.records) {\n        const normalized = normalizeRecord(entry);\n        if (normalized) records.push(normalized);\n      }\n      continue;\n    }\n\n    if (isObject(json) && Array.isArray(json.data)) {\n      for (const entry of json.data) {\n        const normalized = normalizeRecord(entry);\n        if (normalized) records.push(normalized);\n      }\n      continue;\n    }\n\n    if (isObject(json) && Array.isArray(json.result)) {\n      for (const entry of json.result) {\n        const normalized = normalizeRecord(entry);\n        if (normalized) records.push(normalized);\n      }\n      continue;\n    }\n\n    const normalized = normalizeRecord(json);\n    if (normalized) records.push(normalized);\n  }\n\n  return records;\n}\n\nfunction getRecordsFromNode(nodeName) {\n  return flattenRecordsFromItems(getNodeItems(nodeName));\n}\n\nfunction getParsedPayload() {\n  const parsedItems = getNodeItems(CONFIG.nodeNames.parsePayload);\n\n  if (parsedItems.length) {\n    const first = parsedItems[0];\n    return first && first.json ? first.json : first;\n  }\n\n  const inputItems = $input.all();\n  if (inputItems.length) {\n    const first = inputItems[0];\n    return first && first.json ? first.json : first;\n  }\n\n  return {};\n}\n\nfunction byId(records) {\n  const result = {};\n\n  for (const record of records || []) {\n    const id = extractOdooId(record.id);\n    if (id !== null) {\n      result[String(id)] = record;\n    }\n  }\n\n  return result;\n}\n\nfunction parseDateTime(value) {\n  const scalar = normalizeScalar(value);\n  if (!scalar) return null;\n\n  let text = String(scalar).trim();\n\n  if (/^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}/.test(text)) {\n    text = text.replace(\" \", \"T\");\n  }\n\n  text = text.replace(/(\\.\\d{3})\\d+/, \"$1\");\n\n  if (/^\\d{4}-\\d{2}-\\d{2}T/.test(text) && !/(Z|[+-]\\d{2}:?\\d{2})$/.test(text)) {\n    text += \"Z\";\n  }\n\n  const date = new Date(text);\n  if (Number.isNaN(date.getTime())) return null;\n\n  return date;\n}\n\nfunction makeIssue(level, code, message, context = {}) {\n  return { level, code, message, context };\n}\n\nfunction getAllowedRequestStates() {\n  return CONFIG.probeModeAllowPrepared\n    ? CONFIG.allowedRequestStatesForProbe\n    : CONFIG.allowedRequestStatesProduction;\n}\n\nfunction validateEnvelope(parsed, requestRecord, now) {\n  const errors = [];\n  const warnings = [];\n  const request = parsed.request || {};\n\n  for (const hint of parsed.validationHints || []) {\n    if (hint.level === \"error\") {\n      errors.push(makeIssue(\"error\", hint.code, hint.message));\n    } else {\n      warnings.push(makeIssue(\"warning\", hint.code, hint.message));\n    }\n  }\n\n  if (!requestRecord) {\n    errors.push(makeIssue(\n      \"error\",\n      \"odoo_request_not_found\",\n      \"Odoo submission request was not found from odoo_request_id.\",\n      { odooRequestId: request.odooRequestId }\n    ));\n\n    return {\n      status: \"invalid\",\n      errors,\n      warnings,\n      requestRecordFound: false,\n    };\n  }\n\n  if (!sameId(requestRecord.id, request.odooRequestId)) {\n    errors.push(makeIssue(\n      \"error\",\n      \"request_id_mismatch\",\n      \"Odoo request ID does not match parsed request ID.\"\n    ));\n  }\n\n  if (normalizeScalar(requestRecord.x_token_reference) !== normalizeScalar(request.tokenReference)) {\n    errors.push(makeIssue(\n      \"error\",\n      \"token_reference_mismatch\",\n      \"Token reference does not match the Odoo request.\"\n    ));\n  }\n\n  if (!sameId(requestRecord.x_applicant_id, request.odooApplicantId)) {\n    errors.push(makeIssue(\n      \"error\",\n      \"applicant_id_mismatch\",\n      \"Applicant ID does not match the Odoo request.\"\n    ));\n  }\n\n  if (!sameId(requestRecord.x_checklist_id, request.odooChecklistId)) {\n    errors.push(makeIssue(\n      \"error\",\n      \"checklist_id_mismatch\",\n      \"Checklist ID does not match the Odoo request.\"\n    ));\n  }\n\n  const requestState = normalizeScalar(requestRecord.x_state);\n  const allowedStates = getAllowedRequestStates();\n\n  if (!allowedStates.includes(requestState)) {\n    errors.push(makeIssue(\n      \"error\",\n      \"invalid_request_state\",\n      \"Odoo request is not in an allowed state for writeback.\",\n      { state: requestState, allowedStates }\n    ));\n  }\n\n  if (requestState === \"prepared\" && CONFIG.probeModeAllowPrepared) {\n    warnings.push(makeIssue(\n      \"warning\",\n      \"prepared_state_allowed_for_probe\",\n      \"Prepared request state is allowed during the Pass 6C probe. Production should require sent.\"\n    ));\n  }\n\n  const expiry = parseDateTime(requestRecord.x_expires_at || request.expiresAt);\n\n  if (!expiry) {\n    errors.push(makeIssue(\n      \"error\",\n      \"missing_or_invalid_expiry\",\n      \"Request expiry is missing or invalid.\"\n    ));\n  } else if (expiry.getTime() < now.getTime()) {\n    errors.push(makeIssue(\n      \"error\",\n      \"request_expired\",\n      \"Submission request has expired.\",\n      { expiresAt: expiry.toISOString() }\n    ));\n  }\n\n  return {\n    status: errors.length ? \"invalid\" : (warnings.length ? \"valid_with_warnings\" : \"valid\"),\n    errors,\n    warnings,\n    requestRecordFound: true,\n    requestState,\n    allowedStates,\n    expiresAt: expiry ? expiry.toISOString() : null,\n  };\n}\n\nfunction validateSection(section, parsed, requestLineById) {\n  const errors = [];\n  const warnings = [];\n\n  if (!section.routing || !section.routing.show) {\n    return {\n      ...section,\n      validation: {\n        status: \"skipped_not_requested\",\n        isValidForWriteback: false,\n        errors,\n        warnings,\n      },\n    };\n  }\n\n  const request = parsed.request || {};\n  const routing = section.routing;\n\n  const requestLineId = normalizeScalar(routing.requestLineId);\n  const checklistLineId = normalizeScalar(routing.checklistLineId);\n  const documentTypeId = normalizeScalar(routing.documentTypeId);\n  const documentCode = normalizeScalar(routing.documentCode);\n\n  if (!requestLineId) {\n    errors.push(makeIssue(\"error\", \"missing_request_line_id\", \"Requested section is missing request line ID.\"));\n  }\n\n  if (!checklistLineId) {\n    errors.push(makeIssue(\"error\", \"missing_checklist_line_id\", \"Requested section is missing checklist line ID.\"));\n  }\n\n  if (!documentTypeId) {\n    errors.push(makeIssue(\"error\", \"missing_document_type_id\", \"Requested section is missing document type ID.\"));\n  }\n\n  if (!documentCode) {\n    errors.push(makeIssue(\"error\", \"missing_document_code\", \"Requested section is missing document code.\"));\n  }\n\n  const requestLine = requestLineId ? requestLineById[String(requestLineId)] : null;\n\n  if (!requestLine) {\n    errors.push(makeIssue(\n      \"error\",\n      \"request_line_not_found\",\n      \"Odoo request line was not found.\",\n      { requestLineId }\n    ));\n  }\n\n  if (requestLine) {\n    if (!sameId(requestLine.x_request_id, request.odooRequestId)) {\n      errors.push(makeIssue(\n        \"error\",\n        \"request_line_request_mismatch\",\n        \"Request line does not belong to the Odoo request.\"\n      ));\n    }\n\n    if (!sameId(requestLine.x_applicant_id, request.odooApplicantId)) {\n      errors.push(makeIssue(\n        \"error\",\n        \"request_line_applicant_mismatch\",\n        \"Request line applicant does not match request envelope.\"\n      ));\n    }\n\n    if (!sameId(requestLine.x_checklist_id, request.odooChecklistId)) {\n      errors.push(makeIssue(\n        \"error\",\n        \"request_line_checklist_mismatch\",\n        \"Request line checklist does not match request envelope.\"\n      ));\n    }\n\n    if (!sameId(requestLine.x_checklist_line_id, checklistLineId)) {\n      errors.push(makeIssue(\n        \"error\",\n        \"request_line_checklist_line_mismatch\",\n        \"Request line checklist line does not match section routing.\"\n      ));\n    }\n\n    if (!sameId(requestLine.x_document_type_id, documentTypeId)) {\n      errors.push(makeIssue(\n        \"error\",\n        \"request_line_document_type_mismatch\",\n        \"Request line document type does not match section routing.\"\n      ));\n    }\n\n    if (normalizeScalar(requestLine.x_document_code) !== documentCode) {\n      errors.push(makeIssue(\n        \"error\",\n        \"request_line_document_code_mismatch\",\n        \"Request line document code does not match section routing.\"\n      ));\n    }\n\n    const requestLineState = normalizeScalar(requestLine.x_state);\n\n    if (!CONFIG.allowedRequestLineStates.includes(requestLineState)) {\n      errors.push(makeIssue(\n        \"error\",\n        \"invalid_request_line_state\",\n        \"Request line is not in an allowed state for writeback.\",\n        { state: requestLineState, allowedStates: CONFIG.allowedRequestLineStates }\n      ));\n    }\n\n    if (!normalizeBoolean(requestLine.x_public_request_enabled)) {\n      errors.push(makeIssue(\n        \"error\",\n        \"request_line_not_public\",\n        \"Request line is not public request enabled.\"\n      ));\n    }\n  }\n\n  const status = errors.length ? \"invalid\" : (warnings.length ? \"valid_with_warnings\" : \"valid\");\n\n  return {\n    ...section,\n    odoo: {\n      requestLine,\n    },\n    validation: {\n      status,\n      isValidForWriteback: !errors.length,\n      errors,\n      warnings,\n    },\n  };\n}\n\nconst parsed = getParsedPayload();\n\nconst requestRecords = getRecordsFromNode(CONFIG.nodeNames.lookupRequest);\nconst requestLineRecords = getRecordsFromNode(CONFIG.nodeNames.lookupRequestLines);\n\nconst requestById = byId(requestRecords);\nconst requestLineById = byId(requestLineRecords);\n\nconst requestId = parsed.request ? parsed.request.odooRequestId : null;\nconst requestRecord = requestId ? requestById[String(requestId)] : null;\n\nconst now = new Date();\n\nconst envelope = validateEnvelope(parsed, requestRecord, now);\n\nconst validatedSections = (parsed.sections || []).map((section) => {\n  return validateSection(section, parsed, requestLineById);\n});\n\nconst requestedSections = validatedSections.filter((section) => section.routing && section.routing.show);\nconst validRequestedSections = requestedSections.filter((section) => section.validation && section.validation.isValidForWriteback);\nconst invalidRequestedSections = requestedSections.filter((section) => section.validation && section.validation.status === \"invalid\");\n\nconst envelopeValid = envelope.status === \"valid\" || envelope.status === \"valid_with_warnings\";\nconst canProceed = envelopeValid && validRequestedSections.length > 0;\n\nlet status = \"invalid\";\nif (canProceed && invalidRequestedSections.length) {\n  status = \"partial_valid\";\n} else if (canProceed) {\n  status = \"valid\";\n}\n\nreturn [\n  {\n    json: {\n      ...parsed,\n      sections: validatedSections,\n      odooLookup: {\n        requestRecordFound: !!requestRecord,\n        requestRecord,\n        requestRecordCount: requestRecords.length,\n        requestLineRecordCount: requestLineRecords.length,\n      },\n      validation: {\n        module: \"required_document_writeback_validate_envelope.js\",\n        version: CONFIG.moduleVersion,\n        workflow: \"Marsellia | Recruitment | Required Document Submission\",\n        checkedAt: now.toISOString(),\n        probeModeAllowPrepared: CONFIG.probeModeAllowPrepared,\n        status,\n        canProceed,\n        envelope,\n        sectionSummary: {\n          requestedSectionCount: requestedSections.length,\n          validRequestedSectionCount: validRequestedSections.length,\n          invalidRequestedSectionCount: invalidRequestedSections.length,\n          validPrefixes: validRequestedSections.map((section) => section.prefix),\n          invalidPrefixes: invalidRequestedSections.map((section) => section.prefix),\n        },\n      },\n    },\n  },\n];"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                720,
+                -128
+            ],
+            "id": "e4636f89-428d-4961-96ca-265a70ce08c5",
+            "name": "Validate Odoo Envelope"
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://marsellia.odoo.com/json/2/x_hr.applicant_required_document_submission_request/search_read",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpBearerAuth",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "X-Odoo-Database",
+                            "value": "marsellia"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "domain",
+                            "value": "={{ [[\"id\", \"=\", Number($json.request.odooRequestId)]] }}"
+                        },
+                        {
+                            "name": "fields",
+                            "value": "={{ [\"id\",\"x_token_reference\",\"x_applicant_id\",\"x_checklist_id\",\"x_state\",\"x_expires_at\"] }}"
+                        },
+                        {
+                            "name": "limit",
+                            "value": "1"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+                512,
+                176
+            ],
+            "id": "3c68cdf6-fbd6-4790-890e-98fcdd299b17",
+            "name": "Lookup Odoo Request",
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "gZ1RF0422WCOzupq",
+                    "name": "Hamam Odoo - Header Auth account"
+                },
+                "httpBearerAuth": {
+                    "id": "NFBoxNE1IXoFpWH9",
+                    "name": "Odoo-Hamam"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://marsellia.odoo.com/json/2/x_hr.applicant_required_document_submission_request_line/search_read",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpBearerAuth",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "X-Odoo-Database",
+                            "value": "marsellia"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "domain",
+                            "value": "={{ [[\"x_request_id\", \"=\", Number($items(\"Parse Fillout Payload\")[0].json.request.odooRequestId)]] }}"
+                        },
+                        {
+                            "name": "fields",
+                            "value": "={{ [\n  \"id\",\n  \"x_request_id\",\n  \"x_applicant_id\",\n  \"x_checklist_id\",\n  \"x_checklist_line_id\",\n  \"x_document_type_id\",\n  \"x_document_code\",\n  \"x_state\",\n  \"x_public_request_enabled\",\n  \"x_requires_attachment\",\n  \"x_structured_data_required\"\n] }}"
+                        },
+                        {
+                            "name": "limit",
+                            "value": "100"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+                720,
+                32
+            ],
+            "id": "51ffbd59-cbc6-403a-9482-e61ef42a459d",
+            "name": "Lookup Odoo Request Lines",
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "gZ1RF0422WCOzupq",
+                    "name": "Hamam Odoo - Header Auth account"
+                },
+                "httpBearerAuth": {
+                    "id": "NFBoxNE1IXoFpWH9",
+                    "name": "Odoo-Hamam"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "amount": 2
+            },
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1.1,
+            "position": [
+                304,
+                176
+            ],
+            "id": "6d8a846d-b7cf-4a6c-82b2-afdc67ce5ab2",
+            "name": "Wait",
+            "webhookId": "4c127576-af72-4496-85e9-1624bfba89ec"
+        },
+        {
+            "parameters": {
+                "amount": 2
+            },
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1.1,
+            "position": [
+                512,
+                32
+            ],
+            "id": "ebc7f034-55ca-42dd-9104-b80e4edea4cc",
+            "name": "Wait1",
+            "webhookId": "8eb7bdb8-aa42-4ed9-8213-b96f84673d7c"
+        },
+        {
+            "parameters": {
+                "jsCode": "/**\n * MCEP / Marsellia — Required Document Writeback\n * Workflow: Marsellia | Recruitment | Required Document Submission\n * Node: Build Writeback Items\n * Module: required_document_writeback_build_section_items.js\n *\n * Pass 6C-5B:\n * - Builds compact writeback item(s) from validated envelope output.\n * - Emits all valid requested sections.\n * - No downloads.\n * - No Odoo writes.\n *\n * Input:\n * - Output from Validate Odoo Envelope.\n *\n * Output:\n * - One compact n8n item per valid requested section with payload.\n */\n\nconst CONFIG = {\n    moduleVersion: \"6C-5B\",\n    workflow: \"Marsellia | Recruitment | Required Document Submission\",\n    probeOnlyPrefix: null,\n    sourceSystem: \"fillout_zite\",\n};\n\nfunction isObject(value) {\n    return value !== null && typeof value === \"object\" && !Array.isArray(value);\n}\n\nfunction cleanString(value) {\n    if (value === undefined || value === null) return null;\n    const text = String(value).trim();\n    return text || null;\n}\n\nfunction toInt(value) {\n    const text = cleanString(value);\n    if (!text) return null;\n    const parsed = Number.parseInt(text, 10);\n    return Number.isFinite(parsed) ? parsed : null;\n}\n\nfunction normalizeOdooDatetime(value) {\n    const text = cleanString(value);\n    if (!text) return null;\n\n    const date = new Date(text);\n    if (Number.isNaN(date.getTime())) return null;\n\n    const pad = (number) => String(number).padStart(2, \"0\");\n\n    return [\n        date.getUTCFullYear(),\n        pad(date.getUTCMonth() + 1),\n        pad(date.getUTCDate()),\n    ].join(\"-\") + \" \" + [\n        pad(date.getUTCHours()),\n        pad(date.getUTCMinutes()),\n        pad(date.getUTCSeconds()),\n    ].join(\":\");\n}\n\nfunction compactObject(obj) {\n    return Object.fromEntries(\n        Object.entries(obj).filter(([, value]) => {\n            if (value === undefined || value === null) return false;\n            if (typeof value === \"string\" && value.trim() === \"\") return false;\n            if (Array.isArray(value) && value.length === 0) return false;\n            return true;\n        })\n    );\n}\n\nfunction firstFile(section) {\n    if (!Array.isArray(section.files) || !section.files.length) return null;\n    return section.files.find((file) => file && file.url) || section.files[0] || null;\n}\n\nfunction getRequestLine(section) {\n    return section && section.odoo && section.odoo.requestLine\n        ? section.odoo.requestLine\n        : {};\n}\n\nfunction boolFromOdoo(value) {\n    if (value === true) return true;\n    if (value === false) return false;\n    const text = cleanString(value);\n    if (!text) return false;\n    return [\"1\", \"true\", \"yes\", \"y\", \"on\"].includes(text.toLowerCase());\n}\n\nfunction requestLineRequiresAttachment(section) {\n    const requestLine = getRequestLine(section);\n\n    if (\"x_requires_attachment\" in requestLine) {\n        return boolFromOdoo(requestLine.x_requires_attachment);\n    }\n\n    // Safe fallback.\n    // bank_information is structured-only; all other public sections currently require a file.\n    return section.prefix !== \"bank_information\";\n}\n\nfunction mapGenericDocumentFields(section) {\n    const prefix = section.prefix;\n    const fields = section.scalarFields || {};\n\n    return compactObject({\n        x_document_number: fields[`${prefix}_document_number`] || fields[`${prefix}_number`],\n        x_issuing_authority: fields[`${prefix}_issuing_authority`],\n        x_place_of_issue: fields[`${prefix}_place_of_issue`],\n        x_issue_date: fields[`${prefix}_date_of_issue`],\n        x_expiry_date: fields[`${prefix}_date_of_expiry`],\n        x_notes: fields[`${prefix}_notes`],\n    });\n}\n\nfunction mapStructuredFields(section) {\n    const fields = section.scalarFields || {};\n\n    if (section.prefix === \"qualification\") {\n        return compactObject({\n            x_qualification_type: fields.qualification_type,\n            x_qualification_subject: fields.qualification_subject,\n        });\n    }\n\n    if (section.prefix === \"birth_certificate\") {\n        return compactObject({\n            x_date_of_birth: fields.date_of_birth,\n            x_place_of_birth: fields.place_of_birth,\n            x_country_of_birth_id: toInt(fields.country_of_birth),\n        });\n    }\n\n    if (section.prefix === \"family_status\") {\n        return compactObject({\n            x_family_paper_number: fields.family_paper_number,\n            x_family_reference_number: fields.family_reference_number,\n            x_next_of_kin_name: fields.next_of_kin_name,\n            x_next_of_kin_phone: fields.next_of_kin_phone,\n        });\n    }\n\n    if (section.prefix === \"health_certificate\") {\n        return compactObject({\n            x_blood_type: fields.blood_type,\n        });\n    }\n\n    if (section.prefix === \"bank_information\") {\n        return compactObject({\n            x_bank_name: fields.bank_name,\n            x_bank_branch: fields.bank_branch,\n            x_account_number: fields.account_number,\n            x_iban: fields.iban,\n            x_notes: fields.bank_notes,\n        });\n    }\n\n    return {};\n}\n\nfunction buildWritebackItem(validatedPayload, section) {\n    const routing = section.routing || {};\n    const requestLine = getRequestLine(section);\n    const file = firstFile(section);\n    const requiresAttachment = requestLineRequiresAttachment(section);\n\n    const applicantId = toInt(validatedPayload.request && validatedPayload.request.odooApplicantId);\n    const checklistId = toInt(validatedPayload.request && validatedPayload.request.odooChecklistId);\n    const requestId = toInt(validatedPayload.request && validatedPayload.request.odooRequestId);\n    const requestLineId = toInt(routing.requestLineId);\n    const checklistLineId = toInt(routing.checklistLineId);\n    const documentTypeId = toInt(routing.documentTypeId);\n    const documentCode = cleanString(routing.documentCode);\n\n    const sourceSubmissionId = cleanString(validatedPayload.submission && validatedPayload.submission.id);\n    const submittedOn = normalizeOdooDatetime(\n        validatedPayload.submission && validatedPayload.submission.submissionTime\n    );\n\n    const genericFields = mapGenericDocumentFields(section);\n    const structuredFields = mapStructuredFields(section);\n\n    const fileName = cleanString(file && (file.fileName || file.name)) ||\n        `${sourceSubmissionId || \"fillout\"}_${section.prefix}.bin`;\n\n    const submissionVals = compactObject({\n        x_applicant_id: applicantId,\n        x_checklist_id: checklistId,\n        x_line_id: checklistLineId,\n        x_document_type_id: documentTypeId,\n        x_document_code: documentCode,\n        x_submission_request_id: requestId,\n        x_submission_request_line_id: requestLineId,\n        x_source: CONFIG.sourceSystem,\n        x_source_submission_id: sourceSubmissionId,\n        x_source_reference: requestLineId ? String(requestLineId) : null,\n        x_state: \"submitted\",\n        x_submitted_on: submittedOn,\n        ...genericFields,\n        ...structuredFields,\n    });\n\n    return {\n        builder: {\n            module: \"required_document_writeback_build_section_items.js\",\n            version: CONFIG.moduleVersion,\n            workflow: CONFIG.workflow,\n            builtAt: new Date().toISOString(),\n            probeOnlyPrefix: CONFIG.probeOnlyPrefix,\n        },\n        source: {\n            formId: validatedPayload.form && validatedPayload.form.id,\n            formName: validatedPayload.form && validatedPayload.form.name,\n            filloutSubmissionId: sourceSubmissionId,\n            submittedOn,\n            formNotes: validatedPayload.formNotes || null,\n        },\n        request: {\n            requestId,\n            applicantId,\n            checklistId,\n            requestReference: validatedPayload.request && validatedPayload.request.requestReference,\n            tokenReference: validatedPayload.request && validatedPayload.request.tokenReference,\n        },\n        section: {\n            prefix: section.prefix,\n            documentCode,\n            requestLineId,\n            checklistLineId,\n            documentTypeId,\n            requiresAttachment,\n            hasFile: !!(file && file.url),\n            hasStructuredData: !!section.hasStructuredData,\n        },\n        file: file ? {\n            url: cleanString(file.url),\n            fileName,\n            mimeType: cleanString(file.mimeType) || \"application/octet-stream\",\n            size: file.size || null,\n        } : null,\n        duplicateCheck: {\n            model: \"x_hr.applicant_required_document_submission\",\n            method: \"search_count\",\n            domain: [\n                [\"x_source_submission_id\", \"=\", sourceSubmissionId],\n                [\"x_submission_request_line_id\", \"=\", requestLineId],\n            ],\n        },\n        attachmentValsBase: compactObject({\n            name: fileName,\n            res_model: \"hr.applicant\",\n            res_id: applicantId,\n            mimetype: file ? (cleanString(file.mimeType) || \"application/octet-stream\") : null,\n            description: `Required document submission ${section.prefix} from Fillout submission ${sourceSubmissionId}`,\n            type: \"binary\",\n        }),\n        submissionVals,\n        requestLineUpdateBase: {\n            ids: requestLineId ? [requestLineId] : [],\n            vals: {\n                x_state: \"submitted\",\n            },\n        },\n    };\n}\n\nconst inputItems = $input.all();\nconst output = [];\n\nfor (const item of inputItems) {\n    const payload = item && item.json ? item.json : item;\n\n    if (!payload.validation || payload.validation.canProceed !== true) {\n        continue;\n    }\n\n    const sections = Array.isArray(payload.sections) ? payload.sections : [];\n\n    for (const section of sections) {\n        if (!section || !section.routing || section.routing.show !== true) continue;\n        if (!section.validation || section.validation.isValidForWriteback !== true) continue;\n\n        if (CONFIG.probeOnlyPrefix && section.prefix !== CONFIG.probeOnlyPrefix) {\n            continue;\n        }\n\n        const requiresAttachment = requestLineRequiresAttachment(section);\n        const file = firstFile(section);\n\n        if (requiresAttachment && !(file && file.url)) {\n            throw new Error(`Section ${section.prefix} requires an attachment but no file URL was found.`);\n        }\n\n        if (!requiresAttachment && !section.hasPayload) {\n            continue;\n        }\n\n        output.push({\n            json: buildWritebackItem(payload, section),\n        });\n    }\n}\n\nif (!output.length) {\n    throw new Error(`No writeback items were built. Probe prefix: ${CONFIG.probeOnlyPrefix || \"all\"}.`);\n}\n\nreturn output;"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                912,
+                -128
+            ],
+            "id": "cd12d7e0-2722-4c4f-b9f9-94e96eb7366b",
+            "name": "Build Writeback Items"
+        },
+        {
+            "parameters": {},
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1.1,
+            "position": [
+                1344,
+                -32
+            ],
+            "id": "725d5542-6959-412d-a123-97dc84c394a6",
+            "name": "Wait2",
+            "webhookId": "a740a700-9bed-4e52-8ca2-e53d4e62f3af"
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://marsellia.odoo.com/json/2/x_hr.applicant_required_document_submission/search_count",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpBearerAuth",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "X-Odoo-Database",
+                            "value": "marsellia"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "domain",
+                            "value": "={{ $json.duplicateCheck.domain }}"
+                        },
+                        {
+                            "name": "limit",
+                            "value": "100"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+                1520,
+                -32
+            ],
+            "id": "6a83be1c-bb6c-4662-ab0f-f2e4b87acc21",
+            "name": "Check Existing Submission Count",
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "gZ1RF0422WCOzupq",
+                    "name": "Hamam Odoo - Header Auth account"
+                },
+                "httpBearerAuth": {
+                    "id": "NFBoxNE1IXoFpWH9",
+                    "name": "Odoo-Hamam"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "mode": "runOnceForEachItem",
+                "jsCode": "/**\n * MCEP / Marsellia — Required Document Writeback\n * Workflow: Marsellia | Recruitment | Required Document Submission\n * Node: Normalize Duplicate Count\n * Module: required_document_writeback_normalize_duplicate_count.js\n *\n * Pass 6C-5C:\n * - Reads the Odoo search_count response from the current HTTP item.\n * - Reattaches the paired compact writeback item from Loop Over Writeback Items.\n * - Adds duplicateCheckResult.\n *\n * Input:\n * - Current item: Odoo search_count response from Check Existing Submission Count.\n * - Linked source item: current Loop Over Writeback Items item.\n *\n * Output:\n * - Original compact writeback item plus duplicateCheckResult.\n */\n\nconst CONFIG = {\n  moduleVersion: \"6C-5C\",\n  workflow: \"Marsellia | Recruitment | Required Document Submission\",\n  sourceNodeName: \"Loop Over Writeback Items\",\n};\n\nfunction isObject(value) {\n  return value !== null && typeof value === \"object\" && !Array.isArray(value);\n}\n\nfunction extractCount(value) {\n  if (typeof value === \"number\" && Number.isFinite(value)) {\n    return value;\n  }\n\n  if (typeof value === \"string\" && value.trim() !== \"\") {\n    const parsed = Number.parseInt(value.trim(), 10);\n    if (Number.isFinite(parsed)) return parsed;\n  }\n\n  if (Array.isArray(value)) {\n    if (!value.length) return 0;\n\n    for (const entry of value) {\n      const count = extractCount(entry);\n      if (count !== null) return count;\n    }\n\n    return 0;\n  }\n\n  if (isObject(value)) {\n    for (const key of [\"count\", \"result\", \"data\", \"value\", \"body\", \"duplicateCountRaw\"]) {\n      if (key in value) {\n        const count = extractCount(value[key]);\n        if (count !== null) return count;\n      }\n    }\n  }\n\n  return null;\n}\n\nfunction getSourceItem() {\n  // Best path in n8n loop context:\n  // use item-linking from the current HTTP response back to the current loop item.\n  try {\n    const linked = $(CONFIG.sourceNodeName).item;\n    if (linked && linked.json) {\n      return linked.json;\n    }\n  } catch (error) {\n    // Fall through to fallback paths.\n  }\n\n  // Fallback if the HTTP node is configured to preserve input JSON.\n  if ($json && $json.section && $json.duplicateCheck) {\n    return $json;\n  }\n\n  throw new Error(`Could not read linked source item from node: ${CONFIG.sourceNodeName}`);\n}\n\nconst source = getSourceItem();\nconst count = extractCount($json);\n\nif (count === null) {\n  throw new Error(`Could not extract duplicate count from HTTP response: ${JSON.stringify($json)}`);\n}\n\nreturn {\n  json: {\n    ...source,\n    duplicateCheckResult: {\n      module: \"required_document_writeback_normalize_duplicate_count.js\",\n      version: CONFIG.moduleVersion,\n      checkedAt: new Date().toISOString(),\n      count,\n      isDuplicate: count > 0,\n      decision: count > 0 ? \"skip_duplicate_retry\" : \"continue_writeback\",\n    },\n  },\n};"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1696,
+                -32
+            ],
+            "id": "017c33c8-1d30-462e-b852-67781cab0a90",
+            "name": "Normalize Duplicate Count"
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "options": {
+                        "caseSensitive": true,
+                        "leftValue": "",
+                        "typeValidation": "strict",
+                        "version": 3
+                    },
+                    "conditions": [
+                        {
+                            "id": "9bde1d90-ee5c-4aee-9ef3-2ae47671de29",
+                            "leftValue": "={{$json.duplicateCheckResult.isDuplicate}}",
+                            "rightValue": "",
+                            "operator": {
+                                "type": "boolean",
+                                "operation": "false",
+                                "singleValue": true
+                            }
+                        }
+                    ],
+                    "combinator": "and"
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2.3,
+            "position": [
+                1872,
+                -32
+            ],
+            "id": "b6cc2a67-e97c-4dc5-9398-58cab68bfb08",
+            "name": "IF Not Duplicate"
+        },
+        {
+            "parameters": {
+                "url": "={{ $json.file.url }}",
+                "options": {
+                    "redirect": {
+                        "redirect": {}
+                    },
+                    "response": {
+                        "response": {
+                            "responseFormat": "file",
+                            "outputPropertyName": "submitted_file"
+                        }
+                    },
+                    "timeout": 300000
+                }
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+                2144,
+                -48
+            ],
+            "id": "327f69e9-61a1-4be0-94b1-b59f5e4be505",
+            "name": "Download Submitted File"
+        },
+        {
+            "parameters": {
+                "mode": "runOnceForEachItem",
+                "jsCode": "/**\n * MCEP / Marsellia — Required Document Writeback\n * Workflow: Marsellia | Recruitment | Required Document Submission\n * Node: Build Attachment Payload\n * Module: required_document_writeback_build_attachment_payload.js\n *\n * Pass 6C-4D:\n * - Reads the downloaded Fillout/S3 binary file.\n * - Builds Odoo ir.attachment create values.\n * - Does not write to Odoo yet.\n *\n * Input:\n * - Current item JSON from Build Writeback Items / Normalize Duplicate Count.\n * - Current item binary.submitted_file from Download Submitted File.\n *\n * Output:\n * - Same compact writeback item plus attachmentVals.\n */\n\nconst CONFIG = {\n    moduleVersion: \"6C-4D\",\n    workflow: \"Marsellia | Recruitment | Required Document Submission\",\n};\n\nfunction cleanString(value) {\n    if (value === undefined || value === null) return null;\n    const text = String(value).trim();\n    return text || null;\n}\n\nfunction safeString(value) {\n    return cleanString(value)\n        ? cleanString(value).replace(/[^A-Za-z0-9_.-]+/g, \"_\").replace(/_+/g, \"_\")\n        : null;\n}\n\nfunction extensionFromMimeType(mimeType) {\n    const mime = cleanString(mimeType);\n    if (!mime) return null;\n\n    const map = {\n        \"application/pdf\": \"pdf\",\n        \"image/jpeg\": \"jpg\",\n        \"image/png\": \"png\",\n        \"image/webp\": \"webp\",\n    };\n\n    return map[mime] || null;\n}\n\nfunction extensionFromName(fileName) {\n    const name = cleanString(fileName);\n    if (!name || !name.includes(\".\")) return null;\n    const ext = name.split(\".\").pop().toLowerCase();\n    return ext && ext.length <= 8 ? ext : null;\n}\n\nfunction getInputItem() {\n    try {\n        if ($input && $input.item) return $input.item;\n    } catch (error) {\n        // ignored\n    }\n\n    return {};\n}\n\nfunction getBinaryFile(item) {\n    const binary = item && item.binary ? item.binary : {};\n\n    if (binary.submitted_file) return binary.submitted_file;\n\n    const keys = Object.keys(binary || {});\n    if (!keys.length) return null;\n\n    return binary[keys[0]];\n}\n\nfunction binaryToBase64(binaryFile) {\n    if (!binaryFile) return null;\n\n    if (typeof binaryFile.data === \"string\" && binaryFile.data.trim()) {\n        return binaryFile.data;\n    }\n\n    if (typeof binaryFile.fileData === \"string\" && binaryFile.fileData.trim()) {\n        return binaryFile.fileData;\n    }\n\n    if (Buffer.isBuffer(binaryFile)) {\n        return binaryFile.toString(\"base64\");\n    }\n\n    return null;\n}\n\nfunction buildSafeFileName(json, binaryFile) {\n    const requestReference = safeString(json.request && json.request.requestReference) || \"MCEP-F0003-REQ\";\n    const prefix = safeString(json.section && json.section.prefix) || \"document\";\n    const sourceSubmissionId = safeString(json.source && json.source.filloutSubmissionId) || \"fillout\";\n\n    const ext =\n        extensionFromName(binaryFile && (binaryFile.fileName || binaryFile.filename)) ||\n        extensionFromName(json.file && json.file.fileName) ||\n        extensionFromMimeType(binaryFile && binaryFile.mimeType) ||\n        extensionFromMimeType(json.file && json.file.mimeType) ||\n        \"bin\";\n\n    return `${requestReference}_${prefix}_${sourceSubmissionId}.${ext}`;\n}\n\nconst item = getInputItem();\nconst json = item && item.json ? item.json : $json;\nconst binaryFile = getBinaryFile(item);\nconst base64 = binaryToBase64(binaryFile);\n\nif (!json || !json.section) {\n    throw new Error(\"Missing compact writeback item JSON.\");\n}\n\nif (!binaryFile) {\n    throw new Error(\"Missing binary file. Expected binary.submitted_file from Download Submitted File.\");\n}\n\nif (!base64) {\n    throw new Error(\"Downloaded binary file does not contain base64 data.\");\n}\n\nconst detectedMimeType =\n    cleanString(binaryFile.mimeType) ||\n    cleanString(binaryFile.mimetype) ||\n    cleanString(json.file && json.file.mimeType) ||\n    \"application/octet-stream\";\n\nconst safeFileName = buildSafeFileName(json, binaryFile);\n\nconst originalFileName =\n    cleanString(binaryFile.fileName) ||\n    cleanString(binaryFile.filename) ||\n    cleanString(json.file && json.file.fileName);\n\nconst attachmentVals = {\n    ...(json.attachmentValsBase || {}),\n    name: safeFileName,\n    res_model: \"hr.applicant\",\n    res_id: json.request.applicantId,\n    mimetype: detectedMimeType,\n    type: \"binary\",\n    datas: base64,\n    description: [\n        `Required document submission: ${json.section.prefix}`,\n        `Fillout submission: ${json.source.filloutSubmissionId}`,\n        originalFileName ? `Original filename: ${originalFileName}` : null,\n    ].filter(Boolean).join(\"\\n\"),\n};\n\nreturn {\n    json: {\n        ...json,\n        attachmentPayload: {\n            module: \"required_document_writeback_build_attachment_payload.js\",\n            version: CONFIG.moduleVersion,\n            builtAt: new Date().toISOString(),\n            binaryPropertyFound: \"submitted_file\",\n            originalFileName,\n            safeFileName,\n            mimeType: detectedMimeType,\n            base64Length: base64.length,\n        },\n        attachmentVals,\n    },\n};"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                2352,
+                -48
+            ],
+            "id": "873bf4cc-36d1-49d6-8e73-88fb7b568cd3",
+            "name": "Build Attachment Payload"
+        },
+        {
+            "parameters": {
+                "amount": 2
+            },
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1.1,
+            "position": [
+                2560,
+                -48
+            ],
+            "id": "d4db46e2-a87d-4481-8219-f2af5f30e18b",
+            "name": "Wait3",
+            "webhookId": "451f8125-f208-4c7c-88aa-b5888cb6b750"
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://marsellia.odoo.com/json/2/ir.attachment/create",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpBearerAuth",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "X-Odoo-Database",
+                            "value": "marsellia"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "vals_list",
+                            "value": "={{ $('Build Attachment Payload').item.json.attachmentVals }}"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+                2576,
+                160
+            ],
+            "id": "ebc8b1a9-53c6-440c-b368-512f079b2800",
+            "name": "Create Odoo Attachment",
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "gZ1RF0422WCOzupq",
+                    "name": "Hamam Odoo - Header Auth account"
+                },
+                "httpBearerAuth": {
+                    "id": "NFBoxNE1IXoFpWH9",
+                    "name": "Odoo-Hamam"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "mode": "runOnceForEachItem",
+                "jsCode": "/**\n * MCEP / Marsellia — Required Document Writeback\n * Workflow: Marsellia | Recruitment | Required Document Submission\n * Node: Build Submission Payload\n * Module: required_document_writeback_build_submission_payload.js\n *\n * Pass 6C-4F:\n * - Reads created ir.attachment ID from Create Odoo Attachment.\n * - Reattaches compact writeback item from Build Attachment Payload.\n * - Adds x_attachment_id to x_hr.applicant_required_document_submission create values.\n * - Does not write the submission yet.\n */\n\nconst CONFIG = {\n    moduleVersion: \"6C-5D\",\n    workflow: \"Marsellia | Recruitment | Required Document Submission\",\n    sourceNodeName: \"Build Attachment Payload\",\n};\n\nfunction isObject(value) {\n    return value !== null && typeof value === \"object\" && !Array.isArray(value);\n}\n\nfunction extractCreatedId(value) {\n    if (typeof value === \"number\" && Number.isFinite(value)) {\n        return value;\n    }\n\n    if (typeof value === \"string\" && /^\\d+$/.test(value.trim())) {\n        return Number.parseInt(value.trim(), 10);\n    }\n\n    if (Array.isArray(value)) {\n        for (const entry of value) {\n            const id = extractCreatedId(entry);\n            if (id) return id;\n        }\n    }\n\n    if (isObject(value)) {\n        for (const key of [\"id\", \"result\", \"data\", \"value\", \"body\"]) {\n            if (key in value) {\n                const id = extractCreatedId(value[key]);\n                if (id) return id;\n            }\n        }\n    }\n\n    return null;\n}\n\nfunction getSourceItem() {\n    // Best path inside Loop Over Items: linked item from the previous node.\n    try {\n        const linked = $(CONFIG.sourceNodeName).item;\n        if (linked && linked.json) {\n            return linked.json;\n        }\n    } catch (error) {\n        // Fall through to fallback path.\n    }\n\n    // Fallback for non-loop/manual testing.\n    try {\n        const sourceItems = $items(CONFIG.sourceNodeName);\n        if (sourceItems && sourceItems.length) {\n            return sourceItems[0].json || sourceItems[0];\n        }\n    } catch (error) {\n        // Fall through.\n    }\n\n    throw new Error(`Could not read linked source item from node: ${CONFIG.sourceNodeName}`);\n}\n\n\nconst source = getSourceItem();\nconst attachmentResponse = $json;\nconst attachmentId = extractCreatedId(attachmentResponse);\n\nif (!attachmentId) {\n    throw new Error(`Could not extract created attachment ID from response: ${JSON.stringify(attachmentResponse)}`);\n}\n\nif (!source.submissionVals) {\n    throw new Error(\"Missing submissionVals from source writeback item.\");\n}\n\nconst submissionVals = {\n    ...source.submissionVals,\n    x_attachment_id: attachmentId,\n};\n\nreturn {\n    json: {\n        ...source,\n        submissionPayload: {\n            module: \"required_document_writeback_build_submission_payload.js\",\n            version: CONFIG.moduleVersion,\n            builtAt: new Date().toISOString(),\n            attachmentId,\n            model: \"x_hr.applicant_required_document_submission\",\n            method: \"create\",\n        },\n        attachmentId,\n        submissionVals,\n    },\n};"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                2800,
+                160
+            ],
+            "id": "0962d058-df92-4791-8635-86940ddc7698",
+            "name": "Build Submission Payload"
+        },
+        {
+            "parameters": {
+                "amount": 2
+            },
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1.1,
+            "position": [
+                2800,
+                -48
+            ],
+            "id": "e42d73ce-329b-4144-8cf7-535a715b9a21",
+            "name": "Wait4",
+            "webhookId": "95ecbee0-8ced-4ac6-981d-8432e8156111"
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://marsellia.odoo.com/json/2/x_hr.applicant_required_document_submission/create",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpBearerAuth",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "X-Odoo-Database",
+                            "value": "marsellia"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "vals_list",
+                            "value": "={{ $json.submissionVals }}"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+                3008,
+                -48
+            ],
+            "id": "244072b0-581a-4e00-8c75-9c35a8606e42",
+            "name": "Create Odoo Submission",
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "gZ1RF0422WCOzupq",
+                    "name": "Hamam Odoo - Header Auth account"
+                },
+                "httpBearerAuth": {
+                    "id": "NFBoxNE1IXoFpWH9",
+                    "name": "Odoo-Hamam"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "mode": "runOnceForEachItem",
+                "jsCode": "/**\n * MCEP / Marsellia — Required Document Writeback\n * Workflow: Marsellia | Recruitment | Required Document Submission\n * Node: Build Request Line Update\n * Module: required_document_writeback_build_request_line_update.js\n *\n * Pass 6C-4H:\n * - Reads created required-document submission ID from Create Odoo Submission.\n * - Reattaches compact writeback item from Build Submission Payload.\n * - Builds Odoo request-line write payload.\n */\n\nconst CONFIG = {\n    moduleVersion: \"6C-5D\",\n    workflow: \"Marsellia | Recruitment | Required Document Submission\",\n    sourceNodeName: \"Build Submission Payload\",\n};\n\nfunction isObject(value) {\n    return value !== null && typeof value === \"object\" && !Array.isArray(value);\n}\n\nfunction extractCreatedId(value) {\n    if (typeof value === \"number\" && Number.isFinite(value)) {\n        return value;\n    }\n\n    if (typeof value === \"string\" && /^\\d+$/.test(value.trim())) {\n        return Number.parseInt(value.trim(), 10);\n    }\n\n    if (Array.isArray(value)) {\n        for (const entry of value) {\n            const id = extractCreatedId(entry);\n            if (id) return id;\n        }\n    }\n\n    if (isObject(value)) {\n        for (const key of [\"id\", \"result\", \"data\", \"value\", \"body\"]) {\n            if (key in value) {\n                const id = extractCreatedId(value[key]);\n                if (id) return id;\n            }\n        }\n    }\n\n    return null;\n}\n\nfunction getSourceItem() {\n    // Best path inside Loop Over Items: linked item from the previous node.\n    try {\n        const linked = $(CONFIG.sourceNodeName).item;\n        if (linked && linked.json) {\n            return linked.json;\n        }\n    } catch (error) {\n        // Fall through to fallback path.\n    }\n\n    // Fallback for non-loop/manual testing.\n    try {\n        const sourceItems = $items(CONFIG.sourceNodeName);\n        if (sourceItems && sourceItems.length) {\n            return sourceItems[0].json || sourceItems[0];\n        }\n    } catch (error) {\n        // Fall through.\n    }\n\n    throw new Error(`Could not read linked source item from node: ${CONFIG.sourceNodeName}`);\n}\n\n\nconst source = getSourceItem();\nconst submissionResponse = $json;\nconst submissionId = extractCreatedId(submissionResponse);\n\nif (!submissionId) {\n    throw new Error(`Could not extract created submission ID from response: ${JSON.stringify(submissionResponse)}`);\n}\n\nif (!source.section || !source.section.requestLineId) {\n    throw new Error(\"Missing requestLineId from source writeback item.\");\n}\n\nconst requestLineId = source.section.requestLineId;\n\nconst requestLineWrite = {\n    ids: [requestLineId],\n    vals: {\n        x_state: \"submitted\",\n        x_latest_submission_id: submissionId,\n    },\n};\n\nreturn {\n    json: {\n        ...source,\n        submissionId,\n        requestLinePayload: {\n            module: \"required_document_writeback_build_request_line_update.js\",\n            version: CONFIG.moduleVersion,\n            builtAt: new Date().toISOString(),\n            model: \"x_hr.applicant_required_document_submission_request_line\",\n            method: \"write\",\n            requestLineId,\n            submissionId,\n        },\n        requestLineWrite,\n        result: {\n            status: \"submission_created_pending_request_line_update\",\n            prefix: source.section.prefix,\n            attachmentId: source.attachmentId,\n            submissionId,\n            requestLineId,\n        },\n    },\n};"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                3216,
+                -48
+            ],
+            "id": "cbb62d65-ba72-4f31-bbd9-12dec3513f2a",
+            "name": "Build Request Line Update"
+        },
+        {
+            "parameters": {
+                "amount": 2
+            },
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1.1,
+            "position": [
+                3408,
+                -48
+            ],
+            "id": "8b5b7423-fb23-4082-87e9-3d37c5c1c461",
+            "name": "Wait5",
+            "webhookId": "520702ca-508d-4fde-a08a-59c4c425714c"
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://marsellia.odoo.com/json/2/x_hr.applicant_required_document_submission_request_line/write",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpBearerAuth",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "X-Odoo-Database",
+                            "value": "marsellia"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={{ {\n  ids: $json.requestLineWrite.ids,\n  vals: $json.requestLineWrite.vals\n} }}",
+                "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+                3024,
+                176
+            ],
+            "id": "74c4245b-c4a7-497c-b0ff-89177c9c9318",
+            "name": "Update Request Line",
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "gZ1RF0422WCOzupq",
+                    "name": "Hamam Odoo - Header Auth account"
+                },
+                "httpBearerAuth": {
+                    "id": "NFBoxNE1IXoFpWH9",
+                    "name": "Odoo-Hamam"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "options": {}
+            },
+            "type": "n8n-nodes-base.splitInBatches",
+            "typeVersion": 3,
+            "position": [
+                1136,
+                -128
+            ],
+            "id": "208de01a-380f-4ee5-9678-c816a9b25775",
+            "name": "Loop Over Writeback Items"
+        },
+        {
+            "parameters": {
+                "mode": "runOnceForEachItem",
+                "jsCode": "/**\n * MCEP / Marsellia — Required Document Writeback\n * Workflow: Marsellia | Recruitment | Required Document Submission\n * Node: Duplicate Skipped Result\n * Module: required_document_writeback_duplicate_skipped_result.js\n *\n * Pass 6C-5E:\n * - Dry-run loop branch.\n * - Records that a section was skipped because the same Fillout submission/request-line pair already exists.\n * - Performs no downloads and no Odoo writes.\n */\n\nconst CONFIG = {\n    moduleVersion: \"6C-5E\",\n    workflow: \"Marsellia | Recruitment | Required Document Submission\",\n};\n\nif (!$json.duplicateCheckResult || $json.duplicateCheckResult.isDuplicate !== true) {\n    throw new Error(\"Duplicate Skipped Result received a non-duplicate item.\");\n}\n\nreturn {\n    json: {\n        ...$json,\n        loopBranchResult: {\n            module: \"required_document_writeback_duplicate_skipped_result.js\",\n            version: CONFIG.moduleVersion,\n            workflow: CONFIG.workflow,\n            decidedAt: new Date().toISOString(),\n            action: \"skip_duplicate_retry\",\n            prefix: $json.section && $json.section.prefix,\n            requestLineId: $json.section && $json.section.requestLineId,\n            duplicateCount: $json.duplicateCheckResult.count,\n            performedWriteback: false,\n        },\n    },\n};"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1872,
+                128
+            ],
+            "id": "34fdd2c7-22d5-47fe-94e2-4bf4ecf25dee",
+            "name": "Duplicate Skipped Result"
+        },
+        {
+            "parameters": {
+                "mode": "runOnceForEachItem",
+                "jsCode": "/**\n * MCEP / Marsellia — Required Document Writeback\n * Workflow: Marsellia | Recruitment | Required Document Submission\n * Node: Writeback Created Result\n * Module: required_document_writeback_created_result.js\n *\n * Pass 6C-5F:\n * - Reads Odoo request-line update response.\n * - Reattaches linked context from Build Request Line Update.\n * - Emits a compact per-section result for loop return / later summary.\n */\n\nconst CONFIG = {\n    moduleVersion: \"6C-5F\",\n    workflow: \"Marsellia | Recruitment | Required Document Submission\",\n    sourceNodeName: \"Build Request Line Update\",\n};\n\nfunction isObject(value) {\n    return value !== null && typeof value === \"object\" && !Array.isArray(value);\n}\n\nfunction extractSuccess(value) {\n    if (value === true) return true;\n    if (value === false) return false;\n\n    if (typeof value === \"string\") {\n        const text = value.trim().toLowerCase();\n        if ([\"true\", \"1\", \"yes\"].includes(text)) return true;\n        if ([\"false\", \"0\", \"no\"].includes(text)) return false;\n    }\n\n    if (Array.isArray(value)) {\n        for (const entry of value) {\n            const success = extractSuccess(entry);\n            if (success !== null) return success;\n        }\n    }\n\n    if (isObject(value)) {\n        for (const key of [\"result\", \"data\", \"value\", \"body\", \"success\"]) {\n            if (key in value) {\n                const success = extractSuccess(value[key]);\n                if (success !== null) return success;\n            }\n        }\n    }\n\n    return null;\n}\n\nfunction getSourceItem() {\n    try {\n        const linked = $(CONFIG.sourceNodeName).item;\n        if (linked && linked.json) {\n            return linked.json;\n        }\n    } catch (error) {\n        // Fall through.\n    }\n\n    try {\n        const sourceItems = $items(CONFIG.sourceNodeName);\n        if (sourceItems && sourceItems.length) {\n            return sourceItems[0].json || sourceItems[0];\n        }\n    } catch (error) {\n        // Fall through.\n    }\n\n    throw new Error(`Could not read linked source item from node: ${CONFIG.sourceNodeName}`);\n}\n\nconst source = getSourceItem();\nconst requestLineUpdateSuccess = extractSuccess($json);\n\nif (requestLineUpdateSuccess !== true) {\n    throw new Error(`Request line update did not return success=true: ${JSON.stringify($json)}`);\n}\n\nreturn {\n    json: {\n        ...source,\n        loopBranchResult: {\n            module: \"required_document_writeback_created_result.js\",\n            version: CONFIG.moduleVersion,\n            workflow: CONFIG.workflow,\n            decidedAt: new Date().toISOString(),\n            action: \"writeback_created\",\n            prefix: source.section && source.section.prefix,\n            requestLineId: source.section && source.section.requestLineId,\n            attachmentId: source.attachmentId,\n            submissionId: source.submissionId,\n            requestLineUpdated: true,\n            performedWriteback: true,\n        },\n    },\n};"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                3408,
+                176
+            ],
+            "id": "8c08807b-e458-4d36-b67b-31e44a379655",
+            "name": "Writeback Created Result"
+        },
+        {
+            "parameters": {
+                "jsCode": "/**\n * MCEP / Marsellia — Required Document Writeback\n * Workflow: Marsellia | Recruitment | Required Document Submission\n * Node: Summarize Loop Result\n * Module: required_document_writeback_summarize_loop_result.js\n *\n * Pass 6C-6A:\n * - Aggregates the loop return items after all requested sections are processed.\n * - Produces a compact request-level summary.\n * - Performs no Odoo writes.\n */\n\nconst CONFIG = {\n    moduleVersion: \"6C-6A\",\n    workflow: \"Marsellia | Recruitment | Required Document Submission\",\n};\n\nfunction cleanString(value) {\n    if (value === undefined || value === null) return null;\n    const text = String(value).trim();\n    return text === \"\" ? null : text;\n}\n\nfunction unique(values) {\n    return [...new Set(values.filter((value) => value !== undefined && value !== null && value !== \"\"))];\n}\n\nconst inputItems = $input.all();\nconst rows = inputItems.map((item) => item.json || item);\n\nif (!rows.length) {\n    throw new Error(\"Summarize Loop Result received no loop result items.\");\n}\n\nconst first = rows[0];\n\nif (!first.request || !first.request.requestId) {\n    throw new Error(\"Loop result item is missing request.requestId.\");\n}\n\nconst createdRows = rows.filter((row) => row.loopBranchResult && row.loopBranchResult.action === \"writeback_created\");\nconst skippedRows = rows.filter((row) => row.loopBranchResult && row.loopBranchResult.action === \"skip_duplicate_retry\");\nconst failedRows = rows.filter((row) => !row.loopBranchResult);\n\nconst prefixes = rows.map((row) => row.section && row.section.prefix);\nconst createdPrefixes = createdRows.map((row) => row.section && row.section.prefix);\nconst skippedPrefixes = skippedRows.map((row) => row.section && row.section.prefix);\nconst failedPrefixes = failedRows.map((row) => row.section && row.section.prefix);\n\nconst attachmentIds = createdRows.map((row) => row.loopBranchResult.attachmentId);\nconst submissionIds = createdRows.map((row) => row.loopBranchResult.submissionId);\nconst requestLineIds = rows.map((row) => row.section && row.section.requestLineId);\n\nconst submittedOn =\n    cleanString(first.source && first.source.submittedOn) ||\n    new Date().toISOString().slice(0, 19).replace(\"T\", \" \");\n\nconst canCompleteRequest = rows.length > 0 && failedRows.length === 0;\n\nreturn [\n    {\n        json: {\n            finalSummary: {\n                module: \"required_document_writeback_summarize_loop_result.js\",\n                version: CONFIG.moduleVersion,\n                workflow: CONFIG.workflow,\n                summarizedAt: new Date().toISOString(),\n                status: canCompleteRequest ? \"completed\" : \"partial\",\n                canCompleteRequest,\n                processedCount: rows.length,\n                createdCount: createdRows.length,\n                skippedDuplicateCount: skippedRows.length,\n                failedCount: failedRows.length,\n                prefixes: unique(prefixes),\n                createdPrefixes: unique(createdPrefixes),\n                skippedDuplicatePrefixes: unique(skippedPrefixes),\n                failedPrefixes: unique(failedPrefixes),\n                requestLineIds: unique(requestLineIds),\n                attachmentIds: unique(attachmentIds),\n                submissionIds: unique(submissionIds),\n            },\n            request: first.request,\n            source: first.source,\n            responseSubmittedOn: submittedOn,\n            loopResults: rows.map((row) => ({\n                prefix: row.section && row.section.prefix,\n                requestLineId: row.section && row.section.requestLineId,\n                action: row.loopBranchResult && row.loopBranchResult.action,\n                attachmentId: row.loopBranchResult && row.loopBranchResult.attachmentId,\n                submissionId: row.loopBranchResult && row.loopBranchResult.submissionId,\n                performedWriteback: row.loopBranchResult && row.loopBranchResult.performedWriteback,\n            })),\n        },\n    },\n];"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1344,
+                -240
+            ],
+            "id": "2345592c-56b0-4af9-9656-755a0f75ca8e",
+            "name": "Summarize Loop Result"
+        },
+        {
+            "parameters": {
+                "jsCode": "/**\n * MCEP / Marsellia — Required Document Writeback\n * Workflow: Marsellia | Recruitment | Required Document Submission\n * Node: Build Parent Request Update\n * Module: required_document_writeback_build_parent_request_update.js\n *\n * Pass 6C-6A:\n * - Builds the Odoo write payload for the parent submission request.\n * - Marks the request completed only when the loop completed without failed items.\n */\n\nconst CONFIG = {\n    moduleVersion: \"6C-6A\",\n    workflow: \"Marsellia | Recruitment | Required Document Submission\",\n};\n\nfunction cleanString(value) {\n    if (value === undefined || value === null) return null;\n    const text = String(value).trim();\n    return text === \"\" ? null : text;\n}\n\nif (!$json.finalSummary) {\n    throw new Error(\"Missing finalSummary.\");\n}\n\nif (!$json.request || !$json.request.requestId) {\n    throw new Error(\"Missing request.requestId.\");\n}\n\nconst vals = {\n    x_last_response_at:\n        cleanString($json.responseSubmittedOn) ||\n        new Date().toISOString().slice(0, 19).replace(\"T\", \" \"),\n};\n\nif ($json.finalSummary.canCompleteRequest) {\n    vals.x_state = \"completed\";\n}\n\nreturn {\n    json: {\n        ...$json,\n        parentRequestUpdate: {\n            module: \"required_document_writeback_build_parent_request_update.js\",\n            version: CONFIG.moduleVersion,\n            workflow: CONFIG.workflow,\n            builtAt: new Date().toISOString(),\n            model: \"x_hr.applicant_required_document_submission_request\",\n            method: \"write\",\n            ids: [$json.request.requestId],\n            vals,\n        },\n    },\n};"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1520,
+                -240
+            ],
+            "id": "1d54b975-3ee5-4463-894f-38d4e53b6230",
+            "name": "Build Parent Request Update"
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://marsellia.odoo.com/json/2/x_hr.applicant_required_document_submission_request/write",
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpBearerAuth",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "name": "X-Odoo-Database",
+                            "value": "marsellia"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={{ {\n  ids: $json.parentRequestUpdate.ids,\n  vals: $json.parentRequestUpdate.vals\n} }}",
+                "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+                1872,
+                -240
+            ],
+            "id": "dad8359f-a2b0-40bb-9bd4-26d99281ba97",
+            "name": "Update Parent Request",
+            "credentials": {
+                "httpHeaderAuth": {
+                    "id": "gZ1RF0422WCOzupq",
+                    "name": "Hamam Odoo - Header Auth account"
+                },
+                "httpBearerAuth": {
+                    "id": "NFBoxNE1IXoFpWH9",
+                    "name": "Odoo-Hamam"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "amount": 2
+            },
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1.1,
+            "position": [
+                1696,
+                -240
+            ],
+            "id": "0df03939-b84a-4a52-97c0-6ebed3e048d0",
+            "name": "Wait6",
+            "webhookId": "7090ce43-4757-486c-875f-6dc060185a76"
+        },
+        {
+            "parameters": {
+                "mode": "runOnceForEachItem",
+                "jsCode": "/**\n * MCEP / Marsellia — Required Document Writeback\n * Workflow: Marsellia | Recruitment | Required Document Submission\n * Node: Build Final Webhook Response\n * Module: required_document_writeback_final_response.js\n *\n * Pass 6C-6A:\n * - Reads the parent request update response.\n * - Reattaches summary context from Build Parent Request Update.\n * - Emits a compact final response for webhook/logging.\n */\n\nconst CONFIG = {\n    moduleVersion: \"6C-6A\",\n    workflow: \"Marsellia | Recruitment | Required Document Submission\",\n    sourceNodeName: \"Build Parent Request Update\",\n};\n\nfunction isObject(value) {\n    return value !== null && typeof value === \"object\" && !Array.isArray(value);\n}\n\nfunction extractSuccess(value) {\n    if (value === true) return true;\n    if (value === false) return false;\n\n    if (typeof value === \"string\") {\n        const text = value.trim().toLowerCase();\n        if ([\"true\", \"1\", \"yes\"].includes(text)) return true;\n        if ([\"false\", \"0\", \"no\"].includes(text)) return false;\n    }\n\n    if (Array.isArray(value)) {\n        for (const entry of value) {\n            const success = extractSuccess(entry);\n            if (success !== null) return success;\n        }\n    }\n\n    if (isObject(value)) {\n        for (const key of [\"result\", \"data\", \"value\", \"body\", \"success\"]) {\n            if (key in value) {\n                const success = extractSuccess(value[key]);\n                if (success !== null) return success;\n            }\n        }\n    }\n\n    return null;\n}\n\nfunction getSourceItem() {\n    try {\n        const linked = $(CONFIG.sourceNodeName).item;\n        if (linked && linked.json) {\n            return linked.json;\n        }\n    } catch (error) {\n        // Fall through.\n    }\n\n    try {\n        const sourceItems = $items(CONFIG.sourceNodeName);\n        if (sourceItems && sourceItems.length) {\n            return sourceItems[0].json || sourceItems[0];\n        }\n    } catch (error) {\n        // Fall through.\n    }\n\n    throw new Error(`Could not read linked source item from node: ${CONFIG.sourceNodeName}`);\n}\n\nconst source = getSourceItem();\nconst parentRequestUpdated = extractSuccess($json);\n\nif (parentRequestUpdated !== true) {\n    throw new Error(`Parent request update did not return success=true: ${JSON.stringify($json)}`);\n}\n\nconst response = {\n    ok: true,\n    workflow: CONFIG.workflow,\n    module: \"required_document_writeback_final_response.js\",\n    version: CONFIG.moduleVersion,\n    completedAt: new Date().toISOString(),\n    requestId: source.request.requestId,\n    requestReference: source.request.requestReference,\n    applicantId: source.request.applicantId,\n    checklistId: source.request.checklistId,\n    filloutSubmissionId: source.source && source.source.filloutSubmissionId,\n    parentRequestUpdated,\n    summary: source.finalSummary,\n};\n\nreturn {\n    json: {\n        ...source,\n        parentRequestUpdated,\n        webhookResponse: response,\n    },\n};"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                2144,
+                -240
+            ],
+            "id": "74ce19c1-1196-43ec-9e87-56be73fe958f",
+            "name": "Build Final Webhook Response"
+        },
+        {
+            "parameters": {
+                "respondWith": "json",
+                "responseBody": "={{ $json.webhookResponse }}",
+                "options": {}
+            },
+            "type": "n8n-nodes-base.respondToWebhook",
+            "typeVersion": 1.5,
+            "position": [
+                2352,
+                -240
+            ],
+            "id": "fe9acc80-73ac-461b-a37e-3089276cd692",
+            "name": "Respond to Webhook"
+        }
+    ],
+    "pinData": {},
+    "connections": {
+        "Receive Fillout Submission": {
+            "main": [
+                [
+                    {
+                        "node": "Parse Fillout Payload",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Parse Fillout Payload": {
+            "main": [
+                [
+                    {
+                        "node": "Wait",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Lookup Odoo Request": {
+            "main": [
+                [
+                    {
+                        "node": "Wait1",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Lookup Odoo Request Lines": {
+            "main": [
+                [
+                    {
+                        "node": "Validate Odoo Envelope",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Wait": {
+            "main": [
+                [
+                    {
+                        "node": "Lookup Odoo Request",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Wait1": {
+            "main": [
+                [
+                    {
+                        "node": "Lookup Odoo Request Lines",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Validate Odoo Envelope": {
+            "main": [
+                [
+                    {
+                        "node": "Build Writeback Items",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Build Writeback Items": {
+            "main": [
+                [
+                    {
+                        "node": "Loop Over Writeback Items",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Wait2": {
+            "main": [
+                [
+                    {
+                        "node": "Check Existing Submission Count",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Check Existing Submission Count": {
+            "main": [
+                [
+                    {
+                        "node": "Normalize Duplicate Count",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Normalize Duplicate Count": {
+            "main": [
+                [
+                    {
+                        "node": "IF Not Duplicate",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "IF Not Duplicate": {
+            "main": [
+                [
+                    {
+                        "node": "Download Submitted File",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Duplicate Skipped Result",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Download Submitted File": {
+            "main": [
+                [
+                    {
+                        "node": "Build Attachment Payload",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Build Attachment Payload": {
+            "main": [
+                [
+                    {
+                        "node": "Wait3",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Wait3": {
+            "main": [
+                [
+                    {
+                        "node": "Create Odoo Attachment",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Create Odoo Attachment": {
+            "main": [
+                [
+                    {
+                        "node": "Build Submission Payload",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Build Submission Payload": {
+            "main": [
+                [
+                    {
+                        "node": "Wait4",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Wait4": {
+            "main": [
+                [
+                    {
+                        "node": "Create Odoo Submission",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Create Odoo Submission": {
+            "main": [
+                [
+                    {
+                        "node": "Build Request Line Update",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Build Request Line Update": {
+            "main": [
+                [
+                    {
+                        "node": "Wait5",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Wait5": {
+            "main": [
+                [
+                    {
+                        "node": "Update Request Line",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Update Request Line": {
+            "main": [
+                [
+                    {
+                        "node": "Writeback Created Result",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Loop Over Writeback Items": {
+            "main": [
+                [
+                    {
+                        "node": "Summarize Loop Result",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Wait2",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Duplicate Skipped Result": {
+            "main": [
+                [
+                    {
+                        "node": "Loop Over Writeback Items",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Writeback Created Result": {
+            "main": [
+                [
+                    {
+                        "node": "Loop Over Writeback Items",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Summarize Loop Result": {
+            "main": [
+                [
+                    {
+                        "node": "Build Parent Request Update",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Build Parent Request Update": {
+            "main": [
+                [
+                    {
+                        "node": "Wait6",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Wait6": {
+            "main": [
+                [
+                    {
+                        "node": "Update Parent Request",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Update Parent Request": {
+            "main": [
+                [
+                    {
+                        "node": "Build Final Webhook Response",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Build Final Webhook Response": {
+            "main": [
+                [
+                    {
+                        "node": "Respond to Webhook",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "active": false,
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "versionId": "6a02ebbf-8cf9-495c-ade8-45efcd36f23b",
+    "meta": {
+        "instanceId": "465f888b5a1883cf15c48affa7db021cfb31682a1d5590e1e7499c477c3ebea8"
+    },
+    "id": "SIbvU6IDvHyboKTk",
+    "tags": []
+}

@@ -802,3 +802,28 @@ The final webhook/log response includes:
 - skippedDuplicatePrefixes
 - attachmentIds
 - submissionIds
+
+## Pass 6C-7 — Workflow Export and Runbook Lock
+
+Status: locked.
+
+The n8n workflow is exported and documented as the locked Pass 6C required-document writeback workflow.
+
+Locked files:
+
+```text
+RUNBOOK.md
+workflow_export.required_document_submission.6c_locked.json
+```
+
+The runbook records:
+
+- node sequence
+- duplicate behavior
+- Odoo request completion rule
+- rate-limit wait rule
+- source-controlled code modules
+- non-committable runtime artifacts
+- 6D handoff notes
+
+Pass 6C is considered closed after the workflow export, runbook, README update, and sanity checks are committed.
