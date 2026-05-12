@@ -358,6 +358,205 @@ if not action:
     action = {'type': 'ir.actions.client', 'tag': 'reload'}
             ]]></field>
         </record>
+        <!-- ========================================================= -->
+        <!-- Pass 6D-1: Controlled evidence download helpers            -->
+        <!-- ========================================================= -->
+
+        <record id="action_required_document_submission_download_submitted_attachment" model="ir.actions.server">
+            <field name="name">Download Submitted Evidence</field>
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="binding_model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission" />
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+for rec in records.sudo():
+    if rec.x_attachment_id:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % rec.x_attachment_id.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'No submitted evidence',
+                'message': 'No submitted attachment is linked to this required document submission.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+            ]]></field>
+        </record>
+
+        <record id="action_required_document_line_download_latest_accepted_attachment" model="ir.actions.server">
+            <field name="name">Download Latest Accepted Evidence</field>
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="binding_model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+for rec in records.sudo():
+    if rec.x_latest_accepted_attachment_id:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % rec.x_latest_accepted_attachment_id.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'No accepted evidence',
+                'message': 'No accepted evidence attachment is linked to this required document checklist line.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+            ]]></field>
+        </record>
+
+        <!-- ========================================================= -->
+        <!-- Pass 6D-1B: Checklist-line quick evidence actions          -->
+        <!-- ========================================================= -->
+
+        <record id="action_required_document_line_create_manual_submission" model="ir.actions.server">
+            <field name="name">Create Manual Submission</field>
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="binding_model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+submission_model = env['x_hr.applicant_required_document_submission'].sudo()
+action = False
+
+for line in records.sudo():
+    checklist = line.x_checklist_id
+    applicant = checklist.x_applicant_id if checklist else False
+    document_type = line.x_document_type_id
+
+    if not checklist or not applicant or not document_type:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Cannot create submission',
+                'message': 'This checklist line is missing applicant, checklist, or document type linkage.',
+                'type': 'warning',
+                'sticky': True,
+            }
+        }
+        continue
+
+    submission = submission_model.create({
+        'x_applicant_id': applicant.id,
+        'x_checklist_id': checklist.id,
+        'x_line_id': line.id,
+        'x_document_type_id': document_type.id,
+        'x_document_code': line.x_document_code or document_type.x_code or False,
+        'x_source': 'manual',
+        'x_state': 'submitted',
+        'x_submitted_by_user_id': env.user.id,
+        'x_submitted_on': datetime.datetime.now(),
+        'x_notes': 'Manual internal upload created from checklist line.',
+    })
+
+    line.message_post(
+        body='Manual required-document submission created from checklist line.'
+    )
+    checklist.message_post(
+        body='Manual submission created for required document line: %s.' % (
+            line.x_document_name_en or line.x_document_name_ar or line.display_name
+        )
+    )
+
+    view = env.ref(
+        'hr_recruitment_custom.view_required_document_submission_form_controlled',
+        raise_if_not_found=False
+    )
+
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': submission.x_name or 'Required Document Submission',
+        'res_model': 'x_hr.applicant_required_document_submission',
+        'res_id': submission.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+
+    if view:
+        action['views'] = [(view.id, 'form')]
+
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+        <record id="action_required_document_line_open_latest_submission" model="ir.actions.server">
+            <field name="name">Open Latest Submission</field>
+            <field name="model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="binding_model_id"
+                ref="hr_recruitment_custom.model_x_hr_applicant_required_document_line" />
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+submission_model = env['x_hr.applicant_required_document_submission'].sudo()
+action = False
+
+for line in records.sudo():
+    submission = line.x_latest_accepted_submission_id
+
+    if not submission:
+        submission = submission_model.search([
+            ('x_line_id', '=', line.id),
+            ('x_state', 'in', ['submitted', 'accepted', 'rejected', 'superseded']),
+        ], order='x_reviewed_on desc, create_date desc, id desc', limit=1)
+
+    if not submission:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'No submission found',
+                'message': 'No submitted evidence is linked to this checklist line yet.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    view = env.ref(
+        'hr_recruitment_custom.view_required_document_submission_form_controlled',
+        raise_if_not_found=False
+    )
+
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': submission.x_name or 'Required Document Submission',
+        'res_model': 'x_hr.applicant_required_document_submission',
+        'res_id': submission.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+
+    if view:
+        action['views'] = [(view.id, 'form')]
+
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
 
     </data>
 </odoo>

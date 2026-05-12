@@ -88,9 +88,6 @@ for rec in records.sudo():
         if rec.x_submission_sequence != sequence:
             values['x_submission_sequence'] = sequence
 
-        applicant_name = applicant.partner_name or applicant.name or applicant.display_name or 'Applicant'
-        checklist_label = checklist.x_document_reference or checklist.x_name or ('Checklist %s' % checklist.id)
-
         document_label = False
         if document_type:
             document_label = (
@@ -109,9 +106,7 @@ for rec in records.sudo():
         if not document_label:
             document_label = 'Required Document'
 
-        normalized_name = '%s / %s / %s / Submission #%s' % (
-            applicant_name,
-            checklist_label,
+        normalized_name = '%s / Submission #%s' % (
             document_label,
             sequence,
         )
@@ -213,9 +208,6 @@ for rec in records.sudo():
         if rec.x_submission_sequence != sequence:
             values['x_submission_sequence'] = sequence
 
-        applicant_name = applicant.partner_name or applicant.name or applicant.display_name or 'Applicant'
-        checklist_label = checklist.x_document_reference or checklist.x_name or ('Checklist %s' % checklist.id)
-
         document_label = False
         if document_type:
             document_label = (
@@ -234,9 +226,7 @@ for rec in records.sudo():
         if not document_label:
             document_label = 'Required Document'
 
-        normalized_name = '%s / %s / %s / Submission #%s' % (
-            applicant_name,
-            checklist_label,
+        normalized_name = '%s / Submission #%s' % (
             document_label,
             sequence,
         )
@@ -252,25 +242,17 @@ for rec in records.sudo():
             ]]></field>
         </record>
 
-        <record id="action_hr_applicant_cleanup_required_document_submission_identities"
+         <record id="action_hr_applicant_cleanup_required_document_submission_identities"
             model="ir.actions.server">
-            <field name="name">Normalize Checklist / Submission Names</field>
+            <field name="name">Normalize Display Names</field>
             <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
             <field name="binding_model_id" ref="hr_recruitment.model_hr_applicant" />
             <field name="state">code</field>
             <field name="code"><![CDATA[
 checklist_model = env['x_hr.applicant_required_document_checklist'].sudo()
 submission_model = env['x_hr.applicant_required_document_submission'].sudo()
-
-state_labels = {
-    'draft': 'Draft',
-    'in_review': 'In Review',
-    'ready_for_pdf': 'Ready for PDF',
-    'generated': 'Generated',
-    'signature_requested': 'Signature Requested',
-    'signed': 'Signed',
-    'cancelled': 'Cancelled',
-}
+request_model = env['x_hr.applicant_required_document_submission_request'].sudo()
+request_line_model = env['x_hr.applicant_required_document_submission_request_line'].sudo()
 
 for applicant in records.sudo():
     applicant_name = applicant.partner_name or applicant.name or applicant.display_name or 'Applicant'
@@ -279,42 +261,40 @@ for applicant in records.sudo():
         ('x_applicant_id', '=', applicant.id),
     ], order='id asc')
 
-    for index, checklist in enumerate(checklists, start=1):
-        reference = checklist.x_document_reference or ('MCEP-HR-F-0003-%05d-%02d' % (applicant.id, index))
-        state_label = state_labels.get(checklist.x_state or 'draft', checklist.x_state or 'Draft')
-        normalized_name = '%s / F-0003 Checklist #%s / %s / %s' % (
-            applicant_name,
-            index,
-            reference,
-            state_label,
-        )
+    for checklist_index, checklist in enumerate(checklists, start=1):
+        reference = checklist.x_document_reference or ('MCEP-HR-F-0003-%05d-%02d' % (applicant.id, checklist_index))
+        normalized_checklist_name = 'Checklist #%s' % checklist_index
 
-        values = {}
-        if checklist.x_checklist_sequence != index:
-            values['x_checklist_sequence'] = index
+        checklist_values = {}
+
+        if checklist.x_checklist_sequence != checklist_index:
+            checklist_values['x_checklist_sequence'] = checklist_index
+
         if not checklist.x_document_reference:
-            values['x_document_reference'] = reference
-        if checklist.x_name != normalized_name:
-            values['x_name'] = normalized_name
-        if values:
-            checklist.sudo().write(values)
+            checklist_values['x_document_reference'] = reference
+
+        if checklist.x_name != normalized_checklist_name:
+            checklist_values['x_name'] = normalized_checklist_name
+
+        if checklist_values:
+            checklist.sudo().write(checklist_values)
 
     submissions = submission_model.search([
         ('x_applicant_id', '=', applicant.id),
     ], order='x_checklist_id asc, x_line_id asc, id asc')
 
     for submission in submissions:
-        values = {}
-
         line = submission.x_line_id
         checklist = submission.x_checklist_id or (line.x_checklist_id if line else False)
         document_type = (line.x_document_type_id if line else False) or submission.x_document_type_id
 
+        submission_values = {}
+
         if checklist and submission.x_checklist_id != checklist:
-            values['x_checklist_id'] = checklist.id
+            submission_values['x_checklist_id'] = checklist.id
 
         if document_type and submission.x_document_type_id != document_type:
-            values['x_document_type_id'] = document_type.id
+            submission_values['x_document_type_id'] = document_type.id
 
         document_code = False
         if line and line.x_document_code:
@@ -323,19 +303,19 @@ for applicant in records.sudo():
             document_code = document_type.x_code
 
         if document_code and submission.x_document_code != document_code:
-            values['x_document_code'] = document_code
+            submission_values['x_document_code'] = document_code
 
         if not submission.x_source:
-            values['x_source'] = 'manual'
+            submission_values['x_source'] = 'manual'
 
         if not submission.x_state:
-            values['x_state'] = 'submitted'
+            submission_values['x_state'] = 'submitted'
 
         if not submission.x_submitted_by_user_id:
-            values['x_submitted_by_user_id'] = env.user.id
+            submission_values['x_submitted_by_user_id'] = env.user.id
 
         if not submission.x_submitted_on and submission.create_date:
-            values['x_submitted_on'] = submission.create_date
+            submission_values['x_submitted_on'] = submission.create_date
 
         if checklist and line:
             siblings = submission_model.search([
@@ -349,9 +329,7 @@ for applicant in records.sudo():
                 sequence = siblings.ids.index(submission.id) + 1
 
             if submission.x_submission_sequence != sequence:
-                values['x_submission_sequence'] = sequence
-
-            checklist_label = checklist.x_document_reference or checklist.x_name or ('Checklist %s' % checklist.id)
+                submission_values['x_submission_sequence'] = sequence
 
             document_label = False
             if document_type:
@@ -361,6 +339,7 @@ for applicant in records.sudo():
                     or document_type.x_name
                     or document_type.display_name
                 )
+
             if not document_label and line:
                 document_label = (
                     line.x_document_name_en
@@ -368,27 +347,86 @@ for applicant in records.sudo():
                     or line.x_name
                     or line.display_name
                 )
+
             if not document_label:
                 document_label = 'Required Document'
 
-            normalized_name = '%s / %s / %s / Submission #%s' % (
-                applicant_name,
-                checklist_label,
+            normalized_submission_name = '%s / Submission #%s' % (
                 document_label,
                 sequence,
             )
 
-            if submission.x_name != normalized_name:
-                values['x_name'] = normalized_name
+            if submission.x_name != normalized_submission_name:
+                submission_values['x_name'] = normalized_submission_name
 
         elif not submission.x_name:
-            values['x_name'] = 'Required Document Submission'
+            submission_values['x_name'] = 'Required Document Submission'
 
-        if values:
-            submission.sudo().write(values)
+        if submission_values:
+            submission.sudo().write(submission_values)
+
+    requests = request_model.search([
+        ('x_applicant_id', '=', applicant.id),
+    ], order='id asc')
+
+    for request_index, request in enumerate(requests, start=1):
+        request_values = {}
+
+        if request.x_sequence != request_index:
+            request_values['x_sequence'] = request_index
+
+        if not request.x_request_reference:
+            request_values['x_request_reference'] = 'MCEP-HR-F-0003-REQ-%05d' % request.id
+
+        normalized_request_name = '%s / Request #%s' % (
+            applicant_name,
+            request_index,
+        )
+
+        if request.x_name != normalized_request_name:
+            request_values['x_name'] = normalized_request_name
+
+        if request_values:
+            request.sudo().write(request_values)
+
+        request_lines = request_line_model.search([
+            ('x_request_id', '=', request.id),
+        ], order='x_sequence asc, id asc')
+
+        for request_line in request_lines:
+            document_label = False
+
+            if request_line.x_document_type_id:
+                document_label = (
+                    request_line.x_document_type_id.x_name_en
+                    or request_line.x_document_type_id.x_name_ar
+                    or request_line.x_document_type_id.x_name
+                    or request_line.x_document_type_id.display_name
+                )
+
+            if not document_label and request_line.x_checklist_line_id:
+                document_label = (
+                    request_line.x_checklist_line_id.x_document_name_en
+                    or request_line.x_checklist_line_id.x_document_name_ar
+                    or request_line.x_checklist_line_id.x_name
+                    or request_line.x_checklist_line_id.display_name
+                )
+
+            if not document_label:
+                document_label = request_line.x_document_code or 'Required Document'
+
+            normalized_line_name = 'Request #%s / %s' % (
+                request_index,
+                document_label,
+            )
+
+            if request_line.x_name != normalized_line_name:
+                request_line.sudo().write({
+                    'x_name': normalized_line_name,
+                })
 
     applicant.message_post(
-        body='F-0003 checklist and required document submission identities normalized.'
+        body='Checklist, submission request, request-line, and evidence display names normalized.'
     )
 
 action = {'type': 'ir.actions.client', 'tag': 'reload'}

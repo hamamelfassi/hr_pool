@@ -51,7 +51,7 @@ for applicant in records.sudo():
         candidate_email = applicant.email_from or ''
 
         request = request_model.create({
-            'x_name': '%s / Required Document Request #%s' % (candidate_name or applicant.display_name, sequence),
+            'x_name': '%s / Request #%s' % (candidate_name or applicant.display_name, sequence),
             'x_sequence': sequence,
             'x_applicant_id': applicant.id,
             'x_checklist_id': checklist.id,
@@ -65,10 +65,9 @@ for applicant in records.sudo():
 
         request.write({
             'x_request_reference': 'MCEP-HR-F-0003-REQ-%05d' % request.id,
-            'x_name': '%s / F-0003 Request #%s / %s' % (
+            'x_name': '%s / Request #%s' % (
                 candidate_name or applicant.display_name,
                 sequence,
-                'MCEP-HR-F-0003-REQ-%05d' % request.id,
             ),
         })
 
@@ -249,9 +248,12 @@ for request in records.sudo():
             'x_notes': checklist_line.x_notes or False,
         }
 
+        request_label = 'Request #%s' % (request.x_sequence or request.id)
+        document_label = checklist_line.x_document_name_en or checklist_line.x_document_name_ar or document_code or 'Required Document'
+
         values['x_name'] = '%s / %s' % (
-            request.x_request_reference or request.x_name or ('Request %s' % request.id),
-            checklist_line.x_document_name_en or checklist_line.x_document_name_ar or document_code,
+            request_label,
+            document_label,
         )
 
         if existing:
@@ -279,12 +281,10 @@ for request in records.sudo():
     if not request.x_request_reference:
         request_values['x_request_reference'] = 'MCEP-HR-F-0003-REQ-%05d' % request.id
 
-    if not request.x_name:
-        request_values['x_name'] = '%s / F-0003 Request #%s / %s' % (
-            applicant.partner_name or applicant.name or applicant.display_name,
-            request.x_sequence or request.id,
-            request_values.get('x_request_reference') or request.x_request_reference,
-        )
+    request_values['x_name'] = '%s / Request #%s' % (
+        applicant.partner_name or applicant.name or applicant.display_name,
+        request.x_sequence or request.id,
+    )
 
     request.write(request_values)
 

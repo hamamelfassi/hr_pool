@@ -17,7 +17,11 @@
                 <field name="x_name" readonly="1" />
                 <field name="x_applicant_id" readonly="1" />
                 <field name="x_checklist_id" readonly="1" />
-                <field name="x_state" />
+                <field name="x_state" string="Status" readonly="1" widget="badge"
+                    decoration-warning="x_state in ('requested', 'submitted')"
+                    decoration-success="x_state == 'accepted'"
+                    decoration-danger="x_state == 'rejected'"
+                    decoration-muted="x_state == 'cancelled'" />
                 <field name="x_candidate_email_snapshot" readonly="1" />
                 <field name="x_expires_at" readonly="1" />
                 <field name="x_sent_on" readonly="1" />
@@ -78,15 +82,15 @@
                 <sheet>
                     <group>
                         <group string="Request Identity">
-                            <field name="x_name" readonly="1" />
-                            <field name="x_request_reference" readonly="1" />
-                            <field name="x_sequence" readonly="1" />
+                            <field name="x_name" string="Request" readonly="1" />
+                            <field name="x_request_reference" string="Reference" readonly="1" />
+                            <field name="x_sequence" string="No." readonly="1" />
                             <field name="x_applicant_id" readonly="1" />
                             <field name="x_checklist_id" readonly="1" />
                         </group>
                         <group string="Candidate / Token">
-                            <field name="x_candidate_name_snapshot" readonly="1" />
-                            <field name="x_candidate_email_snapshot" readonly="1" />
+                            <field name="x_candidate_name_snapshot" string="Name" readonly="1" />
+                            <field name="x_candidate_email_snapshot" string="Email" readonly="1" />
                             <field name="x_token_reference" readonly="1" />
                             <field name="x_expires_at" readonly="1" />
                         </group>
@@ -95,19 +99,27 @@
                     <group string="Fillout Continuation URL">
                         <field name="x_form_base_url"
                             readonly="x_state not in ('draft', 'prepared')" />
-                        <field name="x_generated_url" readonly="1" />
+                        <field name="x_generated_url"
+                            readonly="1"
+                            widget="url"
+                            invisible="x_state in ('completed', 'cancelled')" />
                     </group>
 
                     <separator string="Request Lines" />
                     <field name="x_line_ids">
                         <list create="false" delete="false">
                             <field name="x_sequence" widget="handle" />
-                            <field name="x_name" readonly="1" />
-                            <field name="x_document_code" readonly="1" />
-                            <field name="x_state" />
-                            <field name="x_checklist_line_id" readonly="1" />
-                            <field name="x_requires_attachment" readonly="1" />
-                            <field name="x_latest_submission_id" readonly="1" />
+                            <field name="x_document_code" string="Code" readonly="1" />
+                            <field name="x_state" string="Status" readonly="1" widget="badge"
+                                decoration-warning="x_state in ('requested', 'submitted')"
+                                decoration-success="x_state == 'accepted'"
+                                decoration-danger="x_state == 'rejected'"
+                                decoration-muted="x_state == 'cancelled'" />
+                            <field name="x_checklist_line_id" string="Checklist Line" readonly="1"
+                                options="{'no_open': True}" />
+                            <field name="x_requires_attachment" string="Attachment" readonly="1" />
+                            <field name="x_latest_submission_id" string="Latest Submission" readonly="1"
+                                options="{'no_open': True}" />
                         </list>
                         <form string="Required Document Request Line" create="false" delete="false">
                             <group>

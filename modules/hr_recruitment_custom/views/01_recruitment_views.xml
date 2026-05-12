@@ -228,33 +228,34 @@
                     <group>
                         <button type="action"
                             name="hr_recruitment_custom.action_hr_applicant_prepare_required_document_checklist"
-                            string="Prepare F-0003 Checklist"
+                            string="Prepare Checklist"
                             class="btn-primary"
                             invisible="not id" />
                         <div class="text-muted">
-                            Prepare and review the F-0003 required documents checklist here.
-                            Generate the F-0003 PDF, send it through Odoo Sign, then sync the signed result once the signer completes the request.
+                            Prepare and review the equired documents checklist here.
+                            Generate the Checklist PDF, send it through Odoo Sign, then sync the signed result once the signer completes the request.
                         </div>
                     </group>
 
                     <field name="x_required_document_checklist_ids"
                         context="{'default_x_applicant_id': id}">
-                        <list create="false" delete="false">
+                        <list string="Required Document Checklists" create="false" delete="false">
                             <field name="x_checklist_sequence" string="#" readonly="1" />
-                            <field name="x_name" readonly="1" />
-                            <field name="x_document_reference" readonly="1" />
-                            <field name="x_state" />
-                            <field name="x_prepared_by_user_id" />
-                            <field name="x_prepared_on" />
-                            <field name="x_reviewer_user_id" />
-                            <field name="x_generated_on" />
-                            <field name="x_signed_on" />
+                            <field name="x_document_reference" string="Reference" readonly="1" />
+                            <field name="x_state" string="Status" readonly="1" widget="badge"
+                                decoration-info="x_state in ('draft', 'in_review')"
+                                decoration-warning="x_state in ('ready_for_pdf', 'signature_requested')"
+                                decoration-success="x_state in ('generated', 'signed')" />
+                            <field name="x_prepared_on" readonly="1" />
+                            <field name="x_reviewer_user_id" string="Reviewed By" readonly="1" />
+                            <field name="x_generated_on" readonly="1" />
+                            <field name="x_signed_on" readonly="1" />
                         </list>
-                        <form string="F-0003 Required Documents Checklist">
+                        <form string="Required Documents Checklist">
                             <header>
                                 <button type="action"
                                     name="hr_recruitment_custom.action_required_document_checklist_refresh_readiness"
-                                    string="Validate Readiness"
+                                    string="Revalidate"
                                     class="btn-primary"
                                     invisible="not id" />
                                 <button type="action"
@@ -289,31 +290,37 @@
                                         <field name="x_prepared_on" readonly="1" />
                                     </group>
                                     <group>
-                                        <field name="x_reviewer_user_id" />
+                                        <field name="x_reviewer_user_id" string="Reviewed By" readonly="1" />
                                         <field name="x_generated_on" readonly="1" />
                                         <field name="x_sent_on" readonly="1" />
                                         <field name="x_signed_on" readonly="1" />
-                                        <field name="x_pdf_attachment_id" readonly="1"
-                                            options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
-                                            domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]" />
-                                        <button type="action"
-                                            name="hr_recruitment_custom.action_required_document_checklist_download_generated_pdf"
-                                            string="Download Generated PDF"
-                                            icon="fa-download"
-                                            class="btn-link"
-                                            invisible="not x_pdf_attachment_id" />
 
-                                        <field name="x_signed_attachment_id"
-                                            readonly="x_state == 'signed'"
-                                            options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
-                                            domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]"
-                                            context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}" />
-                                        <button type="action"
-                                            name="hr_recruitment_custom.action_required_document_checklist_download_signed_pdf"
-                                            string="Download Signed PDF"
-                                            icon="fa-download"
-                                            class="btn-link"
-                                            invisible="not x_signed_attachment_id" />
+                                        <div class="o_row">
+                                            <field name="x_pdf_attachment_id" string="Draft PDF" readonly="1"
+                                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
+                                                domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]" />
+                                            <button type="action"
+                                                name="hr_recruitment_custom.action_required_document_checklist_download_generated_pdf"
+                                                string=""
+                                                title="Download Draft PDF"
+                                                icon="fa-download"
+                                                class="btn-link"
+                                                invisible="not x_pdf_attachment_id" />
+                                        </div>
+
+                                        <div class="o_row">
+                                            <field name="x_signed_attachment_id" string="Signed PDF" readonly="1"
+                                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
+                                                domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]"
+                                                context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}" />
+                                            <button type="action"
+                                                name="hr_recruitment_custom.action_required_document_checklist_download_signed_pdf"
+                                                string=""
+                                                title="Download Signed PDF"
+                                                icon="fa-download"
+                                                class="btn-link"
+                                                invisible="not x_signed_attachment_id" />
+                                        </div>
                                     </group>
                                 </group>
                                 <div class="alert alert-info" role="alert">
@@ -325,25 +332,27 @@
                                 <field name="x_line_ids">
                                     <list editable="bottom" create="false" delete="false">
                                         <field name="x_sequence" widget="handle" />
-                                        <field name="x_document_name_ar" readonly="1" />
-                                        <field name="x_document_name_en" readonly="1" />
-                                        <field name="x_document_code" readonly="1" />
-                                        <field name="x_required" />
-                                        <field name="x_status" />
-                                        <field name="x_capture_scope" readonly="1" />
-                                        <field name="x_public_request_enabled" readonly="1" />
-                                        <field name="x_requires_attachment" readonly="1" />
-                                        <field name="x_latest_accepted_submission_id" readonly="1" />
-                                        <field name="x_latest_accepted_attachment_id"
-                                            readonly="1"
-                                            options="{'no_open': True, 'no_create': True, 'no_create_edit': True}" />
-                                        <field name="x_document_number" readonly="1" />
-                                        <field name="x_issuing_authority" readonly="1" />
-                                        <field name="x_place_of_issue" readonly="1" />
-                                        <field name="x_issue_date" readonly="1" />
-                                        <field name="x_expiry_date" readonly="1" />
-                                        <field name="x_reviewed_by_user_id" readonly="1" />
-                                        <field name="x_reviewed_on" readonly="1" />
+                                        <button type="action"
+                                            name="hr_recruitment_custom.action_required_document_line_create_manual_submission"
+                                            string=""
+                                            title="Create manual submission"
+                                            icon="fa-upload"
+                                            class="btn-link" />
+                                        <button type="action"
+                                            name="hr_recruitment_custom.action_required_document_line_open_latest_submission"
+                                            string=""
+                                            title="Open latest submission"
+                                            icon="fa-external-link"
+                                            class="btn-link" />
+                                        <field name="x_document_name_ar" string="Name (AR)" readonly="1" />
+                                        <field name="x_document_name_en" string="Name (EN)" readonly="1" />
+                                        <field name="x_required" readonly="1" />
+                                        <field name="x_status" string="Status" readonly="1" widget="badge"
+                                            decoration-warning="x_status in ('missing', 'submitted', 'resubmission_requested')"
+                                            decoration-success="x_status == 'accepted'"
+                                            decoration-danger="x_status == 'rejected'"
+                                            decoration-muted="x_status == 'not_applicable'" />
+                                        <field name="x_reviewed_by_user_id" string="Reviewed By" readonly="1" />
                                     </list>
                                     <form string="Required Document Line">
                                         <group>
@@ -367,6 +376,12 @@
                                                 <field name="x_latest_accepted_attachment_id"
                                                     readonly="1"
                                                     options="{'no_open': True, 'no_create': True, 'no_create_edit': True}" />
+                                                <button type="action"
+                                                    name="hr_recruitment_custom.action_required_document_line_download_latest_accepted_attachment"
+                                                    string="Download Accepted Evidence"
+                                                    icon="fa-download"
+                                                    class="btn-link"
+                                                    invisible="not x_latest_accepted_attachment_id" />
                                                 <field name="x_document_number" readonly="1" />
                                                 <field name="x_issuing_authority" readonly="1" />
                                                 <field name="x_place_of_issue" readonly="1" />
@@ -380,11 +395,6 @@
                                             placeholder="Reviewer notes, rejection reason, or structured capture notes." />
                                     </form>
                                 </field>
-
-                                <group>
-                                    <field name="x_notes"
-                                        placeholder="Checklist-level notes for HR/recruitment review." />
-                                </group>
                             </sheet>
                         </form>
                     </field>
@@ -393,14 +403,14 @@
                 <page string="Submissions">
                     <group>
                         <button type="action"
-                            name="hr_recruitment_custom.action_hr_applicant_cleanup_required_document_submission_identities"
-                            string="Normalize Checklist / Submission Names"
+                            name="hr_recruitment_custom.action_hr_applicant_normalize_required_document_identities"
+                            string="Normalize"
                             icon="fa-refresh"
                             class="btn-secondary"
                             invisible="not id" />
                         <button type="action"
                             name="hr_recruitment_custom.action_hr_applicant_create_required_document_submission_request"
-                            string="Create Submission Request"
+                            string="Request Submission"
                             icon="fa-link"
                             class="btn-primary"
                             invisible="not id" />
@@ -411,10 +421,15 @@
                         context="{'default_x_applicant_id': id}">
                         <list string="Submission Requests" create="false" delete="false">
                             <field name="x_sequence" string="#" readonly="1" />
-                            <field name="x_request_reference" readonly="1" />
-                            <field name="x_checklist_id" readonly="1" />
-                            <field name="x_state" />
-                            <field name="x_candidate_email_snapshot" readonly="1" />
+                            <field name="x_request_reference" string="Reference" readonly="1" />
+                            <field name="x_checklist_id" string="Checklist" readonly="1"
+                                options="{'no_open': True}" />
+                            <field name="x_state" string="Status" readonly="1" widget="badge"
+                                decoration-muted="x_state in ('draft', 'cancelled')"
+                                decoration-info="x_state == 'prepared'"
+                                decoration-warning="x_state in ('sent', 'expired')"
+                                decoration-success="x_state == 'completed'" />
+                            <field name="x_candidate_email_snapshot" string="Email" readonly="1" />
                             <field name="x_expires_at" readonly="1" />
                             <field name="x_sent_on" readonly="1" />
                             <field name="x_last_response_at" readonly="1" />
@@ -431,15 +446,19 @@
                             'default_x_submitted_by_user_id': uid
                         }">
 
-                        <list string="Required Document Submissions" delete="false">
+                        <list string="Required Document Submissions" create="false" delete="false">
                             <field name="x_submission_sequence" string="#" readonly="1" />
-                            <field name="x_document_type_id" readonly="1" />
-                            <field name="x_state" />
-                            <field name="x_checklist_id" />
-                            <field name="x_attachment_id"
-                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}" />
+                            <field name="x_document_type_id" string="Type" readonly="1"
+                                options="{'no_open': True}" />
+                            <field name="x_state" string="Status" readonly="1" widget="badge"
+                                decoration-warning="x_state == 'submitted'"
+                                decoration-success="x_state == 'accepted'"
+                                decoration-danger="x_state == 'rejected'"
+                                decoration-muted="x_state == 'superseded'" />
+                            <field name="x_checklist_id" string="Checklist" readonly="1"
+                                options="{'no_open': True}" />
                             <field name="create_date" string="Created On" readonly="1" />
-                            <field name="x_reviewed_on" />
+                            <field name="x_reviewed_on" readonly="1" />
                         </list>
 
                         <form string="Required Document Submission">
@@ -454,6 +473,12 @@
                                     string="Reject Submission"
                                     class="btn-secondary"
                                     invisible="x_state != 'submitted'" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_required_document_submission_download_submitted_attachment"
+                                    string="Download Evidence"
+                                    icon="fa-download"
+                                    class="btn-secondary"
+                                    invisible="not x_attachment_id" />
                                 <field name="x_state"
                                     widget="statusbar"
                                     options="{'clickable': false}"
@@ -463,33 +488,40 @@
                             <sheet>
                                 <group>
                                     <group string="Submission Identity">
-                                        <field name="x_name" readonly="1" />
-                                        <field name="x_submission_sequence" readonly="1" />
-                                        <field name="x_document_code" readonly="1" />
+                                        <field name="x_submission_sequence" string="No." readonly="1" />
+                                        <field name="x_document_code" string="Code" readonly="1" />
                                         <field name="x_applicant_id" readonly="1" />
-                                        <field name="x_source" />
-                                        <field name="x_source_submission_id"
-                                            placeholder="External submission ID, if any" />
-                                        <field name="x_source_reference"
-                                            placeholder="External reference, link label, or batch reference" />
+                                        <field name="x_source" string="Source" readonly="1" />
+                                        <field name="x_source_submission_id" string="Source Submission ID" readonly="1" />
+                                        <field name="x_source_reference" string="Source Reference" readonly="1" />
                                     </group>
 
                                     <group string="Checklist Linkage">
-                                        <field name="x_checklist_id"
-                                            domain="[('x_applicant_id', '=', x_applicant_id)]" />
-                                        <field name="x_line_id"
-                                            domain="[('x_checklist_id', '=', x_checklist_id)]" />
-                                        <field name="x_document_type_id" readonly="1"/>
+                                        <field name="x_checklist_id" string="Checklist" readonly="1"
+                                            options="{'no_open': True}" />
+                                        <field name="x_line_id" string="Checklist Line" readonly="1"
+                                            options="{'no_open': True}" />
+                                        <field name="x_document_type_id" string="Type" readonly="1"
+                                            options="{'no_open': True}" />
                                     </group>
                                 </group>
 
                                 <group string="Submitted Evidence">
                                     <group>
-                                        <field name="x_attachment_id"
-                                            readonly="x_state != 'submitted'"
-                                            options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
-                                            domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]"
-                                            context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}" />
+                                        <div class="o_row">
+                                            <field name="x_attachment_id" string="Evidence"
+                                                readonly="x_state != 'submitted'"
+                                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
+                                                domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]"
+                                                context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}" />
+                                            <button type="action"
+                                                name="hr_recruitment_custom.action_required_document_submission_download_submitted_attachment"
+                                                string=""
+                                                title="Download Evidence"
+                                                icon="fa-download"
+                                                class="btn-link"
+                                                invisible="not x_attachment_id" />
+                                        </div>
                                         <field name="x_submitted_by_user_id"
                                             readonly="x_state != 'submitted'" />
                                         <field name="create_date" string="Created On" readonly="1" />

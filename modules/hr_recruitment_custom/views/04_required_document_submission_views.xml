@@ -14,16 +14,19 @@
         <field name="arch" type="xml">
             <list string="Required Document Submissions" create="false" delete="false">
                 <field name="x_submission_sequence" string="#" readonly="1" />
-                <field name="x_name" readonly="1" />
-                <field name="x_applicant_id" readonly="1" />
-                <field name="x_checklist_id" readonly="1" />
-                <field name="x_document_type_id" readonly="1" />
-                <field name="x_document_code" readonly="1" />
-                <field name="x_state" />
-                <field name="x_attachment_id"
-                    options="{'no_open': True, 'no_create': True, 'no_create_edit': True}" />
+                <field name="x_applicant_id" string="Applicant" readonly="1"
+                    options="{'no_open': True}" />
+                <field name="x_document_type_id" string="Type" readonly="1"
+                    options="{'no_open': True}" />
+                <field name="x_state" string="Status" readonly="1" widget="badge"
+                    decoration-warning="x_state == 'submitted'"
+                    decoration-success="x_state == 'accepted'"
+                    decoration-danger="x_state == 'rejected'"
+                    decoration-muted="x_state == 'superseded'" />
+                <field name="x_checklist_id" string="Checklist" readonly="1"
+                    options="{'no_open': True}" />
                 <field name="create_date" string="Created On" readonly="1" />
-                <field name="x_reviewed_on" readonly="1" />
+                <field name="x_reviewed_on" string="Reviewed On" readonly="1" />
             </list>
         </field>
     </record>
@@ -45,6 +48,12 @@
                         string="Reject Submission"
                         class="btn-secondary"
                         invisible="x_state != 'submitted'" />
+                    <button type="action"
+                        name="hr_recruitment_custom.action_required_document_submission_download_submitted_attachment"
+                        string="Download Evidence"
+                        icon="fa-download"
+                        class="btn-secondary"
+                        invisible="not x_attachment_id" />
                     <field name="x_state"
                         widget="statusbar"
                         options="{'clickable': false}"
@@ -55,39 +64,42 @@
                 <sheet>
                     <group>
                         <group string="Submission Identity">
-                            <field name="x_name" readonly="1" />
-                            <field name="x_submission_sequence" readonly="1" />
-                            <field name="x_document_code" readonly="1" />
-                            <field name="x_applicant_id" readonly="1" />
-                            <field name="x_source"
-                                readonly="x_state != 'submitted'" />
-                            <field name="x_source_submission_id"
-                                readonly="x_state != 'submitted'"
-                                placeholder="External submission ID, if any" />
-                            <field name="x_source_reference"
-                                readonly="x_state != 'submitted'"
-                                placeholder="External reference, link label, or batch reference" />
+                            <field name="x_submission_sequence" string="No." readonly="1" />
+                            <field name="x_document_code" string="Code" readonly="1" />
+                            <field name="x_applicant_id" string="Applicant" readonly="1"
+                                options="{'no_open': True}" />
+                            <field name="x_source" string="Source" readonly="1" />
+                            <field name="x_source_submission_id" string="Source Submission ID" readonly="1" />
+                            <field name="x_source_reference" string="Source Reference" readonly="1" />
                         </group>
 
                         <group string="Checklist Linkage">
-                            <field name="x_checklist_id"
-                                readonly="x_state != 'submitted'"
-                                domain="[('x_applicant_id', '=', x_applicant_id)]" />
-                            <field name="x_line_id"
-                                readonly="x_state != 'submitted'"
-                                domain="[('x_checklist_id', '=', x_checklist_id)]" />
-                            <field name="x_document_type_id" readonly="1" />
+                            <field name="x_checklist_id" string="Checklist" readonly="1"
+                                options="{'no_open': True}" />
+                            <field name="x_line_id" string="Checklist Line" readonly="1"
+                                options="{'no_open': True}" />
+                            <field name="x_document_type_id" string="Type" readonly="1"
+                                options="{'no_open': True}" />
                         </group>
                     </group>
 
                     <group string="Submitted Evidence">
                         <group>
-                            <field name="x_attachment_id"
-                                readonly="x_state != 'submitted'"
-                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
-                                domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]"
-                                context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}" />
-                            <field name="x_submitted_by_user_id"
+                            <div class="o_row">
+                                <field name="x_attachment_id" string="Evidence"
+                                    readonly="x_state != 'submitted'"
+                                    options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
+                                    domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]"
+                                    context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_required_document_submission_download_submitted_attachment"
+                                    string=""
+                                    title="Download Evidence"
+                                    icon="fa-download"
+                                    class="btn-link"
+                                    invisible="not x_attachment_id" />
+                            </div>
+                            <field name="x_submitted_by_user_id" string="Submitted By"
                                 readonly="x_state != 'submitted'" />
                             <field name="create_date" string="Created On" readonly="1" />
                         </group>
@@ -157,11 +169,11 @@
 
                     <group string="Review">
                         <group>
-                            <field name="x_reviewed_by_user_id" readonly="1" />
-                            <field name="x_reviewed_on" readonly="1" />
+                            <field name="x_reviewed_by_user_id" string="Reviewed By" readonly="1" />
+                            <field name="x_reviewed_on" string="Reviewed On" readonly="1" />
                         </group>
                         <group>
-                            <field name="x_reviewer_note"
+                            <field name="x_reviewer_note" string="Reviewer Note / Rejection Reason"
                                 readonly="x_state != 'submitted'"
                                 placeholder="Reviewer note or rejection reason. Required before rejecting a submission." />
                         </group>
