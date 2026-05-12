@@ -764,3 +764,41 @@ new Fillout submissionId + same request line = allowed new evidence submission
 - F-0003 checklist line acceptance is updated only by Odoo HR review actions.
 
 Do not source-control n8n execution dumps, screenshots, base64 attachment payloads, or generated runtime files.
+
+## Pass 6C-6A — Request Completion and Final Webhook Summary
+
+Status: implemented.
+
+After the multi-section loop finishes, the workflow now closes the request-level transaction.
+
+Final path:
+
+```text
+Loop Over Writeback Items done output
+→ Summarize Loop Result
+→ Build Parent Request Update
+→ Update Parent Request
+→ Build Final Webhook Response
+→ Respond to Webhook
+```
+
+### Rules:
+
+The parent request is marked completed only when the loop finishes with zero failed section items.
+x_last_response_at is written from the Fillout submitted timestamp when available.
+x_state is written as completed only after all loop return items are either writeback_created or skip_duplicate_retry.
+
+The final webhook/log response includes:
+
+- requestId
+- requestReference
+- applicantId
+- checklistId
+- filloutSubmissionId
+- createdCount
+- skippedDuplicateCount
+- failedCount
+- createdPrefixes
+- skippedDuplicatePrefixes
+- attachmentIds
+- submissionIds
