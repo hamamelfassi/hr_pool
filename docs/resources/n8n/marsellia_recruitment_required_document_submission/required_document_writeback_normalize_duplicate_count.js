@@ -4,23 +4,23 @@
  * Node: Normalize Duplicate Count
  * Module: required_document_writeback_normalize_duplicate_count.js
  *
- * Pass 6C-4B:
- * - Reads the Odoo search_count response from Check Existing Submission Count.
- * - Reattaches the compact writeback item from Build Writeback Items.
+ * Pass 6C-5C:
+ * - Reads the Odoo search_count response from the current HTTP item.
+ * - Reattaches the paired compact writeback item from Loop Over Writeback Items.
  * - Adds duplicateCheckResult.
  *
  * Input:
- * - Current item: Odoo search_count response.
- * - Source item: Build Writeback Items output.
+ * - Current item: Odoo search_count response from Check Existing Submission Count.
+ * - Linked source item: current Loop Over Writeback Items item.
  *
  * Output:
  * - Original compact writeback item plus duplicateCheckResult.
  */
 
 const CONFIG = {
-    moduleVersion: "6C-4B",
+    moduleVersion: "6C-5C",
     workflow: "Marsellia | Recruitment | Required Document Submission",
-    sourceNodeName: "Build Writeback Items",
+    sourceNodeName: "Loop Over Writeback Items",
 };
 
 function isObject(value) {
@@ -49,17 +49,11 @@ function extractCount(value) {
     }
 
     if (isObject(value)) {
-        for (const key of ["count", "result", "data", "value"]) {
+        for (const key of ["count", "result", "data", "value", "body", "duplicateCountRaw"]) {
             if (key in value) {
                 const count = extractCount(value[key]);
                 if (count !== null) return count;
             }
-        }
-
-        // Some n8n HTTP wrappers keep the parsed response under body.
-        if ("body" in value) {
-            const count = extractCount(value.body);
-            if (count !== null) return count;
         }
     }
 
@@ -67,21 +61,30 @@ function extractCount(value) {
 }
 
 function getSourceItem() {
-    const sourceItems = $items(CONFIG.sourceNodeName);
-
-    if (!sourceItems || !sourceItems.length) {
-        throw new Error(`Could not read source item from node: ${CONFIG.sourceNodeName}`);
+    // Best path in n8n loop context:
+    // use item-linking from the current HTTP response back to the current loop item.
+    try {
+        const linked = $(CONFIG.sourceNodeName).item;
+        if (linked && linked.json) {
+            return linked.json;
+        }
+    } catch (error) {
+        // Fall through to fallback paths.
     }
 
-    // Pass 6C-4B is qualification-only, so one source item is expected.
-    return sourceItems[0].json || sourceItems[0];
+    // Fallback if the HTTP node is configured to preserve input JSON.
+    if ($json && $json.section && $json.duplicateCheck) {
+        return $json;
+    }
+
+    throw new Error(`Could not read linked source item from node: ${CONFIG.sourceNodeName}`);
 }
 
 const source = getSourceItem();
 const count = extractCount($json);
 
 if (count === null) {
-    throw new Error(`Could not extract duplicate count from response: ${JSON.stringify($json)}`);
+    throw new Error(`Could not extract duplicate count from HTTP response: ${JSON.stringify($json)}`);
 }
 
 return {

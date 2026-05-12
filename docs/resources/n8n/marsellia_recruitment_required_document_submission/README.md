@@ -684,3 +684,83 @@ includeDebugPayload: false
 Purpose:
 
 - Reduce payload size before Pass 6C-5 loops over all valid requested sections.
+
+## Pass 6C-5B — Emit All Valid Writeback Sections
+
+Status: implemented.
+
+The `Build Writeback Items` node no longer filters to `qualification`.
+
+The builder now emits one compact writeback item for every section that is:
+
+```text
+requested by URL routing
+valid after Odoo envelope/request-line validation
+not duplicated yet at the later duplicate-check step
+has required file or structured payload
+```
+
+## Expected current test output:
+
+- 11 writeback items
+- cv excluded because cv_show = 0
+- bank_information excluded because bank_information_show = 0
+- passport_photos absent because it is not public
+- qualification included, but duplicate check will skip it for the already-processed Fillout submission/request-line pair
+
+The same reusable writeback lane remains unchanged. Pass 6C-5C will wrap this multi-item output in a Loop Over Items node with batch size 1.
+
+## Pass 6C-5 — Multi-Section Loop Writeback
+
+Status: locked.
+
+Pass 6C-5 expanded the proven qualification-only writeback probe into a looped multi-section writeback lane.
+
+Locked runtime path:
+
+```text
+Parse Fillout Payload
+→ Validate Odoo Envelope
+→ Build Writeback Items
+→ Loop Over Writeback Items
+→ Check Existing Submission Count
+→ Normalize Duplicate Count
+→ IF Not Duplicate
+   false → Duplicate Skipped Result → Loop Over Writeback Items
+   true  → Download Submitted File
+         → Build Attachment Payload
+         → Create Odoo Attachment
+         → Build Submission Payload
+         → Create Odoo Submission
+         → Build Request Line Update
+         → Update Request Line
+         → Writeback Created Result
+         → Loop Over Writeback Items
+```
+
+## Locked test result:
+
+- Build Writeback Items emitted 11 section items.
+- Qualification was skipped as duplicate.
+- 10 non-duplicate sections were written.
+- 10 Odoo attachments were created.
+- 10 required-document submission records were created.
+- 10 request lines were updated to Submitted with latest submission references.
+- Applicant attachments are visible on hr.applicant.
+- Submitted evidence rows are visible in the applicant Submissions tab.
+
+## Duplicate rule remains:
+
+```
+same Fillout submissionId + same request line = duplicate retry, skip
+new Fillout submissionId + same request line = allowed new evidence submission
+```
+
+## Authority rule remains:
+
+- n8n creates submitted evidence only.
+- n8n does not accept or reject evidence.
+- HR review remains inside Odoo through Accept Submission / Reject Submission actions.
+- F-0003 checklist line acceptance is updated only by Odoo HR review actions.
+
+Do not source-control n8n execution dumps, screenshots, base64 attachment payloads, or generated runtime files.

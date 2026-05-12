@@ -4,9 +4,9 @@
  * Node: Build Writeback Items
  * Module: required_document_writeback_build_section_items.js
  *
- * Pass 6C-4A:
+ * Pass 6C-5B:
  * - Builds compact writeback item(s) from validated envelope output.
- * - TEMPORARILY filters to qualification only.
+ * - Emits all valid requested sections.
  * - No downloads.
  * - No Odoo writes.
  *
@@ -14,13 +14,13 @@
  * - Output from Validate Odoo Envelope.
  *
  * Output:
- * - One compact n8n item for the qualification section if valid and payload exists.
+ * - One compact n8n item per valid requested section with payload.
  */
 
 const CONFIG = {
-    moduleVersion: "6C-4A",
+    moduleVersion: "6C-5B",
     workflow: "Marsellia | Recruitment | Required Document Submission",
-    probeOnlyPrefix: "qualification",
+    probeOnlyPrefix: null,
     sourceSystem: "fillout_zite",
 };
 
@@ -98,7 +98,7 @@ function requestLineRequiresAttachment(section) {
         return boolFromOdoo(requestLine.x_requires_attachment);
     }
 
-    // Safe fallback for this Pass 6C-4A probe.
+    // Safe fallback.
     // bank_information is structured-only; all other public sections currently require a file.
     return section.prefix !== "bank_information";
 }
@@ -124,6 +124,39 @@ function mapStructuredFields(section) {
         return compactObject({
             x_qualification_type: fields.qualification_type,
             x_qualification_subject: fields.qualification_subject,
+        });
+    }
+
+    if (section.prefix === "birth_certificate") {
+        return compactObject({
+            x_date_of_birth: fields.date_of_birth,
+            x_place_of_birth: fields.place_of_birth,
+            x_country_of_birth_id: toInt(fields.country_of_birth),
+        });
+    }
+
+    if (section.prefix === "family_status") {
+        return compactObject({
+            x_family_paper_number: fields.family_paper_number,
+            x_family_reference_number: fields.family_reference_number,
+            x_next_of_kin_name: fields.next_of_kin_name,
+            x_next_of_kin_phone: fields.next_of_kin_phone,
+        });
+    }
+
+    if (section.prefix === "health_certificate") {
+        return compactObject({
+            x_blood_type: fields.blood_type,
+        });
+    }
+
+    if (section.prefix === "bank_information") {
+        return compactObject({
+            x_bank_name: fields.bank_name,
+            x_bank_branch: fields.bank_branch,
+            x_account_number: fields.account_number,
+            x_iban: fields.iban,
+            x_notes: fields.bank_notes,
         });
     }
 
@@ -209,7 +242,6 @@ function buildWritebackItem(validatedPayload, section) {
             fileName,
             mimeType: cleanString(file.mimeType) || "application/octet-stream",
             size: file.size || null,
-            raw: file.raw || null,
         } : null,
         duplicateCheck: {
             model: "x_hr.applicant_required_document_submission",

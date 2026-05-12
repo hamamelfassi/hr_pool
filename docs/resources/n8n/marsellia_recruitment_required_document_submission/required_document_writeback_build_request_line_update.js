@@ -11,7 +11,7 @@
  */
 
 const CONFIG = {
-    moduleVersion: "6C-4H",
+    moduleVersion: "6C-5D",
     workflow: "Marsellia | Recruitment | Required Document Submission",
     sourceNodeName: "Build Submission Payload",
 };
@@ -49,14 +49,29 @@ function extractCreatedId(value) {
 }
 
 function getSourceItem() {
-    const sourceItems = $items(CONFIG.sourceNodeName);
-
-    if (!sourceItems || !sourceItems.length) {
-        throw new Error(`Could not read source item from node: ${CONFIG.sourceNodeName}`);
+    // Best path inside Loop Over Items: linked item from the previous node.
+    try {
+        const linked = $(CONFIG.sourceNodeName).item;
+        if (linked && linked.json) {
+            return linked.json;
+        }
+    } catch (error) {
+        // Fall through to fallback path.
     }
 
-    return sourceItems[0].json || sourceItems[0];
+    // Fallback for non-loop/manual testing.
+    try {
+        const sourceItems = $items(CONFIG.sourceNodeName);
+        if (sourceItems && sourceItems.length) {
+            return sourceItems[0].json || sourceItems[0];
+        }
+    } catch (error) {
+        // Fall through.
+    }
+
+    throw new Error(`Could not read linked source item from node: ${CONFIG.sourceNodeName}`);
 }
+
 
 const source = getSourceItem();
 const submissionResponse = $json;
