@@ -888,3 +888,42 @@ roles:
  - width
  - height
 signing_order
+
+### Lesson 4 — F-0003 signature geometry must be recalibrated after report/layout changes
+
+The F-0003 native Sign lifecycle pattern is locked as reusable:
+
+Generated PDF attachment
+→ dynamic sign.template
+→ sign.document from generated PDF
+→ sign.item
+→ sign.send.request
+→ linked sign.request
+→ manual sync
+→ signed PDF/certificate copied to applicant
+→ registry and source checklist marked signed
+
+However, signature coordinates are PDF-layout-specific.
+
+The previous reviewer coordinates were proven against an earlier F-0003 PDF layout:
+
+```text
+page = 1
+posX = 0.073
+posY = 0.591
+width = 0.565
+height = 0.075
+```
+
+After updates to the F-0003 required document taxonomy, QWeb template, row count, spacing, or CSS, these coordinates are no longer final.
+
+Before the next F-0003 implementation lock:
+
+1. regenerate F-0003 from the updated checklist;
+2. inspect the final generated PDF;
+3. manually place the reviewer signature field in Odoo Sign;
+4. record the updated page/posX/posY/width/height values;
+5. patch the F-0003 native Sign send action;
+6. update native_odoo_sign_workflow_wiki.md.
+
+The lifecycle pattern remains locked. The coordinate profile is pending recalibration.

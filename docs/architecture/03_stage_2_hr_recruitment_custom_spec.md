@@ -192,6 +192,24 @@ Accepted submissions update the relevant F-0003 checklist lines.
 
 Rejected submissions remain in the audit trail and do not overwrite earlier submissions.
 
+### 5.4.1 Documents governance deferral
+
+Odoo Documents may centralize and surface attachments created from applicant chatter, recruitment records, and Sign requests.
+
+For the current recruitment-to-employment build, Odoo Documents is a filing/navigation layer only. It is not the lifecycle authority for Evaluation, Contract Proposal, or handover gates.
+
+The authoritative lifecycle source remains:
+
+`x_hr.recruitment_document`
+
+The operational evidence source remains:
+
+`x_hr.applicant_required_document_submission`
+
+Full Odoo Documents governance is deferred until after the complete recruitment-to-employment cycle is implemented. That later governance pass may define folder policy, tag policy, access classes, retention, employee-file migration, and Documents automation.
+
+Until that pass, the recruitment module should not depend on custom Documents folder/tag automation for core workflow correctness.
+
 ### 5.5 `Declarations`
 
 Purpose:
@@ -388,8 +406,17 @@ The Contract tab stores and prepares the values needed for:
 ### 10.3 F-0004 Legal Documents Validity Declaration
 
 - source: Declarations tab;
-- signed by applicant and authorized recruitment/HR manager;
-- single-page QWeb form with fixed signature block.
+- generated as a single-page QWeb form with fixed signature geometry;
+- tracked through `x_hr.recruitment_document` as `legal_documents_validity_declaration`;
+- belongs to the Evaluation / Interviews gate;
+- declares legal validity of submitted documents and applicant responsibility for false, forged, altered, or misleading documents;
+- includes HR/recruitment review fields where required by the source form.
+
+Current implementation note:
+
+- Pass 6F closes F-0004 using the proven one-signer native Odoo Sign flow, with the applicant as signer.
+- HR/recruitment review/countersignature can remain stored and printed in the source form.
+- Promotion to a true two-signer native Sign workflow is deferred unless explicitly re-scoped before implementation.
 
 ## 11. Preboarding documents
 
@@ -448,6 +475,16 @@ The Fillout upload URL should be tokenized. Raw applicant/checklist IDs are not 
 New submision uploads never overwrite previous uploads.
 
 Rejected or superseded submissions remain part of the audit trail.
+
+### 12.1 Required-document evidence and Documents app boundary
+
+The F-0003 checklist controls readiness and the signed checklist artifact.
+
+The Submissions model stores evidence and review outcomes.
+
+Odoo Documents may display, centralize, and search related attachments, but it does not determine whether a checklist line is accepted, whether F-0003 is ready, or whether the Evaluation gate is complete.
+
+The Evaluation gate must read registry state, not Documents folders, tags, or search results.
 
 ## 13. Location taxonomy dependency
 

@@ -367,25 +367,43 @@ Clean message examples:
 
 ## 7. Sign item coordinate profile
 
-### 7.1 F-0003 proven profile
+### 7.1 F-0003 profile
 
-`document_type: required_documents_checklist`
-`source_model: x_hr.applicant_required_document_checklist`
-`generated_attachment_field: x_pdf_attachment_id`
-`signed_attachment_field: x_signed_attachment_id`
+`document_type: required_documents_checklist`  
+`source_model: x_hr.applicant_required_document_checklist`  
+`generated_attachment_field: x_pdf_attachment_id`  
+`signed_attachment_field: x_signed_attachment_id`  
 `registry_document_type: required_documents_checklist`
 
-`role_key: reviewer`
-`sign_role_name: Reviewer`
-`signer_source: x_reviewer_user_id.partner_id`
-`sequence: 1`
-`required: true`
-`page: 1`
-`posX: 0.073`
-`posY: 0.591`
-`width: 0.565`
-`height: 0.075`
+`role_key: reviewer`  
+`sign_role_name: Reviewer`  
+`signer_source: x_reviewer_user_id.partner_id`  
+`sequence: 1`  
+`required: true`  
 `alignment: left`
+
+Historical proven coordinates:
+
+`page: 1`  
+`posX: 0.073`  
+`posY: 0.591`  
+`width: 0.565`  
+`height: 0.075`
+
+Important status:
+
+These coordinates were proven against the earlier F-0003 generated PDF layout.
+
+After the required-document taxonomy, F-0003 template, or report CSS changes, the coordinates must be recalibrated before reuse.
+
+Current rule:
+
+- regenerate the updated F-0003 PDF;
+- manually place/test the reviewer signature in Odoo Sign;
+- record the updated page/posX/posY/width/height values;
+- then patch the server action coordinate profile.
+
+Do not rely on the historical coordinates after report layout changes.
 
 
 ### 7.2 Future profile shape
@@ -550,43 +568,85 @@ Help text pattern:
 
 ## 11. Extension to F-0002
 
-F-0002 should reuse the same pattern after F-0003 is locked.
+F-0002 reuses the proven one-signer native Sign pattern after F-0003.
 
 Expected F-0002 profile:
 
-`document_type: interview_evaluation`
-`source_model: x_hr.applicant_interview_evaluation`
-`generated_attachment_field: x_pdf_attachment_id`
-`signed_attachment_field: x_signed_attachment_id`
+`document_type: interview_evaluation`  
+`source_model: x_hr.applicant_interview_evaluation`  
+`generated_attachment_field: x_pdf_attachment_id`  
+`signed_attachment_field: x_signed_attachment_id`  
 `registry_document_type: interview_evaluation`
-`role_key: interviewer`
-`sign_role_name: Interviewer or Reviewer, to be confirmed`
-`signer_source: x_interviewer_user_id.partner_id`
-`sequence: 1`
-`required: true`
-`page/coordinates: to be calibrated from locked F-0002 PDF`
 
-Do not mix F-0002 implementation into F-0003 hardening.
+Role:
+
+`role_key: interviewer`  
+`sign_role_name: Reviewer or Interviewer, depending on available Sign roles`  
+`signer_source: x_interviewer_user_id.partner_id`  
+`sequence: 1`  
+`required: true`
+
+Coordinate rule:
+
+- coordinates must be calibrated from the current locked F-0002 PDF;
+- the interviewer signature block is the placement target;
+- do not use F-0003 coordinates for F-0002.
+
+Lifecycle rule:
+
+- generated PDF creates/updates the registry row;
+- Send via Odoo Sign creates dynamic template/document/item/send request;
+- linked `sign.request` is stored on the registry;
+- sync closes only after full `sign.request.state == signed`;
+- signed PDF and certificate are copied to applicant attachments;
+- source interview record and registry both become signed;
+- duplicate send is blocked;
+- manual signed-attachment fallback may remain available.
 
 ---
 
 ## 12. Extension to F-0004
 
-F-0004 introduces the first two-signer pattern.
+F-0004 belongs to the Evaluation-stage closure flow and is tracked as:
 
-Expected roles:
+`registry_document_type: legal_documents_validity_declaration`
 
-`Applicant`
-`HR Manager / Reviewer`
+Expected Pass 6F profile:
 
-Rules:
+`document_type: legal_documents_validity_declaration`  
+`source_model: x_hr.applicant_legal_document_validity_declaration` or the final implemented F-0004 source model name  
+`generated_attachment_field: x_pdf_attachment_id`  
+`signed_attachment_field: x_signed_attachment_id`  
+`registry_document_type: legal_documents_validity_declaration`
 
-- each role must have exactly one signer row
-- registry must wait for full sign.request.state == signed
-- one completed signer item is not enough
-- signing order should remain optional unless business/legal process requires it
+Pass 6F signer rule:
 
-Applicant signing requires clean applicant partner/email normalization before send.
+`role_key: applicant`  
+`sign_role_name: Applicant`  
+`signer_source: applicant partner/email resolved from hr.applicant`  
+`sequence: 1`  
+`required: true`
+
+Pass 6F implementation scope:
+
+- one native Sign signer only, using the same proven one-signer pattern;
+- applicant is the signer;
+- HR/recruitment review fields may remain stored and printed;
+- full two-signer native Sign execution is deferred unless explicitly re-scoped.
+
+Future two-signer note:
+
+If F-0004 is later promoted to two-signer native Sign, required roles become:
+
+- Applicant;
+- HR Manager / Reviewer.
+
+At that point:
+
+- each role must have exactly one signer row;
+- registry must wait for full `sign.request.state == signed`;
+- one completed signer item is not enough;
+- signing order should remain optional unless business/legal process requires it.
 
 ---
 

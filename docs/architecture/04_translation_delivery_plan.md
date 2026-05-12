@@ -68,3 +68,22 @@ The implementation pass is not closed until `hr_recruitment_custom` Arabic trans
 - submission states;
 - accept/reject/resubmission actions;
 - public continuation/token labels where introduced.
+
+## 7. Pass 6D–6H recovery rule
+
+Pass 5 and Pass 6 introduced significant user-facing labels before translation delivery was fully caught up.
+
+Before Pass 7 begins, `hr_recruitment_custom` must update Arabic translations for the Evaluation-stage closure surfaces:
+
+- Evaluation / F-0002 fields, buttons, states, and report labels;
+- Documents / F-0003 checklist fields, buttons, states, and report labels;
+- Submissions tab fields, buttons, request states, request-line states, and review messages;
+- Submission Request and Request Line model labels;
+- F-0004 declaration labels, buttons, states, and report labels;
+- recruitment document registry labels used by Evaluation-stage artifacts;
+- native Sign action labels exposed through custom server actions;
+- gate action labels and blocked/success messages.
+
+Translation debt from Pass 5/6 is not allowed to roll into Pass 7.
+
+Pass 7 has its own GRC decision-template translation burden and should not inherit unresolved Evaluation-stage UI translation debt.
