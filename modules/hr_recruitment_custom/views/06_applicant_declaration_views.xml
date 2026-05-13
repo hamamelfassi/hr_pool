@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_applicant_declaration_list" model="ir.ui.view">
+        <field name="name">x.hr.applicant.declaration.list</field>
+        <field name="model">x_hr.applicant_declaration</field>
+        <field name="arch" type="xml">
+            <list string="Declarations" create="false" delete="false">
+                <field name="x_document_reference" string="المرجع" readonly="1" />
+                <field name="x_declaration_type" string="نوع الإقرار" readonly="1" widget="badge" />
+                <field name="x_state" string="الحالة" readonly="1" widget="badge"
+                    decoration-muted="x_state in ('draft', 'superseded')"
+                    decoration-info="x_state == 'generated'"
+                    decoration-warning="x_state == 'signature_requested'"
+                    decoration-success="x_state == 'signed'"
+                    decoration-danger="x_state == 'cancelled'" />
+                <field name="x_generated_on" string="تاريخ الإنشاء" readonly="1" />
+                <field name="x_sent_on" string="تاريخ الإرسال" readonly="1" />
+                <field name="x_signed_on" string="تاريخ التوقيع" readonly="1" />
+            </list>
+        </field>
+    </record>
+
+    <record id="view_applicant_declaration_form" model="ir.ui.view">
+        <field name="name">x.hr.applicant.declaration.form</field>
+        <field name="model">x_hr.applicant_declaration</field>
+        <field name="arch" type="xml">
+            <form string="إقرار المتقدم">
+                <header>
+                    <field name="x_state" widget="statusbar"
+                        options="{'clickable': false}"
+                        statusbar_visible="draft,generated,signature_requested,signed"
+                        readonly="1" />
+                </header>
+                <sheet>
+                    <group>
+                        <group string="بيانات الإقرار">
+                            <field name="x_name" readonly="1" />
+                            <field name="x_applicant_id" readonly="1" />
+                            <field name="x_declaration_type" readonly="x_state != 'draft'" />
+                            <field name="x_declaration_code" readonly="1" />
+                            <field name="x_document_reference" readonly="1" />
+                            <field name="x_sequence" readonly="1" />
+                        </group>
+                        <group string="دورة المستند">
+                            <field name="x_prepared_by_user_id" readonly="1" />
+                            <field name="x_prepared_on" readonly="1" />
+                            <field name="x_reviewer_user_id" readonly="x_state != 'draft'" />
+                            <field name="x_reviewed_on" readonly="1" />
+                            <field name="x_generated_on" readonly="1" />
+                            <field name="x_sent_on" readonly="1" />
+                            <field name="x_signed_on" readonly="1" />
+                        </group>
+                    </group>
+                    <group string="المرفقات الرسمية">
+                        <group>
+                            <field name="x_pdf_attachment_id" string="المستند المنشأ" readonly="1"
+                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
+                                domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]" />
+                        </group>
+                        <group>
+                            <field name="x_signed_attachment_id" string="المستند الموقع" readonly="1"
+                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
+                                domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]"
+                                context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}" />
+                        </group>
+                    </group>
+                    <group string="ملاحظات">
+                        <field name="x_notes" readonly="x_state == 'signed'"
+                            placeholder="ملاحظات داخلية عن هذا الإقرار." />
+                    </group>
+                    <chatter />
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

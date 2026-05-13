@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="field_applicant_declaration_x_name" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+            <field name="name">x_name</field>
+            <field name="field_description">Declaration Name</field>
+            <field name="ttype">char</field>
+            <field name="required" eval="True"/>
+        </record>
+
+        <record id="field_applicant_declaration_x_applicant_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+            <field name="name">x_applicant_id</field>
+            <field name="field_description">Applicant</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.applicant</field>
+            <field name="required" eval="True"/>
+            <field name="on_delete">cascade</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_applicant_declaration_x_sequence" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+            <field name="name">x_sequence</field>
+            <field name="field_description">Declaration Sequence</field>
+            <field name="ttype">integer</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_applicant_declaration_x_declaration_type" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+            <field name="name">x_declaration_type</field>
+            <field name="field_description">Declaration Type</field>
+            <field name="ttype">selection</field>
+            <field name="required" eval="True"/>
+            <field name="selection">[
+                ('legal_documents_validity_declaration', 'إقرار صحة المستندات (F-0004)'),
+                ('policies_compliance_declaration', 'إقرار الالتزام باللوائح والسياسات (F-0007)'),
+                ('non_disclosure_agreement', 'إقرار السرية وعدم الإفصاح (F-0009)')
+                ]</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_applicant_declaration_x_declaration_code" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+            <field name="name">x_declaration_code</field>
+            <field name="field_description">Declaration Code</field>
+            <field name="ttype">char</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_applicant_declaration_x_document_reference" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+            <field name="name">x_document_reference</field>
+            <field name="field_description">Document Reference</field>
+            <field name="ttype">char</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_applicant_declaration_x_state" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+            <field name="name">x_state</field>
+            <field name="field_description">Declaration State</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('draft', 'مسودة'),
+                ('generated', 'منشأ'),
+                ('signature_requested', 'تم طلب التوقيع'),
+                ('signed', 'موقّع'),
+                ('cancelled', 'ملغى'),
+                ('superseded', 'مستبدل')
+                ]</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_applicant_declaration_x_prepared_by_user_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+            <field name="name">x_prepared_by_user_id</field>
+            <field name="field_description">Prepared By</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+        </record>
+
+        <record id="field_applicant_declaration_x_prepared_on" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+            <field name="name">x_prepared_on</field>
+            <field name="field_description">Prepared On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_applicant_declaration_x_reviewer_user_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+            <field name="name">x_reviewer_user_id</field>
+            <field name="field_description">Reviewed By</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+        </record>
+
+        <record id="field_applicant_declaration_x_reviewed_on" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+            <field name="name">x_reviewed_on</field>
+            <field name="field_description">Reviewed On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_applicant_declaration_x_pdf_attachment_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+            <field name="name">x_pdf_attachment_id</field>
+            <field name="field_description">Generated Declaration PDF</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+        </record>
+
+        <record id="field_applicant_declaration_x_signed_attachment_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+            <field name="name">x_signed_attachment_id</field>
+            <field name="field_description">Signed Declaration PDF</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+        </record>
+
+        <record id="field_applicant_declaration_x_generated_on" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+            <field name="name">x_generated_on</field>
+            <field name="field_description">Generated On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_applicant_declaration_x_sent_on" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+            <field name="name">x_sent_on</field>
+            <field name="field_description">Sent On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_applicant_declaration_x_signed_on" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+            <field name="name">x_signed_on</field>
+            <field name="field_description">Signed On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_applicant_declaration_x_notes" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+            <field name="name">x_notes</field>
+            <field name="field_description">Notes</field>
+            <field name="ttype">text</field>
+        </record>
+
+        <record id="field_hr_applicant_x_declaration_ids" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_declaration_ids</field>
+            <field name="field_description">Declarations</field>
+            <field name="ttype">one2many</field>
+            <field name="relation">x_hr.applicant_declaration</field>
+            <field name="relation_field">x_applicant_id</field>
+        </record>
+
+    </data>
+</odoo>

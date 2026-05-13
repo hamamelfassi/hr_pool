@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_hr_applicant_generate_f0004_declaration" model="ir.actions.server">
+        <field name="name">إنشاء F-0004</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+declaration_model = env['x_hr.applicant_declaration'].sudo()
+action = False
+
+for applicant in records.sudo():
+    if not applicant.id:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'لا يوجد متقدم',
+                'message': 'احفظ سجل المتقدم قبل إنشاء الإقرار.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    declaration = declaration_model.search([
+        ('x_applicant_id', '=', applicant.id),
+        ('x_declaration_type', '=', 'legal_documents_validity_declaration'),
+        ('x_state', 'not in', ['signed', 'cancelled', 'superseded']),
+    ], order='id desc', limit=1)
+
+    if not declaration:
+        sequence = declaration_model.search_count([
+            ('x_applicant_id', '=', applicant.id),
+            ('x_declaration_type', '=', 'legal_documents_validity_declaration'),
+        ]) + 1
+
+        applicant_name = applicant.partner_name or applicant.name or applicant.display_name
+        declaration = declaration_model.create({
+            'x_name': 'إقرار صحة المستندات - %s - #%s' % (applicant_name, sequence),
+            'x_applicant_id': applicant.id,
+            'x_declaration_type': 'legal_documents_validity_declaration',
+            'x_declaration_code': 'MCEP-HR-F-0004',
+            'x_sequence': sequence,
+            'x_document_reference': 'MCEP-HR-F-0004-%05d-%02d' % (applicant.id, sequence),
+            'x_state': 'draft',
+            'x_prepared_by_user_id': env.user.id,
+            'x_prepared_on': datetime.datetime.now(),
+        })
+
+        applicant.message_post(body='تم إنشاء سجل إقرار صحة المستندات F-0004.')
+
+    view = env.ref('hr_recruitment_custom.view_applicant_declaration_form', raise_if_not_found=False)
+
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': declaration.x_name or 'إقرار صحة المستندات F-0004',
+        'res_model': 'x_hr.applicant_declaration',
+        'res_id': declaration.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+
+    if view:
+        action['views'] = [(view.id, 'form')]
+
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+
+    <record id="action_hr_applicant_generate_f0007_placeholder" model="ir.actions.server">
+        <field name="name">إنشاء F-0007</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+action = {
+    'type': 'ir.actions.client',
+    'tag': 'display_notification',
+    'params': {
+        'title': 'F-0007',
+        'message': 'سيتم تنفيذ إقرار F-0007 في تمريرة لاحقة.',
+        'type': 'warning',
+        'sticky': False,
+    }
+}
+        ]]></field>
+    </record>
+
+    <record id="action_hr_applicant_generate_f0009_placeholder" model="ir.actions.server">
+        <field name="name">إنشاء F-0009</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+action = {
+    'type': 'ir.actions.client',
+    'tag': 'display_notification',
+    'params': {
+        'title': 'F-0009',
+        'message': 'سيتم تنفيذ إقرار F-0009 في تمريرة لاحقة.',
+        'type': 'warning',
+        'sticky': False,
+    }
+}
+        ]]></field>
+    </record>
+</odoo>

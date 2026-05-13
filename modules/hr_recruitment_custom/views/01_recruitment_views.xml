@@ -22,11 +22,7 @@
         <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form" />
         <field name="arch" type="xml">
             <xpath expr="//form/header" position="inside">
-                <button type="action"
-                    name="hr_recruitment_custom.action_hr_applicant_conduct_interview"
-                    string="Conduct Interview"
-                    class="btn-secondary"
-                    invisible="not id" />
+                
                 <button type="action"
                     name="hr_recruitment_custom.action_hr_applicant_generate_tor_pdf"
                     string="Generate TOR PDF"
@@ -58,16 +54,33 @@
 
             <xpath expr="//sheet/notebook" position="inside">
                 <page string="Evaluation">
-                     <field name="x_mcep_interview_ids" context="{'default_x_applicant_id': id}">
+                     <group>
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_conduct_interview"
+                            string="إجراء مقابلة"
+                            class="btn-secondary oe_highlight"
+                            invisible="not id" />
+                        <div class="text-muted">
+                            أنشئ تقييم مقابلة جديداً، ثم أنشئ ملف F-0002 وأرسله للتوقيع من داخل سجل التقييم.
+                        </div>
+                    </group>
+                    <field name="x_mcep_interview_ids" context="{'default_x_applicant_id': id}">
                         <list create="false" delete="false">
                             <field name="x_name" />
                             <field name="x_interviewer_user_id" readonly="x_document_state != 'draft'" />
                             <field name="x_interview_datetime" readonly="x_document_state != 'draft'" />
                             <field name="x_total_score" />
                             <field name="x_percent_score" />
-                            <field name="x_final_grade" />
+                            <field name="x_final_grade" widget="badge"
+                                decoration-success="x_final_grade in ('excellent', 'very_good')"
+                                decoration-warning="x_final_grade in ('good', 'acceptable')"
+                                decoration-danger="x_final_grade == 'not_acceptable'" />
                             <field name="x_visual_star_rating" widget="priority" readonly="1" />
-                            <field name="x_document_state" />
+                            <field name="x_document_state" widget="badge"
+                                decoration-muted="x_document_state == 'draft'"
+                                decoration-info="x_document_state == 'generated'"
+                                decoration-warning="x_document_state == 'sent'"
+                                decoration-success="x_document_state == 'signed'" />
                             <field name="x_recommend_for_employment" readonly="x_document_state != 'draft'" />
                         </list>
                         <form string="Interview Evaluation">
@@ -626,14 +639,90 @@
                     </field>
                 </page>             
 
-                <page string="Declarations">
+                
+                <page string="الإقرارات">
                     <group>
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_generate_f0004_declaration"
+                            string="إنشاء F-0004"
+                            class="btn-primary"
+                            invisible="not id" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_generate_f0007_placeholder"
+                            string="إنشاء F-0007"
+                            class="btn-secondary"
+                            invisible="not id" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_generate_f0009_placeholder"
+                            string="إنشاء F-0009"
+                            class="btn-secondary"
+                            invisible="not id" />
                         <div class="text-muted">
-                            F-0004, F-0007, and F-0009 declaration generation and signature
-                            workflows
-                            will be implemented in later passes.
+                            استخدم هذه الصفحة لإنشاء ومتابعة إقرارات المتقدم. يتم تنفيذ F-0004 في هذه المرحلة، وتبقى F-0007 و F-0009 للتمريرات اللاحقة.
                         </div>
                     </group>
+
+                    <field name="x_declaration_ids" context="{'default_x_applicant_id': id}">
+                        <list string="إقرارات المتقدم" create="false" delete="false">
+                            <field name="x_document_reference" string="المرجع" readonly="1" />
+                            <field name="x_declaration_type" string="نوع الإقرار" readonly="1" widget="badge" />
+                            <field name="x_state" string="الحالة" readonly="1" widget="badge"
+                                decoration-muted="x_state in ('draft', 'superseded')"
+                                decoration-info="x_state == 'generated'"
+                                decoration-warning="x_state == 'signature_requested'"
+                                decoration-success="x_state == 'signed'"
+                                decoration-danger="x_state == 'cancelled'" />
+                            <field name="x_generated_on" string="تاريخ الإنشاء" readonly="1" />
+                            <field name="x_sent_on" string="تاريخ الإرسال" readonly="1" />
+                            <field name="x_signed_on" string="تاريخ التوقيع" readonly="1" />
+                        </list>
+                        <form string="إقرار المتقدم">
+                            <header>
+                                <field name="x_state" widget="statusbar"
+                                    options="{'clickable': false}"
+                                    statusbar_visible="draft,generated,signature_requested,signed"
+                                    readonly="1" />
+                            </header>
+                            <sheet>
+                                <group>
+                                    <group string="بيانات الإقرار">
+                                        <field name="x_name" readonly="1" />
+                                        <field name="x_applicant_id" readonly="1" />
+                                        <field name="x_declaration_type" readonly="x_state != 'draft'" />
+                                        <field name="x_declaration_code" readonly="1" />
+                                        <field name="x_document_reference" readonly="1" />
+                                        <field name="x_sequence" readonly="1" />
+                                    </group>
+                                    <group string="دورة المستند">
+                                        <field name="x_prepared_by_user_id" readonly="1" />
+                                        <field name="x_prepared_on" readonly="1" />
+                                        <field name="x_reviewer_user_id" readonly="x_state != 'draft'" />
+                                        <field name="x_reviewed_on" readonly="1" />
+                                        <field name="x_generated_on" readonly="1" />
+                                        <field name="x_sent_on" readonly="1" />
+                                        <field name="x_signed_on" readonly="1" />
+                                    </group>
+                                </group>
+                                <group string="المرفقات الرسمية">
+                                    <group>
+                                        <field name="x_pdf_attachment_id" string="المستند المنشأ" readonly="1"
+                                            options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
+                                            domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]" />
+                                    </group>
+                                    <group>
+                                        <field name="x_signed_attachment_id" string="المستند الموقع" readonly="1"
+                                            options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
+                                            domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]"
+                                            context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}" />
+                                    </group>
+                                </group>
+                                <group string="ملاحظات">
+                                    <field name="x_notes" readonly="x_state == 'signed'"
+                                        placeholder="ملاحظات داخلية عن هذا الإقرار." />
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
                 </page>
                 
                 <page string="Contract">
@@ -771,9 +860,16 @@
                 <field name="x_interview_datetime" readonly="x_document_state != 'draft'" />
                 <field name="x_total_score" />
                 <field name="x_percent_score" />
-                <field name="x_final_grade" />
+                <field name="x_final_grade" widget="badge"
+                                decoration-success="x_final_grade in ('excellent', 'very_good')"
+                                decoration-warning="x_final_grade in ('good', 'acceptable')"
+                                decoration-danger="x_final_grade == 'not_acceptable'" />
                 <field name="x_visual_star_rating" widget="priority" readonly="1" />
-                <field name="x_document_state" />
+                <field name="x_document_state" widget="badge"
+                                decoration-muted="x_document_state == 'draft'"
+                                decoration-info="x_document_state == 'generated'"
+                                decoration-warning="x_document_state == 'sent'"
+                                decoration-success="x_document_state == 'signed'" />
                 <field name="x_recommend_for_employment" readonly="x_document_state != 'draft'" />
             </list>
         </field>

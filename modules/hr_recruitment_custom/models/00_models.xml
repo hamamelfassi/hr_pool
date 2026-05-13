@@ -25,4 +25,12 @@
         <field name="model">x_mcep.interview_question</field>
         <field name="state">manual</field>
     </record>
+    <record id="model_x_hr_applicant_declaration" model="ir.model">
+        <field name="name">Applicant Declaration</field>
+        <field name="model">x_hr.applicant_declaration</field>
+        <field name="state">manual</field>
+        <field name="is_mail_thread" eval="True"/>
+        <field name="is_mail_activity" eval="True"/>
+    </record>
+
 </odoo>
