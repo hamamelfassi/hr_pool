@@ -36,6 +36,8 @@
         "report/05_interview_report_actions.xml",
         "report/06_required_document_checklist_report_templates.xml",
         "report/07_required_document_checklist_report_actions.xml",
+        "report/08_legal_document_validity_declaration_report_templates.xml",
+        "report/09_legal_document_validity_declaration_report_actions.xml",
         "data/09_interview_document_workflow_actions.xml",
         "data/10_required_document_types.xml",
         "data/11_required_document_checklist_actions.xml",

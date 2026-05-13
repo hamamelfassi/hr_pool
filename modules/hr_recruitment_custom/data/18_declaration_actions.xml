@@ -105,4 +105,187 @@ action = {
 }
         ]]></field>
     </record>
+
+    <record id="action_applicant_declaration_generate_f0004_pdf" model="ir.actions.server">
+        <field name="name">إنشاء ملف F-0004</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+        <field name="binding_model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+registry_model = env['x_hr.recruitment_document'].sudo()
+attachment_model = env['ir.attachment'].sudo()
+report_service = env['ir.actions.report'].sudo()
+action = False
+
+for rec in records.sudo():
+    if rec.x_declaration_type != 'legal_documents_validity_declaration':
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'نوع إقرار غير مدعوم',
+                'message': 'إنشاء PDF متاح حالياً فقط لإقرار F-0004.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    if rec.x_state in ['generated', 'signature_requested', 'signed'] or rec.x_pdf_attachment_id:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'تم إنشاء F-0004 مسبقاً',
+                'message': 'تم إنشاء ملف F-0004 لهذا الإقرار مسبقاً. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    applicant = rec.x_applicant_id
+    if not applicant:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'لا يوجد متقدم',
+                'message': 'لا يمكن إنشاء F-0004 بدون ربط الإقرار بمتقدم.',
+                'type': 'warning',
+                'sticky': True,
+            }
+        }
+        continue
+
+    generated_on = datetime.datetime.now()
+    applicant_name = applicant.partner_name or applicant.name or applicant.display_name
+    reference = rec.x_document_reference or ('MCEP-HR-F-0004-%05d-%02d' % (applicant.id, rec.x_sequence or 1))
+
+    update_values = {
+        'x_document_reference': reference,
+        'x_declaration_code': 'MCEP-HR-F-0004',
+        'x_prepared_by_user_id': rec.x_prepared_by_user_id.id or env.user.id,
+        'x_prepared_on': rec.x_prepared_on or generated_on,
+        'x_reviewer_user_id': rec.x_reviewer_user_id.id or env.user.id,
+    }
+
+    if not rec.x_reviewed_on:
+        update_values['x_reviewed_on'] = generated_on
+
+    rec.write(update_values)
+
+    pdf_content, _content_type = report_service._render_qweb_pdf(
+        'hr_recruitment_custom.action_report_mcep_legal_document_validity_declaration',
+        [rec.id]
+    )
+
+    filename = '%s - F-0004 Legal Documents Validity Declaration.pdf' % applicant_name
+
+    attachment = attachment_model.create({
+        'name': filename,
+        'type': 'binary',
+        'raw': pdf_content,
+        'res_model': 'hr.applicant',
+        'res_id': applicant.id,
+        'mimetype': 'application/pdf',
+    })
+
+    rec.write({
+        'x_state': 'generated',
+        'x_generated_on': generated_on,
+        'x_pdf_attachment_id': attachment.id,
+    })
+
+    latest_any = registry_model.search([
+        ('x_document_type', '=', 'legal_documents_validity_declaration'),
+        ('x_applicant_id', '=', applicant.id),
+    ], order='x_version desc, id desc', limit=1)
+
+    registry_doc = registry_model.search([
+        ('x_document_type', '=', 'legal_documents_validity_declaration'),
+        ('x_source_model', '=', 'x_hr.applicant_declaration'),
+        ('x_source_res_id', '=', rec.id),
+        ('x_state', '!=', 'signed'),
+    ], order='x_version desc, id desc', limit=1)
+
+    registry_name = 'إقرار صحة المستندات - %s - v%s'
+
+    if registry_doc:
+        registry_doc.write({
+            'x_name': registry_name % (applicant_name, registry_doc.x_version or 1),
+            'x_applicant_id': applicant.id,
+            'x_state': 'generated',
+            'x_generated_attachment_id': attachment.id,
+            'x_generated_on': generated_on,
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'x_hr.applicant_declaration',
+            'x_source_res_id': rec.id,
+            'x_notes': 'تم إنشاء ملف F-0004 PDF من سجل إقرار المتقدم.',
+        })
+    else:
+        next_version = (latest_any.x_version or 0) + 1 if latest_any else 1
+        registry_model.create({
+            'x_name': registry_name % (applicant_name, next_version),
+            'x_applicant_id': applicant.id,
+            'x_document_type': 'legal_documents_validity_declaration',
+            'x_state': 'generated',
+            'x_generated_attachment_id': attachment.id,
+            'x_version': next_version,
+            'x_generated_on': generated_on,
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'x_hr.applicant_declaration',
+            'x_source_res_id': rec.id,
+            'x_notes': 'تم إنشاء ملف F-0004 PDF من سجل إقرار المتقدم.',
+        })
+
+    rec.message_post(body='تم إنشاء ملف F-0004 وربطه بسجل الإقرار.')
+    applicant.message_post(body='تم إنشاء ملف F-0004 وربطه بسجل مستندات التوظيف.')
+
+    action = {
+        'type': 'ir.actions.act_url',
+        'url': '/web/content/%s?download=true' % attachment.id,
+        'target': 'new',
+    }
+
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+
+    <record id="action_applicant_declaration_download_generated_pdf" model="ir.actions.server">
+        <field name="name">تنزيل ملف F-0004 المنشأ</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+        <field name="binding_model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+action = False
+
+for rec in records.sudo():
+    if rec.x_pdf_attachment_id:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % rec.x_pdf_attachment_id.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'لا يوجد ملف منشأ',
+                'message': 'لا يوجد ملف F-0004 منشأ مرتبط بهذا الإقرار.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+
 </odoo>

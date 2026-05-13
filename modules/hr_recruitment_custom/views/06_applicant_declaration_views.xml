@@ -30,6 +30,18 @@
                         options="{'clickable': false}"
                         statusbar_visible="draft,generated,signature_requested,signed"
                         readonly="1" />
+                    <button type="action"
+                        name="hr_recruitment_custom.action_applicant_declaration_generate_f0004_pdf"
+                        string="إنشاء ملف F-0004"
+                        class="btn-primary"
+                        invisible="x_declaration_type != 'legal_documents_validity_declaration' or x_state != 'draft'" />
+                    <button type="action"
+                        name="hr_recruitment_custom.action_applicant_declaration_download_generated_pdf"
+                        string=""
+                        title="تنزيل ملف F-0004 المنشأ"
+                        icon="fa-download"
+                        class="btn-link"
+                        invisible="not x_pdf_attachment_id" />
                 </header>
                 <sheet>
                     <group>
