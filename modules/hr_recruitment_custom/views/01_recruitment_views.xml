@@ -61,35 +61,40 @@
                      <field name="x_mcep_interview_ids" context="{'default_x_applicant_id': id}">
                         <list create="false" delete="false">
                             <field name="x_name" />
-                            <field name="x_interviewer_user_id" />
-                            <field name="x_interview_datetime" />
+                            <field name="x_interviewer_user_id" readonly="x_document_state != 'draft'" />
+                            <field name="x_interview_datetime" readonly="x_document_state != 'draft'" />
                             <field name="x_total_score" />
                             <field name="x_percent_score" />
                             <field name="x_final_grade" />
                             <field name="x_visual_star_rating" widget="priority" readonly="1" />
                             <field name="x_document_state" />
-                            <field name="x_recommend_for_employment" />
+                            <field name="x_recommend_for_employment" readonly="x_document_state != 'draft'" />
                         </list>
                         <form string="Interview Evaluation">
                             <header>
                                 <button type="action"
                                     name="hr_recruitment_custom.action_mcep_interview_generate_pdf_tor"
-                                    string="Generate Interview PDF"
+                                    string="إنشاء ملف تقييم المقابلة"
                                     class="btn-primary"
-                                    invisible="not id or not x_ready_for_pdf" />
+                                    invisible="not id or not x_ready_for_pdf or x_document_state != 'draft'" />
                                 <button type="action"
                                     name="hr_recruitment_custom.action_mcep_interview_send_for_signature"
-                                    string="Send Interview for Signature"
+                                    string="إرسال F-0002 عبر توقيع أودو"
                                     class="btn-secondary"
                                     invisible="not id or not x_pdf_attachment_id or x_document_state != 'generated'" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_mcep_interview_sync_native_sign_completion"
+                                    string="مزامنة نتيجة التوقيع"
+                                    class="btn-secondary"
+                                    invisible="not id or x_document_state != 'sent'" />
                             </header>
                             <sheet>
                                 <group>
                                     <group>
                                         <field name="x_name" readonly="1" />
                                         <field name="x_applicant_id" readonly="1" />
-                                        <field name="x_interviewer_user_id" />
-                                        <field name="x_interview_datetime" />
+                                        <field name="x_interviewer_user_id" readonly="x_document_state != 'draft'" />
+                                        <field name="x_interview_datetime" readonly="x_document_state != 'draft'" />
                                         <field name="x_document_state" widget="statusbar"
                                             options="{'clickable': false}"
                                             statusbar_visible="draft,generated,sent,signed"
@@ -109,12 +114,12 @@
                                 <group string="Interview Snapshot">
                                     <group>
                                         <field name="x_full_name_snapshot" readonly="1" />
-                                        <field name="x_gender_snapshot" />
-                                        <field name="x_national_id_snapshot" />
+                                        <field name="x_gender_snapshot" readonly="x_document_state != 'draft'" />
+                                        <field name="x_national_id_snapshot" readonly="x_document_state != 'draft'" />
                                     </group>
                                     <group>
-                                        <field name="x_employee_number_snapshot" />
-                                        <field name="x_position_applied_snapshot" />
+                                        <field name="x_employee_number_snapshot" readonly="x_document_state != 'draft'" />
+                                        <field name="x_position_applied_snapshot" readonly="x_document_state != 'draft'" />
                                     </group>
                                 </group>
                                 <group string="Interview Document">
@@ -124,24 +129,38 @@
                                         <field name="x_signed_on" readonly="1" />
                                     </group>
                                     <group>
-                                        <field name="x_pdf_attachment_id" readonly="1"
+                                        <button type="action"
+                            name="hr_recruitment_custom.action_mcep_interview_download_generated_pdf"
+                            string=""
+                            title="تنزيل ملف التقييم المنشأ"
+                            icon="fa-download"
+                            class="btn-link"
+                            invisible="not x_pdf_attachment_id" />
+                        <field name="x_pdf_attachment_id" readonly="1"
                                             domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]" />
-                                        <field name="x_signed_attachment_id" readonly="1"
+                                        <button type="action"
+                            name="hr_recruitment_custom.action_mcep_interview_download_signed_pdf"
+                            string=""
+                            title="تنزيل ملف التقييم الموقع"
+                            icon="fa-download"
+                            class="btn-link"
+                            invisible="not x_signed_attachment_id" />
+                        <field name="x_signed_attachment_id" readonly="1"
                                             domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]"
                                             context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}" />
                                     </group>
                                 </group>
                                 <group string="Evaluation Inputs">
                                     <group>
-                                        <field name="x_career_aspirations" />
-                                        <field name="x_long_term_employment_expected" />
-                                        <field name="x_recommend_for_employment" />
+                                        <field name="x_career_aspirations" readonly="x_document_state != 'draft'" />
+                                        <field name="x_long_term_employment_expected" readonly="x_document_state != 'draft'" />
+                                        <field name="x_recommend_for_employment" readonly="x_document_state != 'draft'" />
                                     </group>
                                     <group>
-                                        <field name="x_remarks" />
+                                        <field name="x_remarks" readonly="x_document_state != 'draft'" />
                                     </group>
                                 </group>
-                                <field name="x_line_ids">
+                                <field name="x_line_ids" readonly="x_document_state != 'draft'">
                                     <list editable="bottom" create="false" delete="false">
                                         <field name="x_sequence" widget="handle" />
                                         <field name="x_question_label_ar" readonly="1" />
@@ -269,7 +288,7 @@
                                     invisible="x_state != 'generated' or not x_pdf_attachment_id" />
                                 <button type="action"
                                     name="hr_recruitment_custom.action_required_document_checklist_sync_native_sign_completion"
-                                    string="Sync Signed Result"
+                                    string="مزامنة نتيجة التوقيع"
                                     class="btn-secondary"
                                     invisible="x_state != 'signature_requested'" />
                                 <field name="x_state"
@@ -640,22 +659,27 @@
                 <header>
                     <button type="action"
                         name="hr_recruitment_custom.action_mcep_interview_generate_pdf_tor"
-                        string="Generate Interview PDF"
+                        string="إنشاء ملف تقييم المقابلة"
                         class="btn-primary"
-                        invisible="not id or not x_ready_for_pdf" />
+                        invisible="not id or not x_ready_for_pdf or x_document_state != 'draft'" />
                     <button type="action"
                         name="hr_recruitment_custom.action_mcep_interview_send_for_signature"
-                        string="Send Interview for Signature"
+                        string="إرسال F-0002 عبر توقيع أودو"
                         class="btn-secondary"
                         invisible="not id or not x_pdf_attachment_id or x_document_state != 'generated'" />
+                    <button type="action"
+                        name="hr_recruitment_custom.action_mcep_interview_sync_native_sign_completion"
+                        string="مزامنة نتيجة التوقيع"
+                        class="btn-secondary"
+                        invisible="not id or x_document_state != 'sent'" />
                 </header>
                 <sheet>
                     <group>
                         <group>
                             <field name="x_name" readonly="1" />
                             <field name="x_applicant_id" readonly="1" />
-                            <field name="x_interviewer_user_id" />
-                            <field name="x_interview_datetime" />
+                            <field name="x_interviewer_user_id" readonly="x_document_state != 'draft'" />
+                            <field name="x_interview_datetime" readonly="x_document_state != 'draft'" />
                             <field name="x_document_state" widget="statusbar"
                                 options="{'clickable': false}"
                                 statusbar_visible="draft,generated,sent,signed" readonly="1" />
@@ -673,12 +697,12 @@
                     <group string="Interview Snapshot">
                         <group>
                             <field name="x_full_name_snapshot" readonly="1" />
-                            <field name="x_gender_snapshot" />
-                            <field name="x_national_id_snapshot" />
+                            <field name="x_gender_snapshot" readonly="x_document_state != 'draft'" />
+                            <field name="x_national_id_snapshot" readonly="x_document_state != 'draft'" />
                         </group>
                         <group>
-                            <field name="x_employee_number_snapshot" />
-                            <field name="x_position_applied_snapshot" />
+                            <field name="x_employee_number_snapshot" readonly="x_document_state != 'draft'" />
+                            <field name="x_position_applied_snapshot" readonly="x_document_state != 'draft'" />
                         </group>
                     </group>
                     <group string="Interview Document">
@@ -692,7 +716,7 @@
                                 options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
                                 domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]" />
                             <field name="x_signed_attachment_id"
-                                readonly="x_document_state == 'signed'"
+                                readonly="1"
                                 options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
                                 domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]"
                                 context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}" />
@@ -700,15 +724,15 @@
                     </group>
                     <group string="Evaluation Inputs">
                         <group>
-                            <field name="x_career_aspirations" />
-                            <field name="x_long_term_employment_expected" />
-                            <field name="x_recommend_for_employment" />
+                            <field name="x_career_aspirations" readonly="x_document_state != 'draft'" />
+                            <field name="x_long_term_employment_expected" readonly="x_document_state != 'draft'" />
+                            <field name="x_recommend_for_employment" readonly="x_document_state != 'draft'" />
                         </group>
                         <group>
-                            <field name="x_remarks" />
+                            <field name="x_remarks" readonly="x_document_state != 'draft'" />
                         </group>
                     </group>
-                    <field name="x_line_ids">
+                    <field name="x_line_ids" readonly="x_document_state != 'draft'">
                         <list editable="bottom" create="false" delete="false">
                             <field name="x_sequence" widget="handle" />
                             <field name="x_question_label_ar" readonly="1" />
@@ -743,14 +767,14 @@
             <list string="Interview Evaluations">
                 <field name="x_name" />
                 <field name="x_applicant_id" />
-                <field name="x_interviewer_user_id" />
-                <field name="x_interview_datetime" />
+                <field name="x_interviewer_user_id" readonly="x_document_state != 'draft'" />
+                <field name="x_interview_datetime" readonly="x_document_state != 'draft'" />
                 <field name="x_total_score" />
                 <field name="x_percent_score" />
                 <field name="x_final_grade" />
                 <field name="x_visual_star_rating" widget="priority" readonly="1" />
                 <field name="x_document_state" />
-                <field name="x_recommend_for_employment" />
+                <field name="x_recommend_for_employment" readonly="x_document_state != 'draft'" />
             </list>
         </field>
     </record>

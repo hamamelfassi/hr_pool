@@ -648,6 +648,118 @@ At that point:
 - one completed signer item is not enough;
 - signing order should remain optional unless business/legal process requires it.
 
+
+## **Pass 6E — F-0002 Native Odoo Sign Retrofit Lessons**
+
+Pass 6E reused the proven F-0003 native Odoo Sign lifecycle pattern for F-0002 Interview Evaluation.
+
+The F-0002 flow is now:
+
+1. Interview record is completed.  
+2. F-0002 PDF is generated.  
+3. Generated PDF is linked to the interview record and recruitment document registry.  
+4. A dynamic Odoo Sign request is created for the interviewer.  
+5. The interviewer signs the document.  
+6. Sync copies the signed PDF and certificate where available.  
+7. The interview record becomes Signed.  
+8. The recruitment document registry row becomes Signed.  
+9. Generated and signed download helpers remain available.  
+10. The interview evidence record becomes readonly after generation.
+
+### **Confirmed reusable pattern**
+
+F-0002 can reuse the same lifecycle architecture as F-0003:
+
+* dynamic `sign.template`;  
+* generated `sign.document`;  
+* one required `sign.item`;  
+* `sign.send.request`;  
+* linked `sign.request`;  
+* registry metadata writeback;  
+* signed PDF copy;  
+* completion certificate copy;  
+* source record state closure;  
+* recruitment registry state closure;  
+* duplicate-send prevention.
+
+### **F-0002-specific differences from F-0003**
+
+F-0002 uses the interviewer as the signer.
+
+F-0002 is a scored evaluation artifact. Once generated, it should not be silently edited or regenerated. If a correction is needed, create a new interview evaluation record rather than overwriting the signed evidence artifact.
+
+F-0002 signature coordinates are not reusable from F-0003 because the PDF layout is different. Only the lifecycle pattern is reusable. Signature placement must be calibrated from the actual F-0002 PDF preview or signed PDF output.
+
+### **Required lifecycle rules**
+
+F-0002 generation must be blocked after the first generated artifact exists.
+
+Generation must not reset:
+
+* signed attachment;  
+* sent date;  
+* signed date;  
+* registry state;  
+* Odoo Sign request metadata;  
+* certificate metadata.
+
+After generation, interview scoring and source fields become readonly.
+
+After signing, the normal form surface should not show Generate or Send buttons. It should show only controlled download helpers and immutable evidence metadata.
+
+### **Date source rules**
+
+Use these date sources:
+
+* `x_generated_on` \= F-0002 PDF generation event.  
+* `x_sent_on` \= native Odoo Sign request creation or send event.  
+* `x_signed_on` \= completed signer event or Odoo Sign completion timestamp.
+
+Do not derive `x_sent_on` from `x_generated_on` when a linked `sign.request` exists.
+
+Do not leave temporary repair actions in module data when they were only created to fix fake test records in a fresh database.
+
+### **Sync action rule**
+
+The sync action exists to close the MCEP lifecycle from the linked Odoo Sign request.
+
+It should:
+
+* read the linked `sign.request`;  
+* confirm it is signed;  
+* copy the completed signed PDF;  
+* copy the certificate if available;  
+* write the signed attachment to the source interview record;  
+* write the signed attachment to the recruitment document registry;  
+* mark both the source record and registry row as Signed;  
+* preserve generated and sent metadata.
+
+It should not regenerate the PDF and should not alter interview scoring values.
+
+### **Rapid patch lesson from Pass 6E**
+
+The F-0002 retrofit showed that rapid scripted reuse is acceptable only after inspecting the exact current files.
+
+The F-0003 pattern was reusable, but not blindly. F-0002 required separate handling for:
+
+* coordinates;  
+* source model;  
+* signer;  
+* readonly evidence behavior;  
+* regeneration blocking;  
+* source/registry synchronization;  
+* date chronology.
+
+Future Sign reuse should follow Hybrid Mode:
+
+1. Explain the intended lifecycle.  
+2. Inspect the actual existing source pattern.  
+3. Identify exact reusable parts.  
+4. Identify model-specific differences.  
+5. Apply segmented guarded patches.  
+6. Test a fresh lifecycle record.  
+7. Remove temporary test-only repair tooling before lock.
+
 ---
 
 ## 13. Later native Sign smart button integration

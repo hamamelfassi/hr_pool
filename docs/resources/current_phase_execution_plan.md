@@ -269,6 +269,50 @@ Before the next F-0003 Sign request is considered locked:
 4. record the new page/posX/posY/width/height values;  
 5. update the native Sign profile documentation and implementation.
 
+### **Pass 6E closure note — F-0002 native Sign lifecycle**
+
+Pass 6E is accepted as the F-0002 native Odoo Sign retrofit and hardening slice.
+
+Accepted behavior:
+
+* F-0002 PDF generation works from the interview record.  
+* Native Odoo Sign send works for the interviewer.  
+* Signed PDF and certificate are received through Odoo Sign.  
+* Sync closes both the source interview record and the recruitment document registry row.  
+* Generated, sent, and signed dates are populated chronologically on fresh records.  
+* Generate and Send buttons are hidden after the lifecycle advances.  
+* Download helpers are available for generated and signed artifacts.  
+* Interview input/scoring fields are readonly after generation.  
+* Regeneration over an existing generated or signed F-0002 artifact is blocked.
+
+Important rule:
+
+Corrected evaluations should be handled by creating a new interview evaluation record, not by regenerating over an already generated or signed evidence artifact.
+
+Temporary repair actions created for fake test records are not part of the production workflow and should not remain in module data unless deliberately required for a real migration.
+
+### **Pass 6E implementation lesson**
+
+Pass 6E reinforced the project rule that Rapid Scripted Patch Mode must be used only with strong guardrails.
+
+For future complex workflow patches:
+
+* inspect the current module files first;  
+* identify the exact proven reusable pattern;  
+* separate lifecycle logic from view logic;  
+* avoid broad replacements against generic field names;  
+* compile embedded server-action Python before build;  
+* validate XML before build;  
+* run one fresh end-to-end acceptance test;  
+* document the lesson before moving to the next pass.
+
+Pass 6F should use Hybrid Mode:
+
+1. Manual explanatory design first.  
+2. Confirm which F-0002/F-0003 Sign pattern elements are reused.  
+3. Confirm which F-0004-specific elements differ.  
+4. Apply segmented guarded patches only after the design is accepted.
+
 ## **Deferred scope**
 
 The following are explicitly deferred:

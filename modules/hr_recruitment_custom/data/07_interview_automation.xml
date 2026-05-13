@@ -282,17 +282,44 @@ for rec in records:
 
         registry_model = env['x_hr.recruitment_document'].sudo()
 
-        registry_doc = registry_model.search([
-            ('x_document_type', '=', 'interview_evaluation'),
-            ('x_source_model', '=', 'x_hr.applicant_mcep_interview'),
-            ('x_source_res_id', '=', rec.id),
-        ], order='x_version desc, id desc', limit=1)
+        registry_doc = False
+
+        if rec.x_pdf_attachment_id:
+            registry_doc = registry_model.search([
+                ('x_document_type', '=', 'interview_evaluation'),
+                ('x_source_model', '=', 'x_hr.applicant_mcep_interview'),
+                ('x_source_res_id', '=', rec.id),
+                ('x_generated_attachment_id', '=', rec.x_pdf_attachment_id.id),
+            ], order='id desc', limit=1)
+
+        if not registry_doc:
+            registry_doc = registry_model.search([
+                ('x_document_type', '=', 'interview_evaluation'),
+                ('x_source_model', '=', 'x_hr.applicant_mcep_interview'),
+                ('x_source_res_id', '=', rec.id),
+                ('x_signature_mode', '=', 'native_sign'),
+                ('x_sign_request_res_id', '!=', False),
+            ], order='id desc', limit=1)
+
+        if not registry_doc:
+            registry_doc = registry_model.search([
+                ('x_document_type', '=', 'interview_evaluation'),
+                ('x_source_model', '=', 'x_hr.applicant_mcep_interview'),
+                ('x_source_res_id', '=', rec.id),
+            ], order='id desc', limit=1)
 
         if not registry_doc and rec.x_applicant_id:
             registry_doc = registry_model.search([
                 ('x_document_type', '=', 'interview_evaluation'),
                 ('x_applicant_id', '=', rec.x_applicant_id.id),
-            ], order='x_version desc, id desc', limit=1)
+                ('x_generated_attachment_id', '=', rec.x_pdf_attachment_id.id if rec.x_pdf_attachment_id else False),
+            ], order='id desc', limit=1)
+
+        if not registry_doc and rec.x_applicant_id:
+            registry_doc = registry_model.search([
+                ('x_document_type', '=', 'interview_evaluation'),
+                ('x_applicant_id', '=', rec.x_applicant_id.id),
+            ], order='id desc', limit=1)
 
         if registry_doc:
             registry_doc.write({

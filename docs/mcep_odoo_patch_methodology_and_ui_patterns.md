@@ -204,6 +204,86 @@ print("patched", p)
 - Can produce mixed logic if used before the pattern is mature.
 - Can reduce learning if used without explanation.
 
+### 4.7 Additional Guardrails Learned from Pass 6E
+
+Pass 6E confirmed that Rapid Scripted Patch Mode is useful, but only when the target is tightly bounded and the reusable pattern has been inspected against the actual current module files.
+
+Rapid scripted patches must not rely on broad replacements against generic field names.
+
+Avoid global replacements such as:
+
+* `<field name="x_line_ids">`  
+* `<field name="x_name">`  
+* `<field name="x_state">`  
+* `message_post`  
+* `x_signed_on`  
+* `x_generated_on`
+
+These names may appear in multiple models, embedded views, child lines, or unrelated lifecycle surfaces.
+
+Correct approach:
+
+* Identify the exact file.  
+* Identify the exact server action, view, tab, or embedded model.  
+* Use a distinctive anchor from the local context.  
+* Patch only that bounded block.  
+* Run XML validation.  
+* Compile embedded server-action Python code.  
+* Upgrade and test one narrow lifecycle path.
+
+Example of safe targeting:
+
+* Patch the interview scoring line block only if the surrounding block contains both `x_question_label_ar` and `x_actual_score`.  
+* Do not patch every `x_line_ids` field in the applicant view.
+
+### 4.8 Date and Lifecycle Repair Guardrails
+
+Date repair actions are high-risk and should not be added casually.
+
+Do not create generic repair actions for test records in a fresh database unless there is a deliberate production migration need.
+
+Lifecycle dates must come from the correct event source:
+
+* Generated On \= report generation or generated attachment creation event.  
+* Sent On \= Odoo Sign request creation or actual send timestamp.  
+* Signed On \= completed signer item timestamp or final Odoo Sign completion timestamp.
+
+Never derive Sent On from Generated On when a linked Odoo Sign request exists.
+
+Never derive Signed On from the time a later repair action was run unless there is no better source and the action is explicitly labelled as a repair.
+
+Temporary repair tools created only to fix fake test records should be removed before locking the pass.
+
+### 4.9 Segmented Rapid Patch Standard
+
+For complex workflows, Rapid Scripted Patch Mode must be segmented.
+
+Preferred sequence:
+
+1. Preflight check.  
+2. One model or server-action concern.  
+3. One view concern.  
+4. One helper or button concern.  
+5. Embedded Python compilation check.  
+6. XML parse check.  
+7. Build.  
+8. Upgrade.  
+9. Narrow acceptance test.  
+10. Documentation update.
+
+Do not combine lifecycle logic, view layout, field readonly rules, date repair, status transitions, and translation changes in one large patch script unless the pattern is already fully proven and the replacements are strictly bounded.
+
+### 4.10 Recovery After Rapid Patch Error
+
+If a rapid patch introduces a traceback or lifecycle inconsistency:
+
+1. Stop adding new scope.  
+2. Inspect the exact generated file.  
+3. Identify whether the issue is XML syntax, embedded Python syntax, view validation, access inconsistency, or business lifecycle logic.  
+4. Patch the smallest possible corrective block.  
+5. Add the failed pattern to this methodology document if it is a reusable lesson.  
+6. Do not proceed to the next pass until the affected workflow has passed a fresh acceptance test.
+
 ## 5. Mode Selection Rule
 
 Use this decision rule:
