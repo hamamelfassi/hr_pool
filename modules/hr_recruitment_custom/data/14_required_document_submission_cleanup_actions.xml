@@ -91,22 +91,22 @@ for rec in records.sudo():
         document_label = False
         if document_type:
             document_label = (
-                document_type.x_name_en
-                or document_type.x_name_ar
+                document_type.x_name_ar
+                or document_type.x_name_en
                 or document_type.x_name
                 or document_type.display_name
             )
         if not document_label and line:
             document_label = (
-                line.x_document_name_en
-                or line.x_document_name_ar
+                line.x_document_name_ar
+                or line.x_document_name_en
                 or line.x_name
                 or line.display_name
             )
         if not document_label:
-            document_label = 'Required Document'
+            document_label = 'المستند المطلوب'
 
-        normalized_name = '%s / Submission #%s' % (
+        normalized_name = '%s / تقديم #%s' % (
             document_label,
             sequence,
         )
@@ -115,7 +115,7 @@ for rec in records.sudo():
             values['x_name'] = normalized_name
 
     elif not rec.x_name:
-        values['x_name'] = 'Required Document Submission'
+        values['x_name'] = 'تقديم مستند مطلوب'
 
     if values:
         rec.sudo().write(values)
@@ -211,22 +211,22 @@ for rec in records.sudo():
         document_label = False
         if document_type:
             document_label = (
-                document_type.x_name_en
-                or document_type.x_name_ar
+                document_type.x_name_ar
+                or document_type.x_name_en
                 or document_type.x_name
                 or document_type.display_name
             )
         if not document_label and line:
             document_label = (
-                line.x_document_name_en
-                or line.x_document_name_ar
+                line.x_document_name_ar
+                or line.x_document_name_en
                 or line.x_name
                 or line.display_name
             )
         if not document_label:
-            document_label = 'Required Document'
+            document_label = 'المستند المطلوب'
 
-        normalized_name = '%s / Submission #%s' % (
+        normalized_name = '%s / تقديم #%s' % (
             document_label,
             sequence,
         )
@@ -235,7 +235,7 @@ for rec in records.sudo():
             values['x_name'] = normalized_name
 
     elif not rec.x_name:
-        values['x_name'] = 'Required Document Submission'
+        values['x_name'] = 'تقديم مستند مطلوب'
 
     if values:
         rec.sudo().write(values)
@@ -263,7 +263,7 @@ for applicant in records.sudo():
 
     for checklist_index, checklist in enumerate(checklists, start=1):
         reference = checklist.x_document_reference or ('MCEP-HR-F-0003-%05d-%02d' % (applicant.id, checklist_index))
-        normalized_checklist_name = 'Checklist #%s' % checklist_index
+        normalized_checklist_name = 'قائمة #%s' % checklist_index
 
         checklist_values = {}
 
@@ -334,24 +334,24 @@ for applicant in records.sudo():
             document_label = False
             if document_type:
                 document_label = (
-                    document_type.x_name_en
-                    or document_type.x_name_ar
+                    document_type.x_name_ar
+                    or document_type.x_name_en
                     or document_type.x_name
                     or document_type.display_name
                 )
 
             if not document_label and line:
                 document_label = (
-                    line.x_document_name_en
-                    or line.x_document_name_ar
+                    line.x_document_name_ar
+                    or line.x_document_name_en
                     or line.x_name
                     or line.display_name
                 )
 
             if not document_label:
-                document_label = 'Required Document'
+                document_label = 'المستند المطلوب'
 
-            normalized_submission_name = '%s / Submission #%s' % (
+            normalized_submission_name = '%s / تقديم #%s' % (
                 document_label,
                 sequence,
             )
@@ -360,7 +360,7 @@ for applicant in records.sudo():
                 submission_values['x_name'] = normalized_submission_name
 
         elif not submission.x_name:
-            submission_values['x_name'] = 'Required Document Submission'
+            submission_values['x_name'] = 'تقديم مستند مطلوب'
 
         if submission_values:
             submission.sudo().write(submission_values)
@@ -378,7 +378,7 @@ for applicant in records.sudo():
         if not request.x_request_reference:
             request_values['x_request_reference'] = 'MCEP-HR-F-0003-REQ-%05d' % request.id
 
-        normalized_request_name = '%s / Request #%s' % (
+        normalized_request_name = '%s / طلب #%s' % (
             applicant_name,
             request_index,
         )
@@ -398,24 +398,24 @@ for applicant in records.sudo():
 
             if request_line.x_document_type_id:
                 document_label = (
-                    request_line.x_document_type_id.x_name_en
-                    or request_line.x_document_type_id.x_name_ar
+                    request_line.x_document_type_id.x_name_ar
+                    or request_line.x_document_type_id.x_name_en
                     or request_line.x_document_type_id.x_name
                     or request_line.x_document_type_id.display_name
                 )
 
             if not document_label and request_line.x_checklist_line_id:
                 document_label = (
-                    request_line.x_checklist_line_id.x_document_name_en
-                    or request_line.x_checklist_line_id.x_document_name_ar
+                    request_line.x_checklist_line_id.x_document_name_ar
+                    or request_line.x_checklist_line_id.x_document_name_en
                     or request_line.x_checklist_line_id.x_name
                     or request_line.x_checklist_line_id.display_name
                 )
 
             if not document_label:
-                document_label = request_line.x_document_code or 'Required Document'
+                document_label = request_line.x_document_code or 'المستند المطلوب'
 
-            normalized_line_name = 'Request #%s / %s' % (
+            normalized_line_name = 'طلب #%s / %s' % (
                 request_index,
                 document_label,
             )
@@ -426,7 +426,7 @@ for applicant in records.sudo():
                 })
 
     applicant.message_post(
-        body='Checklist, submission request, request-line, and evidence display names normalized.'
+        body='تم توحيد أسماء القائمة وطلبات التقديم وبنود الطلبات والمستندات المقدمة.'
     )
 
 action = {'type': 'ir.actions.client', 'tag': 'reload'}

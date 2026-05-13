@@ -114,15 +114,15 @@
             <field name="field_description">Structured Capture Scope</field>
             <field name="ttype">selection</field>
             <field name="selection">[
-                ('none', 'None'),
-                ('identity', 'Identity Document'),
-                ('civil_status', 'Civil / Family Status'),
-                ('medical', 'Medical Evidence'),
-                ('academic', 'Academic Evidence'),
-                ('residence', 'Residence Evidence'),
-                ('criminal_record', 'Criminal Record Evidence'),
-                ('photos', 'Photographs'),
-                ('other', 'Other')
+                ('none', 'لا يوجد'),
+                ('identity', 'مستند الهوية'),
+                ('civil_status', 'الحالة المدنية / العائلية'),
+                ('medical', 'إثبات صحي'),
+                ('academic', 'إثبات علمي'),
+                ('residence', 'إثبات إقامة'),
+                ('criminal_record', 'إثبات الحالة الجنائية'),
+                ('photos', 'صور شخصية'),
+                ('other', 'أخرى')
                 ]</field>
         </record>
 
@@ -225,13 +225,13 @@
             <field name="field_description">Checklist State</field>
             <field name="ttype">selection</field>
             <field name="selection">[
-                ('draft', 'Draft'),
-                ('in_review', 'In Review'),
-                ('ready_for_pdf', 'Ready for PDF'),
-                ('generated', 'Generated'),
-                ('signature_requested', 'Signature Requested'),
-                ('signed', 'Signed'),
-                ('cancelled', 'Cancelled')
+                ('draft', 'مسودة'),
+                ('in_review', 'قيد المراجعة'),
+                ('ready_for_pdf', 'جاهز لإنشاء المستند'),
+                ('generated', 'منشأ'),
+                ('signature_requested', 'تم طلب التوقيع'),
+                ('signed', 'موقّع'),
+                ('cancelled', 'ملغى')
                 ]</field>
         </record>
 
@@ -452,12 +452,12 @@
             <field name="field_description">Review Status</field>
             <field name="ttype">selection</field>
             <field name="selection">[
-                ('missing', 'Missing'),
-                ('submitted', 'Submitted'),
-                ('accepted', 'Accepted'),
-                ('rejected', 'Rejected'),
-                ('resubmission_requested', 'Resubmission Requested'),
-                ('not_applicable', 'Not Applicable')
+                ('missing', 'ناقص'),
+                ('submitted', 'مقدم'),
+                ('accepted', 'مقبول'),
+                ('rejected', 'مرفوض'),
+                ('resubmission_requested', 'مطلوب إعادة التقديم'),
+                ('not_applicable', 'غير منطبق')
                 ]</field>
         </record>
 
@@ -468,15 +468,15 @@
             <field name="field_description">Structured Capture Scope</field>
             <field name="ttype">selection</field>
             <field name="selection">[
-                ('none', 'None'),
-                ('identity', 'Identity Document'),
-                ('civil_status', 'Civil / Family Status'),
-                ('medical', 'Medical Evidence'),
-                ('academic', 'Academic Evidence'),
-                ('residence', 'Residence Evidence'),
-                ('criminal_record', 'Criminal Record Evidence'),
-                ('photos', 'Photographs'),
-                ('other', 'Other')
+                ('none', 'لا يوجد'),
+                ('identity', 'مستند الهوية'),
+                ('civil_status', 'الحالة المدنية / العائلية'),
+                ('medical', 'إثبات صحي'),
+                ('academic', 'إثبات علمي'),
+                ('residence', 'إثبات إقامة'),
+                ('criminal_record', 'إثبات الحالة الجنائية'),
+                ('photos', 'صور شخصية'),
+                ('other', 'أخرى')
                 ]</field>
         </record>
 

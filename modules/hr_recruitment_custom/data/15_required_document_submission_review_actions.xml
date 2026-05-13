@@ -455,7 +455,17 @@ for line in records.sudo():
         }
         continue
 
+    document_label = (
+        line.x_document_name_ar
+        or line.x_document_name_en
+        or document_type.x_name_ar
+        or document_type.x_name_en
+        or document_type.x_name
+        or 'المستند المطلوب'
+    )
+
     submission = submission_model.create({
+        'x_name': '%s / تقديم يدوي' % document_label,
         'x_applicant_id': applicant.id,
         'x_checklist_id': checklist.id,
         'x_line_id': line.id,
@@ -465,16 +475,17 @@ for line in records.sudo():
         'x_state': 'submitted',
         'x_submitted_by_user_id': env.user.id,
         'x_submitted_on': datetime.datetime.now(),
-        'x_notes': 'Manual internal upload created from checklist line.',
+        'x_notes': 'تم إنشاء تقديم يدوي داخلي من بند قائمة المستندات.',
     })
 
-    line.message_post(
-        body='Manual required-document submission created from checklist line.'
+    submission.message_post(
+        body='تم إنشاء هذا التقديم يدوياً من بند قائمة المستندات.'
     )
     checklist.message_post(
-        body='Manual submission created for required document line: %s.' % (
-            line.x_document_name_en or line.x_document_name_ar or line.display_name
-        )
+        body='تم إنشاء تقديم يدوي للمستند المطلوب: %s.' % document_label
+    )
+    applicant.message_post(
+        body='تم إنشاء تقديم يدوي للمستند المطلوب: %s.' % document_label
     )
 
     view = env.ref(
@@ -484,7 +495,7 @@ for line in records.sudo():
 
     action = {
         'type': 'ir.actions.act_window',
-        'name': submission.x_name or 'Required Document Submission',
+        'name': submission.x_name or 'تقديم المستند المطلوب',
         'res_model': 'x_hr.applicant_required_document_submission',
         'res_id': submission.id,
         'view_mode': 'form',
@@ -541,7 +552,7 @@ for line in records.sudo():
 
     action = {
         'type': 'ir.actions.act_window',
-        'name': submission.x_name or 'Required Document Submission',
+        'name': submission.x_name or 'تقديم المستند المطلوب',
         'res_model': 'x_hr.applicant_required_document_submission',
         'res_id': submission.id,
         'view_mode': 'form',

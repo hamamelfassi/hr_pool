@@ -41,7 +41,7 @@ for applicant in records:
         ]) + 1
         checklist_reference = 'MCEP-HR-F-0003-%05d-%02d' % (applicant.id, checklist_sequence)
         checklist = checklist_model.create({
-            'x_name': '%s / F-0003 Checklist #%s / %s / Draft' % (
+            'x_name': '%s / قائمة F-0003 #%s / %s / مسودة' % (
                 applicant_name,
                 checklist_sequence,
                 checklist_reference,

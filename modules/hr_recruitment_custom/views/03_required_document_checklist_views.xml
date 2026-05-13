@@ -117,13 +117,13 @@
                             <button type="action"
                                 name="hr_recruitment_custom.action_required_document_line_create_manual_submission"
                                 string=""
-                                title="Create manual submission"
+                                title="إنشاء تقديم يدوي"
                                 icon="fa-upload"
                                 class="btn-link" />
                             <button type="action"
                                 name="hr_recruitment_custom.action_required_document_line_open_latest_submission"
                                 string=""
-                                title="Open latest submission"
+                                title="فتح آخر تقديم"
                                 icon="fa-external-link"
                                 class="btn-link" />
                             <field name="x_document_name_ar" string="Name (AR)" readonly="1" />
@@ -169,7 +169,7 @@
                                         options="{'no_open': True, 'no_create': True, 'no_create_edit': True}" />
                                     <button type="action"
                                         name="hr_recruitment_custom.action_required_document_line_download_latest_accepted_attachment"
-                                        string="Download Accepted Evidence"
+                                        string="تنزيل المستند المقبول"
                                         icon="fa-download"
                                         class="btn-link"
                                         invisible="not x_latest_accepted_attachment_id" />

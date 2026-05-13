@@ -109,10 +109,10 @@
             <field name="field_description">Submission Source</field>
             <field name="ttype">selection</field>
             <field name="selection">[
-                ('manual', 'Manual Internal Upload'),
+                ('manual', 'تحميل يدوي'),
                 ('fillout_zite', 'Fillout / Zite'),
-                ('n8n', 'n8n Writeback'),
-                ('other', 'Other')
+                ('n8n', 'تحديث n8n'),
+                ('other', 'أخرى')
                 ]</field>
         </record>
 
@@ -123,10 +123,10 @@
             <field name="field_description">Submission State</field>
             <field name="ttype">selection</field>
             <field name="selection">[
-                ('submitted', 'Submitted'),
-                ('accepted', 'Accepted'),
-                ('rejected', 'Rejected'),
-                ('superseded', 'Superseded')
+                ('submitted', 'مقدم'),
+                ('accepted', 'مقبول'),
+                ('rejected', 'مرفوض'),
+                ('superseded', 'مستبدل')
                 ]</field>
             <field name="index" eval="True" />
         </record>

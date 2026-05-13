@@ -232,8 +232,7 @@
                             class="btn-primary"
                             invisible="not id" />
                         <div class="text-muted">
-                            Prepare and review the equired documents checklist here.
-                            Generate the Checklist PDF, send it through Odoo Sign, then sync the signed result once the signer completes the request.
+                            Review required documents, generate the checklist, send it for signature, then sync the signed result.
                         </div>
                     </group>
 
@@ -323,11 +322,9 @@
                                         </div>
                                     </group>
                                 </group>
-                                <div class="alert alert-info" role="alert">
-                                    Save checklist line changes before validating readiness. The
-                                    checklist becomes Ready for PDF only when all required lines are
-                                    Accepted.
-                                </div>
+                                    <div class="alert alert-info" role="alert">
+                                        احفظ تغييرات بنود القائمة قبل التحديث. تصبح القائمة جاهزة فقط عندما تكون جميع البنود المطلوبة مقبولة.
+                                    </div>
                                 <separator string="Required Document Lines" />
                                 <field name="x_line_ids">
                                     <list editable="bottom" create="false" delete="false">
@@ -335,13 +332,13 @@
                                         <button type="action"
                                             name="hr_recruitment_custom.action_required_document_line_create_manual_submission"
                                             string=""
-                                            title="Create manual submission"
+                                            title="إنشاء تقديم يدوي"
                                             icon="fa-upload"
                                             class="btn-link" />
                                         <button type="action"
                                             name="hr_recruitment_custom.action_required_document_line_open_latest_submission"
                                             string=""
-                                            title="Open latest submission"
+                                            title="فتح آخر تقديم"
                                             icon="fa-external-link"
                                             class="btn-link" />
                                         <field name="x_document_name_ar" string="Name (AR)" readonly="1" />

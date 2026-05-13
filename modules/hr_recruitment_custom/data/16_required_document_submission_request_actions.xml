@@ -51,7 +51,7 @@ for applicant in records.sudo():
         candidate_email = applicant.email_from or ''
 
         request = request_model.create({
-            'x_name': '%s / Request #%s' % (candidate_name or applicant.display_name, sequence),
+            'x_name': '%s / طلب #%s' % (candidate_name or applicant.display_name, sequence),
             'x_sequence': sequence,
             'x_applicant_id': applicant.id,
             'x_checklist_id': checklist.id,
@@ -65,7 +65,7 @@ for applicant in records.sudo():
 
         request.write({
             'x_request_reference': 'MCEP-HR-F-0003-REQ-%05d' % request.id,
-            'x_name': '%s / Request #%s' % (
+            'x_name': '%s / طلب #%s' % (
                 candidate_name or applicant.display_name,
                 sequence,
             ),
@@ -248,8 +248,8 @@ for request in records.sudo():
             'x_notes': checklist_line.x_notes or False,
         }
 
-        request_label = 'Request #%s' % (request.x_sequence or request.id)
-        document_label = checklist_line.x_document_name_en or checklist_line.x_document_name_ar or document_code or 'Required Document'
+        request_label = 'طلب #%s' % (request.x_sequence or request.id)
+        document_label = checklist_line.x_document_name_ar or checklist_line.x_document_name_en or document_code or 'المستند المطلوب'
 
         values['x_name'] = '%s / %s' % (
             request_label,
@@ -281,7 +281,7 @@ for request in records.sudo():
     if not request.x_request_reference:
         request_values['x_request_reference'] = 'MCEP-HR-F-0003-REQ-%05d' % request.id
 
-    request_values['x_name'] = '%s / Request #%s' % (
+    request_values['x_name'] = '%s / طلب #%s' % (
         applicant.partner_name or applicant.name or applicant.display_name,
         request.x_sequence or request.id,
     )

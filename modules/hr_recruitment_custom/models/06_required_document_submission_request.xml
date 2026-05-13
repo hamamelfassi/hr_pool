@@ -86,12 +86,12 @@
             <field name="field_description">Request State</field>
             <field name="ttype">selection</field>
             <field name="selection">[
-                ('draft', 'Draft'),
-                ('prepared', 'Prepared'),
-                ('sent', 'Sent'),
-                ('expired', 'Expired'),
-                ('completed', 'Completed'),
-                ('cancelled', 'Cancelled')
+                ('draft', 'مسودة'),
+                ('prepared', 'معدّ'),
+                ('sent', 'مرسل'),
+                ('expired', 'منتهي'),
+                ('completed', 'مكتمل'),
+                ('cancelled', 'ملغى')
                 ]</field>
             <field name="index" eval="True" />
         </record>
@@ -370,11 +370,11 @@
             <field name="field_description">Request Line State</field>
             <field name="ttype">selection</field>
             <field name="selection">[
-                ('requested', 'Requested'),
-                ('submitted', 'Submitted'),
-                ('accepted', 'Accepted'),
-                ('rejected', 'Rejected'),
-                ('cancelled', 'Cancelled')
+                ('requested', 'مطلوب'),
+                ('submitted', 'مقدم'),
+                ('accepted', 'مقبول'),
+                ('rejected', 'مرفوض'),
+                ('cancelled', 'ملغى')
                 ]</field>
             <field name="index" eval="True" />
         </record>
