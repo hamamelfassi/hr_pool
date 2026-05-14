@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_decision_engine" name="Decision Engine" parent="grc_backbone.menu_grc_governance" sequence="45"/>
+    <menuitem id="menu_decision_templates" name="Decision Templates" parent="grc_backbone.menu_decision_engine" action="grc_backbone.action_decision_template" sequence="10"/>
+
+    <record id="view_decision_template_list" model="ir.ui.view">
+        <field name="name">x_grc.decision_template.list</field>
+        <field name="model">x_grc.decision_template</field>
+        <field name="arch" type="xml">
+            <list string="قوالب القرارات">
+                <field name="x_profile_template_code_default" string="الكود"/>
+                <field name="x_title_ar" string="العنوان العربي"/>
+                <field name="x_family_id" string="العائلة"/>
+                <field name="x_type_id" string="النوع"/>
+                <field name="x_profile_id" string="الملف"/>
+                <field name="x_decision_family" string="التصنيف القديم" optional="hide"/>
+                <field name="x_version" string="الإصدار"/>
+                <field name="x_active" string="نشط"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_decision_template_search" model="ir.ui.view">
+        <field name="name">x_grc.decision_template.search</field>
+        <field name="model">x_grc.decision_template</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="x_name"/>
+                <field name="x_code"/>
+                <field name="x_title_ar"/>
+                <field name="x_family_id"/>
+                <field name="x_type_id"/>
+                <field name="x_profile_id"/>
+                <field name="x_decision_family"/>
+                <filter name="active_templates" string="Active" domain="[('x_active', '=', True)]"/>
+                <filter name="recruitment_family" string="Recruitment" domain="[('x_decision_family', '=', 'recruitment')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_decision_template_form" model="ir.ui.view">
+        <field name="name">x_grc.decision_template.form</field>
+        <field name="model">x_grc.decision_template</field>
+        <field name="arch" type="xml">
+            <form string="قالب قرار">
+                <sheet>
+                    <group>
+                        <group string="هوية القالب">
+                            <field name="x_name" string="اسم القالب"/>
+                            <field name="x_profile_id" string="ملف القرار" required="1"/>
+                            <field name="x_profile_template_code_default" string="كود القالب" readonly="1"/>
+                            <field name="x_profile_family_id" string="عائلة القرار" readonly="1"/>
+                            <field name="x_profile_type_id" string="نوع القرار" readonly="1"/>
+                            <field name="x_code" invisible="1" readonly="1"/>
+                            <field name="x_family_id" invisible="1" readonly="1"/>
+                            <field name="x_type_id" invisible="1" readonly="1"/>
+                            <field name="x_decision_family" invisible="1" readonly="1"/>
+                            <field name="x_version"/>
+                            <field name="x_active"/>
+                        </group>
+                        <group string="العناوين والجهة المصدرة">
+                            <field name="x_title_ar"/>
+                            <field name="x_title_en"/>
+                            <field name="x_profile_default_issuer_title_ar" string="صفة المصدر بالعربية" readonly="1"/>
+                            <field name="x_profile_default_issuer_title_en" string="صفة المصدر بالإنجليزية" readonly="1"/>
+                            <field name="x_default_issuer_title_ar" invisible="1" readonly="1"/>
+                            <field name="x_default_issuer_title_en" invisible="1" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="الموضوع">
+                            <group>
+                                <field name="x_subject_template_ar" placeholder="مثال: قرار بشأن تعيين {applicant_name}"/>
+                                <field name="x_subject_template_en" placeholder="Optional English helper subject."/>
+                            </group>
+                        </page>
+
+                        <page string="الأسانيد / الديباجة">
+                            <field name="x_basis_line_ids">
+                                <list string="Basis Lines" editable="bottom">
+                                    <field name="x_sequence" string="#" width="60"/>
+                                    <field name="x_name" string="الوصف"/>
+                                    <field name="x_basis_type" string="النوع"/>
+                                    <field name="x_phrase_id" string="صيغة الربط"/>
+                                    <field name="x_relationship_phrase_ar" string="صيغة الربط اليدوية"/>
+                                    <field name="x_framework_id" string="إطار"/>
+                                    <field name="x_policy_id" string="سياسة"/>
+                                    <field name="x_provision_id" string="بند"/>
+                                    <field name="x_related_decision_id" string="قرار سابق"/>
+                                    <field name="x_reference_text_ar" string="نص مرجعي"/>
+                                </list>
+                                <form string="Basis Line">
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                <field name="x_template_id" readonly="1"/>
+                                                <field name="x_sequence"/>
+                                                <field name="x_name"/>
+                                                <field name="x_basis_type"/>
+                                            </group>
+                                            <group>
+                                                <field name="x_phrase_id"/>
+                                                <field name="x_relationship_phrase_ar"/>
+                                                <field name="x_relationship_phrase_en"/>
+                                            </group>
+                                        </group>
+                                        <group string="Linked Governance References">
+                                            <field name="x_framework_id"/>
+                                            <field name="x_policy_id"/>
+                                            <field name="x_provision_id"/>
+                                            <field name="x_related_decision_id"/>
+                                        </group>
+                                        <group string="Future Generic Source">
+                                            <field name="x_source_model"/>
+                                            <field name="x_source_res_id"/>
+                                        </group>
+                                        <group string="Snapshot / Free Text">
+                                            <field name="x_reference_text_ar"/>
+                                            <field name="x_reference_text_en"/>
+                                            <field name="x_snapshot_text_ar"/>
+                                            <field name="x_snapshot_text_en"/>
+                                            <field name="x_notes"/>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+
+                        <page string="مواد القرار">
+                            <field name="x_article_line_ids">
+                                <list string="Article Lines" editable="bottom">
+                                    <field name="x_sequence" string="#" width="60"/>
+                                    <field name="x_article_number" string="رقم المادة"/>
+                                    <field name="x_name" string="اسم السطر"/>
+                                    <field name="x_title_ar" string="عنوان عربي"/>
+                                    <field name="x_body_ar" string="النص العربي"/>
+                                    <field name="x_uses_variables" string="متغيرات؟"/>
+                                    <field name="x_variable_keys" string="مفاتيح المتغيرات"/>
+                                </list>
+                                <form string="Decision Article">
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                <field name="x_template_id" readonly="1"/>
+                                                <field name="x_sequence"/>
+                                                <field name="x_article_number"/>
+                                                <field name="x_name"/>
+                                                <field name="x_uses_variables"/>
+                                                <field name="x_variable_keys" placeholder="applicant_name, job_title, department, start_date"/>
+                                            </group>
+                                            <group>
+                                                <field name="x_title_ar"/>
+                                                <field name="x_title_en"/>
+                                            </group>
+                                        </group>
+                                        <group string="Arabic Article Body">
+                                            <field name="x_body_ar" placeholder="مثال: يتم تعيين السيد/السيدة {applicant_name} بوظيفة {job_title}..."/>
+                                        </group>
+                                        <group string="English Helper Body">
+                                            <field name="x_body_en"/>
+                                        </group>
+                                        <group>
+                                            <field name="x_notes"/>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+
+                        <page string="المتغيرات">
+                            <field name="x_variable_definition_ids">
+                                <list string="Variables" editable="bottom">
+                                    <field name="x_sequence" invisible="1"/>
+                                    <field name="x_key" string="المفتاح"/>
+                                    <field name="x_label_ar" string="التسمية العربية"/>
+                                    <field name="x_value_type" string="نوع القيمة"/>
+                                    <field name="x_required" string="إلزامي"/>
+                                    <field name="x_source_model_hint" string="نموذج المصدر"/>
+                                    <field name="x_source_field_hint" string="حقل المصدر"/>
+                                </list>
+                                <form string="Decision Variable">
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                <field name="x_template_id" readonly="1"/>
+                                                <field name="x_name"/>
+                                                <field name="x_key"/>
+                                                <field name="x_value_type"/>
+                                                <field name="x_required"/>
+                                            </group>
+                                            <group>
+                                                <field name="x_label_ar"/>
+                                                <field name="x_label_en"/>
+                                                <field name="x_default_value_text"/>
+                                            </group>
+                                        </group>
+                                        <group string="Future Source Mapping Hint">
+                                            <field name="x_source_model_hint"/>
+                                            <field name="x_source_field_hint"/>
+                                        </group>
+                                        <group>
+                                            <field name="x_notes"/>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+
+                        <page string="ملاحظات">
+                            <field name="x_notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

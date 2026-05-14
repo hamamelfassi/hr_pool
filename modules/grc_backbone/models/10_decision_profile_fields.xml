@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Decision Family -->
+
+    <record id="field_decision_family_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_family"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Family Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_family_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_family"/>
+        <field name="name">x_code</field>
+        <field name="field_description">Family Code</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_decision_family_x_active" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_family"/>
+        <field name="name">x_active</field>
+        <field name="field_description">Active</field>
+        <field name="ttype">boolean</field>
+    </record>
+
+    <record id="field_decision_family_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_family"/>
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <!-- Decision Type -->
+
+    <record id="field_decision_type_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_type"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Type Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_type_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_type"/>
+        <field name="name">x_code</field>
+        <field name="field_description">Type Code</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_decision_type_x_family_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_type"/>
+        <field name="name">x_family_id</field>
+        <field name="field_description">Decision Family</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_family</field>
+        <field name="required">True</field>
+        <field name="on_delete">restrict</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_decision_type_x_active" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_type"/>
+        <field name="name">x_active</field>
+        <field name="field_description">Active</field>
+        <field name="ttype">boolean</field>
+    </record>
+
+    <record id="field_decision_type_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_type"/>
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <!-- Decision Profile -->
+
+    <record id="field_decision_profile_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_profile"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Profile Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_profile_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_profile"/>
+        <field name="name">x_code</field>
+        <field name="field_description">Profile Code</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_decision_profile_x_family_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_profile"/>
+        <field name="name">x_family_id</field>
+        <field name="field_description">Decision Family</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_family</field>
+        <field name="required">True</field>
+        <field name="on_delete">restrict</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_decision_profile_x_type_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_profile"/>
+        <field name="name">x_type_id</field>
+        <field name="field_description">Decision Type</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_type</field>
+        <field name="required">True</field>
+        <field name="on_delete">restrict</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_decision_profile_x_template_code_default" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_profile"/>
+        <field name="name">x_template_code_default</field>
+        <field name="field_description">Default Template Code</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_decision_profile_x_reference_prefix" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_profile"/>
+        <field name="name">x_reference_prefix</field>
+        <field name="field_description">Reference Prefix</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_decision_profile_x_default_issuer_title_ar" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_profile"/>
+        <field name="name">x_default_issuer_title_ar</field>
+        <field name="field_description">Default Arabic Issuer Title</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_profile_x_default_issuer_title_en" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_profile"/>
+        <field name="name">x_default_issuer_title_en</field>
+        <field name="field_description">Default English Issuer Title</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_profile_x_authority_mode" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_profile"/>
+        <field name="name">x_authority_mode</field>
+        <field name="field_description">Authority Mode</field>
+        <field name="ttype">selection</field>
+        <field name="selection">[
+            ('chairman', 'Chairman'),
+            ('board', 'Board'),
+            ('manager', 'Manager'),
+            ('committee', 'Committee'),
+            ('system', 'System'),
+            ('other', 'Other')
+            ]</field>
+    </record>
+
+    <record id="field_decision_profile_x_active" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_profile"/>
+        <field name="name">x_active</field>
+        <field name="field_description">Active</field>
+        <field name="ttype">boolean</field>
+    </record>
+
+    <record id="field_decision_profile_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_profile"/>
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <!-- Basis Phrase -->
+
+    <record id="field_decision_basis_phrase_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_basis_phrase"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Phrase Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_basis_phrase_x_phrase_ar" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_basis_phrase"/>
+        <field name="name">x_phrase_ar</field>
+        <field name="field_description">Arabic Phrase</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_basis_phrase_x_phrase_en" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_basis_phrase"/>
+        <field name="name">x_phrase_en</field>
+        <field name="field_description">English Phrase</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_basis_phrase_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_basis_phrase"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+    </record>
+
+    <record id="field_decision_basis_phrase_x_active" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_basis_phrase"/>
+        <field name="name">x_active</field>
+        <field name="field_description">Active</field>
+        <field name="ttype">boolean</field>
+    </record>
+
+    <!-- Extend Decision Template -->
+
+    <record id="field_decision_template_x_family_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_template"/>
+        <field name="name">x_family_id</field>
+        <field name="field_description">Decision Family</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_family</field>
+        <field name="on_delete">restrict</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_decision_template_x_type_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_template"/>
+        <field name="name">x_type_id</field>
+        <field name="field_description">Decision Type</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_type</field>
+        <field name="on_delete">restrict</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_decision_template_x_profile_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_template"/>
+        <field name="name">x_profile_id</field>
+        <field name="field_description">Decision Profile</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_profile</field>
+        <field name="required">True</field>
+        <field name="on_delete">restrict</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_decision_template_x_profile_template_code_default" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_template"/>
+        <field name="name">x_profile_template_code_default</field>
+        <field name="field_description">Profile Template Code</field>
+        <field name="ttype">char</field>
+        <field name="related">x_profile_id.x_template_code_default</field>
+        <field name="readonly">True</field>
+    </record>
+
+    <record id="field_decision_template_x_profile_family_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_template"/>
+        <field name="name">x_profile_family_id</field>
+        <field name="field_description">Profile Family</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_family</field>
+        <field name="related">x_profile_id.x_family_id</field>
+        <field name="readonly">True</field>
+    </record>
+
+    <record id="field_decision_template_x_profile_type_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_template"/>
+        <field name="name">x_profile_type_id</field>
+        <field name="field_description">Profile Type</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_type</field>
+        <field name="related">x_profile_id.x_type_id</field>
+        <field name="readonly">True</field>
+    </record>
+
+    <record id="field_decision_template_x_profile_default_issuer_title_ar" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_template"/>
+        <field name="name">x_profile_default_issuer_title_ar</field>
+        <field name="field_description">Profile Default Arabic Issuer Title</field>
+        <field name="ttype">char</field>
+        <field name="related">x_profile_id.x_default_issuer_title_ar</field>
+        <field name="readonly">True</field>
+    </record>
+
+    <record id="field_decision_template_x_profile_default_issuer_title_en" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_template"/>
+        <field name="name">x_profile_default_issuer_title_en</field>
+        <field name="field_description">Profile Default English Issuer Title</field>
+        <field name="ttype">char</field>
+        <field name="related">x_profile_id.x_default_issuer_title_en</field>
+        <field name="readonly">True</field>
+    </record>
+
+    <!-- Extend Decision Basis Line -->
+
+    <record id="field_decision_basis_line_x_phrase_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_basis_line"/>
+        <field name="name">x_phrase_id</field>
+        <field name="field_description">Basis Phrase</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_basis_phrase</field>
+        <field name="on_delete">restrict</field>
+    </record>
+
+    <!-- Extend Decision Template Article Line -->
+
+    <record id="field_decision_template_article_line_x_variable_keys" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_template_article_line"/>
+        <field name="name">x_variable_keys</field>
+        <field name="field_description">Variable Keys</field>
+        <field name="ttype">text</field>
+    </record>
+</odoo>

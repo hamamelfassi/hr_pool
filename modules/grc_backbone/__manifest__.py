@@ -17,6 +17,8 @@
         "models/06_location_taxonomy.xml",
         "models/07_decision_template_models.xml",
         "models/08_decision_template_fields.xml",
+        "models/09_decision_profile_models.xml",
+        "models/10_decision_profile_fields.xml",
         "data/01_selection_values.xml",
         "data/02_sequences.xml",
         "data/03_seed_functional_taxonomy.xml",
@@ -25,10 +27,12 @@
         "data/06_seed_libya_municipalities.xml",
         "data/07_seed_libya_localities.xml",
         "data/08_location_hierarchy_automation.xml",
+        "data/09_decision_profile_seed.xml",
         "actions/01_actions.xml",
         "actions/02_actions_task_templates.xml",
         "actions/03_location_actions.xml",
         "actions/04_decision_template_actions.xml",
+        "actions/05_decision_profile_actions.xml",
         "views/01_governance_views.xml",
         "views/02_taxonomy_views.xml",
         "views/03_risk_compliance_views.xml",
@@ -36,6 +40,7 @@
         "views/05_task_templates_views.xml",
         "views/06_location_taxonomy_views.xml",
         "views/07_decision_template_views.xml",
+        "views/08_decision_profile_views.xml",
         "security/ir.model.access.csv"
     ]
 }

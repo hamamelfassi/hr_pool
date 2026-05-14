@@ -17,7 +17,7 @@
         <field name="name">x_code</field>
         <field name="field_description">Template Code</field>
         <field name="ttype">char</field>
-        <field name="required">True</field>
+        <field name="required">False</field>
         <field name="index">True</field>
     </record>
 

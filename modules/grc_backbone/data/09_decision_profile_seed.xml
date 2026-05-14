@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Decision Families -->
+
+        <record id="decision_family_hr" model="x_grc.decision_family">
+            <field name="x_name">HR</field>
+            <field name="x_code">HR</field>
+            <field name="x_active" eval="True"/>
+            <field name="x_description">Human Resources and employment lifecycle decisions.</field>
+        </record>
+
+        <record id="decision_family_logistics" model="x_grc.decision_family">
+            <field name="x_name">Logistics</field>
+            <field name="x_code">LOGISTICS</field>
+            <field name="x_active" eval="True"/>
+        </record>
+
+        <record id="decision_family_sales" model="x_grc.decision_family">
+            <field name="x_name">Sales</field>
+            <field name="x_code">SALES</field>
+            <field name="x_active" eval="True"/>
+        </record>
+
+        <record id="decision_family_procurement" model="x_grc.decision_family">
+            <field name="x_name">Procurement</field>
+            <field name="x_code">PROCUREMENT</field>
+            <field name="x_active" eval="True"/>
+        </record>
+
+        <record id="decision_family_finance" model="x_grc.decision_family">
+            <field name="x_name">Finance</field>
+            <field name="x_code">FINANCE</field>
+            <field name="x_active" eval="True"/>
+        </record>
+
+        <record id="decision_family_operations" model="x_grc.decision_family">
+            <field name="x_name">Operations</field>
+            <field name="x_code">OPERATIONS</field>
+            <field name="x_active" eval="True"/>
+        </record>
+
+        <record id="decision_family_hse" model="x_grc.decision_family">
+            <field name="x_name">HSE</field>
+            <field name="x_code">HSE</field>
+            <field name="x_active" eval="True"/>
+        </record>
+
+        <record id="decision_family_general_governance" model="x_grc.decision_family">
+            <field name="x_name">General Governance</field>
+            <field name="x_code">GENERAL_GOVERNANCE</field>
+            <field name="x_active" eval="True"/>
+        </record>
+
+        <!-- HR Decision Types -->
+
+        <record id="decision_type_hr_recruitment_hiring" model="x_grc.decision_type">
+            <field name="x_name">Recruitment Hiring</field>
+            <field name="x_code">HR_RECRUITMENT_HIRING</field>
+            <field name="x_family_id" ref="grc_backbone.decision_family_hr"/>
+            <field name="x_active" eval="True"/>
+            <field name="x_description">Recruitment and appointment decisions.</field>
+        </record>
+
+        <record id="decision_type_hr_leave" model="x_grc.decision_type">
+            <field name="x_name">Leave</field>
+            <field name="x_code">HR_LEAVE</field>
+            <field name="x_family_id" ref="grc_backbone.decision_family_hr"/>
+            <field name="x_active" eval="True"/>
+        </record>
+
+        <record id="decision_type_hr_mission" model="x_grc.decision_type">
+            <field name="x_name">Mission / Assignment</field>
+            <field name="x_code">HR_MISSION_ASSIGNMENT</field>
+            <field name="x_family_id" ref="grc_backbone.decision_family_hr"/>
+            <field name="x_active" eval="True"/>
+        </record>
+
+        <record id="decision_type_hr_advance" model="x_grc.decision_type">
+            <field name="x_name">Advance</field>
+            <field name="x_code">HR_ADVANCE</field>
+            <field name="x_family_id" ref="grc_backbone.decision_family_hr"/>
+            <field name="x_active" eval="True"/>
+        </record>
+
+        <record id="decision_type_hr_resignation" model="x_grc.decision_type">
+            <field name="x_name">Resignation</field>
+            <field name="x_code">HR_RESIGNATION</field>
+            <field name="x_family_id" ref="grc_backbone.decision_family_hr"/>
+            <field name="x_active" eval="True"/>
+        </record>
+
+        <record id="decision_type_hr_termination" model="x_grc.decision_type">
+            <field name="x_name">Termination</field>
+            <field name="x_code">HR_TERMINATION</field>
+            <field name="x_family_id" ref="grc_backbone.decision_family_hr"/>
+            <field name="x_active" eval="True"/>
+        </record>
+
+        <record id="decision_type_hr_disciplinary_action" model="x_grc.decision_type">
+            <field name="x_name">Disciplinary Action</field>
+            <field name="x_code">HR_DISCIPLINARY_ACTION</field>
+            <field name="x_family_id" ref="grc_backbone.decision_family_hr"/>
+            <field name="x_active" eval="True"/>
+        </record>
+
+        <record id="decision_type_hr_promotion_transfer" model="x_grc.decision_type">
+            <field name="x_name">Promotion / Transfer</field>
+            <field name="x_code">HR_PROMOTION_TRANSFER</field>
+            <field name="x_family_id" ref="grc_backbone.decision_family_hr"/>
+            <field name="x_active" eval="True"/>
+        </record>
+
+        <!-- Basis Phrase Helper Values -->
+
+        <record id="decision_basis_phrase_based_on" model="x_grc.decision_basis_phrase">
+            <field name="x_name">بناءً على</field>
+            <field name="x_phrase_ar">بناءً على</field>
+            <field name="x_phrase_en">Based on</field>
+            <field name="x_sequence">10</field>
+            <field name="x_active" eval="True"/>
+        </record>
+
+        <record id="decision_basis_phrase_after_reviewing" model="x_grc.decision_basis_phrase">
+            <field name="x_name">وبعد الاطلاع على</field>
+            <field name="x_phrase_ar">وبعد الاطلاع على</field>
+            <field name="x_phrase_en">After reviewing</field>
+            <field name="x_sequence">20</field>
+            <field name="x_active" eval="True"/>
+        </record>
+
+        <record id="decision_basis_phrase_pursuant_to" model="x_grc.decision_basis_phrase">
+            <field name="x_name">عملاً بـ</field>
+            <field name="x_phrase_ar">عملاً بـ</field>
+            <field name="x_phrase_en">Pursuant to</field>
+            <field name="x_sequence">30</field>
+            <field name="x_active" eval="True"/>
+        </record>
+
+        <record id="decision_basis_phrase_relying_on" model="x_grc.decision_basis_phrase">
+            <field name="x_name">استناداً إلى</field>
+            <field name="x_phrase_ar">استناداً إلى</field>
+            <field name="x_phrase_en">Relying on</field>
+            <field name="x_sequence">40</field>
+            <field name="x_active" eval="True"/>
+        </record>
+
+        <record id="decision_basis_phrase_by_reviewing" model="x_grc.decision_basis_phrase">
+            <field name="x_name">بالإطلاع على</field>
+            <field name="x_phrase_ar">بالإطلاع على</field>
+            <field name="x_phrase_en">By reviewing</field>
+            <field name="x_sequence">50</field>
+            <field name="x_active" eval="True"/>
+        </record>
+
+        <!-- Initial Recruitment Hiring Decision Profile -->
+
+        <record id="decision_profile_mcep_board_hiring_decision" model="x_grc.decision_profile">
+            <field name="x_name">MCEP Board Hiring Decision</field>
+            <field name="x_code">MCEP_BOARD_HIRING_DECISION</field>
+            <field name="x_family_id" ref="grc_backbone.decision_family_hr"/>
+            <field name="x_type_id" ref="grc_backbone.decision_type_hr_recruitment_hiring"/>
+            <field name="x_template_code_default">RECRUITMENT_HIRING_DECISION</field>
+            <field name="x_reference_prefix">MCEP-HR-DEC-HIRE</field>
+            <field name="x_default_issuer_title_ar">رئيس مجلس الإدارة</field>
+            <field name="x_default_issuer_title_en">Chairman of the Board</field>
+            <field name="x_authority_mode">chairman</field>
+            <field name="x_active" eval="True"/>
+            <field name="x_notes">Initial profile for recruitment hiring board decisions. Authority enforcement is deferred to later recruitment passes.</field>
+        </record>
+    </data>
+</odoo>
