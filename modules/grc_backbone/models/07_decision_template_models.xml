@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="model_decision_template" model="ir.model">
+        <field name="name">Decision Template</field>
+        <field name="model">x_grc.decision_template</field>
+    </record>
+
+    <record id="model_decision_basis_line" model="ir.model">
+        <field name="name">Decision Basis Line</field>
+        <field name="model">x_grc.decision_basis_line</field>
+    </record>
+
+    <record id="model_decision_template_article_line" model="ir.model">
+        <field name="name">Decision Template Article Line</field>
+        <field name="model">x_grc.decision_template_article_line</field>
+    </record>
+
+    <record id="model_decision_template_variable" model="ir.model">
+        <field name="name">Decision Template Variable</field>
+        <field name="model">x_grc.decision_template_variable</field>
+    </record>
+</odoo>

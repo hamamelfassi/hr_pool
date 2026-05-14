@@ -53,3 +53,7 @@ access_task_template_line_reader,Task Template Line reader,grc_backbone.model_ta
 access_location_admin,Location admin,grc_backbone.model_location,base.group_user,1,1,1,1
 access_location_contributor,Location contributor,grc_backbone.model_location,base.group_user,1,1,1,1
 access_location_reader,Location reader,grc_backbone.model_location,base.group_user,1,1,1,1
+access_decision_template_user,Decision Template user,grc_backbone.model_decision_template,base.group_user,1,1,1,1
+access_decision_basis_line_user,Decision Basis Line user,grc_backbone.model_decision_basis_line,base.group_user,1,1,1,1
+access_decision_template_article_line_user,Decision Template Article Line user,grc_backbone.model_decision_template_article_line,base.group_user,1,1,1,1
+access_decision_template_variable_user,Decision Template Variable user,grc_backbone.model_decision_template_variable,base.group_user,1,1,1,1
