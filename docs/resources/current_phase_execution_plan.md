@@ -313,6 +313,72 @@ Pass 6F should use Hybrid Mode:
 3. Confirm which F-0004-specific elements differ.  
 4. Apply segmented guarded patches only after the design is accepted.
 
+### **Pass 6G — Evaluation gate to Contract Proposal / Preboarding**
+
+Status: design clarified before implementation.
+
+The Evaluation gate closes the Evaluation band and moves the applicant to Odoo’s native Contract Proposal stage.
+
+Accepted target:
+
+* Stage model: `hr.recruitment.stage`  
+* Stage name: Contract Proposal / مقترح العقد  
+* Stage ID: `5`
+
+Accepted applicant header label:
+
+تهيئة التعاقد
+
+Button placement:
+
+* applicant header;  
+* recruitment document registry bound action;  
+* not inside the Contract tab.
+
+Gate authority:
+
+* `x_hr.recruitment_document` is the source of truth;  
+* visual tab state is not enough;  
+* Documents folder/tag state is not enough.
+
+Required signed artifacts:
+
+* F-0002 / `interview_evaluation`;  
+* F-0003 / `required_documents_checklist`;  
+* F-0004 / `legal_documents_validity_declaration`.
+
+Each must be the latest active row for that document type, with:
+
+* `x_state = signed`;  
+* `x_signed_attachment_id` populated.
+
+Cancelled and superseded rows are ignored.
+
+A newer unsigned active artifact blocks the gate even if an older signed artifact exists.
+
+On success:
+
+* write applicant `stage_id = 5`;  
+* post chatter;  
+* show success toast;  
+* unlock future Contract Proposal / Preboarding work by stage position, not by creating downstream documents in 6G.
+
+On block:
+
+* show a sticky warning listing missing/unsigned artifacts;  
+* post chatter;  
+* do not move the applicant.
+
+Non-scope for 6G:
+
+* no board decision generation;  
+* no contract generation;  
+* no TOR generation;  
+* no F-0007/F-0009 generation;  
+* no employee creation;  
+* no payroll handoff;  
+* no stage persistence automation unless separately scoped.
+
 ## **Deferred scope**
 
 The following are explicitly deferred:

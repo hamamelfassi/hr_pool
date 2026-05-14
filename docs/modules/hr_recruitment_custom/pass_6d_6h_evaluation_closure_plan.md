@@ -214,36 +214,210 @@ Implement F-0004 Legal Documents Validity Declaration in the Declarations tab an
 
 ---
 
-## **8\. Pass 6G — Evaluation gate action**
+### **8\. Pass 6G — Evaluation gate action**
 
 ### **Objective**
 
-Add the authoritative guarded action that moves an applicant to Contract Proposal / Preboarding only after Evaluation-stage documents are signed.
+Add the authoritative guarded action that closes the Evaluation band and moves an applicant to Odoo’s native Contract Proposal stage.
+
+Operational Arabic label:
+
+تهيئة التعاقد
+
+This label maps to Odoo’s Contract Proposal stage while also carrying the intended preboarding meaning.
+
+### **Evaluation band**
+
+The following Odoo recruitment stages are treated as the flexible Evaluation band:
+
+* Qualification / التأهيل  
+* First Interview / المقابلة الأولى  
+* Second Interview / المقابلة الثانية
+
+Users may move applicants within this band according to operational reality.
+
+The registry, not the stage alone, remains the authority for documentary completion.
+
+### **Target stage**
+
+The Evaluation gate moves the applicant to:
+
+* Odoo model: `hr.recruitment.stage`  
+* Target stage: Contract Proposal / مقترح العقد  
+* Confirmed stage ID: `5`
+
+Implementation should use the confirmed stage ID first.
+
+Do not fuzzy-match arbitrary stages such as “contract” or “preboard” unless explicitly re-scoped.
 
 ### **Gate condition**
 
-Latest active registry artifacts must be signed:
+The latest active registry artifacts must be signed:
 
-```
-interview_evaluation
-required_documents_checklist
-legal_documents_validity_declaration
-```
+* `interview_evaluation`  
+* `required_documents_checklist`  
+* `legal_documents_validity_declaration`
+
+Each required artifact must satisfy:
+
+* latest active registry row exists;  
+* `x_state = signed`;  
+* `x_signed_attachment_id` exists.
+
+A newer generated, signature-requested, or otherwise unsigned active artifact blocks the gate even if an older signed version exists.
+
+Cancelled and superseded rows are ignored.
+
+### **Button placement**
+
+The gate action appears in two places:
+
+1. `hr.applicant` header, labelled:
+
+تهيئة التعاقد
+
+2. Bound action on `x_hr.recruitment_document`, allowing authorized users to trigger the same gate from the recruitment document registry for the selected document’s applicant.
+
+The gate button must not be placed inside the Contract tab.
+
+The Contract tab is reserved for downstream Contract Proposal / Preboarding document operations, including board decision, employment contract, TOR, and final declarations.
 
 ### **Scope**
 
-* guarded applicant action;  
-* safe search for Contract Proposal / Preboarding stage;  
+* applicant header gate action;  
+* recruitment document registry bound action;  
+* exact target stage ID `5`;  
+* registry-based validation;  
 * clean toast if blocked;  
-* chatter on success or blocked attempt;  
-* no native stage schema changes.
+* chatter on blocked attempt;  
+* stage write on success;  
+* chatter on success;  
+* no Documents app dependency;  
+* no visual tab-state dependency;  
+* no downstream contract/decision/TOR generation yet.
+
+### **Non-scope**
+
+* no board decision generation;  
+* no contract generation;  
+* no TOR generation;  
+* no F-0007/F-0009 generation;  
+* no employee creation;  
+* no `hr.contract` creation;  
+* no payroll handoff;  
+* no stage persistence automation in 6G-2 unless separately scoped;  
+* no change to native Odoo stage schema.
 
 ### **Acceptance**
 
-* gate blocks if any required artifact is unsigned;  
-* gate succeeds only when all three are signed;  
-* applicant moves to Contract Proposal / Preboarding;  
-* gate does not depend on Documents folders, tags, or visual tab state.
+* gate blocks if any required Evaluation artifact is missing, unsigned, or lacks a signed attachment;  
+* gate succeeds only when F-0002, F-0003, and F-0004 are signed with signed attachments;  
+* applicant moves to stage ID `5`;  
+* applicant header button appears as “تهيئة التعاقد”;  
+* same gate is available from the recruitment document registry;  
+* Contract tab does not contain the Evaluation gate button;  
+* chatter records blocked and successful attempts;  
+* no Documents folder/tag dependency;  
+* no Odoo traceback.
+
+### **Future hardening**
+
+Stage persistence / anti-manual-regression should be handled in a later sub-slice only after design confirmation.
+
+Possible future fields:
+
+* `x_evaluation_gate_closed`  
+* `x_evaluation_gate_closed_on`  
+* `x_evaluation_gate_closed_by_user_id`  
+* `x_recruitment_lifecycle_phase`
+
+Possible future behavior:
+
+* if Evaluation gate is closed and a user manually moves the applicant back into the Evaluation band, a guarded automation can restore Contract Proposal or show a warning.
+
+This should not be mixed into the first 6G implementation unless explicitly accepted.
+
+---
+
+## **8A. Contract Proposal / Preboarding doctrine**
+
+Odoo’s native Contract Proposal stage is used as the project’s Preboarding operating stage.
+
+This stage is not limited to generating a simple contract proposal. It is the controlled preboarding workspace where the company prepares and signs the remaining documents required before the applicant can become an employee.
+
+### **Purpose**
+
+Contract Proposal / Preboarding allows the Chairman, HR Manager, recruitment users, and authorized supervisors to complete the remaining signed documentary controls without forcing a rigid document order that does not match operational reality.
+
+### **Registry authority**
+
+The recruitment document registry remains the source of truth.
+
+The stage shows where the applicant is in the lifecycle. The registry proves which documentary controls are complete.
+
+### **Documents expected in Contract Proposal / Preboarding**
+
+The following registry artifacts are expected downstream:
+
+* `board_decision`  
+* `employment_contract`  
+* `tor`  
+* `policies_compliance_declaration`  
+* `non_disclosure_agreement`
+
+Document codes / forms:
+
+* Board Decision  
+* Official employment contract government template  
+* F-0006 TOR  
+* F-0007 policies/internal regulations declaration  
+* F-0009 confidentiality / non-disclosure declaration
+
+### **Internal control gates**
+
+Inside Contract Proposal / Preboarding, the process should be flexible but still controlled.
+
+The first internal gate is Chairman control over the board decision:
+
+* only the Chairman or authorized Chairman-equivalent role may generate/sign the board decision;  
+* signed board decision unlocks official employment contract preparation/sending.
+
+The second internal gate is completion of the employment contract signature flow:
+
+* contract may involve Chairman/company representative and applicant;  
+* contract completion is an internal control point;  
+* final applicant handoff still waits for all required preboarding artifacts.
+
+### **Flexible document ordering**
+
+TOR and final declarations may be completed before or after the board decision and contract, depending on operational requirements.
+
+This is intentional.
+
+The lifecycle should support:
+
+* TOR preparation during negotiation;  
+* TOR preparation after contract drafting;  
+* F-0007/F-0009 reading and acceptance before or after contract preparation;  
+* structured use of applicant evidence already approved during Evaluation.
+
+The registry controls final movement. It should not force unnecessary rigid ordering inside the Contract Proposal stage except where Chairman authority is required.
+
+### **Final Preboarding gate**
+
+Movement from Contract Proposal to Odoo’s native Contract Signed stage is governed by a later gate.
+
+The final preboarding gate condition is expected to require signed registry artifacts for:
+
+* board decision;  
+* employment contract;  
+* TOR / F-0006;  
+* F-0007;  
+* F-0009.
+
+This final gate will later trigger the employee/contract/payroll/onboarding handoff.
+
+The final handoff is out of scope until the full recruitment-to-employment pass sequence is complete.
 
 ---
 
@@ -286,35 +460,97 @@ Run the end-to-end Evaluation closure test and lock Pass 6\.
 
 After 6H lock:
 
-### **Pass 7**
+### **Pass 7 — GRC decision-template foundation**
 
-GRC decision-template foundation.
+Build reusable decision-template primitives in `grc_backbone`.
 
-### **Pass 8**
+This should include template structure, basis/preamble, article lines, variables, and recruitment board decision seed data.
 
-Contract tab and board decision.
+The board decision should not be hacked directly into recruitment without reusable GRC primitives.
 
-### **Pass 9**
+### **Pass 8 — Contract Proposal / Preboarding surface**
 
-Official employment contract workflow and manual/static PDF signing pattern.
+Build the Contract Proposal operational workspace inside `hr_recruitment_custom`.
 
-### **Pass 10**
+This pass should expose the downstream preboarding registry artifacts and tab structure, but only implement a tightly scoped first artifact if accepted.
 
-TOR / F-0006 reposition and two-signer QWeb Sign pattern.
+Expected artifact families:
 
-### **Pass 11**
+* board decision;  
+* employment contract;  
+* TOR / F-0006;  
+* F-0007;  
+* F-0009.
 
-F-0007 and F-0009 final declarations.
+The Contract tab becomes the working surface for this stage.
 
-### **Pass 12**
+### **Pass 9 — Board decision control gate**
 
-Onboard now handover.
+Implement board decision generation/signing using the GRC decision-template foundation.
 
-### **Pass 13**
+Chairman signing of the board decision acts as the first internal control gate inside Contract Proposal / Preboarding.
 
-Employment lifecycle architecture.
+Signed board decision unlocks official employment contract preparation/sending.
 
-### **Pass 14**
+### **Pass 10 — Official employment contract workflow**
 
-Documents governance and access framework.
+Implement the official employment contract workflow using the government template/manual-static PDF pattern.
 
+Expected registry artifact:
+
+* `employment_contract`
+
+Expected control principle:
+
+* contract completion is required before final preboarding handoff;  
+* Chairman/company representative signature remains an internal authority gate.
+
+### **Pass 11 — TOR / F-0006 and final declarations**
+
+Implement TOR / F-0006 and the final declarations:
+
+* F-0006 TOR;  
+* F-0007 policies/internal regulations declaration;  
+* F-0009 confidentiality / non-disclosure declaration.
+
+The exact order may remain flexible inside Contract Proposal / Preboarding, but all must be signed before movement to Contract Signed.
+
+### **Pass 12 — Final Preboarding gate and handover**
+
+Add the final gate from Contract Proposal to Contract Signed.
+
+Expected gate condition:
+
+* board decision signed;  
+* employment contract signed;  
+* TOR / F-0006 signed;  
+* F-0007 signed;  
+* F-0009 signed.
+
+Expected effect:
+
+* move applicant to Contract Signed;  
+* trigger employee / contract / payroll / onboarding handoff design;  
+* link or create `hr.employee`;  
+* link or create `hr.contract`;  
+* preserve signed artifact history.
+
+### **Pass 13 — Employment lifecycle architecture**
+
+Separate employment lifecycle track after recruitment-to-employment handoff.
+
+Do not mix this into recruitment gate work.
+
+### **Pass 14 — Documents governance and access framework**
+
+Move the deferred Documents governance work here:
+
+* folder/tag policy;  
+* applicant/employee document transition;  
+* confidentiality classes;  
+* access groups;  
+* management access framework;  
+* Documents automation;  
+* retention rules.
+
+This belongs after the full two-stage cycle exists.

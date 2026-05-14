@@ -348,6 +348,44 @@ Version rule:
 - each fresh generation may supersede a previous artifact or increment the active record version depending on the safest current implementation pattern;
 - the chosen behavior must be consistent per document type and documented in the implementation summary.
 
+### 8.1 Evaluation band and Contract Proposal / Preboarding semantics
+
+The Odoo recruitment stages are retained as native lifecycle containers.
+
+The system does not replace Odoo’s native recruitment stage model.
+
+**The Evaluation band consists of:**
+
+- Qualification / التأهيل;
+- First Interview / المقابلة الأولى;
+- Second Interview / المقابلة الثانية.
+
+Within this band, reviewers may move applicants according to operational needs.
+
+The authoritative documentary control is not the visual stage. It is the recruitment document registry.
+
+The Evaluation gate moves the applicant to Odoo’s Contract Proposal stage only when the registry proves that these artifacts are signed:
+
+F-0002 Interview Evaluation;
+F-0003 Required Documents Checklist;
+F-0004 Legal Documents Validity Declaration.
+
+For this implementation, Contract Proposal is also treated as Preboarding.
+
+**Contract Proposal / Preboarding is the flexible operating stage for:**
+
+board decision;
+official employment contract;
+TOR / F-0006;
+F-0007;
+F-0009.
+
+The registry allows flexible ordering inside this stage while preserving authority through internal gates.
+
+Chairman-controlled board decision signing is an internal control gate.
+
+Final movement from Contract Proposal to Contract Signed is a later gate requiring signed completion of the downstream preboarding artifacts.
+
 ## 9. Generated form strategy
 
 ### 9.1 QWeb-generated forms
