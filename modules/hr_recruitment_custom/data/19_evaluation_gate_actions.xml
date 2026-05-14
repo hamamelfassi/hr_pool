@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_hr_applicant_evaluation_to_contract_proposal" model="ir.actions.server">
+        <field name="name">تهيئة التعاقد</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="binding_model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+applicants_to_process = records.sudo()
+
+TARGET_STAGE_ID = 5
+
+registry_model = env['x_hr.recruitment_document'].sudo()
+stage_model = env['hr.recruitment.stage'].sudo()
+action = False
+
+target_stage = stage_model.browse(TARGET_STAGE_ID)
+if not target_stage.exists():
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': 'مرحلة مقترح العقد غير موجودة',
+            'message': 'لم يتم العثور على مرحلة Contract Proposal / مقترح العقد بالمعرف 5. لم يتم تحريك أي متقدم.',
+            'type': 'warning',
+            'sticky': True,
+        }
+    }
+else:
+    required_documents = [
+        ('interview_evaluation', 'F-0002 تقييم المقابلة'),
+        ('required_documents_checklist', 'F-0003 قائمة المستندات المطلوبة'),
+        ('legal_documents_validity_declaration', 'F-0004 إقرار صحة المستندات'),
+    ]
+
+    for applicant in applicants_to_process:
+        if not applicant or not applicant.exists():
+            continue
+
+        blocking_messages = []
+        signed_documents = []
+
+        for document_type, label in required_documents:
+            latest_doc = registry_model.search([
+                ('x_applicant_id', '=', applicant.id),
+                ('x_document_type', '=', document_type),
+                ('x_state', 'not in', ['cancelled', 'superseded']),
+            ], order='x_version desc, id desc', limit=1)
+
+            if not latest_doc:
+                blocking_messages.append('%s: غير موجود في سجل مستندات التوظيف.' % label)
+                continue
+
+            if latest_doc.x_state != 'signed':
+                blocking_messages.append('%s: الحالة الحالية %s وليست موقّع.' % (label, latest_doc.x_state or 'غير محددة'))
+                continue
+
+            if not latest_doc.x_signed_attachment_id:
+                blocking_messages.append('%s: الحالة موقّع لكن لا يوجد مستند موقع مرتبط.' % label)
+                continue
+
+            signed_documents.append(label)
+
+        if blocking_messages:
+            applicant.message_post(
+                body='تم منع تهيئة التعاقد بسبب مستندات تقييم غير مكتملة:<br/>%s' % '<br/>'.join(blocking_messages)
+            )
+
+            action = {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': 'لا يمكن تهيئة التعاقد',
+                    'message': 'لا يمكن نقل المتقدم إلى مقترح العقد قبل إغلاق المستندات التالية:\n- ' + '\n- '.join(blocking_messages),
+                    'type': 'warning',
+                    'sticky': True,
+                }
+            }
+            continue
+
+        old_stage = applicant.stage_id.display_name if applicant.stage_id else 'غير محددة'
+
+        applicant.write({
+            'stage_id': target_stage.id,
+        })
+
+        applicant.message_post(
+            body='تمت تهيئة التعاقد ونقل المتقدم من مرحلة %s إلى مرحلة %s بعد التحقق من المستندات الموقعة: %s.' % (
+                old_stage,
+                target_stage.display_name,
+                ', '.join(signed_documents)
+            )
+        )
+
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'تمت تهيئة التعاقد',
+                'message': 'تم التحقق من F-0002 و F-0003 و F-0004 ونقل المتقدم إلى مرحلة %s.' % target_stage.display_name,
+                'type': 'success',
+                'sticky': False,
+                'next': {'type': 'ir.actions.client', 'tag': 'reload'},
+            }
+        }
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+
+        ]]></field>
+    </record>
+
+    <record id="action_recruitment_document_evaluation_to_contract_proposal" model="ir.actions.server">
+        <field name="name">تهيئة التعاقد</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_recruitment_document"/>
+        <field name="binding_model_id" ref="hr_recruitment_custom.model_x_hr_recruitment_document"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+applicant_ids = []
+applicants_to_process = env['hr.applicant'].sudo().browse([])
+
+for document in records.sudo():
+    if document.x_applicant_id and document.x_applicant_id.id not in applicant_ids:
+        applicant_ids.append(document.x_applicant_id.id)
+
+if applicant_ids:
+    applicants_to_process = env['hr.applicant'].sudo().browse(applicant_ids)
+else:
+    applicants_to_process = env['hr.applicant'].sudo().browse([])
+
+TARGET_STAGE_ID = 5
+
+registry_model = env['x_hr.recruitment_document'].sudo()
+stage_model = env['hr.recruitment.stage'].sudo()
+action = False
+
+target_stage = stage_model.browse(TARGET_STAGE_ID)
+if not target_stage.exists():
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': 'مرحلة مقترح العقد غير موجودة',
+            'message': 'لم يتم العثور على مرحلة Contract Proposal / مقترح العقد بالمعرف 5. لم يتم تحريك أي متقدم.',
+            'type': 'warning',
+            'sticky': True,
+        }
+    }
+else:
+    required_documents = [
+        ('interview_evaluation', 'F-0002 تقييم المقابلة'),
+        ('required_documents_checklist', 'F-0003 قائمة المستندات المطلوبة'),
+        ('legal_documents_validity_declaration', 'F-0004 إقرار صحة المستندات'),
+    ]
+
+    for applicant in applicants_to_process:
+        if not applicant or not applicant.exists():
+            continue
+
+        blocking_messages = []
+        signed_documents = []
+
+        for document_type, label in required_documents:
+            latest_doc = registry_model.search([
+                ('x_applicant_id', '=', applicant.id),
+                ('x_document_type', '=', document_type),
+                ('x_state', 'not in', ['cancelled', 'superseded']),
+            ], order='x_version desc, id desc', limit=1)
+
+            if not latest_doc:
+                blocking_messages.append('%s: غير موجود في سجل مستندات التوظيف.' % label)
+                continue
+
+            if latest_doc.x_state != 'signed':
+                blocking_messages.append('%s: الحالة الحالية %s وليست موقّع.' % (label, latest_doc.x_state or 'غير محددة'))
+                continue
+
+            if not latest_doc.x_signed_attachment_id:
+                blocking_messages.append('%s: الحالة موقّع لكن لا يوجد مستند موقع مرتبط.' % label)
+                continue
+
+            signed_documents.append(label)
+
+        if blocking_messages:
+            applicant.message_post(
+                body='تم منع تهيئة التعاقد بسبب مستندات تقييم غير مكتملة:<br/>%s' % '<br/>'.join(blocking_messages)
+            )
+
+            action = {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': 'لا يمكن تهيئة التعاقد',
+                    'message': 'لا يمكن نقل المتقدم إلى مقترح العقد قبل إغلاق المستندات التالية:\n- ' + '\n- '.join(blocking_messages),
+                    'type': 'warning',
+                    'sticky': True,
+                }
+            }
+            continue
+
+        old_stage = applicant.stage_id.display_name if applicant.stage_id else 'غير محددة'
+
+        applicant.write({
+            'stage_id': target_stage.id,
+        })
+
+        applicant.message_post(
+            body='تمت تهيئة التعاقد ونقل المتقدم من مرحلة %s إلى مرحلة %s بعد التحقق من المستندات الموقعة: %s.' % (
+                old_stage,
+                target_stage.display_name,
+                ', '.join(signed_documents)
+            )
+        )
+
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'تمت تهيئة التعاقد',
+                'message': 'تم التحقق من F-0002 و F-0003 و F-0004 ونقل المتقدم إلى مرحلة %s.' % target_stage.display_name,
+                'type': 'success',
+                'sticky': False,
+                'next': {'type': 'ir.actions.client', 'tag': 'reload'},
+            }
+        }
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+
+        ]]></field>
+    </record>
+</odoo>

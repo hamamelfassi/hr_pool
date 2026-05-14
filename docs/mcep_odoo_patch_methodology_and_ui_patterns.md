@@ -284,6 +284,91 @@ If a rapid patch introduces a traceback or lifecycle inconsistency:
 5. Add the failed pattern to this methodology document if it is a reusable lesson.  
 6. Do not proceed to the next pass until the affected workflow has passed a fresh acceptance test.
 
+### 4.11 Requirements Unknowns Checkpoint
+
+Before generating any patch that changes lifecycle gates, stage movement, role authority, access control, registry semantics, applicant/employee handoff, or downstream unlock logic, the assistant must first identify all key unknowns that would otherwise require assumptions.
+
+This checkpoint is mandatory for:
+
+* lifecycle gates;  
+* stage movement;  
+* registry authority rules;  
+* role-restricted actions;  
+* applicant-to-employee handoff;  
+* contract or payroll handoff;  
+* official document sequence logic;  
+* stage persistence or anti-manual-regression automation;  
+* actions that unlock later workflow buttons or tabs.
+
+For each unknown, the assistant must state:
+
+1. the unknown;  
+2. the recommended default;  
+3. acceptable alternatives;  
+4. implementation impact;  
+5. risk if guessed incorrectly.
+
+Patch scripts must not be generated until the user confirms or corrects the unknowns.
+
+Examples of required unknowns:
+
+* exact target Odoo stage ID or stage name;  
+* whether stage lookup should use exact ID, exact name, Arabic name, or fuzzy matching;  
+* where the action button should appear;  
+* whether the action should be available from applicant, registry, or both;  
+* who may run the action;  
+* whether the action only sets stage or also locks stage;  
+* whether the gate should write persistent lifecycle metadata;  
+* whether latest active signed document is required, or any historical signed document is enough;  
+* whether signed state alone is enough, or a signed attachment must also exist;  
+* whether a newer generated/unsigned artifact blocks an older signed artifact;  
+* whether manual stage changes after the gate should be tolerated, blocked, or automatically corrected;  
+* whether downstream actions are only visually enabled or actually security-gated.
+
+If a requirement is not explicitly confirmed, the assistant must not silently guess.
+
+### 4.12 Gate and Stage Movement Patch Rule
+
+Gate and stage-movement logic is business-authority logic. It is not a mechanical reuse pattern.
+
+Gate patches must use Manual Surgical Patch Mode or Hybrid Mode.
+
+Rapid Scripted Patch Mode may only be used after:
+
+* the gate doctrine is written;  
+* all unknowns are confirmed;  
+* the exact target stage is known;  
+* button placement is confirmed;  
+* registry selection rules are confirmed;  
+* the implementation is split into bounded script segments;  
+* the user has accepted the explanatory design.
+
+Gate actions must not use fuzzy stage matching unless explicitly approved.
+
+If an exact stage ID is known, prefer the stage ID over name matching, while still validating that the stage exists and is accessible.
+
+### 4.13 Gate Button Placement Rule
+
+Lifecycle gate buttons belong where users make lifecycle decisions.
+
+For this project:
+
+* Evaluation-to-Contract Proposal gate appears in the `hr.applicant` header.  
+* The same gate may also be available as a bound action from the recruitment document registry.  
+* The Contract tab is reserved for contract/proposal/preboarding document operations, not for the Evaluation gate itself.  
+* Operational document buttons should remain inside their relevant tab surfaces.  
+* Applicant header buttons should be limited to cross-tab lifecycle decisions and native Odoo applicant actions.
+
+User-facing lifecycle labels should be Arabic-first and non-technical.
+
+For the Evaluation gate, the accepted applicant header label is:
+
+تهيئة التعاقد
+
+This maps operationally to Odoo’s “Contract Proposal” stage while carrying the Arabic meaning of preboarding/pre-contract preparation.
+
+
+
 ## 5. Mode Selection Rule
 
 Use this decision rule:

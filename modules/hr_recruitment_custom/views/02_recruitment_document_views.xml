@@ -29,6 +29,11 @@
             <field name="arch" type="xml">
                 <form string="Recruitment Document">
                     <header>
+                        <button type="action"
+                            name="hr_recruitment_custom.action_recruitment_document_evaluation_to_contract_proposal"
+                            string="تهيئة التعاقد"
+                            class="btn-primary"
+                            invisible="not x_applicant_id" />
                         <field name="x_state"
                             widget="statusbar"
                             options="{'clickable': false}"
