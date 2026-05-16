@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_governance_reference" model="ir.actions.act_window">
+        <field name="name">Governance References</field>
+        <field name="res_model">x_grc.governance_reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'default_x_active': True, 'default_x_status': 'active'}</field>
+    </record>
+
+    <record id="action_grc_variable" model="ir.actions.act_window">
+        <field name="name">Variable Dictionary</field>
+        <field name="res_model">x_grc.variable</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'default_x_active': True, 'default_x_value_type': 'char'}</field>
+    </record>
+</odoo>

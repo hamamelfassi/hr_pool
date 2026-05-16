@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Governance Reference -->
+
+    <record id="field_governance_reference_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Reference Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_governance_reference_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference"/>
+        <field name="name">x_code</field>
+        <field name="field_description">Reference Code</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_governance_reference_x_reference_type" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference"/>
+        <field name="name">x_reference_type</field>
+        <field name="field_description">Reference Type</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+        <field name="selection">[
+            ('law', 'Law'),
+            ('regulation', 'Regulation'),
+            ('framework', 'Framework'),
+            ('standard', 'Standard'),
+            ('policy', 'Policy'),
+            ('procedure', 'Procedure / SOP'),
+            ('decision', 'Decision'),
+            ('letter', 'Letter'),
+            ('memo', 'Memo'),
+            ('meeting_minutes', 'Meeting Minutes'),
+            ('free_text', 'Free Text'),
+            ('other', 'Other')
+            ]</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_governance_reference_x_authority_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference"/>
+        <field name="name">x_authority_name</field>
+        <field name="field_description">Issuing Authority</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_governance_reference_x_reference_date" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference"/>
+        <field name="name">x_reference_date</field>
+        <field name="field_description">Reference Date</field>
+        <field name="ttype">date</field>
+    </record>
+
+    <record id="field_governance_reference_x_version" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference"/>
+        <field name="name">x_version</field>
+        <field name="field_description">Version</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_governance_reference_x_status" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference"/>
+        <field name="name">x_status</field>
+        <field name="field_description">Status</field>
+        <field name="ttype">selection</field>
+        <field name="selection">[
+            ('draft', 'Draft'),
+            ('active', 'Active'),
+            ('superseded', 'Superseded'),
+            ('archived', 'Archived')
+            ]</field>
+    </record>
+
+    <record id="field_governance_reference_x_active" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference"/>
+        <field name="name">x_active</field>
+        <field name="field_description">Active</field>
+        <field name="ttype">boolean</field>
+    </record>
+
+    <record id="field_governance_reference_x_summary_ar" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference"/>
+        <field name="name">x_summary_ar</field>
+        <field name="field_description">Arabic Summary</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_governance_reference_x_summary_en" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference"/>
+        <field name="name">x_summary_en</field>
+        <field name="field_description">English Summary</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_governance_reference_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference"/>
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+    </record>
+
+    <!-- Global Variable Dictionary -->
+
+    <record id="field_grc_variable_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_grc_variable"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Variable Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_grc_variable_x_key" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_grc_variable"/>
+        <field name="name">x_key</field>
+        <field name="field_description">Variable Key</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_grc_variable_x_label_ar" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_grc_variable"/>
+        <field name="name">x_label_ar</field>
+        <field name="field_description">Arabic Label</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_grc_variable_x_label_en" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_grc_variable"/>
+        <field name="name">x_label_en</field>
+        <field name="field_description">English Label</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_grc_variable_x_value_type" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_grc_variable"/>
+        <field name="name">x_value_type</field>
+        <field name="field_description">Value Type</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+        <field name="selection">[
+            ('char', 'Short Text'),
+            ('text', 'Long Text'),
+            ('date', 'Date'),
+            ('datetime', 'Datetime'),
+            ('integer', 'Integer'),
+            ('float', 'Float'),
+            ('monetary', 'Monetary'),
+            ('many2one_ref', 'Record Reference'),
+            ('boolean', 'Boolean')
+            ]</field>
+    </record>
+
+    <record id="field_grc_variable_x_active" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_grc_variable"/>
+        <field name="name">x_active</field>
+        <field name="field_description">Active</field>
+        <field name="ttype">boolean</field>
+    </record>
+
+    <record id="field_grc_variable_x_description" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_grc_variable"/>
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <!-- Decision basis line now points to generic governance reference -->
+
+    <record id="field_decision_basis_line_x_reference_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_basis_line"/>
+        <field name="name">x_reference_id</field>
+        <field name="field_description">Governance Reference</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.governance_reference</field>
+        <field name="on_delete">restrict</field>
+    </record>
+
+    <!-- Decision template variable is now a binding to a global variable -->
+
+    <record id="field_decision_template_variable_x_variable_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_template_variable"/>
+        <field name="name">x_variable_id</field>
+        <field name="field_description">Variable</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.variable</field>
+        <field name="required">True</field>
+        <field name="on_delete">restrict</field>
+        <field name="index">True</field>
+    </record>
+</odoo>

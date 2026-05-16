@@ -4,5 +4,6 @@
         <field name="name">قوالب القرارات</field>
         <field name="res_model">x_grc.decision_template</field>
         <field name="view_mode">list,form</field>
+        <field name="context">{'default_x_active': True, 'default_x_version': 1}</field>
     </record>
 </odoo>

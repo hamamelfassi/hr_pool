@@ -231,25 +231,7 @@
 
     <!-- Extend Decision Template -->
 
-    <record id="field_decision_template_x_family_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_backbone.model_decision_template"/>
-        <field name="name">x_family_id</field>
-        <field name="field_description">Decision Family</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">x_grc.decision_family</field>
-        <field name="on_delete">restrict</field>
-        <field name="index">True</field>
-    </record>
 
-    <record id="field_decision_template_x_type_id" model="ir.model.fields">
-        <field name="model_id" ref="grc_backbone.model_decision_template"/>
-        <field name="name">x_type_id</field>
-        <field name="field_description">Decision Type</field>
-        <field name="ttype">many2one</field>
-        <field name="relation">x_grc.decision_type</field>
-        <field name="on_delete">restrict</field>
-        <field name="index">True</field>
-    </record>
 
     <record id="field_decision_template_x_profile_id" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_template"/>
@@ -322,10 +304,4 @@
 
     <!-- Extend Decision Template Article Line -->
 
-    <record id="field_decision_template_article_line_x_variable_keys" model="ir.model.fields">
-        <field name="model_id" ref="grc_backbone.model_decision_template_article_line"/>
-        <field name="name">x_variable_keys</field>
-        <field name="field_description">Variable Keys</field>
-        <field name="ttype">text</field>
-    </record>
 </odoo>

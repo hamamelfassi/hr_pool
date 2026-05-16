@@ -10,10 +10,9 @@
             <list string="قوالب القرارات">
                 <field name="x_profile_template_code_default" string="الكود"/>
                 <field name="x_title_ar" string="العنوان العربي"/>
-                <field name="x_family_id" string="العائلة"/>
-                <field name="x_type_id" string="النوع"/>
+                <field name="x_profile_family_id" string="العائلة"/>
+                <field name="x_profile_type_id" string="النوع"/>
                 <field name="x_profile_id" string="الملف"/>
-                <field name="x_decision_family" string="التصنيف القديم" optional="hide"/>
                 <field name="x_version" string="الإصدار"/>
                 <field name="x_active" string="نشط"/>
             </list>
@@ -26,14 +25,11 @@
         <field name="arch" type="xml">
             <search>
                 <field name="x_name"/>
-                <field name="x_code"/>
                 <field name="x_title_ar"/>
-                <field name="x_family_id"/>
-                <field name="x_type_id"/>
+                <field name="x_profile_family_id"/>
+                <field name="x_profile_type_id"/>
                 <field name="x_profile_id"/>
-                <field name="x_decision_family"/>
                 <filter name="active_templates" string="Active" domain="[('x_active', '=', True)]"/>
-                <filter name="recruitment_family" string="Recruitment" domain="[('x_decision_family', '=', 'recruitment')]"/>
             </search>
         </field>
     </record>
@@ -51,10 +47,6 @@
                             <field name="x_profile_template_code_default" string="كود القالب" readonly="1"/>
                             <field name="x_profile_family_id" string="عائلة القرار" readonly="1"/>
                             <field name="x_profile_type_id" string="نوع القرار" readonly="1"/>
-                            <field name="x_code" invisible="1" readonly="1"/>
-                            <field name="x_family_id" invisible="1" readonly="1"/>
-                            <field name="x_type_id" invisible="1" readonly="1"/>
-                            <field name="x_decision_family" invisible="1" readonly="1"/>
                             <field name="x_version"/>
                             <field name="x_active"/>
                         </group>
@@ -63,8 +55,6 @@
                             <field name="x_title_en"/>
                             <field name="x_profile_default_issuer_title_ar" string="صفة المصدر بالعربية" readonly="1"/>
                             <field name="x_profile_default_issuer_title_en" string="صفة المصدر بالإنجليزية" readonly="1"/>
-                            <field name="x_default_issuer_title_ar" invisible="1" readonly="1"/>
-                            <field name="x_default_issuer_title_en" invisible="1" readonly="1"/>
                         </group>
                     </group>
 
@@ -84,10 +74,7 @@
                                     <field name="x_basis_type" string="النوع"/>
                                     <field name="x_phrase_id" string="صيغة الربط"/>
                                     <field name="x_relationship_phrase_ar" string="صيغة الربط اليدوية"/>
-                                    <field name="x_framework_id" string="إطار"/>
-                                    <field name="x_policy_id" string="سياسة"/>
-                                    <field name="x_provision_id" string="بند"/>
-                                    <field name="x_related_decision_id" string="قرار سابق"/>
+                                    <field name="x_reference_id" string="مرجع حوكمة"/>
                                     <field name="x_reference_text_ar" string="نص مرجعي"/>
                                 </list>
                                 <form string="Basis Line">
@@ -105,11 +92,8 @@
                                                 <field name="x_relationship_phrase_en"/>
                                             </group>
                                         </group>
-                                        <group string="Linked Governance References">
-                                            <field name="x_framework_id"/>
-                                            <field name="x_policy_id"/>
-                                            <field name="x_provision_id"/>
-                                            <field name="x_related_decision_id"/>
+                                        <group string="Governance Reference">
+                                            <field name="x_reference_id"/>
                                         </group>
                                         <group string="Future Generic Source">
                                             <field name="x_source_model"/>
@@ -136,7 +120,6 @@
                                     <field name="x_title_ar" string="عنوان عربي"/>
                                     <field name="x_body_ar" string="النص العربي"/>
                                     <field name="x_uses_variables" string="متغيرات؟"/>
-                                    <field name="x_variable_keys" string="مفاتيح المتغيرات"/>
                                 </list>
                                 <form string="Decision Article">
                                     <sheet>
@@ -147,7 +130,6 @@
                                                 <field name="x_article_number"/>
                                                 <field name="x_name"/>
                                                 <field name="x_uses_variables"/>
-                                                <field name="x_variable_keys" placeholder="applicant_name, job_title, department, start_date"/>
                                             </group>
                                             <group>
                                                 <field name="x_title_ar"/>
@@ -169,13 +151,17 @@
                         </page>
 
                         <page string="المتغيرات">
+                            <group>
+                                <div class="text-muted">
+                                    استخدم مفاتيح المتغيرات داخل النص بهذا الشكل: {employee_full_name}. يجب تعريف كل مفتاح مستخدم في هذا التبويب من قاموس المتغيرات. لا تستخدم مسافات أو عبارات عربية داخل الأقواس.
+                                </div>
+                            </group>
                             <field name="x_variable_definition_ids">
                                 <list string="Variables" editable="bottom">
                                     <field name="x_sequence" invisible="1"/>
-                                    <field name="x_key" string="المفتاح"/>
-                                    <field name="x_label_ar" string="التسمية العربية"/>
-                                    <field name="x_value_type" string="نوع القيمة"/>
+                                    <field name="x_variable_id" string="المتغير"/>
                                     <field name="x_required" string="إلزامي"/>
+                                    <field name="x_default_value_text" string="قيمة افتراضية"/>
                                     <field name="x_source_model_hint" string="نموذج المصدر"/>
                                     <field name="x_source_field_hint" string="حقل المصدر"/>
                                 </list>
@@ -184,15 +170,16 @@
                                         <group>
                                             <group>
                                                 <field name="x_template_id" readonly="1"/>
-                                                <field name="x_name"/>
-                                                <field name="x_key"/>
-                                                <field name="x_value_type"/>
+                                                <field name="x_variable_id"/>
                                                 <field name="x_required"/>
+                                                <field name="x_default_value_text"/>
                                             </group>
                                             <group>
-                                                <field name="x_label_ar"/>
-                                                <field name="x_label_en"/>
-                                                <field name="x_default_value_text"/>
+                                                <field name="x_name" invisible="1" readonly="1"/>
+                                                <field name="x_key" invisible="1" readonly="1"/>
+                                                <field name="x_label_ar" invisible="1" readonly="1"/>
+                                                <field name="x_label_en" invisible="1" readonly="1"/>
+                                                <field name="x_value_type" invisible="1" readonly="1"/>
                                             </group>
                                         </group>
                                         <group string="Future Source Mapping Hint">

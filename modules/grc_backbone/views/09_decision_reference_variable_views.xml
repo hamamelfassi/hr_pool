@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_governance_references" name="Governance References" parent="grc_backbone.menu_decision_configuration" action="grc_backbone.action_governance_reference" sequence="40"/>
+    <menuitem id="menu_grc_variables" name="Variable Dictionary" parent="grc_backbone.menu_decision_configuration" action="grc_backbone.action_grc_variable" sequence="50"/>
+
+    <record id="view_governance_reference_list" model="ir.ui.view">
+        <field name="name">x_grc.governance_reference.list</field>
+        <field name="model">x_grc.governance_reference</field>
+        <field name="arch" type="xml">
+            <list string="Governance References">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_reference_type"/>
+                <field name="x_authority_name"/>
+                <field name="x_reference_date"/>
+                <field name="x_status" widget="badge"/>
+                <field name="x_active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_governance_reference_form" model="ir.ui.view">
+        <field name="name">x_grc.governance_reference.form</field>
+        <field name="model">x_grc.governance_reference</field>
+        <field name="arch" type="xml">
+            <form string="Governance Reference">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_name"/>
+                            <field name="x_code"/>
+                            <field name="x_reference_type"/>
+                            <field name="x_authority_name"/>
+                        </group>
+                        <group>
+                            <field name="x_reference_date"/>
+                            <field name="x_version"/>
+                            <field name="x_status"/>
+                            <field name="x_active"/>
+                        </group>
+                    </group>
+                    <group string="Summary">
+                        <field name="x_summary_ar"/>
+                        <field name="x_summary_en"/>
+                    </group>
+                    <group>
+                        <field name="x_notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_grc_variable_list" model="ir.ui.view">
+        <field name="name">x_grc.variable.list</field>
+        <field name="model">x_grc.variable</field>
+        <field name="arch" type="xml">
+            <list string="Variable Dictionary">
+                <field name="x_key"/>
+                <field name="x_label_ar"/>
+                <field name="x_label_en"/>
+                <field name="x_value_type"/>
+                <field name="x_active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_grc_variable_form" model="ir.ui.view">
+        <field name="name">x_grc.variable.form</field>
+        <field name="model">x_grc.variable</field>
+        <field name="arch" type="xml">
+            <form string="Variable">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_name"/>
+                            <field name="x_key"/>
+                            <field name="x_value_type"/>
+                            <field name="x_active"/>
+                        </group>
+                        <group>
+                            <field name="x_label_ar"/>
+                            <field name="x_label_en"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="x_description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

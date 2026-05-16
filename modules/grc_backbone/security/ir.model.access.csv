@@ -61,3 +61,5 @@ access_decision_family_user,Decision Family user,grc_backbone.model_decision_fam
 access_decision_type_user,Decision Type user,grc_backbone.model_decision_type,base.group_user,1,1,1,1
 access_decision_profile_user,Decision Profile user,grc_backbone.model_decision_profile,base.group_user,1,1,1,1
 access_decision_basis_phrase_user,Decision Basis Phrase user,grc_backbone.model_decision_basis_phrase,base.group_user,1,1,1,1
+access_governance_reference_user,Governance Reference user,grc_backbone.model_governance_reference,base.group_user,1,1,1,1
+access_grc_variable_user,GRC Variable user,grc_backbone.model_grc_variable,base.group_user,1,1,1,1

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Pass 7A-3 cleanup note:
+        Stale exploratory fields are detached from the Decision Engine UI, but not deleted here.
+
+        Odoo SaaS blocks deletion of ir.model.fields if any active view still references them.
+        Actual field deletion/migration is deferred to a later controlled cleanup pass after
+        the cleaned decision engine has remained stable.
+    -->
+</odoo>

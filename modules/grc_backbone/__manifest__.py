@@ -19,6 +19,8 @@
         "models/08_decision_template_fields.xml",
         "models/09_decision_profile_models.xml",
         "models/10_decision_profile_fields.xml",
+        "models/11_decision_reference_variable_models.xml",
+        "models/12_decision_reference_variable_fields.xml",
         "data/01_selection_values.xml",
         "data/02_sequences.xml",
         "data/03_seed_functional_taxonomy.xml",
@@ -33,6 +35,7 @@
         "actions/03_location_actions.xml",
         "actions/04_decision_template_actions.xml",
         "actions/05_decision_profile_actions.xml",
+        "actions/06_decision_reference_variable_actions.xml",
         "views/01_governance_views.xml",
         "views/02_taxonomy_views.xml",
         "views/03_risk_compliance_views.xml",
@@ -41,6 +44,8 @@
         "views/06_location_taxonomy_views.xml",
         "views/07_decision_template_views.xml",
         "views/08_decision_profile_views.xml",
+        "views/09_decision_reference_variable_views.xml",
+        "data/10_decision_engine_cleanup.xml",
         "security/ir.model.access.csv"
     ]
 }
