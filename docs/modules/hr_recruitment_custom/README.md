@@ -60,3 +60,28 @@ Server actions in this module must follow the SaaS-safe guard pattern documented
 - `docs/modules/hr_recruitment_custom/server_action_saas_patterns_wiki.md`
 
 Key rule: do not use `raise Warning(...)` inside Odoo.com SaaS 19.2 server actions. Use `display_notification` toast guards and preserve them by avoiding unconditional reload overwrites.
+
+## Pass 7 / Pass 8 continuity note
+
+The recruitment Board Decision must consume the GRC decision engine. It should not be implemented as an isolated recruitment-only template structure.
+
+`grc_backbone` owns:
+
+- governance references;
+- governance provisions;
+- governance text patterns;
+- variable dictionary;
+- decision profiles;
+- decision templates;
+- decision instances.
+
+`hr_recruitment_custom` owns:
+
+- applicant context;
+- Contract tab operational surface;
+- applicant/job variable value mapping;
+- PDF generation from the decision instance;
+- Odoo Sign routing to the Chairman;
+- recruitment document registry state for `board_decision`.
+
+Pass 8 begins only after the GRC decision instance foundation is stable.

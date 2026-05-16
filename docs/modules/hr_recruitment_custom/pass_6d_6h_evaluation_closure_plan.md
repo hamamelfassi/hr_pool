@@ -468,6 +468,27 @@ This should include template structure, basis/preamble, article lines, variables
 
 The board decision should not be hacked directly into recruitment without reusable GRC primitives.
 
+#### Pass 7 handoff note — GRC decision engine dependency
+
+Evaluation closure hands the applicant into Contract Proposal / Preboarding.
+
+The next document family is the Board Decision, but the Board Decision is not structurally owned by the recruitment module.
+
+Pass 7 refounds the GRC decision engine first:
+
+- Governance Reference;
+- Governance Reference Relation;
+- Governance Provision;
+- Governance Text Pattern;
+- Variable Dictionary;
+- Decision Profile;
+- Decision Template;
+- Decision Instance.
+
+After Pass 7 is stable, Pass 8 consumes a GRC decision instance inside the Contract tab and tracks the signed Chairman decision through `x_hr.recruitment_document` as `board_decision`.
+
+Recruitment remains the operational cockpit. GRC remains the decision-template authority.
+
 ### **Pass 8 — Contract Proposal / Preboarding surface**
 
 Build the Contract Proposal operational workspace inside `hr_recruitment_custom`.

@@ -25,29 +25,34 @@ The operating constraints are:
 
 ### 3.1 `grc_backbone`
 
-`grc_backbone` is the constitutional and reusable governance master-data layer.
+`grc_backbone` is the reusable governance, reference, taxonomy, and decision-engine foundation for the Marsellia / MCEP Odoo SaaS IMS program.
 
-It owns reusable structures that can be consumed across HR, recruitment, operations, HSE, finance, contracts, and other Odoo-native or custom workflows.
+It must not become an operational recruitment app. It provides governed reference data, reusable patterns, variables, provisions, decision templates, and cross-module governance primitives that can be consumed by HR, recruitment, HSE, operations, compliance, finance, contracts, and future Odoo-native workflows.
 
-Current and planned ownership includes:
+The active target doctrine is now unified and strongly typed:
 
-- governance frameworks;
-- policies;
-- provisions / rules;
-- decisions;
-- functional areas;
-- governed functions;
-- SOPs;
-- task templates;
-- risks;
-- controls;
-- compliance checks;
-- incidents;
-- tender / contract / clause governance;
-- reusable location taxonomy;
-- reusable decision-template primitives.
+- `x_grc.governance_reference` is the canonical authority/source record. It covers laws, regulations, frameworks, standards, policies, procedures/SOPs, decisions, letters, memos, meeting minutes, free-text references, and other authority sources through a type field, not through separate fragmented source models.
+- `x_grc.governance_reference_relation` models hierarchy and relationships between references, such as implements, amends, supersedes, cites, interprets, depends on, derived from, and replaces.
+- `x_grc.governance_provision` models granular clauses, articles, controls, requirements, and obligations under any governance reference.
+- `x_grc.variable` is the global reusable variable dictionary for document generation, workflow texts, and future structured governance automation.
+- `x_grc.governance_text_pattern` stores reusable text fragments such as subjects, basis lines, articles, clauses, footers, signature blocks, and general reusable wording.
+- `x_grc.decision_family`, `x_grc.decision_type`, and `x_grc.decision_profile` define governed decision categories and authority defaults.
+- `x_grc.decision_template` assembles controlled reusable decision documents from references, provisions, patterns, and variables.
+- `x_grc.decision_instance` will represent actual case-specific generated decisions created from templates.
+- `x_grc.functional_area`, `x_grc.function`, and `x_grc.location` remain reusable taxonomy primitives.
 
-`grc_backbone` must not become an operational recruitment app. It provides governed reference data and reusable templates.
+The core semantic rule is:
+
+- Governance Reference = authority/source.
+- Governance Provision = granular clause, article, control, requirement, or obligation.
+- Governance Text Pattern = reusable wording.
+- Variable = reusable data slot.
+- Decision Template = controlled document assembly.
+- Decision Instance = case-specific generated decision.
+
+The previous fragmented scaffold models for frameworks, policies, provisions, decisions, SOPs, task templates, risks, controls, incidents, commercial clauses, tenders, and related early experimental governance objects are superseded as active architecture unless deliberately reintroduced later through the unified governance-reference/provision/pattern doctrine.
+
+Task templates and task-template lines from the old SOP scaffold are retired from the active architecture and may be deleted/rebuilt later. Future task/action templates should be redesigned from governance references, provisions, workflows, controls, and evidence obligations.
 
 ### 3.2 `hr_pool`
 
@@ -247,6 +252,7 @@ Generated QWeb PDF
 → manual Sync Signed Result
 → signed PDF/certificate copied to applicant
 → x_hr.recruitment_document and source record close as signed
+```
 
 ## 10. Locked sequential pass plan
 
@@ -280,9 +286,20 @@ Implement/align F-0002, F-0003, and F-0004 workflows and gate Contract Proposal 
 
 Add tokenized Fillout upload links, submitted-document handling, review/resubmission, and supplemental applicant data capture.
 
-### Pass 7 — GRC decision template foundation
+### Pass 7 — GRC governance reference and decision engine foundation
 
-Add minimal reusable decision-template primitives and seed the recruitment board decision template.
+Refound `grc_backbone` around the unified Governance Reference / Provision / Text Pattern / Variable / Decision Template doctrine.
+
+Pass 7 implements the structural foundation before recruitment consumes it:
+
+- 7A-4 — unified governance library foundation;
+- 7A-5 — SaaS-safe decision template authoring UX;
+- 7A-6 — retirement of old scaffold surfaces/data;
+- 7C — recruitment board decision template seed/setup;
+- 7B — decision instances and instantiate-from-template action;
+- 7D — documentation lock.
+
+The recruitment board decision is the first use case, but the primitives must remain reusable for HR, HSE, operations, compliance, finance, contracts, and future governance workflows.
 
 ### Pass 8 — Contract tab and Board Decision
 

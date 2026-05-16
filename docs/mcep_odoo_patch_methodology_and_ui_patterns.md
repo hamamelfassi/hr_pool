@@ -368,6 +368,88 @@ For the Evaluation gate, the accepted applicant header label is:
 This maps operationally to Odoo’s “Contract Proposal” stage while carrying the Arabic meaning of preboarding/pre-contract preparation.
 
 
+### 4.14 Architecture Redesign and Primitive Retirement Rule
+
+When a pass changes architectural primitives, documentation must be patched before implementation.
+
+This is mandatory when the change:
+
+- introduces a new canonical model family;
+- supersedes an older model family;
+- changes which module owns a business concept;
+- changes workflow authority;
+- changes stage/gate semantics;
+- creates reusable primitives meant to serve future modules.
+
+Do not implement a major model refoundation while old architecture documents still describe the superseded doctrine as active.
+
+When a model primitive is superseded by a cleaner canonical primitive, do not keep both as active concepts unless there is a deliberate migration reason.
+
+If physical deletion of installed Odoo SaaS fields/models is risky, use this order:
+
+1. remove or hide active menus/actions/views;
+2. detach new logic from the retired fields/models;
+3. neutralize obsolete seed data;
+4. document the retired status;
+5. physically delete only in a later controlled cleanup if Odoo allows it safely.
+
+Retired does not mean still architecturally valid. It means no new implementation should depend on it.
+
+### 4.15 SaaS-Safe Parent Refresh Action Pattern
+
+Odoo.com SaaS importable XML modules should not assume custom Python model methods or true `@api.onchange` behavior inside one2many child lines.
+
+For child-line authoring UX, prefer a parent-level refresh action.
+
+Pattern:
+
+1. User selects references, provisions, patterns, or variables in child rows.
+2. User saves the parent record.
+3. User clicks a parent-level action such as:
+
+`تحديث القالب من المحددات`
+
+4. The server action populates all selected child lines at once.
+
+This pattern is preferred over:
+
+- per-line buttons;
+- hidden automated-on-save actions;
+- broad onchange assumptions;
+- duplicated helper text fields that become stale.
+
+The refresh action must:
+
+- populate only bounded, well-understood fields;
+- preserve manual override/snapshot fields where needed;
+- fail or warn clearly when required selections are missing;
+- avoid recursion;
+- be segmented and sanity-checked like any other server action.
+
+### 4.16 Placeholder and Variable Binding Rule
+
+Reusable text patterns may contain placeholders using English snake_case keys inside braces.
+
+Correct:
+
+`{employee_full_name}`
+
+Incorrect:
+
+`{ الاسم الكامل }`
+
+Incorrect:
+
+`{employee full name}`
+
+Rules:
+
+- Variables are defined once in the global variable dictionary.
+- Templates bind required variables in one Variables tab.
+- Subject, basis, and article text may use `{key}` placeholders.
+- Do not create separate `x_subject_variable_keys`, `x_basis_variable_keys`, or `x_article_variable_keys` fields as active architecture.
+- Later renderers should scan text for placeholders and validate that each key is bound to the template.
+- 
 
 ## 5. Mode Selection Rule
 

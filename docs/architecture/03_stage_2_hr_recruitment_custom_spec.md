@@ -460,10 +460,45 @@ Current implementation note:
 
 ### 11.1 Board Decision
 
-- source: Contract tab;
-- template source: `grc_backbone` decision template foundation once implemented;
-- signer: Chairman;
-- signed decision unlocks employment contract preparation.
+The Board Decision is not owned structurally by `hr_recruitment_custom`.
+
+Recruitment consumes the `grc_backbone` decision engine:
+
+- decision profile from `x_grc.decision_profile`;
+- decision template from `x_grc.decision_template`;
+- case-specific decision instance from `x_grc.decision_instance`;
+- governance references, provisions, text patterns, and variables from the GRC backbone;
+- signed artifact tracked in `x_hr.recruitment_document` as `board_decision`.
+
+Recruitment owns the operational applicant context and registry linkage. GRC owns the reusable decision doctrine.
+
+The target chairman workflow is:
+
+1. open the applicant in Contract Proposal / Preboarding;
+2. instantiate the recruitment board decision from the locked GRC template;
+3. generate the decision PDF;
+4. chairman signs through Odoo Sign;
+5. the signed decision closes the registry artifact and unlocks employment contract preparation.
+
+Signer: Chairman.
+
+Signed decision unlocks employment contract preparation, but does not itself create the employment contract.
+
+
+### 11.1.1 GRC decision engine dependency
+
+The recruitment board decision must be generated from the unified GRC decision engine, not from ad-hoc recruitment-only fields.
+
+The GRC layer provides:
+
+- Governance Reference = authority/source;
+- Governance Provision = granular clause, article, control, requirement, or obligation;
+- Governance Text Pattern = reusable wording;
+- Variable Dictionary = reusable data slots;
+- Decision Template = controlled reusable assembly;
+- Decision Instance = case-specific generated decision.
+
+Recruitment may supply applicant/job values into the decision instance variable values, but it should not redefine the decision template architecture.
 
 ### 11.2 Employment Contract
 
@@ -580,7 +615,7 @@ Detailed employment lifecycle after handover is a separate future architecture t
 5. Pass 4 — Stage 1 intake field uplift.
 6. Pass 5 — Evaluation stage gate.
 7. Pass 6 — Required document upload flow.
-8. Pass 7 — GRC decision template foundation.
+8. Pass 7 — GRC governance reference and decision engine foundation.
 9. Pass 8 — Contract tab and Board Decision.
 10. Pass 9 — Employment contract workflow.
 11. Pass 10 — TOR reposition and update.

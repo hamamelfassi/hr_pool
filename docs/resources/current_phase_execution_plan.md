@@ -1,4 +1,18 @@
-# Current Phase Execution Plan — Pass 6D–6H Evaluation Closure
+# Current Phase Execution Plan — Pass 7 GRC Governance Reference and Decision Engine Foundation
+
+## Active phase override
+
+Pass 6 Evaluation-stage closure has been accepted sufficiently to proceed to Pass 7.
+
+The current phase is now:
+
+`Pass 7 — GRC governance reference and decision engine foundation`
+
+Immediate next slice:
+
+`7A-4 — Unified governance library foundation`
+
+Pass 7 is no longer a minimal recruitment-only decision-template pass. It is a structural GRC refoundation pass that establishes the reusable Governance Reference / Provision / Text Pattern / Variable / Decision Template architecture before recruitment consumes the board decision workflow.
 
 ## Status
 
@@ -27,7 +41,19 @@ Locked from 6A–6C:
 
 ## Current next pass
 
-Pass 6D — UI/UX polish and translation catch-up for required-document surfaces.
+## Current next pass
+
+Pass 7A-4 — Unified governance library foundation in `grc_backbone`.
+
+Scope:
+
+- add governance reference relations;
+- add governance provisions;
+- add governance text patterns;
+- extend decision basis/article lines to select references, provisions, and patterns;
+- prepare the clean foundation for SaaS-safe template authoring.
+
+No recruitment code changes in 7A-4.
 
 ## Authority
 
@@ -395,13 +421,43 @@ The following are explicitly deferred:
 
 ## **Future pass map**
 
-### **Pass 7 — GRC decision template foundation**
+### **Pass 7 — GRC governance reference and decision engine foundation**
 
-Build minimal reusable decision-template primitives in `grc_backbone`.
+Build the reusable GRC foundation before recruitment consumes the board decision workflow.
 
-### **Pass 8 — Contract tab \+ Board Decision**
+Pass 7 slices:
 
-Consume GRC decision templates in recruitment and generate/sign the board decision.
+- 7A-4 — Unified governance library foundation;
+- 7A-5 — Decision template authoring UX;
+- 7A-6 — Retire old scaffold surfaces/data;
+- 7C — Recruitment decision template seed/setup;
+- 7B — Decision instances;
+- 7D — Documentation lock.
+
+Core primitives:
+
+- Governance Reference;
+- Governance Reference Relation;
+- Governance Provision;
+- Variable Dictionary;
+- Governance Text Pattern;
+- Decision Profile;
+- Decision Template;
+- Decision Instance.
+
+### **Pass 8 — Contract tab + Board Decision consumption**
+
+`hr_recruitment_custom` consumes the GRC decision instance foundation:
+
+```text
+Contract tab
+→ instantiate board decision for applicant
+→ populate applicant/job variable values
+→ generate board decision PDF
+→ Chairman signs
+→ registry document = board_decision signed
+→ unlock employment contract preparation
+```
 
 ### **Pass 9 — Official employment contract workflow**
 
