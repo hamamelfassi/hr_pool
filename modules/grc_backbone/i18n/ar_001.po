@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~19.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "Language: ar_001\n"
-"POT-Creation-Date: 2026-05-16 11:50+0000\n"
-"PO-Revision-Date: 2026-05-16 11:50+0000\n"
+"POT-Creation-Date: 2026-05-17 21:14+0000\n"
+"PO-Revision-Date: 2026-05-17 21:14+0000\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -1912,6 +1912,11 @@ msgid "An-Nasiriyah"
 msgstr "الناصرية"
 
 #. module: grc_backbone
+#: model:x_grc.decision_basis_phrase,x_phrase_en:grc_backbone.decision_basis_phrase_and_on
+msgid "And on"
+msgstr "وعلى"
+
+#. module: grc_backbone
 #: model:x_grc.location,x_name:grc_backbone.loc_district_001
 msgid "Aniqat Alkhams"
 msgstr "النقاط الخمس"
@@ -2005,11 +2010,6 @@ msgstr "الرويسات"
 #: model:x_grc.location,x_name:grc_backbone.loc_locality_0200
 msgid "Ar-Rabta"
 msgstr "الرابطة"
-
-#. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
-msgid "Arabic Article Body"
-msgstr "نص المادة بالعربية"
 
 #. module: grc_backbone
 #: model:ir.model.fields,field_description:grc_backbone.field_decision_template_article_line_x_title_ar
@@ -3718,11 +3718,6 @@ msgid "English Body"
 msgstr "النص الإنجليزي"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
-msgid "English Helper Body"
-msgstr "النص الإنجليزي المساعد"
-
-#. module: grc_backbone
 #: model:ir.model.fields,field_description:grc_backbone.field_decision_template_variable_x_label_en
 #: model:ir.model.fields,field_description:grc_backbone.field_grc_variable_x_label_en
 msgid "English Label"
@@ -4038,11 +4033,6 @@ msgstr "فرسطاء"
 
 #. module: grc_backbone
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
-msgid "Future Generic Source"
-msgstr "مصدر عام مستقبلي"
-
-#. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
 msgid "Future Source Mapping Hint"
 msgstr ""
 
@@ -4225,6 +4215,7 @@ msgstr "سياسات الحوكمة"
 #: model:ir.model,name:grc_backbone.model_governance_provision
 #: model:ir.model,name:grc_backbone.model_provision
 #: model:ir.model.fields,field_description:grc_backbone.field_decision_basis_line_x_governance_provision_id
+#: model:ir.model.fields,field_description:grc_backbone.field_decision_template_article_line_x_governance_provision_id
 #: model:ir.model.fields,field_description:grc_backbone.field_governance_text_pattern_x_provision_id
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_governance_provision_form
 msgid "Governance Provision"
@@ -4243,7 +4234,6 @@ msgstr "بنود الحوكمة"
 #: model:ir.model.fields,field_description:grc_backbone.field_decision_basis_line_x_reference_id
 #: model:ir.model.fields,field_description:grc_backbone.field_governance_provision_x_reference_id
 #: model:ir.model.fields,field_description:grc_backbone.field_governance_text_pattern_x_reference_id
-#: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_governance_reference_form
 msgid "Governance Reference"
 msgstr "مرجع حوكمة"
@@ -5364,6 +5354,11 @@ msgid "Omar al-Mukhtar"
 msgstr "عمر المختار"
 
 #. module: grc_backbone
+#: model:x_grc.decision_basis_phrase,x_phrase_en:grc_backbone.decision_basis_phrase_on
+msgid "On"
+msgstr "على"
+
+#. module: grc_backbone
 #: model:x_grc.function,x_name:grc_backbone.fn_onboarding_governance
 msgid "Onboarding Governance"
 msgstr "حوكمة التهيئة الوظيفية"
@@ -5870,6 +5865,11 @@ msgstr "بادئة المرجع"
 #: model:ir.model.fields,field_description:grc_backbone.field_governance_reference_x_reference_type
 msgid "Reference Type"
 msgstr "نوع المرجع"
+
+#. module: grc_backbone
+#: model:ir.actions.server,name:grc_backbone.action_decision_template_refresh
+msgid "Refresh Template"
+msgstr "تحديث القالب"
 
 #. module: grc_backbone
 #: model:x_grc.location,x_name:grc_backbone.loc_municipality_077
@@ -6385,11 +6385,6 @@ msgstr "سرت"
 #: model:x_grc.function,x_name:grc_backbone.fn_site_support
 msgid "Site Receipt & Field Support Coordination"
 msgstr "تنسيق الاستلام بالموقع والدعم الميداني"
-
-#. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
-msgid "Snapshot / Free Text"
-msgstr "نص مثبت / نص حر"
 
 #. module: grc_backbone
 #: model:x_grc.location,x_name:grc_backbone.loc_locality_0433
@@ -7585,7 +7580,21 @@ msgstr "الزويتينة سلطان"
 
 #. module: grc_backbone
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
+msgid ""
+"أضف السند باختيار صيغة الربط ومرجع الحوكمة، ويمكن اختيار بند أو نمط نص عند "
+"الحاجة. بعد الحفظ اضغط تحديث القالب لملء الوصف والنوع والنص المثبت تلقائياً."
+msgstr ""
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
 msgid "إلزامي"
+msgstr ""
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
+msgid ""
+"اختر نمط النص لكل مادة، ويمكن ربط بند حوكمة عند الحاجة. بعد الحفظ اضغط تحديث"
+" القالب لملء رقم المادة والعنوان والنص تلقائياً."
 msgstr ""
 
 #. module: grc_backbone
@@ -7604,11 +7613,6 @@ msgstr ""
 
 #. module: grc_backbone
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
-msgid "اسم السطر"
-msgstr ""
-
-#. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
 msgid "اسم القالب"
 msgstr ""
 
@@ -7620,6 +7624,11 @@ msgstr ""
 #. module: grc_backbone
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_list
 msgid "الإصدار"
+msgstr ""
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
+msgid "الاختيارات"
 msgstr ""
 
 #. module: grc_backbone
@@ -7664,18 +7673,12 @@ msgstr ""
 
 #. module: grc_backbone
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
-msgid "النص العربي"
+msgid "النص المثبت / التعديل اليدوي"
 msgstr ""
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_list
 msgid "النوع"
-msgstr ""
-
-#. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
-msgid "الوصف"
 msgstr ""
 
 #. module: grc_backbone
@@ -7693,6 +7696,29 @@ msgstr ""
 #. module: grc_backbone
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
 msgid "بند / حكم"
+msgstr ""
+
+#. module: grc_backbone
+#: model:ir.actions.server,name:grc_backbone.action_governance_provision_refresh
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_governance_provision_form
+msgid "تحديث البند"
+msgstr ""
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
+msgid "تحديث القالب"
+msgstr ""
+
+#. module: grc_backbone
+#: model:ir.actions.server,name:grc_backbone.action_grc_variable_refresh
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_grc_variable_form
+msgid "تحديث المتغير"
+msgstr ""
+
+#. module: grc_backbone
+#: model:ir.actions.server,name:grc_backbone.action_governance_text_pattern_refresh
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_governance_text_pattern_form
+msgid "تحديث النمط"
 msgstr ""
 
 #. module: grc_backbone
@@ -7727,12 +7753,13 @@ msgstr ""
 
 #. module: grc_backbone
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
-msgid "صيغة الربط اليدوية"
+msgid "عائلة القرار"
 msgstr ""
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
-msgid "عائلة القرار"
+#: model:x_grc.decision_basis_phrase,x_name:grc_backbone.decision_basis_phrase_on
+#: model:x_grc.decision_basis_phrase,x_phrase_ar:grc_backbone.decision_basis_phrase_on
+msgid "على"
 msgstr ""
 
 #. module: grc_backbone
@@ -7779,12 +7806,18 @@ msgstr ""
 
 #. module: grc_backbone
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
-msgid "مثال: يتم تعيين السيد/السيدة {applicant_name} بوظيفة {job_title}..."
+msgid ""
+"مثال: يتم تعيين {honorific_ar} / {employee_full_name} بوظيفة {job_title}..."
 msgstr ""
 
 #. module: grc_backbone
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
 msgid "مرجع حوكمة"
+msgstr ""
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
+msgid "مصدر مستقبلي"
 msgstr ""
 
 #. module: grc_backbone
@@ -7803,13 +7836,23 @@ msgid "مواد القرار"
 msgstr ""
 
 #. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
+msgid "ناتج التحديث"
+msgstr ""
+
+#. module: grc_backbone
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_list
 msgid "نشط"
 msgstr ""
 
 #. module: grc_backbone
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
-msgid "نص مرجعي"
+msgid "نص المادة"
+msgstr ""
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
+msgid "نص مثبت"
 msgstr ""
 
 #. module: grc_backbone
@@ -7844,151 +7887,167 @@ msgid "وبعد الاطلاع على"
 msgstr ""
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "Implements"
-msgstr "ينفّذ"
+#: model:x_grc.decision_basis_phrase,x_name:grc_backbone.decision_basis_phrase_and_on
+#: model:x_grc.decision_basis_phrase,x_phrase_ar:grc_backbone.decision_basis_phrase_and_on
+msgid "وعلى"
+msgstr ""
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "Amends"
-msgstr "يعدّل"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "Refresh Variable"
+msgstr "تحديث المتغير"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "Supersedes"
-msgstr "يحل محل"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "Refresh Provision"
+msgstr "تحديث البند"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "Cites"
-msgstr "يستشهد بـ"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "Refresh Pattern"
+msgstr "تحديث النمط"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "Interprets"
-msgstr "يفسّر"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "تحديث القالب"
+msgstr "تحديث القالب"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "Depends On"
-msgstr "يعتمد على"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "تحديث المتغير"
+msgstr "تحديث المتغير"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "Derived From"
-msgstr "مشتق من"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "تحديث البند"
+msgstr "تحديث البند"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "Replaces"
-msgstr "يستبدل"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "تحديث النمط"
+msgstr "تحديث النمط"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "Article"
-msgstr "مادة"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "متغيرات غير معرّفة"
+msgstr "متغيرات غير معرّفة"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "Requirement"
-msgstr "متطلب"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "تم تحديث القالب، لكن توجد مفاتيح مستخدمة داخل النص وغير مضافة في تبويب المتغيرات: %s%s"
+msgstr "تم تحديث القالب، لكن توجد مفاتيح مستخدمة داخل النص وغير مضافة في تبويب المتغيرات: %s%s"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "Step"
-msgstr "خطوة"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "على"
+msgstr "على"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "Rule"
-msgstr "قاعدة"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "وعلى"
+msgstr "وعلى"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "Recommended"
-msgstr "موصى به"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "أضف السند باختيار صيغة الربط ومرجع الحوكمة، ويمكن اختيار بند أو نمط نص عند الحاجة. بعد الحفظ اضغط تحديث القالب لملء الوصف والنوع والنص المثبت تلقائياً."
+msgstr "أضف السند باختيار صيغة الربط ومرجع الحوكمة، ويمكن اختيار بند أو نمط نص عند الحاجة. بعد الحفظ اضغط تحديث القالب لملء الوصف والنوع والنص المثبت تلقائياً."
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "Informative"
-msgstr "إرشادي"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "اختر نمط النص لكل مادة، ويمكن ربط بند حوكمة عند الحاجة. بعد الحفظ اضغط تحديث القالب لملء رقم المادة والعنوان والنص تلقائياً."
+msgstr "اختر نمط النص لكل مادة، ويمكن ربط بند حوكمة عند الحاجة. بعد الحفظ اضغط تحديث القالب لملء رقم المادة والعنوان والنص تلقائياً."
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "Conditional"
-msgstr "مشروط"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "الاختيارات"
+msgstr "الاختيارات"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "Subject"
-msgstr "الموضوع"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "ناتج التحديث"
+msgstr "ناتج التحديث"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "Footer"
-msgstr "التذييل"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "النص المثبت / التعديل اليدوي"
+msgstr "النص المثبت / التعديل اليدوي"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "Signature Block"
-msgstr "كتلة التوقيع"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "مصدر مستقبلي"
+msgstr "مصدر مستقبلي"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "General"
-msgstr "عام"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "نص المادة"
+msgstr "نص المادة"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "Other"
-msgstr "أخرى"
-
-#. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "بند / حكم"
-msgstr "بند / حكم"
-
-#. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "نمط نص"
-msgstr "نمط نص"
-
-#. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "نمط النص"
-msgstr "نمط النص"
-
-#. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "مرجع حوكمة"
-msgstr "مرجع حوكمة"
-
-#. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
 msgid "صيغة الربط"
 msgstr "صيغة الربط"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "نص مرجعي"
-msgstr "نص مرجعي"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "مرجع حوكمة"
+msgstr "مرجع حوكمة"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "بند / حكم"
+msgstr "بند / حكم"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "نمط نص"
+msgstr "نمط نص"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "نمط النص"
+msgstr "نمط النص"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
 msgid "نص مثبت"
 msgstr "نص مثبت"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "مواد القرار"
-msgstr "مواد القرار"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "رقم المادة"
+msgstr "رقم المادة"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "الأسانيد / الديباجة"
-msgstr "الأسانيد / الديباجة"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "عنوان عربي"
+msgstr "عنوان عربي"
 
 #. module: grc_backbone
-#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a4_translation_recovery
-msgid "المتغيرات"
-msgstr "المتغيرات"
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "متغيرات؟"
+msgstr "متغيرات؟"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "المتغير"
+msgstr "المتغير"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "إلزامي"
+msgstr "إلزامي"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "قيمة افتراضية"
+msgstr "قيمة افتراضية"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "نموذج المصدر"
+msgstr "نموذج المصدر"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
+msgid "حقل المصدر"
+msgstr "حقل المصدر"

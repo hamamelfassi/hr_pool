@@ -72,6 +72,13 @@
         <field name="model">x_grc.variable</field>
         <field name="arch" type="xml">
             <form string="Variable">
+                <header>
+                    <button type="action"
+                        name="grc_backbone.action_grc_variable_refresh"
+                        string="تحديث المتغير"
+                        class="btn-primary"
+                        invisible="not id"/>
+                </header>
                 <sheet>
                     <group>
                         <group>

@@ -66,6 +66,13 @@
         <field name="model">x_grc.governance_provision</field>
         <field name="arch" type="xml">
             <form string="Governance Provision">
+                <header>
+                    <button type="action"
+                        name="grc_backbone.action_governance_provision_refresh"
+                        string="تحديث البند"
+                        class="btn-primary"
+                        invisible="not id"/>
+                </header>
                 <sheet>
                     <group>
                         <group>
@@ -123,6 +130,13 @@
         <field name="model">x_grc.governance_text_pattern</field>
         <field name="arch" type="xml">
             <form string="Governance Text Pattern">
+                <header>
+                    <button type="action"
+                        name="grc_backbone.action_governance_text_pattern_refresh"
+                        string="تحديث النمط"
+                        class="btn-primary"
+                        invisible="not id"/>
+                </header>
                 <sheet>
                     <group>
                         <group>

@@ -95,7 +95,7 @@
         <field name="name">x_name</field>
         <field name="field_description">Provision Name</field>
         <field name="ttype">char</field>
-        <field name="required">True</field>
+        <field name="required">False</field>
         <field name="index">True</field>
         <field name="translate">standard</field>
     </record>
@@ -237,7 +237,7 @@
         <field name="name">x_name</field>
         <field name="field_description">Pattern Name</field>
         <field name="ttype">char</field>
-        <field name="required">True</field>
+        <field name="required">False</field>
         <field name="index">True</field>
         <field name="translate">standard</field>
     </record>

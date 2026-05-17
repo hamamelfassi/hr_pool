@@ -115,7 +115,7 @@
         <field name="name">x_name</field>
         <field name="field_description">Variable Name</field>
         <field name="ttype">char</field>
-        <field name="required">True</field>
+        <field name="required">False</field>
         <field name="index">True</field>
         <field name="translate">standard</field>
     </record>

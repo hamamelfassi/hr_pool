@@ -40,6 +40,7 @@
         "actions/06_decision_reference_variable_actions.xml",
         "actions/07_governance_library_actions.xml",
         "actions/08_decision_template_refresh_actions.xml",
+        "actions/09_governance_source_refresh_actions.xml",
         "views/01_governance_views.xml",
         "views/02_taxonomy_views.xml",
         "views/03_risk_compliance_views.xml",

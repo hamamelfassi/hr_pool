@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_grc_variable_refresh" model="ir.actions.server">
+        <field name="name">تحديث المتغير</field>
+        <field name="model_id" ref="grc_backbone.model_grc_variable"/>
+        <field name="binding_model_id" ref="grc_backbone.model_grc_variable"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+def clean_text(value):
+    if not value:
+        return ''
+    return str(value).strip()
+
+def first_text(*values):
+    for value in values:
+        value = clean_text(value)
+        if value:
+            return value
+    return ''
+
+for rec in records.sudo():
+    vals = {}
+
+    name = first_text(rec.x_name, rec.x_label_ar, rec.x_key, 'متغير')
+    label_ar = first_text(rec.x_label_ar, rec.x_name)
+
+    if name and rec.x_name != name:
+        vals['x_name'] = name
+
+    if label_ar and rec.x_label_ar != label_ar:
+        vals['x_label_ar'] = label_ar
+
+    if vals:
+        rec.write(vals)
+
+action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+
+    <record id="action_governance_provision_refresh" model="ir.actions.server">
+        <field name="name">تحديث البند</field>
+        <field name="model_id" ref="grc_backbone.model_governance_provision"/>
+        <field name="binding_model_id" ref="grc_backbone.model_governance_provision"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+def clean_text(value):
+    if not value:
+        return ''
+    return str(value).strip()
+
+def first_text(*values):
+    for value in values:
+        value = clean_text(value)
+        if value:
+            return value
+    return ''
+
+def short_text(value, limit=90):
+    value = clean_text(value)
+    if not value:
+        return ''
+    value = ' '.join(value.split())
+    if len(value) <= limit:
+        return value
+    return value[:limit].rstrip() + '...'
+
+for rec in records.sudo():
+    name = first_text(
+        rec.x_name,
+        rec.x_title_ar,
+        short_text(rec.x_body_ar),
+        rec.x_code,
+        'بند حوكمة'
+    )
+
+    vals = {}
+    if name and rec.x_name != name:
+        vals['x_name'] = name
+
+    if vals:
+        rec.write(vals)
+
+action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+
+    <record id="action_governance_text_pattern_refresh" model="ir.actions.server">
+        <field name="name">تحديث النمط</field>
+        <field name="model_id" ref="grc_backbone.model_governance_text_pattern"/>
+        <field name="binding_model_id" ref="grc_backbone.model_governance_text_pattern"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+def clean_text(value):
+    if not value:
+        return ''
+    return str(value).strip()
+
+def first_text(*values):
+    for value in values:
+        value = clean_text(value)
+        if value:
+            return value
+    return ''
+
+def short_text(value, limit=90):
+    value = clean_text(value)
+    if not value:
+        return ''
+    value = ' '.join(value.split())
+    if len(value) <= limit:
+        return value
+    return value[:limit].rstrip() + '...'
+
+for rec in records.sudo():
+    provision = rec.x_provision_id
+    reference = rec.x_reference_id
+
+    title_ar = rec.x_title_ar
+    title_en = rec.x_title_en
+    body_ar = rec.x_body_ar
+    body_en = rec.x_body_en
+
+    if provision:
+        title_ar = first_text(title_ar, provision.x_title_ar)
+        title_en = first_text(title_en, provision.x_title_en)
+        body_ar = first_text(body_ar, provision.x_body_ar, provision.x_title_ar)
+        body_en = first_text(body_en, provision.x_body_en, provision.x_title_en)
+
+    if reference:
+        title_ar = first_text(title_ar, reference.x_name)
+        title_en = first_text(title_en, reference.x_name)
+        body_ar = first_text(body_ar, reference.x_summary_ar, reference.x_name)
+        body_en = first_text(body_en, reference.x_summary_en, reference.x_name)
+
+    name = first_text(
+        rec.x_name,
+        title_ar,
+        short_text(body_ar),
+        rec.x_code,
+        'نمط نص'
+    )
+
+    vals = {}
+
+    if name and rec.x_name != name:
+        vals['x_name'] = name
+    if title_ar and rec.x_title_ar != title_ar:
+        vals['x_title_ar'] = title_ar
+    if title_en and rec.x_title_en != title_en:
+        vals['x_title_en'] = title_en
+    if body_ar and rec.x_body_ar != body_ar:
+        vals['x_body_ar'] = body_ar
+    if body_en and rec.x_body_en != body_en:
+        vals['x_body_en'] = body_en
+
+    if vals:
+        rec.write(vals)
+
+action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+</odoo>
