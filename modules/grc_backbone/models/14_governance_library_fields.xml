@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend Governance Reference with simple parent hierarchy -->
+
+    <record id="field_governance_reference_x_parent_reference_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference"/>
+        <field name="name">x_parent_reference_id</field>
+        <field name="field_description">Parent Governance Reference</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.governance_reference</field>
+        <field name="on_delete">restrict</field>
+        <field name="index">True</field>
+    </record>
+
+    <!-- Governance Reference Relation -->
+
+    <record id="field_governance_reference_relation_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference_relation"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Relation Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_governance_reference_relation_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference_relation"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+    </record>
+
+    <record id="field_governance_reference_relation_x_source_reference_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference_relation"/>
+        <field name="name">x_source_reference_id</field>
+        <field name="field_description">Source Reference</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.governance_reference</field>
+        <field name="required">True</field>
+        <field name="on_delete">restrict</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_governance_reference_relation_x_target_reference_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference_relation"/>
+        <field name="name">x_target_reference_id</field>
+        <field name="field_description">Target Reference</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.governance_reference</field>
+        <field name="required">True</field>
+        <field name="on_delete">restrict</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_governance_reference_relation_x_relation_type" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference_relation"/>
+        <field name="name">x_relation_type</field>
+        <field name="field_description">Relation Type</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+        <field name="selection">[
+            ('implements', 'Implements'),
+            ('amends', 'Amends'),
+            ('supersedes', 'Supersedes'),
+            ('cites', 'Cites'),
+            ('interprets', 'Interprets'),
+            ('depends_on', 'Depends On'),
+            ('derived_from', 'Derived From'),
+            ('replaces', 'Replaces'),
+            ('other', 'Other')
+            ]</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_governance_reference_relation_x_active" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference_relation"/>
+        <field name="name">x_active</field>
+        <field name="field_description">Active</field>
+        <field name="ttype">boolean</field>
+    </record>
+
+    <record id="field_governance_reference_relation_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference_relation"/>
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <!-- Governance Provision -->
+
+    <record id="field_governance_provision_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_provision"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Provision Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_governance_provision_x_reference_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_provision"/>
+        <field name="name">x_reference_id</field>
+        <field name="field_description">Governance Reference</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.governance_reference</field>
+        <field name="required">True</field>
+        <field name="on_delete">restrict</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_governance_provision_x_parent_provision_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_provision"/>
+        <field name="name">x_parent_provision_id</field>
+        <field name="field_description">Parent Provision</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.governance_provision</field>
+        <field name="on_delete">restrict</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_governance_provision_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_provision"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">Sequence</field>
+        <field name="ttype">integer</field>
+    </record>
+
+    <record id="field_governance_provision_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_provision"/>
+        <field name="name">x_code</field>
+        <field name="field_description">Provision Code</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_governance_provision_x_title_ar" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_provision"/>
+        <field name="name">x_title_ar</field>
+        <field name="field_description">Arabic Title</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_governance_provision_x_title_en" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_provision"/>
+        <field name="name">x_title_en</field>
+        <field name="field_description">English Title</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_governance_provision_x_body_ar" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_provision"/>
+        <field name="name">x_body_ar</field>
+        <field name="field_description">Arabic Body</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_governance_provision_x_body_en" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_provision"/>
+        <field name="name">x_body_en</field>
+        <field name="field_description">English Body</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_governance_provision_x_requirement_type" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_provision"/>
+        <field name="name">x_requirement_type</field>
+        <field name="field_description">Requirement Type</field>
+        <field name="ttype">selection</field>
+        <field name="selection">[
+            ('article', 'Article'),
+            ('clause', 'Clause'),
+            ('control', 'Control'),
+            ('requirement', 'Requirement'),
+            ('step', 'Step'),
+            ('rule', 'Rule'),
+            ('other', 'Other')
+            ]</field>
+    </record>
+
+    <record id="field_governance_provision_x_obligation_level" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_provision"/>
+        <field name="name">x_obligation_level</field>
+        <field name="field_description">Obligation Level</field>
+        <field name="ttype">selection</field>
+        <field name="selection">[
+            ('mandatory', 'Mandatory'),
+            ('recommended', 'Recommended'),
+            ('informative', 'Informative'),
+            ('conditional', 'Conditional'),
+            ('other', 'Other')
+            ]</field>
+    </record>
+
+    <record id="field_governance_provision_x_owner_function_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_provision"/>
+        <field name="name">x_owner_function_id</field>
+        <field name="field_description">Owner Function</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.function</field>
+        <field name="on_delete">restrict</field>
+    </record>
+
+    <record id="field_governance_provision_x_evidence_expectation" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_provision"/>
+        <field name="name">x_evidence_expectation</field>
+        <field name="field_description">Evidence Expectation</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_governance_provision_x_active" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_provision"/>
+        <field name="name">x_active</field>
+        <field name="field_description">Active</field>
+        <field name="ttype">boolean</field>
+    </record>
+
+    <record id="field_governance_provision_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_provision"/>
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <!-- Governance Text Pattern -->
+
+    <record id="field_governance_text_pattern_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_text_pattern"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Pattern Name</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_governance_text_pattern_x_code" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_text_pattern"/>
+        <field name="name">x_code</field>
+        <field name="field_description">Pattern Code</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_governance_text_pattern_x_pattern_role" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_text_pattern"/>
+        <field name="name">x_pattern_role</field>
+        <field name="field_description">Pattern Role</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+        <field name="selection">[
+            ('subject', 'Subject'),
+            ('basis_line', 'Basis Line'),
+            ('article', 'Article'),
+            ('footer', 'Footer'),
+            ('signature_block', 'Signature Block'),
+            ('general', 'General')
+            ]</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_governance_text_pattern_x_family_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_text_pattern"/>
+        <field name="name">x_family_id</field>
+        <field name="field_description">Decision Family</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_family</field>
+        <field name="on_delete">restrict</field>
+    </record>
+
+    <record id="field_governance_text_pattern_x_type_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_text_pattern"/>
+        <field name="name">x_type_id</field>
+        <field name="field_description">Decision Type</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_type</field>
+        <field name="on_delete">restrict</field>
+    </record>
+
+    <record id="field_governance_text_pattern_x_profile_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_text_pattern"/>
+        <field name="name">x_profile_id</field>
+        <field name="field_description">Decision Profile</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_profile</field>
+        <field name="on_delete">restrict</field>
+    </record>
+
+    <record id="field_governance_text_pattern_x_reference_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_text_pattern"/>
+        <field name="name">x_reference_id</field>
+        <field name="field_description">Governance Reference</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.governance_reference</field>
+        <field name="on_delete">restrict</field>
+    </record>
+
+    <record id="field_governance_text_pattern_x_provision_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_text_pattern"/>
+        <field name="name">x_provision_id</field>
+        <field name="field_description">Governance Provision</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.governance_provision</field>
+        <field name="on_delete">restrict</field>
+    </record>
+
+    <record id="field_governance_text_pattern_x_article_number" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_text_pattern"/>
+        <field name="name">x_article_number</field>
+        <field name="field_description">Article Number</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_governance_text_pattern_x_title_ar" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_text_pattern"/>
+        <field name="name">x_title_ar</field>
+        <field name="field_description">Arabic Title</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_governance_text_pattern_x_title_en" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_text_pattern"/>
+        <field name="name">x_title_en</field>
+        <field name="field_description">English Title</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_governance_text_pattern_x_body_ar" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_text_pattern"/>
+        <field name="name">x_body_ar</field>
+        <field name="field_description">Arabic Body</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_governance_text_pattern_x_body_en" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_text_pattern"/>
+        <field name="name">x_body_en</field>
+        <field name="field_description">English Body</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_governance_text_pattern_x_uses_variables" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_text_pattern"/>
+        <field name="name">x_uses_variables</field>
+        <field name="field_description">Uses Variables</field>
+        <field name="ttype">boolean</field>
+    </record>
+
+    <record id="field_governance_text_pattern_x_active" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_text_pattern"/>
+        <field name="name">x_active</field>
+        <field name="field_description">Active</field>
+        <field name="ttype">boolean</field>
+    </record>
+
+    <record id="field_governance_text_pattern_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_text_pattern"/>
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <!-- Extend Decision Basis Lines -->
+
+    <record id="field_decision_basis_line_x_governance_provision_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_basis_line"/>
+        <field name="name">x_governance_provision_id</field>
+        <field name="field_description">Governance Provision</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.governance_provision</field>
+        <field name="on_delete">restrict</field>
+    </record>
+
+    <record id="field_decision_basis_line_x_pattern_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_basis_line"/>
+        <field name="name">x_pattern_id</field>
+        <field name="field_description">Text Pattern</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.governance_text_pattern</field>
+        <field name="on_delete">restrict</field>
+    </record>
+
+    <!-- Extend Decision Template Article Lines -->
+
+    <record id="field_decision_template_article_line_x_pattern_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_template_article_line"/>
+        <field name="name">x_pattern_id</field>
+        <field name="field_description">Text Pattern</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.governance_text_pattern</field>
+        <field name="on_delete">restrict</field>
+    </record>
+
+    <record id="field_decision_template_article_line_x_governance_provision_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_template_article_line"/>
+        <field name="name">x_governance_provision_id</field>
+        <field name="field_description">Governance Provision</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.governance_provision</field>
+        <field name="on_delete">restrict</field>
+    </record>
+</odoo>

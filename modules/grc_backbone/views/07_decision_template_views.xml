@@ -39,6 +39,13 @@
         <field name="model">x_grc.decision_template</field>
         <field name="arch" type="xml">
             <form string="قالب قرار">
+                <header>
+                    <button type="action"
+                        name="grc_backbone.action_decision_template_refresh"
+                        string="تحديث القالب"
+                        class="btn-primary"
+                        invisible="not id"/>
+                </header>
                 <sheet>
                     <group>
                         <group string="هوية القالب">
@@ -67,43 +74,49 @@
                         </page>
 
                         <page string="الأسانيد / الديباجة">
+                            <group>
+                                <div class="text-muted">
+                                    أضف السند باختيار صيغة الربط ومرجع الحوكمة، ويمكن اختيار بند أو نمط نص عند الحاجة. بعد الحفظ اضغط تحديث القالب لملء الوصف والنوع والنص المثبت تلقائياً.
+                                </div>
+                            </group>
                             <field name="x_basis_line_ids">
                                 <list string="Basis Lines" editable="bottom">
                                     <field name="x_sequence" string="#" width="60"/>
-                                    <field name="x_name" string="الوصف"/>
-                                    <field name="x_basis_type" string="النوع"/>
                                     <field name="x_phrase_id" string="صيغة الربط"/>
-                                    <field name="x_relationship_phrase_ar" string="صيغة الربط اليدوية"/>
                                     <field name="x_reference_id" string="مرجع حوكمة"/>
-                                    <field name="x_reference_text_ar" string="نص مرجعي"/>
+                                    <field name="x_governance_provision_id" string="بند / حكم"/>
+                                    <field name="x_pattern_id" string="نمط نص"/>
+                                    <field name="x_snapshot_text_ar" string="نص مثبت"/>
                                 </list>
                                 <form string="Basis Line">
                                     <sheet>
                                         <group>
-                                            <group>
+                                            <group string="الاختيارات">
                                                 <field name="x_template_id" readonly="1"/>
                                                 <field name="x_sequence"/>
-                                                <field name="x_name"/>
-                                                <field name="x_basis_type"/>
-                                            </group>
-                                            <group>
                                                 <field name="x_phrase_id"/>
-                                                <field name="x_relationship_phrase_ar"/>
-                                                <field name="x_relationship_phrase_en"/>
+                                                <field name="x_reference_id"/>
+                                                <field name="x_governance_provision_id"/>
+                                                <field name="x_pattern_id"/>
+                                            </group>
+                                            <group string="ناتج التحديث">
+                                                <field name="x_name" readonly="1"/>
+                                                <field name="x_basis_type" readonly="1"/>
+                                                <field name="x_relationship_phrase_ar" readonly="1"/>
+                                                <field name="x_relationship_phrase_en" readonly="1"/>
                                             </group>
                                         </group>
-                                        <group string="Governance Reference">
-                                            <field name="x_reference_id"/>
-                                        </group>
-                                        <group string="Future Generic Source">
-                                            <field name="x_source_model"/>
-                                            <field name="x_source_res_id"/>
-                                        </group>
-                                        <group string="Snapshot / Free Text">
+                                        <group string="النص المثبت / التعديل اليدوي">
                                             <field name="x_reference_text_ar"/>
                                             <field name="x_reference_text_en"/>
                                             <field name="x_snapshot_text_ar"/>
                                             <field name="x_snapshot_text_en"/>
+                                        </group>
+                                        <group string="مصدر مستقبلي">
+                                            <field name="x_source_model"/>
+                                            <field name="x_source_res_id"/>
+                                        </group>
+                                        <group>
                                             <field name="x_notes"/>
                                         </group>
                                     </sheet>
@@ -112,34 +125,39 @@
                         </page>
 
                         <page string="مواد القرار">
+                            <group>
+                                <div class="text-muted">
+                                    اختر نمط النص لكل مادة، ويمكن ربط بند حوكمة عند الحاجة. بعد الحفظ اضغط تحديث القالب لملء رقم المادة والعنوان والنص تلقائياً.
+                                </div>
+                            </group>
                             <field name="x_article_line_ids">
                                 <list string="Article Lines" editable="bottom">
                                     <field name="x_sequence" string="#" width="60"/>
+                                    <field name="x_pattern_id" string="نمط النص"/>
+                                    <field name="x_governance_provision_id" string="بند / حكم"/>
                                     <field name="x_article_number" string="رقم المادة"/>
-                                    <field name="x_name" string="اسم السطر"/>
                                     <field name="x_title_ar" string="عنوان عربي"/>
-                                    <field name="x_body_ar" string="النص العربي"/>
                                     <field name="x_uses_variables" string="متغيرات؟"/>
                                 </list>
                                 <form string="Decision Article">
                                     <sheet>
                                         <group>
-                                            <group>
+                                            <group string="الاختيارات">
                                                 <field name="x_template_id" readonly="1"/>
                                                 <field name="x_sequence"/>
-                                                <field name="x_article_number"/>
-                                                <field name="x_name"/>
-                                                <field name="x_uses_variables"/>
+                                                <field name="x_pattern_id"/>
+                                                <field name="x_governance_provision_id"/>
                                             </group>
-                                            <group>
+                                            <group string="ناتج التحديث">
+                                                <field name="x_article_number"/>
+                                                <field name="x_name" readonly="1"/>
+                                                <field name="x_uses_variables" readonly="1"/>
                                                 <field name="x_title_ar"/>
                                                 <field name="x_title_en"/>
                                             </group>
                                         </group>
-                                        <group string="Arabic Article Body">
-                                            <field name="x_body_ar" placeholder="مثال: يتم تعيين السيد/السيدة {applicant_name} بوظيفة {job_title}..."/>
-                                        </group>
-                                        <group string="English Helper Body">
+                                        <group string="نص المادة">
+                                            <field name="x_body_ar" placeholder="مثال: يتم تعيين {honorific_ar} / {employee_full_name} بوظيفة {job_title}..."/>
                                             <field name="x_body_en"/>
                                         </group>
                                         <group>

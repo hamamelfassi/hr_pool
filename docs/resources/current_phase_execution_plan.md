@@ -445,6 +445,344 @@ Core primitives:
 - Decision Template;
 - Decision Instance.
 
+### **7A-5A — Simplify template child-line UX**
+
+Decision Template tabs should become guided setup surfaces, not raw technical tables.
+
+Basis lines list should show mainly:
+
+```
+#
+صيغة الربط
+مرجع حوكمة
+بند / حكم
+نمط نص
+نص مثبت
+```
+
+Article lines list should show mainly:
+
+```
+#
+نمط النص
+بند / حكم
+رقم المادة
+عنوان عربي
+يستخدم متغيرات؟
+```
+
+Variable rows list should show mainly:
+
+```
+المتغير
+إلزامي؟
+قيمة افتراضية
+نموذج المصدر
+حقل المصدر
+```
+
+Technical/copy fields remain available in popup/detail forms only where useful.
+
+### **7A-5B — Add parent refresh action**
+
+Button label:
+
+```
+تحديث القالب
+```
+
+English action name:
+
+```
+Refresh Template
+```
+
+The button runs on `x_grc.decision_template`.
+
+It refreshes:
+
+```
+basis lines
+article lines
+variable bindings
+```
+
+No onchange assumption. No per-line buttons. No auto-on-save recursion.
+
+### **7A-5C — Basis line refresh rules**
+
+User selects:
+
+```
+صيغة الربط
+مرجع حوكمة
+بند / حكم optional
+نمط نص optional
+```
+
+Action fills:
+
+```
+x_name
+x_basis_type
+x_relationship_phrase_ar
+x_relationship_phrase_en
+x_reference_text_ar
+x_reference_text_en
+x_snapshot_text_ar
+x_snapshot_text_en
+```
+
+`x_name` rule:
+
+```
+[صيغة الربط] + " " + [best Arabic substance]
+```
+
+Best Arabic substance priority:
+
+```
+provision.title_ar
+pattern.title_ar
+reference.name / reference.summary_ar
+manual reference_text_ar
+```
+
+Use code only as last fallback.
+
+Basis type derivation:
+
+```
+If provision selected → provision.reference.reference_type
+Else if reference selected → reference.reference_type
+Else if pattern has provision/reference → derive from that
+Else → free_text / other
+```
+
+### **7A-5D — Article line refresh rules**
+
+User selects:
+
+```
+نمط النص
+بند / حكم optional
+```
+
+Action fills:
+
+```
+x_name
+x_article_number
+x_title_ar
+x_title_en
+x_body_ar
+x_body_en
+x_uses_variables
+```
+
+`x_name` priority:
+
+```
+pattern.title_ar
+pattern.name
+provision.title_ar
+manual title/body summary
+```
+
+Code is last fallback only.
+
+### **7A-5E — Variable binding refresh rules**
+
+User selects:
+
+```
+المتغير
+```
+
+User may manually set:
+
+```
+إلزامي؟
+قيمة افتراضية
+نموذج المصدر
+حقل المصدر
+```
+
+Action fills snapshot fields:
+
+```
+x_name
+x_key
+x_label_ar
+x_label_en
+x_value_type
+```
+
+`x_name` priority:
+
+```
+variable.x_name
+variable.x_label_ar
+variable.x_key as last fallback
+```
+
+### **7A-5F — Source-record UX refresh actions**
+
+Apply the same low-risk UX pattern where useful.
+
+For `x_grc.variable`:
+
+```
+تحديث المتغير
+```
+
+Rules:
+
+```
+If x_name empty → fill from x_label_ar, then x_key as last fallback.
+If x_label_ar empty → fill from x_name.
+Never modify x_key automatically.
+```
+
+For `x_grc.governance_provision`:
+
+```
+تحديث البند
+```
+
+Rules:
+
+```
+If x_name empty → fill from x_title_ar, then x_body_ar summary, then x_code as last fallback.
+Do not infer body/title from parent reference.
+```
+
+For `x_grc.governance_text_pattern`:
+
+```
+تحديث النمط
+```
+
+Rules:
+
+```
+If x_name empty → fill from x_title_ar, then x_body_ar summary, then x_code as last fallback.
+If provision selected and title/body empty → copy provision title/body.
+If reference selected and title/body empty → copy reference summary/name.
+```
+
+### **7A-5G — Placeholder validation via toast**
+
+`تحديث القالب` scans placeholders in:
+
+```
+subject template
+basis snapshot/reference text
+article body text
+```
+
+It checks that each `{key}` exists in the template variable bindings.
+
+If missing keys exist, use a SaaS-safe toast/display notification pattern, not UserError.
+
+Expected behavior:
+
+```
+Template is not silently accepted.
+User receives a clear notification listing missing keys.
+No broken template is treated as ready.
+```
+
+## **Updated 7A-6 scope — Retire old scaffold surfaces/data**
+
+Purpose: remove old architecture noise after the new foundation is in place.
+
+Scope:
+
+```
+Retire old framework/policy/provision/decision/SOP surfaces from active UI.
+Retire risk/control/compliance/incident placeholder surfaces if still exposed.
+Retire commercial/tender/contract/clause placeholder surfaces if still exposed.
+Delete/neutralize old task template and task-template-line seed data.
+Remove old task-template/task-line active menus/views/actions where safe.
+Keep functional taxonomy and locations intact.
+Do not physically delete installed ir.model/ir.model.fields unless safely detached and explicitly scoped.
+```
+
+Doctrine:
+
+```
+Old framework/policy/SOP/decision/provision concepts are now represented by:
+x_grc.governance_reference
+x_grc.governance_reference_relation
+x_grc.governance_provision
+x_grc.governance_text_pattern
+```
+
+Acceptance:
+
+```
+GRC navigation is cleaner.
+Old scaffold menus no longer compete with the new governance library.
+No old SOP/task-template seed examples remain active.
+Functional Areas, Functions, and Locations remain working.
+No traceback.
+```
+
+## **Updated 7C scope — User-assisted recruitment decision template setup**
+
+7C is **not** a programmatic seed pass.
+
+It is a guided manual setup workflow using the improved 7A-5 UX.
+
+Scope:
+
+```
+Use Governance References already created or create missing ones.
+Create/verify needed Governance Provisions if useful.
+Create reusable Governance Text Patterns for:
+- appointment article
+- execution article
+- any reusable basis wording if needed
+Create/verify Variable Dictionary records.
+Complete the existing recruitment decision template:
+- subject
+- basis lines
+- article lines
+- variable bindings
+Run تحديث القالب.
+Resolve any toast warnings for missing placeholders.
+Confirm template is ready for instance generation.
+```
+
+Target template:
+
+```
+قالب قرار مجلس الإدارة بشأن تعيين موظف
+```
+
+7C acceptance:
+
+```
+Template has clean basis lines.
+Template has clean article lines.
+Template variables are bound.
+No raw/manual duplicate labels are required.
+Refresh action populates fields correctly.
+No PDF yet.
+No instance yet.
+```
+
+## **Future order remains locked**
+
+```
+7A-5: Refresh Template UX
+7A-6: Retire old scaffold surfaces/data
+7C: Guided manual template setup
+7B: Decision instances / instantiate from template
+7D: Documentation lock
+```
+
 ### **Pass 8 — Contract tab + Board Decision consumption**
 
 `hr_recruitment_custom` consumes the GRC decision instance foundation:

@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_decision_template_refresh" model="ir.actions.server">
+        <field name="name">Refresh Template</field>
+        <field name="model_id" ref="grc_backbone.model_decision_template"/>
+        <field name="binding_model_id" ref="grc_backbone.model_decision_template"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+action = False
+
+def clean_text(value):
+    if not value:
+        return ''
+    return str(value).strip()
+
+def first_text(*values):
+    for value in values:
+        value = clean_text(value)
+        if value:
+            return value
+    return ''
+
+def short_text(value, limit=90):
+    value = clean_text(value)
+    if not value:
+        return ''
+    value = ' '.join(value.split())
+    if len(value) <= limit:
+        return value
+    return value[:limit].rstrip() + '...'
+
+def basis_type_from_reference_type(reference_type):
+    if reference_type in ['framework', 'law', 'regulation', 'policy', 'decision', 'letter', 'memo', 'free_text', 'other']:
+        return reference_type
+    if reference_type == 'standard':
+        return 'framework'
+    if reference_type == 'procedure':
+        return 'policy'
+    if reference_type == 'meeting_minutes':
+        return 'decision'
+    return 'other'
+
+def extract_keys_from_text(text):
+    text = clean_text(text)
+    keys = []
+    current = ''
+    inside = False
+
+    for ch in text:
+        if ch == '{':
+            inside = True
+            current = ''
+            continue
+        if ch == '}' and inside:
+            key = current.strip()
+            if key and (' ' not in key) and key not in keys:
+                keys.append(key)
+            inside = False
+            current = ''
+            continue
+        if inside:
+            current += ch
+
+    return keys
+
+def append_missing(existing, items):
+    for item in items:
+        if item and item not in existing:
+            existing.append(item)
+
+def get_line_reference(line):
+    provision = line.x_governance_provision_id
+    pattern = line.x_pattern_id
+    reference = line.x_reference_id
+
+    if not provision and pattern and pattern.x_provision_id:
+        provision = pattern.x_provision_id
+
+    if not reference and provision and provision.x_reference_id:
+        reference = provision.x_reference_id
+
+    if not reference and pattern and pattern.x_reference_id:
+        reference = pattern.x_reference_id
+
+    if not reference and pattern and pattern.x_provision_id and pattern.x_provision_id.x_reference_id:
+        reference = pattern.x_provision_id.x_reference_id
+
+    return reference, provision, pattern
+
+for template in records.sudo():
+    # 1) Basis lines
+    for line in template.x_basis_line_ids:
+        reference, provision, pattern = get_line_reference(line)
+
+        phrase_ar = first_text(
+            line.x_phrase_id.x_phrase_ar if line.x_phrase_id else '',
+            line.x_relationship_phrase_ar
+        )
+        phrase_en = first_text(
+            line.x_phrase_id.x_phrase_en if line.x_phrase_id else '',
+            line.x_relationship_phrase_en
+        )
+
+        ref_type = ''
+        if reference:
+            ref_type = reference.x_reference_type or ''
+
+        basis_type = basis_type_from_reference_type(ref_type) if ref_type else (line.x_basis_type or 'other')
+
+        source_title_ar = first_text(
+            provision.x_title_ar if provision else '',
+            pattern.x_title_ar if pattern else '',
+            reference.x_name if reference else '',
+            line.x_reference_text_ar,
+            line.x_snapshot_text_ar
+        )
+        source_title_en = first_text(
+            provision.x_title_en if provision else '',
+            pattern.x_title_en if pattern else '',
+            reference.x_name if reference else '',
+            line.x_reference_text_en,
+            line.x_snapshot_text_en
+        )
+
+        source_body_ar = first_text(
+            pattern.x_body_ar if pattern and pattern.x_pattern_role in ['basis_line', 'general'] else '',
+            provision.x_body_ar if provision else '',
+            provision.x_title_ar if provision else '',
+            reference.x_summary_ar if reference else '',
+            reference.x_name if reference else '',
+            line.x_reference_text_ar,
+            line.x_snapshot_text_ar
+        )
+        source_body_en = first_text(
+            pattern.x_body_en if pattern and pattern.x_pattern_role in ['basis_line', 'general'] else '',
+            provision.x_body_en if provision else '',
+            provision.x_title_en if provision else '',
+            reference.x_summary_en if reference else '',
+            reference.x_name if reference else '',
+            line.x_reference_text_en,
+            line.x_snapshot_text_en
+        )
+
+        display_ar = first_text(source_title_ar, source_body_ar, 'سند قرار')
+        generated_name = first_text(
+            (phrase_ar + ' ' + display_ar).strip() if phrase_ar else display_ar,
+            line.x_name,
+            'سند قرار'
+        )
+
+        line.write({
+            'x_name': generated_name,
+            'x_basis_type': basis_type,
+            'x_relationship_phrase_ar': phrase_ar or False,
+            'x_relationship_phrase_en': phrase_en or False,
+            'x_reference_id': reference.id if reference else False,
+            'x_governance_provision_id': provision.id if provision else False,
+            'x_reference_text_ar': source_body_ar or False,
+            'x_reference_text_en': source_body_en or False,
+            'x_snapshot_text_ar': source_body_ar or False,
+            'x_snapshot_text_en': source_body_en or False,
+        })
+
+    # 2) Article lines
+    for article in template.x_article_line_ids:
+        pattern = article.x_pattern_id
+        provision = article.x_governance_provision_id
+
+        if not provision and pattern and pattern.x_provision_id:
+            provision = pattern.x_provision_id
+
+        title_ar = first_text(
+            pattern.x_title_ar if pattern else '',
+            provision.x_title_ar if provision else '',
+            article.x_title_ar,
+            article.x_name
+        )
+        title_en = first_text(
+            pattern.x_title_en if pattern else '',
+            provision.x_title_en if provision else '',
+            article.x_title_en
+        )
+        body_ar = first_text(
+            pattern.x_body_ar if pattern else '',
+            provision.x_body_ar if provision else '',
+            article.x_body_ar
+        )
+        body_en = first_text(
+            pattern.x_body_en if pattern else '',
+            provision.x_body_en if provision else '',
+            article.x_body_en
+        )
+
+        article_number = first_text(
+            pattern.x_article_number if pattern else '',
+            article.x_article_number
+        )
+
+        generated_article_name = first_text(
+            title_ar,
+            pattern.x_name if pattern else '',
+            provision.x_name if provision else '',
+            short_text(body_ar),
+            'مادة قرار'
+        )
+
+        uses_variables = bool(
+            (pattern and pattern.x_uses_variables)
+            or extract_keys_from_text(body_ar)
+            or extract_keys_from_text(body_en)
+        )
+
+        vals = {
+            'x_name': generated_article_name,
+            'x_article_number': article_number or False,
+            'x_title_ar': title_ar or False,
+            'x_title_en': title_en or False,
+            'x_body_ar': body_ar or False,
+            'x_body_en': body_en or False,
+            'x_uses_variables': uses_variables,
+        }
+
+        if provision:
+            vals['x_governance_provision_id'] = provision.id
+
+        article.write(vals)
+
+    # 3) Variable bindings
+    for variable_line in template.x_variable_definition_ids:
+        variable = variable_line.x_variable_id
+        if variable:
+            variable_line.write({
+                'x_name': first_text(variable.x_name, variable.x_label_ar, variable.x_key, variable_line.x_name) or False,
+                'x_key': variable.x_key or False,
+                'x_label_ar': first_text(variable.x_label_ar, variable.x_name) or False,
+                'x_label_en': first_text(variable.x_label_en, variable.x_name) or False,
+                'x_value_type': variable.x_value_type or variable_line.x_value_type or 'char',
+            })
+
+    # 4) Placeholder validation
+    bound_keys = []
+    for variable_line in template.x_variable_definition_ids:
+        key = first_text(
+            variable_line.x_key,
+            variable_line.x_variable_id.x_key if variable_line.x_variable_id else ''
+        )
+        if key and key not in bound_keys:
+            bound_keys.append(key)
+
+    used_keys = []
+    append_missing(used_keys, extract_keys_from_text(template.x_subject_template_ar))
+    append_missing(used_keys, extract_keys_from_text(template.x_subject_template_en))
+
+    for line in template.x_basis_line_ids:
+        append_missing(used_keys, extract_keys_from_text(line.x_reference_text_ar))
+        append_missing(used_keys, extract_keys_from_text(line.x_reference_text_en))
+        append_missing(used_keys, extract_keys_from_text(line.x_snapshot_text_ar))
+        append_missing(used_keys, extract_keys_from_text(line.x_snapshot_text_en))
+
+    for article in template.x_article_line_ids:
+        append_missing(used_keys, extract_keys_from_text(article.x_body_ar))
+        append_missing(used_keys, extract_keys_from_text(article.x_body_en))
+
+    missing_keys = []
+    for key in used_keys:
+        if key not in bound_keys and key not in missing_keys:
+            missing_keys.append(key)
+
+    if missing_keys:
+        shown_keys = ', '.join(missing_keys[:20])
+        extra = ''
+        if len(missing_keys) > 20:
+            extra = ' ...'
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'متغيرات غير معرّفة',
+                'message': 'تم تحديث القالب، لكن توجد مفاتيح مستخدمة داخل النص وغير مضافة في تبويب المتغيرات: %s%s' % (shown_keys, extra),
+                'type': 'warning',
+                'sticky': True,
+            }
+        }
+        continue
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+</odoo>

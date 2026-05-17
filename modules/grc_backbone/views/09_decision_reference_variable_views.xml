@@ -11,6 +11,7 @@
                 <field name="x_code"/>
                 <field name="x_name"/>
                 <field name="x_reference_type"/>
+                <field name="x_parent_reference_id"/>
                 <field name="x_authority_name"/>
                 <field name="x_reference_date"/>
                 <field name="x_status" widget="badge"/>
@@ -30,6 +31,7 @@
                             <field name="x_name"/>
                             <field name="x_code"/>
                             <field name="x_reference_type"/>
+                            <field name="x_parent_reference_id"/>
                             <field name="x_authority_name"/>
                         </group>
                         <group>

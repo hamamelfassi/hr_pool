@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_governance_reference_relations" name="Governance Reference Relations" parent="grc_backbone.menu_decision_configuration" action="grc_backbone.action_governance_reference_relation" sequence="45"/>
+    <menuitem id="menu_governance_provisions" name="Governance Provisions" parent="grc_backbone.menu_decision_configuration" action="grc_backbone.action_governance_provision" sequence="46"/>
+    <menuitem id="menu_governance_text_patterns" name="Governance Text Patterns" parent="grc_backbone.menu_decision_configuration" action="grc_backbone.action_governance_text_pattern" sequence="47"/>
+
+    <record id="view_governance_reference_relation_list" model="ir.ui.view">
+        <field name="name">x_grc.governance_reference_relation.list</field>
+        <field name="model">x_grc.governance_reference_relation</field>
+        <field name="arch" type="xml">
+            <list string="Governance Reference Relations">
+                <field name="x_sequence"/>
+                <field name="x_name"/>
+                <field name="x_source_reference_id"/>
+                <field name="x_relation_type" widget="badge"/>
+                <field name="x_target_reference_id"/>
+                <field name="x_active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_governance_reference_relation_form" model="ir.ui.view">
+        <field name="name">x_grc.governance_reference_relation.form</field>
+        <field name="model">x_grc.governance_reference_relation</field>
+        <field name="arch" type="xml">
+            <form string="Governance Reference Relation">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_sequence"/>
+                            <field name="x_name"/>
+                            <field name="x_relation_type"/>
+                            <field name="x_active"/>
+                        </group>
+                        <group>
+                            <field name="x_source_reference_id"/>
+                            <field name="x_target_reference_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="x_notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_governance_provision_list" model="ir.ui.view">
+        <field name="name">x_grc.governance_provision.list</field>
+        <field name="model">x_grc.governance_provision</field>
+        <field name="arch" type="xml">
+            <list string="Governance Provisions">
+                <field name="x_sequence"/>
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_reference_id"/>
+                <field name="x_requirement_type" widget="badge"/>
+                <field name="x_obligation_level" widget="badge"/>
+                <field name="x_active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_governance_provision_form" model="ir.ui.view">
+        <field name="name">x_grc.governance_provision.form</field>
+        <field name="model">x_grc.governance_provision</field>
+        <field name="arch" type="xml">
+            <form string="Governance Provision">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_name"/>
+                            <field name="x_code"/>
+                            <field name="x_reference_id"/>
+                            <field name="x_parent_provision_id"/>
+                            <field name="x_sequence"/>
+                            <field name="x_active"/>
+                        </group>
+                        <group>
+                            <field name="x_requirement_type"/>
+                            <field name="x_obligation_level"/>
+                            <field name="x_owner_function_id"/>
+                        </group>
+                    </group>
+                    <group string="Titles">
+                        <field name="x_title_ar"/>
+                        <field name="x_title_en"/>
+                    </group>
+                    <group string="Provision Text">
+                        <field name="x_body_ar"/>
+                        <field name="x_body_en"/>
+                    </group>
+                    <group string="Evidence">
+                        <field name="x_evidence_expectation"/>
+                    </group>
+                    <group>
+                        <field name="x_notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_governance_text_pattern_list" model="ir.ui.view">
+        <field name="name">x_grc.governance_text_pattern.list</field>
+        <field name="model">x_grc.governance_text_pattern</field>
+        <field name="arch" type="xml">
+            <list string="Governance Text Patterns">
+                <field name="x_code"/>
+                <field name="x_name"/>
+                <field name="x_pattern_role" widget="badge"/>
+                <field name="x_profile_id"/>
+                <field name="x_reference_id"/>
+                <field name="x_provision_id"/>
+                <field name="x_uses_variables"/>
+                <field name="x_active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_governance_text_pattern_form" model="ir.ui.view">
+        <field name="name">x_grc.governance_text_pattern.form</field>
+        <field name="model">x_grc.governance_text_pattern</field>
+        <field name="arch" type="xml">
+            <form string="Governance Text Pattern">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="x_name"/>
+                            <field name="x_code"/>
+                            <field name="x_pattern_role"/>
+                            <field name="x_article_number"/>
+                            <field name="x_uses_variables"/>
+                            <field name="x_active"/>
+                        </group>
+                        <group>
+                            <field name="x_family_id"/>
+                            <field name="x_type_id"/>
+                            <field name="x_profile_id"/>
+                            <field name="x_reference_id"/>
+                            <field name="x_provision_id"/>
+                        </group>
+                    </group>
+                    <group string="Titles">
+                        <field name="x_title_ar"/>
+                        <field name="x_title_en"/>
+                    </group>
+                    <group string="Pattern Body">
+                        <field name="x_body_ar"/>
+                        <field name="x_body_en"/>
+                    </group>
+                    <group>
+                        <field name="x_notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

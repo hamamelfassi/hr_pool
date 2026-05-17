@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_governance_reference_relation" model="ir.actions.act_window">
+        <field name="name">Governance Reference Relations</field>
+        <field name="res_model">x_grc.governance_reference_relation</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'default_x_active': True}</field>
+    </record>
+
+    <record id="action_governance_provision" model="ir.actions.act_window">
+        <field name="name">Governance Provisions</field>
+        <field name="res_model">x_grc.governance_provision</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'default_x_active': True, 'default_x_requirement_type': 'article', 'default_x_obligation_level': 'mandatory'}</field>
+    </record>
+
+    <record id="action_governance_text_pattern" model="ir.actions.act_window">
+        <field name="name">Governance Text Patterns</field>
+        <field name="res_model">x_grc.governance_text_pattern</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'default_x_active': True, 'default_x_pattern_role': 'article'}</field>
+    </record>
+</odoo>
