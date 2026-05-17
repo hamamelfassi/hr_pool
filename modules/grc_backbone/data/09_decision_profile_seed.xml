@@ -129,6 +129,22 @@
             <field name="x_active" eval="True"/>
         </record>
 
+        <record id="decision_basis_phrase_on" model="x_grc.decision_basis_phrase">
+            <field name="x_name">على</field>
+            <field name="x_phrase_ar">على</field>
+            <field name="x_phrase_en">On</field>
+            <field name="x_sequence">21</field>
+            <field name="x_active" eval="True"/>
+        </record>
+
+        <record id="decision_basis_phrase_and_on" model="x_grc.decision_basis_phrase">
+            <field name="x_name">وعلى</field>
+            <field name="x_phrase_ar">وعلى</field>
+            <field name="x_phrase_en">And on</field>
+            <field name="x_sequence">22</field>
+            <field name="x_active" eval="True"/>
+        </record>
+
         <record id="decision_basis_phrase_pursuant_to" model="x_grc.decision_basis_phrase">
             <field name="x_name">عملاً بـ</field>
             <field name="x_phrase_ar">عملاً بـ</field>

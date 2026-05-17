@@ -148,6 +148,15 @@ for template in records.sudo():
             'سند قرار'
         )
 
+        snapshot_body_ar = first_text(
+            (phrase_ar + ' ' + source_body_ar).strip() if phrase_ar and source_body_ar else source_body_ar,
+            source_body_ar
+        )
+        snapshot_body_en = first_text(
+            (phrase_en + ' ' + source_body_en).strip() if phrase_en and source_body_en else source_body_en,
+            source_body_en
+        )
+
         line.write({
             'x_name': generated_name,
             'x_basis_type': basis_type,
@@ -157,8 +166,8 @@ for template in records.sudo():
             'x_governance_provision_id': provision.id if provision else False,
             'x_reference_text_ar': source_body_ar or False,
             'x_reference_text_en': source_body_en or False,
-            'x_snapshot_text_ar': source_body_ar or False,
-            'x_snapshot_text_en': source_body_en or False,
+            'x_snapshot_text_ar': snapshot_body_ar or False,
+            'x_snapshot_text_en': snapshot_body_en or False,
         })
 
     # 2) Article lines
