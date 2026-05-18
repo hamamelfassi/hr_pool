@@ -3437,7 +3437,7 @@ msgstr "القرارات"
 #: model:ir.ui.menu,name:grc_backbone.menu_decision_families
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_family_list
 msgid "Decision Families"
-msgstr "عائلات القرارات"
+msgstr "مجالات الحوكمة"
 
 #. module: grc_backbone
 #: model:ir.model,name:grc_backbone.model_decision_family
@@ -3447,7 +3447,7 @@ msgstr "عائلات القرارات"
 #: model:ir.model.fields,field_description:grc_backbone.field_governance_text_pattern_x_family_id
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_family_form
 msgid "Decision Family"
-msgstr "عائلة القرار"
+msgstr "مجال الحوكمة"
 
 #. module: grc_backbone
 #: model:ir.model,name:grc_backbone.model_decision_profile
@@ -3455,14 +3455,14 @@ msgstr "عائلة القرار"
 #: model:ir.model.fields,field_description:grc_backbone.field_governance_text_pattern_x_profile_id
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_profile_form
 msgid "Decision Profile"
-msgstr "ملف القرار"
+msgstr "نموذج القرار"
 
 #. module: grc_backbone
 #: model:ir.actions.act_window,name:grc_backbone.action_decision_profile
 #: model:ir.ui.menu,name:grc_backbone.menu_decision_profiles
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_profile_list
 msgid "Decision Profiles"
-msgstr "ملفات القرارات"
+msgstr "نماذج القرارات"
 
 #. module: grc_backbone
 #: model:ir.model,name:grc_backbone.model_decision_template
@@ -3499,14 +3499,14 @@ msgstr "عنوان القرار"
 #: model:ir.model.fields,field_description:grc_backbone.field_governance_text_pattern_x_type_id
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_type_form
 msgid "Decision Type"
-msgstr "نوع القرار"
+msgstr "إجراء الحوكمة"
 
 #. module: grc_backbone
 #: model:ir.actions.act_window,name:grc_backbone.action_decision_type
 #: model:ir.ui.menu,name:grc_backbone.menu_decision_types
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_type_list
 msgid "Decision Types"
-msgstr "أنواع القرارات"
+msgstr "إجراءات الحوكمة"
 
 #. module: grc_backbone
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
@@ -3867,12 +3867,12 @@ msgstr "فم ملغة"
 #. module: grc_backbone
 #: model:ir.model.fields,field_description:grc_backbone.field_decision_family_x_code
 msgid "Family Code"
-msgstr "كود العائلة"
+msgstr "كود مجال الحوكمة"
 
 #. module: grc_backbone
 #: model:ir.model.fields,field_description:grc_backbone.field_decision_family_x_name
 msgid "Family Name"
-msgstr "اسم العائلة"
+msgstr "اسم مجال الحوكمة"
 
 #. module: grc_backbone
 #: model:x_grc.location,x_name:grc_backbone.loc_locality_0300
@@ -4236,7 +4236,7 @@ msgstr "بنود الحوكمة"
 #: model:ir.model.fields,field_description:grc_backbone.field_governance_text_pattern_x_reference_id
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_governance_reference_form
 msgid "Governance Reference"
-msgstr "مرجع حوكمة"
+msgstr "مرجع الحوكمة"
 
 #. module: grc_backbone
 #: model:ir.model,name:grc_backbone.model_governance_reference_relation
@@ -5547,7 +5547,7 @@ msgstr "صفة المصدر بالإنجليزية من الملف"
 #. module: grc_backbone
 #: model:ir.model.fields,field_description:grc_backbone.field_decision_template_x_profile_family_id
 msgid "Profile Family"
-msgstr "العائلة من الملف"
+msgstr "مجال النموذج"
 
 #. module: grc_backbone
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_profile_form
@@ -5567,7 +5567,7 @@ msgstr "كود القالب من الملف"
 #. module: grc_backbone
 #: model:ir.model.fields,field_description:grc_backbone.field_decision_template_x_profile_type_id
 msgid "Profile Type"
-msgstr "النوع من الملف"
+msgstr "إجراء النموذج"
 
 #. module: grc_backbone
 #: model:x_grc.location,x_name:grc_backbone.loc_locality_0514
@@ -7137,12 +7137,12 @@ msgstr "تونين"
 #. module: grc_backbone
 #: model:ir.model.fields,field_description:grc_backbone.field_decision_type_x_code
 msgid "Type Code"
-msgstr "كود النوع"
+msgstr "كود إجراء الحوكمة"
 
 #. module: grc_backbone
 #: model:ir.model.fields,field_description:grc_backbone.field_decision_type_x_name
 msgid "Type Name"
-msgstr "اسم النوع"
+msgstr "اسم إجراء الحوكمة"
 
 #. module: grc_backbone
 #: model:x_grc.location,x_name:grc_backbone.loc_locality_0511
@@ -8115,12 +8115,12 @@ msgstr "تصنيف الحوكمة"
 #. module: grc_backbone
 #: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a6_navigation_translation_recovery
 msgid "Governance Families"
-msgstr "عائلات الحوكمة"
+msgstr "مجالات الحوكمة"
 
 #. module: grc_backbone
 #: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a6_navigation_translation_recovery
 msgid "Governance Types"
-msgstr "أنواع الحوكمة"
+msgstr "إجراءات الحوكمة"
 
 #. module: grc_backbone
 #: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a6_navigation_translation_recovery
@@ -8146,3 +8146,48 @@ msgstr "أنماط نصوص الحوكمة"
 #: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a6_navigation_translation_recovery
 msgid "References"
 msgstr "مراجع الحوكمة"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a6j_translation_touchup
+msgid "Governance Reference Type"
+msgstr "نوع مرجع الحوكمة"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a6j_translation_touchup
+msgid "Reference Type Name"
+msgstr "اسم نوع المرجع"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a6j_translation_touchup
+msgid "Reference Type Code"
+msgstr "كود نوع المرجع"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a6j_translation_touchup
+msgid "Parent Reference"
+msgstr "المرجع الأعلى"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a6j_translation_touchup
+msgid "عائلات الحوكمة"
+msgstr "مجالات الحوكمة"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a6j_translation_touchup
+msgid "عائلات القرارت"
+msgstr "مجالات الحوكمة"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a6j_translation_touchup
+msgid "عائلات القرارات"
+msgstr "مجالات الحوكمة"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a6j_translation_touchup
+msgid "أنواع الحوكمة"
+msgstr "إجراءات الحوكمة"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a6j_translation_touchup
+msgid "أنواع القرارات"
+msgstr "إجراءات الحوكمة"

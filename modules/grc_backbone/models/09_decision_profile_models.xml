@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="model_decision_family" model="ir.model">
-        <field name="name">Decision Family</field>
+        <field name="name">مجال الحوكمة</field>
         <field name="model">x_grc.decision_family</field>
     </record>
 
     <record id="model_decision_type" model="ir.model">
-        <field name="name">Decision Type</field>
+        <field name="name">إجراء الحوكمة</field>
         <field name="model">x_grc.decision_type</field>
     </record>
 
     <record id="model_decision_profile" model="ir.model">
-        <field name="name">Decision Profile</field>
+        <field name="name">نموذج القرار</field>
         <field name="model">x_grc.decision_profile</field>
     </record>
 
     <record id="model_decision_basis_phrase" model="ir.model">
-        <field name="name">Decision Basis Phrase</field>
+        <field name="name">صيغة سند القرار</field>
         <field name="model">x_grc.decision_basis_phrase</field>
     </record>
 </odoo>

@@ -1,33 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!--
-        Pass 7A-6I — SaaS-boundary lock cleanup.
+        Pass 7A-6I / 7A-6J SaaS-boundary lock cleanup.
 
-        This file intentionally performs only safe active-record cleanup.
+        This file only removes temporary diagnostic/cleanup server actions.
+        It does not delete ir.model, ir.model.fields, or ir.model.fields.selection.
 
-        It removes temporary diagnostic/cleanup server actions that were used during
-        the Pass 7A-6 retirement investigation.
-
-        It deliberately does NOT delete:
-        - ir.model
-        - ir.model.fields
-        - ir.model.fields.selection
-
-        Reason:
-        Odoo Online SaaS/import-module/server-action execution cannot safely emulate
-        Odoo upgrade-script model/field removal once registry/source and old database
-        schema metadata diverge.
-
-        The retired legacy scaffold has:
-        - no active source model/field declarations;
-        - no active menus/views/actions/access rows;
-        - no business records;
-        - no module XMLIDs;
-        - no selection XMLIDs;
-        - no non-null legacy column data.
-
-        Remaining retired ir.model / ir.model.fields entries, if visible in technical
-        metadata, are dormant SaaS database remnants and must be ignored.
+        Remaining retired schema metadata, if visible in Odoo technical metadata,
+        is a dormant Odoo Online SaaS remnant and must be ignored.
     -->
 
     <delete model="ir.actions.server" search="[('name', 'in', [

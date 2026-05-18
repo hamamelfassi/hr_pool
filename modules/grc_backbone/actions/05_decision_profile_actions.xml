@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="action_decision_family" model="ir.actions.act_window">
-        <field name="name">Decision Families</field>
+        <field name="name">مجالات الحوكمة</field>
         <field name="res_model">x_grc.decision_family</field>
         <field name="view_mode">list,form</field>
     </record>
 
     <record id="action_decision_type" model="ir.actions.act_window">
-        <field name="name">Decision Types</field>
+        <field name="name">إجراءات الحوكمة</field>
         <field name="res_model">x_grc.decision_type</field>
         <field name="view_mode">list,form</field>
     </record>
 
     <record id="action_decision_profile" model="ir.actions.act_window">
-        <field name="name">Decision Profiles</field>
+        <field name="name">نماذج القرارات</field>
         <field name="res_model">x_grc.decision_profile</field>
         <field name="view_mode">list,form</field>
     </record>
 
     <record id="action_decision_basis_phrase" model="ir.actions.act_window">
-        <field name="name">Basis Phrases</field>
+        <field name="name">صيغ الأسانيد</field>
         <field name="res_model">x_grc.decision_basis_phrase</field>
         <field name="view_mode">list,form</field>
     </record>

@@ -110,13 +110,13 @@
         sequence="20"/>
 
     <menuitem id="menu_decision_families"
-        name="عائلات الحوكمة"
+        name="مجالات الحوكمة"
         parent="grc_backbone.menu_governance_taxonomy"
         action="grc_backbone.action_decision_family"
         sequence="10"/>
 
     <menuitem id="menu_decision_types"
-        name="أنواع الحوكمة"
+        name="إجراءات الحوكمة"
         parent="grc_backbone.menu_governance_taxonomy"
         action="grc_backbone.action_decision_type"
         sequence="20"/>

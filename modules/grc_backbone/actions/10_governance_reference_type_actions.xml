@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="action_governance_reference_type" model="ir.actions.act_window">
-        <field name="name">Governance Reference Types</field>
+        <field name="name">أنواع مراجع الحوكمة</field>
         <field name="res_model">x_grc.governance_reference_type</field>
         <field name="view_mode">list,form</field>
         <field name="context">{'default_x_active': True}</field>

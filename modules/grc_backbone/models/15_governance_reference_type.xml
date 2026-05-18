@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="model_governance_reference_type" model="ir.model">
-        <field name="name">Governance Reference Type</field>
+        <field name="name">نوع مرجع الحوكمة</field>
         <field name="model">x_grc.governance_reference_type</field>
     </record>
 
     <record id="field_governance_reference_type_x_name" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_governance_reference_type"/>
         <field name="name">x_name</field>
-        <field name="field_description">Reference Type Name</field>
+        <field name="field_description">اسم نوع المرجع</field>
         <field name="ttype">char</field>
         <field name="required">True</field>
         <field name="index">True</field>
@@ -18,7 +18,7 @@
     <record id="field_governance_reference_type_x_code" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_governance_reference_type"/>
         <field name="name">x_code</field>
-        <field name="field_description">Reference Type Code</field>
+        <field name="field_description">كود نوع المرجع</field>
         <field name="ttype">char</field>
         <field name="required">True</field>
         <field name="index">True</field>
@@ -27,7 +27,7 @@
     <record id="field_governance_reference_type_x_label_en" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_governance_reference_type"/>
         <field name="name">x_label_en</field>
-        <field name="field_description">English Label</field>
+        <field name="field_description">التسمية الإنجليزية</field>
         <field name="ttype">char</field>
         <field name="translate">standard</field>
     </record>
@@ -35,21 +35,21 @@
     <record id="field_governance_reference_type_x_sequence" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_governance_reference_type"/>
         <field name="name">x_sequence</field>
-        <field name="field_description">Sequence</field>
+        <field name="field_description">التسلسل</field>
         <field name="ttype">integer</field>
     </record>
 
     <record id="field_governance_reference_type_x_active" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_governance_reference_type"/>
         <field name="name">x_active</field>
-        <field name="field_description">Active</field>
+        <field name="field_description">نشط</field>
         <field name="ttype">boolean</field>
     </record>
 
     <record id="field_governance_reference_type_x_description" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_governance_reference_type"/>
         <field name="name">x_description</field>
-        <field name="field_description">Description</field>
+        <field name="field_description">الوصف</field>
         <field name="ttype">text</field>
         <field name="translate">standard</field>
     </record>
@@ -57,7 +57,7 @@
     <record id="field_governance_reference_x_reference_type_id" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_governance_reference"/>
         <field name="name">x_reference_type_id</field>
-        <field name="field_description">Governance Reference Type</field>
+        <field name="field_description">نوع مرجع الحوكمة</field>
         <field name="ttype">many2one</field>
         <field name="relation">x_grc.governance_reference_type</field>
         <field name="on_delete">restrict</field>

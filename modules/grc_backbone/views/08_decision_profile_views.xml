@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem id="menu_decision_profiles" name="Decision Profiles" parent="grc_backbone.menu_decision_engine" action="grc_backbone.action_decision_profile" sequence="20"/>
-    <menuitem id="menu_decision_configuration" name="Decision Configuration" parent="grc_backbone.menu_decision_engine" sequence="90"/>
-    <menuitem id="menu_decision_families" name="Decision Families" parent="grc_backbone.menu_decision_configuration" action="grc_backbone.action_decision_family" sequence="10"/>
-    <menuitem id="menu_decision_types" name="Decision Types" parent="grc_backbone.menu_decision_configuration" action="grc_backbone.action_decision_type" sequence="20"/>
-    <menuitem id="menu_decision_basis_phrases" name="Basis Phrases" parent="grc_backbone.menu_decision_configuration" action="grc_backbone.action_decision_basis_phrase" sequence="30"/>
+    <menuitem id="menu_decision_profiles" name="نماذج القرارات" parent="grc_backbone.menu_decision_engine" action="grc_backbone.action_decision_profile" sequence="20"/>
+    <menuitem id="menu_decision_configuration" name="الإعدادات" parent="grc_backbone.menu_decision_engine" sequence="90"/>
+    <menuitem id="menu_decision_families" name="مجالات الحوكمة" parent="grc_backbone.menu_decision_configuration" action="grc_backbone.action_decision_family" sequence="10"/>
+    <menuitem id="menu_decision_types" name="إجراءات الحوكمة" parent="grc_backbone.menu_decision_configuration" action="grc_backbone.action_decision_type" sequence="20"/>
+    <menuitem id="menu_decision_basis_phrases" name="صيغ الأسانيد" parent="grc_backbone.menu_decision_configuration" action="grc_backbone.action_decision_basis_phrase" sequence="30"/>
 
     <record id="view_decision_family_list" model="ir.ui.view">
         <field name="name">x_grc.decision_family.list</field>
         <field name="model">x_grc.decision_family</field>
         <field name="arch" type="xml">
-            <list string="Decision Families">
+            <list string="مجالات الحوكمة">
                 <field name="x_code"/>
                 <field name="x_name"/>
-                <field name="x_active"/>
+                <field name="x_active" string="نشط"/>
             </list>
         </field>
     </record>
@@ -22,12 +22,12 @@
         <field name="name">x_grc.decision_family.form</field>
         <field name="model">x_grc.decision_family</field>
         <field name="arch" type="xml">
-            <form string="Decision Family">
+            <form string="مجال الحوكمة">
                 <sheet>
                     <group>
                         <field name="x_name"/>
                         <field name="x_code"/>
-                        <field name="x_active"/>
+                        <field name="x_active" string="نشط"/>
                     </group>
                     <group>
                         <field name="x_description"/>
@@ -41,11 +41,11 @@
         <field name="name">x_grc.decision_type.list</field>
         <field name="model">x_grc.decision_type</field>
         <field name="arch" type="xml">
-            <list string="Decision Types">
+            <list string="إجراءات الحوكمة">
                 <field name="x_code"/>
                 <field name="x_name"/>
-                <field name="x_family_id"/>
-                <field name="x_active"/>
+                <field name="x_family_id" string="مجال الحوكمة"/>
+                <field name="x_active" string="نشط"/>
             </list>
         </field>
     </record>
@@ -54,14 +54,14 @@
         <field name="name">x_grc.decision_type.form</field>
         <field name="model">x_grc.decision_type</field>
         <field name="arch" type="xml">
-            <form string="Decision Type">
+            <form string="إجراء الحوكمة">
                 <sheet>
                     <group>
                         <group>
                             <field name="x_name"/>
                             <field name="x_code"/>
-                            <field name="x_family_id"/>
-                            <field name="x_active"/>
+                            <field name="x_family_id" string="مجال الحوكمة"/>
+                            <field name="x_active" string="نشط"/>
                         </group>
                     </group>
                     <group>
@@ -76,14 +76,14 @@
         <field name="name">x_grc.decision_profile.list</field>
         <field name="model">x_grc.decision_profile</field>
         <field name="arch" type="xml">
-            <list string="Decision Profiles">
+            <list string="نماذج القرارات">
                 <field name="x_code"/>
                 <field name="x_name"/>
-                <field name="x_family_id"/>
-                <field name="x_type_id"/>
+                <field name="x_family_id" string="مجال الحوكمة"/>
+                <field name="x_type_id" string="إجراء الحوكمة"/>
                 <field name="x_default_issuer_title_ar"/>
                 <field name="x_authority_mode"/>
-                <field name="x_active"/>
+                <field name="x_active" string="نشط"/>
             </list>
         </field>
     </record>
@@ -92,15 +92,15 @@
         <field name="name">x_grc.decision_profile.form</field>
         <field name="model">x_grc.decision_profile</field>
         <field name="arch" type="xml">
-            <form string="Decision Profile">
+            <form string="نموذج القرار">
                 <sheet>
                     <group>
                         <group string="Profile Identity">
                             <field name="x_name"/>
                             <field name="x_code"/>
-                            <field name="x_family_id"/>
-                            <field name="x_type_id"/>
-                            <field name="x_active"/>
+                            <field name="x_family_id" string="مجال الحوكمة"/>
+                            <field name="x_type_id" string="إجراء الحوكمة"/>
+                            <field name="x_active" string="نشط"/>
                         </group>
                         <group string="Template Defaults">
                             <field name="x_template_code_default"/>
@@ -127,7 +127,7 @@
                 <field name="x_name"/>
                 <field name="x_phrase_ar"/>
                 <field name="x_phrase_en"/>
-                <field name="x_active"/>
+                <field name="x_active" string="نشط"/>
             </list>
         </field>
     </record>
@@ -143,7 +143,7 @@
                         <field name="x_name"/>
                         <field name="x_phrase_ar"/>
                         <field name="x_phrase_en"/>
-                        <field name="x_active"/>
+                        <field name="x_active" string="نشط"/>
                     </group>
                 </sheet>
             </form>

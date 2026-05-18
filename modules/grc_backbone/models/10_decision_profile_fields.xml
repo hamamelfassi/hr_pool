@@ -5,7 +5,7 @@
     <record id="field_decision_family_x_name" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_family"/>
         <field name="name">x_name</field>
-        <field name="field_description">Family Name</field>
+        <field name="field_description">اسم مجال الحوكمة</field>
         <field name="ttype">char</field>
         <field name="required">True</field>
         <field name="index">True</field>
@@ -15,7 +15,7 @@
     <record id="field_decision_family_x_code" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_family"/>
         <field name="name">x_code</field>
-        <field name="field_description">Family Code</field>
+        <field name="field_description">كود مجال الحوكمة</field>
         <field name="ttype">char</field>
         <field name="required">True</field>
         <field name="index">True</field>
@@ -24,14 +24,14 @@
     <record id="field_decision_family_x_active" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_family"/>
         <field name="name">x_active</field>
-        <field name="field_description">Active</field>
+        <field name="field_description">نشط</field>
         <field name="ttype">boolean</field>
     </record>
 
     <record id="field_decision_family_x_description" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_family"/>
         <field name="name">x_description</field>
-        <field name="field_description">Description</field>
+        <field name="field_description">الوصف</field>
         <field name="ttype">text</field>
         <field name="translate">standard</field>
     </record>
@@ -41,7 +41,7 @@
     <record id="field_decision_type_x_name" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_type"/>
         <field name="name">x_name</field>
-        <field name="field_description">Type Name</field>
+        <field name="field_description">اسم إجراء الحوكمة</field>
         <field name="ttype">char</field>
         <field name="required">True</field>
         <field name="index">True</field>
@@ -51,7 +51,7 @@
     <record id="field_decision_type_x_code" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_type"/>
         <field name="name">x_code</field>
-        <field name="field_description">Type Code</field>
+        <field name="field_description">كود إجراء الحوكمة</field>
         <field name="ttype">char</field>
         <field name="required">True</field>
         <field name="index">True</field>
@@ -60,7 +60,7 @@
     <record id="field_decision_type_x_family_id" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_type"/>
         <field name="name">x_family_id</field>
-        <field name="field_description">Decision Family</field>
+        <field name="field_description">مجال الحوكمة</field>
         <field name="ttype">many2one</field>
         <field name="relation">x_grc.decision_family</field>
         <field name="required">True</field>
@@ -71,14 +71,14 @@
     <record id="field_decision_type_x_active" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_type"/>
         <field name="name">x_active</field>
-        <field name="field_description">Active</field>
+        <field name="field_description">نشط</field>
         <field name="ttype">boolean</field>
     </record>
 
     <record id="field_decision_type_x_description" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_type"/>
         <field name="name">x_description</field>
-        <field name="field_description">Description</field>
+        <field name="field_description">الوصف</field>
         <field name="ttype">text</field>
         <field name="translate">standard</field>
     </record>
@@ -88,7 +88,7 @@
     <record id="field_decision_profile_x_name" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_profile"/>
         <field name="name">x_name</field>
-        <field name="field_description">Profile Name</field>
+        <field name="field_description">اسم النموذج</field>
         <field name="ttype">char</field>
         <field name="required">True</field>
         <field name="index">True</field>
@@ -98,7 +98,7 @@
     <record id="field_decision_profile_x_code" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_profile"/>
         <field name="name">x_code</field>
-        <field name="field_description">Profile Code</field>
+        <field name="field_description">كود النموذج</field>
         <field name="ttype">char</field>
         <field name="required">True</field>
         <field name="index">True</field>
@@ -107,7 +107,7 @@
     <record id="field_decision_profile_x_family_id" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_profile"/>
         <field name="name">x_family_id</field>
-        <field name="field_description">Decision Family</field>
+        <field name="field_description">مجال الحوكمة</field>
         <field name="ttype">many2one</field>
         <field name="relation">x_grc.decision_family</field>
         <field name="required">True</field>
@@ -118,7 +118,7 @@
     <record id="field_decision_profile_x_type_id" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_profile"/>
         <field name="name">x_type_id</field>
-        <field name="field_description">Decision Type</field>
+        <field name="field_description">إجراء الحوكمة</field>
         <field name="ttype">many2one</field>
         <field name="relation">x_grc.decision_type</field>
         <field name="required">True</field>
@@ -174,7 +174,7 @@
     <record id="field_decision_profile_x_active" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_profile"/>
         <field name="name">x_active</field>
-        <field name="field_description">Active</field>
+        <field name="field_description">نشط</field>
         <field name="ttype">boolean</field>
     </record>
 
@@ -191,7 +191,7 @@
     <record id="field_decision_basis_phrase_x_name" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_basis_phrase"/>
         <field name="name">x_name</field>
-        <field name="field_description">Phrase Name</field>
+        <field name="field_description">اسم الصيغة</field>
         <field name="ttype">char</field>
         <field name="required">True</field>
         <field name="index">True</field>
@@ -201,7 +201,7 @@
     <record id="field_decision_basis_phrase_x_phrase_ar" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_basis_phrase"/>
         <field name="name">x_phrase_ar</field>
-        <field name="field_description">Arabic Phrase</field>
+        <field name="field_description">الصيغة العربية</field>
         <field name="ttype">char</field>
         <field name="required">True</field>
         <field name="translate">standard</field>
@@ -210,7 +210,7 @@
     <record id="field_decision_basis_phrase_x_phrase_en" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_basis_phrase"/>
         <field name="name">x_phrase_en</field>
-        <field name="field_description">English Phrase</field>
+        <field name="field_description">الصيغة الإنجليزية</field>
         <field name="ttype">char</field>
         <field name="translate">standard</field>
     </record>
@@ -218,14 +218,14 @@
     <record id="field_decision_basis_phrase_x_sequence" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_basis_phrase"/>
         <field name="name">x_sequence</field>
-        <field name="field_description">Sequence</field>
+        <field name="field_description">التسلسل</field>
         <field name="ttype">integer</field>
     </record>
 
     <record id="field_decision_basis_phrase_x_active" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_basis_phrase"/>
         <field name="name">x_active</field>
-        <field name="field_description">Active</field>
+        <field name="field_description">نشط</field>
         <field name="ttype">boolean</field>
     </record>
 
@@ -236,7 +236,7 @@
     <record id="field_decision_template_x_profile_id" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_template"/>
         <field name="name">x_profile_id</field>
-        <field name="field_description">Decision Profile</field>
+        <field name="field_description">نموذج القرار</field>
         <field name="ttype">many2one</field>
         <field name="relation">x_grc.decision_profile</field>
         <field name="required">True</field>
@@ -256,7 +256,7 @@
     <record id="field_decision_template_x_profile_family_id" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_template"/>
         <field name="name">x_profile_family_id</field>
-        <field name="field_description">Profile Family</field>
+        <field name="field_description">مجال النموذج</field>
         <field name="ttype">many2one</field>
         <field name="relation">x_grc.decision_family</field>
         <field name="related">x_profile_id.x_family_id</field>
@@ -266,7 +266,7 @@
     <record id="field_decision_template_x_profile_type_id" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_template"/>
         <field name="name">x_profile_type_id</field>
-        <field name="field_description">Profile Type</field>
+        <field name="field_description">إجراء النموذج</field>
         <field name="ttype">many2one</field>
         <field name="relation">x_grc.decision_type</field>
         <field name="related">x_profile_id.x_type_id</field>
@@ -296,7 +296,7 @@
     <record id="field_decision_basis_line_x_phrase_id" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_basis_line"/>
         <field name="name">x_phrase_id</field>
-        <field name="field_description">Basis Phrase</field>
+        <field name="field_description">صيغة السند</field>
         <field name="ttype">many2one</field>
         <field name="relation">x_grc.decision_basis_phrase</field>
         <field name="on_delete">restrict</field>

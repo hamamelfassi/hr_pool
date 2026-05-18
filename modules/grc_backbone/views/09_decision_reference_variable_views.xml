@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem id="menu_governance_references" name="Governance References" parent="grc_backbone.menu_decision_configuration" action="grc_backbone.action_governance_reference" sequence="40"/>
-    <menuitem id="menu_grc_variables" name="Variable Dictionary" parent="grc_backbone.menu_decision_configuration" action="grc_backbone.action_grc_variable" sequence="50"/>
+    <menuitem id="menu_governance_references" name="مراجع الحوكمة" parent="grc_backbone.menu_decision_configuration" action="grc_backbone.action_governance_reference" sequence="40"/>
+    <menuitem id="menu_grc_variables" name="قاموس المتغيرات" parent="grc_backbone.menu_decision_configuration" action="grc_backbone.action_grc_variable" sequence="50"/>
 
     <record id="view_governance_reference_list" model="ir.ui.view">
         <field name="name">x_grc.governance_reference.list</field>
         <field name="model">x_grc.governance_reference</field>
         <field name="arch" type="xml">
-            <list string="Governance References">
+            <list string="مراجع الحوكمة">
                 <field name="x_code"/>
                 <field name="x_name"/>
-                <field name="x_reference_type_id"/>
-                <field name="x_parent_reference_id"/>
-                <field name="x_authority_name"/>
-                <field name="x_reference_date"/>
-                <field name="x_status" widget="badge"/>
-                <field name="x_active"/>
+                <field name="x_reference_type_id" string="نوع مرجع الحوكمة"/>
+                <field name="x_parent_reference_id" string="المرجع الأعلى"/>
+                <field name="x_authority_name" string="جهة الإصدار"/>
+                <field name="x_reference_date" string="تاريخ المرجع"/>
+                <field name="x_status" string="الحالة" widget="badge"/>
+                <field name="x_active" string="نشط"/>
             </list>
         </field>
     </record>
@@ -24,7 +24,7 @@
         <field name="name">x_grc.governance_reference.form</field>
         <field name="model">x_grc.governance_reference</field>
         <field name="arch" type="xml">
-            <form string="Governance Reference">
+            <form string="مرجع الحوكمة">
                 <header>
                     <button type="action"
                         name="grc_backbone.action_governance_reference_refresh_type"
@@ -37,16 +37,16 @@
                         <group>
                             <field name="x_name"/>
                             <field name="x_code"/>
-                            <field name="x_reference_type_id"/>
+                            <field name="x_reference_type_id" string="نوع مرجع الحوكمة"/>
                             <field name="x_reference_type" invisible="1"/>
-                            <field name="x_parent_reference_id"/>
-                            <field name="x_authority_name"/>
+                            <field name="x_parent_reference_id" string="المرجع الأعلى"/>
+                            <field name="x_authority_name" string="جهة الإصدار"/>
                         </group>
                         <group>
-                            <field name="x_reference_date"/>
+                            <field name="x_reference_date" string="تاريخ المرجع"/>
                             <field name="x_version"/>
-                            <field name="x_status"/>
-                            <field name="x_active"/>
+                            <field name="x_status" string="الحالة"/>
+                            <field name="x_active" string="نشط"/>
                         </group>
                     </group>
                     <group string="Summary">
@@ -65,12 +65,12 @@
         <field name="name">x_grc.variable.list</field>
         <field name="model">x_grc.variable</field>
         <field name="arch" type="xml">
-            <list string="Variable Dictionary">
+            <list string="قاموس المتغيرات">
                 <field name="x_key"/>
                 <field name="x_label_ar"/>
                 <field name="x_label_en"/>
                 <field name="x_value_type"/>
-                <field name="x_active"/>
+                <field name="x_active" string="نشط"/>
             </list>
         </field>
     </record>
@@ -93,7 +93,7 @@
                             <field name="x_name"/>
                             <field name="x_key"/>
                             <field name="x_value_type"/>
-                            <field name="x_active"/>
+                            <field name="x_active" string="نشط"/>
                         </group>
                         <group>
                             <field name="x_label_ar"/>

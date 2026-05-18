@@ -5,7 +5,7 @@
     <record id="field_governance_reference_x_name" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_governance_reference"/>
         <field name="name">x_name</field>
-        <field name="field_description">Reference Name</field>
+        <field name="field_description">اسم المرجع</field>
         <field name="ttype">char</field>
         <field name="required">True</field>
         <field name="index">True</field>
@@ -15,7 +15,7 @@
     <record id="field_governance_reference_x_code" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_governance_reference"/>
         <field name="name">x_code</field>
-        <field name="field_description">Reference Code</field>
+        <field name="field_description">كود المرجع</field>
         <field name="ttype">char</field>
         <field name="index">True</field>
     </record>
@@ -23,7 +23,7 @@
     <record id="field_governance_reference_x_reference_type" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_governance_reference"/>
         <field name="name">x_reference_type</field>
-        <field name="field_description">Reference Type</field>
+        <field name="field_description">نوع المرجع</field>
         <field name="ttype">selection</field>
         <field name="required">False</field>
         <field name="selection">[
@@ -46,7 +46,7 @@
     <record id="field_governance_reference_x_authority_name" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_governance_reference"/>
         <field name="name">x_authority_name</field>
-        <field name="field_description">Issuing Authority</field>
+        <field name="field_description">جهة الإصدار</field>
         <field name="ttype">char</field>
         <field name="translate">standard</field>
     </record>
@@ -54,21 +54,21 @@
     <record id="field_governance_reference_x_reference_date" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_governance_reference"/>
         <field name="name">x_reference_date</field>
-        <field name="field_description">Reference Date</field>
+        <field name="field_description">تاريخ المرجع</field>
         <field name="ttype">date</field>
     </record>
 
     <record id="field_governance_reference_x_version" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_governance_reference"/>
         <field name="name">x_version</field>
-        <field name="field_description">Version</field>
+        <field name="field_description">الإصدار</field>
         <field name="ttype">char</field>
     </record>
 
     <record id="field_governance_reference_x_status" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_governance_reference"/>
         <field name="name">x_status</field>
-        <field name="field_description">Status</field>
+        <field name="field_description">الحالة</field>
         <field name="ttype">selection</field>
         <field name="selection">[
             ('draft', 'Draft'),
@@ -81,14 +81,14 @@
     <record id="field_governance_reference_x_active" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_governance_reference"/>
         <field name="name">x_active</field>
-        <field name="field_description">Active</field>
+        <field name="field_description">نشط</field>
         <field name="ttype">boolean</field>
     </record>
 
     <record id="field_governance_reference_x_summary_ar" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_governance_reference"/>
         <field name="name">x_summary_ar</field>
-        <field name="field_description">Arabic Summary</field>
+        <field name="field_description">الملخص العربي</field>
         <field name="ttype">text</field>
         <field name="translate">standard</field>
     </record>
@@ -96,7 +96,7 @@
     <record id="field_governance_reference_x_summary_en" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_governance_reference"/>
         <field name="name">x_summary_en</field>
-        <field name="field_description">English Summary</field>
+        <field name="field_description">الملخص الإنجليزي</field>
         <field name="ttype">text</field>
         <field name="translate">standard</field>
     </record>
@@ -104,7 +104,7 @@
     <record id="field_governance_reference_x_notes" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_governance_reference"/>
         <field name="name">x_notes</field>
-        <field name="field_description">Notes</field>
+        <field name="field_description">ملاحظات</field>
         <field name="ttype">text</field>
     </record>
 
@@ -113,7 +113,7 @@
     <record id="field_grc_variable_x_name" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_grc_variable"/>
         <field name="name">x_name</field>
-        <field name="field_description">Variable Name</field>
+        <field name="field_description">اسم المتغير</field>
         <field name="ttype">char</field>
         <field name="required">False</field>
         <field name="index">True</field>
@@ -123,7 +123,7 @@
     <record id="field_grc_variable_x_key" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_grc_variable"/>
         <field name="name">x_key</field>
-        <field name="field_description">Variable Key</field>
+        <field name="field_description">مفتاح المتغير</field>
         <field name="ttype">char</field>
         <field name="required">True</field>
         <field name="index">True</field>
@@ -132,7 +132,7 @@
     <record id="field_grc_variable_x_label_ar" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_grc_variable"/>
         <field name="name">x_label_ar</field>
-        <field name="field_description">Arabic Label</field>
+        <field name="field_description">التسمية العربية</field>
         <field name="ttype">char</field>
         <field name="translate">standard</field>
     </record>
@@ -140,7 +140,7 @@
     <record id="field_grc_variable_x_label_en" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_grc_variable"/>
         <field name="name">x_label_en</field>
-        <field name="field_description">English Label</field>
+        <field name="field_description">التسمية الإنجليزية</field>
         <field name="ttype">char</field>
         <field name="translate">standard</field>
     </record>
@@ -148,7 +148,7 @@
     <record id="field_grc_variable_x_value_type" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_grc_variable"/>
         <field name="name">x_value_type</field>
-        <field name="field_description">Value Type</field>
+        <field name="field_description">نوع القيمة</field>
         <field name="ttype">selection</field>
         <field name="required">True</field>
         <field name="selection">[
@@ -167,14 +167,14 @@
     <record id="field_grc_variable_x_active" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_grc_variable"/>
         <field name="name">x_active</field>
-        <field name="field_description">Active</field>
+        <field name="field_description">نشط</field>
         <field name="ttype">boolean</field>
     </record>
 
     <record id="field_grc_variable_x_description" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_grc_variable"/>
         <field name="name">x_description</field>
-        <field name="field_description">Description</field>
+        <field name="field_description">الوصف</field>
         <field name="ttype">text</field>
         <field name="translate">standard</field>
     </record>
@@ -184,7 +184,7 @@
     <record id="field_decision_basis_line_x_reference_id" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_basis_line"/>
         <field name="name">x_reference_id</field>
-        <field name="field_description">Governance Reference</field>
+        <field name="field_description">مرجع الحوكمة</field>
         <field name="ttype">many2one</field>
         <field name="relation">x_grc.governance_reference</field>
         <field name="on_delete">restrict</field>
@@ -195,7 +195,7 @@
     <record id="field_decision_template_variable_x_variable_id" model="ir.model.fields">
         <field name="model_id" ref="grc_backbone.model_decision_template_variable"/>
         <field name="name">x_variable_id</field>
-        <field name="field_description">Variable</field>
+        <field name="field_description">المتغير</field>
         <field name="ttype">many2one</field>
         <field name="relation">x_grc.variable</field>
         <field name="required">True</field>
