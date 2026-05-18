@@ -13,12 +13,13 @@ The active GRC doctrine is now unified and strongly typed.
 ### Active canonical primitives
 
 - `x_grc.governance_reference` — typed authority/source library.
+- `x_grc.governance_reference_type` — configurable helper model for reference types and typed reference menus.
 - `x_grc.governance_reference_relation` — relationship and hierarchy layer between references.
 - `x_grc.governance_provision` — granular clauses, articles, controls, requirements, and obligations under a reference.
 - `x_grc.variable` — global reusable variable dictionary.
 - `x_grc.governance_text_pattern` — reusable wording fragments for subjects, basis lines, articles, clauses, footers, signature blocks, and general text.
-- `x_grc.decision_family` — broad decision family.
-- `x_grc.decision_type` — decision type under a family.
+- `x_grc.decision_family` — technical model currently used as Governance Families in UI.
+- `x_grc.decision_type` — technical model currently used as Governance Types in UI.
 - `x_grc.decision_profile` — governed decision profile, default authority, and reference prefix.
 - `x_grc.decision_template` — controlled reusable decision document assembly.
 - `x_grc.decision_instance` — case-specific generated decision instance, planned after the template foundation.
@@ -35,6 +36,7 @@ The active GRC doctrine is now unified and strongly typed.
 - Decision Template = controlled document assembly.
 - Decision Instance = case-specific generated decision.
 
+```markdown
 ## Governance reference types
 
 `x_grc.governance_reference` covers what earlier drafts modeled as separate objects:
@@ -46,15 +48,81 @@ The active GRC doctrine is now unified and strongly typed.
 - policies;
 - procedures / SOPs;
 - decisions;
-- letters;
+- correspondence / letters;
 - memos;
 - meeting minutes;
+- contracts;
 - free text;
 - other authority/reference sources.
 
-The type field distinguishes the reference kind. Separate hard models should not be created merely because a reference has a different category.
+Reference type is governed by:
+
+`x_grc.governance_reference_type`
+
+The legacy selection field `x_reference_type` may remain temporarily as a migration/snapshot fallback, but normal UI and filtered menus should use `x_reference_type_id`.
+
+Canonical Arabic labels:
+
+- law = القوانين;
+- regulation = اللوائح;
+- framework = الأطر;
+- standard = المعايير;
+- policy = السياسات;
+- procedure = دليل إجراءات التشغيل;
+- decision = القرارات;
+- letter = مراسلة;
+- memo = مذكرة;
+- meeting_minutes = محضر اجتماع;
+- contract = العقود;
+- free_text = نص حر;
+- other = أخرى.
+
+Separate hard models should not be created merely because a reference has a different category.
 
 Hierarchy and cross-reference are modeled through `x_grc.governance_reference_relation`, not by proliferating models.
+
+## GRC control-centre navigation
+
+7A-6 repositions `grc_backbone` as a central GRC control centre rather than a set of disconnected scaffold lists.
+
+Current backed menus should include:
+
+```text
+القواعد الحاكمة
+    القوانين
+    اللوائح
+    الأطر
+    السياسات
+    دليل إجراءات التشغيل
+
+Decisions / القرارات
+    القرارات
+    قوالب القرارات
+    نماذج القرارات
+
+الدليل الجغرافي
+
+الإعدادات
+    Functional Taxonomy
+        Functional Areas
+        Functions
+    Governance Taxonomy
+        Governance Families
+        Governance Types
+        Governance Reference Types
+        Governance Relations
+    Governance Library
+        Provisions
+        Patterns
+        Variables
+        References
+```
+
+The safe default landing for the app is Decision Templates / قوالب القرارات.
+
+The old Frameworks list must not remain the default landing surface.
+
+Future menu slots such as Procedures, Letters, Contracts, Organisational Structures, Risk, and Compliance should be documented but not exposed as dead menus before their backing models/workflows are implemented.
 
 ## Provisions
 
@@ -180,3 +248,14 @@ Architecture-level rules remain in:
 - `docs/modules/grc_backbone/pass_7_grc_decision_engine_plan.md`
 
 This folder should contain module-specific notes, implementation summaries, seed-data notes, architecture decisions, and cleanup tasks.
+
+## Procedure / SOP terminology lock
+
+For governance reference type `procedure`, use these labels consistently:
+
+- reference type code: `procedure`
+- parent/menu heading: دليل إجراءات التشغيل
+- filtered view/list label: إجراءات التشغيل
+- singular record label: إجراء تشغيل
+
+Do not use دليل إجراءات التشغيل as the singular record label. It is the parent/menu heading for the SOP/procedure library surface.

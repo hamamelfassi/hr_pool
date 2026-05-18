@@ -449,7 +449,29 @@ Rules:
 - Subject, basis, and article text may use `{key}` placeholders.
 - Do not create separate `x_subject_variable_keys`, `x_basis_variable_keys`, or `x_article_variable_keys` fields as active architecture.
 - Later renderers should scan text for placeholders and validate that each key is bound to the template.
-- 
+
+### 4.17 Reference Type Helper and Filtered Menu Rule
+
+When a selection field begins acting as a stable taxonomy, analytics dimension, or filtered-menu driver, prefer a helper model over expanding the selection field.
+
+For the GRC backbone, `x_grc.governance_reference_type` is the canonical helper for Governance Reference typing.
+
+Rules:
+
+- Use helper-model fields for active UI and filtered menus.
+- Keep legacy selection fields temporarily only as migration/snapshot fallbacks.
+- Do not mutate an existing selection field into a many2one in-place on Odoo SaaS.
+- Add the new many2one field first.
+- Update views/actions/server actions to use the many2one field.
+- Hide or de-emphasize the legacy selection field.
+- Physically delete old fields only in a later controlled cleanup if safe.
+
+For typed filtered menus:
+
+- filter on the helper type, not on old selection fields;
+- use stable helper `x_code` values or seeded XML IDs;
+- avoid dead menus with no backing workflow;
+- document future menu slots without exposing them too early.
 
 ## 5. Mode Selection Rule
 
@@ -743,6 +765,40 @@ Do not generate fake references such as:
 ```
 
 Do not create explicit `ir.model.fields.selection` rows for existing field/value pairs unless binding to existing rows is proven safe.
+
+```markdown
+### 7.11 GRC Control Centre Navigation Pattern
+
+For `grc_backbone`, navigation should reflect the unified GRC doctrine, not the old fragmented model scaffolds.
+
+Current backed menu groups should be:
+
+```text
+القواعد الحاكمة
+Decisions / القرارات
+الدليل الجغرافي
+الإعدادات
+```
+
+Only expose clickable menus when the backed model/workflow exists and is part of the active architecture.
+
+Do not expose future menu shells as dead navigation.
+
+Default GRC landing should be a safe active surface. During Pass 7, the safe landing is:
+
+`Decision Templates / قوالب القرارات`
+
+Old framework/policy/SOP/provision/decision/task-template scaffolds should be removed from active navigation once superseded by:
+
+- Governance Reference;
+- Governance Reference Type;
+- Governance Reference Relation;
+- Governance Provision;
+- Governance Text Pattern;
+- Variable Dictionary;
+- Decision Profiles/Templates/Instances.
+
+Functional taxonomy and location taxonomy remain active and should not be broken by cleanup passes.
 
 ## 8. QWeb and Odoo Sign Reuse Rule
 

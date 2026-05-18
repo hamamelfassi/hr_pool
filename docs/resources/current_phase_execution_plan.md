@@ -10,9 +10,11 @@ The current phase is now:
 
 Immediate next slice:
 
-`7A-4 — Unified governance library foundation`
+`7A-6A — Docs-only lock for GRC control-centre navigation and reference-type refoundation`
 
-Pass 7 is no longer a minimal recruitment-only decision-template pass. It is a structural GRC refoundation pass that establishes the reusable Governance Reference / Provision / Text Pattern / Variable / Decision Template architecture before recruitment consumes the board decision workflow.
+Pass 7 is no longer a minimal recruitment-only decision-template pass. It is a structural GRC refoundation pass that establishes the reusable Governance Reference / Reference Type / Provision / Text Pattern / Variable / Decision Template architecture before recruitment consumes the board decision workflow.
+
+7A-4 and 7A-5 are accepted and committed. The next work is 7A-6, which must first update documentation before implementation because it changes active navigation doctrine and retires old scaffold surfaces.
 
 ## Status
 
@@ -41,19 +43,18 @@ Locked from 6A–6C:
 
 ## Current next pass
 
-## Current next pass
+Pass 7A-6 — GRC control-centre navigation and legacy scaffold retirement in `grc_backbone`.
 
-Pass 7A-4 — Unified governance library foundation in `grc_backbone`.
+Immediate implementation order:
 
-Scope:
+1. 7A-6A — docs-only lock;
+2. 7A-6B — Governance Reference Type helper model;
+3. 7A-6C — GRC control-centre navigation shell and typed reference menus;
+4. 7A-6D — retire old scaffold surfaces/data;
+5. 7A-6E — Arabic translations;
+6. 7A-6F — acceptance and commit.
 
-- add governance reference relations;
-- add governance provisions;
-- add governance text patterns;
-- extend decision basis/article lines to select references, provisions, and patterns;
-- prepare the clean foundation for SaaS-safe template authoring.
-
-No recruitment code changes in 7A-4.
+No recruitment code changes in 7A-6.
 
 ## Authority
 
@@ -693,9 +694,98 @@ User receives a clear notification listing missing keys.
 No broken template is treated as ready.
 ```
 
-## **Updated 7A-6 scope — Retire old scaffold surfaces/data**
+## **Updated 7A-6 scope — GRC control-centre navigation and legacy scaffold retirement**
 
-Purpose: remove old architecture noise after the new foundation is in place.
+Purpose: refactor active GRC navigation around the new unified governance-reference doctrine and retire old scaffold surfaces from active architecture.
+
+7A-6 is split into:
+
+### **7A-6A — Docs-only lock**
+
+Scope:
+
+```
+Update GRC architecture docs before code.
+Lock Governance Reference Type helper model.
+Lock current vs future menu doctrine.
+Lock default landing on Decision Templates.
+Lock retirement policy for old scaffold surfaces/data.
+```
+
+### **7A-6B — Governance Reference Type helper model**
+
+Scope:
+
+```
+Add x_grc.governance_reference_type.
+Add x_reference_type_id to x_grc.governance_reference.
+Seed law/regulation/framework/standard/policy/procedure/decision/letter/memo/meeting_minutes/contract/free_text/other.
+Expose x_reference_type_id in Governance Reference views.
+Hide/de-emphasize legacy x_reference_type.
+Update refresh logic to use helper type first.
+```
+
+Canonical Arabic labels:
+
+```
+procedure = دليل إجراءات التشغيل
+letter = مراسلة
+contract = العقود
+```
+
+### **7A-6C — GRC control-centre navigation shell**
+
+Current backed menus:
+
+```
+القواعد الحاكمة
+    القوانين
+    اللوائح
+    الأطر
+    السياسات
+    دليل إجراءات التشغيل
+
+Decisions / القرارات
+    القرارات
+    قوالب القرارات
+    نماذج القرارات
+
+الدليل الجغرافي
+
+الإعدادات
+    Functional Taxonomy
+        Functional Areas
+        Functions
+    Governance Taxonomy
+        Governance Families
+        Governance Types
+        Governance Reference Types
+        Governance Relations
+    Governance Library
+        Provisions
+        Patterns
+        Variables
+        References
+```
+
+Default landing:
+
+```
+Decision Templates / قوالب القرارات
+```
+
+Future documented but not yet exposed as dead menus:
+
+```
+Procedures
+Letters
+Contracts
+Organisational Structures
+Risk
+Compliance
+```
+
+### **7A-6D — Retire old scaffold surfaces/data**
 
 Scope:
 
@@ -714,6 +804,7 @@ Doctrine:
 ```
 Old framework/policy/SOP/decision/provision concepts are now represented by:
 x_grc.governance_reference
+x_grc.governance_reference_type
 x_grc.governance_reference_relation
 x_grc.governance_provision
 x_grc.governance_text_pattern
@@ -723,6 +814,8 @@ Acceptance:
 
 ```
 GRC navigation is cleaner.
+Opening GRC lands on Decision Templates, not old Frameworks.
+Typed reference menus work.
 Old scaffold menus no longer compete with the new governance library.
 No old SOP/task-template seed examples remain active.
 Functional Areas, Functions, and Locations remain working.
@@ -820,3 +913,14 @@ Separate post-recruitment employment lifecycle design.
 ### **Pass 14 — Documents governance and access framework**
 
 Revisit full Odoo Documents governance, folder/tag policy, filing automation, retention, and access controls after the two-stage recruitment cycle is operational.
+
+## Procedure / SOP terminology lock
+
+For governance reference type `procedure`, use these labels consistently:
+
+- reference type code: `procedure`
+- parent/menu heading: دليل إجراءات التشغيل
+- filtered view/list label: إجراءات التشغيل
+- singular record label: إجراء تشغيل
+
+Do not use دليل إجراءات التشغيل as the singular record label. It is the parent/menu heading for the SOP/procedure library surface.

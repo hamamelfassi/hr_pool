@@ -41,15 +41,51 @@ It may represent:
 - policy;
 - procedure / SOP;
 - decision;
-- letter;
+- letter / correspondence;
 - memo;
 - meeting minutes;
+- contract;
 - free text;
 - other source.
 
-The reference type is a field, not a separate model family.
+The reference type must be driven by a helper model, not by separate hard models for each reference category.
+
+Canonical helper model:
+
+`x_grc.governance_reference_type`
+
+The legacy selection field `x_reference_type` may remain temporarily as a migration/snapshot fallback, but normal views, filtered menus, actions, and refresh logic should use:
+
+`x_reference_type_id → x_grc.governance_reference_type`
 
 This replaces the earlier fragmented approach where frameworks, policies, SOPs, decisions, and provisions were started as separate unrelated scaffolds.
+
+### Canonical reference types
+
+The initial seeded reference types are:
+
+| Code              | Arabic display label | English helper label              |
+| ----------------- | -------------------- | --------------------------------- |
+| `law`             | القوانين             | Laws                              |
+| `regulation`      | اللوائح              | Regulations                       |
+| `framework`       | الأطر                | Frameworks                        |
+| `standard`        | المعايير             | Standards                         |
+| `policy`          | السياسات             | Policies                          |
+| `procedure`       | دليل إجراءات التشغيل | SOPs / Operating Procedure Manual |
+| `decision`        | القرارات             | Decisions                         |
+| `letter`          | مراسلة               | Correspondence / Letter           |
+| `memo`            | مذكرة                | Memo                              |
+| `meeting_minutes` | محضر اجتماع          | Meeting Minutes                   |
+| `contract`        | العقود               | Contracts                         |
+| `free_text`       | نص حر                | Free Text                         |
+| `other`           | أخرى                 | Other                             |
+
+Rules:
+
+- `x_code` is the stable technical key.
+- `x_name` is the Arabic-first translatable display label.
+- `x_label_en` is the English helper label.
+- Type-specific menus must filter references through `x_reference_type_id`, not through the legacy selection field.
 
 ## 4. Governance Reference Relation
 
@@ -79,6 +115,42 @@ Examples:
 - a decision cites a policy.
 
 Do not create separate hard models just because a reference is part of a hierarchy.
+
+## 4A. Governance Reference Type
+
+Model:
+
+`x_grc.governance_reference_type`
+
+Purpose: provide a reusable, translatable, analytics-friendly type layer for governance references.
+
+Fields:
+
+- `x_name` — Arabic-first translatable display label.
+- `x_code` — stable technical key.
+- `x_label_en` — English helper label.
+- `x_sequence` — ordering.
+- `x_active` — active flag.
+- `x_description` — optional explanatory note.
+
+This model exists because a selection field is too rigid for the long-term GRC control centre. A helper model enables:
+
+- translatable Arabic-first dropdowns;
+- type-filtered reference menus;
+- analytics by type;
+- future configuration without model refactors;
+- consistent reference-type usage across references, provisions, patterns, and decisions.
+
+Downstream usage:
+
+- Governance References select `x_reference_type_id`.
+- Governance Provisions derive their type context through their linked reference.
+- Governance Text Patterns derive type context through their linked reference or provision where applicable.
+- Governance Reference Relations relate typed references but do not need their own type field.
+- Decision template basis-line type derivation should use `x_reference_type_id.x_code` first, with legacy `x_reference_type` only as fallback.
+- Variables are independent from reference types.
+
+Do not physically remove the legacy `x_reference_type` selection field during the first migration. Hide/de-emphasize it in UI and detach new logic from it first.
 
 ## 5. Governance Provision
 
@@ -175,13 +247,29 @@ Example article pattern:
 
 The pattern can contain placeholders, but it does not own the template’s variable authority. The decision template variables tab remains the required variable binding authority.
 
-## 8. Decision family, type, and profile
+## 8. Governance family, type, and profile
 
-Decision family/type/profile form the classification and default authority spine.
+The existing technical models remain:
 
-- `x_grc.decision_family` = broad business family such as HR, Logistics, Sales, Procurement, Finance, HSE, Operations, General Governance.
+- `x_grc.decision_family`
+- `x_grc.decision_type`
+- `x_grc.decision_profile`
+
+For 7A-6 and later UI, these should be presented as:
+
+- Governance Families
+- Governance Types
+- Governance Profiles / Decision Profiles where the surface is specifically decision-oriented
+
+Reason: these models are becoming the classification spine for governed processes, not only board decisions.
+
+Semantic usage:
+
+- `x_grc.decision_family` = broad governance/process family such as HR, Logistics, Sales, Procurement, Finance, HSE, Operations, General Governance.
 - `x_grc.decision_type` = process/type under a family, such as Recruitment Hiring, Leave, Mission, Advance, Resignation, Termination.
 - `x_grc.decision_profile` = governed profile carrying default template code, reference prefix, issuer title, and later authority restrictions.
+
+Do not physically rename the Odoo models in 7A-6. Use UI labels and documentation to generalize them while preserving technical stability.
 
 The template selects a profile. Profile-derived family/type/code/issuer fields should be display/related fields, not separately authored fields.
 
@@ -243,13 +331,13 @@ Odoo.com SaaS importable XML modules cannot rely on custom Python model methods 
 
 Therefore child-line auto-population should use a safe parent-level action:
 
-`تحديث القالب من المحددات`
+`تحديث القالب`
 
 Expected behavior:
 
 1. User selects references, provisions, patterns, and variables in child rows.
 2. User saves.
-3. User clicks the parent-level refresh action.
+3. User clicks the parent-level refresh action `تحديث القالب`.
 4. Server action populates snapshots and helper fields.
 
 The action should populate:
@@ -323,7 +411,96 @@ The implementation should map this as:
 - variables from the template variables tab;
 - actual values from a decision instance connected later to `hr.applicant`.
 
-## 14. Non-goals for Pass 7 foundation
+## 14. GRC Control Centre navigation doctrine
+
+The `grc_backbone` module should present itself as a central Governance, Risk, and Compliance control centre.
+
+The long-term navigation model is broader than the surfaces currently implemented. Only backed surfaces should be clickable now; future headings should be documented but not exposed as dead menus.
+
+### Current implementable menus for 7A-6
+
+The 7A-6 navigation should implement the currently backed surfaces:
+
+```text
+القواعد الحاكمة
+    القوانين
+    اللوائح
+    الأطر
+    السياسات
+    دليل إجراءات التشغيل
+
+Decisions / القرارات
+    القرارات
+    قوالب القرارات
+    نماذج القرارات
+
+الدليل الجغرافي
+    current location taxonomy views
+
+الإعدادات
+    Functional Taxonomy
+        Functional Areas
+        Functions
+    Governance Taxonomy
+        Governance Families
+        Governance Types
+        Governance Reference Types
+        Governance Relations
+    Governance Library
+        Provisions
+        Patterns
+        Variables
+        References
+```
+
+Rules:
+
+- Opening the GRC app must not land on old Frameworks.
+- The safe default landing for now is Decision Templates / قوالب القرارات.
+- Filtered reference menus under `القواعد الحاكمة` must use `x_reference_type_id`.
+- Old framework/policy/SOP/provision/decision/task-template surfaces must not remain active competing menus.
+- Functional taxonomy and location taxonomy remain active.
+
+### Future documented menu slots
+
+The following surfaces are documented for future implementation but should not be exposed as dead menus until they have backed models/workflows:
+
+```text
+Procedures / الإجراءات
+    Procedure Templates
+    Task Templates
+    Task Lines / Steps
+
+Letters / المراسلات
+    Letters
+    Letter Templates
+    Letter Profiles
+
+Contracts / العقود
+    Contracts
+    Contract Templates
+    Contract Profiles
+
+Organisational Structures / الهياكل التنظيمية
+    Internal Organisational Units
+    Government Organisations
+    Banks and Branches
+    Vendor List
+    Client List
+
+Risk
+Compliance
+```
+
+Future procedures, letters, and contracts should reuse the same doctrine:
+
+- Governance Reference for typed source/record identity.
+- Governance Provision for granular clauses/requirements.
+- Governance Text Pattern for reusable wording.
+- Variable Dictionary for data slots.
+- Profiles/Templates/Instances for recurring generated documents/processes.
+
+## 15. Non-goals for Pass 7 foundation
 
 Pass 7 foundation does not implement:
 
@@ -337,3 +514,14 @@ Pass 7 foundation does not implement:
 - final employment lifecycle.
 
 Those come after the decision engine foundation is stable.
+
+## Procedure / SOP terminology lock
+
+For governance reference type `procedure`, use these labels consistently:
+
+- reference type code: `procedure`
+- parent/menu heading: دليل إجراءات التشغيل
+- filtered view/list label: إجراءات التشغيل
+- singular record label: إجراء تشغيل
+
+Do not use دليل إجراءات التشغيل as the singular record label. It is the parent/menu heading for the SOP/procedure library surface.

@@ -1,9 +1,9 @@
 # Pass 7 — GRC Governance Reference and Decision Engine Plan
 
-Status: revised and locked before implementation 7A-4  
+Status: revised and locked before implementation 7A-6  
 Module: `grc_backbone`  
 Primary use case: recruitment board hiring decision  
-Reusable scope: HR, HSE, operations, compliance, finance, contracts, and future governance workflows
+Reusable scope: HR, HSE, operations, compliance, finance, contracts, procedures, letters, and future governance workflows
 
 ## 1. Purpose
 
@@ -18,15 +18,29 @@ The recruitment board decision is the first consumer of a generic governance ref
 The active Pass 7 foundation is:
 
 - Governance Reference;
+- Governance Reference Type;
 - Governance Reference Relation;
 - Governance Provision;
 - Variable Dictionary;
 - Governance Text Pattern;
-- Decision Family / Type / Profile;
+- Governance Family / Type / Profile using the existing decision-family/type/profile technical models;
 - Decision Template;
 - Decision Instance.
 
 The older fragmented scaffold doctrine is retired from active implementation.
+
+Key doctrine:
+
+```text
+Reference = authority/source
+Reference Type = configurable typed classification of references
+Reference Relation = relationship/hierarchy between references
+Provision = granular clause/article/rule/control/obligation
+Pattern = reusable wording
+Variable = reusable data slot
+Template = controlled assembly
+Instance = case-specific generated artifact
+```
 
 ## 3. Slice sequence
 
@@ -64,7 +78,7 @@ Scope:
 
 Add parent-level action on decision templates:
 
-`تحديث القالب من المحددات`
+`تحديث القالب`
 
 The action populates all selected child lines at once.
 
@@ -108,7 +122,109 @@ Acceptance:
 - No per-line button needed.
 - No unsafe onchange assumption.
 
-### 7A-6 — Retire old scaffold surfaces/data
+### 7A-6 — GRC navigation refoundation and legacy scaffold retirement
+
+7A-6 is not only a deletion pass. It is the GRC control-centre navigation and reference-type refoundation pass.
+
+#### 7A-6A — Docs-only lock
+
+Scope:
+
+- Update the GRC architecture doctrine before implementation.
+- Lock the governance reference type helper model.
+- Lock the current vs future menu doctrine.
+- Lock the retirement policy for old scaffold surfaces/data.
+- Lock that physical model/field deletion is deferred unless proven safe.
+
+Acceptance:
+
+- Documentation and implementation plan agree before code changes.
+
+#### 7A-6B — Governance Reference Type helper
+
+Scope:
+
+- Add `x_grc.governance_reference_type`.
+- Add `x_reference_type_id` to `x_grc.governance_reference`.
+- Seed reference types:
+  - law / القوانين;
+  - regulation / اللوائح;
+  - framework / الأطر;
+  - standard / المعايير;
+  - policy / السياسات;
+  - procedure / دليل إجراءات التشغيل;
+  - decision / القرارات;
+  - letter / مراسلة;
+  - memo / مذكرة;
+  - meeting_minutes / محضر اجتماع;
+  - contract / العقود;
+  - free_text / نص حر;
+  - other / أخرى.
+- Update Governance Reference views to expose `x_reference_type_id` and hide/de-emphasize legacy `x_reference_type`.
+- Update template refresh logic to derive basis type from `x_reference_type_id.x_code` first, with legacy `x_reference_type` only as fallback.
+
+Acceptance:
+
+- New helper type model works.
+- Governance Reference form/list uses helper type.
+- Existing references can be classified through the helper type.
+- Refresh Template still works.
+
+#### 7A-6C — GRC control-centre navigation shell
+
+Scope:
+
+Implement currently backed menus only:
+
+```text
+القواعد الحاكمة
+    القوانين
+    اللوائح
+    الأطر
+    السياسات
+    دليل إجراءات التشغيل
+
+Decisions / القرارات
+    القرارات
+    قوالب القرارات
+    نماذج القرارات
+
+الدليل الجغرافي
+    existing location taxonomy views
+
+الإعدادات
+    Functional Taxonomy
+        Functional Areas
+        Functions
+    Governance Taxonomy
+        Governance Families
+        Governance Types
+        Governance Reference Types
+        Governance Relations
+    Governance Library
+        Provisions
+        Patterns
+        Variables
+        References
+```
+
+Filtered reference menus must use `x_reference_type_id`.
+
+Default landing rule:
+
+- Opening GRC should land on Decision Templates / قوالب القرارات.
+- It must not land on the old Frameworks list.
+
+Future menu slots to document but not expose as dead menus yet:
+
+- Procedures / الإجراءات;
+- Letters / المراسلات;
+- Contracts / العقود;
+- Organisational Structures / الهياكل التنظيمية;
+- Risk;
+- Compliance.
+
+#### 7A-6D — Retire old scaffold surfaces/data
 
 Scope:
 
@@ -123,13 +239,13 @@ Retire old active surfaces for early scaffolds:
 - early risk/control/compliance/incident surfaces;
 - early tender/contract/clause surfaces.
 
-Task templates and task-template lines may be deleted and rebuilt later according to the improved architecture.
+Task templates and task-template lines may be removed/neutralized and later rebuilt under the improved reference/provision/pattern/control/workflow architecture.
 
 Implementation rule:
 
 - remove/hide menus/actions/views first;
 - neutralize or remove seed data tied to old SOP/task scaffolds;
-- physically delete models/fields only if safe;
+- do not physically delete installed `ir.model` / `ir.model.fields` in this first cleanup pass unless dependency inspection proves it safe;
 - if Odoo SaaS blocks physical deletion, defer physical deletion to a controlled cleanup pass.
 
 Acceptance:
@@ -138,7 +254,44 @@ Acceptance:
 - Old scaffold surfaces are not visible as active architecture.
 - Functional taxonomy still works.
 - Location taxonomy still works.
+- Governance Reference Type menus/filters work.
 - Decision engine uses the new reference/provision/pattern/variable foundation.
+- No traceback.
+
+#### 7A-6E — Arabic translations
+
+Scope:
+
+Patch Arabic UI for:
+
+- القواعد الحاكمة;
+- القوانين;
+- اللوائح;
+- الأطر;
+- السياسات;
+- دليل إجراءات التشغيل;
+- القرارات;
+- قوالب القرارات;
+- نماذج القرارات;
+- الدليل الجغرافي;
+- الإعدادات;
+- Governance Reference Types;
+- Governance Families;
+- Governance Types;
+- Governance Library;
+- Governance Taxonomy.
+
+#### 7A-6F — Acceptance and commit
+
+Acceptance:
+
+- GRC default landing is Decision Templates.
+- Filtered reference menus open the correct typed reference views.
+- Governance Reference uses the helper type model.
+- Old framework/policy/SOP/provision/decision/task-template menus are gone or retired.
+- Functional Areas, Functions, and Locations remain working.
+- Refresh Template still works.
+- No traceback.
 
 ### 7C — Recruitment decision template seed/setup
 
@@ -261,3 +414,14 @@ Suggested commits:
 - `pass7d: lock GRC decision engine documentation`
 
 Do not commit built module zips, exported PO files, screenshots, generated PDFs, or temporary scripts.
+
+## Procedure / SOP terminology lock
+
+For governance reference type `procedure`, use these labels consistently:
+
+- reference type code: `procedure`
+- parent/menu heading: دليل إجراءات التشغيل
+- filtered view/list label: إجراءات التشغيل
+- singular record label: إجراء تشغيل
+
+Do not use دليل إجراءات التشغيل as the singular record label. It is the parent/menu heading for the SOP/procedure library surface.
