@@ -12,8 +12,6 @@
         "models/01_models.xml",
         "models/02_fields_core_base.xml",
         "models/03_fields_core_o2m.xml",
-        "models/04_fields_task_templates_base.xml",
-        "models/05_fields_task_templates_o2m.xml",
         "models/06_location_taxonomy.xml",
         "models/07_decision_template_models.xml",
         "models/08_decision_template_fields.xml",
