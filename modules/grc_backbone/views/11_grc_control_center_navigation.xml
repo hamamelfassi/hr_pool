@@ -88,82 +88,82 @@
         sequence="90"/>
 
     <menuitem id="menu_grc_taxonomy"
-        name="Functional Taxonomy"
+        name="التصنيف الوظيفي"
         parent="grc_backbone.menu_decision_configuration"
         sequence="10"/>
 
     <menuitem id="menu_functional_areas"
-        name="Functional Areas"
+        name="المجالات الوظيفية"
         parent="grc_backbone.menu_grc_taxonomy"
         action="grc_backbone.action_functional_area"
         sequence="10"/>
 
     <menuitem id="menu_functions"
-        name="Functions"
+        name="الاختصاصات الوظيفية"
         parent="grc_backbone.menu_grc_taxonomy"
         action="grc_backbone.action_function"
         sequence="20"/>
 
     <menuitem id="menu_governance_taxonomy"
-        name="Governance Taxonomy"
+        name="تصنيف الحوكمة"
         parent="grc_backbone.menu_decision_configuration"
         sequence="20"/>
 
     <menuitem id="menu_decision_families"
-        name="Governance Families"
+        name="عائلات الحوكمة"
         parent="grc_backbone.menu_governance_taxonomy"
         action="grc_backbone.action_decision_family"
         sequence="10"/>
 
     <menuitem id="menu_decision_types"
-        name="Governance Types"
+        name="أنواع الحوكمة"
         parent="grc_backbone.menu_governance_taxonomy"
         action="grc_backbone.action_decision_type"
         sequence="20"/>
 
     <menuitem id="menu_governance_reference_types"
-        name="Governance Reference Types"
+        name="أنواع مراجع الحوكمة"
         parent="grc_backbone.menu_governance_taxonomy"
         action="grc_backbone.action_governance_reference_type"
         sequence="30"/>
 
     <menuitem id="menu_governance_reference_relations"
-        name="Governance Relations"
+        name="علاقات مراجع الحوكمة"
         parent="grc_backbone.menu_governance_taxonomy"
         action="grc_backbone.action_governance_reference_relation"
         sequence="40"/>
 
     <menuitem id="menu_decision_basis_phrases"
-        name="Basis Phrases"
+        name="صيغ الأسانيد"
         parent="grc_backbone.menu_governance_taxonomy"
         action="grc_backbone.action_decision_basis_phrase"
         sequence="50"/>
 
     <menuitem id="menu_governance_library"
-        name="Governance Library"
+        name="مكتبة الحوكمة"
         parent="grc_backbone.menu_decision_configuration"
         sequence="30"/>
 
     <menuitem id="menu_governance_provisions"
-        name="Provisions"
+        name="بنود الحوكمة"
         parent="grc_backbone.menu_governance_library"
         action="grc_backbone.action_governance_provision"
         sequence="10"/>
 
     <menuitem id="menu_governance_text_patterns"
-        name="Patterns"
+        name="أنماط نصوص الحوكمة"
         parent="grc_backbone.menu_governance_library"
         action="grc_backbone.action_governance_text_pattern"
         sequence="20"/>
 
     <menuitem id="menu_grc_variables"
-        name="Variables"
+        name="قاموس المتغيرات"
         parent="grc_backbone.menu_governance_library"
         action="grc_backbone.action_grc_variable"
         sequence="30"/>
 
     <menuitem id="menu_governance_references"
-        name="References"
+        name="مراجع الحوكمة"
         parent="grc_backbone.menu_governance_library"
         action="grc_backbone.action_governance_reference_all"
         sequence="40"/>

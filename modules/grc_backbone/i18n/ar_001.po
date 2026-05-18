@@ -5610,7 +5610,7 @@ msgstr "نص البند"
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_policy_form
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_provision_list
 msgid "Provisions"
-msgstr "بنود"
+msgstr "بنود الحوكمة"
 
 #. module: grc_backbone
 #: model:ir.model.fields,field_description:grc_backbone.field_sop_x_purpose
@@ -7294,7 +7294,7 @@ msgstr "اسم المتغير"
 #. module: grc_backbone
 #: model_terms:ir.ui.view,arch_db:grc_backbone.view_decision_template_form
 msgid "Variables"
-msgstr "المتغيرات"
+msgstr "قاموس المتغيرات"
 
 #. module: grc_backbone
 #: model:ir.model.fields,field_description:grc_backbone.field_governance_reference_x_version
@@ -8106,3 +8106,43 @@ msgstr "إجراءات التشغيل"
 #: model:ir.ui.menu,name:grc_backbone.menu_sops
 msgid "إجراءات التشغيل"
 msgstr "إجراءات التشغيل"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a6_navigation_translation_recovery
+msgid "Governance Taxonomy"
+msgstr "تصنيف الحوكمة"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a6_navigation_translation_recovery
+msgid "Governance Families"
+msgstr "عائلات الحوكمة"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a6_navigation_translation_recovery
+msgid "Governance Types"
+msgstr "أنواع الحوكمة"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a6_navigation_translation_recovery
+msgid "Governance Reference Types"
+msgstr "أنواع مراجع الحوكمة"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a6_navigation_translation_recovery
+msgid "Governance Relations"
+msgstr "علاقات مراجع الحوكمة"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a6_navigation_translation_recovery
+msgid "Governance Library"
+msgstr "مكتبة الحوكمة"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a6_navigation_translation_recovery
+msgid "Patterns"
+msgstr "أنماط نصوص الحوكمة"
+
+#. module: grc_backbone
+#: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a6_navigation_translation_recovery
+msgid "References"
+msgstr "مراجع الحوكمة"

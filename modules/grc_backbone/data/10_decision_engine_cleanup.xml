@@ -1,11 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!--
-        Pass 7A-3 cleanup note:
-        Stale exploratory fields are detached from the Decision Engine UI, but not deleted here.
+        Pass 7A-6D/E — Legacy surface retirement.
 
-        Odoo SaaS blocks deletion of ir.model.fields if any active view still references them.
-        Actual field deletion/migration is deferred to a later controlled cleanup pass after
-        the cleaned decision engine has remained stable.
+        This pass retires old scaffold surfaces from the active GRC UI after the
+        unified Governance Reference / Provision / Pattern / Variable / Decision
+        Template foundation became the active doctrine.
+
+        Deliberately NOT done here:
+        - no physical ir.model deletion;
+        - no physical ir.model.fields deletion;
+        - no removal of installed model/field XML files from the manifest yet.
+
+        Reason:
+        Odoo SaaS can block model/field deletion while any view/action/dependency still exists.
+        This cleanup first removes active menus/actions/views and old seed examples.
+        Physical deletion, if still desired, belongs to a later hard cleanup pass.
     -->
+
+    <!-- Old risk/control/compliance/incident menus -->
+    <delete id="menu_risks" model="ir.ui.menu"/>
+    <delete id="menu_risk_assessments" model="ir.ui.menu"/>
+    <delete id="menu_controls" model="ir.ui.menu"/>
+    <delete id="menu_checks" model="ir.ui.menu"/>
+    <delete id="menu_incidents" model="ir.ui.menu"/>
+    <delete id="menu_grc_risk" model="ir.ui.menu"/>
+    <delete id="menu_grc_compliance" model="ir.ui.menu"/>
+
+    <!-- Old commercial governance menus -->
+    <delete id="menu_clauses" model="ir.ui.menu"/>
+    <delete id="menu_contract_templates" model="ir.ui.menu"/>
+    <delete id="menu_tenders" model="ir.ui.menu"/>
+    <delete id="menu_grc_commercial" model="ir.ui.menu"/>
+
+    <!-- Old task-template menu -->
+    <delete id="menu_task_templates" model="ir.ui.menu"/>
+
+    <!-- Old fragmented governance actions now replaced by Governance Reference filtered actions -->
+    <delete id="action_framework" model="ir.actions.act_window"/>
+    <delete id="action_policy" model="ir.actions.act_window"/>
+    <delete id="action_provision" model="ir.actions.act_window"/>
+    <delete id="action_decision" model="ir.actions.act_window"/>
+    <delete id="action_sop" model="ir.actions.act_window"/>
+
+    <!-- Old risk/control/compliance/incident actions -->
+    <delete id="action_risk" model="ir.actions.act_window"/>
+    <delete id="action_risk_assessment" model="ir.actions.act_window"/>
+    <delete id="action_control" model="ir.actions.act_window"/>
+    <delete id="action_compliance_check" model="ir.actions.act_window"/>
+    <delete id="action_incident" model="ir.actions.act_window"/>
+
+    <!-- Old commercial actions -->
+    <delete id="action_contract_template" model="ir.actions.act_window"/>
+    <delete id="action_tender" model="ir.actions.act_window"/>
+    <delete id="action_clause" model="ir.actions.act_window"/>
+
+    <!-- Old task-template action -->
+    <delete id="action_task_template" model="ir.actions.act_window"/>
+
+    <!-- Old fragmented governance views -->
+    <delete id="view_framework_list" model="ir.ui.view"/>
+    <delete id="view_framework_search" model="ir.ui.view"/>
+    <delete id="view_framework_form" model="ir.ui.view"/>
+    <delete id="view_policy_list" model="ir.ui.view"/>
+    <delete id="view_policy_search" model="ir.ui.view"/>
+    <delete id="view_policy_form" model="ir.ui.view"/>
+    <delete id="view_provision_list" model="ir.ui.view"/>
+    <delete id="view_provision_search" model="ir.ui.view"/>
+    <delete id="view_provision_form" model="ir.ui.view"/>
+    <delete id="view_decision_list" model="ir.ui.view"/>
+    <delete id="view_decision_search" model="ir.ui.view"/>
+    <delete id="view_decision_form" model="ir.ui.view"/>
+    <delete id="view_sop_list" model="ir.ui.view"/>
+    <delete id="view_sop_search" model="ir.ui.view"/>
+    <delete id="view_sop_form" model="ir.ui.view"/>
+
+    <!-- Old risk/control/compliance/incident views -->
+    <delete id="view_risk_list" model="ir.ui.view"/>
+    <delete id="view_risk_search" model="ir.ui.view"/>
+    <delete id="view_risk_form" model="ir.ui.view"/>
+    <delete id="view_risk_assessment_list" model="ir.ui.view"/>
+    <delete id="view_risk_assessment_search" model="ir.ui.view"/>
+    <delete id="view_risk_assessment_form" model="ir.ui.view"/>
+    <delete id="view_control_list" model="ir.ui.view"/>
+    <delete id="view_control_search" model="ir.ui.view"/>
+    <delete id="view_control_form" model="ir.ui.view"/>
+    <delete id="view_compliance_check_list" model="ir.ui.view"/>
+    <delete id="view_compliance_check_search" model="ir.ui.view"/>
+    <delete id="view_compliance_check_form" model="ir.ui.view"/>
+    <delete id="view_incident_list" model="ir.ui.view"/>
+    <delete id="view_incident_search" model="ir.ui.view"/>
+    <delete id="view_incident_form" model="ir.ui.view"/>
+
+    <!-- Old commercial views -->
+    <delete id="view_clause_list" model="ir.ui.view"/>
+    <delete id="view_clause_search" model="ir.ui.view"/>
+    <delete id="view_clause_form" model="ir.ui.view"/>
+    <delete id="view_contract_template_list" model="ir.ui.view"/>
+    <delete id="view_contract_template_search" model="ir.ui.view"/>
+    <delete id="view_contract_template_form" model="ir.ui.view"/>
+    <delete id="view_tender_list" model="ir.ui.view"/>
+    <delete id="view_tender_search" model="ir.ui.view"/>
+    <delete id="view_tender_form" model="ir.ui.view"/>
+
+    <!-- Old task-template views -->
+    <delete id="view_task_template_list" model="ir.ui.view"/>
+    <delete id="view_task_template_search" model="ir.ui.view"/>
+    <delete id="view_task_template_form" model="ir.ui.view"/>
+
+    <!-- Retire old SOP/task-template seed examples. Delete task templates before linked SOPs. -->
+    <delete id="task_template_external_governance_renewal" model="x_grc.task_template"/>
+    <delete id="task_template_diesel_supply_replenishment" model="x_grc.task_template"/>
+    <delete id="sop_external_governance_renewal" model="x_grc.sop"/>
+    <delete id="sop_site_supply_replenishment" model="x_grc.sop"/>
 </odoo>
