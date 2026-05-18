@@ -259,3 +259,13 @@ For governance reference type `procedure`, use these labels consistently:
 - singular record label: إجراء تشغيل
 
 Do not use دليل إجراءات التشغيل as the singular record label. It is the parent/menu heading for the SOP/procedure library surface.
+
+## Retired scaffold ignore register
+
+Pass 7A-6I locked the legacy GRC scaffold retirement boundary.
+
+See:
+
+- `docs/modules/grc_backbone/retired_grc_scaffold_ignore_register.md`
+
+The retired fragmented models must not be reused. The active architecture is the unified Governance Reference / Governance Provision / Governance Text Pattern / Variable Dictionary / Decision Engine foundation.

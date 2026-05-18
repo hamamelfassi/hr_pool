@@ -1,100 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!--
-        Pass 7A-6H corrective cleanup.
+        Pass 7A-6I — SaaS-boundary lock cleanup.
 
-        This file cleans active installed remnants only:
-        - retired menus
-        - retired actions
-        - retired views
-        - retired access rows
-        - retired sequence rows
+        This file intentionally performs only safe active-record cleanup.
+
+        It removes temporary diagnostic/cleanup server actions that were used during
+        the Pass 7A-6 retirement investigation.
 
         It deliberately does NOT delete:
-        - ir.model.fields
         - ir.model
+        - ir.model.fields
+        - ir.model.fields.selection
 
         Reason:
-        Odoo SaaS can block ir.model.fields deletion with:
-        "This column contains module data and cannot be removed!"
+        Odoo Online SaaS/import-module/server-action execution cannot safely emulate
+        Odoo upgrade-script model/field removal once registry/source and old database
+        schema metadata diverge.
 
-        Therefore old custom models/fields may remain in the database as dormant
-        technical artifacts, but they are no longer loaded from source, no longer
-        exposed in menus/views/actions, and no longer used by the GRC backbone.
+        The retired legacy scaffold has:
+        - no active source model/field declarations;
+        - no active menus/views/actions/access rows;
+        - no business records;
+        - no module XMLIDs;
+        - no selection XMLIDs;
+        - no non-null legacy column data.
+
+        Remaining retired ir.model / ir.model.fields entries, if visible in technical
+        metadata, are dormant SaaS database remnants and must be ignored.
     -->
 
-    <delete model="ir.ui.menu" search="[('name', 'in', [
-        'Risk &amp; Controls',
-        'Risks',
-        'Risk Assessments',
-        'Controls',
-        'Compliance &amp; Incidents',
-        'Compliance Checks',
-        'Incidents',
-        'Commercial Governance',
-        'Clauses',
-        'Contract Templates',
-        'Tenders',
-        'Task Templates'
-    ])]"/>
-
-    <delete model="ir.actions.act_window" search="[('res_model', 'in', [
-        'x_grc.framework',
-        'x_grc.policy',
-        'x_grc.provision',
-        'x_grc.decision',
-        'x_grc.sop',
-        'x_grc.task_template',
-        'x_grc.task_template_line',
-        'x_grc.risk',
-        'x_grc.risk_assessment',
-        'x_grc.control',
-        'x_grc.compliance_check',
-        'x_grc.incident',
-        'x_grc.contract_template',
-        'x_grc.tender',
-        'x_grc.clause'
-    ])]"/>
-
-    <delete model="ir.ui.view" search="[('model', 'in', [
-        'x_grc.framework',
-        'x_grc.policy',
-        'x_grc.provision',
-        'x_grc.decision',
-        'x_grc.sop',
-        'x_grc.task_template',
-        'x_grc.task_template_line',
-        'x_grc.risk',
-        'x_grc.risk_assessment',
-        'x_grc.control',
-        'x_grc.compliance_check',
-        'x_grc.incident',
-        'x_grc.contract_template',
-        'x_grc.tender',
-        'x_grc.clause'
-    ])]"/>
-
-    <delete model="ir.model.access" search="[('model_id.model', 'in', [
-        'x_grc.framework',
-        'x_grc.policy',
-        'x_grc.provision',
-        'x_grc.decision',
-        'x_grc.sop',
-        'x_grc.task_template',
-        'x_grc.task_template_line',
-        'x_grc.risk',
-        'x_grc.risk_assessment',
-        'x_grc.control',
-        'x_grc.compliance_check',
-        'x_grc.incident',
-        'x_grc.contract_template',
-        'x_grc.tender',
-        'x_grc.clause'
-    ])]"/>
-
-    <delete model="ir.sequence" search="[('code', 'in', [
-        'x_grc.compliance_check',
-        'x_grc.incident',
-        'x_grc.tender'
+    <delete model="ir.actions.server" search="[('name', 'in', [
+        'تدقيق النماذج القديمة',
+        'فك ربط بيانات النماذج القديمة',
+        'حذف النماذج القديمة نهائياً',
+        'تشخيص بيانات أعمدة النماذج القديمة'
     ])]"/>
 </odoo>

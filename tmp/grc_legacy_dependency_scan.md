@@ -1,0 +1,404 @@
+# GRC Legacy Dependency Scan — 7A-6G
+
+## Result
+
+This report checks whether retired legacy scaffold references remain before physical model/field deletion.
+
+## Retired models targeted for 7A-6H
+
+- `x_grc.framework`
+- `x_grc.policy`
+- `x_grc.provision`
+- `x_grc.decision`
+- `x_grc.sop`
+- `x_grc.task_template`
+- `x_grc.task_template_line`
+- `x_grc.risk`
+- `x_grc.risk_assessment`
+- `x_grc.control`
+- `x_grc.compliance_check`
+- `x_grc.incident`
+- `x_grc.contract_template`
+- `x_grc.tender`
+- `x_grc.clause`
+
+## Active loaded file hits
+
+These must be addressed before physical deletion:
+- `actions/04_decision_template_actions.xml` → `x_grc.decision`
+- `actions/05_decision_profile_actions.xml` → `x_grc.decision`
+- `data/02_sequences.xml` → `x_grc.compliance_check`
+- `data/02_sequences.xml` → `x_grc.incident`
+- `data/02_sequences.xml` → `x_grc.tender`
+- `data/09_decision_profile_seed.xml` → `x_grc.decision`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.clause`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.compliance_check`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.contract_template`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.control`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.decision`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.framework`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.incident`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.policy`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.provision`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.risk`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.risk_assessment`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.sop`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.task_template`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.tender`
+- `models/01_models.xml` → `x_grc.clause`
+- `models/01_models.xml` → `x_grc.compliance_check`
+- `models/01_models.xml` → `x_grc.contract_template`
+- `models/01_models.xml` → `x_grc.control`
+- `models/01_models.xml` → `x_grc.decision`
+- `models/01_models.xml` → `x_grc.framework`
+- `models/01_models.xml` → `x_grc.incident`
+- `models/01_models.xml` → `x_grc.policy`
+- `models/01_models.xml` → `x_grc.provision`
+- `models/01_models.xml` → `x_grc.risk`
+- `models/01_models.xml` → `x_grc.risk_assessment`
+- `models/01_models.xml` → `x_grc.sop`
+- `models/01_models.xml` → `x_grc.task_template`
+- `models/01_models.xml` → `x_grc.task_template_line`
+- `models/01_models.xml` → `x_grc.tender`
+- `models/02_fields_core_base.xml` → `x_grc.clause`
+- `models/02_fields_core_base.xml` → `x_grc.control`
+- `models/02_fields_core_base.xml` → `x_grc.framework`
+- `models/02_fields_core_base.xml` → `x_grc.policy`
+- `models/02_fields_core_base.xml` → `x_grc.provision`
+- `models/02_fields_core_base.xml` → `x_grc.risk`
+- `models/03_fields_core_o2m.xml` → `x_grc.clause`
+- `models/03_fields_core_o2m.xml` → `x_grc.compliance_check`
+- `models/03_fields_core_o2m.xml` → `x_grc.contract_template`
+- `models/03_fields_core_o2m.xml` → `x_grc.control`
+- `models/03_fields_core_o2m.xml` → `x_grc.incident`
+- `models/03_fields_core_o2m.xml` → `x_grc.provision`
+- `models/03_fields_core_o2m.xml` → `x_grc.risk`
+- `models/03_fields_core_o2m.xml` → `x_grc.risk_assessment`
+- `models/03_fields_core_o2m.xml` → `x_grc.sop`
+- `models/03_fields_core_o2m.xml` → `x_grc.tender`
+- `models/04_fields_task_templates_base.xml` → `x_grc.sop`
+- `models/04_fields_task_templates_base.xml` → `x_grc.task_template`
+- `models/05_fields_task_templates_o2m.xml` → `x_grc.task_template`
+- `models/05_fields_task_templates_o2m.xml` → `x_grc.task_template_line`
+- `models/07_decision_template_models.xml` → `x_grc.decision`
+- `models/08_decision_template_fields.xml` → `x_grc.decision`
+- `models/09_decision_profile_models.xml` → `x_grc.decision`
+- `models/10_decision_profile_fields.xml` → `x_grc.decision`
+- `models/14_governance_library_fields.xml` → `x_grc.decision`
+- `views/07_decision_template_views.xml` → `x_grc.decision`
+- `views/08_decision_profile_views.xml` → `x_grc.decision`
+
+## Source-tree hits
+
+These may include detached legacy files that are no longer manifest-loaded:
+- `actions/02_actions_task_templates.xml` → `x_grc.task_template`
+- `actions/04_decision_template_actions.xml` → `x_grc.decision`
+- `actions/05_decision_profile_actions.xml` → `x_grc.decision`
+- `data/02_sequences.xml` → `x_grc.compliance_check`
+- `data/02_sequences.xml` → `x_grc.incident`
+- `data/02_sequences.xml` → `x_grc.tender`
+- `data/04_seed_task_templates.xml` → `x_grc.sop`
+- `data/04_seed_task_templates.xml` → `x_grc.task_template`
+- `data/09_decision_profile_seed.xml` → `x_grc.decision`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.clause`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.compliance_check`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.contract_template`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.control`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.decision`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.framework`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.incident`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.policy`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.provision`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.risk`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.risk_assessment`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.sop`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.task_template`
+- `data/10_decision_engine_cleanup.xml` → `x_grc.tender`
+- `i18n/ar_001.po` → `x_grc.decision`
+- `i18n/ar_001.po` → `x_grc.sop`
+- `i18n/ar_001.po` → `x_grc.task_template`
+- `models/01_models.xml` → `x_grc.clause`
+- `models/01_models.xml` → `x_grc.compliance_check`
+- `models/01_models.xml` → `x_grc.contract_template`
+- `models/01_models.xml` → `x_grc.control`
+- `models/01_models.xml` → `x_grc.decision`
+- `models/01_models.xml` → `x_grc.framework`
+- `models/01_models.xml` → `x_grc.incident`
+- `models/01_models.xml` → `x_grc.policy`
+- `models/01_models.xml` → `x_grc.provision`
+- `models/01_models.xml` → `x_grc.risk`
+- `models/01_models.xml` → `x_grc.risk_assessment`
+- `models/01_models.xml` → `x_grc.sop`
+- `models/01_models.xml` → `x_grc.task_template`
+- `models/01_models.xml` → `x_grc.task_template_line`
+- `models/01_models.xml` → `x_grc.tender`
+- `models/02_fields_core_base.xml` → `x_grc.clause`
+- `models/02_fields_core_base.xml` → `x_grc.control`
+- `models/02_fields_core_base.xml` → `x_grc.framework`
+- `models/02_fields_core_base.xml` → `x_grc.policy`
+- `models/02_fields_core_base.xml` → `x_grc.provision`
+- `models/02_fields_core_base.xml` → `x_grc.risk`
+- `models/03_fields_core_o2m.xml` → `x_grc.clause`
+- `models/03_fields_core_o2m.xml` → `x_grc.compliance_check`
+- `models/03_fields_core_o2m.xml` → `x_grc.contract_template`
+- `models/03_fields_core_o2m.xml` → `x_grc.control`
+- `models/03_fields_core_o2m.xml` → `x_grc.incident`
+- `models/03_fields_core_o2m.xml` → `x_grc.provision`
+- `models/03_fields_core_o2m.xml` → `x_grc.risk`
+- `models/03_fields_core_o2m.xml` → `x_grc.risk_assessment`
+- `models/03_fields_core_o2m.xml` → `x_grc.sop`
+- `models/03_fields_core_o2m.xml` → `x_grc.tender`
+- `models/04_fields_task_templates_base.xml` → `x_grc.sop`
+- `models/04_fields_task_templates_base.xml` → `x_grc.task_template`
+- `models/05_fields_task_templates_o2m.xml` → `x_grc.task_template`
+- `models/05_fields_task_templates_o2m.xml` → `x_grc.task_template_line`
+- `models/07_decision_template_models.xml` → `x_grc.decision`
+- `models/08_decision_template_fields.xml` → `x_grc.decision`
+- `models/09_decision_profile_models.xml` → `x_grc.decision`
+- `models/10_decision_profile_fields.xml` → `x_grc.decision`
+- `models/14_governance_library_fields.xml` → `x_grc.decision`
+- `views/01_governance_views.xml` → `x_grc.decision`
+- `views/01_governance_views.xml` → `x_grc.framework`
+- `views/01_governance_views.xml` → `x_grc.policy`
+- `views/01_governance_views.xml` → `x_grc.provision`
+- `views/03_risk_compliance_views.xml` → `x_grc.compliance_check`
+- `views/03_risk_compliance_views.xml` → `x_grc.control`
+- `views/03_risk_compliance_views.xml` → `x_grc.incident`
+- `views/03_risk_compliance_views.xml` → `x_grc.risk`
+- `views/03_risk_compliance_views.xml` → `x_grc.risk_assessment`
+- `views/04_commercial_views.xml` → `x_grc.clause`
+- `views/04_commercial_views.xml` → `x_grc.contract_template`
+- `views/04_commercial_views.xml` → `x_grc.tender`
+- `views/05_task_templates_views.xml` → `x_grc.task_template`
+- `views/07_decision_template_views.xml` → `x_grc.decision`
+- `views/08_decision_profile_views.xml` → `x_grc.decision`
+
+## Loaded model field blocks still tied to retired models
+
+- `models/02_fields_core_base.xml` / `field_framework_x_name` → model_ref `grc_backbone.model_framework`
+- `models/02_fields_core_base.xml` / `field_framework_x_code` → model_ref `grc_backbone.model_framework`
+- `models/02_fields_core_base.xml` / `field_framework_x_description` → model_ref `grc_backbone.model_framework`
+- `models/02_fields_core_base.xml` / `field_framework_x_type` → model_ref `grc_backbone.model_framework`
+- `models/02_fields_core_base.xml` / `field_framework_x_authority` → model_ref `grc_backbone.model_framework`
+- `models/02_fields_core_base.xml` / `field_framework_x_valid_from` → model_ref `grc_backbone.model_framework`
+- `models/02_fields_core_base.xml` / `field_framework_x_valid_to` → model_ref `grc_backbone.model_framework`
+- `models/02_fields_core_base.xml` / `field_framework_x_state` → model_ref `grc_backbone.model_framework`
+- `models/02_fields_core_base.xml` / `field_framework_x_policy_ids` → model_ref `grc_backbone.model_framework`, relation `x_grc.policy`
+- `models/02_fields_core_base.xml` / `field_framework_x_policy_ids` → model_ref `grc_backbone.model_framework`, relation `x_grc.policy`
+- `models/02_fields_core_base.xml` / `field_policy_x_name` → model_ref `grc_backbone.model_policy`
+- `models/02_fields_core_base.xml` / `field_policy_x_code` → model_ref `grc_backbone.model_policy`
+- `models/02_fields_core_base.xml` / `field_policy_x_objective` → model_ref `grc_backbone.model_policy`
+- `models/02_fields_core_base.xml` / `field_policy_x_state` → model_ref `grc_backbone.model_policy`
+- `models/02_fields_core_base.xml` / `field_policy_x_framework_ids` → model_ref `grc_backbone.model_policy`, relation `x_grc.framework`
+- `models/02_fields_core_base.xml` / `field_policy_x_framework_ids` → model_ref `grc_backbone.model_policy`, relation `x_grc.framework`
+- `models/02_fields_core_base.xml` / `field_provision_x_name` → model_ref `grc_backbone.model_provision`
+- `models/02_fields_core_base.xml` / `field_provision_x_code` → model_ref `grc_backbone.model_provision`
+- `models/02_fields_core_base.xml` / `field_provision_x_description` → model_ref `grc_backbone.model_provision`
+- `models/02_fields_core_base.xml` / `field_provision_x_framework_id` → model_ref `grc_backbone.model_provision`, relation `x_grc.framework`
+- `models/02_fields_core_base.xml` / `field_provision_x_framework_id` → model_ref `grc_backbone.model_provision`, relation `x_grc.framework`
+- `models/02_fields_core_base.xml` / `field_provision_x_policy_id` → model_ref `grc_backbone.model_provision`, relation `x_grc.policy`
+- `models/02_fields_core_base.xml` / `field_provision_x_policy_id` → model_ref `grc_backbone.model_provision`, relation `x_grc.policy`
+- `models/02_fields_core_base.xml` / `field_provision_x_metric_type` → model_ref `grc_backbone.model_provision`
+- `models/02_fields_core_base.xml` / `field_provision_x_target_value` → model_ref `grc_backbone.model_provision`
+- `models/02_fields_core_base.xml` / `field_provision_x_uom_id` → model_ref `grc_backbone.model_provision`, relation `uom.uom`
+- `models/02_fields_core_base.xml` / `field_provision_x_evaluation_frequency` → model_ref `grc_backbone.model_provision`
+- `models/02_fields_core_base.xml` / `field_provision_x_state` → model_ref `grc_backbone.model_provision`
+- `models/02_fields_core_base.xml` / `field_decision_x_name` → model_ref `grc_backbone.model_decision`
+- `models/02_fields_core_base.xml` / `field_decision_x_decision_date` → model_ref `grc_backbone.model_decision`
+- `models/02_fields_core_base.xml` / `field_decision_x_executive_body` → model_ref `grc_backbone.model_decision`
+- `models/02_fields_core_base.xml` / `field_decision_x_resolution_text` → model_ref `grc_backbone.model_decision`
+- `models/02_fields_core_base.xml` / `field_decision_x_related_policy_id` → model_ref `grc_backbone.model_decision`, relation `x_grc.policy`
+- `models/02_fields_core_base.xml` / `field_decision_x_related_policy_id` → model_ref `grc_backbone.model_decision`, relation `x_grc.policy`
+- `models/02_fields_core_base.xml` / `field_decision_x_state` → model_ref `grc_backbone.model_decision`
+- `models/02_fields_core_base.xml` / `field_sop_x_name` → model_ref `grc_backbone.model_sop`
+- `models/02_fields_core_base.xml` / `field_sop_x_code` → model_ref `grc_backbone.model_sop`
+- `models/02_fields_core_base.xml` / `field_sop_x_version` → model_ref `grc_backbone.model_sop`
+- `models/02_fields_core_base.xml` / `field_sop_x_function_id` → model_ref `grc_backbone.model_sop`, relation `x_grc.function`
+- `models/02_fields_core_base.xml` / `field_sop_x_purpose` → model_ref `grc_backbone.model_sop`
+- `models/02_fields_core_base.xml` / `field_sop_x_procedure_steps` → model_ref `grc_backbone.model_sop`
+- `models/02_fields_core_base.xml` / `field_sop_x_state` → model_ref `grc_backbone.model_sop`
+- `models/02_fields_core_base.xml` / `field_risk_x_name` → model_ref `grc_backbone.model_risk`
+- `models/02_fields_core_base.xml` / `field_risk_x_code` → model_ref `grc_backbone.model_risk`
+- `models/02_fields_core_base.xml` / `field_risk_x_category` → model_ref `grc_backbone.model_risk`
+- `models/02_fields_core_base.xml` / `field_risk_x_description` → model_ref `grc_backbone.model_risk`
+- `models/02_fields_core_base.xml` / `field_risk_x_functional_area_id` → model_ref `grc_backbone.model_risk`, relation `x_grc.functional_area`
+- `models/02_fields_core_base.xml` / `field_risk_x_state` → model_ref `grc_backbone.model_risk`
+- `models/02_fields_core_base.xml` / `field_risk_assessment_x_name` → model_ref `grc_backbone.model_risk_assessment`
+- `models/02_fields_core_base.xml` / `field_risk_assessment_x_risk_id` → model_ref `grc_backbone.model_risk_assessment`, relation `x_grc.risk`
+- `models/02_fields_core_base.xml` / `field_risk_assessment_x_risk_id` → model_ref `grc_backbone.model_risk_assessment`, relation `x_grc.risk`
+- `models/02_fields_core_base.xml` / `field_risk_assessment_x_date` → model_ref `grc_backbone.model_risk_assessment`
+- `models/02_fields_core_base.xml` / `field_risk_assessment_x_likelihood` → model_ref `grc_backbone.model_risk_assessment`
+- `models/02_fields_core_base.xml` / `field_risk_assessment_x_impact` → model_ref `grc_backbone.model_risk_assessment`
+- `models/02_fields_core_base.xml` / `field_risk_assessment_x_risk_score` → model_ref `grc_backbone.model_risk_assessment`
+- `models/02_fields_core_base.xml` / `field_risk_assessment_x_status` → model_ref `grc_backbone.model_risk_assessment`
+- `models/02_fields_core_base.xml` / `field_risk_assessment_x_state` → model_ref `grc_backbone.model_risk_assessment`
+- `models/02_fields_core_base.xml` / `field_control_x_name` → model_ref `grc_backbone.model_control`
+- `models/02_fields_core_base.xml` / `field_control_x_code` → model_ref `grc_backbone.model_control`
+- `models/02_fields_core_base.xml` / `field_control_x_risk_id` → model_ref `grc_backbone.model_control`, relation `x_grc.risk`
+- `models/02_fields_core_base.xml` / `field_control_x_risk_id` → model_ref `grc_backbone.model_control`, relation `x_grc.risk`
+- `models/02_fields_core_base.xml` / `field_control_x_control_type` → model_ref `grc_backbone.model_control`
+- `models/02_fields_core_base.xml` / `field_control_x_action_required` → model_ref `grc_backbone.model_control`
+- `models/02_fields_core_base.xml` / `field_control_x_is_hse_blocker` → model_ref `grc_backbone.model_control`
+- `models/02_fields_core_base.xml` / `field_control_x_state` → model_ref `grc_backbone.model_control`
+- `models/02_fields_core_base.xml` / `field_compliance_check_x_name` → model_ref `grc_backbone.model_compliance_check`
+- `models/02_fields_core_base.xml` / `field_compliance_check_x_check_date` → model_ref `grc_backbone.model_compliance_check`
+- `models/02_fields_core_base.xml` / `field_compliance_check_x_provision_id` → model_ref `grc_backbone.model_compliance_check`, relation `x_grc.provision`
+- `models/02_fields_core_base.xml` / `field_compliance_check_x_provision_id` → model_ref `grc_backbone.model_compliance_check`, relation `x_grc.provision`
+- `models/02_fields_core_base.xml` / `field_compliance_check_x_control_id` → model_ref `grc_backbone.model_compliance_check`, relation `x_grc.control`
+- `models/02_fields_core_base.xml` / `field_compliance_check_x_control_id` → model_ref `grc_backbone.model_compliance_check`, relation `x_grc.control`
+- `models/02_fields_core_base.xml` / `field_compliance_check_x_result` → model_ref `grc_backbone.model_compliance_check`
+- `models/02_fields_core_base.xml` / `field_compliance_check_x_notes` → model_ref `grc_backbone.model_compliance_check`
+- `models/02_fields_core_base.xml` / `field_compliance_check_x_state` → model_ref `grc_backbone.model_compliance_check`
+- `models/02_fields_core_base.xml` / `field_incident_x_name` → model_ref `grc_backbone.model_incident`
+- `models/02_fields_core_base.xml` / `field_incident_x_incident_date` → model_ref `grc_backbone.model_incident`
+- `models/02_fields_core_base.xml` / `field_incident_x_description` → model_ref `grc_backbone.model_incident`
+- `models/02_fields_core_base.xml` / `field_incident_x_severity` → model_ref `grc_backbone.model_incident`
+- `models/02_fields_core_base.xml` / `field_incident_x_failed_control_id` → model_ref `grc_backbone.model_incident`, relation `x_grc.control`
+- `models/02_fields_core_base.xml` / `field_incident_x_failed_control_id` → model_ref `grc_backbone.model_incident`, relation `x_grc.control`
+- `models/02_fields_core_base.xml` / `field_incident_x_realized_risk_id` → model_ref `grc_backbone.model_incident`, relation `x_grc.risk`
+- `models/02_fields_core_base.xml` / `field_incident_x_realized_risk_id` → model_ref `grc_backbone.model_incident`, relation `x_grc.risk`
+- `models/02_fields_core_base.xml` / `field_incident_x_corrective_action` → model_ref `grc_backbone.model_incident`
+- `models/02_fields_core_base.xml` / `field_incident_x_state` → model_ref `grc_backbone.model_incident`
+- `models/02_fields_core_base.xml` / `field_contract_template_x_name` → model_ref `grc_backbone.model_contract_template`
+- `models/02_fields_core_base.xml` / `field_contract_template_x_code` → model_ref `grc_backbone.model_contract_template`
+- `models/02_fields_core_base.xml` / `field_contract_template_x_type` → model_ref `grc_backbone.model_contract_template`
+- `models/02_fields_core_base.xml` / `field_contract_template_x_functional_area_id` → model_ref `grc_backbone.model_contract_template`, relation `x_grc.functional_area`
+- `models/02_fields_core_base.xml` / `field_contract_template_x_description` → model_ref `grc_backbone.model_contract_template`
+- `models/02_fields_core_base.xml` / `field_contract_template_x_clause_ids` → model_ref `grc_backbone.model_contract_template`, relation `x_grc.clause`
+- `models/02_fields_core_base.xml` / `field_contract_template_x_clause_ids` → model_ref `grc_backbone.model_contract_template`, relation `x_grc.clause`
+- `models/02_fields_core_base.xml` / `field_contract_template_x_state` → model_ref `grc_backbone.model_contract_template`
+- `models/02_fields_core_base.xml` / `field_tender_x_name` → model_ref `grc_backbone.model_tender`
+- `models/02_fields_core_base.xml` / `field_tender_x_reference_code` → model_ref `grc_backbone.model_tender`
+- `models/02_fields_core_base.xml` / `field_tender_x_client_id` → model_ref `grc_backbone.model_tender`, relation `res.partner`
+- `models/02_fields_core_base.xml` / `field_tender_x_functional_area_id` → model_ref `grc_backbone.model_tender`, relation `x_grc.functional_area`
+- `models/02_fields_core_base.xml` / `field_tender_x_submission_deadline` → model_ref `grc_backbone.model_tender`
+- `models/02_fields_core_base.xml` / `field_tender_x_expected_revenue` → model_ref `grc_backbone.model_tender`
+- `models/02_fields_core_base.xml` / `field_tender_x_clause_ids` → model_ref `grc_backbone.model_tender`, relation `x_grc.clause`
+- `models/02_fields_core_base.xml` / `field_tender_x_clause_ids` → model_ref `grc_backbone.model_tender`, relation `x_grc.clause`
+- `models/02_fields_core_base.xml` / `field_tender_x_state` → model_ref `grc_backbone.model_tender`
+- `models/02_fields_core_base.xml` / `field_clause_x_name` → model_ref `grc_backbone.model_clause`
+- `models/02_fields_core_base.xml` / `field_clause_x_code` → model_ref `grc_backbone.model_clause`
+- `models/02_fields_core_base.xml` / `field_clause_x_category` → model_ref `grc_backbone.model_clause`
+- `models/02_fields_core_base.xml` / `field_clause_x_content` → model_ref `grc_backbone.model_clause`
+- `models/02_fields_core_base.xml` / `field_clause_x_functional_area_id` → model_ref `grc_backbone.model_clause`, relation `x_grc.functional_area`
+- `models/02_fields_core_base.xml` / `field_clause_x_is_mandatory` → model_ref `grc_backbone.model_clause`
+- `models/02_fields_core_base.xml` / `field_clause_x_state` → model_ref `grc_backbone.model_clause`
+- `models/03_fields_core_o2m.xml` / `field_framework_x_provision_ids` → model_ref `grc_backbone.model_framework`, relation `x_grc.provision`
+- `models/03_fields_core_o2m.xml` / `field_framework_x_provision_ids` → model_ref `grc_backbone.model_framework`, relation `x_grc.provision`
+- `models/03_fields_core_o2m.xml` / `field_policy_x_provision_ids` → model_ref `grc_backbone.model_policy`, relation `x_grc.provision`
+- `models/03_fields_core_o2m.xml` / `field_policy_x_provision_ids` → model_ref `grc_backbone.model_policy`, relation `x_grc.provision`
+- `models/03_fields_core_o2m.xml` / `field_provision_x_compliance_check_ids` → model_ref `grc_backbone.model_provision`, relation `x_grc.compliance_check`
+- `models/03_fields_core_o2m.xml` / `field_provision_x_compliance_check_ids` → model_ref `grc_backbone.model_provision`, relation `x_grc.compliance_check`
+- `models/03_fields_core_o2m.xml` / `field_functional_area_x_risk_ids` → model_ref `grc_backbone.model_functional_area`, relation `x_grc.risk`
+- `models/03_fields_core_o2m.xml` / `field_functional_area_x_clause_ids` → model_ref `grc_backbone.model_functional_area`, relation `x_grc.clause`
+- `models/03_fields_core_o2m.xml` / `field_functional_area_x_contract_template_ids` → model_ref `grc_backbone.model_functional_area`, relation `x_grc.contract_template`
+- `models/03_fields_core_o2m.xml` / `field_functional_area_x_tender_ids` → model_ref `grc_backbone.model_functional_area`, relation `x_grc.tender`
+- `models/03_fields_core_o2m.xml` / `field_function_x_sop_ids` → model_ref `grc_backbone.model_function`, relation `x_grc.sop`
+- `models/03_fields_core_o2m.xml` / `field_risk_x_assessment_ids` → model_ref `grc_backbone.model_risk`, relation `x_grc.risk_assessment`
+- `models/03_fields_core_o2m.xml` / `field_risk_x_assessment_ids` → model_ref `grc_backbone.model_risk`, relation `x_grc.risk_assessment`
+- `models/03_fields_core_o2m.xml` / `field_risk_x_control_ids` → model_ref `grc_backbone.model_risk`, relation `x_grc.control`
+- `models/03_fields_core_o2m.xml` / `field_risk_x_control_ids` → model_ref `grc_backbone.model_risk`, relation `x_grc.control`
+- `models/03_fields_core_o2m.xml` / `field_risk_x_incident_ids` → model_ref `grc_backbone.model_risk`, relation `x_grc.incident`
+- `models/03_fields_core_o2m.xml` / `field_risk_x_incident_ids` → model_ref `grc_backbone.model_risk`, relation `x_grc.incident`
+- `models/03_fields_core_o2m.xml` / `field_control_x_compliance_check_ids` → model_ref `grc_backbone.model_control`, relation `x_grc.compliance_check`
+- `models/03_fields_core_o2m.xml` / `field_control_x_compliance_check_ids` → model_ref `grc_backbone.model_control`, relation `x_grc.compliance_check`
+- `models/03_fields_core_o2m.xml` / `field_control_x_incident_ids` → model_ref `grc_backbone.model_control`, relation `x_grc.incident`
+- `models/03_fields_core_o2m.xml` / `field_control_x_incident_ids` → model_ref `grc_backbone.model_control`, relation `x_grc.incident`
+- `models/04_fields_task_templates_base.xml` / `field_task_template_x_name` → model_ref `grc_backbone.model_task_template`
+- `models/04_fields_task_templates_base.xml` / `field_task_template_x_code` → model_ref `grc_backbone.model_task_template`
+- `models/04_fields_task_templates_base.xml` / `field_task_template_x_description` → model_ref `grc_backbone.model_task_template`
+- `models/04_fields_task_templates_base.xml` / `field_task_template_x_function_id` → model_ref `grc_backbone.model_task_template`, relation `x_grc.function`
+- `models/04_fields_task_templates_base.xml` / `field_task_template_x_sop_ids` → model_ref `grc_backbone.model_task_template`, relation `x_grc.sop`
+- `models/04_fields_task_templates_base.xml` / `field_task_template_x_sop_ids` → model_ref `grc_backbone.model_task_template`, relation `x_grc.sop`
+- `models/04_fields_task_templates_base.xml` / `field_task_template_x_state` → model_ref `grc_backbone.model_task_template`
+- `models/04_fields_task_templates_base.xml` / `field_task_template_x_version` → model_ref `grc_backbone.model_task_template`
+- `models/04_fields_task_templates_base.xml` / `field_task_template_x_effective_date` → model_ref `grc_backbone.model_task_template`
+- `models/04_fields_task_templates_base.xml` / `field_task_template_x_retired_date` → model_ref `grc_backbone.model_task_template`
+- `models/04_fields_task_templates_base.xml` / `field_task_template_x_is_default` → model_ref `grc_backbone.model_task_template`
+- `models/04_fields_task_templates_base.xml` / `field_task_template_x_notes` → model_ref `grc_backbone.model_task_template`
+- `models/04_fields_task_templates_base.xml` / `field_task_template_line_x_template_id` → model_ref `grc_backbone.model_task_template_line`, relation `x_grc.task_template`
+- `models/04_fields_task_templates_base.xml` / `field_task_template_line_x_template_id` → model_ref `grc_backbone.model_task_template_line`, relation `x_grc.task_template`
+- `models/04_fields_task_templates_base.xml` / `field_task_template_line_x_sequence` → model_ref `grc_backbone.model_task_template_line`
+- `models/04_fields_task_templates_base.xml` / `field_task_template_line_x_name` → model_ref `grc_backbone.model_task_template_line`
+- `models/04_fields_task_templates_base.xml` / `field_task_template_line_x_state` → model_ref `grc_backbone.model_task_template_line`
+- `models/04_fields_task_templates_base.xml` / `field_task_template_line_x_instruction` → model_ref `grc_backbone.model_task_template_line`
+- `models/04_fields_task_templates_base.xml` / `field_task_template_line_x_expected_outcome` → model_ref `grc_backbone.model_task_template_line`
+- `models/04_fields_task_templates_base.xml` / `field_task_template_line_x_required` → model_ref `grc_backbone.model_task_template_line`
+- `models/04_fields_task_templates_base.xml` / `field_task_template_line_x_notes` → model_ref `grc_backbone.model_task_template_line`
+- `models/05_fields_task_templates_o2m.xml` / `field_function_x_task_template_ids` → model_ref `grc_backbone.model_function`, relation `x_grc.task_template`
+- `models/05_fields_task_templates_o2m.xml` / `field_sop_x_task_template_ids` → model_ref `grc_backbone.model_sop`, relation `x_grc.task_template`
+- `models/05_fields_task_templates_o2m.xml` / `field_sop_x_task_template_ids` → model_ref `grc_backbone.model_sop`, relation `x_grc.task_template`
+- `models/05_fields_task_templates_o2m.xml` / `field_task_template_x_line_ids` → model_ref `grc_backbone.model_task_template`, relation `x_grc.task_template_line`
+- `models/05_fields_task_templates_o2m.xml` / `field_task_template_x_line_ids` → model_ref `grc_backbone.model_task_template`, relation `x_grc.task_template_line`
+
+## Access rows still tied to retired models
+
+- `access_framework_admin,Governance Framework admin,grc_backbone.model_framework,base.group_user,1,1,1,1`
+- `access_framework_contributor,Governance Framework contributor,grc_backbone.model_framework,base.group_user,1,1,1,1`
+- `access_framework_reader,Governance Framework reader,grc_backbone.model_framework,base.group_user,1,1,1,1`
+- `access_policy_admin,Governance Policy admin,grc_backbone.model_policy,base.group_user,1,1,1,1`
+- `access_policy_contributor,Governance Policy contributor,grc_backbone.model_policy,base.group_user,1,1,1,1`
+- `access_policy_reader,Governance Policy reader,grc_backbone.model_policy,base.group_user,1,1,1,1`
+- `access_provision_admin,Governance Provision admin,grc_backbone.model_provision,base.group_user,1,1,1,1`
+- `access_provision_contributor,Governance Provision contributor,grc_backbone.model_provision,base.group_user,1,1,1,1`
+- `access_provision_reader,Governance Provision reader,grc_backbone.model_provision,base.group_user,1,1,1,1`
+- `access_decision_admin,Governance Decision admin,grc_backbone.model_decision,base.group_user,1,1,1,1`
+- `access_decision_contributor,Governance Decision contributor,grc_backbone.model_decision,base.group_user,1,1,1,1`
+- `access_decision_reader,Governance Decision reader,grc_backbone.model_decision,base.group_user,1,1,1,1`
+- `access_sop_admin,Standard Operating Procedure admin,grc_backbone.model_sop,base.group_user,1,1,1,1`
+- `access_sop_contributor,Standard Operating Procedure contributor,grc_backbone.model_sop,base.group_user,1,1,1,1`
+- `access_sop_reader,Standard Operating Procedure reader,grc_backbone.model_sop,base.group_user,1,1,1,1`
+- `access_risk_admin,Risk admin,grc_backbone.model_risk,base.group_user,1,1,1,1`
+- `access_risk_contributor,Risk contributor,grc_backbone.model_risk,base.group_user,1,1,1,1`
+- `access_risk_reader,Risk reader,grc_backbone.model_risk,base.group_user,1,1,1,1`
+- `access_risk_assessment_admin,Risk Assessment admin,grc_backbone.model_risk_assessment,base.group_user,1,1,1,1`
+- `access_risk_assessment_admin,Risk Assessment admin,grc_backbone.model_risk_assessment,base.group_user,1,1,1,1`
+- `access_risk_assessment_contributor,Risk Assessment contributor,grc_backbone.model_risk_assessment,base.group_user,1,1,1,1`
+- `access_risk_assessment_contributor,Risk Assessment contributor,grc_backbone.model_risk_assessment,base.group_user,1,1,1,1`
+- `access_risk_assessment_reader,Risk Assessment reader,grc_backbone.model_risk_assessment,base.group_user,1,1,1,1`
+- `access_risk_assessment_reader,Risk Assessment reader,grc_backbone.model_risk_assessment,base.group_user,1,1,1,1`
+- `access_control_admin,Control admin,grc_backbone.model_control,base.group_user,1,1,1,1`
+- `access_control_contributor,Control contributor,grc_backbone.model_control,base.group_user,1,1,1,1`
+- `access_control_reader,Control reader,grc_backbone.model_control,base.group_user,1,1,1,1`
+- `access_compliance_check_admin,Compliance Check admin,grc_backbone.model_compliance_check,base.group_user,1,1,1,1`
+- `access_compliance_check_contributor,Compliance Check contributor,grc_backbone.model_compliance_check,base.group_user,1,1,1,1`
+- `access_compliance_check_reader,Compliance Check reader,grc_backbone.model_compliance_check,base.group_user,1,1,1,1`
+- `access_incident_admin,Incident admin,grc_backbone.model_incident,base.group_user,1,1,1,1`
+- `access_incident_contributor,Incident contributor,grc_backbone.model_incident,base.group_user,1,1,1,1`
+- `access_incident_reader,Incident reader,grc_backbone.model_incident,base.group_user,1,1,1,1`
+- `access_contract_template_admin,Contract Template admin,grc_backbone.model_contract_template,base.group_user,1,1,1,1`
+- `access_contract_template_contributor,Contract Template contributor,grc_backbone.model_contract_template,base.group_user,1,1,1,1`
+- `access_contract_template_reader,Contract Template reader,grc_backbone.model_contract_template,base.group_user,1,1,1,1`
+- `access_tender_admin,Tender admin,grc_backbone.model_tender,base.group_user,1,1,1,1`
+- `access_tender_contributor,Tender contributor,grc_backbone.model_tender,base.group_user,1,1,1,1`
+- `access_tender_reader,Tender reader,grc_backbone.model_tender,base.group_user,1,1,1,1`
+- `access_clause_admin,Clause admin,grc_backbone.model_clause,base.group_user,1,1,1,1`
+- `access_clause_contributor,Clause contributor,grc_backbone.model_clause,base.group_user,1,1,1,1`
+- `access_clause_reader,Clause reader,grc_backbone.model_clause,base.group_user,1,1,1,1`
+- `access_task_template_admin,Task Template admin,grc_backbone.model_task_template,base.group_user,1,1,1,1`
+- `access_task_template_contributor,Task Template contributor,grc_backbone.model_task_template,base.group_user,1,1,1,1`
+- `access_task_template_reader,Task Template reader,grc_backbone.model_task_template,base.group_user,1,1,1,1`
+- `access_task_template_line_admin,Task Template Line admin,grc_backbone.model_task_template_line,base.group_user,1,1,1,1`
+- `access_task_template_line_admin,Task Template Line admin,grc_backbone.model_task_template_line,base.group_user,1,1,1,1`
+- `access_task_template_line_contributor,Task Template Line contributor,grc_backbone.model_task_template_line,base.group_user,1,1,1,1`
+- `access_task_template_line_contributor,Task Template Line contributor,grc_backbone.model_task_template_line,base.group_user,1,1,1,1`
+- `access_task_template_line_reader,Task Template Line reader,grc_backbone.model_task_template_line,base.group_user,1,1,1,1`
+- `access_task_template_line_reader,Task Template Line reader,grc_backbone.model_task_template_line,base.group_user,1,1,1,1`
+- `access_decision_template_user,Decision Template user,grc_backbone.model_decision_template,base.group_user,1,1,1,1`
+- `access_decision_basis_line_user,Decision Basis Line user,grc_backbone.model_decision_basis_line,base.group_user,1,1,1,1`
+- `access_decision_template_article_line_user,Decision Template Article Line user,grc_backbone.model_decision_template_article_line,base.group_user,1,1,1,1`
+- `access_decision_template_variable_user,Decision Template Variable user,grc_backbone.model_decision_template_variable,base.group_user,1,1,1,1`
+- `access_decision_family_user,Decision Family user,grc_backbone.model_decision_family,base.group_user,1,1,1,1`
+- `access_decision_type_user,Decision Type user,grc_backbone.model_decision_type,base.group_user,1,1,1,1`
+- `access_decision_profile_user,Decision Profile user,grc_backbone.model_decision_profile,base.group_user,1,1,1,1`
+- `access_decision_basis_phrase_user,Decision Basis Phrase user,grc_backbone.model_decision_basis_phrase,base.group_user,1,1,1,1`
+
+## 7A-6H implication
+
+Physical deletion should remove or neutralize:
+
+- retired `ir.model.fields` records from active model XML files;
+- retired `ir.model` records from `models/01_models.xml`;
+- retired access CSV rows;
+- detached legacy files may remain physically present but should stay absent from `__manifest__.py`.
+
