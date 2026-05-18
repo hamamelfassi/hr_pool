@@ -66,3 +66,4 @@ access_grc_variable_user,GRC Variable user,grc_backbone.model_grc_variable,base.
 access_governance_reference_relation_user,Governance Reference Relation user,grc_backbone.model_governance_reference_relation,base.group_user,1,1,1,1
 access_governance_provision_user,Governance Provision user,grc_backbone.model_governance_provision,base.group_user,1,1,1,1
 access_governance_text_pattern_user,Governance Text Pattern user,grc_backbone.model_governance_text_pattern,base.group_user,1,1,1,1
+access_governance_reference_type_user,Governance Reference Type user,grc_backbone.model_governance_reference_type,base.group_user,1,1,1,1

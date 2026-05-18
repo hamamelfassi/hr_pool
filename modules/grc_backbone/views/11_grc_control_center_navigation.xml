@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Safe default landing: opening GRC lands on Decision Templates, not legacy Frameworks. -->
+    <menuitem id="menu_grc_root"
+        name="GRC"
+        action="grc_backbone.action_decision_template"
+        sequence="35"/>
+
+    <!-- Governing Rules -->
+    <menuitem id="menu_grc_governance"
+        name="القواعد الحاكمة"
+        parent="grc_backbone.menu_grc_root"
+        action="grc_backbone.action_governance_reference_law"
+        sequence="10"/>
+
+    <menuitem id="menu_governing_rules_laws"
+        name="القوانين"
+        parent="grc_backbone.menu_grc_governance"
+        action="grc_backbone.action_governance_reference_law"
+        sequence="10"/>
+
+    <menuitem id="menu_provisions"
+        name="اللوائح"
+        parent="grc_backbone.menu_grc_governance"
+        action="grc_backbone.action_governance_reference_regulation"
+        sequence="20"/>
+
+    <menuitem id="menu_frameworks"
+        name="الأطر"
+        parent="grc_backbone.menu_grc_governance"
+        action="grc_backbone.action_governance_reference_framework"
+        sequence="30"/>
+
+    <menuitem id="menu_policies"
+        name="السياسات"
+        parent="grc_backbone.menu_grc_governance"
+        action="grc_backbone.action_governance_reference_policy"
+        sequence="40"/>
+
+    <menuitem id="menu_sops"
+        name="إجراءات التشغيل"
+        parent="grc_backbone.menu_grc_governance"
+        action="grc_backbone.action_governance_reference_procedure"
+        sequence="50"/>
+
+    <!-- Decisions -->
+    <menuitem id="menu_decision_engine"
+        name="القرارات"
+        parent="grc_backbone.menu_grc_root"
+        action="grc_backbone.action_decision_template"
+        sequence="20"/>
+
+    <menuitem id="menu_decisions"
+        name="القرارات"
+        parent="grc_backbone.menu_decision_engine"
+        action="grc_backbone.action_governance_reference_decision"
+        sequence="10"/>
+
+    <menuitem id="menu_decision_templates"
+        name="قوالب القرارات"
+        parent="grc_backbone.menu_decision_engine"
+        action="grc_backbone.action_decision_template"
+        sequence="20"/>
+
+    <menuitem id="menu_decision_profiles"
+        name="نماذج القرارات"
+        parent="grc_backbone.menu_decision_engine"
+        action="grc_backbone.action_decision_profile"
+        sequence="30"/>
+
+    <!-- Location Directory -->
+    <menuitem id="menu_location_directory"
+        name="الدليل الجغرافي"
+        parent="grc_backbone.menu_grc_root"
+        action="grc_backbone.action_location"
+        sequence="30"/>
+
+    <menuitem id="menu_locations"
+        name="المواقع الجغرافية"
+        parent="grc_backbone.menu_location_directory"
+        action="grc_backbone.action_location"
+        sequence="10"/>
+
+    <!-- Configurations -->
+    <menuitem id="menu_decision_configuration"
+        name="الإعدادات"
+        parent="grc_backbone.menu_grc_root"
+        sequence="90"/>
+
+    <menuitem id="menu_grc_taxonomy"
+        name="Functional Taxonomy"
+        parent="grc_backbone.menu_decision_configuration"
+        sequence="10"/>
+
+    <menuitem id="menu_functional_areas"
+        name="Functional Areas"
+        parent="grc_backbone.menu_grc_taxonomy"
+        action="grc_backbone.action_functional_area"
+        sequence="10"/>
+
+    <menuitem id="menu_functions"
+        name="Functions"
+        parent="grc_backbone.menu_grc_taxonomy"
+        action="grc_backbone.action_function"
+        sequence="20"/>
+
+    <menuitem id="menu_governance_taxonomy"
+        name="Governance Taxonomy"
+        parent="grc_backbone.menu_decision_configuration"
+        sequence="20"/>
+
+    <menuitem id="menu_decision_families"
+        name="Governance Families"
+        parent="grc_backbone.menu_governance_taxonomy"
+        action="grc_backbone.action_decision_family"
+        sequence="10"/>
+
+    <menuitem id="menu_decision_types"
+        name="Governance Types"
+        parent="grc_backbone.menu_governance_taxonomy"
+        action="grc_backbone.action_decision_type"
+        sequence="20"/>
+
+    <menuitem id="menu_governance_reference_types"
+        name="Governance Reference Types"
+        parent="grc_backbone.menu_governance_taxonomy"
+        action="grc_backbone.action_governance_reference_type"
+        sequence="30"/>
+
+    <menuitem id="menu_governance_reference_relations"
+        name="Governance Relations"
+        parent="grc_backbone.menu_governance_taxonomy"
+        action="grc_backbone.action_governance_reference_relation"
+        sequence="40"/>
+
+    <menuitem id="menu_decision_basis_phrases"
+        name="Basis Phrases"
+        parent="grc_backbone.menu_governance_taxonomy"
+        action="grc_backbone.action_decision_basis_phrase"
+        sequence="50"/>
+
+    <menuitem id="menu_governance_library"
+        name="Governance Library"
+        parent="grc_backbone.menu_decision_configuration"
+        sequence="30"/>
+
+    <menuitem id="menu_governance_provisions"
+        name="Provisions"
+        parent="grc_backbone.menu_governance_library"
+        action="grc_backbone.action_governance_provision"
+        sequence="10"/>
+
+    <menuitem id="menu_governance_text_patterns"
+        name="Patterns"
+        parent="grc_backbone.menu_governance_library"
+        action="grc_backbone.action_governance_text_pattern"
+        sequence="20"/>
+
+    <menuitem id="menu_grc_variables"
+        name="Variables"
+        parent="grc_backbone.menu_governance_library"
+        action="grc_backbone.action_grc_variable"
+        sequence="30"/>
+
+    <menuitem id="menu_governance_references"
+        name="References"
+        parent="grc_backbone.menu_governance_library"
+        action="grc_backbone.action_governance_reference_all"
+        sequence="40"/>
+</odoo>

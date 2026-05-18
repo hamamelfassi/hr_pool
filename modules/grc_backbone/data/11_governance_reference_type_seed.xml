@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <data noupdate="0">
+
+        <record id="governance_reference_type_law" model="x_grc.governance_reference_type">
+            <field name="x_name">القوانين</field>
+            <field name="x_code">law</field>
+            <field name="x_label_en">Law</field>
+            <field name="x_sequence">10</field>
+            <field name="x_active" eval="True"/>
+            <field name="x_description">External or internal legal authority.</field>
+        </record>
+
+        <record id="governance_reference_type_regulation" model="x_grc.governance_reference_type">
+            <field name="x_name">اللوائح</field>
+            <field name="x_code">regulation</field>
+            <field name="x_label_en">Regulation</field>
+            <field name="x_sequence">20</field>
+            <field name="x_active" eval="True"/>
+            <field name="x_description">Regulatory instruments and formal regulations.</field>
+        </record>
+
+        <record id="governance_reference_type_framework" model="x_grc.governance_reference_type">
+            <field name="x_name">الأطر</field>
+            <field name="x_code">framework</field>
+            <field name="x_label_en">Framework</field>
+            <field name="x_sequence">30</field>
+            <field name="x_active" eval="True"/>
+            <field name="x_description">Frameworks and governing standards families.</field>
+        </record>
+
+        <record id="governance_reference_type_standard" model="x_grc.governance_reference_type">
+            <field name="x_name">المعايير</field>
+            <field name="x_code">standard</field>
+            <field name="x_label_en">Standard</field>
+            <field name="x_sequence">40</field>
+            <field name="x_active" eval="True"/>
+            <field name="x_description">Technical or management standards.</field>
+        </record>
+
+        <record id="governance_reference_type_policy" model="x_grc.governance_reference_type">
+            <field name="x_name">السياسات</field>
+            <field name="x_code">policy</field>
+            <field name="x_label_en">Policy</field>
+            <field name="x_sequence">50</field>
+            <field name="x_active" eval="True"/>
+            <field name="x_description">Company policy references.</field>
+        </record>
+
+        <record id="governance_reference_type_procedure" model="x_grc.governance_reference_type">
+            <field name="x_name">إجراءات التشغيل</field>
+            <field name="x_code">procedure</field>
+            <field name="x_label_en">Procedure / SOP</field>
+            <field name="x_sequence">60</field>
+            <field name="x_active" eval="True"/>
+            <field name="x_description">Operating procedures. Parent menu heading: دليل إجراءات التشغيل. Singular record label: إجراء تشغيل.</field>
+        </record>
+
+        <record id="governance_reference_type_decision" model="x_grc.governance_reference_type">
+            <field name="x_name">القرارات</field>
+            <field name="x_code">decision</field>
+            <field name="x_label_en">Decision</field>
+            <field name="x_sequence">70</field>
+            <field name="x_active" eval="True"/>
+            <field name="x_description">Governance, board, committee, or management decisions.</field>
+        </record>
+
+        <record id="governance_reference_type_letter" model="x_grc.governance_reference_type">
+            <field name="x_name">مراسلة</field>
+            <field name="x_code">letter</field>
+            <field name="x_label_en">Letter / Correspondence</field>
+            <field name="x_sequence">80</field>
+            <field name="x_active" eval="True"/>
+            <field name="x_description">Incoming or outgoing correspondence.</field>
+        </record>
+
+        <record id="governance_reference_type_memo" model="x_grc.governance_reference_type">
+            <field name="x_name">مذكرة</field>
+            <field name="x_code">memo</field>
+            <field name="x_label_en">Memo</field>
+            <field name="x_sequence">90</field>
+            <field name="x_active" eval="True"/>
+            <field name="x_description">Internal memos and notes.</field>
+        </record>
+
+        <record id="governance_reference_type_meeting_minutes" model="x_grc.governance_reference_type">
+            <field name="x_name">محضر اجتماع</field>
+            <field name="x_code">meeting_minutes</field>
+            <field name="x_label_en">Meeting Minutes</field>
+            <field name="x_sequence">100</field>
+            <field name="x_active" eval="True"/>
+            <field name="x_description">Meeting minutes and meeting records.</field>
+        </record>
+
+        <record id="governance_reference_type_contract" model="x_grc.governance_reference_type">
+            <field name="x_name">العقود</field>
+            <field name="x_code">contract</field>
+            <field name="x_label_en">Contract</field>
+            <field name="x_sequence">110</field>
+            <field name="x_active" eval="True"/>
+            <field name="x_description">Contracts and contractual references.</field>
+        </record>
+
+        <record id="governance_reference_type_free_text" model="x_grc.governance_reference_type">
+            <field name="x_name">نص حر</field>
+            <field name="x_code">free_text</field>
+            <field name="x_label_en">Free Text</field>
+            <field name="x_sequence">120</field>
+            <field name="x_active" eval="True"/>
+            <field name="x_description">Free text authority/reference.</field>
+        </record>
+
+        <record id="governance_reference_type_other" model="x_grc.governance_reference_type">
+            <field name="x_name">أخرى</field>
+            <field name="x_code">other</field>
+            <field name="x_label_en">Other</field>
+            <field name="x_sequence">130</field>
+            <field name="x_active" eval="True"/>
+            <field name="x_description">Other governance reference type.</field>
+        </record>
+
+    </data>
+
+</odoo>

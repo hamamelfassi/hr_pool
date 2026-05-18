@@ -25,7 +25,7 @@
         <field name="name">x_reference_type</field>
         <field name="field_description">Reference Type</field>
         <field name="ttype">selection</field>
-        <field name="required">True</field>
+        <field name="required">False</field>
         <field name="selection">[
             ('law', 'Law'),
             ('regulation', 'Regulation'),

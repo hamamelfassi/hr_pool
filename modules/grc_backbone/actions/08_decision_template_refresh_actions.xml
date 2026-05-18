@@ -38,6 +38,8 @@ def basis_type_from_reference_type(reference_type):
         return 'policy'
     if reference_type == 'meeting_minutes':
         return 'decision'
+    if reference_type == 'contract':
+        return 'other'
     return 'other'
 
 def extract_keys_from_text(text):
@@ -103,7 +105,11 @@ for template in records.sudo():
 
         ref_type = ''
         if reference:
-            ref_type = reference.x_reference_type or ''
+            ref_type = (
+                reference.x_reference_type_id.x_code
+                if reference.x_reference_type_id
+                else (reference.x_reference_type or '')
+            )
 
         basis_type = basis_type_from_reference_type(ref_type) if ref_type else (line.x_basis_type or 'other')
 

@@ -23,6 +23,7 @@
         "models/12_decision_reference_variable_fields.xml",
         "models/13_governance_library_models.xml",
         "models/14_governance_library_fields.xml",
+        "models/15_governance_reference_type.xml",
         "data/01_selection_values.xml",
         "data/02_sequences.xml",
         "data/03_seed_functional_taxonomy.xml",
@@ -32,6 +33,7 @@
         "data/07_seed_libya_localities.xml",
         "data/08_location_hierarchy_automation.xml",
         "data/09_decision_profile_seed.xml",
+        "data/11_governance_reference_type_seed.xml",
         "actions/01_actions.xml",
         "actions/02_actions_task_templates.xml",
         "actions/03_location_actions.xml",
@@ -41,6 +43,7 @@
         "actions/07_governance_library_actions.xml",
         "actions/08_decision_template_refresh_actions.xml",
         "actions/09_governance_source_refresh_actions.xml",
+        "actions/10_governance_reference_type_actions.xml",
         "views/01_governance_views.xml",
         "views/02_taxonomy_views.xml",
         "views/03_risk_compliance_views.xml",
@@ -51,6 +54,7 @@
         "views/08_decision_profile_views.xml",
         "views/09_decision_reference_variable_views.xml",
         "views/10_governance_library_views.xml",
+        "views/11_grc_control_center_navigation.xml",
         "data/10_decision_engine_cleanup.xml",
         "security/ir.model.access.csv"
     ]

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_governance_reference_type" model="ir.actions.act_window">
+        <field name="name">Governance Reference Types</field>
+        <field name="res_model">x_grc.governance_reference_type</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'default_x_active': True}</field>
+    </record>
+
+    <record id="action_governance_reference_all" model="ir.actions.act_window">
+        <field name="name">كل مراجع الحوكمة</field>
+        <field name="res_model">x_grc.governance_reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="context" eval="{'default_x_active': True, 'default_x_status': 'active', 'default_x_reference_type': 'other', 'default_x_reference_type_id': ref('grc_backbone.governance_reference_type_other')}"/>
+    </record>
+
+    <record id="action_governance_reference_law" model="ir.actions.act_window">
+        <field name="name">القوانين</field>
+        <field name="res_model">x_grc.governance_reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('x_reference_type_id.x_code', '=', 'law')]</field>
+        <field name="context" eval="{'default_x_active': True, 'default_x_status': 'active', 'default_x_reference_type': 'law', 'default_x_reference_type_id': ref('grc_backbone.governance_reference_type_law')}"/>
+    </record>
+
+    <record id="action_governance_reference_regulation" model="ir.actions.act_window">
+        <field name="name">اللوائح</field>
+        <field name="res_model">x_grc.governance_reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('x_reference_type_id.x_code', '=', 'regulation')]</field>
+        <field name="context" eval="{'default_x_active': True, 'default_x_status': 'active', 'default_x_reference_type': 'regulation', 'default_x_reference_type_id': ref('grc_backbone.governance_reference_type_regulation')}"/>
+    </record>
+
+    <record id="action_governance_reference_framework" model="ir.actions.act_window">
+        <field name="name">الأطر</field>
+        <field name="res_model">x_grc.governance_reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('x_reference_type_id.x_code', '=', 'framework')]</field>
+        <field name="context" eval="{'default_x_active': True, 'default_x_status': 'active', 'default_x_reference_type': 'framework', 'default_x_reference_type_id': ref('grc_backbone.governance_reference_type_framework')}"/>
+    </record>
+
+    <record id="action_governance_reference_standard" model="ir.actions.act_window">
+        <field name="name">المعايير</field>
+        <field name="res_model">x_grc.governance_reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('x_reference_type_id.x_code', '=', 'standard')]</field>
+        <field name="context" eval="{'default_x_active': True, 'default_x_status': 'active', 'default_x_reference_type': 'standard', 'default_x_reference_type_id': ref('grc_backbone.governance_reference_type_standard')}"/>
+    </record>
+
+    <record id="action_governance_reference_policy" model="ir.actions.act_window">
+        <field name="name">السياسات</field>
+        <field name="res_model">x_grc.governance_reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('x_reference_type_id.x_code', '=', 'policy')]</field>
+        <field name="context" eval="{'default_x_active': True, 'default_x_status': 'active', 'default_x_reference_type': 'policy', 'default_x_reference_type_id': ref('grc_backbone.governance_reference_type_policy')}"/>
+    </record>
+
+    <record id="action_governance_reference_procedure" model="ir.actions.act_window">
+        <field name="name">إجراءات التشغيل</field>
+        <field name="res_model">x_grc.governance_reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('x_reference_type_id.x_code', '=', 'procedure')]</field>
+        <field name="context" eval="{'default_x_active': True, 'default_x_status': 'active', 'default_x_reference_type': 'procedure', 'default_x_reference_type_id': ref('grc_backbone.governance_reference_type_procedure')}"/>
+    </record>
+
+    <record id="action_governance_reference_decision" model="ir.actions.act_window">
+        <field name="name">القرارات</field>
+        <field name="res_model">x_grc.governance_reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('x_reference_type_id.x_code', '=', 'decision')]</field>
+        <field name="context" eval="{'default_x_active': True, 'default_x_status': 'active', 'default_x_reference_type': 'decision', 'default_x_reference_type_id': ref('grc_backbone.governance_reference_type_decision')}"/>
+    </record>
+
+    <record id="action_governance_reference_letter" model="ir.actions.act_window">
+        <field name="name">المراسلات</field>
+        <field name="res_model">x_grc.governance_reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('x_reference_type_id.x_code', '=', 'letter')]</field>
+        <field name="context" eval="{'default_x_active': True, 'default_x_status': 'active', 'default_x_reference_type': 'letter', 'default_x_reference_type_id': ref('grc_backbone.governance_reference_type_letter')}"/>
+    </record>
+
+    <record id="action_governance_reference_memo" model="ir.actions.act_window">
+        <field name="name">المذكرات</field>
+        <field name="res_model">x_grc.governance_reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('x_reference_type_id.x_code', '=', 'memo')]</field>
+        <field name="context" eval="{'default_x_active': True, 'default_x_status': 'active', 'default_x_reference_type': 'memo', 'default_x_reference_type_id': ref('grc_backbone.governance_reference_type_memo')}"/>
+    </record>
+
+    <record id="action_governance_reference_meeting_minutes" model="ir.actions.act_window">
+        <field name="name">محاضر الاجتماعات</field>
+        <field name="res_model">x_grc.governance_reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('x_reference_type_id.x_code', '=', 'meeting_minutes')]</field>
+        <field name="context" eval="{'default_x_active': True, 'default_x_status': 'active', 'default_x_reference_type': 'meeting_minutes', 'default_x_reference_type_id': ref('grc_backbone.governance_reference_type_meeting_minutes')}"/>
+    </record>
+
+    <record id="action_governance_reference_contract" model="ir.actions.act_window">
+        <field name="name">العقود</field>
+        <field name="res_model">x_grc.governance_reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('x_reference_type_id.x_code', '=', 'contract')]</field>
+        <field name="context" eval="{'default_x_active': True, 'default_x_status': 'active', 'default_x_reference_type': 'other', 'default_x_reference_type_id': ref('grc_backbone.governance_reference_type_contract')}"/>
+    </record>
+
+    <record id="action_governance_reference_free_text" model="ir.actions.act_window">
+        <field name="name">النصوص الحرة</field>
+        <field name="res_model">x_grc.governance_reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('x_reference_type_id.x_code', '=', 'free_text')]</field>
+        <field name="context" eval="{'default_x_active': True, 'default_x_status': 'active', 'default_x_reference_type': 'free_text', 'default_x_reference_type_id': ref('grc_backbone.governance_reference_type_free_text')}"/>
+    </record>
+
+    <record id="action_governance_reference_other" model="ir.actions.act_window">
+        <field name="name">أخرى</field>
+        <field name="res_model">x_grc.governance_reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('x_reference_type_id.x_code', '=', 'other')]</field>
+        <field name="context" eval="{'default_x_active': True, 'default_x_status': 'active', 'default_x_reference_type': 'other', 'default_x_reference_type_id': ref('grc_backbone.governance_reference_type_other')}"/>
+    </record>
+
+    <record id="action_governance_reference_refresh_type" model="ir.actions.server">
+        <field name="name">تحديث نوع المرجع</field>
+        <field name="model_id" ref="grc_backbone.model_governance_reference"/>
+        <field name="binding_model_id" ref="grc_backbone.model_governance_reference"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+legacy_codes = [
+    'law',
+    'regulation',
+    'framework',
+    'standard',
+    'policy',
+    'procedure',
+    'decision',
+    'letter',
+    'memo',
+    'meeting_minutes',
+    'free_text',
+    'other',
+]
+
+type_model = env['x_grc.governance_reference_type'].sudo()
+
+for rec in records.sudo():
+    vals = {}
+
+    helper = rec.x_reference_type_id
+    legacy = rec.x_reference_type or ''
+
+    if not helper:
+        code = legacy or 'other'
+        helper = type_model.search([('x_code', '=', code)], limit=1)
+        if helper:
+            vals['x_reference_type_id'] = helper.id
+
+    if helper and not legacy:
+        helper_code = helper.x_code or 'other'
+        if helper_code in legacy_codes:
+            vals['x_reference_type'] = helper_code
+        else:
+            vals['x_reference_type'] = 'other'
+
+    if vals:
+        rec.write(vals)
+
+action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+</odoo>

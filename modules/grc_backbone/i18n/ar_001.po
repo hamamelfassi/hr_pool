@@ -3420,7 +3420,7 @@ msgstr "صيغة سند القرار"
 #. module: grc_backbone
 #: model:ir.ui.menu,name:grc_backbone.menu_decision_configuration
 msgid "Decision Configuration"
-msgstr "إعدادات القرارات"
+msgstr "الإعدادات"
 
 #. module: grc_backbone
 #: model:ir.model.fields,field_description:grc_backbone.field_decision_x_decision_date
@@ -3430,7 +3430,7 @@ msgstr "تاريخ القرار"
 #. module: grc_backbone
 #: model:ir.ui.menu,name:grc_backbone.menu_decision_engine
 msgid "Decision Engine"
-msgstr "محرك القرارات"
+msgstr "القرارات"
 
 #. module: grc_backbone
 #: model:ir.actions.act_window,name:grc_backbone.action_decision_family
@@ -4179,7 +4179,7 @@ msgstr "غوط الشعال ( الاستقلال)"
 #. module: grc_backbone
 #: model:ir.ui.menu,name:grc_backbone.menu_grc_governance
 msgid "Governance"
-msgstr "الحوكمة"
+msgstr "القواعد الحاكمة"
 
 #. module: grc_backbone
 #: model:ir.model,name:grc_backbone.model_decision
@@ -5522,7 +5522,7 @@ msgstr "خطوات الإجراء"
 #. module: grc_backbone
 #: model:ir.ui.menu,name:grc_backbone.menu_sops
 msgid "Procedures / SOPs"
-msgstr "الإجراءات / إجراءات التشغيل القياسية"
+msgstr "إجراءات التشغيل"
 
 #. module: grc_backbone
 #: model:x_grc.decision_family,x_name:grc_backbone.decision_family_procurement
@@ -8051,3 +8051,58 @@ msgstr "نموذج المصدر"
 #: model_terms:ir.ui.view,arch_db:grc_backbone.pass7a5_translation_recovery
 msgid "حقل المصدر"
 msgstr "حقل المصدر"
+
+#. module: grc_backbone
+#: model:ir.ui.menu,name:grc_backbone.menu_grc_governance
+msgid "الحوكمة"
+msgstr "القواعد الحاكمة"
+
+#. module: grc_backbone
+#: model:ir.ui.menu,name:grc_backbone.menu_grc_governance
+msgid "القواعد الحاكمة"
+msgstr "القواعد الحاكمة"
+
+#. module: grc_backbone
+#: model:ir.ui.menu,name:grc_backbone.menu_provisions
+msgid "Provisions"
+msgstr "اللوائح"
+
+#. module: grc_backbone
+#: model:ir.ui.menu,name:grc_backbone.menu_provisions
+msgid "بنود"
+msgstr "اللوائح"
+
+#. module: grc_backbone
+#: model:ir.ui.menu,name:grc_backbone.menu_provisions
+msgid "اللوائح"
+msgstr "اللوائح"
+
+#. module: grc_backbone
+#: model:ir.ui.menu,name:grc_backbone.menu_decision_engine
+msgid "محرك القرارات"
+msgstr "القرارات"
+
+#. module: grc_backbone
+#: model:ir.ui.menu,name:grc_backbone.menu_decision_engine
+msgid "القرارات"
+msgstr "القرارات"
+
+#. module: grc_backbone
+#: model:ir.ui.menu,name:grc_backbone.menu_decision_configuration
+msgid "إعدادات القرارات"
+msgstr "الإعدادات"
+
+#. module: grc_backbone
+#: model:ir.ui.menu,name:grc_backbone.menu_decision_configuration
+msgid "الإعدادات"
+msgstr "الإعدادات"
+
+#. module: grc_backbone
+#: model:ir.ui.menu,name:grc_backbone.menu_sops
+msgid "الإجراءات / إجراءات التشغيل القياسية"
+msgstr "إجراءات التشغيل"
+
+#. module: grc_backbone
+#: model:ir.ui.menu,name:grc_backbone.menu_sops
+msgid "إجراءات التشغيل"
+msgstr "إجراءات التشغيل"

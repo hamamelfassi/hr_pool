@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="action_governance_reference" model="ir.actions.act_window">
-        <field name="name">Governance References</field>
+        <field name="name">كل مراجع الحوكمة</field>
         <field name="res_model">x_grc.governance_reference</field>
         <field name="view_mode">list,form</field>
-        <field name="context">{'default_x_active': True, 'default_x_status': 'active'}</field>
+        <field name="context" eval="{'default_x_active': True, 'default_x_status': 'active', 'default_x_reference_type': 'other', 'default_x_reference_type_id': ref('grc_backbone.governance_reference_type_other')}"/>
     </record>
 
     <record id="action_grc_variable" model="ir.actions.act_window">
