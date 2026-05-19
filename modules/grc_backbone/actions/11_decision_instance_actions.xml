@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_decision_instance" model="ir.actions.act_window">
+        <field name="name">القرارات المولدة</field>
+        <field name="res_model">x_grc.decision_instance</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'default_x_active': True, 'default_x_state': 'draft'}</field>
+    </record>
+</odoo>

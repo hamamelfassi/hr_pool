@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_decision_instance_list" model="ir.ui.view">
+        <field name="name">x_grc.decision_instance.list</field>
+        <field name="model">x_grc.decision_instance</field>
+        <field name="arch" type="xml">
+            <list string="القرارات المولدة" create="0" duplicate="0">
+                <field name="x_name" string="اسم القرار" readonly="1" placeholder="يتم توليده من رقم القرار وسنته وموضوعه"/>
+                <field name="x_state" string="الحالة" widget="badge"/>
+                <field name="x_template_id" string="قالب القرار" readonly="1" options="{'no_open': False, 'no_create': True}"/>
+                <field name="x_profile_id" string="ملف القرار" readonly="1" options="{'no_open': False, 'no_create': True}"/>
+                <field name="x_family_id" string="مجال الحوكمة" readonly="1" options="{'no_open': False, 'no_create': True}"/>
+                <field name="x_type_id" string="إجراء الحوكمة" readonly="1" options="{'no_open': False, 'no_create': True}"/>
+                <field name="x_decision_number" string="رقم القرار"/>
+                <field name="x_decision_year" string="سنة القرار"/>
+                <field name="x_issue_date" string="تاريخ الإصدار"/>
+                <field name="x_source_model" string="نموذج المصدر"/>
+                <field name="x_source_res_id" string="سجل المصدر"/>
+                <field name="x_active" string="نشط"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_decision_instance_form" model="ir.ui.view">
+        <field name="name">x_grc.decision_instance.form</field>
+        <field name="model">x_grc.decision_instance</field>
+        <field name="arch" type="xml">
+            <form string="قرار مولد" create="0" duplicate="0">
+                <sheet>
+                    <group>
+                        <group string="هوية القرار">
+                            <field name="x_name" string="اسم القرار"/>
+                            <field name="x_state" string="الحالة" widget="statusbar"
+                                statusbar_visible="draft,prepared,locked,cancelled"/>
+                            <field name="x_template_id" string="قالب القرار"/>
+                            <field name="x_profile_id" string="ملف القرار"/>
+                            <field name="x_family_id" string="مجال الحوكمة"/>
+                            <field name="x_type_id" string="إجراء الحوكمة"/>
+                            <field name="x_active" string="نشط"/>
+                        </group>
+                        <group string="بيانات الإصدار">
+                            <field name="x_decision_number" string="رقم القرار"/>
+                            <field name="x_decision_year" string="سنة القرار"/>
+                            <field name="x_issue_date" string="تاريخ الإصدار"/>
+                            <field name="x_source_model" string="نموذج المصدر"/>
+                            <field name="x_source_res_id" string="معرف سجل المصدر"/>
+                        </group>
+                    </group>
+
+                    <group string="الأثر النظامي">
+                        <field name="create_uid" string="أنشئ بواسطة" readonly="1"/>
+                        <field name="create_date" string="تاريخ الإنشاء" readonly="1"/>
+                        <field name="write_uid" string="آخر تحديث بواسطة" readonly="1"/>
+                        <field name="write_date" string="تاريخ آخر تحديث" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="الموضوع">
+                            <group>
+                                <field name="x_title_ar" string="العنوان العربي"/>
+                                <field name="x_title_en" string="العنوان الإنجليزي"/>
+                                <field name="x_subject_ar" string="الموضوع بالعربية"/>
+                                <field name="x_subject_en" string="الموضوع بالإنجليزية"/>
+                            </group>
+                        </page>
+
+                        <page string="الأسانيد / الديباجة">
+                            <field name="x_basis_line_ids">
+                                <list editable="bottom" string="أسس القرار">
+                                    <field name="x_sequence" string="#" width="60px"/>
+                                    <field name="x_relationship_phrase_ar" string="صيغة الربط"/>
+                                    <field name="x_reference_id" string="مرجع حوكمة"/>
+                                    <field name="x_governance_provision_id" string="بند / حكم"/>
+                                    <field name="x_snapshot_text_ar" string="النص المثبت"/>
+                                    <field name="x_rendered_text_ar" string="النص المعروض"/>
+                                </list>
+                                <form string="سند القرار">
+                                    <sheet>
+                                        <group>
+                                            <group string="المصدر">
+                                                <field name="x_instance_id" readonly="1"/>
+                                                <field name="x_template_line_id" readonly="1"/>
+                                                <field name="x_sequence"/>
+                                                <field name="x_phrase_id"/>
+                                                <field name="x_reference_id"/>
+                                                <field name="x_governance_provision_id"/>
+                                                <field name="x_pattern_id"/>
+                                            </group>
+                                            <group string="الصياغة">
+                                                <field name="x_name"/>
+                                                <field name="x_relationship_phrase_ar"/>
+                                                <field name="x_relationship_phrase_en"/>
+                                            </group>
+                                        </group>
+                                        <group string="النصوص">
+                                            <field name="x_snapshot_text_ar"/>
+                                            <field name="x_snapshot_text_en"/>
+                                            <field name="x_rendered_text_ar"/>
+                                            <field name="x_rendered_text_en"/>
+                                        </group>
+                                        <group>
+                                            <field name="x_notes"/>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+
+                        <page string="مواد القرار">
+                            <field name="x_article_line_ids">
+                                <list editable="bottom" string="مواد القرار">
+                                    <field name="x_sequence" string="#" width="60px"/>
+                                    <field name="x_article_number" string="رقم المادة" width="90px"/>
+                                    <field name="x_title_ar" string="العنوان"/>
+                                    <field name="x_body_ar" string="النص العربي"/>
+                                    <field name="x_uses_variables" string="متغيرات؟"/>
+                                </list>
+                                <form string="مادة القرار">
+                                    <sheet>
+                                        <group>
+                                            <group string="المصدر">
+                                                <field name="x_instance_id" readonly="1"/>
+                                                <field name="x_template_line_id" readonly="1"/>
+                                                <field name="x_sequence"/>
+                                                <field name="x_article_number"/>
+                                            </group>
+                                            <group string="العناوين">
+                                                <field name="x_name"/>
+                                                <field name="x_title_ar"/>
+                                                <field name="x_title_en"/>
+                                                <field name="x_uses_variables"/>
+                                            </group>
+                                        </group>
+                                        <group string="النصوص">
+                                            <field name="x_body_ar"/>
+                                            <field name="x_body_en"/>
+                                            <field name="x_rendered_body_ar"/>
+                                            <field name="x_rendered_body_en"/>
+                                        </group>
+                                        <group>
+                                            <field name="x_notes"/>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+
+                        <page string="المتغيرات والقيم">
+                            <field name="x_variable_value_ids">
+                                <list editable="bottom" string="قيم المتغيرات">
+                                    <field name="x_key" string="المفتاح"/>
+                                    <field name="x_label_ar" string="التسمية"/>
+                                    <field name="x_value_type" string="نوع القيمة" widget="badge"/>
+                                    <field name="x_required" string="إلزامي"/>
+                                    <field name="x_default_value_text" string="القيمة الافتراضية"/>
+                                    <field name="x_value_text" string="القيمة النصية"/>
+                                    <field name="x_value_date" string="قيمة التاريخ"/>
+                                    <field name="x_resolved_display_value" string="القيمة المعروضة"/>
+                                </list>
+                                <form string="قيمة متغير">
+                                    <sheet>
+                                        <group>
+                                            <group string="المتغير">
+                                                <field name="x_instance_id" readonly="1"/>
+                                                <field name="x_template_variable_id" readonly="1"/>
+                                                <field name="x_variable_id" readonly="1"/>
+                                                <field name="x_name"/>
+                                                <field name="x_key"/>
+                                                <field name="x_label_ar"/>
+                                                <field name="x_label_en"/>
+                                                <field name="x_value_type"/>
+                                                <field name="x_required"/>
+                                            </group>
+                                            <group string="القيمة">
+                                                <field name="x_default_value_text"/>
+                                                <field name="x_value_text"/>
+                                                <field name="x_value_date"/>
+                                                <field name="x_value_number"/>
+                                                <field name="x_value_boolean"/>
+                                                <field name="x_resolved_display_value"/>
+                                            </group>
+                                        </group>
+                                        <group string="تلميح المصدر">
+                                            <field name="x_source_model_hint"/>
+                                            <field name="x_source_field_hint"/>
+                                        </group>
+                                        <group>
+                                            <field name="x_notes"/>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+
+                        <page string="المعاينة">
+                            <group string="المعاينة العربية">
+                                <field name="x_rendered_text_ar" nolabel="1"/>
+                            </group>
+                            <group string="المعاينة الإنجليزية">
+                                <field name="x_rendered_text_en" nolabel="1"/>
+                            </group>
+                        </page>
+
+                        <page string="ملاحظات">
+                            <field name="x_notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

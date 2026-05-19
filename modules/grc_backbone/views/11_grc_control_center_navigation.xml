@@ -62,11 +62,17 @@
         action="grc_backbone.action_decision_template"
         sequence="20"/>
 
+    <menuitem id="menu_decision_instances"
+        name="القرارات المولدة"
+        parent="grc_backbone.menu_decision_engine"
+        action="grc_backbone.action_decision_instance"
+        sequence="30"/>
+
     <menuitem id="menu_decision_profiles"
         name="نماذج القرارات"
         parent="grc_backbone.menu_decision_engine"
         action="grc_backbone.action_decision_profile"
-        sequence="30"/>
+        sequence="40"/>
 
     <!-- Location Directory -->
     <menuitem id="menu_location_directory"

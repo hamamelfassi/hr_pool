@@ -42,6 +42,7 @@
         "actions/08_decision_template_refresh_actions.xml",
         "actions/09_governance_source_refresh_actions.xml",
         "actions/10_governance_reference_type_actions.xml",
+        "actions/11_decision_instance_actions.xml",
         "views/00_grc_navigation_bootstrap.xml",
         "views/02_taxonomy_views.xml",
         "views/06_location_taxonomy_views.xml",
@@ -49,6 +50,7 @@
         "views/08_decision_profile_views.xml",
         "views/09_decision_reference_variable_views.xml",
         "views/10_governance_library_views.xml",
+        "views/12_decision_instance_views.xml",
         "views/11_grc_control_center_navigation.xml",
         "data/10_decision_engine_cleanup.xml",
         "security/ir.model.access.csv"
