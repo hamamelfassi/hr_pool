@@ -85,3 +85,113 @@ The recruitment Board Decision must consume the GRC decision engine. It should n
 - recruitment document registry state for `board_decision`.
 
 Pass 8 begins only after the GRC decision instance foundation is stable.
+
+## Pass 8 lock — appointment decision tab and controlled GRC consumption
+
+Pass 8 consumes the Pass 7 GRC generated-decision engine from `hr_recruitment_custom`.
+
+### UX split
+
+```text
+hr.applicant tab: قرار التعيين
+HR-specific generated-decision cockpit form
+Native GRC generated-decision form
+```
+
+The applicant tab is a compact operational surface. It is not a full GRC decision editor.
+
+### Applicant tab scope
+
+The applicant tab contains:
+
+- board decision status summary;
+- manual instantiation fields:
+  - decision number;
+  - HR letter registration number;
+  - HR letter date;
+- readonly generated-decision and recruitment-document links;
+- readonly artifact snapshots;
+- filtered generated-decision row list.
+
+Applicant-tab buttons, implemented after the shell, are:
+
+```text
+إنشاء القرار
+تحديث القرار
+فتح القرار
+```
+
+PDF and Sign buttons belong to the standalone cockpit form, not the applicant tab:
+
+```text
+توليد المستند
+إرسال للتوقيع
+مزامنة التوقيع
+```
+
+### Controlled consuming workflow
+
+GRC remains the flexible governance authoring source.
+
+`hr_recruitment_custom` consumes generated decisions in a controlled way:
+
+- derived applicant/job variables are readonly;
+- only decision number is required at creation/update;
+- HR letter date and HR letter registration remain optional manual fields;
+- basis and article lines are not edited from the recruitment cockpit;
+- the PDF is rendered from structured generated-decision basis/article lines.
+
+### Variable mapping
+
+```text
+decision_subject_ar → template default
+honorific_ar        → hr.applicant.x_gender: Male = السيد, Female = السيدة
+employee_full_name  → hr.applicant.partner_name
+job_title           → hr.applicant.job_id.name
+department          → hr.applicant.department_id.name
+start_date          → hr.applicant.availability
+decision_number     → manual field on قرار التعيين tab
+decision_year       → derived from creation/issue date YYYY
+issue_date          → derived from creation/issue date YYYY-MM-DD
+hr_letter_date      → optional manual field
+hr_letter_registration → optional manual field
+```
+
+### PDF and Sign ownership
+
+The Board Decision QWeb/PDF and native Odoo Sign flow live in `hr_recruitment_custom`.
+
+`grc_backbone` owns the generic generated-decision engine.
+
+`hr_recruitment_custom` owns recruitment context, applicant mapping, PDF generation, recruitment document registry writeback, Chairman signing, and signed/certificate/stamped artifacts.
+
+### Chairman signer
+
+Initial Chairman signer source:
+
+```text
+User ID: 5
+Arabic name: حسين عبد الكريم المطردي
+English/exported name: Hsein Muttardi
+```
+
+Before sending, the implementation must validate that user 5 exists, has a partner, and the partner has an email.
+
+### Stage guard
+
+Production doctrine: Board Decision generation belongs in Contract Proposal / Preboarding.
+
+For implementation/testing, the hard stage guard is deferred because the required variables are already available earlier.
+
+### Non-scope for 8A/8B
+
+8A/8B do not implement:
+
+- decision instance creation action;
+- variable population action;
+- PDF generation;
+- Odoo Sign send/sync;
+- stamped-copy upload workflow;
+- automatic sequence hardening;
+- amendment/cancellation governance.
+

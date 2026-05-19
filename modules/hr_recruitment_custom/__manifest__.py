@@ -16,6 +16,7 @@
         "models/01_fields.xml",
         "models/02_interview_relations.xml",
         "models/03_recruitment_document.xml",
+        "models/04_board_decision_bridge_fields.xml",
         "models/04_required_document_checklist.xml",
         "models/05_required_document_submission.xml",
         "models/06_required_document_submission_request.xml",

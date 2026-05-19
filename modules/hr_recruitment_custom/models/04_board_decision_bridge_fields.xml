@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Pass 8B — Board Decision bridge fields -->
+
+    <!-- Extend GRC generated decisions with HR recruitment bridge fields. -->
+
+    <record id="field_decision_instance_x_hr_applicant_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_hr_applicant_id</field>
+        <field name="field_description">Applicant</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.applicant</field>
+        <field name="on_delete">set null</field>
+        <field name="index" eval="True"/>
+    </record>
+
+    <record id="field_decision_instance_x_hr_recruitment_document_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_hr_recruitment_document_id</field>
+        <field name="field_description">Recruitment Document</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_hr.recruitment_document</field>
+        <field name="on_delete">set null</field>
+        <field name="index" eval="True"/>
+    </record>
+
+    <record id="field_decision_instance_x_hr_generated_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_hr_generated_attachment_id</field>
+        <field name="field_description">Generated Board Decision PDF</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+    </record>
+
+    <record id="field_decision_instance_x_hr_signed_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_hr_signed_attachment_id</field>
+        <field name="field_description">Signed Board Decision PDF</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+    </record>
+
+    <record id="field_decision_instance_x_hr_certificate_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_hr_certificate_attachment_id</field>
+        <field name="field_description">Board Decision Signature Certificate</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+    </record>
+
+    <record id="field_decision_instance_x_hr_stamped_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_hr_stamped_attachment_id</field>
+        <field name="field_description">Stamped Board Decision Copy</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+    </record>
+
+    <record id="field_decision_instance_x_hr_generated_on" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_hr_generated_on</field>
+        <field name="field_description">Board Decision Generated On</field>
+        <field name="ttype">datetime</field>
+    </record>
+
+    <record id="field_decision_instance_x_hr_sent_on" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_hr_sent_on</field>
+        <field name="field_description">Board Decision Sent On</field>
+        <field name="ttype">datetime</field>
+    </record>
+
+    <record id="field_decision_instance_x_hr_signed_on" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_hr_signed_on</field>
+        <field name="field_description">Board Decision Signed On</field>
+        <field name="ttype">datetime</field>
+    </record>
+
+    <record id="field_decision_instance_x_hr_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_hr_notes</field>
+        <field name="field_description">Recruitment Board Decision Notes</field>
+        <field name="ttype">text</field>
+    </record>
+
+    <!-- Applicant decision cockpit fields. -->
+
+    <record id="field_hr_applicant_x_board_decision_state" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_board_decision_state</field>
+        <field name="field_description">Board Decision State</field>
+        <field name="ttype">selection</field>
+        <field name="selection">[
+            ('draft', 'مسودة'),
+            ('prepared', 'مشروع'),
+            ('locked', 'نافذ'),
+            ('cancelled', 'ملغي')
+            ]</field>
+    </record>
+
+    <record id="field_hr_applicant_x_board_decision_number" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_board_decision_number</field>
+        <field name="field_description">Board Decision Number</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_hr_applicant_x_board_decision_hr_letter_date" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_board_decision_hr_letter_date</field>
+        <field name="field_description">HR Letter Date</field>
+        <field name="ttype">date</field>
+    </record>
+
+    <record id="field_hr_applicant_x_board_decision_hr_letter_registration" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_board_decision_hr_letter_registration</field>
+        <field name="field_description">HR Letter Registration Number</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_hr_applicant_x_board_decision_instance_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_board_decision_instance_id</field>
+        <field name="field_description">Board Decision Instance</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_instance</field>
+        <field name="on_delete">set null</field>
+        <field name="index" eval="True"/>
+    </record>
+
+    <record id="field_hr_applicant_x_board_decision_instance_ids" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_board_decision_instance_ids</field>
+        <field name="field_description">Board Decision Instances</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.decision_instance</field>
+        <field name="relation_field">x_hr_applicant_id</field>
+    </record>
+
+    <record id="field_hr_applicant_x_board_decision_document_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_board_decision_document_id</field>
+        <field name="field_description">Board Decision Recruitment Document</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_hr.recruitment_document</field>
+        <field name="on_delete">set null</field>
+    </record>
+
+    <record id="field_hr_applicant_x_board_decision_generated_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_board_decision_generated_attachment_id</field>
+        <field name="field_description">Generated Board Decision PDF</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+    </record>
+
+    <record id="field_hr_applicant_x_board_decision_signed_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_board_decision_signed_attachment_id</field>
+        <field name="field_description">Signed Board Decision PDF</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+    </record>
+
+    <record id="field_hr_applicant_x_board_decision_certificate_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_board_decision_certificate_attachment_id</field>
+        <field name="field_description">Board Decision Signature Certificate</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+    </record>
+
+    <record id="field_hr_applicant_x_board_decision_stamped_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_board_decision_stamped_attachment_id</field>
+        <field name="field_description">Stamped Board Decision Copy</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+    </record>
+
+    <record id="field_hr_applicant_x_board_decision_generated_on" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_board_decision_generated_on</field>
+        <field name="field_description">Board Decision Generated On</field>
+        <field name="ttype">datetime</field>
+    </record>
+
+    <record id="field_hr_applicant_x_board_decision_sent_on" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_board_decision_sent_on</field>
+        <field name="field_description">Board Decision Sent On</field>
+        <field name="ttype">datetime</field>
+    </record>
+
+    <record id="field_hr_applicant_x_board_decision_signed_on" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_board_decision_signed_on</field>
+        <field name="field_description">Board Decision Signed On</field>
+        <field name="ttype">datetime</field>
+    </record>
+
+    <record id="field_hr_applicant_x_board_decision_notes" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_board_decision_notes</field>
+        <field name="field_description">Board Decision Notes</field>
+        <field name="ttype">text</field>
+    </record>
+</odoo>

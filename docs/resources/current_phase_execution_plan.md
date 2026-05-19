@@ -4,57 +4,49 @@
 
 The current phase is:
 
-`Pass 7D — Final GRC Decision Engine Foundation lock`
+`Pass 8A/8B — Appointment Decision tab shell and bridge fields`
 
-Pass 7A, 7B, and 7C are implementation-complete.
+Pass 7 is closed and accepted.
 
-The remaining work in this phase is final documentation lock, sanity verification, build verification, and commit/push.
+Pass 8 consumes the GRC generated-decision engine from `hr_recruitment_custom` through a dedicated applicant tab named:
 
-## Status
+`قرار التعيين`
 
-Pass 7A is complete and accepted.
+Current implementation scope:
 
-Pass 7C is complete and accepted as the recruitment board hiring decision template setup.
+1. 8A — documentation lock and applicant tab shell.
+2. 8B — bridge fields between `hr.applicant` and `x_grc.decision_instance`.
 
-Pass 7B is complete and accepted as the generic generated-decision foundation.
+This slice intentionally does not implement decision creation, PDF generation, Odoo Sign, registry writeback, or stamped-copy upload workflow.
 
-Locked from 7B:
+Locked Pass 8 UX split:
 
-- generated decisions are represented by `x_grc.decision_instance`;
-- generated decision child lines are represented by basis, article, and variable-value instance models;
-- generated decisions are created from templates using `إنشاء نسخة قرار`;
-- variable-value rows are canonical;
-- header metadata fields are readonly snapshots;
-- preview refresh is driven from variable values;
-- lifecycle states are:
-  - `draft` / مسودة;
-  - `prepared` / مشروع;
-  - `locked` / نافذ;
-  - `cancelled` / ملغي;
-- locked/cancelled generated decisions are readonly in the UI;
-- action-menu bindings were removed for lifecycle/refresh server actions;
-- no QWeb/PDF, Sign, recruitment binding, or chairman-only security gate exists in Pass 7.
+```text
+hr.applicant / قرار التعيين
+= compact operational summary and manual instantiation inputs
 
-## Current next step
+HR-specific generated-decision cockpit
+= generated decision snapshots, PDF, Sign, and artifact lifecycle
 
-Close Pass 7D.
+GRC generated-decision form
+= generic governance detail surface
+```
 
-Required final checks:
+Locked applicant-tab manual inputs:
 
-- module XML parses locally;
-- module builds cleanly after `rm -f dist/*.zip`;
-- Odoo SaaS upgrade is clean;
-- generated-decision creation and lifecycle acceptance tests pass;
-- `python3 scripts/check_grc_retired_scaffold_refs.py` passes if the script exists in the repo;
-- documentation and module README are committed.
+- decision number — required later by action validation;
+- HR letter registration number — optional;
+- HR letter date — optional.
 
-## Deferred principle
+Locked derived variables:
 
-Locked generated governed instances should not be silently edited, directly cancelled, or amended in-place.
-
-Future amendment/cancellation should be governed by newly generated amendment/cancellation decisions or equivalent governed instances.
-
-This principle is recorded for future architecture work but is intentionally not added to the current 14-pass implementation plan unless separately scoped.
+- subject from template;
+- honorific from applicant gender;
+- full name from applicant partner name;
+- job title from applicant job;
+- department from applicant department;
+- start date from applicant availability;
+- decision year and issue date from creation/issue datetime.
 
 
 ## Authority
