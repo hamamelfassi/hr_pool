@@ -40,6 +40,7 @@
         "actions/08_decision_template_refresh_actions.xml",
         "actions/09_governance_source_refresh_actions.xml",
         "actions/10_governance_reference_type_actions.xml",
+        "views/00_grc_navigation_bootstrap.xml",
         "views/02_taxonomy_views.xml",
         "views/06_location_taxonomy_views.xml",
         "views/07_decision_template_views.xml",

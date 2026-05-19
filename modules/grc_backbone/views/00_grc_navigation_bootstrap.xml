@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Bootstrap-only menu anchors for clean installs.
+
+        Final Pass 7A-6 control-centre navigation remains defined in:
+        views/11_grc_control_center_navigation.xml
+
+        This file only guarantees early parent menu external IDs exist before
+        older view files reference them during module install/import.
+    -->
+
+    <menuitem id="menu_grc_root"
+        name="GRC"
+        action="grc_backbone.action_decision_template"
+        sequence="35"/>
+
+    <menuitem id="menu_grc_governance"
+        name="القواعد الحاكمة"
+        parent="grc_backbone.menu_grc_root"
+        action="grc_backbone.action_governance_reference_law"
+        sequence="10"/>
+</odoo>
