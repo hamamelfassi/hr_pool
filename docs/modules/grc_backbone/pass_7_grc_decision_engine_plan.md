@@ -347,26 +347,183 @@ Acceptance:
 - Variables are bound once in the Variables tab.
 - Template is ready for instance generation.
 
-### 7B — Decision instances
+### 7B — Generic decision instance foundation
 
 This slice intentionally comes after 7A-4/7A-5/7A-6 and 7C.
 
+7B implements generic decision instances in `grc_backbone`.
+
+It does not implement recruitment-specific generation, PDF reports, Odoo Sign, chairman security, or `hr.applicant` buttons.
+
+Doctrine:
+
+```text
+Governance Reference = authority/source
+Decision Template = reusable controlled assembly
+Decision Instance = case-specific generated artifact
+```
+
+Do not create `x_grc.governance_reference_instance`.
+
+Do not store generated runtime decisions directly as `x_grc.governance_reference`.
+
+A signed issued decision may later be linked or promoted into a Governance Reference of type `decision`, but that is a later archival/governance feature.
+
+#### 7B-0 — Governance Reference usability polish
+
 Scope:
 
-- Add `x_grc.decision_instance`.
-- Add instance basis/article/variable-value lines.
-- Add instantiate-from-template action.
-- Copy template snapshots into a draft instance.
-- Preserve source model/source record fields for future recruitment linkage.
+- improve `x_grc.governance_reference` form usability before instance work;
+- add provisions and relations tabs if technically safe;
+- optionally add lightweight source attachment/source URL fields.
+
+Allowed surfaces:
+
+```text
+البنود / الأحكام
+العلاقات
+المرفقات والمصدر
+ملاحظات
+```
+
+Non-scope:
+
+- no full Documents folder/tag governance;
+- no Documents automation;
+- no lifecycle authority through attachments;
+- no chatter dependency unless explicitly scoped.
+
+#### 7B-1 — Decision Instance models
+
+Add:
+
+- `x_grc.decision_instance`;
+- `x_grc.decision_instance_basis_line`;
+- `x_grc.decision_instance_article_line`;
+- `x_grc.decision_instance_variable_value`.
+
+#### 7B-2 — Main instance fields
+
+Minimum fields:
+
+- `x_name`;
+- `x_template_id`;
+- `x_profile_id`;
+- `x_family_id`;
+- `x_type_id`;
+- `x_state`;
+- `x_source_model`;
+- `x_source_res_id`;
+- `x_title_ar`;
+- `x_title_en`;
+- `x_subject_ar`;
+- `x_subject_en`;
+- `x_issue_date`;
+- `x_decision_number`;
+- `x_decision_year`;
+- `x_rendered_text_ar`;
+- `x_rendered_text_en`;
+- `x_notes`;
+- `x_active`.
+
+State values:
+
+```text
+draft
+prepared
+locked
+cancelled
+```
+
+Strict immutability is deferred.
+
+#### 7B-3 — Instance child lines
+
+Basis snapshot line should preserve:
+
+- template line reference;
+- sequence;
+- phrase;
+- reference;
+- provision;
+- pattern;
+- copied Arabic/English snapshot text;
+- rendered Arabic/English text.
+
+Article snapshot line should preserve:
+
+- template article line reference;
+- sequence;
+- article number;
+- Arabic/English title;
+- Arabic/English body;
+- rendered Arabic/English body;
+- variable usage flag.
+
+Variable value line should preserve:
+
+- template variable binding reference;
+- variable dictionary reference;
+- key;
+- Arabic/English labels;
+- value type;
+- required flag;
+- default value;
+- manual value fields;
+- source model/field hints;
+- resolved display value.
+
+#### 7B-4 — Actions
+
+On `x_grc.decision_template`:
+
+```text
+إنشاء نسخة قرار
+```
+
+Expected behavior:
+
+- create draft `x_grc.decision_instance`;
+- copy profile/family/type/title/subject;
+- copy basis lines as snapshots;
+- copy article lines as snapshots;
+- create variable-value rows from template variables;
+- open the created instance.
+
+On `x_grc.decision_instance`:
+
+```text
+تحديث من القالب
+تحديث المعاينة
+تجهيز القرار
+قفل القرار
+إلغاء القرار
+```
+
+Rules:
+
+- refresh from template only in draft/prepared;
+- preview rendering replaces `{key}` placeholders from variable-value rows;
+- missing required values produce SaaS-safe display-notification toasts;
+- lock is lightweight only in 7B.
+
+#### 7B acceptance
 
 Acceptance:
 
-- Can instantiate a draft decision from the recruitment board decision template.
-- Instance preserves copied text snapshots.
+- Decision Instances menu opens.
+- A draft instance can be created from the recruitment board decision template.
+- Instance preserves copied template profile/family/type/title/subject.
+- Instance preserves copied basis text snapshots.
+- Instance preserves copied article text snapshots.
 - Instance variable values are editable.
-- No PDF generation yet unless separately scoped.
-- No Odoo Sign yet.
-- No HR recruitment linkage yet unless later explicitly scoped.
+- Preview can be rendered from variable values.
+- Missing required values produce a clear toast.
+- No QWeb/PDF generation.
+- No Odoo Sign.
+- No HR recruitment linkage.
+- No recruitment document registry write.
+
 
 ### 7D — Documentation lock
 

@@ -10,11 +10,22 @@ The current phase is now:
 
 Immediate next slice:
 
-`7A-6A — Docs-only lock for GRC control-centre navigation and reference-type refoundation`
+`7B-0 — Governance Reference usability polish before Decision Instances`
 
-Pass 7 is no longer a minimal recruitment-only decision-template pass. It is a structural GRC refoundation pass that establishes the reusable Governance Reference / Reference Type / Provision / Text Pattern / Variable / Decision Template architecture before recruitment consumes the board decision workflow.
+Pass 7 is no longer a minimal recruitment-only decision-template pass. It is a structural GRC refoundation pass that establishes the reusable Governance Reference / Reference Type / Provision / Text Pattern / Variable / Decision Template / Decision Instance architecture before recruitment consumes the board decision workflow.
 
-7A-4 and 7A-5 are accepted and committed. The next work is 7A-6, which must first update documentation before implementation because it changes active navigation doctrine and retires old scaffold surfaces.
+7A-4, 7A-5, and 7A-6 are complete and accepted.
+
+7C is manually completed and accepted as the recruitment board hiring decision template setup. The template now has:
+
+- governed recruitment decision profile;
+- governance references for the recruitment decision preamble;
+- reusable appointment and execution article text patterns;
+- bound template variables;
+- optional HR letter date/registration variables left blank for later workflow resolution;
+- refreshed template basis/article/variable snapshots through `تحديث القالب`.
+
+The next implementation work is 7B. Full 7D documentation lock remains after 7B is implemented and accepted.
 
 ## Status
 
@@ -24,37 +35,71 @@ Pass 6B is complete, committed, and pushed.
 
 Pass 6C is complete and functionally locked.
 
-Locked from 6A–6C:
+Pass 7A-4 is complete and accepted.
 
-- F-0003 canonical document taxonomy.
-- Structured submission/checklist fields.
-- Conditional structured submission views by document code.
-- Controlled standalone checklist and submission views.
-- Submission request/request-line models.
-- Request-line generation from outstanding public checklist lines.
-- Fillout continuation URL generation.
-- Refreshable candidate snapshot before send.
-- Open URL action.
-- Send request email action.
-- Mark manually sent action.
-- Public Fillout/n8n writeback probe.
-- Multi-section writeback including structured data and bank-information exception.
-- n8n creates submitted evidence only; Odoo HR review remains authoritative.
+Pass 7A-5 is complete and accepted.
+
+Pass 7A-6 is complete and accepted, including GRC control-centre navigation, Governance Reference Type helper model, old scaffold retirement, SaaS-boundary lock, and the clean-install menu bootstrap correction.
+
+Pass 7C is complete and accepted as a user-assisted manual seed/setup pass.
+
+Locked from 7C:
+
+- recruitment board decision template exists;
+- template profile is `MCEP_BOARD_HIRING_DECISION`;
+- template code is `RECRUITMENT_HIRING_DECISION`;
+- subject uses `{decision_subject_ar}`;
+- basis lines are built from Governance References;
+- Article 1 uses the appointment text pattern and applicant/job variables;
+- Article 2 uses the execution text pattern and no variables;
+- required variables are bound in the template variable tab;
+- HR letter date and registration variables remain optional and manually unresolved until a later HR-letter workflow exists;
+- no PDF, Sign, recruitment binding, or decision instance exists yet.
 
 ## Current next pass
 
-Pass 7A-6 — GRC control-centre navigation and legacy scaffold retirement in `grc_backbone`.
+Pass 7B — Generic Decision Instance foundation in `grc_backbone`.
 
-Immediate implementation order:
+Implementation order:
 
-1. 7A-6A — docs-only lock;
-2. 7A-6B — Governance Reference Type helper model;
-3. 7A-6C — GRC control-centre navigation shell and typed reference menus;
-4. 7A-6D — retire old scaffold surfaces/data;
-5. 7A-6E — Arabic translations;
-6. 7A-6F — acceptance and commit.
+1. 7B-0 — Governance Reference usability polish:
+   - add reference form tabs for provisions and relations if technically safe;
+   - optionally add simple source attachment/source URL fields;
+   - no Documents folder/tag automation;
+   - no chatter dependency unless explicitly scoped.
 
-No recruitment code changes in 7A-6.
+2. 7B-1 — Decision Instance model foundation:
+   - add `x_grc.decision_instance`;
+   - add instance basis/article/variable-value child models;
+   - add access rights.
+
+3. 7B-2 — Decision Instance views and menu:
+   - add Decision Instances / نماذج القرارات menu;
+   - add list/form/search views;
+   - keep Arabic-first labels.
+
+4. 7B-3 — Instantiate from template:
+   - add template action to create a draft instance;
+   - copy profile/family/type/title/subject;
+   - copy basis line snapshots;
+   - copy article line snapshots;
+   - create variable-value rows from template variables.
+
+5. 7B-4 — Instance refresh and preview:
+   - refresh draft/prepared instance from template;
+   - allow manual variable values;
+   - render placeholder values into preview text;
+   - use SaaS-safe display-notification toasts for missing required values.
+
+6. 7B-5 — Light lifecycle:
+   - states: draft, prepared, locked, cancelled;
+   - no strict immutability yet;
+   - no QWeb/PDF;
+   - no Odoo Sign;
+   - no recruitment button;
+   - no `hr.applicant` binding beyond generic `x_source_model` / `x_source_res_id` fields.
+
+No recruitment code changes in 7B unless separately scoped.
 
 ## Authority
 
@@ -865,6 +910,230 @@ Refresh action populates fields correctly.
 No PDF yet.
 No instance yet.
 ```
+
+## **Updated 7B scope — Generic Decision Instance foundation**
+
+7B implements the generic GRC decision runtime. It does not implement recruitment-specific generation.
+
+Core doctrine:
+
+```text
+Governance Reference = authority/source
+Decision Template = reusable controlled assembly
+Decision Instance = case-specific generated decision draft/runtime artifact
+```
+
+Do not create:
+
+```text
+x_grc.governance_reference_instance
+```
+
+Do not store generated runtime decisions directly as:
+
+```text
+x_grc.governance_reference
+```
+
+A signed issued decision may later be linked or promoted into a Governance Reference of type `decision`, but that is a later archival/governance feature, not the 7B runtime model.
+
+### 7B-0 — Governance Reference usability polish
+
+Scope:
+
+```text
+Improve x_grc.governance_reference usability before instance implementation.
+```
+
+Recommended additions if technically safe:
+
+```text
+Tabs:
+- البنود / الأحكام
+- العلاقات
+- المرفقات والمصدر
+- ملاحظات
+```
+
+Allowed lightweight fields:
+
+```text
+x_source_attachment_id
+x_source_url
+```
+
+Allowed one2many surfaces if inverse fields already exist or can be added cleanly:
+
+```text
+x_provision_ids
+x_outgoing_relation_ids
+x_incoming_relation_ids
+```
+
+Non-scope:
+
+```text
+No full Odoo Documents folder/tag governance.
+No Documents automation.
+No lifecycle authority through attachments.
+No chatter dependency unless explicitly scoped.
+```
+
+### 7B-1 — Decision Instance models
+
+Add:
+
+```text
+x_grc.decision_instance
+x_grc.decision_instance_basis_line
+x_grc.decision_instance_article_line
+x_grc.decision_instance_variable_value
+```
+
+### 7B-2 — Main instance fields
+
+Minimum fields:
+
+```text
+x_name
+x_template_id
+x_profile_id
+x_family_id
+x_type_id
+x_state
+x_source_model
+x_source_res_id
+x_title_ar
+x_title_en
+x_subject_ar
+x_subject_en
+x_issue_date
+x_decision_number
+x_decision_year
+x_rendered_text_ar
+x_rendered_text_en
+x_notes
+x_active
+```
+
+States:
+
+```text
+draft
+prepared
+locked
+cancelled
+```
+
+### 7B-3 — Instance child lines
+
+Basis snapshot lines:
+
+```text
+x_instance_id
+x_template_line_id
+x_sequence
+x_phrase_id
+x_relationship_phrase_ar
+x_relationship_phrase_en
+x_reference_id
+x_governance_provision_id
+x_pattern_id
+x_snapshot_text_ar
+x_snapshot_text_en
+x_rendered_text_ar
+x_rendered_text_en
+x_notes
+```
+
+Article snapshot lines:
+
+```text
+x_instance_id
+x_template_line_id
+x_sequence
+x_article_number
+x_title_ar
+x_title_en
+x_body_ar
+x_body_en
+x_rendered_body_ar
+x_rendered_body_en
+x_uses_variables
+x_notes
+```
+
+Variable value lines:
+
+```text
+x_instance_id
+x_template_variable_id
+x_variable_id
+x_key
+x_label_ar
+x_label_en
+x_value_type
+x_required
+x_default_value_text
+x_value_text
+x_value_date
+x_value_number
+x_value_boolean
+x_source_model_hint
+x_source_field_hint
+x_resolved_display_value
+x_notes
+```
+
+### 7B-4 — Generic actions
+
+On `x_grc.decision_template`:
+
+```text
+إنشاء نسخة قرار
+```
+
+Creates a draft `x_grc.decision_instance` from the selected template.
+
+On `x_grc.decision_instance`:
+
+```text
+تحديث من القالب
+تحديث المعاينة
+تجهيز القرار
+قفل القرار
+إلغاء القرار
+```
+
+Rules:
+
+```text
+تحديث من القالب only works in draft/prepared.
+تحديث المعاينة replaces {key} placeholders from variable-value rows.
+Missing required values produce display-notification toasts.
+قفل القرار is light metadata locking only; strict immutability is deferred.
+```
+
+### 7B-5 — 7B acceptance
+
+Acceptance:
+
+```text
+Decision Instances menu opens.
+A draft instance can be created from the recruitment board decision template.
+Instance copies template profile/family/type/title/subject.
+Instance copies basis snapshots.
+Instance copies article snapshots.
+Instance creates variable-value rows.
+Manual variable values can be entered.
+Preview can be rendered from variable values.
+Missing required values produce a clear toast.
+No PDF generation exists.
+No Odoo Sign exists.
+No hr.applicant button exists.
+No recruitment document registry row is created.
+```
+
 
 ## **Future order remains locked**
 
