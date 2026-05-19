@@ -68,12 +68,17 @@
                             <field name="x_provision_ids"
                                 context="{'default_x_reference_id': id, 'default_x_active': True, 'default_x_requirement_type': 'article', 'default_x_obligation_level': 'mandatory'}">
                                 <list editable="bottom" string="البنود / الأحكام">
-                                    <field name="x_sequence" string="التسلسل"/>
-                                    <field name="x_code" string="كود البند"/>
-                                    <field name="x_name" string="اسم البند"/>
-                                    <field name="x_requirement_type" string="نوع المتطلب" widget="badge"/>
-                                    <field name="x_obligation_level" string="مستوى الإلزام" widget="badge"/>
-                                    <field name="x_active" string="نشط"/>
+                                    <field name="x_sequence" string="#" width="48px"/>
+                                    <field name="x_name" string="اسم البند" width="22%"/>
+                                    <field name="x_body_ar" string="النص العربي" width="70%"/>
+                                    <button type="action"
+                                        name="grc_backbone.action_governance_provision_open_form"
+                                        string=""
+                                        help="فتح بند الحوكمة"
+                                        icon="fa-external-link"
+                                        class="oe_link"
+                                        width="48px"
+                                        invisible="not id"/>
                                 </list>
                             </field>
                         </page>
