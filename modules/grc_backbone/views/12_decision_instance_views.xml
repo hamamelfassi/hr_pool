@@ -14,9 +14,9 @@
                 <field name="x_decision_number" string="رقم القرار" readonly="1"/>
                 <field name="x_decision_year" string="سنة القرار" readonly="1"/>
                 <field name="x_issue_date" string="تاريخ الإصدار" readonly="1"/>
-                <field name="x_source_model" string="نموذج المصدر"/>
+                <field name="x_source_model" string="نموذج المصدر" readonly="x_state in ['locked', 'cancelled']"/>
                 <field name="x_source_res_id" string="سجل المصدر"/>
-                <field name="x_active" string="نشط"/>
+                <field name="x_active" string="نشط" readonly="x_state in ['locked', 'cancelled']"/>
             </list>
         </field>
     </record>
@@ -51,21 +51,22 @@
                 <sheet>
                     <group>
                         <group string="هوية القرار">
-                            <field name="x_name" string="اسم القرار"/>
+                            <field name="x_name" string="اسم القرار" readonly="1" placeholder="يتم توليده من رقم القرار وسنته وموضوعه"/>
                             <field name="x_state" string="الحالة" widget="statusbar"
-                                statusbar_visible="draft,prepared,locked,cancelled"/>
-                            <field name="x_template_id" string="قالب القرار"/>
-                            <field name="x_profile_id" string="ملف القرار"/>
-                            <field name="x_family_id" string="مجال الحوكمة"/>
-                            <field name="x_type_id" string="إجراء الحوكمة"/>
-                            <field name="x_active" string="نشط"/>
+                                statusbar_visible="draft,prepared,locked,cancelled"
+                                readonly="1"/>
+                            <field name="x_template_id" string="قالب القرار" readonly="1" options="{'no_open': False, 'no_create': True}"/>
+                            <field name="x_profile_id" string="ملف القرار" readonly="1" options="{'no_open': False, 'no_create': True}"/>
+                            <field name="x_family_id" string="مجال الحوكمة" readonly="1" options="{'no_open': False, 'no_create': True}"/>
+                            <field name="x_type_id" string="إجراء الحوكمة" readonly="1" options="{'no_open': False, 'no_create': True}"/>
+                            <field name="x_active" string="نشط" readonly="x_state in ['locked', 'cancelled']"/>
                         </group>
                         <group string="بيانات الإصدار">
                             <field name="x_decision_number" string="رقم القرار" readonly="1"/>
                             <field name="x_decision_year" string="سنة القرار" readonly="1"/>
                             <field name="x_issue_date" string="تاريخ الإصدار" readonly="1"/>
-                            <field name="x_source_model" string="نموذج المصدر"/>
-                            <field name="x_source_res_id" string="معرف سجل المصدر"/>
+                            <field name="x_source_model" string="نموذج المصدر" readonly="x_state in ['locked', 'cancelled']"/>
+                            <field name="x_source_res_id" string="معرف سجل المصدر" readonly="x_state in ['locked', 'cancelled']"/>
                         </group>
                     </group>
 
@@ -78,15 +79,15 @@
                     <notebook>
                         <page string="الموضوع">
                             <group>
-                                <field name="x_title_ar" string="العنوان العربي"/>
-                                <field name="x_title_en" string="العنوان الإنجليزي"/>
-                                <field name="x_subject_ar" string="الموضوع بالعربية"/>
-                                <field name="x_subject_en" string="الموضوع بالإنجليزية"/>
+                                <field name="x_title_ar" string="العنوان العربي" readonly="x_state in ['locked', 'cancelled']"/>
+                                <field name="x_title_en" string="العنوان الإنجليزي" readonly="x_state in ['locked', 'cancelled']"/>
+                                <field name="x_subject_ar" string="الموضوع بالعربية" readonly="x_state in ['locked', 'cancelled']"/>
+                                <field name="x_subject_en" string="الموضوع بالإنجليزية" readonly="x_state in ['locked', 'cancelled']"/>
                             </group>
                         </page>
 
                         <page string="الأسانيد / الديباجة">
-                            <field name="x_basis_line_ids">
+                            <field name="x_basis_line_ids" readonly="x_state in ['locked', 'cancelled']">
                                 <list editable="bottom" string="أسس القرار">
                                     <field name="x_sequence" string="#" width="60px"/>
                                     <field name="x_relationship_phrase_ar" string="صيغة الربط"/>
@@ -128,7 +129,7 @@
                         </page>
 
                         <page string="مواد القرار">
-                            <field name="x_article_line_ids">
+                            <field name="x_article_line_ids" readonly="x_state in ['locked', 'cancelled']">
                                 <list editable="bottom" string="مواد القرار">
                                     <field name="x_sequence" string="#" width="60px"/>
                                     <field name="x_article_number" string="رقم المادة" width="90px"/>
@@ -167,7 +168,7 @@
                         </page>
 
                         <page string="المتغيرات والقيم">
-                            <field name="x_variable_value_ids">
+                            <field name="x_variable_value_ids" readonly="x_state in ['locked', 'cancelled']">
                                 <list editable="bottom" string="قيم المتغيرات">
                                     <field name="x_key" string="المفتاح"/>
                                     <field name="x_label_ar" string="التسمية"/>
@@ -220,6 +221,7 @@
                                     nolabel="1"
                                     colspan="4"
                                     widget="text"
+                                    readonly="1"
                                     style="width: 100%; min-height: 220px;"/>
 
                                 <separator string="المعاينة الإنجليزية" colspan="4"/>
@@ -227,12 +229,13 @@
                                     nolabel="1"
                                     colspan="4"
                                     widget="text"
+                                    readonly="1"
                                     style="width: 100%; min-height: 160px;"/>
                             </group>
                         </page>
 
                         <page string="ملاحظات">
-                            <field name="x_notes" nolabel="1"/>
+                            <field name="x_notes" nolabel="1" readonly="x_state in ['locked', 'cancelled']"/>
                         </page>
                     </notebook>
                 </sheet>

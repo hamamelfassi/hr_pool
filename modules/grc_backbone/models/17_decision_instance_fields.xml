@@ -60,10 +60,10 @@
         <field name="ttype">selection</field>
         <field name="required">True</field>
         <field name="selection">[
-            ('draft', 'Draft'),
-            ('prepared', 'Prepared'),
-            ('locked', 'Locked'),
-            ('cancelled', 'Cancelled')
+            ('draft', 'مسودة'),
+            ('prepared', 'مشروع'),
+            ('locked', 'نافذ'),
+            ('cancelled', 'ملغي')
             ]</field>
         <field name="index">True</field>
     </record>
