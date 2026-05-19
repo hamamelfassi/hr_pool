@@ -582,3 +582,76 @@ For governance reference type `procedure`, use these labels consistently:
 - singular record label: إجراء تشغيل
 
 Do not use دليل إجراءات التشغيل as the singular record label. It is the parent/menu heading for the SOP/procedure library surface.
+
+## Pass 7D lock status
+
+Pass 7 is now implementation-complete pending final acceptance.
+
+### Completed
+
+7A completed the GRC refoundation and retired the old fragmented scaffold from active source/UI.
+
+7C completed manual/user-assisted recruitment board decision template seeding.
+
+7B completed the generic generated-decision foundation.
+
+### 7B locked runtime
+
+Implemented:
+
+- `x_grc.decision_instance`;
+- `x_grc.decision_instance_basis_line`;
+- `x_grc.decision_instance_article_line`;
+- `x_grc.decision_instance_variable_value`;
+- generated decisions menu under `القرارات` as `القرارات المولدة`;
+- `إنشاء نسخة قرار` from Decision Template;
+- variable-value rows as canonical values;
+- header metadata as readonly snapshots;
+- `تحديث المعاينة`;
+- lifecycle actions:
+  - `تجهيز القرار`;
+  - `قفل القرار`;
+  - `إلغاء القرار`;
+- Arabic lifecycle labels:
+  - Draft → مسودة;
+  - Prepared → مشروع;
+  - Locked → نافذ;
+  - Cancelled → ملغي;
+- view-level readonly behavior for locked/cancelled generated decisions.
+
+### Deferred from Pass 7
+
+Not implemented in Pass 7:
+
+- QWeb/PDF generation;
+- Odoo Sign integration;
+- recruitment applicant binding;
+- chairman-only security gates;
+- hard server-side immutability;
+- generated-document registry writeback;
+- governed amendment/cancellation flow;
+- direct physical DB deletion of retired SaaS metadata remnants.
+
+### Amendment/cancellation canonical principle
+
+Locked generated governed instances should not be silently edited, directly cancelled, or amended in-place.
+
+Future amendment/cancellation should be governed by a newly generated amendment/cancellation decision or equivalent governed instance.
+
+This is a canonical principle for future governance architecture, but it is not added to the current 14-pass implementation plan unless explicitly scoped later.
+
+### Final 7D acceptance
+
+Pass 7 closes when:
+
+- module upgrades cleanly;
+- GRC opens on decision templates;
+- generated decisions menu opens;
+- recruitment hiring decision template remains usable;
+- generated decisions instantiate from template;
+- preview refresh works from variable rows;
+- lifecycle transitions work;
+- locked/cancelled generated decisions are readonly in UI;
+- retired scaffold sanity check passes;
+- docs are committed.
+

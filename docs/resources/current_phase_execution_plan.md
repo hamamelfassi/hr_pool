@@ -2,104 +2,60 @@
 
 ## Active phase override
 
-Pass 6 Evaluation-stage closure has been accepted sufficiently to proceed to Pass 7.
+The current phase is:
 
-The current phase is now:
+`Pass 7D — Final GRC Decision Engine Foundation lock`
 
-`Pass 7 — GRC governance reference and decision engine foundation`
+Pass 7A, 7B, and 7C are implementation-complete.
 
-Immediate next slice:
-
-`7B-0 — Governance Reference usability polish before Decision Instances`
-
-Pass 7 is no longer a minimal recruitment-only decision-template pass. It is a structural GRC refoundation pass that establishes the reusable Governance Reference / Reference Type / Provision / Text Pattern / Variable / Decision Template / Decision Instance architecture before recruitment consumes the board decision workflow.
-
-7A-4, 7A-5, and 7A-6 are complete and accepted.
-
-7C is manually completed and accepted as the recruitment board hiring decision template setup. The template now has:
-
-- governed recruitment decision profile;
-- governance references for the recruitment decision preamble;
-- reusable appointment and execution article text patterns;
-- bound template variables;
-- optional HR letter date/registration variables left blank for later workflow resolution;
-- refreshed template basis/article/variable snapshots through `تحديث القالب`.
-
-The next implementation work is 7B. Full 7D documentation lock remains after 7B is implemented and accepted.
+The remaining work in this phase is final documentation lock, sanity verification, build verification, and commit/push.
 
 ## Status
 
-Pass 6A is complete, committed, and pushed.
+Pass 7A is complete and accepted.
 
-Pass 6B is complete, committed, and pushed.
+Pass 7C is complete and accepted as the recruitment board hiring decision template setup.
 
-Pass 6C is complete and functionally locked.
+Pass 7B is complete and accepted as the generic generated-decision foundation.
 
-Pass 7A-4 is complete and accepted.
+Locked from 7B:
 
-Pass 7A-5 is complete and accepted.
+- generated decisions are represented by `x_grc.decision_instance`;
+- generated decision child lines are represented by basis, article, and variable-value instance models;
+- generated decisions are created from templates using `إنشاء نسخة قرار`;
+- variable-value rows are canonical;
+- header metadata fields are readonly snapshots;
+- preview refresh is driven from variable values;
+- lifecycle states are:
+  - `draft` / مسودة;
+  - `prepared` / مشروع;
+  - `locked` / نافذ;
+  - `cancelled` / ملغي;
+- locked/cancelled generated decisions are readonly in the UI;
+- action-menu bindings were removed for lifecycle/refresh server actions;
+- no QWeb/PDF, Sign, recruitment binding, or chairman-only security gate exists in Pass 7.
 
-Pass 7A-6 is complete and accepted, including GRC control-centre navigation, Governance Reference Type helper model, old scaffold retirement, SaaS-boundary lock, and the clean-install menu bootstrap correction.
+## Current next step
 
-Pass 7C is complete and accepted as a user-assisted manual seed/setup pass.
+Close Pass 7D.
 
-Locked from 7C:
+Required final checks:
 
-- recruitment board decision template exists;
-- template profile is `MCEP_BOARD_HIRING_DECISION`;
-- template code is `RECRUITMENT_HIRING_DECISION`;
-- subject uses `{decision_subject_ar}`;
-- basis lines are built from Governance References;
-- Article 1 uses the appointment text pattern and applicant/job variables;
-- Article 2 uses the execution text pattern and no variables;
-- required variables are bound in the template variable tab;
-- HR letter date and registration variables remain optional and manually unresolved until a later HR-letter workflow exists;
-- no PDF, Sign, recruitment binding, or decision instance exists yet.
+- module XML parses locally;
+- module builds cleanly after `rm -f dist/*.zip`;
+- Odoo SaaS upgrade is clean;
+- generated-decision creation and lifecycle acceptance tests pass;
+- `python3 scripts/check_grc_retired_scaffold_refs.py` passes if the script exists in the repo;
+- documentation and module README are committed.
 
-## Current next pass
+## Deferred principle
 
-Pass 7B — Generic Decision Instance foundation in `grc_backbone`.
+Locked generated governed instances should not be silently edited, directly cancelled, or amended in-place.
 
-Implementation order:
+Future amendment/cancellation should be governed by newly generated amendment/cancellation decisions or equivalent governed instances.
 
-1. 7B-0 — Governance Reference usability polish:
-   - add reference form tabs for provisions and relations if technically safe;
-   - optionally add simple source attachment/source URL fields;
-   - no Documents folder/tag automation;
-   - no chatter dependency unless explicitly scoped.
+This principle is recorded for future architecture work but is intentionally not added to the current 14-pass implementation plan unless separately scoped.
 
-2. 7B-1 — Decision Instance model foundation:
-   - add `x_grc.decision_instance`;
-   - add instance basis/article/variable-value child models;
-   - add access rights.
-
-3. 7B-2 — Decision Instance views and menu:
-   - add Decision Instances / نماذج القرارات menu;
-   - add list/form/search views;
-   - keep Arabic-first labels.
-
-4. 7B-3 — Instantiate from template:
-   - add template action to create a draft instance;
-   - copy profile/family/type/title/subject;
-   - copy basis line snapshots;
-   - copy article line snapshots;
-   - create variable-value rows from template variables.
-
-5. 7B-4 — Instance refresh and preview:
-   - refresh draft/prepared instance from template;
-   - allow manual variable values;
-   - render placeholder values into preview text;
-   - use SaaS-safe display-notification toasts for missing required values.
-
-6. 7B-5 — Light lifecycle:
-   - states: draft, prepared, locked, cancelled;
-   - no strict immutability yet;
-   - no QWeb/PDF;
-   - no Odoo Sign;
-   - no recruitment button;
-   - no `hr.applicant` binding beyond generic `x_source_model` / `x_source_res_id` fields.
-
-No recruitment code changes in 7B unless separately scoped.
 
 ## Authority
 

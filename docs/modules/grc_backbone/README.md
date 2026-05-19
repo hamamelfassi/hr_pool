@@ -269,3 +269,83 @@ See:
 - `docs/modules/grc_backbone/retired_grc_scaffold_ignore_register.md`
 
 The retired fragmented models must not be reused. The active architecture is the unified Governance Reference / Governance Provision / Governance Text Pattern / Variable Dictionary / Decision Engine foundation.
+
+## Pass 7D lock — generated governed instance doctrine
+
+Pass 7 locks the GRC decision engine foundation around the following doctrine.
+
+### Canonical split
+
+```text
+Governance Reference = authority/source
+Decision Template = reusable governed assembly
+Generated Decision / Decision Instance = case-specific runtime artifact
+```
+
+A generated decision is not stored directly as a Governance Reference at creation time.
+
+It lives as:
+
+```text
+x_grc.decision_instance
+```
+
+A later archival/governance pass may link or promote an issued signed decision into a Governance Reference of type `decision`, but this is not part of Pass 7.
+
+### Runtime generation path
+
+The canonical creation path is:
+
+```text
+Decision Template
+→ إنشاء نسخة قرار
+→ Generated Decision
+```
+
+Generated decisions should not be manually built brick-by-brick as their primary creation path.
+
+Manual GRC-originated generation is still allowed, but it must start from a template.
+
+### Variable canonicality
+
+Variable value rows are canonical.
+
+Header metadata fields are snapshots written from variable values during preview refresh.
+
+Current snapshot examples:
+
+```text
+decision_number → x_decision_number
+decision_year   → x_decision_year
+issue_date      → x_issue_date
+```
+
+### Current lifecycle
+
+```text
+draft      → مسودة
+prepared   → مشروع
+locked     → نافذ
+cancelled  → ملغي
+```
+
+The current lifecycle is deliberately light.
+
+Strict server-side immutability, PDF generation, Odoo Sign integration, recruitment binding, and generated-document registry integration are deferred.
+
+### UI immutability
+
+Locked and cancelled generated decisions are readonly in the UI.
+
+This is a view-level safety measure, not a hard server-side immutability system.
+
+### Amendment/cancellation canonical principle
+
+Locked generated governed instances should not be silently edited, directly cancelled, or amended in-place.
+
+Future amendment/cancellation should itself be governed by a newly generated amendment/cancellation decision or equivalent governed instance.
+
+This principle applies beyond decisions to generated governed instances generally.
+
+This future governance flow is intentionally not added to the current 14-pass implementation plan unless explicitly scoped later.
+
