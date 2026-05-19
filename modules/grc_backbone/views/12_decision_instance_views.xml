@@ -199,11 +199,20 @@
                         </page>
 
                         <page string="المعاينة">
-                            <group string="المعاينة العربية">
-                                <field name="x_rendered_text_ar" nolabel="1"/>
-                            </group>
-                            <group string="المعاينة الإنجليزية">
-                                <field name="x_rendered_text_en" nolabel="1"/>
+                            <group col="1">
+                                <separator string="المعاينة العربية" colspan="4"/>
+                                <field name="x_rendered_text_ar"
+                                    nolabel="1"
+                                    colspan="4"
+                                    widget="text"
+                                    style="width: 100%; min-height: 220px;"/>
+
+                                <separator string="المعاينة الإنجليزية" colspan="4"/>
+                                <field name="x_rendered_text_en"
+                                    nolabel="1"
+                                    colspan="4"
+                                    widget="text"
+                                    style="width: 100%; min-height: 160px;"/>
                             </group>
                         </page>
 
