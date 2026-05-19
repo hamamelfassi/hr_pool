@@ -49,13 +49,64 @@
                             <field name="x_active" string="نشط"/>
                         </group>
                     </group>
-                    <group string="Summary">
-                        <field name="x_summary_ar"/>
-                        <field name="x_summary_en"/>
-                    </group>
-                    <group>
-                        <field name="x_notes"/>
-                    </group>
+                    <notebook>
+                        <page string="المرفقات والمصدر">
+                            <group>
+                                <group string="الملخص">
+                                    <field name="x_summary_ar" string="الملخص العربي"/>
+                                    <field name="x_summary_en" string="الملخص الإنجليزي"/>
+                                </group>
+                                <group string="المصدر">
+                                    <field name="x_source_attachment_id" string="مرفق المصدر"
+                                        options="{'no_create_edit': False}"/>
+                                    <field name="x_source_url" string="رابط المصدر"
+                                        placeholder="https://..."/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="البنود / الأحكام">
+                            <field name="x_provision_ids"
+                                context="{'default_x_reference_id': id, 'default_x_active': True, 'default_x_requirement_type': 'article', 'default_x_obligation_level': 'mandatory'}">
+                                <list editable="bottom" string="البنود / الأحكام">
+                                    <field name="x_sequence" string="التسلسل"/>
+                                    <field name="x_code" string="كود البند"/>
+                                    <field name="x_name" string="اسم البند"/>
+                                    <field name="x_requirement_type" string="نوع المتطلب" widget="badge"/>
+                                    <field name="x_obligation_level" string="مستوى الإلزام" widget="badge"/>
+                                    <field name="x_active" string="نشط"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="العلاقات">
+                            <group string="العلاقات الصادرة">
+                                <field name="x_outgoing_relation_ids"
+                                    context="{'default_x_source_reference_id': id, 'default_x_active': True, 'default_x_relation_type': 'cites'}">
+                                    <list editable="bottom" string="العلاقات الصادرة">
+                                        <field name="x_sequence" string="التسلسل"/>
+                                        <field name="x_name" string="اسم العلاقة"/>
+                                        <field name="x_relation_type" string="نوع العلاقة" widget="badge"/>
+                                        <field name="x_target_reference_id" string="المرجع الهدف"/>
+                                        <field name="x_active" string="نشط"/>
+                                    </list>
+                                </field>
+                            </group>
+                            <group string="العلاقات الواردة">
+                                <field name="x_incoming_relation_ids"
+                                    context="{'default_x_target_reference_id': id, 'default_x_active': True, 'default_x_relation_type': 'cites'}">
+                                    <list editable="bottom" string="العلاقات الواردة">
+                                        <field name="x_sequence" string="التسلسل"/>
+                                        <field name="x_name" string="اسم العلاقة"/>
+                                        <field name="x_relation_type" string="نوع العلاقة" widget="badge"/>
+                                        <field name="x_source_reference_id" string="المرجع المصدر"/>
+                                        <field name="x_active" string="نشط"/>
+                                    </list>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="ملاحظات">
+                            <field name="x_notes" string="ملاحظات"/>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>

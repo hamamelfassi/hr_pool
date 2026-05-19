@@ -12,6 +12,21 @@
         <field name="index">True</field>
     </record>
 
+    <record id="field_governance_reference_x_source_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference"/>
+        <field name="name">x_source_attachment_id</field>
+        <field name="field_description">Source Attachment</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+    </record>
+
+    <record id="field_governance_reference_x_source_url" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference"/>
+        <field name="name">x_source_url</field>
+        <field name="field_description">Source URL</field>
+        <field name="ttype">char</field>
+    </record>
+
     <!-- Governance Reference Relation -->
 
     <record id="field_governance_reference_relation_x_name" model="ir.model.fields">
@@ -411,5 +426,33 @@
         <field name="ttype">many2one</field>
         <field name="relation">x_grc.governance_provision</field>
         <field name="on_delete">restrict</field>
+    </record>
+    <!-- Governance Reference reverse helper fields -->
+
+    <record id="field_governance_reference_x_provision_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference"/>
+        <field name="name">x_provision_ids</field>
+        <field name="field_description">Provisions</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.governance_provision</field>
+        <field name="relation_field">x_reference_id</field>
+    </record>
+
+    <record id="field_governance_reference_x_outgoing_relation_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference"/>
+        <field name="name">x_outgoing_relation_ids</field>
+        <field name="field_description">Outgoing Relations</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.governance_reference_relation</field>
+        <field name="relation_field">x_source_reference_id</field>
+    </record>
+
+    <record id="field_governance_reference_x_incoming_relation_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_governance_reference"/>
+        <field name="name">x_incoming_relation_ids</field>
+        <field name="field_description">Incoming Relations</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.governance_reference_relation</field>
+        <field name="relation_field">x_target_reference_id</field>
     </record>
 </odoo>
