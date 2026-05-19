@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Decision Instance -->
+
+    <record id="field_decision_instance_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_name</field>
+        <field name="field_description">اسم نسخة القرار</field>
+        <field name="ttype">char</field>
+        <field name="required">True</field>
+        <field name="index">True</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_x_template_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_template_id</field>
+        <field name="field_description">قالب القرار</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_template</field>
+        <field name="required">True</field>
+        <field name="on_delete">restrict</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_decision_instance_x_profile_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_profile_id</field>
+        <field name="field_description">ملف القرار</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_profile</field>
+        <field name="on_delete">restrict</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_decision_instance_x_family_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_family_id</field>
+        <field name="field_description">مجال الحوكمة</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_family</field>
+        <field name="on_delete">restrict</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_decision_instance_x_type_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_type_id</field>
+        <field name="field_description">إجراء الحوكمة</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_type</field>
+        <field name="on_delete">restrict</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_decision_instance_x_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_state</field>
+        <field name="field_description">الحالة</field>
+        <field name="ttype">selection</field>
+        <field name="required">True</field>
+        <field name="selection">[
+            ('draft', 'Draft'),
+            ('prepared', 'Prepared'),
+            ('locked', 'Locked'),
+            ('cancelled', 'Cancelled')
+            ]</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_decision_instance_x_source_model" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_source_model</field>
+        <field name="field_description">نموذج المصدر</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_decision_instance_x_source_res_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_source_res_id</field>
+        <field name="field_description">معرف سجل المصدر</field>
+        <field name="ttype">integer</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_decision_instance_x_title_ar" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_title_ar</field>
+        <field name="field_description">العنوان العربي</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_x_title_en" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_title_en</field>
+        <field name="field_description">العنوان الإنجليزي</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_x_subject_ar" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_subject_ar</field>
+        <field name="field_description">الموضوع بالعربية</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_x_subject_en" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_subject_en</field>
+        <field name="field_description">الموضوع بالإنجليزية</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_x_issue_date" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_issue_date</field>
+        <field name="field_description">تاريخ الإصدار</field>
+        <field name="ttype">date</field>
+    </record>
+
+    <record id="field_decision_instance_x_decision_number" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_decision_number</field>
+        <field name="field_description">رقم القرار</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_decision_instance_x_decision_year" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_decision_year</field>
+        <field name="field_description">سنة القرار</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_decision_instance_x_rendered_text_ar" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_rendered_text_ar</field>
+        <field name="field_description">المعاينة العربية</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_x_rendered_text_en" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_rendered_text_en</field>
+        <field name="field_description">المعاينة الإنجليزية</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_notes</field>
+        <field name="field_description">ملاحظات</field>
+        <field name="ttype">text</field>
+    </record>
+
+    <record id="field_decision_instance_x_active" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_active</field>
+        <field name="field_description">نشط</field>
+        <field name="ttype">boolean</field>
+    </record>
+
+    <!-- Decision Instance Basis Line -->
+
+    <record id="field_decision_instance_basis_line_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_basis_line"/>
+        <field name="name">x_name</field>
+        <field name="field_description">اسم السند</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_basis_line_x_instance_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_basis_line"/>
+        <field name="name">x_instance_id</field>
+        <field name="field_description">نسخة القرار</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_instance</field>
+        <field name="required">True</field>
+        <field name="on_delete">cascade</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_decision_instance_basis_line_x_template_line_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_basis_line"/>
+        <field name="name">x_template_line_id</field>
+        <field name="field_description">سطر القالب</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_basis_line</field>
+        <field name="on_delete">set null</field>
+    </record>
+
+    <record id="field_decision_instance_basis_line_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_basis_line"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">التسلسل</field>
+        <field name="ttype">integer</field>
+    </record>
+
+    <record id="field_decision_instance_basis_line_x_phrase_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_basis_line"/>
+        <field name="name">x_phrase_id</field>
+        <field name="field_description">صيغة الربط</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_basis_phrase</field>
+        <field name="on_delete">restrict</field>
+    </record>
+
+    <record id="field_decision_instance_basis_line_x_relationship_phrase_ar" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_basis_line"/>
+        <field name="name">x_relationship_phrase_ar</field>
+        <field name="field_description">صيغة الربط بالعربية</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_basis_line_x_relationship_phrase_en" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_basis_line"/>
+        <field name="name">x_relationship_phrase_en</field>
+        <field name="field_description">صيغة الربط بالإنجليزية</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_basis_line_x_reference_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_basis_line"/>
+        <field name="name">x_reference_id</field>
+        <field name="field_description">مرجع حوكمة</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.governance_reference</field>
+        <field name="on_delete">restrict</field>
+    </record>
+
+    <record id="field_decision_instance_basis_line_x_governance_provision_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_basis_line"/>
+        <field name="name">x_governance_provision_id</field>
+        <field name="field_description">بند / حكم</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.governance_provision</field>
+        <field name="on_delete">restrict</field>
+    </record>
+
+    <record id="field_decision_instance_basis_line_x_pattern_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_basis_line"/>
+        <field name="name">x_pattern_id</field>
+        <field name="field_description">نمط نص</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.governance_text_pattern</field>
+        <field name="on_delete">restrict</field>
+    </record>
+
+    <record id="field_decision_instance_basis_line_x_snapshot_text_ar" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_basis_line"/>
+        <field name="name">x_snapshot_text_ar</field>
+        <field name="field_description">النص العربي المثبت</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_basis_line_x_snapshot_text_en" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_basis_line"/>
+        <field name="name">x_snapshot_text_en</field>
+        <field name="field_description">النص الإنجليزي المثبت</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_basis_line_x_rendered_text_ar" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_basis_line"/>
+        <field name="name">x_rendered_text_ar</field>
+        <field name="field_description">النص العربي المعروض</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_basis_line_x_rendered_text_en" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_basis_line"/>
+        <field name="name">x_rendered_text_en</field>
+        <field name="field_description">النص الإنجليزي المعروض</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_basis_line_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_basis_line"/>
+        <field name="name">x_notes</field>
+        <field name="field_description">ملاحظات</field>
+        <field name="ttype">text</field>
+    </record>
+
+    <!-- Decision Instance Article Line -->
+
+    <record id="field_decision_instance_article_line_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_article_line"/>
+        <field name="name">x_name</field>
+        <field name="field_description">اسم المادة</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_article_line_x_instance_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_article_line"/>
+        <field name="name">x_instance_id</field>
+        <field name="field_description">نسخة القرار</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_instance</field>
+        <field name="required">True</field>
+        <field name="on_delete">cascade</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_decision_instance_article_line_x_template_line_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_article_line"/>
+        <field name="name">x_template_line_id</field>
+        <field name="field_description">سطر مادة القالب</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_template_article_line</field>
+        <field name="on_delete">set null</field>
+    </record>
+
+    <record id="field_decision_instance_article_line_x_sequence" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_article_line"/>
+        <field name="name">x_sequence</field>
+        <field name="field_description">التسلسل</field>
+        <field name="ttype">integer</field>
+    </record>
+
+    <record id="field_decision_instance_article_line_x_article_number" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_article_line"/>
+        <field name="name">x_article_number</field>
+        <field name="field_description">رقم المادة</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_decision_instance_article_line_x_title_ar" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_article_line"/>
+        <field name="name">x_title_ar</field>
+        <field name="field_description">العنوان العربي</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_article_line_x_title_en" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_article_line"/>
+        <field name="name">x_title_en</field>
+        <field name="field_description">العنوان الإنجليزي</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_article_line_x_body_ar" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_article_line"/>
+        <field name="name">x_body_ar</field>
+        <field name="field_description">النص العربي</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_article_line_x_body_en" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_article_line"/>
+        <field name="name">x_body_en</field>
+        <field name="field_description">النص الإنجليزي</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_article_line_x_rendered_body_ar" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_article_line"/>
+        <field name="name">x_rendered_body_ar</field>
+        <field name="field_description">النص العربي المعروض</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_article_line_x_rendered_body_en" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_article_line"/>
+        <field name="name">x_rendered_body_en</field>
+        <field name="field_description">النص الإنجليزي المعروض</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_article_line_x_uses_variables" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_article_line"/>
+        <field name="name">x_uses_variables</field>
+        <field name="field_description">يستخدم متغيرات</field>
+        <field name="ttype">boolean</field>
+    </record>
+
+    <record id="field_decision_instance_article_line_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_article_line"/>
+        <field name="name">x_notes</field>
+        <field name="field_description">ملاحظات</field>
+        <field name="ttype">text</field>
+    </record>
+
+    <!-- Decision Instance Variable Value -->
+
+    <record id="field_decision_instance_variable_value_x_name" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_variable_value"/>
+        <field name="name">x_name</field>
+        <field name="field_description">اسم قيمة المتغير</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_variable_value_x_instance_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_variable_value"/>
+        <field name="name">x_instance_id</field>
+        <field name="field_description">نسخة القرار</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_instance</field>
+        <field name="required">True</field>
+        <field name="on_delete">cascade</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_decision_instance_variable_value_x_template_variable_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_variable_value"/>
+        <field name="name">x_template_variable_id</field>
+        <field name="field_description">متغير القالب</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.decision_template_variable</field>
+        <field name="on_delete">set null</field>
+    </record>
+
+    <record id="field_decision_instance_variable_value_x_variable_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_variable_value"/>
+        <field name="name">x_variable_id</field>
+        <field name="field_description">المتغير</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_grc.variable</field>
+        <field name="on_delete">restrict</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_decision_instance_variable_value_x_key" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_variable_value"/>
+        <field name="name">x_key</field>
+        <field name="field_description">مفتاح المتغير</field>
+        <field name="ttype">char</field>
+        <field name="index">True</field>
+    </record>
+
+    <record id="field_decision_instance_variable_value_x_label_ar" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_variable_value"/>
+        <field name="name">x_label_ar</field>
+        <field name="field_description">التسمية العربية</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_variable_value_x_label_en" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_variable_value"/>
+        <field name="name">x_label_en</field>
+        <field name="field_description">التسمية الإنجليزية</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_variable_value_x_value_type" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_variable_value"/>
+        <field name="name">x_value_type</field>
+        <field name="field_description">نوع القيمة</field>
+        <field name="ttype">selection</field>
+        <field name="selection">[
+            ('char', 'Short Text'),
+            ('text', 'Long Text'),
+            ('date', 'Date'),
+            ('datetime', 'Datetime'),
+            ('integer', 'Integer'),
+            ('float', 'Float'),
+            ('monetary', 'Monetary'),
+            ('many2one_ref', 'Record Reference'),
+            ('boolean', 'Boolean')
+            ]</field>
+    </record>
+
+    <record id="field_decision_instance_variable_value_x_required" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_variable_value"/>
+        <field name="name">x_required</field>
+        <field name="field_description">إلزامي</field>
+        <field name="ttype">boolean</field>
+    </record>
+
+    <record id="field_decision_instance_variable_value_x_default_value_text" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_variable_value"/>
+        <field name="name">x_default_value_text</field>
+        <field name="field_description">قيمة افتراضية</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_variable_value_x_value_text" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_variable_value"/>
+        <field name="name">x_value_text</field>
+        <field name="field_description">قيمة نصية</field>
+        <field name="ttype">text</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_variable_value_x_value_date" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_variable_value"/>
+        <field name="name">x_value_date</field>
+        <field name="field_description">قيمة تاريخ</field>
+        <field name="ttype">date</field>
+    </record>
+
+    <record id="field_decision_instance_variable_value_x_value_number" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_variable_value"/>
+        <field name="name">x_value_number</field>
+        <field name="field_description">قيمة رقمية</field>
+        <field name="ttype">float</field>
+    </record>
+
+    <record id="field_decision_instance_variable_value_x_value_boolean" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_variable_value"/>
+        <field name="name">x_value_boolean</field>
+        <field name="field_description">قيمة منطقية</field>
+        <field name="ttype">boolean</field>
+    </record>
+
+    <record id="field_decision_instance_variable_value_x_source_model_hint" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_variable_value"/>
+        <field name="name">x_source_model_hint</field>
+        <field name="field_description">نموذج المصدر</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_decision_instance_variable_value_x_source_field_hint" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_variable_value"/>
+        <field name="name">x_source_field_hint</field>
+        <field name="field_description">حقل المصدر</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_decision_instance_variable_value_x_resolved_display_value" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_variable_value"/>
+        <field name="name">x_resolved_display_value</field>
+        <field name="field_description">القيمة المعروضة</field>
+        <field name="ttype">char</field>
+        <field name="translate">standard</field>
+    </record>
+
+    <record id="field_decision_instance_variable_value_x_notes" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance_variable_value"/>
+        <field name="name">x_notes</field>
+        <field name="field_description">ملاحظات</field>
+        <field name="ttype">text</field>
+    </record>
+
+    <!-- Decision Instance reverse helper fields -->
+
+    <record id="field_decision_instance_x_basis_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_basis_line_ids</field>
+        <field name="field_description">أسس القرار</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.decision_instance_basis_line</field>
+        <field name="relation_field">x_instance_id</field>
+    </record>
+
+    <record id="field_decision_instance_x_article_line_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_article_line_ids</field>
+        <field name="field_description">مواد القرار</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.decision_instance_article_line</field>
+        <field name="relation_field">x_instance_id</field>
+    </record>
+
+    <record id="field_decision_instance_x_variable_value_ids" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_variable_value_ids</field>
+        <field name="field_description">قيم المتغيرات</field>
+        <field name="ttype">one2many</field>
+        <field name="relation">x_grc.decision_instance_variable_value</field>
+        <field name="relation_field">x_instance_id</field>
+    </record>
+</odoo>

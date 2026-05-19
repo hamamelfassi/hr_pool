@@ -22,6 +22,8 @@
         "models/13_governance_library_models.xml",
         "models/14_governance_library_fields.xml",
         "models/15_governance_reference_type.xml",
+        "models/16_decision_instance_models.xml",
+        "models/17_decision_instance_fields.xml",
         "data/01_selection_values.xml",
         "data/02_sequences.xml",
         "data/03_seed_functional_taxonomy.xml",
