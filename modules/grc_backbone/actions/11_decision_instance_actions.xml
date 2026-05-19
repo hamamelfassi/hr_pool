@@ -245,18 +245,7 @@ def build_decision_name(number, year, subject):
     subject = first_text(strip_subject_prefix(subject), '...')
     return 'القرار رقم ' + number + ' لسنة ' + year + ' بخصوص ' + subject
 
-def variable_display_value(line, rec):
-    key = clean_text(line.x_key)
-
-    if key == 'decision_number':
-        return clean_text(rec.x_decision_number)
-    if key == 'decision_year':
-        return clean_text(rec.x_decision_year)
-    if key == 'issue_date':
-        return clean_text(rec.x_issue_date)
-    if key == 'decision_subject_ar':
-        return first_text(line.x_value_text, strip_subject_prefix(rec.x_subject_ar), line.x_default_value_text)
-
+def variable_display_value(line):
     value_type = clean_text(line.x_value_type)
 
     if value_type == 'date':
@@ -344,31 +333,36 @@ for rec in records.sudo():
     else:
         variable_map = {}
 
+        decision_number_snapshot = ''
+        decision_year_snapshot = ''
+        issue_date_snapshot = False
+
         for line in rec.x_variable_value_ids:
             key = clean_text(line.x_key)
-            value = variable_display_value(line, rec)
+            value = variable_display_value(line)
 
-            update_vals = {
+            line.write({
                 'x_resolved_display_value': value or False,
-            }
-
-            if key in ['decision_number', 'decision_year']:
-                update_vals['x_value_text'] = value or False
-            if key == 'issue_date':
-                if rec.x_issue_date:
-                    update_vals['x_value_date'] = rec.x_issue_date
-                if value:
-                    update_vals['x_value_text'] = value
-            if key == 'decision_subject_ar' and value and not clean_text(line.x_value_text):
-                update_vals['x_value_text'] = value
-
-            line.write(update_vals)
+            })
 
             if key:
                 variable_map[key] = value
 
+            if key == 'decision_number':
+                decision_number_snapshot = value
+            if key == 'decision_year':
+                decision_year_snapshot = value
+            if key == 'issue_date' and line.x_value_date:
+                issue_date_snapshot = line.x_value_date
+
             if line.x_required and not value:
                 missing_labels.append(first_text(line.x_label_ar, line.x_name, key))
+
+        rec.write({
+            'x_decision_number': decision_number_snapshot or False,
+            'x_decision_year': decision_year_snapshot or False,
+            'x_issue_date': issue_date_snapshot or False,
+        })
 
         template = rec.x_template_id
 
@@ -408,6 +402,19 @@ for rec in records.sudo():
 
         processed_count = processed_count + 1
 
+reload_action = False
+first_rec = records.sudo()[:1]
+if first_rec:
+    reload_action = {
+        'type': 'ir.actions.act_window',
+        'name': first_rec.x_name or 'قرار مولد',
+        'res_model': 'x_grc.decision_instance',
+        'res_id': first_rec.id,
+        'view_mode': 'form',
+        'views': [(False, 'form')],
+        'target': 'current',
+    }
+
 if missing_labels:
     unique_missing = []
     for label in missing_labels:
@@ -422,6 +429,7 @@ if missing_labels:
             'message': 'القيم المطلوبة الناقصة: ' + ', '.join(unique_missing),
             'type': 'warning',
             'sticky': True,
+            'next': reload_action,
         },
     }
 else:
@@ -433,6 +441,7 @@ else:
             'message': 'تم تحديث اسم القرار والنصوص المعروضة لعدد ' + str(processed_count) + ' قرار.',
             'type': 'success',
             'sticky': False,
+            'next': reload_action,
         },
     }
         ]]></field>

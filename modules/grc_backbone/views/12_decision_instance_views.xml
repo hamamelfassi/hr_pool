@@ -11,9 +11,9 @@
                 <field name="x_profile_id" string="ملف القرار" readonly="1" options="{'no_open': False, 'no_create': True}"/>
                 <field name="x_family_id" string="مجال الحوكمة" readonly="1" options="{'no_open': False, 'no_create': True}"/>
                 <field name="x_type_id" string="إجراء الحوكمة" readonly="1" options="{'no_open': False, 'no_create': True}"/>
-                <field name="x_decision_number" string="رقم القرار"/>
-                <field name="x_decision_year" string="سنة القرار"/>
-                <field name="x_issue_date" string="تاريخ الإصدار"/>
+                <field name="x_decision_number" string="رقم القرار" readonly="1"/>
+                <field name="x_decision_year" string="سنة القرار" readonly="1"/>
+                <field name="x_issue_date" string="تاريخ الإصدار" readonly="1"/>
                 <field name="x_source_model" string="نموذج المصدر"/>
                 <field name="x_source_res_id" string="سجل المصدر"/>
                 <field name="x_active" string="نشط"/>
@@ -46,9 +46,9 @@
                             <field name="x_active" string="نشط"/>
                         </group>
                         <group string="بيانات الإصدار">
-                            <field name="x_decision_number" string="رقم القرار"/>
-                            <field name="x_decision_year" string="سنة القرار"/>
-                            <field name="x_issue_date" string="تاريخ الإصدار"/>
+                            <field name="x_decision_number" string="رقم القرار" readonly="1"/>
+                            <field name="x_decision_year" string="سنة القرار" readonly="1"/>
+                            <field name="x_issue_date" string="تاريخ الإصدار" readonly="1"/>
                             <field name="x_source_model" string="نموذج المصدر"/>
                             <field name="x_source_res_id" string="معرف سجل المصدر"/>
                         </group>
