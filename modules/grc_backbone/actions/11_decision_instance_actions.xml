@@ -447,4 +447,246 @@ else:
         ]]></field>
     </record>
 
+    <record id="action_decision_instance_prepare" model="ir.actions.server">
+        <field name="name">تجهيز القرار</field>
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="binding_model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+action = False
+
+def clean_text(value):
+    if not value:
+        return ''
+    return str(value).strip()
+
+def first_text(*values):
+    for value in values:
+        value = clean_text(value)
+        if value:
+            return value
+    return ''
+
+def value_present(line):
+    value_type = clean_text(line.x_value_type)
+    if value_type == 'date':
+        return bool(line.x_value_date or clean_text(line.x_value_text) or clean_text(line.x_default_value_text))
+    if value_type in ['integer', 'float', 'monetary']:
+        if line.x_value_number not in [False, None]:
+            return True
+        return bool(clean_text(line.x_value_text) or clean_text(line.x_default_value_text))
+    if value_type == 'boolean':
+        if line.x_value_boolean:
+            return True
+        return bool(clean_text(line.x_value_text) or clean_text(line.x_default_value_text))
+    return bool(clean_text(line.x_value_text) or clean_text(line.x_default_value_text) or clean_text(line.x_resolved_display_value))
+
+prepared_count = 0
+blocked_messages = []
+
+for rec in records.sudo():
+    if rec.x_state != 'draft':
+        blocked_messages.append((rec.x_name or 'قرار') + ': يجب أن يكون في حالة مسودة.')
+    else:
+        missing = []
+        for line in rec.x_variable_value_ids:
+            if line.x_required and not value_present(line):
+                missing.append(first_text(line.x_label_ar, line.x_name, line.x_key, 'متغير مطلوب'))
+
+        if missing:
+            blocked_messages.append((rec.x_name or 'قرار') + ': القيم المطلوبة الناقصة: ' + ', '.join(missing))
+        else:
+            rec.write({'x_state': 'prepared'})
+            prepared_count = prepared_count + 1
+
+first_rec = records.sudo()[:1]
+reload_action = False
+if first_rec:
+    reload_action = {
+        'type': 'ir.actions.act_window',
+        'name': first_rec.x_name or 'قرار مولد',
+        'res_model': 'x_grc.decision_instance',
+        'res_id': first_rec.id,
+        'view_mode': 'form',
+        'views': [(False, 'form')],
+        'target': 'current',
+    }
+
+if blocked_messages:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': 'لم يتم تجهيز بعض القرارات',
+            'message': ' | '.join(blocked_messages),
+            'type': 'warning',
+            'sticky': True,
+            'next': reload_action,
+        },
+    }
+else:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': 'تم تجهيز القرار',
+            'message': 'تم تجهيز ' + str(prepared_count) + ' قرار.',
+            'type': 'success',
+            'sticky': False,
+            'next': reload_action,
+        },
+    }
+        ]]></field>
+    </record>
+
+    <record id="action_decision_instance_lock" model="ir.actions.server">
+        <field name="name">قفل القرار</field>
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="binding_model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+action = False
+
+def clean_text(value):
+    if not value:
+        return ''
+    return str(value).strip()
+
+def first_text(*values):
+    for value in values:
+        value = clean_text(value)
+        if value:
+            return value
+    return ''
+
+def value_present(line):
+    value_type = clean_text(line.x_value_type)
+    if value_type == 'date':
+        return bool(line.x_value_date or clean_text(line.x_value_text) or clean_text(line.x_default_value_text))
+    if value_type in ['integer', 'float', 'monetary']:
+        if line.x_value_number not in [False, None]:
+            return True
+        return bool(clean_text(line.x_value_text) or clean_text(line.x_default_value_text))
+    if value_type == 'boolean':
+        if line.x_value_boolean:
+            return True
+        return bool(clean_text(line.x_value_text) or clean_text(line.x_default_value_text))
+    return bool(clean_text(line.x_value_text) or clean_text(line.x_default_value_text) or clean_text(line.x_resolved_display_value))
+
+locked_count = 0
+blocked_messages = []
+
+for rec in records.sudo():
+    if rec.x_state != 'prepared':
+        blocked_messages.append((rec.x_name or 'قرار') + ': يجب أن يكون مجهزاً قبل القفل.')
+    else:
+        missing = []
+        for line in rec.x_variable_value_ids:
+            if line.x_required and not value_present(line):
+                missing.append(first_text(line.x_label_ar, line.x_name, line.x_key, 'متغير مطلوب'))
+
+        if missing:
+            blocked_messages.append((rec.x_name or 'قرار') + ': القيم المطلوبة الناقصة: ' + ', '.join(missing))
+        else:
+            rec.write({'x_state': 'locked'})
+            locked_count = locked_count + 1
+
+first_rec = records.sudo()[:1]
+reload_action = False
+if first_rec:
+    reload_action = {
+        'type': 'ir.actions.act_window',
+        'name': first_rec.x_name or 'قرار مولد',
+        'res_model': 'x_grc.decision_instance',
+        'res_id': first_rec.id,
+        'view_mode': 'form',
+        'views': [(False, 'form')],
+        'target': 'current',
+    }
+
+if blocked_messages:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': 'لم يتم قفل بعض القرارات',
+            'message': ' | '.join(blocked_messages),
+            'type': 'warning',
+            'sticky': True,
+            'next': reload_action,
+        },
+    }
+else:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': 'تم قفل القرار',
+            'message': 'تم قفل ' + str(locked_count) + ' قرار.',
+            'type': 'success',
+            'sticky': False,
+            'next': reload_action,
+        },
+    }
+        ]]></field>
+    </record>
+
+    <record id="action_decision_instance_cancel" model="ir.actions.server">
+        <field name="name">إلغاء القرار</field>
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="binding_model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+action = False
+
+cancelled_count = 0
+blocked_names = []
+
+for rec in records.sudo():
+    if rec.x_state in ['draft', 'prepared']:
+        rec.write({'x_state': 'cancelled'})
+        cancelled_count = cancelled_count + 1
+    else:
+        blocked_names.append(rec.x_name or 'قرار مقفل/ملغى')
+
+first_rec = records.sudo()[:1]
+reload_action = False
+if first_rec:
+    reload_action = {
+        'type': 'ir.actions.act_window',
+        'name': first_rec.x_name or 'قرار مولد',
+        'res_model': 'x_grc.decision_instance',
+        'res_id': first_rec.id,
+        'view_mode': 'form',
+        'views': [(False, 'form')],
+        'target': 'current',
+    }
+
+if blocked_names:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': 'تم الإلغاء جزئياً',
+            'message': 'تم إلغاء ' + str(cancelled_count) + ' قرار. لم يتم إلغاء: ' + ', '.join(blocked_names),
+            'type': 'warning',
+            'sticky': True,
+            'next': reload_action,
+        },
+    }
+else:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': 'تم إلغاء القرار',
+            'message': 'تم إلغاء ' + str(cancelled_count) + ' قرار.',
+            'type': 'success',
+            'sticky': False,
+            'next': reload_action,
+        },
+    }
+        ]]></field>
+    </record>
+
 </odoo>

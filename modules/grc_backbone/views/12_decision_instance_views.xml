@@ -30,8 +30,23 @@
                     <button type="action"
                         name="grc_backbone.action_decision_instance_refresh_preview"
                         string="تحديث المعاينة"
-                        class="btn-primary"
+                        class="btn-secondary"
                         invisible="not id or x_state in ['locked', 'cancelled']"/>
+                    <button type="action"
+                        name="grc_backbone.action_decision_instance_prepare"
+                        string="تجهيز القرار"
+                        class="btn-primary"
+                        invisible="not id or x_state != 'draft'"/>
+                    <button type="action"
+                        name="grc_backbone.action_decision_instance_lock"
+                        string="قفل القرار"
+                        class="btn-primary"
+                        invisible="not id or x_state != 'prepared'"/>
+                    <button type="action"
+                        name="grc_backbone.action_decision_instance_cancel"
+                        string="إلغاء القرار"
+                        class="btn-secondary"
+                        invisible="not id or x_state not in ['draft', 'prepared']"/>
                 </header>
                 <sheet>
                     <group>
