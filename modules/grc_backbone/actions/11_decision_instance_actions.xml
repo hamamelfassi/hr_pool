@@ -6,4 +6,436 @@
         <field name="view_mode">list,form</field>
         <field name="context">{'default_x_active': True, 'default_x_state': 'draft'}</field>
     </record>
+    <record id="action_decision_template_create_instance" model="ir.actions.server">
+        <field name="name">إنشاء نسخة قرار</field>
+        <field name="model_id" ref="grc_backbone.model_decision_template"/>
+        <field name="binding_model_id" ref="grc_backbone.model_decision_template"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+action = False
+
+def clean_text(value):
+    if not value:
+        return ''
+    return str(value).strip()
+
+def first_text(*values):
+    for value in values:
+        value = clean_text(value)
+        if value:
+            return value
+    return ''
+
+def replace_placeholders(text, variable_map):
+    text = clean_text(text)
+    if not text:
+        return ''
+    for key in variable_map:
+        value = clean_text(variable_map.get(key))
+        text = text.replace('{' + key + '}', value)
+    return text
+
+def name_subject(subject):
+    subject = clean_text(subject)
+    if subject.startswith('بشأن '):
+        return subject[5:].strip()
+    if subject.startswith('بخصوص '):
+        return subject[6:].strip()
+    return subject
+
+def build_decision_name(number, year, subject):
+    number = first_text(number, '...')
+    year = first_text(year, '...')
+    subject = first_text(name_subject(subject), '...')
+    return 'القرار رقم ' + number + ' لسنة ' + year + ' بخصوص ' + subject
+
+template = records.sudo()[:1]
+
+if not template:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': 'لا يوجد قالب',
+            'message': 'اختر قالب قرار أولاً.',
+            'type': 'warning',
+            'sticky': False,
+        },
+    }
+else:
+    variable_map = {}
+
+    for variable_line in template.x_variable_definition_ids:
+        key = first_text(
+            variable_line.x_key,
+            variable_line.x_variable_id.x_key if variable_line.x_variable_id else ''
+        )
+        default_value = clean_text(variable_line.x_default_value_text)
+        if key and default_value:
+            variable_map[key] = default_value
+
+    subject_ar = replace_placeholders(template.x_subject_template_ar, variable_map)
+    subject_en = replace_placeholders(template.x_subject_template_en, variable_map)
+
+    if not subject_ar:
+        subject_ar = first_text(template.x_title_ar, template.x_name, 'قرار')
+
+    decision_name = build_decision_name('', '', subject_ar)
+
+    instance_vals = {
+        'x_name': decision_name,
+        'x_template_id': template.id,
+        'x_profile_id': template.x_profile_id.id if template.x_profile_id else False,
+        'x_family_id': template.x_profile_family_id.id if template.x_profile_family_id else False,
+        'x_type_id': template.x_profile_type_id.id if template.x_profile_type_id else False,
+        'x_state': 'draft',
+        'x_title_ar': template.x_title_ar or False,
+        'x_title_en': template.x_title_en or False,
+        'x_subject_ar': subject_ar or False,
+        'x_subject_en': subject_en or False,
+        'x_active': True,
+    }
+
+    instance = env['x_grc.decision_instance'].sudo().create(instance_vals)
+
+    for line in template.x_basis_line_ids:
+        snapshot_ar = first_text(line.x_snapshot_text_ar, line.x_reference_text_ar)
+        snapshot_en = first_text(line.x_snapshot_text_en, line.x_reference_text_en)
+
+        rendered_ar = replace_placeholders(snapshot_ar, variable_map)
+        rendered_en = replace_placeholders(snapshot_en, variable_map)
+
+        env['x_grc.decision_instance_basis_line'].sudo().create({
+            'x_instance_id': instance.id,
+            'x_template_line_id': line.id,
+            'x_sequence': line.x_sequence or 0,
+            'x_phrase_id': line.x_phrase_id.id if line.x_phrase_id else False,
+            'x_relationship_phrase_ar': line.x_relationship_phrase_ar or False,
+            'x_relationship_phrase_en': line.x_relationship_phrase_en or False,
+            'x_reference_id': line.x_reference_id.id if line.x_reference_id else False,
+            'x_governance_provision_id': line.x_governance_provision_id.id if line.x_governance_provision_id else False,
+            'x_pattern_id': line.x_pattern_id.id if line.x_pattern_id else False,
+            'x_name': line.x_name or False,
+            'x_snapshot_text_ar': snapshot_ar or False,
+            'x_snapshot_text_en': snapshot_en or False,
+            'x_rendered_text_ar': rendered_ar or False,
+            'x_rendered_text_en': rendered_en or False,
+            'x_notes': line.x_notes or False,
+        })
+
+    for article in template.x_article_line_ids:
+        body_ar = article.x_body_ar or ''
+        body_en = article.x_body_en or ''
+
+        rendered_body_ar = replace_placeholders(body_ar, variable_map)
+        rendered_body_en = replace_placeholders(body_en, variable_map)
+
+        env['x_grc.decision_instance_article_line'].sudo().create({
+            'x_instance_id': instance.id,
+            'x_template_line_id': article.id,
+            'x_sequence': article.x_sequence or 0,
+            'x_article_number': article.x_article_number or False,
+            'x_name': article.x_name or article.x_title_ar or False,
+            'x_title_ar': article.x_title_ar or False,
+            'x_title_en': article.x_title_en or False,
+            'x_body_ar': body_ar or False,
+            'x_body_en': body_en or False,
+            'x_rendered_body_ar': rendered_body_ar or False,
+            'x_rendered_body_en': rendered_body_en or False,
+            'x_uses_variables': bool(article.x_uses_variables),
+            'x_notes': article.x_notes or False,
+        })
+
+    for variable_line in template.x_variable_definition_ids:
+        variable = variable_line.x_variable_id
+        key = first_text(
+            variable_line.x_key,
+            variable.x_key if variable else ''
+        )
+        label_ar = first_text(
+            variable_line.x_label_ar,
+            variable.x_label_ar if variable else '',
+            variable_line.x_name,
+            key
+        )
+        label_en = first_text(
+            variable_line.x_label_en,
+            variable.x_label_en if variable else '',
+            variable_line.x_name,
+            key
+        )
+        value_type = first_text(
+            variable_line.x_value_type,
+            variable.x_value_type if variable else '',
+            'char'
+        )
+        default_value = clean_text(variable_line.x_default_value_text)
+        resolved_value = default_value
+
+        env['x_grc.decision_instance_variable_value'].sudo().create({
+            'x_instance_id': instance.id,
+            'x_template_variable_id': variable_line.id,
+            'x_variable_id': variable.id if variable else False,
+            'x_name': first_text(variable_line.x_name, label_ar, key, 'قيمة متغير'),
+            'x_key': key or False,
+            'x_label_ar': label_ar or False,
+            'x_label_en': label_en or False,
+            'x_value_type': value_type,
+            'x_required': bool(variable_line.x_required),
+            'x_default_value_text': default_value or False,
+            'x_value_text': default_value or False,
+            'x_resolved_display_value': resolved_value or False,
+            'x_source_model_hint': variable_line.x_source_model_hint or False,
+            'x_source_field_hint': variable_line.x_source_field_hint or False,
+            'x_notes': variable_line.x_notes or False,
+        })
+
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': instance.x_name,
+        'res_model': 'x_grc.decision_instance',
+        'res_id': instance.id,
+        'view_mode': 'form',
+        'views': [(False, 'form')],
+        'target': 'current',
+    }
+        ]]></field>
+    </record>
+
+    <record id="action_decision_instance_refresh_preview" model="ir.actions.server">
+        <field name="name">تحديث المعاينة</field>
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="binding_model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+action = False
+
+def clean_text(value):
+    if not value:
+        return ''
+    return str(value).strip()
+
+def first_text(*values):
+    for value in values:
+        value = clean_text(value)
+        if value:
+            return value
+    return ''
+
+def strip_subject_prefix(subject):
+    subject = clean_text(subject)
+    if subject.startswith('بشأن '):
+        return subject[5:].strip()
+    if subject.startswith('بخصوص '):
+        return subject[6:].strip()
+    return subject
+
+def replace_placeholders(text, variable_map):
+    text = clean_text(text)
+    if not text:
+        return ''
+    for key in variable_map:
+        value = clean_text(variable_map.get(key))
+        text = text.replace('{' + key + '}', value)
+    return text
+
+def build_decision_name(number, year, subject):
+    number = first_text(number, '...')
+    year = first_text(year, '...')
+    subject = first_text(strip_subject_prefix(subject), '...')
+    return 'القرار رقم ' + number + ' لسنة ' + year + ' بخصوص ' + subject
+
+def variable_display_value(line, rec):
+    key = clean_text(line.x_key)
+
+    if key == 'decision_number':
+        return clean_text(rec.x_decision_number)
+    if key == 'decision_year':
+        return clean_text(rec.x_decision_year)
+    if key == 'issue_date':
+        return clean_text(rec.x_issue_date)
+    if key == 'decision_subject_ar':
+        return first_text(line.x_value_text, strip_subject_prefix(rec.x_subject_ar), line.x_default_value_text)
+
+    value_type = clean_text(line.x_value_type)
+
+    if value_type == 'date':
+        return first_text(line.x_value_date, line.x_value_text, line.x_default_value_text)
+    if value_type in ['integer', 'float', 'monetary']:
+        if line.x_value_number not in [False, None]:
+            return clean_text(line.x_value_number)
+        return first_text(line.x_value_text, line.x_default_value_text)
+    if value_type == 'boolean':
+        if line.x_value_boolean:
+            return 'نعم'
+        return first_text(line.x_value_text, line.x_default_value_text)
+    return first_text(line.x_value_text, line.x_default_value_text)
+
+def build_preview_ar(rec, subject_ar):
+    lines = []
+
+    title = clean_text(rec.x_title_ar)
+    if title:
+        lines.append(title)
+
+    subject = clean_text(subject_ar)
+    if subject:
+        lines.append(subject)
+
+    lines.append('')
+    lines.append('وبعد الإطلاع:-')
+
+    for basis in rec.x_basis_line_ids.sorted('x_sequence'):
+        text = first_text(basis.x_rendered_text_ar, basis.x_snapshot_text_ar)
+        phrase = clean_text(basis.x_relationship_phrase_ar)
+        if text:
+            if phrase and not text.startswith(phrase):
+                lines.append('- ' + phrase + ' ' + text)
+            else:
+                lines.append('- ' + text)
+
+    lines.append('')
+    lines.append('قــــــــــرر')
+
+    for article in rec.x_article_line_ids.sorted('x_sequence'):
+        article_no = clean_text(article.x_article_number)
+        body = first_text(article.x_rendered_body_ar, article.x_body_ar)
+        if article_no:
+            lines.append('')
+            lines.append('مادة (' + article_no + ')')
+        if body:
+            lines.append(body)
+
+    return '\n'.join(lines).strip()
+
+def build_preview_en(rec, subject_en):
+    lines = []
+
+    title = clean_text(rec.x_title_en)
+    if title:
+        lines.append(title)
+
+    subject = clean_text(subject_en)
+    if subject:
+        lines.append(subject)
+
+    for basis in rec.x_basis_line_ids.sorted('x_sequence'):
+        text = first_text(basis.x_rendered_text_en, basis.x_snapshot_text_en)
+        if text:
+            lines.append('- ' + text)
+
+    for article in rec.x_article_line_ids.sorted('x_sequence'):
+        article_no = clean_text(article.x_article_number)
+        body = first_text(article.x_rendered_body_en, article.x_body_en)
+        if article_no:
+            lines.append('')
+            lines.append('Article ' + article_no)
+        if body:
+            lines.append(body)
+
+    return '\n'.join(lines).strip()
+
+processed_count = 0
+missing_labels = []
+
+for rec in records.sudo():
+    if rec.x_state in ['locked', 'cancelled']:
+        missing_labels.append(rec.x_name or 'قرار مقفل/ملغى')
+    else:
+        variable_map = {}
+
+        for line in rec.x_variable_value_ids:
+            key = clean_text(line.x_key)
+            value = variable_display_value(line, rec)
+
+            update_vals = {
+                'x_resolved_display_value': value or False,
+            }
+
+            if key in ['decision_number', 'decision_year']:
+                update_vals['x_value_text'] = value or False
+            if key == 'issue_date':
+                if rec.x_issue_date:
+                    update_vals['x_value_date'] = rec.x_issue_date
+                if value:
+                    update_vals['x_value_text'] = value
+            if key == 'decision_subject_ar' and value and not clean_text(line.x_value_text):
+                update_vals['x_value_text'] = value
+
+            line.write(update_vals)
+
+            if key:
+                variable_map[key] = value
+
+            if line.x_required and not value:
+                missing_labels.append(first_text(line.x_label_ar, line.x_name, key))
+
+        template = rec.x_template_id
+
+        subject_template_ar = ''
+        subject_template_en = ''
+
+        if template:
+            subject_template_ar = clean_text(template.x_subject_template_ar)
+            subject_template_en = clean_text(template.x_subject_template_en)
+
+        subject_ar = first_text(replace_placeholders(subject_template_ar, variable_map), rec.x_subject_ar)
+        subject_en = first_text(replace_placeholders(subject_template_en, variable_map), rec.x_subject_en)
+
+        for basis in rec.x_basis_line_ids:
+            basis.write({
+                'x_rendered_text_ar': replace_placeholders(basis.x_snapshot_text_ar, variable_map) or False,
+                'x_rendered_text_en': replace_placeholders(basis.x_snapshot_text_en, variable_map) or False,
+            })
+
+        for article in rec.x_article_line_ids:
+            article.write({
+                'x_rendered_body_ar': replace_placeholders(article.x_body_ar, variable_map) or False,
+                'x_rendered_body_en': replace_placeholders(article.x_body_en, variable_map) or False,
+            })
+
+        name = build_decision_name(rec.x_decision_number, rec.x_decision_year, subject_ar)
+        preview_ar = build_preview_ar(rec, subject_ar)
+        preview_en = build_preview_en(rec, subject_en)
+
+        rec.write({
+            'x_name': name,
+            'x_subject_ar': subject_ar or False,
+            'x_subject_en': subject_en or False,
+            'x_rendered_text_ar': preview_ar or False,
+            'x_rendered_text_en': preview_en or False,
+        })
+
+        processed_count = processed_count + 1
+
+if missing_labels:
+    unique_missing = []
+    for label in missing_labels:
+        if label and label not in unique_missing:
+            unique_missing.append(label)
+
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': 'تم تحديث المعاينة مع وجود نواقص',
+            'message': 'القيم المطلوبة الناقصة: ' + ', '.join(unique_missing),
+            'type': 'warning',
+            'sticky': True,
+        },
+    }
+else:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': 'تم تحديث المعاينة',
+            'message': 'تم تحديث اسم القرار والنصوص المعروضة لعدد ' + str(processed_count) + ' قرار.',
+            'type': 'success',
+            'sticky': False,
+        },
+    }
+        ]]></field>
+    </record>
+
 </odoo>

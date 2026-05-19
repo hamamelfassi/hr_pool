@@ -43,6 +43,11 @@
                     <button type="action"
                         name="grc_backbone.action_decision_template_refresh"
                         string="تحديث القالب"
+                        class="btn-secondary"
+                        invisible="not id"/>
+                    <button type="action"
+                        name="grc_backbone.action_decision_template_create_instance"
+                        string="إنشاء نسخة قرار"
                         class="btn-primary"
                         invisible="not id"/>
                 </header>
