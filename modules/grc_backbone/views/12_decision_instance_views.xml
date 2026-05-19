@@ -26,6 +26,13 @@
         <field name="model">x_grc.decision_instance</field>
         <field name="arch" type="xml">
             <form string="قرار مولد" create="0" duplicate="0">
+                <header>
+                    <button type="action"
+                        name="grc_backbone.action_decision_instance_refresh_preview"
+                        string="تحديث المعاينة"
+                        class="btn-primary"
+                        invisible="not id or x_state in ['locked', 'cancelled']"/>
+                </header>
                 <sheet>
                     <group>
                         <group string="هوية القرار">
