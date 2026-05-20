@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="action_hr_applicant_create_board_decision" model="ir.actions.server">
+            <field name="name">إنشاء القرار</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+def clean_text(value):
+    if not value:
+        return ''
+    return str(value).strip()
+
+def first_text(*values):
+    for value in values:
+        value = clean_text(value)
+        if value:
+            return value
+    return ''
+
+def replace_placeholders(text, variable_map):
+    text = clean_text(text)
+    if not text:
+        return ''
+    for key in variable_map:
+        value = clean_text(variable_map.get(key))
+        text = text.replace('{' + key + '}', value)
+    return text
+
+def strip_subject_prefix(subject):
+    subject = clean_text(subject)
+    if subject.startswith('بشأن '):
+        return subject[5:].strip()
+    if subject.startswith('بخصوص '):
+        return subject[6:].strip()
+    return subject
+
+def build_decision_name(number, year, subject):
+    number = first_text(number, '...')
+    year = first_text(year, '...')
+    subject = first_text(strip_subject_prefix(subject), '...')
+    return 'القرار رقم ' + number + ' لسنة ' + year + ' بخصوص ' + subject
+
+def find_recruitment_template():
+    template = env['x_grc.decision_template'].sudo().search([
+        ('x_active', '=', True),
+        ('x_profile_template_code_default', '=', 'RECRUITMENT_HIRING_DECISION')
+    ], limit=1)
+
+    if not template:
+        template = env['x_grc.decision_template'].sudo().search([
+            ('x_active', '=', True),
+            ('x_name', 'ilike', 'RECRUITMENT_HIRING_DECISION')
+        ], limit=1)
+
+    if not template:
+        template = env['x_grc.decision_template'].sudo().search([
+            ('x_active', '=', True),
+            ('x_name', 'ilike', 'تعيين موظف')
+        ], limit=1)
+
+    return template
+
+def issue_date_for(instance):
+    value = False
+    if instance and instance.create_date:
+        value = instance.create_date.date()
+    if not value:
+        value = datetime.datetime.now().date()
+    return value
+
+def applicant_honorific(applicant):
+    gender = ''
+    if 'x_gender' in applicant._fields:
+        gender = clean_text(applicant.x_gender).lower()
+    if gender == 'male':
+        return 'السيد'
+    if gender == 'female':
+        return 'السيدة'
+    return ''
+
+def applicant_full_name(applicant):
+    partner_name = ''
+    applicant_name = ''
+    display_name = ''
+
+    if 'partner_name' in applicant._fields:
+        partner_name = applicant.partner_name
+    if 'name' in applicant._fields:
+        applicant_name = applicant.name
+    display_name = applicant.display_name
+
+    return first_text(partner_name, applicant_name, display_name)
+
+def applicant_job_title(applicant):
+    if applicant.job_id:
+        return first_text(
+            applicant.job_id.with_context(lang='ar_001').name,
+            applicant.job_id.name,
+            applicant.job_id.display_name
+        )
+    return ''
+
+def applicant_department_name(applicant):
+    if 'department_id' in applicant._fields and applicant.department_id:
+        return first_text(
+            applicant.department_id.with_context(lang='ar_001').name,
+            applicant.department_id.name,
+            applicant.department_id.display_name
+        )
+    return ''
+
+def applicant_start_date(applicant):
+    if 'availability' in applicant._fields and applicant.availability:
+        return applicant.availability
+    return False
+
+def write_variable_value(line, value):
+    value_type = clean_text(line.x_value_type)
+
+    if value_type == 'date':
+        line.write({
+            'x_value_date': value or False,
+            'x_value_text': clean_text(value) or False,
+            'x_resolved_display_value': clean_text(value) or False,
+        })
+    else:
+        line.write({
+            'x_value_text': clean_text(value) or False,
+            'x_resolved_display_value': clean_text(value) or False,
+        })
+
+def create_instance_from_template(template, applicant):
+    variable_map = {}
+
+    for variable_line in template.x_variable_definition_ids:
+        key = first_text(
+            variable_line.x_key,
+            variable_line.x_variable_id.x_key if variable_line.x_variable_id else ''
+        )
+        default_value = clean_text(variable_line.x_default_value_text)
+        if key and default_value:
+            variable_map[key] = default_value
+
+    subject_ar = replace_placeholders(template.x_subject_template_ar, variable_map)
+    subject_en = replace_placeholders(template.x_subject_template_en, variable_map)
+
+    if not subject_ar:
+        subject_ar = first_text(template.x_title_ar, template.x_name, 'قرار')
+
+    instance = env['x_grc.decision_instance'].sudo().create({
+        'x_name': build_decision_name('', '', subject_ar),
+        'x_template_id': template.id,
+        'x_profile_id': template.x_profile_id.id if template.x_profile_id else False,
+        'x_family_id': template.x_profile_family_id.id if template.x_profile_family_id else False,
+        'x_type_id': template.x_profile_type_id.id if template.x_profile_type_id else False,
+        'x_state': 'draft',
+        'x_source_model': 'hr.applicant',
+        'x_source_res_id': applicant.id,
+        'x_hr_applicant_id': applicant.id,
+        'x_title_ar': template.x_title_ar or False,
+        'x_title_en': template.x_title_en or False,
+        'x_subject_ar': subject_ar or False,
+        'x_subject_en': subject_en or False,
+        'x_active': True,
+    })
+
+    for line in template.x_basis_line_ids:
+        snapshot_ar = first_text(line.x_snapshot_text_ar, line.x_reference_text_ar)
+        snapshot_en = first_text(line.x_snapshot_text_en, line.x_reference_text_en)
+
+        env['x_grc.decision_instance_basis_line'].sudo().create({
+            'x_instance_id': instance.id,
+            'x_template_line_id': line.id,
+            'x_sequence': line.x_sequence or 0,
+            'x_phrase_id': line.x_phrase_id.id if line.x_phrase_id else False,
+            'x_relationship_phrase_ar': line.x_relationship_phrase_ar or False,
+            'x_relationship_phrase_en': line.x_relationship_phrase_en or False,
+            'x_reference_id': line.x_reference_id.id if line.x_reference_id else False,
+            'x_governance_provision_id': line.x_governance_provision_id.id if line.x_governance_provision_id else False,
+            'x_pattern_id': line.x_pattern_id.id if line.x_pattern_id else False,
+            'x_name': line.x_name or False,
+            'x_snapshot_text_ar': snapshot_ar or False,
+            'x_snapshot_text_en': snapshot_en or False,
+            'x_rendered_text_ar': replace_placeholders(snapshot_ar, variable_map) or False,
+            'x_rendered_text_en': replace_placeholders(snapshot_en, variable_map) or False,
+            'x_notes': line.x_notes or False,
+        })
+
+    for article in template.x_article_line_ids:
+        body_ar = article.x_body_ar or ''
+        body_en = article.x_body_en or ''
+
+        env['x_grc.decision_instance_article_line'].sudo().create({
+            'x_instance_id': instance.id,
+            'x_template_line_id': article.id,
+            'x_sequence': article.x_sequence or 0,
+            'x_article_number': article.x_article_number or False,
+            'x_name': article.x_name or article.x_title_ar or False,
+            'x_title_ar': article.x_title_ar or False,
+            'x_title_en': article.x_title_en or False,
+            'x_body_ar': body_ar or False,
+            'x_body_en': body_en or False,
+            'x_rendered_body_ar': replace_placeholders(body_ar, variable_map) or False,
+            'x_rendered_body_en': replace_placeholders(body_en, variable_map) or False,
+            'x_uses_variables': bool(article.x_uses_variables),
+            'x_notes': article.x_notes or False,
+        })
+
+    for variable_line in template.x_variable_definition_ids:
+        variable = variable_line.x_variable_id
+        key = first_text(
+            variable_line.x_key,
+            variable.x_key if variable else ''
+        )
+        label_ar = first_text(
+            variable_line.x_label_ar,
+            variable.x_label_ar if variable else '',
+            variable_line.x_name,
+            key
+        )
+        label_en = first_text(
+            variable_line.x_label_en,
+            variable.x_label_en if variable else '',
+            variable_line.x_name,
+            key
+        )
+        value_type = first_text(
+            variable_line.x_value_type,
+            variable.x_value_type if variable else '',
+            'char'
+        )
+        default_value = clean_text(variable_line.x_default_value_text)
+
+        env['x_grc.decision_instance_variable_value'].sudo().create({
+            'x_instance_id': instance.id,
+            'x_template_variable_id': variable_line.id,
+            'x_variable_id': variable.id if variable else False,
+            'x_name': first_text(variable_line.x_name, label_ar, key, 'قيمة متغير'),
+            'x_key': key or False,
+            'x_label_ar': label_ar or False,
+            'x_label_en': label_en or False,
+            'x_value_type': value_type,
+            'x_required': bool(variable_line.x_required),
+            'x_default_value_text': default_value or False,
+            'x_value_text': default_value or False,
+            'x_resolved_display_value': default_value or False,
+            'x_source_model_hint': variable_line.x_source_model_hint or False,
+            'x_source_field_hint': variable_line.x_source_field_hint or False,
+            'x_notes': variable_line.x_notes or False,
+        })
+
+    return instance
+
+def write_applicant_variables(instance, applicant):
+    issue_date = issue_date_for(instance)
+    issue_year = str(issue_date.year)
+
+    values_by_key = {
+        'decision_subject_ar': 'تعيين موظف',
+        'honorific_ar': applicant_honorific(applicant),
+        'employee_full_name': applicant_full_name(applicant),
+        'job_title': applicant_job_title(applicant),
+        'department': applicant_department_name(applicant),
+        'start_date': applicant_start_date(applicant),
+        'decision_number': clean_text(applicant.x_board_decision_number),
+        'decision_year': issue_year,
+        'issue_date': issue_date,
+        'hr_letter_date': applicant.x_board_decision_hr_letter_date if applicant.x_board_decision_hr_letter_date else False,
+        'hr_letter_registration': clean_text(applicant.x_board_decision_hr_letter_registration),
+    }
+
+    for line in instance.x_variable_value_ids:
+        key = clean_text(line.x_key)
+        if key in values_by_key:
+            write_variable_value(line, values_by_key[key])
+
+def refresh_grc_preview(instance):
+    env.ref('grc_backbone.action_decision_instance_refresh_preview').sudo().with_context(
+        active_model='x_grc.decision_instance',
+        active_id=instance.id,
+        active_ids=[instance.id]
+    ).run()
+
+def sync_applicant_snapshots(applicant, instance):
+    applicant.write({
+        'x_board_decision_instance_id': instance.id,
+        'x_board_decision_state': instance.x_state or False,
+        'x_board_decision_generated_attachment_id': instance.x_hr_generated_attachment_id.id if instance.x_hr_generated_attachment_id else False,
+        'x_board_decision_signed_attachment_id': instance.x_hr_signed_attachment_id.id if instance.x_hr_signed_attachment_id else False,
+        'x_board_decision_certificate_attachment_id': instance.x_hr_certificate_attachment_id.id if instance.x_hr_certificate_attachment_id else False,
+        'x_board_decision_stamped_attachment_id': instance.x_hr_stamped_attachment_id.id if instance.x_hr_stamped_attachment_id else False,
+        'x_board_decision_generated_on': instance.x_hr_generated_on or False,
+        'x_board_decision_sent_on': instance.x_hr_sent_on or False,
+        'x_board_decision_signed_on': instance.x_hr_signed_on or False,
+        'x_board_decision_document_id': instance.x_hr_recruitment_document_id.id if instance.x_hr_recruitment_document_id else False,
+    })
+
+def applicant_reload_action(applicant):
+    return {
+        'type': 'ir.actions.act_window',
+        'name': applicant.display_name or 'Applicant',
+        'res_model': 'hr.applicant',
+        'res_id': applicant.id,
+        'view_mode': 'form',
+        'views': [(False, 'form')],
+        'target': 'current',
+    }
+
+applicant = records.sudo()[:1]
+
+if not applicant:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {'title': 'لا يوجد متقدم', 'message': 'افتح سجل متقدم أولاً.', 'type': 'warning', 'sticky': False},
+    }
+else:
+    existing_instance = applicant.x_board_decision_instance_id or applicant.x_board_decision_instance_ids[:1]
+
+    if existing_instance:
+        sync_applicant_snapshots(applicant, existing_instance)
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'القرار موجود',
+                'message': 'يوجد قرار تعيين مولد بالفعل لهذا المتقدم. استخدم تحديث القرار أو فتح القرار.',
+                'type': 'warning',
+                'sticky': False,
+                'next': applicant_reload_action(applicant),
+            },
+        }
+    elif not clean_text(applicant.x_board_decision_number):
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {'title': 'رقم القرار مطلوب', 'message': 'أدخل رقم القرار قبل إنشاء القرار.', 'type': 'warning', 'sticky': False},
+        }
+    else:
+        template = find_recruitment_template()
+
+        if not template:
+            action = {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': 'قالب القرار غير موجود',
+                    'message': 'لم يتم العثور على قالب RECRUITMENT_HIRING_DECISION النشط في GRC.',
+                    'type': 'danger',
+                    'sticky': True,
+                },
+            }
+        else:
+            instance = create_instance_from_template(template, applicant)
+            write_applicant_variables(instance, applicant)
+            refresh_grc_preview(instance)
+            sync_applicant_snapshots(applicant, instance)
+
+            applicant.message_post(body='تم إنشاء قرار التعيين المولد من قالب GRC وربطه بسجل المتقدم.')
+
+            action = {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': 'تم إنشاء القرار',
+                    'message': 'تم إنشاء قرار التعيين وربطه بسجل المتقدم.',
+                    'type': 'success',
+                    'sticky': False,
+                    'next': applicant_reload_action(applicant),
+                },
+            }
+            ]]></field>
+        </record>
+
+        <record id="action_hr_applicant_update_board_decision" model="ir.actions.server">
+            <field name="name">تحديث القرار</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+def clean_text(value):
+    if not value:
+        return ''
+    return str(value).strip()
+
+def first_text(*values):
+    for value in values:
+        value = clean_text(value)
+        if value:
+            return value
+    return ''
+
+def issue_date_for(instance):
+    value = False
+    if instance and instance.create_date:
+        value = instance.create_date.date()
+    if not value:
+        value = datetime.datetime.now().date()
+    return value
+
+def applicant_honorific(applicant):
+    gender = ''
+    if 'x_gender' in applicant._fields:
+        gender = clean_text(applicant.x_gender).lower()
+    if gender == 'male':
+        return 'السيد'
+    if gender == 'female':
+        return 'السيدة'
+    return ''
+
+def applicant_full_name(applicant):
+    partner_name = ''
+    applicant_name = ''
+    display_name = ''
+
+    if 'partner_name' in applicant._fields:
+        partner_name = applicant.partner_name
+    if 'name' in applicant._fields:
+        applicant_name = applicant.name
+    display_name = applicant.display_name
+
+    return first_text(partner_name, applicant_name, display_name)
+
+def applicant_job_title(applicant):
+    if applicant.job_id:
+        return first_text(
+            applicant.job_id.with_context(lang='ar_001').name,
+            applicant.job_id.name,
+            applicant.job_id.display_name
+        )
+    return ''
+
+def applicant_department_name(applicant):
+    if 'department_id' in applicant._fields and applicant.department_id:
+        return first_text(
+            applicant.department_id.with_context(lang='ar_001').name,
+            applicant.department_id.name,
+            applicant.department_id.display_name
+        )
+    return ''
+
+def applicant_start_date(applicant):
+    if 'availability' in applicant._fields and applicant.availability:
+        return applicant.availability
+    return False
+
+def write_variable_value(line, value):
+    value_type = clean_text(line.x_value_type)
+
+    if value_type == 'date':
+        line.write({
+            'x_value_date': value or False,
+            'x_value_text': clean_text(value) or False,
+            'x_resolved_display_value': clean_text(value) or False,
+        })
+    else:
+        line.write({
+            'x_value_text': clean_text(value) or False,
+            'x_resolved_display_value': clean_text(value) or False,
+        })
+
+def write_applicant_variables(instance, applicant):
+    issue_date = issue_date_for(instance)
+    issue_year = str(issue_date.year)
+
+    values_by_key = {
+        'decision_subject_ar': 'تعيين موظف',
+        'honorific_ar': applicant_honorific(applicant),
+        'employee_full_name': applicant_full_name(applicant),
+        'job_title': applicant_job_title(applicant),
+        'department': applicant_department_name(applicant),
+        'start_date': applicant_start_date(applicant),
+        'decision_number': clean_text(applicant.x_board_decision_number),
+        'decision_year': issue_year,
+        'issue_date': issue_date,
+        'hr_letter_date': applicant.x_board_decision_hr_letter_date if applicant.x_board_decision_hr_letter_date else False,
+        'hr_letter_registration': clean_text(applicant.x_board_decision_hr_letter_registration),
+    }
+
+    for line in instance.x_variable_value_ids:
+        key = clean_text(line.x_key)
+        if key in values_by_key:
+            write_variable_value(line, values_by_key[key])
+
+def refresh_grc_preview(instance):
+    env.ref('grc_backbone.action_decision_instance_refresh_preview').sudo().with_context(
+        active_model='x_grc.decision_instance',
+        active_id=instance.id,
+        active_ids=[instance.id]
+    ).run()
+
+def sync_applicant_snapshots(applicant, instance):
+    applicant.write({
+        'x_board_decision_instance_id': instance.id,
+        'x_board_decision_state': instance.x_state or False,
+        'x_board_decision_generated_attachment_id': instance.x_hr_generated_attachment_id.id if instance.x_hr_generated_attachment_id else False,
+        'x_board_decision_signed_attachment_id': instance.x_hr_signed_attachment_id.id if instance.x_hr_signed_attachment_id else False,
+        'x_board_decision_certificate_attachment_id': instance.x_hr_certificate_attachment_id.id if instance.x_hr_certificate_attachment_id else False,
+        'x_board_decision_stamped_attachment_id': instance.x_hr_stamped_attachment_id.id if instance.x_hr_stamped_attachment_id else False,
+        'x_board_decision_generated_on': instance.x_hr_generated_on or False,
+        'x_board_decision_sent_on': instance.x_hr_sent_on or False,
+        'x_board_decision_signed_on': instance.x_hr_signed_on or False,
+        'x_board_decision_document_id': instance.x_hr_recruitment_document_id.id if instance.x_hr_recruitment_document_id else False,
+    })
+
+def applicant_reload_action(applicant):
+    return {
+        'type': 'ir.actions.act_window',
+        'name': applicant.display_name or 'Applicant',
+        'res_model': 'hr.applicant',
+        'res_id': applicant.id,
+        'view_mode': 'form',
+        'views': [(False, 'form')],
+        'target': 'current',
+    }
+
+applicant = records.sudo()[:1]
+
+if not applicant:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {'title': 'لا يوجد متقدم', 'message': 'افتح سجل متقدم أولاً.', 'type': 'warning', 'sticky': False},
+    }
+else:
+    instance = applicant.x_board_decision_instance_id or applicant.x_board_decision_instance_ids[:1]
+
+    if not instance:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {'title': 'لا يوجد قرار', 'message': 'أنشئ قرار التعيين أولاً.', 'type': 'warning', 'sticky': False},
+        }
+    elif instance.x_state in ['locked', 'cancelled']:
+        sync_applicant_snapshots(applicant, instance)
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'لا يمكن التحديث',
+                'message': 'لا يمكن تحديث قرار نافذ أو ملغي من سجل المتقدم.',
+                'type': 'warning',
+                'sticky': False,
+                'next': applicant_reload_action(applicant),
+            },
+        }
+    elif not clean_text(applicant.x_board_decision_number):
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {'title': 'رقم القرار مطلوب', 'message': 'أدخل رقم القرار قبل تحديث القرار.', 'type': 'warning', 'sticky': False},
+        }
+    else:
+        write_applicant_variables(instance, applicant)
+        refresh_grc_preview(instance)
+        sync_applicant_snapshots(applicant, instance)
+
+        applicant.message_post(body='تم تحديث قرار التعيين المولد من بيانات المتقدم.')
+
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'تم تحديث القرار',
+                'message': 'تم تحديث قيم قرار التعيين من بيانات المتقدم.',
+                'type': 'success',
+                'sticky': False,
+                'next': applicant_reload_action(applicant),
+            },
+        }
+            ]]></field>
+        </record>
+
+        <record id="action_hr_applicant_open_board_decision" model="ir.actions.server">
+            <field name="name">فتح القرار</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+applicant = records.sudo()[:1]
+
+if not applicant:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {'title': 'لا يوجد متقدم', 'message': 'افتح سجل متقدم أولاً.', 'type': 'warning', 'sticky': False},
+    }
+else:
+    instance = applicant.x_board_decision_instance_id or applicant.x_board_decision_instance_ids[:1]
+
+    if not instance:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {'title': 'لا يوجد قرار', 'message': 'أنشئ قرار التعيين أولاً.', 'type': 'warning', 'sticky': False},
+        }
+    else:
+        applicant.write({
+            'x_board_decision_instance_id': instance.id,
+            'x_board_decision_state': instance.x_state or False,
+            'x_board_decision_generated_attachment_id': instance.x_hr_generated_attachment_id.id if instance.x_hr_generated_attachment_id else False,
+            'x_board_decision_signed_attachment_id': instance.x_hr_signed_attachment_id.id if instance.x_hr_signed_attachment_id else False,
+            'x_board_decision_certificate_attachment_id': instance.x_hr_certificate_attachment_id.id if instance.x_hr_certificate_attachment_id else False,
+            'x_board_decision_stamped_attachment_id': instance.x_hr_stamped_attachment_id.id if instance.x_hr_stamped_attachment_id else False,
+            'x_board_decision_generated_on': instance.x_hr_generated_on or False,
+            'x_board_decision_sent_on': instance.x_hr_sent_on or False,
+            'x_board_decision_signed_on': instance.x_hr_signed_on or False,
+            'x_board_decision_document_id': instance.x_hr_recruitment_document_id.id if instance.x_hr_recruitment_document_id else False,
+        })
+
+        action = {
+            'type': 'ir.actions.act_window',
+            'name': instance.x_name or 'قرار التعيين',
+            'res_model': 'x_grc.decision_instance',
+            'res_id': instance.id,
+            'view_mode': 'form',
+            'views': [(False, 'form')],
+            'target': 'current',
+        }
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>

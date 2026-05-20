@@ -50,6 +50,7 @@
         "data/17_required_document_writeback_safety_actions.xml",
         "data/18_declaration_actions.xml",
         "data/19_evaluation_gate_actions.xml",
+        "data/20_board_decision_actions.xml",
         "views/01_recruitment_views.xml",
         "views/02_recruitment_document_views.xml",
         "views/03_required_document_checklist_views.xml",

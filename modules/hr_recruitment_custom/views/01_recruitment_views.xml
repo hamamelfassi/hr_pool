@@ -205,6 +205,25 @@
                     </field>
                 </page>
                 <page string="قرار التعيين">
+                    <group string="إجراءات القرار" col="6">
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_create_board_decision"
+                            string="إنشاء القرار"
+                            class="btn-primary"
+                            invisible="not id or x_board_decision_instance_id"/>
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_update_board_decision"
+                            string="تحديث القرار"
+                            class="btn-secondary"
+                            invisible="not id or not x_board_decision_instance_id or x_board_decision_state in ['locked', 'cancelled']"/>
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_open_board_decision"
+                            string="فتح القرار"
+                            class="btn-secondary"
+                            invisible="not id or not x_board_decision_instance_id"/>
+                    </group>
+
+
                     <group>
                         <group string="بيانات إنشاء القرار">
                             <field name="x_board_decision_state"
@@ -264,7 +283,8 @@
                     <group string="القرارات المولدة المرتبطة">
                         <field name="x_board_decision_instance_ids"
                             context="{'default_x_hr_applicant_id': id}"
-                            readonly="1">
+                            readonly="1"
+                            nolabel="1">
                             <list create="false" delete="false"
                                 decoration-muted="x_state == 'draft'"
                                 decoration-info="x_state == 'prepared'"
