@@ -620,9 +620,17 @@ else:
             'params': {'title': 'لا يوجد قرار', 'message': 'أنشئ قرار التعيين أولاً.', 'type': 'warning', 'sticky': False},
         }
     else:
+        instance.write({
+            'x_hr_document_state': instance.x_hr_document_state or 'none',
+            'x_hr_signer_user_id': instance.x_hr_signer_user_id.id if instance.x_hr_signer_user_id else 5,
+            'x_hr_job_id': applicant.job_id.id if applicant.job_id else False,
+            'x_hr_department_id': applicant.department_id.id if 'department_id' in applicant._fields and applicant.department_id else False,
+        })
+
         applicant.write({
             'x_board_decision_instance_id': instance.id,
             'x_board_decision_state': instance.x_state or False,
+            'x_board_decision_document_state': instance.x_hr_document_state or False,
             'x_board_decision_generated_attachment_id': instance.x_hr_generated_attachment_id.id if instance.x_hr_generated_attachment_id else False,
             'x_board_decision_signed_attachment_id': instance.x_hr_signed_attachment_id.id if instance.x_hr_signed_attachment_id else False,
             'x_board_decision_certificate_attachment_id': instance.x_hr_certificate_attachment_id.id if instance.x_hr_certificate_attachment_id else False,

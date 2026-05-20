@@ -234,6 +234,13 @@
                                 decoration-success="x_board_decision_state == 'locked'"
                                 decoration-danger="x_board_decision_state == 'cancelled'"
                                 readonly="1"/>
+                            <field name="x_board_decision_document_state"
+                                string="حالة المستند والتوقيع"
+                                widget="badge"
+                                decoration-muted="not x_board_decision_document_state or x_board_decision_document_state == 'none'"
+                                decoration-info="x_board_decision_document_state in ['generated', 'sent']"
+                                decoration-success="x_board_decision_document_state in ['signed', 'stamped']"
+                                readonly="1"/>
                             <field name="x_board_decision_number"
                                 string="رقم القرار"
                                 placeholder="يُطلب عند إنشاء القرار"/>
@@ -282,6 +289,7 @@
 
                     <group string="القرارات المولدة المرتبطة">
                         <field name="x_board_decision_instance_ids"
+                            string=" "
                             context="{'default_x_hr_applicant_id': id}"
                             readonly="1"
                             nolabel="1">
@@ -292,11 +300,15 @@
                                 decoration-danger="x_state == 'cancelled'">
                                 <field name="x_name" string="اسم القرار"/>
                                 <field name="x_decision_number" string="رقم القرار"/>
-                                <field name="x_state" string="الحالة" widget="badge"
+                                <field name="x_state" string="حالة القرار" widget="badge"
                                     decoration-muted="x_state == 'draft'"
                                     decoration-info="x_state == 'prepared'"
                                     decoration-success="x_state == 'locked'"
                                     decoration-danger="x_state == 'cancelled'"/>
+                                <field name="x_hr_document_state" string="حالة المستند" widget="badge"
+                                    decoration-muted="not x_hr_document_state or x_hr_document_state == 'none'"
+                                    decoration-info="x_hr_document_state in ['generated', 'sent']"
+                                    decoration-success="x_hr_document_state in ['signed', 'stamped']"/>
                                 <field name="x_hr_generated_attachment_id" string="المستند"/>
                                 <field name="x_hr_signed_attachment_id" string="الموقع"/>
                                 <field name="x_hr_certificate_attachment_id" string="الشهادة"/>
