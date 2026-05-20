@@ -207,4 +207,100 @@
         <field name="field_description">Board Decision Notes</field>
         <field name="ttype">text</field>
     </record>
+
+    <!-- Pass 8D — HR document/signature lifecycle fields on generated decision. -->
+
+    <record id="field_decision_instance_x_hr_document_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_hr_document_state</field>
+        <field name="field_description">HR Document Signature State</field>
+        <field name="ttype">selection</field>
+        <field name="selection">[
+            ('none', 'لم يولد'),
+            ('generated', 'مولد'),
+            ('sent', 'مرسل للتوقيع'),
+            ('signed', 'موقع'),
+            ('stamped', 'مختوم')
+            ]</field>
+    </record>
+
+    <record id="field_decision_instance_x_hr_signer_user_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_hr_signer_user_id</field>
+        <field name="field_description">Chairman Signer</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">res.users</field>
+        <field name="on_delete">set null</field>
+    </record>
+
+    <record id="field_decision_instance_x_hr_sign_request_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_hr_sign_request_id</field>
+        <field name="field_description">Board Decision Sign Request</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">sign.request</field>
+        <field name="on_delete">set null</field>
+        <field name="index" eval="True"/>
+    </record>
+
+    <record id="field_decision_instance_x_hr_sign_request_state" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_hr_sign_request_state</field>
+        <field name="field_description">Sign Request State</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_decision_instance_x_hr_stamped_on" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_hr_stamped_on</field>
+        <field name="field_description">Stamped Copy Uploaded On</field>
+        <field name="ttype">datetime</field>
+    </record>
+
+    <record id="field_decision_instance_x_hr_stamped_upload" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_hr_stamped_upload</field>
+        <field name="field_description">Stamped Copy Upload</field>
+        <field name="ttype">binary</field>
+    </record>
+
+    <record id="field_decision_instance_x_hr_stamped_filename" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_hr_stamped_filename</field>
+        <field name="field_description">Stamped Copy Filename</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id="field_decision_instance_x_hr_job_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_hr_job_id</field>
+        <field name="field_description">Applicant Job</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.job</field>
+        <field name="on_delete">set null</field>
+    </record>
+
+    <record id="field_decision_instance_x_hr_department_id" model="ir.model.fields">
+        <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="name">x_hr_department_id</field>
+        <field name="field_description">Applicant Department</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">hr.department</field>
+        <field name="on_delete">set null</field>
+    </record>
+
+    <record id="field_hr_applicant_x_board_decision_document_state" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_board_decision_document_state</field>
+        <field name="field_description">Board Decision Document State</field>
+        <field name="ttype">selection</field>
+        <field name="selection">[
+            ('none', 'لم يولد'),
+            ('generated', 'مولد'),
+            ('sent', 'مرسل للتوقيع'),
+            ('signed', 'موقع'),
+            ('stamped', 'مختوم')
+            ]</field>
+    </record>
+
 </odoo>

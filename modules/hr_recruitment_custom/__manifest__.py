@@ -6,6 +6,7 @@
     "mail",
     "hr",
     "hr_recruitment",
+    "sign",
     "grc_backbone"
 ],
     "application": False,
@@ -51,11 +52,13 @@
         "data/18_declaration_actions.xml",
         "data/19_evaluation_gate_actions.xml",
         "data/20_board_decision_actions.xml",
+        "data/21_board_decision_attachment_actions.xml",
         "views/01_recruitment_views.xml",
         "views/02_recruitment_document_views.xml",
         "views/03_required_document_checklist_views.xml",
         "views/04_required_document_submission_views.xml",
         "views/05_required_document_submission_request_views.xml",
         "views/06_applicant_declaration_views.xml",
+        "views/07_decision_instance_document_signature_views.xml",
     ],
 }

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_decision_instance_form_hr_document_signature" model="ir.ui.view">
+        <field name="name">x_grc.decision_instance.form.hr.document.signature</field>
+        <field name="model">x_grc.decision_instance</field>
+        <field name="inherit_id" ref="grc_backbone.view_decision_instance_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[1]" position="before">
+                <page string="المستند والتوقيع" invisible="not x_hr_applicant_id">
+                    <group>
+                        <group string="حالة المستند">
+                            <field name="x_hr_document_state"
+                                string="حالة المستند والتوقيع"
+                                widget="badge"
+                                decoration-muted="not x_hr_document_state or x_hr_document_state == 'none'"
+                                decoration-info="x_hr_document_state in ['generated', 'sent']"
+                                decoration-success="x_hr_document_state in ['signed', 'stamped']"
+                                readonly="1"/>
+                            <field name="x_state" string="حالة القرار" widget="badge" readonly="1"/>
+                            <field name="x_hr_signer_user_id"
+                                string="الموقع المعتمد"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="x_hr_sign_request_id"
+                                string="طلب التوقيع"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="x_hr_sign_request_state"
+                                string="حالة طلب التوقيع"
+                                readonly="1"/>
+                        </group>
+
+                        <group string="مصدر التوظيف">
+                            <field name="x_hr_applicant_id"
+                                string="المتقدم"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="x_hr_job_id"
+                                string="المنصب الوظيفي"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="x_hr_department_id"
+                                string="الوحدة الإدارية"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="x_source_model" string="نموذج المصدر" readonly="1"/>
+                            <field name="x_source_res_id" string="معرف سجل المصدر" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <group string="المستند المولد">
+                        <group>
+                            <field name="x_hr_generated_attachment_id"
+                                string="المستند المولد"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="x_hr_generated_on" string="تاريخ توليد المستند" readonly="1"/>
+                            <field name="x_hr_recruitment_document_id"
+                                string="سجل مستند التوظيف"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
+                        </group>
+                        <group string="إجراءات المستند المولد">
+                            <button type="action"
+                                name="hr_recruitment_custom.action_decision_instance_open_generated_pdf"
+                                string="فتح المستند"
+                                icon="fa-external-link"
+                                class="btn-secondary"
+                                invisible="not x_hr_generated_attachment_id"/>
+                            <button type="action"
+                                name="hr_recruitment_custom.action_decision_instance_download_generated_pdf"
+                                string="تنزيل المستند"
+                                icon="fa-download"
+                                class="btn-secondary"
+                                invisible="not x_hr_generated_attachment_id"/>
+                        </group>
+                    </group>
+
+                    <group string="التوقيع">
+                        <group>
+                            <field name="x_hr_sent_on" string="تاريخ الإرسال للتوقيع" readonly="1"/>
+                            <field name="x_hr_signed_on" string="تاريخ التوقيع" readonly="1"/>
+                            <field name="x_hr_signed_attachment_id"
+                                string="المستند الموقع"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="x_hr_certificate_attachment_id"
+                                string="شهادة التوقيع"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
+                        </group>
+                        <group string="إجراءات التوقيع">
+                            <button type="action"
+                                name="hr_recruitment_custom.action_decision_instance_open_signed_pdf"
+                                string="فتح الموقع"
+                                icon="fa-external-link"
+                                class="btn-secondary"
+                                invisible="not x_hr_signed_attachment_id"/>
+                            <button type="action"
+                                name="hr_recruitment_custom.action_decision_instance_download_signed_pdf"
+                                string="تنزيل الموقع"
+                                icon="fa-download"
+                                class="btn-secondary"
+                                invisible="not x_hr_signed_attachment_id"/>
+                            <button type="action"
+                                name="hr_recruitment_custom.action_decision_instance_open_certificate"
+                                string="فتح الشهادة"
+                                icon="fa-external-link"
+                                class="btn-secondary"
+                                invisible="not x_hr_certificate_attachment_id"/>
+                            <button type="action"
+                                name="hr_recruitment_custom.action_decision_instance_download_certificate"
+                                string="تنزيل الشهادة"
+                                icon="fa-download"
+                                class="btn-secondary"
+                                invisible="not x_hr_certificate_attachment_id"/>
+                        </group>
+                    </group>
+
+                    <group string="النسخة المختومة">
+                        <group>
+                            <field name="x_hr_stamped_upload"
+                                string="رفع النسخة المختومة"
+                                filename="x_hr_stamped_filename"
+                                readonly="x_hr_document_state not in ['signed', 'stamped']"/>
+                            <field name="x_hr_stamped_filename" invisible="1"/>
+                            <field name="x_hr_stamped_attachment_id"
+                                string="النسخة المختومة المرتبطة"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="x_hr_stamped_on" string="تاريخ رفع النسخة المختومة" readonly="1"/>
+                        </group>
+                        <group string="إجراءات النسخة المختومة">
+                            <button type="action"
+                                name="hr_recruitment_custom.action_decision_instance_open_stamped_copy"
+                                string="فتح المختوم"
+                                icon="fa-external-link"
+                                class="btn-secondary"
+                                invisible="not x_hr_stamped_attachment_id"/>
+                            <button type="action"
+                                name="hr_recruitment_custom.action_decision_instance_download_stamped_copy"
+                                string="تنزيل المختوم"
+                                icon="fa-download"
+                                class="btn-secondary"
+                                invisible="not x_hr_stamped_attachment_id"/>
+                        </group>
+                    </group>
+
+                    <group string="ملاحظات التوظيف">
+                        <field name="x_hr_notes" nolabel="1"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
