@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="action_decision_instance_generate_board_decision_pdf" model="ir.actions.server">
+            <field name="name">توليد المستند</field>
+            <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+def clean_text(value):
+    if not value:
+        return ''
+    return str(value).strip()
+
+def first_text(*values):
+    for value in values:
+        value = clean_text(value)
+        if value:
+            return value
+    return ''
+
+def strip_subject_prefix(subject):
+    subject = clean_text(subject)
+    if subject.startswith('بشأن '):
+        return subject[5:].strip()
+    if subject.startswith('بخصوص '):
+        return subject[6:].strip()
+    return subject
+
+def replace_placeholders(text, variable_map):
+    text = clean_text(text)
+    if not text:
+        return ''
+    for key in variable_map:
+        value = clean_text(variable_map.get(key))
+        text = text.replace('{' + key + '}', value)
+    return text
+
+def variable_display_value(line):
+    value_type = clean_text(line.x_value_type)
+
+    if value_type == 'date':
+        if line.x_value_date:
+            return '\u200e' + line.x_value_date.strftime('%Y-%m-%d') + '\u200e'
+        return first_text(line.x_value_text, line.x_default_value_text)
+    if value_type in ['integer', 'float', 'monetary']:
+        if line.x_value_number not in [False, None]:
+            return clean_text(line.x_value_number)
+        return first_text(line.x_value_text, line.x_default_value_text)
+    if value_type == 'boolean':
+        if line.x_value_boolean:
+            return 'نعم'
+        return first_text(line.x_value_text, line.x_default_value_text)
+    return first_text(line.x_value_text, line.x_default_value_text)
+
+def build_decision_name(number, year, subject):
+    number = first_text(number, '...')
+    year = first_text(year, '...')
+    subject = first_text(strip_subject_prefix(subject), '...')
+    return 'القرار رقم ' + number + ' لسنة ' + year + ' بخصوص ' + subject
+
+def build_preview_ar(rec, subject_ar):
+    lines = []
+
+    title = clean_text(rec.x_title_ar)
+    if title:
+        lines.append(title)
+
+    subject = clean_text(subject_ar)
+    if subject:
+        lines.append(subject)
+
+    lines.append('')
+    lines.append('وبعد الإطلاع:-')
+
+    for basis in rec.x_basis_line_ids.sorted('x_sequence'):
+        text = first_text(basis.x_rendered_text_ar, basis.x_snapshot_text_ar)
+        if text:
+            lines.append(text)
+
+    lines.append('')
+    lines.append('قــــــــــرر')
+
+    for article in rec.x_article_line_ids.sorted('x_sequence'):
+        article_no = clean_text(article.x_article_number)
+        body = first_text(article.x_rendered_body_ar, article.x_body_ar)
+        if article_no:
+            lines.append('')
+            lines.append('مادة (' + article_no + ')')
+        if body:
+            lines.append(body)
+
+    return '\n'.join(lines).strip()
+
+def applicant_name_for_filename(applicant):
+    partner_name = ''
+    if applicant and 'partner_name' in applicant._fields:
+        partner_name = applicant.partner_name
+    return first_text(partner_name, applicant.display_name if applicant else '')
+
+def normalize_decision_snapshot(rec):
+    variable_map = {}
+
+    decision_number_snapshot = ''
+    decision_year_snapshot = ''
+    issue_date_snapshot = False
+
+    for line in rec.x_variable_value_ids:
+        key = clean_text(line.x_key)
+        value = variable_display_value(line)
+
+        line.write({
+            'x_resolved_display_value': value or False,
+        })
+
+        if key:
+            variable_map[key] = value
+
+        if key == 'decision_number':
+            decision_number_snapshot = value
+        if key == 'decision_year':
+            decision_year_snapshot = value
+        if key == 'issue_date' and line.x_value_date:
+            issue_date_snapshot = line.x_value_date
+
+    if not issue_date_snapshot:
+        issue_date_snapshot = rec.x_issue_date or datetime.datetime.now().date()
+
+    if not decision_year_snapshot and issue_date_snapshot:
+        decision_year_snapshot = str(issue_date_snapshot.year)
+
+    template = rec.x_template_id
+    subject_template_ar = ''
+    subject_template_en = ''
+
+    if template:
+        subject_template_ar = clean_text(template.x_subject_template_ar)
+        subject_template_en = clean_text(template.x_subject_template_en)
+
+    subject_ar = first_text(replace_placeholders(subject_template_ar, variable_map), rec.x_subject_ar)
+    subject_en = first_text(replace_placeholders(subject_template_en, variable_map), rec.x_subject_en)
+
+    rec.write({
+        'x_decision_number': decision_number_snapshot or rec.x_decision_number or False,
+        'x_decision_year': decision_year_snapshot or rec.x_decision_year or False,
+        'x_issue_date': issue_date_snapshot or rec.x_issue_date or False,
+        'x_subject_ar': subject_ar or False,
+        'x_subject_en': subject_en or False,
+    })
+
+    position = 0
+    for basis in rec.x_basis_line_ids.sorted('x_sequence'):
+        rendered_ar = replace_placeholders(basis.x_snapshot_text_ar, variable_map)
+        rendered_en = replace_placeholders(basis.x_snapshot_text_en, variable_map)
+        basis.write({
+            'x_rendered_text_ar': rendered_ar or basis.x_rendered_text_ar or basis.x_snapshot_text_ar or False,
+            'x_rendered_text_en': rendered_en or basis.x_rendered_text_en or basis.x_snapshot_text_en or False,
+        })
+
+    for article in rec.x_article_line_ids.sorted('x_sequence'):
+        position = position + 1
+        article_no = clean_text(article.x_article_number)
+        if not article_no:
+            article_no = str(position)
+
+        rendered_body_ar = replace_placeholders(article.x_body_ar, variable_map)
+        rendered_body_en = replace_placeholders(article.x_body_en, variable_map)
+
+        article.write({
+            'x_article_number': article_no,
+            'x_rendered_body_ar': rendered_body_ar or article.x_rendered_body_ar or article.x_body_ar or False,
+            'x_rendered_body_en': rendered_body_en or article.x_rendered_body_en or article.x_body_en or False,
+        })
+
+    name = build_decision_name(rec.x_decision_number, rec.x_decision_year, subject_ar)
+    preview_ar = build_preview_ar(rec, subject_ar)
+
+    rec.write({
+        'x_name': name,
+        'x_rendered_text_ar': preview_ar or False,
+    })
+
+record = records.sudo()[:1]
+
+if not record:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {'title': 'لا يوجد قرار', 'message': 'افتح قراراً مولداً أولاً.', 'type': 'warning', 'sticky': False},
+    }
+elif not record.x_hr_applicant_id:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {'title': 'قرار غير مرتبط بالتوظيف', 'message': 'لا يمكن توليد مستند التعيين إلا لقرار مرتبط بمتقدم.', 'type': 'warning', 'sticky': False},
+    }
+elif record.x_state != 'locked':
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {'title': 'القرار غير نافذ', 'message': 'يجب قفل القرار وجعله نافذاً قبل توليد المستند الرسمي.', 'type': 'warning', 'sticky': False},
+    }
+elif record.x_hr_document_state in ['sent', 'signed', 'stamped']:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {'title': 'لا يمكن إعادة التوليد', 'message': 'لا يمكن توليد مستند جديد بعد الإرسال للتوقيع أو التوقيع أو الختم.', 'type': 'warning', 'sticky': False},
+    }
+else:
+    applicant = record.x_hr_applicant_id
+    generated_on = datetime.datetime.now()
+    attachment_model = env['ir.attachment'].sudo()
+    registry_model = env['x_hr.recruitment_document'].sudo()
+    report_service = env['ir.actions.report'].sudo()
+
+    normalize_decision_snapshot(record)
+
+    applicant_filename = applicant_name_for_filename(applicant)
+    filename_base = record.x_name or 'قرار تعيين'
+    if applicant_filename:
+        filename_base = filename_base + ' - ' + applicant_filename
+    filename = filename_base + '.pdf'
+
+    pdf_content, _content_type = report_service._render_qweb_pdf(
+        'hr_recruitment_custom.action_report_board_decision_pdf',
+        [record.id]
+    )
+
+    attachment = attachment_model.create({
+        'name': filename,
+        'type': 'binary',
+        'raw': pdf_content,
+        'res_model': 'hr.applicant',
+        'res_id': applicant.id,
+        'mimetype': 'application/pdf',
+    })
+
+    latest_any = registry_model.search([
+        ('x_document_type', '=', 'board_decision'),
+        ('x_applicant_id', '=', applicant.id),
+    ], order='x_version desc, id desc', limit=1)
+
+    registry_doc = registry_model.search([
+        ('x_document_type', '=', 'board_decision'),
+        ('x_source_model', '=', 'x_grc.decision_instance'),
+        ('x_source_res_id', '=', record.id),
+        ('x_state', '!=', 'signed'),
+    ], order='x_version desc, id desc', limit=1)
+
+    if registry_doc:
+        registry_doc.write({
+            'x_name': filename_base,
+            'x_applicant_id': applicant.id,
+            'x_document_type': 'board_decision',
+            'x_state': 'generated',
+            'x_generated_attachment_id': attachment.id,
+            'x_generated_on': generated_on,
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'x_grc.decision_instance',
+            'x_source_res_id': record.id,
+            'x_notes': 'Board decision PDF generated from the locked GRC decision instance.',
+        })
+    else:
+        next_version = (latest_any.x_version or 0) + 1 if latest_any else 1
+        registry_doc = registry_model.create({
+            'x_name': filename_base,
+            'x_applicant_id': applicant.id,
+            'x_document_type': 'board_decision',
+            'x_state': 'generated',
+            'x_generated_attachment_id': attachment.id,
+            'x_version': next_version,
+            'x_generated_on': generated_on,
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'x_grc.decision_instance',
+            'x_source_res_id': record.id,
+            'x_notes': 'Board decision PDF generated from the locked GRC decision instance.',
+        })
+
+    record.write({
+        'x_hr_document_state': 'generated',
+        'x_hr_generated_attachment_id': attachment.id,
+        'x_hr_generated_on': generated_on,
+        'x_hr_recruitment_document_id': registry_doc.id,
+        'x_hr_signer_user_id': record.x_hr_signer_user_id.id if record.x_hr_signer_user_id else 5,
+        'x_hr_job_id': record.x_hr_job_id.id if record.x_hr_job_id else applicant.job_id.id if applicant.job_id else False,
+        'x_hr_department_id': record.x_hr_department_id.id if record.x_hr_department_id else applicant.department_id.id if 'department_id' in applicant._fields and applicant.department_id else False,
+    })
+
+    applicant.write({
+        'x_board_decision_instance_id': record.id,
+        'x_board_decision_state': record.x_state or False,
+        'x_board_decision_document_state': 'generated',
+        'x_board_decision_generated_attachment_id': attachment.id,
+        'x_board_decision_generated_on': generated_on,
+        'x_board_decision_document_id': registry_doc.id,
+        'x_board_decision_signed_attachment_id': record.x_hr_signed_attachment_id.id if record.x_hr_signed_attachment_id else False,
+        'x_board_decision_certificate_attachment_id': record.x_hr_certificate_attachment_id.id if record.x_hr_certificate_attachment_id else False,
+        'x_board_decision_stamped_attachment_id': record.x_hr_stamped_attachment_id.id if record.x_hr_stamped_attachment_id else False,
+        'x_board_decision_sent_on': record.x_hr_sent_on or False,
+        'x_board_decision_signed_on': record.x_hr_signed_on or False,
+    })
+
+    applicant.message_post(body='تم توليد مستند قرار التعيين وربطه بسجل مستندات التوظيف.')
+
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': 'تم توليد المستند',
+            'message': 'تم توليد مستند قرار التعيين وربطه بسجل التوظيف.',
+            'type': 'success',
+            'sticky': False,
+            'next': {
+                'type': 'ir.actions.act_window',
+                'name': record.x_name or 'قرار التعيين',
+                'res_model': 'x_grc.decision_instance',
+                'res_id': record.id,
+                'view_mode': 'form',
+                'views': [(False, 'form')],
+                'target': 'current',
+            },
+        },
+    }
+            ]]></field>
+        </record>
+    </data>
+</odoo>

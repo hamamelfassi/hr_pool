@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_board_decision_pdf" model="ir.actions.report">
+        <field name="name">Board Decision PDF</field>
+        <field name="model">x_grc.decision_instance</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hr_recruitment_custom.report_board_decision_document</field>
+        <field name="report_file">hr_recruitment_custom.report_board_decision_document</field>
+        <field name="paperformat_id" ref="hr_recruitment_custom.paperformat_board_decision"/>
+        <field name="attachment_use" eval="False"/>
+        <field name="print_report_name">(object.x_name or 'قرار تعيين') + ((' - ' + object.x_hr_applicant_id.partner_name) if object.x_hr_applicant_id and object.x_hr_applicant_id.partner_name else '') + '.pdf'</field>
+        <field name="binding_model_id" ref="grc_backbone.model_decision_instance"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

@@ -70,6 +70,12 @@
                         </group>
                         <group string="أوامر المستند">
                             <button type="action"
+                                name="hr_recruitment_custom.action_decision_instance_generate_board_decision_pdf"
+                                string="توليد المستند"
+                                icon="fa-file-pdf-o"
+                                class="btn-primary"
+                                invisible="x_state != 'locked' or x_hr_document_state in ['sent', 'signed', 'stamped']"/>
+                            <button type="action"
                                 name="hr_recruitment_custom.action_decision_instance_open_generated_pdf"
                                 string="فتح المستند"
                                 icon="fa-external-link"
