@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="action_decision_instance_send_board_decision_sign" model="ir.actions.server">
+            <field name="name">إرسال للتوقيع</field>
+            <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+registry_model = env['x_hr.recruitment_document'].sudo()
+sign_template_model = env['sign.template'].sudo()
+sign_document_model = env['sign.document'].sudo()
+sign_item_model = env['sign.item'].sudo()
+sign_role_model = env['sign.item.role'].sudo()
+sign_send_model = env['sign.send.request'].sudo()
+sign_send_signer_model = env['sign.send.request.signer'].sudo()
+sign_request_model = env['sign.request'].sudo()
+
+signature_type = env.ref('sign.sign_item_type_signature', raise_if_not_found=False)
+
+sign_role = sign_role_model.search([('name', '=', 'Chairman')], order='id asc', limit=1)
+if not sign_role:
+    sign_role = sign_role_model.search([('name', '=', 'Reviewer')], order='id asc', limit=1)
+if not sign_role:
+    sign_role = sign_role_model.search([('name', '=', 'Employee')], order='id asc', limit=1)
+if not sign_role:
+    sign_role = sign_role_model.search([], order='id asc', limit=1)
+
+def find_registry_doc(rec, applicant):
+    registry_doc = rec.x_hr_recruitment_document_id
+    if registry_doc:
+        return registry_doc
+
+    registry_doc = registry_model.search([
+        ('x_document_type', '=', 'board_decision'),
+        ('x_source_model', '=', 'x_grc.decision_instance'),
+        ('x_source_res_id', '=', rec.id),
+        ('x_state', '!=', 'signed'),
+    ], order='x_version desc, id desc', limit=1)
+
+    if not registry_doc and rec.x_hr_generated_attachment_id:
+        registry_doc = registry_model.search([
+            ('x_document_type', '=', 'board_decision'),
+            ('x_applicant_id', '=', applicant.id),
+            ('x_generated_attachment_id', '=', rec.x_hr_generated_attachment_id.id),
+            ('x_state', '!=', 'signed'),
+        ], order='x_version desc, id desc', limit=1)
+
+    return registry_doc
+
+def sync_applicant_from_decision(applicant, rec, registry_doc):
+    applicant.write({
+        'x_board_decision_instance_id': rec.id,
+        'x_board_decision_state': rec.x_state or False,
+        'x_board_decision_document_state': rec.x_hr_document_state or False,
+        'x_board_decision_sign_request_id': rec.x_hr_sign_request_id.id if rec.x_hr_sign_request_id else False,
+        'x_board_decision_sign_request_state': rec.x_hr_sign_request_state or False,
+        'x_board_decision_generated_attachment_id': rec.x_hr_generated_attachment_id.id if rec.x_hr_generated_attachment_id else False,
+        'x_board_decision_signed_attachment_id': rec.x_hr_signed_attachment_id.id if rec.x_hr_signed_attachment_id else False,
+        'x_board_decision_certificate_attachment_id': rec.x_hr_certificate_attachment_id.id if rec.x_hr_certificate_attachment_id else False,
+        'x_board_decision_stamped_attachment_id': rec.x_hr_stamped_attachment_id.id if rec.x_hr_stamped_attachment_id else False,
+        'x_board_decision_generated_on': rec.x_hr_generated_on or False,
+        'x_board_decision_sent_on': rec.x_hr_sent_on or False,
+        'x_board_decision_signed_on': rec.x_hr_signed_on or False,
+        'x_board_decision_document_id': registry_doc.id if registry_doc else False,
+    })
+
+def reload_decision_action(rec):
+    return {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'قرار التعيين',
+        'res_model': 'x_grc.decision_instance',
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'views': [(False, 'form')],
+        'target': 'current',
+    }
+
+record = records.sudo()[:1]
+
+if not record:
+    action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'لا يوجد قرار', 'message': 'افتح قراراً مولداً أولاً.', 'type': 'warning', 'sticky': False}}
+elif not signature_type:
+    action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'إعدادات التوقيع غير مكتملة', 'message': 'لم يتم العثور على نوع حقل التوقيع في Odoo Sign.', 'type': 'warning', 'sticky': True}}
+elif not sign_role:
+    action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'دور التوقيع غير موجود', 'message': 'لم يتم العثور على أي دور توقيع في Odoo Sign.', 'type': 'warning', 'sticky': True}}
+elif not record.x_hr_applicant_id:
+    action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'قرار غير مرتبط بالتوظيف', 'message': 'لا يمكن إرسال القرار للتوقيع لأنه غير مرتبط بمتقدم.', 'type': 'warning', 'sticky': False}}
+elif record.x_state != 'locked':
+    action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'القرار غير نافذ', 'message': 'يجب أن يكون القرار نافذاً قبل إرساله للتوقيع.', 'type': 'warning', 'sticky': False}}
+elif record.x_hr_document_state != 'generated':
+    action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'المستند غير مولد', 'message': 'يجب توليد مستند القرار قبل إرساله للتوقيع.', 'type': 'warning', 'sticky': False}}
+elif not record.x_hr_generated_attachment_id:
+    action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'المستند غير موجود', 'message': 'لا يوجد ملف PDF مولد مرتبط بهذا القرار.', 'type': 'warning', 'sticky': False}}
+else:
+    applicant = record.x_hr_applicant_id
+    signer_user = record.x_hr_signer_user_id or env['res.users'].sudo().browse(5)
+    signer_partner = signer_user.partner_id if signer_user and signer_user.exists() else False
+    signer_email = signer_partner.email if signer_partner else ''
+    if not signer_email and signer_user and signer_user.exists():
+        signer_email = signer_user.email
+
+    registry_doc = find_registry_doc(record, applicant)
+
+    if not signer_user or not signer_user.exists():
+        action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'الموقع غير موجود', 'message': 'لم يتم العثور على المستخدم رقم 5 الخاص برئيس مجلس الإدارة.', 'type': 'warning', 'sticky': True}}
+    elif not signer_partner:
+        action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'بيانات الموقع ناقصة', 'message': 'المستخدم الموقع لا يملك جهة اتصال مرتبطة.', 'type': 'warning', 'sticky': True}}
+    elif not signer_email:
+        action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'بريد الموقع ناقص', 'message': 'جهة اتصال رئيس مجلس الإدارة لا تملك بريداً إلكترونياً.', 'type': 'warning', 'sticky': True}}
+    elif not registry_doc:
+        action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'سجل المستند غير موجود', 'message': 'لم يتم العثور على سجل مستند التوظيف المرتبط بالقرار. أعد توليد المستند أولاً.', 'type': 'warning', 'sticky': True}}
+    elif record.x_hr_sign_request_id and record.x_hr_sign_request_id.exists() and record.x_hr_sign_request_id.state not in ['cancelled', 'canceled']:
+        action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'طلب التوقيع موجود', 'message': 'يوجد طلب توقيع نشط لهذا القرار. استخدم مزامنة التوقيع بعد إكماله.', 'type': 'warning', 'sticky': True}}
+    elif registry_doc.x_sign_request_res_id and sign_request_model.browse(registry_doc.x_sign_request_res_id).exists() and sign_request_model.browse(registry_doc.x_sign_request_res_id).state not in ['cancelled', 'canceled']:
+        existing_request = sign_request_model.browse(registry_doc.x_sign_request_res_id)
+        action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'طلب التوقيع موجود', 'message': 'يوجد طلب توقيع مرتبط في الحالة: ' + (existing_request.state or 'غير معروفة') + '. استخدم مزامنة التوقيع.', 'type': 'warning', 'sticky': True}}
+    else:
+        sent_on = datetime.datetime.now()
+        validity_date = datetime.date.today() + datetime.timedelta(days=60)
+        pdf_attachment = record.x_hr_generated_attachment_id
+        filename = pdf_attachment.name or ((record.x_name or 'قرار تعيين') + '.pdf')
+
+        sign_template = sign_template_model.create({
+            'name': filename,
+            'user_id': env.user.id,
+            'signature_request_validity': 60,
+        })
+
+        sign_document = sign_document_model.create({
+            'template_id': sign_template.id,
+            'attachment_id': pdf_attachment.id,
+            'name': filename,
+            'sequence': 1,
+        })
+
+        sign_item_model.create({
+            'document_id': sign_document.id,
+            'type_id': signature_type.id,
+            'responsible_id': sign_role.id,
+            'page': 1,
+            'posX': 0.110,
+            'posY': 0.720,
+            'width': 0.300,
+            'height': 0.080,
+            'required': True,
+            'name': 'Chairman Signature',
+            'alignment': 'left',
+            'constant': False,
+        })
+
+        subject = 'Signature Request - ' + filename
+        body = '<p>يرجى مراجعة وتوقيع قرار التعيين المرفق.</p>'
+
+        send_request = sign_send_model.create({
+            'template_id': sign_template.id,
+            'signer_id': signer_partner.id,
+            'subject': subject,
+            'body': body,
+            'validity': validity_date,
+            'certificate_reference': False,
+            'reminder_enabled': False,
+            'model': 'hr.applicant',
+            'res_ids': str([applicant.id]),
+        })
+
+        if send_request.signer_ids:
+            signer_line = send_request.signer_ids.filtered(lambda line: line.role_id.id == sign_role.id)[:1]
+            if not signer_line:
+                signer_line = send_request.signer_ids[:1]
+            signer_line.sudo().write({
+                'partner_id': signer_partner.id,
+                'mail_sent_order': 1,
+            })
+        else:
+            sign_send_signer_model.create({
+                'sign_send_request_id': send_request.id,
+                'role_id': sign_role.id,
+                'partner_id': signer_partner.id,
+                'mail_sent_order': 1,
+            })
+
+        send_request.send_request()
+
+        generated_request = sign_request_model.search([
+            ('template_id', '=', sign_template.id),
+            ('request_item_ids.partner_id', '=', signer_partner.id),
+        ], order='create_date desc, id desc', limit=1)
+
+        if generated_request:
+            registry_doc.write({
+                'x_state': 'signature_requested',
+                'x_sent_on': sent_on,
+                'x_responsible_user_id': env.user.id,
+                'x_source_model': 'x_grc.decision_instance',
+                'x_source_res_id': record.id,
+                'x_signature_mode': 'native_sign',
+                'x_sign_request_model': 'sign.request',
+                'x_sign_request_res_id': generated_request.id,
+                'x_sign_request_reference': generated_request.reference or filename,
+                'x_sign_request_state': generated_request.state or 'sent',
+                'x_sign_request_url': '/odoo/sign/' + str(generated_request.id),
+                'x_notes': ((registry_doc.x_notes or '') + '\nNative Odoo Sign request created for board decision on %s. Request ID: %s. Chairman: %s.' % (sent_on, generated_request.id, signer_partner.display_name)).strip(),
+            })
+            record.write({
+                'x_hr_document_state': 'sent',
+                'x_hr_sent_on': sent_on,
+                'x_hr_signer_user_id': signer_user.id,
+                'x_hr_sign_request_id': generated_request.id,
+                'x_hr_sign_request_state': generated_request.state or 'sent',
+                'x_hr_recruitment_document_id': registry_doc.id,
+            })
+            sync_applicant_from_decision(applicant, record, registry_doc)
+            applicant.message_post(body='تم إرسال قرار التعيين للتوقيع عبر Odoo Sign إلى رئيس مجلس الإدارة.')
+            action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'تم الإرسال للتوقيع', 'message': 'تم إرسال قرار التعيين للتوقيع إلى رئيس مجلس الإدارة.', 'type': 'success', 'sticky': False, 'next': reload_decision_action(record)}}
+        else:
+            registry_doc.write({
+                'x_state': 'signature_requested',
+                'x_sent_on': sent_on,
+                'x_signature_mode': 'native_sign',
+                'x_sign_request_model': 'sign.request',
+                'x_sign_request_reference': filename,
+                'x_sign_request_state': 'sent_request_not_found',
+                'x_notes': ((registry_doc.x_notes or '') + '\nNative Odoo Sign send_request() executed for board decision on %s, but generated sign.request could not be located automatically. Dynamic template ID: %s.' % (sent_on, sign_template.id)).strip(),
+            })
+            record.write({
+                'x_hr_document_state': 'sent',
+                'x_hr_sent_on': sent_on,
+                'x_hr_signer_user_id': signer_user.id,
+                'x_hr_sign_request_state': 'sent_request_not_found',
+                'x_hr_recruitment_document_id': registry_doc.id,
+            })
+            sync_applicant_from_decision(applicant, record, registry_doc)
+            applicant.message_post(body='تم تنفيذ إرسال قرار التعيين عبر Odoo Sign، لكن لم يتم العثور على طلب التوقيع تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.')
+            action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'تم الإرسال مع تنبيه', 'message': 'تم تنفيذ الإرسال، لكن لم يتم العثور على طلب التوقيع تلقائياً. راجع تطبيق التوقيع.', 'type': 'warning', 'sticky': True, 'next': reload_decision_action(record)}}
+            ]]></field>
+        </record>
+
+        <record id="action_decision_instance_sync_board_decision_sign" model="ir.actions.server">
+            <field name="name">مزامنة التوقيع</field>
+            <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+registry_model = env['x_hr.recruitment_document'].sudo()
+sign_request_model = env['sign.request'].sudo()
+
+def find_registry_doc(rec, applicant):
+    registry_doc = rec.x_hr_recruitment_document_id
+    if registry_doc:
+        return registry_doc
+    registry_doc = registry_model.search([
+        ('x_document_type', '=', 'board_decision'),
+        ('x_source_model', '=', 'x_grc.decision_instance'),
+        ('x_source_res_id', '=', rec.id),
+    ], order='x_version desc, id desc', limit=1)
+    if not registry_doc and applicant:
+        registry_doc = registry_model.search([
+            ('x_document_type', '=', 'board_decision'),
+            ('x_applicant_id', '=', applicant.id),
+            ('x_generated_attachment_id', '=', rec.x_hr_generated_attachment_id.id if rec.x_hr_generated_attachment_id else 0),
+        ], order='x_version desc, id desc', limit=1)
+    return registry_doc
+
+def sync_applicant_from_decision(applicant, rec, registry_doc):
+    applicant.write({
+        'x_board_decision_instance_id': rec.id,
+        'x_board_decision_state': rec.x_state or False,
+        'x_board_decision_document_state': rec.x_hr_document_state or False,
+        'x_board_decision_sign_request_id': rec.x_hr_sign_request_id.id if rec.x_hr_sign_request_id else False,
+        'x_board_decision_sign_request_state': rec.x_hr_sign_request_state or False,
+        'x_board_decision_generated_attachment_id': rec.x_hr_generated_attachment_id.id if rec.x_hr_generated_attachment_id else False,
+        'x_board_decision_signed_attachment_id': rec.x_hr_signed_attachment_id.id if rec.x_hr_signed_attachment_id else False,
+        'x_board_decision_certificate_attachment_id': rec.x_hr_certificate_attachment_id.id if rec.x_hr_certificate_attachment_id else False,
+        'x_board_decision_stamped_attachment_id': rec.x_hr_stamped_attachment_id.id if rec.x_hr_stamped_attachment_id else False,
+        'x_board_decision_generated_on': rec.x_hr_generated_on or False,
+        'x_board_decision_sent_on': rec.x_hr_sent_on or False,
+        'x_board_decision_signed_on': rec.x_hr_signed_on or False,
+        'x_board_decision_document_id': registry_doc.id if registry_doc else False,
+    })
+
+def reload_decision_action(rec):
+    return {'type': 'ir.actions.act_window', 'name': rec.x_name or 'قرار التعيين', 'res_model': 'x_grc.decision_instance', 'res_id': rec.id, 'view_mode': 'form', 'views': [(False, 'form')], 'target': 'current'}
+
+record = records.sudo()[:1]
+
+if not record:
+    action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'لا يوجد قرار', 'message': 'افتح قراراً مولداً أولاً.', 'type': 'warning', 'sticky': False}}
+elif not record.x_hr_applicant_id:
+    action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'قرار غير مرتبط بالتوظيف', 'message': 'لا يمكن مزامنة التوقيع لأنه غير مرتبط بمتقدم.', 'type': 'warning', 'sticky': False}}
+else:
+    applicant = record.x_hr_applicant_id
+    registry_doc = find_registry_doc(record, applicant)
+    sign_request = record.x_hr_sign_request_id
+    if not sign_request and registry_doc and registry_doc.x_sign_request_res_id:
+        sign_request = sign_request_model.browse(registry_doc.x_sign_request_res_id)
+
+    if not registry_doc:
+        action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'سجل المستند غير موجود', 'message': 'لم يتم العثور على سجل مستند التوظيف المرتبط بالقرار.', 'type': 'warning', 'sticky': True}}
+    elif not sign_request or not sign_request.exists():
+        action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'طلب التوقيع غير موجود', 'message': 'لا يوجد طلب توقيع مرتبط بهذا القرار.', 'type': 'warning', 'sticky': True}}
+    else:
+        request_state = sign_request.state or 'unknown'
+        if request_state != 'signed':
+            registry_doc.write({
+                'x_sign_request_state': request_state,
+                'x_notes': ((registry_doc.x_notes or '') + '\nBoard decision Sign sync checked on %s. Request state: %s.' % (datetime.datetime.now(), request_state)).strip(),
+            })
+            record.write({
+                'x_hr_sign_request_id': sign_request.id,
+                'x_hr_sign_request_state': request_state,
+                'x_hr_document_state': record.x_hr_document_state or 'sent',
+            })
+            sync_applicant_from_decision(applicant, record, registry_doc)
+            action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'لم يكتمل التوقيع بعد', 'message': 'طلب التوقيع لا يزال في الحالة: ' + request_state + '. أعد المزامنة بعد اكتمال التوقيع.', 'type': 'warning', 'sticky': False, 'next': reload_decision_action(record)}}
+        else:
+            completed_attachments = sign_request.completed_document_attachment_ids
+            if not completed_attachments:
+                registry_doc.write({
+                    'x_sign_request_state': 'signed_no_completed_attachment_found',
+                    'x_notes': ((registry_doc.x_notes or '') + '\nOdoo Sign request %s is signed, but no completed document attachments were found during board decision sync on %s.' % (sign_request.id, datetime.datetime.now())).strip(),
+                })
+                record.write({
+                    'x_hr_sign_request_state': 'signed_no_completed_attachment_found',
+                })
+                action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'لم يتم العثور على المستند الموقع', 'message': 'طلب التوقيع مكتمل لكن لم يتم العثور على المرفقات المكتملة.', 'type': 'warning', 'sticky': True, 'next': reload_decision_action(record)}}
+            else:
+                signed_native = False
+                certificate_native = False
+                for attachment in completed_attachments:
+                    attachment_name = (attachment.name or '').lower()
+                    if not certificate_native and ('certificate' in attachment_name or 'completion' in attachment_name or 'history' in attachment_name):
+                        certificate_native = attachment
+                    elif not signed_native:
+                        signed_native = attachment
+
+                if not signed_native:
+                    signed_native = completed_attachments[0]
+
+                signed_copy = record.x_hr_signed_attachment_id or registry_doc.x_signed_attachment_id
+                if not signed_copy:
+                    signed_copy = signed_native.copy({
+                        'name': signed_native.name or ('Signed Board Decision - ' + (applicant.display_name or 'Applicant') + '.pdf'),
+                        'res_model': 'hr.applicant',
+                        'res_id': applicant.id,
+                    })
+
+                certificate_copy = record.x_hr_certificate_attachment_id or registry_doc.x_sign_certificate_attachment_id
+                if certificate_native and not certificate_copy:
+                    certificate_copy = certificate_native.copy({
+                        'name': certificate_native.name or ('Board Decision Sign Certificate - ' + (applicant.display_name or 'Applicant') + '.pdf'),
+                        'res_model': 'hr.applicant',
+                        'res_id': applicant.id,
+                    })
+
+                signed_on = sign_request.write_date or datetime.datetime.now()
+                signer_items = sign_request.request_item_ids.filtered(lambda item: item.state == 'completed')
+                for signer_item in signer_items:
+                    if signer_item.write_date and signer_item.write_date > signed_on:
+                        signed_on = signer_item.write_date
+                if not signed_on and sign_request.completion_date:
+                    signed_on = datetime.datetime.combine(sign_request.completion_date, datetime.time(12, 0, 0))
+                if not signed_on:
+                    signed_on = datetime.datetime.now()
+
+                registry_values = {
+                    'x_state': 'signed',
+                    'x_signed_attachment_id': signed_copy.id,
+                    'x_sign_completed_attachment_id': signed_copy.id,
+                    'x_sign_completed_on': signed_on,
+                    'x_signed_on': signed_on,
+                    'x_sign_request_state': request_state,
+                    'x_sign_request_reference': sign_request.reference or registry_doc.x_sign_request_reference,
+                    'x_responsible_user_id': env.user.id,
+                    'x_source_model': 'x_grc.decision_instance',
+                    'x_source_res_id': record.id,
+                    'x_notes': ((registry_doc.x_notes or '') + '\nNative Odoo Sign completion synced for board decision on %s. Sign request ID: %s. Signed artifact: %s.' % (datetime.datetime.now(), sign_request.id, signed_copy.name)).strip(),
+                }
+                if certificate_copy:
+                    registry_values['x_sign_certificate_attachment_id'] = certificate_copy.id
+                registry_doc.write(registry_values)
+
+                record_values = {
+                    'x_hr_document_state': 'signed',
+                    'x_hr_signed_on': signed_on,
+                    'x_hr_signed_attachment_id': signed_copy.id,
+                    'x_hr_sign_request_id': sign_request.id,
+                    'x_hr_sign_request_state': request_state,
+                    'x_hr_recruitment_document_id': registry_doc.id,
+                }
+                if certificate_copy:
+                    record_values['x_hr_certificate_attachment_id'] = certificate_copy.id
+                record.write(record_values)
+
+                sync_applicant_from_decision(applicant, record, registry_doc)
+                applicant.message_post(body='تمت مزامنة توقيع قرار التعيين عبر Odoo Sign وربط المستند الموقع وشهادة التوقيع إن وجدت.')
+                action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'تمت مزامنة التوقيع', 'message': 'تم ربط المستند الموقع وشهادة التوقيع إن وجدت بسجل التوظيف.', 'type': 'success', 'sticky': False, 'next': reload_decision_action(record)}}
+            ]]></field>
+        </record>
+
+        <record id="action_decision_instance_open_board_decision_sign_request" model="ir.actions.server">
+            <field name="name">فتح طلب التوقيع</field>
+            <field name="model_id" ref="grc_backbone.model_decision_instance"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+record = records.sudo()[:1]
+sign_request = False
+
+if record:
+    sign_request = record.x_hr_sign_request_id
+    if not sign_request and record.x_hr_recruitment_document_id and record.x_hr_recruitment_document_id.x_sign_request_res_id:
+        sign_request = env['sign.request'].sudo().browse(record.x_hr_recruitment_document_id.x_sign_request_res_id)
+
+if not record:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {'title': 'لا يوجد قرار', 'message': 'افتح القرار أولاً.', 'type': 'warning', 'sticky': False},
+    }
+elif not sign_request or not sign_request.exists():
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {'title': 'طلب التوقيع غير موجود', 'message': 'لا يوجد طلب توقيع مرتبط بهذا القرار.', 'type': 'warning', 'sticky': False},
+    }
+else:
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': sign_request.reference or record.x_name or 'طلب التوقيع',
+        'res_model': 'sign.request',
+        'res_id': sign_request.id,
+        'view_mode': 'form',
+        'views': [(False, 'form')],
+        'target': 'current',
+    }
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>
