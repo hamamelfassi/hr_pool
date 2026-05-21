@@ -56,6 +56,7 @@
         "data/20_board_decision_actions.xml",
         "data/21_board_decision_attachment_actions.xml",
         "data/22_board_decision_pdf_actions.xml",
+        "data/23_board_decision_sign_actions.xml",
         "views/01_recruitment_views.xml",
         "views/02_recruitment_document_views.xml",
         "views/03_required_document_checklist_views.xml",

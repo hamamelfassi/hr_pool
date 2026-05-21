@@ -291,6 +291,8 @@ else:
         'x_board_decision_instance_id': record.id,
         'x_board_decision_state': record.x_state or False,
         'x_board_decision_document_state': 'generated',
+        'x_board_decision_sign_request_id': record.x_hr_sign_request_id.id if record.x_hr_sign_request_id else False,
+        'x_board_decision_sign_request_state': record.x_hr_sign_request_state or False,
         'x_board_decision_generated_attachment_id': attachment.id,
         'x_board_decision_generated_on': generated_on,
         'x_board_decision_document_id': registry_doc.id,
