@@ -1141,3 +1141,22 @@ For governance reference type `procedure`, use these labels consistently:
 - singular record label: إجراء تشغيل
 
 Do not use دليل إجراءات التشغيل as the singular record label. It is the parent/menu heading for the SOP/procedure library surface.
+
+## Pass 9 — Official Employment Contract QWeb Overlay
+
+Pass 9 is scoped to generate the official employment contract as a recruitment legal artifact using QWeb background PNG overlay.
+
+Locked scope:
+
+- The official government contract pages are used as PNG backgrounds.
+- QWeb overlays only dynamic contract values.
+- The source government text/layout is not recreated manually.
+- Odoo Sign is not part of the default F-0005 contract flow.
+- The real-world flow is generated draft PDF → manual print/sign → signed upload → Ministry of Labour accreditation upload.
+- The main applicant `العقد` tab follows the organising style of the completed `قرار التعيين` tab.
+- The standalone contract cockpit follows the sectioning/button style of the customised decision instance cockpit.
+- Native `hr.employee`, `hr.contract`, payroll, and bank handover are prepared for but not executed in Pass 9.
+
+Canonical tracker:
+
+- `docs/modules/hr_recruitment_custom/phase_9_plan_tracker.md`
