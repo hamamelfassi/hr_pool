@@ -871,5 +871,188 @@
             <field name="ttype">text</field>
         </record>
 
+
+        <!-- Pass 9C source / provenance fields -->
+        <record id="field_employment_contract_x_conversion_request_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_conversion_request_id</field>
+            <field name="field_description">Pool Conversion Request</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.pool_conversion_request</field>
+            <field name="on_delete">set null</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_employment_contract_x_snapshot_refreshed_on" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_snapshot_refreshed_on</field>
+            <field name="field_description">Snapshot Refreshed On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_employment_contract_x_snapshot_refreshed_by_user_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_snapshot_refreshed_by_user_id</field>
+            <field name="field_description">Snapshot Refreshed By</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_missing_snapshot_notes" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_missing_snapshot_notes</field>
+            <field name="field_description">Missing Snapshot Notes</field>
+            <field name="ttype">text</field>
+        </record>
+
+        <!-- Source submissions -->
+        <record id="field_employment_contract_x_identity_source_submission_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_identity_source_submission_id</field>
+            <field name="field_description">Identity Source Submission</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.applicant_required_document_submission</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_identity_source_attachment_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_identity_source_attachment_id</field>
+            <field name="field_description">Identity Source Attachment</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_birth_source_submission_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_birth_source_submission_id</field>
+            <field name="field_description">Birth Source Submission</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.applicant_required_document_submission</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_birth_source_attachment_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_birth_source_attachment_id</field>
+            <field name="field_description">Birth Source Attachment</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_residence_source_submission_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_residence_source_submission_id</field>
+            <field name="field_description">Residence Source Submission</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.applicant_required_document_submission</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_residence_source_attachment_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_residence_source_attachment_id</field>
+            <field name="field_description">Residence Source Attachment</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_family_source_submission_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_family_source_submission_id</field>
+            <field name="field_description">Family Source Submission</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.applicant_required_document_submission</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_family_source_attachment_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_family_source_attachment_id</field>
+            <field name="field_description">Family Source Attachment</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_health_source_submission_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_health_source_submission_id</field>
+            <field name="field_description">Health Source Submission</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.applicant_required_document_submission</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_health_source_attachment_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_health_source_attachment_id</field>
+            <field name="field_description">Health Source Attachment</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_bank_source_submission_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_bank_source_submission_id</field>
+            <field name="field_description">Bank Source Submission</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.applicant_required_document_submission</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_bank_source_attachment_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_bank_source_attachment_id</field>
+            <field name="field_description">Bank Source Attachment</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_qualification_source_submission_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_qualification_source_submission_id</field>
+            <field name="field_description">Qualification Source Submission</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.applicant_required_document_submission</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_qualification_source_attachment_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_qualification_source_attachment_id</field>
+            <field name="field_description">Qualification Source Attachment</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <!-- Applicant pool bridge cache -->
+        <record id="field_hr_applicant_x_pool_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_pool_id</field>
+            <field name="field_description">HR Pool Candidate</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.pool</field>
+            <field name="on_delete">set null</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_hr_applicant_x_pool_conversion_request_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_pool_conversion_request_id</field>
+            <field name="field_description">HR Pool Conversion Request</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.pool_conversion_request</field>
+            <field name="on_delete">set null</field>
+            <field name="index" eval="True"/>
+        </record>
+
     </data>
 </odoo>

@@ -665,3 +665,44 @@ Lessons learned:
 Next step:
 
 - Install/upgrade `hr_recruitment_custom`, verify the contract tab and standalone cockpit, then proceed to 9C snapshot resolver.
+
+## 9C-1 — Contract snapshot resolver and provenance links
+
+Date: 2026-05-21
+
+Status: Patch generated; Odoo acceptance pending.
+
+Files touched:
+
+- `modules/hr_recruitment_custom/models/08_employment_contract.xml`
+- `modules/hr_recruitment_custom/data/24_employment_contract_actions.xml`
+- `modules/hr_recruitment_custom/views/08_employment_contract_views.xml`
+- `docs/modules/hr_recruitment_custom/phase_9_plan_tracker.md`
+
+What changed:
+
+- Added fallback-safe pool and conversion request linking.
+- Added readonly source/provenance links for pool, conversion request, accepted submissions, and evidence attachments.
+- Replaced the light 9B update action with a real snapshot resolver.
+- Resolver now reads from `hr.applicant`, linked `x_hr.pool`, `x_hr.pool_conversion_request`, and accepted `x_hr.applicant_required_document_submission` records.
+- Corrected the Arabic legal company name to `شركة مرسيليا للنظافة وحماية البيئة`.
+- Added a standalone `المصادر` tab.
+- Added readonly-after-generation locking behavior for contract snapshot fields.
+
+Acceptance result:
+
+- Pending Odoo SaaS install/upgrade and data review.
+
+Issues / tracebacks:
+
+- None at patch generation stage.
+
+Lessons learned:
+
+- The reliable pool linkage is not applicant-native yet; resolver must search `x_hr.pool.x_applicant_id` and `x_hr.pool_conversion_request.x_applicant_id`.
+- Contract source fields should behave as governed links, not user-editable dropdowns.
+- Contract data must remain manually fillable before generation and become locked after generated artifact creation.
+
+Next step:
+
+- Install/upgrade, create or refresh a contract, verify pool link, conversion request link, accepted submission data, and source provenance fields.
