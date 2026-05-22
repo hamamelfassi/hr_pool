@@ -625,3 +625,43 @@ Lessons learned:
 Next step:
 
 - 9B contract model + applicant tab shell.
+
+## 9B-1 — Contract model and applicant tab shell
+
+Date: 2026-05-21
+
+Status: Patch generated; Odoo acceptance pending.
+
+Files touched:
+
+- `modules/hr_recruitment_custom/__manifest__.py`
+- `modules/hr_recruitment_custom/models/08_employment_contract.xml`
+- `modules/hr_recruitment_custom/security/ir.model.access.csv`
+- `modules/hr_recruitment_custom/data/24_employment_contract_actions.xml`
+- `modules/hr_recruitment_custom/views/08_employment_contract_views.xml`
+- `modules/hr_recruitment_custom/views/01_recruitment_views.xml`
+
+What changed:
+
+- Added `x_hr.applicant_employment_contract` as the official employment contract snapshot/cockpit model.
+- Added applicant bridge and mirror fields for the main `العقد` tab.
+- Added create/open/update-placeholder server actions.
+- Replaced the old placeholder Contract tab with a structured Arabic contract tab aligned with the completed decision tab style.
+- Added the standalone contract cockpit view with sectioned tabs aligned with the customised decision instance cockpit style.
+
+Acceptance result:
+
+- Pending Odoo SaaS install/upgrade and UI review.
+
+Issues / tracebacks:
+
+- None at patch generation stage.
+
+Lessons learned:
+
+- Pass 9 shell must stay separate from rendering; QWeb overlay and PNG coordinate calibration remain deferred to 9D/9E.
+- Applicant tab should remain compact; detailed field completion belongs in the standalone contract cockpit.
+
+Next step:
+
+- Install/upgrade `hr_recruitment_custom`, verify the contract tab and standalone cockpit, then proceed to 9C snapshot resolver.

@@ -882,16 +882,119 @@
                         </form>
                     </field>
                 </page>
-                
-                <page string="Contract">
+                <page string="العقد">
+                    <group string="إجراءات العقد" col="8">
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_create_employment_contract"
+                            string="إنشاء العقد"
+                            class="btn-primary"
+                            invisible="not id or x_employment_contract_id"/>
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_update_employment_contract_data"
+                            string="تحديث بيانات العقد"
+                            class="btn-secondary"
+                            invisible="not id or not x_employment_contract_id or x_employment_contract_state in ['ministry_accredited', 'cancelled']"/>
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_open_employment_contract"
+                            string="فتح بيانات العقد"
+                            class="btn-secondary"
+                            invisible="not id or not x_employment_contract_id"/>
+                    </group>
+
                     <group>
-                        <div class="text-muted">
-                            Board decision, official labor contract artifact tracking,
-                            contract-support
-                            fields, employee ID generation, and handover readiness will be
-                            implemented
-                            in later passes.
-                        </div>
+                        <group string="بيانات العقد">
+                            <field name="x_employment_contract_state"
+                                string="حالة العقد"
+                                widget="badge"
+                                decoration-muted="x_employment_contract_state == 'draft_data'"
+                                decoration-info="x_employment_contract_state in ['ready_to_render', 'generated']"
+                                decoration-warning="x_employment_contract_state == 'printed'"
+                                decoration-success="x_employment_contract_state in ['signed_uploaded', 'ministry_accredited', 'handover_ready']"
+                                decoration-danger="x_employment_contract_state == 'cancelled'"
+                                readonly="1"/>
+                            <field name="x_employment_contract_number" string="رقم العقد" readonly="1"/>
+                            <field name="x_employment_contract_date" string="تاريخ العقد" readonly="1"/>
+                            <field name="x_employment_contract_start_date" string="تاريخ بداية العقد" readonly="1"/>
+                            <field name="x_employment_contract_end_date" string="تاريخ نهاية العقد" readonly="1"/>
+                            <field name="x_employment_contract_duration_label" string="مدة العقد" readonly="1"/>
+                            <field name="x_employment_contract_monthly_wage" string="الأجر الشهري" readonly="1"/>
+                            <field name="x_employment_contract_job_id"
+                                string="المنصب الوظيفي"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="x_employment_contract_department_id"
+                                string="الوحدة الإدارية"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
+                        </group>
+
+                        <group string="روابط وسجل العقد">
+                            <field name="x_employment_contract_id"
+                                string="سجل بيانات العقد"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="x_employment_contract_document_id"
+                                string="سجل مستند التوظيف"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="x_employment_contract_board_decision_id"
+                                string="قرار التعيين المرتبط"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="x_employment_contract_generated_on" string="تاريخ توليد المستند" readonly="1"/>
+                            <field name="x_employment_contract_signed_uploaded_on" string="تاريخ رفع النسخة الموقعة" readonly="1"/>
+                            <field name="x_employment_contract_ministry_accredited_on" string="تاريخ الاعتماد" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <group string="ملفات العقد">
+                        <group>
+                            <field name="x_employment_contract_generated_attachment_id"
+                                string="المستند المولد"
+                                readonly="1"
+                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
+                            <field name="x_employment_contract_signed_attachment_id"
+                                string="النسخة الموقعة"
+                                readonly="1"
+                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
+                        </group>
+                        <group>
+                            <field name="x_employment_contract_ministry_attachment_id"
+                                string="النسخة المعتمدة من وزارة العمل"
+                                readonly="1"
+                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
+                        </group>
+                    </group>
+
+                    <group string="العقود المرتبطة">
+                        <field name="x_employment_contract_ids"
+                            string=" "
+                            context="{'default_x_applicant_id': id}"
+                            readonly="1"
+                            nolabel="1">
+                            <list create="false" delete="false"
+                                decoration-muted="x_state == 'draft_data'"
+                                decoration-info="x_state in ['ready_to_render', 'generated']"
+                                decoration-warning="x_state == 'printed'"
+                                decoration-success="x_state in ['signed_uploaded', 'ministry_accredited', 'handover_ready']"
+                                decoration-danger="x_state == 'cancelled'">
+                                <field name="x_name" string="اسم العقد"/>
+                                <field name="x_contract_number" string="رقم العقد"/>
+                                <field name="x_state" string="الحالة" widget="badge"
+                                    decoration-muted="x_state == 'draft_data'"
+                                    decoration-info="x_state in ['ready_to_render', 'generated']"
+                                    decoration-warning="x_state == 'printed'"
+                                    decoration-success="x_state in ['signed_uploaded', 'ministry_accredited', 'handover_ready']"
+                                    decoration-danger="x_state == 'cancelled'"/>
+                                <field name="x_generated_attachment_id" string="المسودة"/>
+                                <field name="x_signed_attachment_id" string="الموقع"/>
+                                <field name="x_ministry_accredited_attachment_id" string="المعتمد"/>
+                            </list>
+                        </field>
+                    </group>
+
+                    <group string="ملاحظات">
+                        <field name="x_employment_contract_notes" nolabel="1"/>
                     </group>
                 </page>
             </xpath>

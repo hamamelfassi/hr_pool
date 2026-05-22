@@ -1,0 +1,875 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="model_x_hr_applicant_employment_contract" model="ir.model">
+            <field name="name">Applicant Employment Contract</field>
+            <field name="model">x_hr.applicant_employment_contract</field>
+            <field name="state">manual</field>
+            <field name="is_mail_thread" eval="True"/>
+            <field name="is_mail_activity" eval="True"/>
+        </record>
+
+        <!-- Core contract model fields -->
+        <record id="field_employment_contract_x_name" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_name</field>
+            <field name="field_description">Contract Name</field>
+            <field name="ttype">char</field>
+            <field name="required" eval="True"/>
+        </record>
+
+        <record id="field_employment_contract_x_applicant_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_applicant_id</field>
+            <field name="field_description">Applicant</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.applicant</field>
+            <field name="required" eval="True"/>
+            <field name="on_delete">cascade</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_employment_contract_x_pool_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_pool_id</field>
+            <field name="field_description">Pool Candidate</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.pool</field>
+            <field name="on_delete">set null</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_employment_contract_x_state" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_state</field>
+            <field name="field_description">Contract State</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('draft_data', 'مسودة بيانات'),
+                ('ready_to_render', 'جاهز للتوليد'),
+                ('generated', 'مسودة مولدة'),
+                ('printed', 'مطبوع / قيد التوقيع اليدوي'),
+                ('signed_uploaded', 'موقع ومرفوع'),
+                ('ministry_accredited', 'معتمد من وزارة العمل'),
+                ('handover_ready', 'جاهز للترحيل'),
+                ('cancelled', 'ملغى')
+            ]</field>
+        </record>
+
+        <record id="field_employment_contract_x_contract_number" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_contract_number</field>
+            <field name="field_description">Contract Number</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_contract_date" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_contract_date</field>
+            <field name="field_description">Contract Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_employment_contract_x_template_code" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_template_code</field>
+            <field name="field_description">Template Code</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_template_version" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_template_version</field>
+            <field name="field_description">Template Version</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_field_map_version" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_field_map_version</field>
+            <field name="field_description">Field Map Version</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <!-- Links and artifact lifecycle -->
+        <record id="field_employment_contract_x_board_decision_instance_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_board_decision_instance_id</field>
+            <field name="field_description">Board Decision Instance</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_grc.decision_instance</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_recruitment_document_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_recruitment_document_id</field>
+            <field name="field_description">Recruitment Document Registry Record</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.recruitment_document</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_generated_attachment_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_generated_attachment_id</field>
+            <field name="field_description">Generated Contract PDF</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_generated_on" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_generated_on</field>
+            <field name="field_description">Generated On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_employment_contract_x_generated_by_user_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_generated_by_user_id</field>
+            <field name="field_description">Generated By</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_signed_attachment_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_signed_attachment_id</field>
+            <field name="field_description">Signed Uploaded Contract</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_signed_uploaded_on" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_signed_uploaded_on</field>
+            <field name="field_description">Signed Uploaded On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_employment_contract_x_signed_uploaded_by_user_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_signed_uploaded_by_user_id</field>
+            <field name="field_description">Signed Uploaded By</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_ministry_accredited_attachment_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_ministry_accredited_attachment_id</field>
+            <field name="field_description">Ministry Accredited Contract</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_ministry_accredited_on" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_ministry_accredited_on</field>
+            <field name="field_description">Ministry Accredited On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_employment_contract_x_ministry_accredited_by_user_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_ministry_accredited_by_user_id</field>
+            <field name="field_description">Ministry Accredited Uploaded By</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_render_status" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_render_status</field>
+            <field name="field_description">Render Status</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_render_error" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_render_error</field>
+            <field name="field_description">Render Error</field>
+            <field name="ttype">text</field>
+        </record>
+
+        <!-- Party 1 / employer -->
+        <record id="field_employment_contract_x_company_name_ar" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_company_name_ar</field>
+            <field name="field_description">Company Name Arabic</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_company_registration_number" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_company_registration_number</field>
+            <field name="field_description">Company Registration Number</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_company_address_ar" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_company_address_ar</field>
+            <field name="field_description">Company Address Arabic</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_representative_name_ar" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_representative_name_ar</field>
+            <field name="field_description">Representative Name Arabic</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_representative_title_ar" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_representative_title_ar</field>
+            <field name="field_description">Representative Title Arabic</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_representative_nationality_ar" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_representative_nationality_ar</field>
+            <field name="field_description">Representative Nationality Arabic</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <!-- Party 2 / applicant identity -->
+        <record id="field_employment_contract_x_full_name_ar" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_full_name_ar</field>
+            <field name="field_description">Full Name Arabic</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_first_name_ar" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_first_name_ar</field>
+            <field name="field_description">First Name Arabic</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_father_name_ar" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_father_name_ar</field>
+            <field name="field_description">Father Name Arabic</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_grandfather_name_ar" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_grandfather_name_ar</field>
+            <field name="field_description">Grandfather Name Arabic</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_surname_ar" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_surname_ar</field>
+            <field name="field_description">Surname Arabic</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_date_of_birth" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_date_of_birth</field>
+            <field name="field_description">Date of Birth</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_employment_contract_x_gender" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_gender</field>
+            <field name="field_description">Gender</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('male', 'ذكر'),
+                ('female', 'أنثى')
+            ]</field>
+        </record>
+
+        <record id="field_employment_contract_x_marital_status" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_marital_status</field>
+            <field name="field_description">Marital Status</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_nationality_ar" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_nationality_ar</field>
+            <field name="field_description">Nationality Arabic</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_national_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_national_id</field>
+            <field name="field_description">National ID</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_email" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_email</field>
+            <field name="field_description">Email</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_phone" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_phone</field>
+            <field name="field_description">Phone</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_mobile_1" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_mobile_1</field>
+            <field name="field_description">Mobile 1</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_mobile_2" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_mobile_2</field>
+            <field name="field_description">Mobile 2</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <!-- Identity and residence -->
+        <record id="field_employment_contract_x_identity_document_source" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_identity_document_source</field>
+            <field name="field_description">Identity Document Source</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('id_card', 'بطاقة شخصية'),
+                ('passport', 'جواز سفر'),
+                ('driving_license', 'رخصة قيادة')
+            ]</field>
+        </record>
+
+        <record id="field_employment_contract_x_identity_document_number" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_identity_document_number</field>
+            <field name="field_description">Identity Document Number</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_identity_document_issue_place" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_identity_document_issue_place</field>
+            <field name="field_description">Identity Document Issue Place</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_identity_document_issue_date" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_identity_document_issue_date</field>
+            <field name="field_description">Identity Document Issue Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_employment_contract_x_residence_region_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_residence_region_id</field>
+            <field name="field_description">Residence Region</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_grc.location</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_residence_district_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_residence_district_id</field>
+            <field name="field_description">Residence District</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_grc.location</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_residence_municipality_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_residence_municipality_id</field>
+            <field name="field_description">Residence Municipality</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_grc.location</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_residence_location_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_residence_location_id</field>
+            <field name="field_description">Residence Location</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_grc.location</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_residence_address_text" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_residence_address_text</field>
+            <field name="field_description">Residence Address Text</field>
+            <field name="ttype">text</field>
+        </record>
+
+        <record id="field_employment_contract_x_home_phone" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_home_phone</field>
+            <field name="field_description">Home Phone</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <!-- Bank, qualification, family and health -->
+        <record id="field_employment_contract_x_bank_name" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_bank_name</field>
+            <field name="field_description">Bank Name</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_bank_branch" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_bank_branch</field>
+            <field name="field_description">Bank Branch</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_bank_account_number" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_bank_account_number</field>
+            <field name="field_description">Bank Account Number</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_iban" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_iban</field>
+            <field name="field_description">IBAN</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_qualification_type" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_qualification_type</field>
+            <field name="field_description">Qualification Type</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_qualification_subject" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_qualification_subject</field>
+            <field name="field_description">Qualification Subject</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_family_paper_number" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_family_paper_number</field>
+            <field name="field_description">Family Paper Number</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_family_reference_number" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_family_reference_number</field>
+            <field name="field_description">Family Reference Number</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_next_of_kin_name" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_next_of_kin_name</field>
+            <field name="field_description">Next of Kin Name</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_next_of_kin_phone" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_next_of_kin_phone</field>
+            <field name="field_description">Next of Kin Phone</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_blood_type" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_blood_type</field>
+            <field name="field_description">Blood Type</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <!-- Job, duration, compensation -->
+        <record id="field_employment_contract_x_job_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_job_id</field>
+            <field name="field_description">Job</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.job</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_job_title_ar" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_job_title_ar</field>
+            <field name="field_description">Job Title Arabic</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_department_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_department_id</field>
+            <field name="field_description">Department</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.department</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_department_name_ar" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_department_name_ar</field>
+            <field name="field_description">Department Name Arabic</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_contract_start_date" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_contract_start_date</field>
+            <field name="field_description">Contract Start Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_employment_contract_x_contract_end_date" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_contract_end_date</field>
+            <field name="field_description">Contract End Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_employment_contract_x_contract_duration_value" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_contract_duration_value</field>
+            <field name="field_description">Contract Duration Value</field>
+            <field name="ttype">integer</field>
+        </record>
+
+        <record id="field_employment_contract_x_contract_duration_unit" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_contract_duration_unit</field>
+            <field name="field_description">Contract Duration Unit</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('day', 'يوم'),
+                ('month', 'شهر'),
+                ('year', 'سنة')
+            ]</field>
+        </record>
+
+        <record id="field_employment_contract_x_renewal_duration_value" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_renewal_duration_value</field>
+            <field name="field_description">Renewal Duration Value</field>
+            <field name="ttype">integer</field>
+        </record>
+
+        <record id="field_employment_contract_x_renewal_duration_unit" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_renewal_duration_unit</field>
+            <field name="field_description">Renewal Duration Unit</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('day', 'يوم'),
+                ('month', 'شهر'),
+                ('year', 'سنة')
+            ]</field>
+        </record>
+
+        <record id="field_employment_contract_x_work_location" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_work_location</field>
+            <field name="field_description">Work Location</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_monthly_wage_amount" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_monthly_wage_amount</field>
+            <field name="field_description">Monthly Wage Amount</field>
+            <field name="ttype">float</field>
+        </record>
+
+        <record id="field_employment_contract_x_monthly_wage_text_ar" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_monthly_wage_text_ar</field>
+            <field name="field_description">Monthly Wage Arabic Text</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_allowances_text_ar" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_allowances_text_ar</field>
+            <field name="field_description">Allowances Arabic Text</field>
+            <field name="ttype">text</field>
+        </record>
+
+        <record id="field_employment_contract_x_benefits_text_ar" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_benefits_text_ar</field>
+            <field name="field_description">Benefits Arabic Text</field>
+            <field name="ttype">text</field>
+        </record>
+
+        <record id="field_employment_contract_x_annual_leave_days" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_annual_leave_days</field>
+            <field name="field_description">Annual Leave Days</field>
+            <field name="ttype">integer</field>
+        </record>
+
+        <record id="field_employment_contract_x_compensation_notes" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_compensation_notes</field>
+            <field name="field_description">Compensation Notes</field>
+            <field name="ttype">text</field>
+        </record>
+
+        <!-- Handover readiness -->
+        <record id="field_employment_contract_x_handover_state" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_handover_state</field>
+            <field name="field_description">Handover State</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('not_ready', 'غير جاهز'),
+                ('ready', 'جاهز للترحيل'),
+                ('handed_over', 'تم الترحيل'),
+                ('blocked', 'متوقف')
+            ]</field>
+        </record>
+
+        <record id="field_employment_contract_x_employee_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_employee_id</field>
+            <field name="field_description">Employee</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.employee</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_hr_contract_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_hr_contract_id</field>
+            <field name="field_description">Native HR Contract Reference</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_employment_contract_x_partner_bank_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_partner_bank_id</field>
+            <field name="field_description">Partner Bank</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.partner.bank</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_employment_contract_x_handover_ready" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_handover_ready</field>
+            <field name="field_description">Handover Ready</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_employment_contract_x_handover_blocking_notes" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_handover_blocking_notes</field>
+            <field name="field_description">Handover Blocking Notes</field>
+            <field name="ttype">text</field>
+        </record>
+
+        <record id="field_employment_contract_x_notes" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_notes</field>
+            <field name="field_description">Notes</field>
+            <field name="ttype">text</field>
+        </record>
+
+        <!-- hr.applicant bridge / mirror fields -->
+        <record id="field_hr_applicant_x_employment_contract_ids" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_contract_ids</field>
+            <field name="field_description">Employment Contracts</field>
+            <field name="ttype">one2many</field>
+            <field name="relation">x_hr.applicant_employment_contract</field>
+            <field name="relation_field">x_applicant_id</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_contract_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_contract_id</field>
+            <field name="field_description">Active Employment Contract</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.applicant_employment_contract</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_contract_state" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_contract_state</field>
+            <field name="field_description">Employment Contract State</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('draft_data', 'مسودة بيانات'),
+                ('ready_to_render', 'جاهز للتوليد'),
+                ('generated', 'مسودة مولدة'),
+                ('printed', 'مطبوع / قيد التوقيع اليدوي'),
+                ('signed_uploaded', 'موقع ومرفوع'),
+                ('ministry_accredited', 'معتمد من وزارة العمل'),
+                ('handover_ready', 'جاهز للترحيل'),
+                ('cancelled', 'ملغى')
+            ]</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_contract_number" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_contract_number</field>
+            <field name="field_description">Employment Contract Number</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_contract_date" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_contract_date</field>
+            <field name="field_description">Employment Contract Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_contract_start_date" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_contract_start_date</field>
+            <field name="field_description">Employment Contract Start Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_contract_end_date" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_contract_end_date</field>
+            <field name="field_description">Employment Contract End Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_contract_duration_label" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_contract_duration_label</field>
+            <field name="field_description">Employment Contract Duration Label</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_contract_monthly_wage" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_contract_monthly_wage</field>
+            <field name="field_description">Employment Contract Monthly Wage</field>
+            <field name="ttype">float</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_contract_job_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_contract_job_id</field>
+            <field name="field_description">Employment Contract Job</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.job</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_contract_department_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_contract_department_id</field>
+            <field name="field_description">Employment Contract Department</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.department</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_contract_document_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_contract_document_id</field>
+            <field name="field_description">Employment Contract Registry Document</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.recruitment_document</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_contract_generated_attachment_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_contract_generated_attachment_id</field>
+            <field name="field_description">Generated Employment Contract</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_contract_generated_on" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_contract_generated_on</field>
+            <field name="field_description">Employment Contract Generated On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_contract_signed_attachment_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_contract_signed_attachment_id</field>
+            <field name="field_description">Signed Employment Contract</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_contract_signed_uploaded_on" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_contract_signed_uploaded_on</field>
+            <field name="field_description">Employment Contract Signed Uploaded On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_contract_ministry_attachment_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_contract_ministry_attachment_id</field>
+            <field name="field_description">Ministry Accredited Employment Contract</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_contract_ministry_accredited_on" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_contract_ministry_accredited_on</field>
+            <field name="field_description">Employment Contract Ministry Accredited On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_contract_board_decision_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_contract_board_decision_id</field>
+            <field name="field_description">Linked Board Decision</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_grc.decision_instance</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_contract_notes" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_contract_notes</field>
+            <field name="field_description">Employment Contract Notes</field>
+            <field name="ttype">text</field>
+        </record>
+
+    </data>
+</odoo>

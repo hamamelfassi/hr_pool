@@ -7,7 +7,8 @@
     "hr",
     "hr_recruitment",
     "sign",
-    "grc_backbone"
+    "grc_backbone",
+    "hr_pool"
 ],
     "application": False,
     "installable": True,
@@ -22,6 +23,7 @@
         "models/05_required_document_submission.xml",
         "models/06_required_document_submission_request.xml",
         "models/07_applicant_declaration.xml",
+        "models/08_employment_contract.xml",
         "security/ir.model.access.csv",
         "data/01_role_definition_automation.xml",
         "data/02_tor_selection_values.xml",
@@ -57,12 +59,14 @@
         "data/21_board_decision_attachment_actions.xml",
         "data/22_board_decision_pdf_actions.xml",
         "data/23_board_decision_sign_actions.xml",
+        "data/24_employment_contract_actions.xml",
         "views/01_recruitment_views.xml",
         "views/02_recruitment_document_views.xml",
         "views/03_required_document_checklist_views.xml",
         "views/04_required_document_submission_views.xml",
         "views/05_required_document_submission_request_views.xml",
         "views/06_applicant_declaration_views.xml",
+        "views/08_employment_contract_views.xml",
         "views/07_decision_instance_document_signature_views.xml",
     ],
 }
