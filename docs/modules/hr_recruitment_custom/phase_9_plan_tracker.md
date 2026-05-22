@@ -706,3 +706,44 @@ Lessons learned:
 Next step:
 
 - Install/upgrade, create or refresh a contract, verify pool link, conversion request link, accepted submission data, and source provenance fields.
+
+## 9C-6 — Contract resolver refinement before PDF calibration
+
+Date: 2026-05-22
+
+Status: Patch generated; Odoo acceptance pending.
+
+Files touched:
+
+- `modules/hr_recruitment_custom/models/08_employment_contract.xml`
+- `modules/hr_recruitment_custom/data/24_employment_contract_actions.xml`
+- `modules/hr_recruitment_custom/views/08_employment_contract_views.xml`
+- `docs/modules/hr_recruitment_custom/phase_9_plan_tracker.md`
+
+What changed:
+
+- Added identity document expiry date to the employment contract snapshot.
+- Corrected the Arabic legal company name to `شركة مرسيليا للنظافة وحماية البيئة` wherever found in the module.
+- Hardened the resolver with phone normalization, blood type normalization, gender normalization, selected identity-source resolution, and availability-to-contract-start-date handling.
+- Added fallback-safe location hierarchy inference for region, district, municipality, and locality where parent fields are available.
+- Added a focused `تحديث مستند الهوية` button that reuses the contract resolver.
+- Made source-owned fields such as job, department, and contract start date readonly in the contract cockpit.
+- Kept source/provenance fields as readonly governed links, not editable dropdowns.
+
+Acceptance result:
+
+- Pending Odoo SaaS install/upgrade and data review.
+
+Issues / tracebacks:
+
+- None at patch generation stage.
+
+Lessons learned:
+
+- Phone and blood-type values must be normalized as plain legal snapshot text, while UI/QWeb can force LTR rendering later.
+- Identity source selection should drive which accepted submission is used, instead of permanently defaulting to ID card.
+- Employment contract PDF calibration should not start until these snapshot fields are stable.
+
+Next step:
+
+- Install/upgrade, refresh an existing contract, test identity source switching, verify phone/blood-type normalization, then proceed to 9D QWeb overlay proof.

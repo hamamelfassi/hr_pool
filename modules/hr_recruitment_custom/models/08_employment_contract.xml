@@ -380,6 +380,14 @@
             <field name="ttype">date</field>
         </record>
 
+        <!-- Pass 9C-6 contract resolver refinement fields -->
+        <record id="field_employment_contract_x_identity_document_expiry_date" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_identity_document_expiry_date</field>
+            <field name="field_description">Identity Document Expiry Date</field>
+            <field name="ttype">date</field>
+        </record>
+
         <record id="field_employment_contract_x_residence_region_id" model="ir.model.fields">
             <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
             <field name="name">x_residence_region_id</field>

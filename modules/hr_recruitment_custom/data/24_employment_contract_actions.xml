@@ -10,12 +10,22 @@
 action = False
 
 LOCKED_STATES = ['generated', 'printed', 'signed_uploaded', 'ministry_accredited', 'handover_ready', 'cancelled']
-MUTABLE_STATES = ['draft_data', 'ready_to_render']
+
+AR_DIGIT_MAP = {
+    '٠': '0', '١': '1', '٢': '2', '٣': '3', '٤': '4',
+    '٥': '5', '٦': '6', '٧': '7', '٨': '8', '٩': '9',
+    '۰': '0', '۱': '1', '۲': '2', '۳': '3', '۴': '4',
+    '۵': '5', '۶': '6', '۷': '7', '۸': '8', '۹': '9',
+}
+
+BIDI_MARKS = ['\u200e', '\u200f', '\u202a', '\u202b', '\u202c', '\u202d', '\u202e', '\u2066', '\u2067', '\u2068', '\u2069']
+
 
 def clean_text(value):
     if not value:
         return ''
     return str(value).strip()
+
 
 def first_text(*values):
     for value in values:
@@ -24,21 +34,20 @@ def first_text(*values):
             return value
     return ''
 
+
 def has_field(record, field_name):
     return bool(record and field_name in record._fields)
+
 
 def get_field(record, field_name):
     if has_field(record, field_name):
         return record[field_name]
     return False
 
+
 def get_text_field(record, field_name):
     return clean_text(get_field(record, field_name))
 
-def keep_or_fill(current, candidate):
-    if current not in [False, None, '', 0, 0.0]:
-        return current
-    return candidate or False
 
 def keep_or_fill_text(current, candidate):
     current = clean_text(current)
@@ -46,11 +55,54 @@ def keep_or_fill_text(current, candidate):
         return current
     return clean_text(candidate) or False
 
-def date_today():
+
+def today_date():
     return datetime.date.today()
+
 
 def now_dt():
     return datetime.datetime.now()
+
+
+def normalize_gender(value):
+    value = clean_text(value).lower()
+    if value in ['male', 'm', 'ذكر', 'رجل']:
+        return 'male'
+    if value in ['female', 'f', 'أنثى', 'انثى', 'امرأة']:
+        return 'female'
+    return False
+
+
+def normalize_phone(value):
+    value = clean_text(value)
+    if not value:
+        return ''
+    for mark in BIDI_MARKS:
+        value = value.replace(mark, '')
+    value = ''.join([AR_DIGIT_MAP.get(ch, ch) for ch in value])
+    for ch in [' ', '\t', '\n', '\r', '-', '–', '—', '(', ')']:
+        value = value.replace(ch, '')
+    if value.endswith('+') and not value.startswith('+'):
+        value = '+' + value[:-1]
+    if value.startswith('00'):
+        value = '+' + value[2:]
+    return value
+
+
+def normalize_blood_type(value):
+    value = clean_text(value).upper().replace(' ', '')
+    for mark in BIDI_MARKS:
+        value = value.replace(mark, '')
+    if value.endswith('+') and not value.startswith('+'):
+        value = value[:-1] + '+'
+    if value.endswith('-') and not value.startswith('-'):
+        value = value[:-1] + '-'
+    value = value.replace('٠', '0').replace('۰', '0')
+    allowed = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
+    if value in allowed:
+        return value
+    return clean_text(value)
+
 
 def display_name_ar(record):
     if not record:
@@ -61,14 +113,18 @@ def display_name_ar(record):
         record.display_name
     )
 
+
 def country_name_ar(country):
     if not country:
         return ''
-    return first_text(
-        country.with_context(lang='ar_001').name,
-        country.name,
-        country.display_name
-    )
+    if getattr(country, '_name', ''):
+        return first_text(
+            country.with_context(lang='ar_001').name,
+            country.name,
+            country.display_name
+        )
+    return clean_text(country)
+
 
 def find_pool(applicant):
     pool = False
@@ -82,6 +138,7 @@ def find_pool(applicant):
             pool = req.x_pool_id.sudo()
     return pool
 
+
 def find_conversion_request(applicant, pool):
     req = False
     if has_field(applicant, 'x_pool_conversion_request_id') and applicant.x_pool_conversion_request_id:
@@ -92,24 +149,136 @@ def find_conversion_request(applicant, pool):
         req = env['x_hr.pool_conversion_request'].sudo().search([('x_pool_id', '=', pool.id)], order='id desc', limit=1)
     return req
 
-def accepted_submission(applicant, codes, require_attachment=False):
-    domain = [
+
+def accepted_submission(applicant, codes):
+    return env['x_hr.applicant_required_document_submission'].sudo().search([
         ('x_applicant_id', '=', applicant.id),
         ('x_state', '=', 'accepted'),
         ('x_document_code', 'in', codes),
-    ]
-    if require_attachment:
-        domain.append(('x_attachment_id', '!=', False))
-    return env['x_hr.applicant_required_document_submission'].sudo().search(
-        domain,
-        order='x_reviewed_on desc, x_submitted_on desc, id desc',
-        limit=1
-    )
+    ], order='x_reviewed_on desc, x_submitted_on desc, id desc', limit=1)
+
 
 def attachment_id(submission):
     if submission and submission.x_attachment_id:
         return submission.x_attachment_id.id
     return False
+
+
+def identity_codes_for_source(source):
+    source = clean_text(source)
+    if source == 'passport':
+        return ['passport']
+    if source == 'driving_license':
+        return ['driving_license']
+    return ['id_card', 'national_id']
+
+
+def source_for_identity_submission(submission):
+    code = clean_text(submission.x_document_code) if submission else ''
+    if code in ['id_card', 'national_id']:
+        return 'id_card'
+    if code == 'passport':
+        return 'passport'
+    if code == 'driving_license':
+        return 'driving_license'
+    return False
+
+
+def selected_identity_submission(applicant, selected_source):
+    selected_source = clean_text(selected_source)
+    if selected_source:
+        return accepted_submission(applicant, identity_codes_for_source(selected_source))
+    for source in ['id_card', 'passport', 'driving_license']:
+        sub = accepted_submission(applicant, identity_codes_for_source(source))
+        if sub:
+            return sub
+    return False
+
+
+def location_parent(location):
+    if not location:
+        return False
+    for field_name in ['x_parent_id', 'x_parent_location_id', 'x_parent_location', 'parent_id', 'x_parent']:
+        parent = get_field(location, field_name)
+        if parent and getattr(parent, '_name', '') == getattr(location, '_name', ''):
+            return parent
+    return False
+
+
+def location_level(location):
+    if not location:
+        return ''
+    for field_name in ['x_location_type', 'x_type', 'x_level', 'x_location_level', 'type']:
+        value = get_text_field(location, field_name).lower()
+        if value:
+            return value
+    return ''
+
+
+def is_level(location, level):
+    value = location_level(location)
+    if level == 'region':
+        return value in ['region', 'regions', 'منطقة', 'region_level']
+    if level == 'district':
+        return value in ['district', 'districts', 'محلة', 'فرع بلدي', 'district_level']
+    if level == 'municipality':
+        return value in ['municipality', 'municipalities', 'بلدية', 'municipality_level']
+    if level == 'locality':
+        return value in ['locality', 'localities', 'محلة', 'منطقة سكنية', 'locality_level']
+    return False
+
+
+def complete_location_hierarchy(region, district, municipality, locality):
+    # If a locality is available, walk upward to municipality/district/region when fields exist.
+    if locality and not municipality:
+        parent = location_parent(locality)
+        if parent:
+            municipality = parent
+    if municipality and not district:
+        parent = location_parent(municipality)
+        if parent:
+            district = parent
+    if district and not region:
+        parent = location_parent(district)
+        if parent:
+            region = parent
+    # If the supplied municipality was actually a locality because of legacy naming, try one more upward pass.
+    if municipality and is_level(municipality, 'locality') and not locality:
+        locality = municipality
+        municipality = location_parent(locality)
+        if municipality and not district:
+            district = location_parent(municipality)
+        if district and not region:
+            region = location_parent(district)
+    return region, district, municipality, locality
+
+
+def applicant_full_name(applicant, pool):
+    parts = []
+    for field_name in ['x_first_name_ar', 'x_father_name_ar', 'x_grandfather_name_ar', 'x_surname_ar']:
+        value = first_text(get_text_field(applicant, field_name), get_text_field(pool, field_name))
+        if value:
+            parts.append(value)
+    if parts:
+        return ' '.join(parts)
+    return first_text(applicant.partner_name, applicant.display_name)
+
+
+def resolve_job(applicant, req):
+    if applicant.job_id:
+        return applicant.job_id
+    if req and req.x_job_id:
+        return req.x_job_id
+    return False
+
+
+def resolve_department(applicant, job):
+    if has_field(applicant, 'department_id') and applicant.department_id:
+        return applicant.department_id
+    if job and has_field(job, 'department_id') and job.department_id:
+        return job.department_id
+    return False
+
 
 def duration_label(contract):
     value = contract.x_contract_duration_value or 0
@@ -124,55 +293,9 @@ def duration_label(contract):
         return str(value) + ' يوم'
     return str(value)
 
-def applicant_name(applicant, pool):
-    parts = []
-    for field_name in ['x_first_name_ar', 'x_father_name_ar', 'x_grandfather_name_ar', 'x_surname_ar']:
-        value = first_text(get_text_field(applicant, field_name), get_text_field(pool, field_name))
-        if value:
-            parts.append(value)
-    if parts:
-        return ' '.join(parts)
-    return first_text(applicant.partner_name, applicant.display_name)
-
-def resolve_job(applicant, req):
-    if applicant.job_id:
-        return applicant.job_id
-    if req and req.x_job_id:
-        return req.x_job_id
-    return False
-
-def resolve_department(applicant, job):
-    department = False
-    if has_field(applicant, 'department_id') and applicant.department_id:
-        department = applicant.department_id
-    elif job and has_field(job, 'department_id') and job.department_id:
-        department = job.department_id
-    return department
-
-def selected_identity_submission(applicant):
-    for codes in [
-        ['id_card'],
-        ['national_id'],
-        ['passport'],
-        ['driving_license'],
-    ]:
-        sub = accepted_submission(applicant, codes, False)
-        if sub:
-            return sub
-    return False
-
-def identity_source_value(sub):
-    code = clean_text(sub.x_document_code) if sub else ''
-    if code in ['id_card', 'national_id']:
-        return 'id_card'
-    if code == 'passport':
-        return 'passport'
-    if code == 'driving_license':
-        return 'driving_license'
-    return False
 
 def sync_applicant(applicant, contract):
-    applicant_vals = {
+    vals = {
         'x_employment_contract_id': contract.id,
         'x_employment_contract_state': contract.x_state or False,
         'x_employment_contract_number': contract.x_contract_number or False,
@@ -193,10 +316,11 @@ def sync_applicant(applicant, contract):
         'x_employment_contract_board_decision_id': contract.x_board_decision_instance_id.id if contract.x_board_decision_instance_id else False,
     }
     if has_field(applicant, 'x_pool_id'):
-        applicant_vals['x_pool_id'] = contract.x_pool_id.id if contract.x_pool_id else False
+        vals['x_pool_id'] = contract.x_pool_id.id if contract.x_pool_id else False
     if has_field(applicant, 'x_pool_conversion_request_id'):
-        applicant_vals['x_pool_conversion_request_id'] = contract.x_conversion_request_id.id if contract.x_conversion_request_id else False
-    applicant.write(applicant_vals)
+        vals['x_pool_conversion_request_id'] = contract.x_conversion_request_id.id if contract.x_conversion_request_id else False
+    applicant.write(vals)
+
 
 def refresh_contract_snapshot(contract, applicant):
     if contract.x_state in LOCKED_STATES:
@@ -205,58 +329,65 @@ def refresh_contract_snapshot(contract, applicant):
     pool = find_pool(applicant)
     req = find_conversion_request(applicant, pool)
 
-    identity_sub = selected_identity_submission(applicant)
-    birth_sub = accepted_submission(applicant, ['birth_certificate'], False)
-    residence_sub = accepted_submission(applicant, ['residence_certificate'], False)
-    family_sub = accepted_submission(applicant, ['family_status'], False)
-    health_sub = accepted_submission(applicant, ['health_certificate'], False)
-    bank_sub = accepted_submission(applicant, ['bank_information'], False)
-    qualification_sub = accepted_submission(applicant, ['qualification'], False)
+    selected_source = clean_text(contract.x_identity_document_source)
+    identity_sub = selected_identity_submission(applicant, selected_source)
+    identity_source = selected_source or source_for_identity_submission(identity_sub)
+    birth_sub = accepted_submission(applicant, ['birth_certificate'])
+    residence_sub = accepted_submission(applicant, ['residence_certificate'])
+    family_sub = accepted_submission(applicant, ['family_status'])
+    health_sub = accepted_submission(applicant, ['health_certificate'])
+    bank_sub = accepted_submission(applicant, ['bank_information'])
+    qualification_sub = accepted_submission(applicant, ['qualification'])
 
     job = resolve_job(applicant, req)
     department = resolve_department(applicant, job)
 
-    first_name = keep_or_fill_text(contract.x_first_name_ar, first_text(get_text_field(applicant, 'x_first_name_ar'), get_text_field(pool, 'x_first_name_ar')))
-    father_name = keep_or_fill_text(contract.x_father_name_ar, first_text(get_text_field(applicant, 'x_father_name_ar'), get_text_field(pool, 'x_father_name_ar')))
-    grandfather_name = keep_or_fill_text(contract.x_grandfather_name_ar, first_text(get_text_field(applicant, 'x_grandfather_name_ar'), get_text_field(pool, 'x_grandfather_name_ar')))
-    surname = keep_or_fill_text(contract.x_surname_ar, first_text(get_text_field(applicant, 'x_surname_ar'), get_text_field(pool, 'x_surname_ar')))
-    full_name = keep_or_fill_text(contract.x_full_name_ar, applicant_name(applicant, pool))
+    full_name = first_text(contract.x_full_name_ar, applicant_full_name(applicant, pool))
+    first_name = first_text(contract.x_first_name_ar, get_text_field(applicant, 'x_first_name_ar'), get_text_field(pool, 'x_first_name_ar'))
+    father_name = first_text(contract.x_father_name_ar, get_text_field(applicant, 'x_father_name_ar'), get_text_field(pool, 'x_father_name_ar'))
+    grandfather_name = first_text(contract.x_grandfather_name_ar, get_text_field(applicant, 'x_grandfather_name_ar'), get_text_field(pool, 'x_grandfather_name_ar'))
+    surname = first_text(contract.x_surname_ar, get_text_field(applicant, 'x_surname_ar'), get_text_field(pool, 'x_surname_ar'))
 
-    national_id = keep_or_fill_text(contract.x_national_id, first_text(
-        get_text_field(applicant, 'x_national_id'),
-        get_text_field(pool, 'x_national_id'),
-        identity_sub.x_document_number if identity_sub else ''
-    ))
-
-    gender = contract.x_gender or get_text_field(applicant, 'x_gender') or get_text_field(pool, 'x_gender') or False
-
+    national_id = first_text(contract.x_national_id, get_text_field(applicant, 'x_national_id'), get_text_field(pool, 'x_national_id'), identity_sub.x_document_number if identity_sub else '')
+    gender = normalize_gender(first_text(contract.x_gender, get_text_field(applicant, 'x_gender'), get_text_field(pool, 'x_gender')))
     date_of_birth = contract.x_date_of_birth or get_field(applicant, 'x_date_of_birth') or get_field(pool, 'x_date_of_birth') or (birth_sub.x_date_of_birth if birth_sub and birth_sub.x_date_of_birth else False)
-    marital_status = keep_or_fill_text(contract.x_marital_status, get_text_field(pool, 'x_marital_status'))
 
-    nationality = contract.x_nationality_ar
+    nationality = first_text(contract.x_nationality_ar)
     if not nationality and pool and has_field(pool, 'x_nationality_id') and pool.x_nationality_id:
         nationality = country_name_ar(pool.x_nationality_id)
 
-    residence_region = contract.x_residence_region_id or get_field(applicant, 'x_residence_region_id') or get_field(pool, 'x_residence_region_id') or False
-    residence_district = contract.x_residence_district_id or get_field(applicant, 'x_residence_district_id') or get_field(pool, 'x_residence_district_id') or False
-    residence_municipality = contract.x_residence_municipality_id or get_field(applicant, 'x_residence_municipality_id') or get_field(pool, 'x_residence_municipality_id') or False
-    residence_location = contract.x_residence_location_id or get_field(applicant, 'x_residence_location_id') or get_field(pool, 'x_residence_location_id') or False
-    residence_address = keep_or_fill_text(contract.x_residence_address_text, first_text(get_text_field(applicant, 'x_address_text'), get_text_field(pool, 'x_address_text')))
+    region = contract.x_residence_region_id or get_field(applicant, 'x_residence_region_id') or get_field(pool, 'x_residence_region_id') or False
+    district = contract.x_residence_district_id or get_field(applicant, 'x_residence_district_id') or get_field(pool, 'x_residence_district_id') or False
+    municipality = contract.x_residence_municipality_id or get_field(applicant, 'x_residence_municipality_id') or get_field(pool, 'x_residence_municipality_id') or False
+    locality = contract.x_residence_location_id or get_field(applicant, 'x_residence_location_id') or get_field(pool, 'x_residence_location_id') or False
+    region, district, municipality, locality = complete_location_hierarchy(region, district, municipality, locality)
 
-    contract_start = contract.x_contract_start_date or get_field(applicant, 'availability') or False
+    preferred_phone = first_text(get_text_field(pool, 'x_phone'), get_text_field(applicant, 'partner_phone'), get_text_field(applicant, 'partner_mobile'))
+    preferred_email = first_text(get_text_field(applicant, 'email_from'), get_text_field(pool, 'x_email'))
+    contract_start = get_field(applicant, 'availability') or contract.x_contract_start_date or False
+
+    identity_number = contract.x_identity_document_number
+    identity_issue_place = contract.x_identity_document_issue_place
+    identity_issue_date = contract.x_identity_document_issue_date
+    identity_expiry_date = contract.x_identity_document_expiry_date
+    if identity_sub:
+        identity_number = identity_sub.x_document_number or False
+        identity_issue_place = identity_sub.x_place_of_issue or False
+        identity_issue_date = identity_sub.x_issue_date or False
+        identity_expiry_date = identity_sub.x_expiry_date or False
 
     vals = {
         'x_pool_id': pool.id if pool else False,
         'x_conversion_request_id': req.id if req else False,
-        'x_contract_date': contract.x_contract_date or date_today(),
+        'x_contract_date': contract.x_contract_date or today_date(),
         'x_template_code': 'MCEP-HR-F-0005',
         'x_template_version': 'V.0.0.2015',
         'x_field_map_version': 'f0005-letter-overlay-v1',
 
         'x_company_name_ar': 'شركة مرسيليا للنظافة وحماية البيئة',
-        'x_representative_name_ar': keep_or_fill_text(contract.x_representative_name_ar, 'حسين عبد الكريم حسين'),
-        'x_representative_title_ar': keep_or_fill_text(contract.x_representative_title_ar, 'رئيس مجلس الإدارة'),
-        'x_representative_nationality_ar': keep_or_fill_text(contract.x_representative_nationality_ar, 'ليبي'),
+        'x_representative_name_ar': first_text(contract.x_representative_name_ar, 'حسين عبد الكريم حسين'),
+        'x_representative_title_ar': first_text(contract.x_representative_title_ar, 'رئيس مجلس الإدارة'),
+        'x_representative_nationality_ar': first_text(contract.x_representative_nationality_ar, 'ليبي'),
 
         'x_full_name_ar': full_name or False,
         'x_first_name_ar': first_name or False,
@@ -265,42 +396,44 @@ def refresh_contract_snapshot(contract, applicant):
         'x_surname_ar': surname or False,
         'x_date_of_birth': date_of_birth or False,
         'x_gender': gender or False,
-        'x_marital_status': marital_status or False,
+        'x_marital_status': first_text(contract.x_marital_status, get_text_field(pool, 'x_marital_status')) or False,
         'x_nationality_ar': nationality or False,
         'x_national_id': national_id or False,
-        'x_email': keep_or_fill_text(contract.x_email, first_text(get_text_field(applicant, 'email_from'), get_text_field(pool, 'x_email'))),
-        'x_phone': keep_or_fill_text(contract.x_phone, first_text(get_text_field(applicant, 'partner_phone'), get_text_field(pool, 'x_phone'))),
-        'x_mobile_1': keep_or_fill_text(contract.x_mobile_1, first_text(get_text_field(applicant, 'partner_mobile'), get_text_field(pool, 'x_phone'))),
+        'x_email': first_text(contract.x_email, preferred_email) or False,
+        'x_phone': normalize_phone(preferred_phone) or False,
+        'x_mobile_1': normalize_phone(preferred_phone) or False,
+        'x_mobile_2': normalize_phone(contract.x_mobile_2) or False,
 
-        'x_identity_document_source': contract.x_identity_document_source or identity_source_value(identity_sub) or False,
-        'x_identity_document_number': keep_or_fill_text(contract.x_identity_document_number, first_text(identity_sub.x_document_number if identity_sub else '', national_id)),
-        'x_identity_document_issue_place': keep_or_fill_text(contract.x_identity_document_issue_place, identity_sub.x_place_of_issue if identity_sub else ''),
-        'x_identity_document_issue_date': contract.x_identity_document_issue_date or (identity_sub.x_issue_date if identity_sub and identity_sub.x_issue_date else False),
+        'x_identity_document_source': identity_source or False,
+        'x_identity_document_number': identity_number or False,
+        'x_identity_document_issue_place': identity_issue_place or False,
+        'x_identity_document_issue_date': identity_issue_date or False,
+        'x_identity_document_expiry_date': identity_expiry_date or False,
 
-        'x_residence_region_id': residence_region.id if residence_region else False,
-        'x_residence_district_id': residence_district.id if residence_district else False,
-        'x_residence_municipality_id': residence_municipality.id if residence_municipality else False,
-        'x_residence_location_id': residence_location.id if residence_location else False,
-        'x_residence_address_text': residence_address or False,
-        'x_home_phone': keep_or_fill_text(contract.x_home_phone, get_text_field(pool, 'x_phone')),
+        'x_residence_region_id': region.id if region else False,
+        'x_residence_district_id': district.id if district else False,
+        'x_residence_municipality_id': municipality.id if municipality else False,
+        'x_residence_location_id': locality.id if locality else False,
+        'x_residence_address_text': first_text(contract.x_residence_address_text, get_text_field(applicant, 'x_address_text'), get_text_field(pool, 'x_address_text')) or False,
+        'x_home_phone': normalize_phone(preferred_phone) or False,
 
-        'x_bank_name': keep_or_fill_text(contract.x_bank_name, bank_sub.x_bank_name if bank_sub else ''),
-        'x_bank_branch': keep_or_fill_text(contract.x_bank_branch, bank_sub.x_bank_branch if bank_sub else ''),
-        'x_bank_account_number': keep_or_fill_text(contract.x_bank_account_number, bank_sub.x_account_number if bank_sub else ''),
-        'x_iban': keep_or_fill_text(contract.x_iban, bank_sub.x_iban if bank_sub else ''),
+        'x_bank_name': first_text(contract.x_bank_name, bank_sub.x_bank_name if bank_sub else '') or False,
+        'x_bank_branch': first_text(contract.x_bank_branch, bank_sub.x_bank_branch if bank_sub else '') or False,
+        'x_bank_account_number': first_text(contract.x_bank_account_number, bank_sub.x_account_number if bank_sub else '') or False,
+        'x_iban': first_text(contract.x_iban, bank_sub.x_iban if bank_sub else '') or False,
 
-        'x_qualification_type': keep_or_fill_text(contract.x_qualification_type, qualification_sub.x_qualification_type if qualification_sub else ''),
-        'x_qualification_subject': keep_or_fill_text(contract.x_qualification_subject, qualification_sub.x_qualification_subject if qualification_sub else ''),
-        'x_family_paper_number': keep_or_fill_text(contract.x_family_paper_number, family_sub.x_family_paper_number if family_sub else ''),
-        'x_family_reference_number': keep_or_fill_text(contract.x_family_reference_number, family_sub.x_family_reference_number if family_sub else ''),
-        'x_next_of_kin_name': keep_or_fill_text(contract.x_next_of_kin_name, family_sub.x_next_of_kin_name if family_sub else ''),
-        'x_next_of_kin_phone': keep_or_fill_text(contract.x_next_of_kin_phone, family_sub.x_next_of_kin_phone if family_sub else ''),
-        'x_blood_type': keep_or_fill_text(contract.x_blood_type, health_sub.x_blood_type if health_sub else ''),
+        'x_qualification_type': first_text(contract.x_qualification_type, qualification_sub.x_qualification_type if qualification_sub else '') or False,
+        'x_qualification_subject': first_text(contract.x_qualification_subject, qualification_sub.x_qualification_subject if qualification_sub else '') or False,
+        'x_family_paper_number': first_text(contract.x_family_paper_number, family_sub.x_family_paper_number if family_sub else '') or False,
+        'x_family_reference_number': first_text(contract.x_family_reference_number, family_sub.x_family_reference_number if family_sub else '') or False,
+        'x_next_of_kin_name': first_text(contract.x_next_of_kin_name, family_sub.x_next_of_kin_name if family_sub else '') or False,
+        'x_next_of_kin_phone': normalize_phone(family_sub.x_next_of_kin_phone if family_sub and family_sub.x_next_of_kin_phone else contract.x_next_of_kin_phone) or False,
+        'x_blood_type': normalize_blood_type(health_sub.x_blood_type if health_sub and health_sub.x_blood_type else contract.x_blood_type) or False,
 
         'x_job_id': job.id if job else False,
-        'x_job_title_ar': keep_or_fill_text(contract.x_job_title_ar, display_name_ar(job) if job else ''),
+        'x_job_title_ar': display_name_ar(job) if job else False,
         'x_department_id': department.id if department else False,
-        'x_department_name_ar': keep_or_fill_text(contract.x_department_name_ar, display_name_ar(department) if department else ''),
+        'x_department_name_ar': display_name_ar(department) if department else False,
         'x_contract_start_date': contract_start or False,
 
         'x_identity_source_submission_id': identity_sub.id if identity_sub else False,
@@ -322,14 +455,14 @@ def refresh_contract_snapshot(contract, applicant):
         'x_snapshot_refreshed_by_user_id': env.user.id,
     }
 
-    clean_name = full_name or applicant.display_name or 'المتقدم'
-    vals['x_name'] = contract.x_name or ('عقد العمل - ' + clean_name)
+    vals['x_name'] = contract.x_name or ('عقد العمل - ' + (full_name or applicant.display_name or 'المتقدم'))
 
     missing = []
     for label, value in [
         ('الاسم الكامل', vals.get('x_full_name_ar')),
         ('الرقم الوطني', vals.get('x_national_id')),
         ('الجنس', vals.get('x_gender')),
+        ('مستند الهوية', vals.get('x_identity_document_number')),
         ('المسمى الوظيفي', vals.get('x_job_title_ar')),
         ('الوحدة الإدارية', vals.get('x_department_name_ar')),
         ('تاريخ بداية العقد', vals.get('x_contract_start_date')),
@@ -350,16 +483,17 @@ def refresh_contract_snapshot(contract, applicant):
     contract.write(vals)
 
     if has_field(applicant, 'x_pool_id') or has_field(applicant, 'x_pool_conversion_request_id'):
-        applicant_bridge_vals = {}
+        bridge = {}
         if has_field(applicant, 'x_pool_id'):
-            applicant_bridge_vals['x_pool_id'] = pool.id if pool else False
+            bridge['x_pool_id'] = pool.id if pool else False
         if has_field(applicant, 'x_pool_conversion_request_id'):
-            applicant_bridge_vals['x_pool_conversion_request_id'] = req.id if req else False
-        if applicant_bridge_vals:
-            applicant.write(applicant_bridge_vals)
+            bridge['x_pool_conversion_request_id'] = req.id if req else False
+        if bridge:
+            applicant.write(bridge)
 
     sync_applicant(applicant, contract)
     return 'updated'
+
 
 def open_contract_action(contract):
     return {
@@ -371,6 +505,7 @@ def open_contract_action(contract):
         'views': [(False, 'form')],
         'target': 'current',
     }
+
 
 applicant = records.sudo()[:1]
 
@@ -385,14 +520,14 @@ else:
     if not contract:
         pool = find_pool(applicant)
         req = find_conversion_request(applicant, pool)
-        name = applicant_name(applicant, pool)
+        name = applicant_full_name(applicant, pool)
         contract = env['x_hr.applicant_employment_contract'].sudo().create({
             'x_name': 'عقد العمل - ' + (name or applicant.display_name or 'المتقدم'),
             'x_applicant_id': applicant.id,
             'x_pool_id': pool.id if pool else False,
             'x_conversion_request_id': req.id if req else False,
             'x_state': 'draft_data',
-            'x_contract_date': date_today(),
+            'x_contract_date': today_date(),
             'x_template_code': 'MCEP-HR-F-0005',
             'x_template_version': 'V.0.0.2015',
             'x_field_map_version': 'f0005-letter-overlay-v1',
@@ -476,12 +611,22 @@ else:
 action = False
 
 LOCKED_STATES = ['generated', 'printed', 'signed_uploaded', 'ministry_accredited', 'handover_ready', 'cancelled']
-MUTABLE_STATES = ['draft_data', 'ready_to_render']
+
+AR_DIGIT_MAP = {
+    '٠': '0', '١': '1', '٢': '2', '٣': '3', '٤': '4',
+    '٥': '5', '٦': '6', '٧': '7', '٨': '8', '٩': '9',
+    '۰': '0', '۱': '1', '۲': '2', '۳': '3', '۴': '4',
+    '۵': '5', '۶': '6', '۷': '7', '۸': '8', '۹': '9',
+}
+
+BIDI_MARKS = ['\u200e', '\u200f', '\u202a', '\u202b', '\u202c', '\u202d', '\u202e', '\u2066', '\u2067', '\u2068', '\u2069']
+
 
 def clean_text(value):
     if not value:
         return ''
     return str(value).strip()
+
 
 def first_text(*values):
     for value in values:
@@ -490,21 +635,20 @@ def first_text(*values):
             return value
     return ''
 
+
 def has_field(record, field_name):
     return bool(record and field_name in record._fields)
+
 
 def get_field(record, field_name):
     if has_field(record, field_name):
         return record[field_name]
     return False
 
+
 def get_text_field(record, field_name):
     return clean_text(get_field(record, field_name))
 
-def keep_or_fill(current, candidate):
-    if current not in [False, None, '', 0, 0.0]:
-        return current
-    return candidate or False
 
 def keep_or_fill_text(current, candidate):
     current = clean_text(current)
@@ -512,11 +656,54 @@ def keep_or_fill_text(current, candidate):
         return current
     return clean_text(candidate) or False
 
-def date_today():
+
+def today_date():
     return datetime.date.today()
+
 
 def now_dt():
     return datetime.datetime.now()
+
+
+def normalize_gender(value):
+    value = clean_text(value).lower()
+    if value in ['male', 'm', 'ذكر', 'رجل']:
+        return 'male'
+    if value in ['female', 'f', 'أنثى', 'انثى', 'امرأة']:
+        return 'female'
+    return False
+
+
+def normalize_phone(value):
+    value = clean_text(value)
+    if not value:
+        return ''
+    for mark in BIDI_MARKS:
+        value = value.replace(mark, '')
+    value = ''.join([AR_DIGIT_MAP.get(ch, ch) for ch in value])
+    for ch in [' ', '\t', '\n', '\r', '-', '–', '—', '(', ')']:
+        value = value.replace(ch, '')
+    if value.endswith('+') and not value.startswith('+'):
+        value = '+' + value[:-1]
+    if value.startswith('00'):
+        value = '+' + value[2:]
+    return value
+
+
+def normalize_blood_type(value):
+    value = clean_text(value).upper().replace(' ', '')
+    for mark in BIDI_MARKS:
+        value = value.replace(mark, '')
+    if value.endswith('+') and not value.startswith('+'):
+        value = value[:-1] + '+'
+    if value.endswith('-') and not value.startswith('-'):
+        value = value[:-1] + '-'
+    value = value.replace('٠', '0').replace('۰', '0')
+    allowed = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
+    if value in allowed:
+        return value
+    return clean_text(value)
+
 
 def display_name_ar(record):
     if not record:
@@ -527,14 +714,18 @@ def display_name_ar(record):
         record.display_name
     )
 
+
 def country_name_ar(country):
     if not country:
         return ''
-    return first_text(
-        country.with_context(lang='ar_001').name,
-        country.name,
-        country.display_name
-    )
+    if getattr(country, '_name', ''):
+        return first_text(
+            country.with_context(lang='ar_001').name,
+            country.name,
+            country.display_name
+        )
+    return clean_text(country)
+
 
 def find_pool(applicant):
     pool = False
@@ -548,6 +739,7 @@ def find_pool(applicant):
             pool = req.x_pool_id.sudo()
     return pool
 
+
 def find_conversion_request(applicant, pool):
     req = False
     if has_field(applicant, 'x_pool_conversion_request_id') and applicant.x_pool_conversion_request_id:
@@ -558,24 +750,136 @@ def find_conversion_request(applicant, pool):
         req = env['x_hr.pool_conversion_request'].sudo().search([('x_pool_id', '=', pool.id)], order='id desc', limit=1)
     return req
 
-def accepted_submission(applicant, codes, require_attachment=False):
-    domain = [
+
+def accepted_submission(applicant, codes):
+    return env['x_hr.applicant_required_document_submission'].sudo().search([
         ('x_applicant_id', '=', applicant.id),
         ('x_state', '=', 'accepted'),
         ('x_document_code', 'in', codes),
-    ]
-    if require_attachment:
-        domain.append(('x_attachment_id', '!=', False))
-    return env['x_hr.applicant_required_document_submission'].sudo().search(
-        domain,
-        order='x_reviewed_on desc, x_submitted_on desc, id desc',
-        limit=1
-    )
+    ], order='x_reviewed_on desc, x_submitted_on desc, id desc', limit=1)
+
 
 def attachment_id(submission):
     if submission and submission.x_attachment_id:
         return submission.x_attachment_id.id
     return False
+
+
+def identity_codes_for_source(source):
+    source = clean_text(source)
+    if source == 'passport':
+        return ['passport']
+    if source == 'driving_license':
+        return ['driving_license']
+    return ['id_card', 'national_id']
+
+
+def source_for_identity_submission(submission):
+    code = clean_text(submission.x_document_code) if submission else ''
+    if code in ['id_card', 'national_id']:
+        return 'id_card'
+    if code == 'passport':
+        return 'passport'
+    if code == 'driving_license':
+        return 'driving_license'
+    return False
+
+
+def selected_identity_submission(applicant, selected_source):
+    selected_source = clean_text(selected_source)
+    if selected_source:
+        return accepted_submission(applicant, identity_codes_for_source(selected_source))
+    for source in ['id_card', 'passport', 'driving_license']:
+        sub = accepted_submission(applicant, identity_codes_for_source(source))
+        if sub:
+            return sub
+    return False
+
+
+def location_parent(location):
+    if not location:
+        return False
+    for field_name in ['x_parent_id', 'x_parent_location_id', 'x_parent_location', 'parent_id', 'x_parent']:
+        parent = get_field(location, field_name)
+        if parent and getattr(parent, '_name', '') == getattr(location, '_name', ''):
+            return parent
+    return False
+
+
+def location_level(location):
+    if not location:
+        return ''
+    for field_name in ['x_location_type', 'x_type', 'x_level', 'x_location_level', 'type']:
+        value = get_text_field(location, field_name).lower()
+        if value:
+            return value
+    return ''
+
+
+def is_level(location, level):
+    value = location_level(location)
+    if level == 'region':
+        return value in ['region', 'regions', 'منطقة', 'region_level']
+    if level == 'district':
+        return value in ['district', 'districts', 'محلة', 'فرع بلدي', 'district_level']
+    if level == 'municipality':
+        return value in ['municipality', 'municipalities', 'بلدية', 'municipality_level']
+    if level == 'locality':
+        return value in ['locality', 'localities', 'محلة', 'منطقة سكنية', 'locality_level']
+    return False
+
+
+def complete_location_hierarchy(region, district, municipality, locality):
+    # If a locality is available, walk upward to municipality/district/region when fields exist.
+    if locality and not municipality:
+        parent = location_parent(locality)
+        if parent:
+            municipality = parent
+    if municipality and not district:
+        parent = location_parent(municipality)
+        if parent:
+            district = parent
+    if district and not region:
+        parent = location_parent(district)
+        if parent:
+            region = parent
+    # If the supplied municipality was actually a locality because of legacy naming, try one more upward pass.
+    if municipality and is_level(municipality, 'locality') and not locality:
+        locality = municipality
+        municipality = location_parent(locality)
+        if municipality and not district:
+            district = location_parent(municipality)
+        if district and not region:
+            region = location_parent(district)
+    return region, district, municipality, locality
+
+
+def applicant_full_name(applicant, pool):
+    parts = []
+    for field_name in ['x_first_name_ar', 'x_father_name_ar', 'x_grandfather_name_ar', 'x_surname_ar']:
+        value = first_text(get_text_field(applicant, field_name), get_text_field(pool, field_name))
+        if value:
+            parts.append(value)
+    if parts:
+        return ' '.join(parts)
+    return first_text(applicant.partner_name, applicant.display_name)
+
+
+def resolve_job(applicant, req):
+    if applicant.job_id:
+        return applicant.job_id
+    if req and req.x_job_id:
+        return req.x_job_id
+    return False
+
+
+def resolve_department(applicant, job):
+    if has_field(applicant, 'department_id') and applicant.department_id:
+        return applicant.department_id
+    if job and has_field(job, 'department_id') and job.department_id:
+        return job.department_id
+    return False
+
 
 def duration_label(contract):
     value = contract.x_contract_duration_value or 0
@@ -590,55 +894,9 @@ def duration_label(contract):
         return str(value) + ' يوم'
     return str(value)
 
-def applicant_name(applicant, pool):
-    parts = []
-    for field_name in ['x_first_name_ar', 'x_father_name_ar', 'x_grandfather_name_ar', 'x_surname_ar']:
-        value = first_text(get_text_field(applicant, field_name), get_text_field(pool, field_name))
-        if value:
-            parts.append(value)
-    if parts:
-        return ' '.join(parts)
-    return first_text(applicant.partner_name, applicant.display_name)
-
-def resolve_job(applicant, req):
-    if applicant.job_id:
-        return applicant.job_id
-    if req and req.x_job_id:
-        return req.x_job_id
-    return False
-
-def resolve_department(applicant, job):
-    department = False
-    if has_field(applicant, 'department_id') and applicant.department_id:
-        department = applicant.department_id
-    elif job and has_field(job, 'department_id') and job.department_id:
-        department = job.department_id
-    return department
-
-def selected_identity_submission(applicant):
-    for codes in [
-        ['id_card'],
-        ['national_id'],
-        ['passport'],
-        ['driving_license'],
-    ]:
-        sub = accepted_submission(applicant, codes, False)
-        if sub:
-            return sub
-    return False
-
-def identity_source_value(sub):
-    code = clean_text(sub.x_document_code) if sub else ''
-    if code in ['id_card', 'national_id']:
-        return 'id_card'
-    if code == 'passport':
-        return 'passport'
-    if code == 'driving_license':
-        return 'driving_license'
-    return False
 
 def sync_applicant(applicant, contract):
-    applicant_vals = {
+    vals = {
         'x_employment_contract_id': contract.id,
         'x_employment_contract_state': contract.x_state or False,
         'x_employment_contract_number': contract.x_contract_number or False,
@@ -659,10 +917,11 @@ def sync_applicant(applicant, contract):
         'x_employment_contract_board_decision_id': contract.x_board_decision_instance_id.id if contract.x_board_decision_instance_id else False,
     }
     if has_field(applicant, 'x_pool_id'):
-        applicant_vals['x_pool_id'] = contract.x_pool_id.id if contract.x_pool_id else False
+        vals['x_pool_id'] = contract.x_pool_id.id if contract.x_pool_id else False
     if has_field(applicant, 'x_pool_conversion_request_id'):
-        applicant_vals['x_pool_conversion_request_id'] = contract.x_conversion_request_id.id if contract.x_conversion_request_id else False
-    applicant.write(applicant_vals)
+        vals['x_pool_conversion_request_id'] = contract.x_conversion_request_id.id if contract.x_conversion_request_id else False
+    applicant.write(vals)
+
 
 def refresh_contract_snapshot(contract, applicant):
     if contract.x_state in LOCKED_STATES:
@@ -671,58 +930,65 @@ def refresh_contract_snapshot(contract, applicant):
     pool = find_pool(applicant)
     req = find_conversion_request(applicant, pool)
 
-    identity_sub = selected_identity_submission(applicant)
-    birth_sub = accepted_submission(applicant, ['birth_certificate'], False)
-    residence_sub = accepted_submission(applicant, ['residence_certificate'], False)
-    family_sub = accepted_submission(applicant, ['family_status'], False)
-    health_sub = accepted_submission(applicant, ['health_certificate'], False)
-    bank_sub = accepted_submission(applicant, ['bank_information'], False)
-    qualification_sub = accepted_submission(applicant, ['qualification'], False)
+    selected_source = clean_text(contract.x_identity_document_source)
+    identity_sub = selected_identity_submission(applicant, selected_source)
+    identity_source = selected_source or source_for_identity_submission(identity_sub)
+    birth_sub = accepted_submission(applicant, ['birth_certificate'])
+    residence_sub = accepted_submission(applicant, ['residence_certificate'])
+    family_sub = accepted_submission(applicant, ['family_status'])
+    health_sub = accepted_submission(applicant, ['health_certificate'])
+    bank_sub = accepted_submission(applicant, ['bank_information'])
+    qualification_sub = accepted_submission(applicant, ['qualification'])
 
     job = resolve_job(applicant, req)
     department = resolve_department(applicant, job)
 
-    first_name = keep_or_fill_text(contract.x_first_name_ar, first_text(get_text_field(applicant, 'x_first_name_ar'), get_text_field(pool, 'x_first_name_ar')))
-    father_name = keep_or_fill_text(contract.x_father_name_ar, first_text(get_text_field(applicant, 'x_father_name_ar'), get_text_field(pool, 'x_father_name_ar')))
-    grandfather_name = keep_or_fill_text(contract.x_grandfather_name_ar, first_text(get_text_field(applicant, 'x_grandfather_name_ar'), get_text_field(pool, 'x_grandfather_name_ar')))
-    surname = keep_or_fill_text(contract.x_surname_ar, first_text(get_text_field(applicant, 'x_surname_ar'), get_text_field(pool, 'x_surname_ar')))
-    full_name = keep_or_fill_text(contract.x_full_name_ar, applicant_name(applicant, pool))
+    full_name = first_text(contract.x_full_name_ar, applicant_full_name(applicant, pool))
+    first_name = first_text(contract.x_first_name_ar, get_text_field(applicant, 'x_first_name_ar'), get_text_field(pool, 'x_first_name_ar'))
+    father_name = first_text(contract.x_father_name_ar, get_text_field(applicant, 'x_father_name_ar'), get_text_field(pool, 'x_father_name_ar'))
+    grandfather_name = first_text(contract.x_grandfather_name_ar, get_text_field(applicant, 'x_grandfather_name_ar'), get_text_field(pool, 'x_grandfather_name_ar'))
+    surname = first_text(contract.x_surname_ar, get_text_field(applicant, 'x_surname_ar'), get_text_field(pool, 'x_surname_ar'))
 
-    national_id = keep_or_fill_text(contract.x_national_id, first_text(
-        get_text_field(applicant, 'x_national_id'),
-        get_text_field(pool, 'x_national_id'),
-        identity_sub.x_document_number if identity_sub else ''
-    ))
-
-    gender = contract.x_gender or get_text_field(applicant, 'x_gender') or get_text_field(pool, 'x_gender') or False
-
+    national_id = first_text(contract.x_national_id, get_text_field(applicant, 'x_national_id'), get_text_field(pool, 'x_national_id'), identity_sub.x_document_number if identity_sub else '')
+    gender = normalize_gender(first_text(contract.x_gender, get_text_field(applicant, 'x_gender'), get_text_field(pool, 'x_gender')))
     date_of_birth = contract.x_date_of_birth or get_field(applicant, 'x_date_of_birth') or get_field(pool, 'x_date_of_birth') or (birth_sub.x_date_of_birth if birth_sub and birth_sub.x_date_of_birth else False)
-    marital_status = keep_or_fill_text(contract.x_marital_status, get_text_field(pool, 'x_marital_status'))
 
-    nationality = contract.x_nationality_ar
+    nationality = first_text(contract.x_nationality_ar)
     if not nationality and pool and has_field(pool, 'x_nationality_id') and pool.x_nationality_id:
         nationality = country_name_ar(pool.x_nationality_id)
 
-    residence_region = contract.x_residence_region_id or get_field(applicant, 'x_residence_region_id') or get_field(pool, 'x_residence_region_id') or False
-    residence_district = contract.x_residence_district_id or get_field(applicant, 'x_residence_district_id') or get_field(pool, 'x_residence_district_id') or False
-    residence_municipality = contract.x_residence_municipality_id or get_field(applicant, 'x_residence_municipality_id') or get_field(pool, 'x_residence_municipality_id') or False
-    residence_location = contract.x_residence_location_id or get_field(applicant, 'x_residence_location_id') or get_field(pool, 'x_residence_location_id') or False
-    residence_address = keep_or_fill_text(contract.x_residence_address_text, first_text(get_text_field(applicant, 'x_address_text'), get_text_field(pool, 'x_address_text')))
+    region = contract.x_residence_region_id or get_field(applicant, 'x_residence_region_id') or get_field(pool, 'x_residence_region_id') or False
+    district = contract.x_residence_district_id or get_field(applicant, 'x_residence_district_id') or get_field(pool, 'x_residence_district_id') or False
+    municipality = contract.x_residence_municipality_id or get_field(applicant, 'x_residence_municipality_id') or get_field(pool, 'x_residence_municipality_id') or False
+    locality = contract.x_residence_location_id or get_field(applicant, 'x_residence_location_id') or get_field(pool, 'x_residence_location_id') or False
+    region, district, municipality, locality = complete_location_hierarchy(region, district, municipality, locality)
 
-    contract_start = contract.x_contract_start_date or get_field(applicant, 'availability') or False
+    preferred_phone = first_text(get_text_field(pool, 'x_phone'), get_text_field(applicant, 'partner_phone'), get_text_field(applicant, 'partner_mobile'))
+    preferred_email = first_text(get_text_field(applicant, 'email_from'), get_text_field(pool, 'x_email'))
+    contract_start = get_field(applicant, 'availability') or contract.x_contract_start_date or False
+
+    identity_number = contract.x_identity_document_number
+    identity_issue_place = contract.x_identity_document_issue_place
+    identity_issue_date = contract.x_identity_document_issue_date
+    identity_expiry_date = contract.x_identity_document_expiry_date
+    if identity_sub:
+        identity_number = identity_sub.x_document_number or False
+        identity_issue_place = identity_sub.x_place_of_issue or False
+        identity_issue_date = identity_sub.x_issue_date or False
+        identity_expiry_date = identity_sub.x_expiry_date or False
 
     vals = {
         'x_pool_id': pool.id if pool else False,
         'x_conversion_request_id': req.id if req else False,
-        'x_contract_date': contract.x_contract_date or date_today(),
+        'x_contract_date': contract.x_contract_date or today_date(),
         'x_template_code': 'MCEP-HR-F-0005',
         'x_template_version': 'V.0.0.2015',
         'x_field_map_version': 'f0005-letter-overlay-v1',
 
         'x_company_name_ar': 'شركة مرسيليا للنظافة وحماية البيئة',
-        'x_representative_name_ar': keep_or_fill_text(contract.x_representative_name_ar, 'حسين عبد الكريم حسين'),
-        'x_representative_title_ar': keep_or_fill_text(contract.x_representative_title_ar, 'رئيس مجلس الإدارة'),
-        'x_representative_nationality_ar': keep_or_fill_text(contract.x_representative_nationality_ar, 'ليبي'),
+        'x_representative_name_ar': first_text(contract.x_representative_name_ar, 'حسين عبد الكريم حسين'),
+        'x_representative_title_ar': first_text(contract.x_representative_title_ar, 'رئيس مجلس الإدارة'),
+        'x_representative_nationality_ar': first_text(contract.x_representative_nationality_ar, 'ليبي'),
 
         'x_full_name_ar': full_name or False,
         'x_first_name_ar': first_name or False,
@@ -731,42 +997,44 @@ def refresh_contract_snapshot(contract, applicant):
         'x_surname_ar': surname or False,
         'x_date_of_birth': date_of_birth or False,
         'x_gender': gender or False,
-        'x_marital_status': marital_status or False,
+        'x_marital_status': first_text(contract.x_marital_status, get_text_field(pool, 'x_marital_status')) or False,
         'x_nationality_ar': nationality or False,
         'x_national_id': national_id or False,
-        'x_email': keep_or_fill_text(contract.x_email, first_text(get_text_field(applicant, 'email_from'), get_text_field(pool, 'x_email'))),
-        'x_phone': keep_or_fill_text(contract.x_phone, first_text(get_text_field(applicant, 'partner_phone'), get_text_field(pool, 'x_phone'))),
-        'x_mobile_1': keep_or_fill_text(contract.x_mobile_1, first_text(get_text_field(applicant, 'partner_mobile'), get_text_field(pool, 'x_phone'))),
+        'x_email': first_text(contract.x_email, preferred_email) or False,
+        'x_phone': normalize_phone(preferred_phone) or False,
+        'x_mobile_1': normalize_phone(preferred_phone) or False,
+        'x_mobile_2': normalize_phone(contract.x_mobile_2) or False,
 
-        'x_identity_document_source': contract.x_identity_document_source or identity_source_value(identity_sub) or False,
-        'x_identity_document_number': keep_or_fill_text(contract.x_identity_document_number, first_text(identity_sub.x_document_number if identity_sub else '', national_id)),
-        'x_identity_document_issue_place': keep_or_fill_text(contract.x_identity_document_issue_place, identity_sub.x_place_of_issue if identity_sub else ''),
-        'x_identity_document_issue_date': contract.x_identity_document_issue_date or (identity_sub.x_issue_date if identity_sub and identity_sub.x_issue_date else False),
+        'x_identity_document_source': identity_source or False,
+        'x_identity_document_number': identity_number or False,
+        'x_identity_document_issue_place': identity_issue_place or False,
+        'x_identity_document_issue_date': identity_issue_date or False,
+        'x_identity_document_expiry_date': identity_expiry_date or False,
 
-        'x_residence_region_id': residence_region.id if residence_region else False,
-        'x_residence_district_id': residence_district.id if residence_district else False,
-        'x_residence_municipality_id': residence_municipality.id if residence_municipality else False,
-        'x_residence_location_id': residence_location.id if residence_location else False,
-        'x_residence_address_text': residence_address or False,
-        'x_home_phone': keep_or_fill_text(contract.x_home_phone, get_text_field(pool, 'x_phone')),
+        'x_residence_region_id': region.id if region else False,
+        'x_residence_district_id': district.id if district else False,
+        'x_residence_municipality_id': municipality.id if municipality else False,
+        'x_residence_location_id': locality.id if locality else False,
+        'x_residence_address_text': first_text(contract.x_residence_address_text, get_text_field(applicant, 'x_address_text'), get_text_field(pool, 'x_address_text')) or False,
+        'x_home_phone': normalize_phone(preferred_phone) or False,
 
-        'x_bank_name': keep_or_fill_text(contract.x_bank_name, bank_sub.x_bank_name if bank_sub else ''),
-        'x_bank_branch': keep_or_fill_text(contract.x_bank_branch, bank_sub.x_bank_branch if bank_sub else ''),
-        'x_bank_account_number': keep_or_fill_text(contract.x_bank_account_number, bank_sub.x_account_number if bank_sub else ''),
-        'x_iban': keep_or_fill_text(contract.x_iban, bank_sub.x_iban if bank_sub else ''),
+        'x_bank_name': first_text(contract.x_bank_name, bank_sub.x_bank_name if bank_sub else '') or False,
+        'x_bank_branch': first_text(contract.x_bank_branch, bank_sub.x_bank_branch if bank_sub else '') or False,
+        'x_bank_account_number': first_text(contract.x_bank_account_number, bank_sub.x_account_number if bank_sub else '') or False,
+        'x_iban': first_text(contract.x_iban, bank_sub.x_iban if bank_sub else '') or False,
 
-        'x_qualification_type': keep_or_fill_text(contract.x_qualification_type, qualification_sub.x_qualification_type if qualification_sub else ''),
-        'x_qualification_subject': keep_or_fill_text(contract.x_qualification_subject, qualification_sub.x_qualification_subject if qualification_sub else ''),
-        'x_family_paper_number': keep_or_fill_text(contract.x_family_paper_number, family_sub.x_family_paper_number if family_sub else ''),
-        'x_family_reference_number': keep_or_fill_text(contract.x_family_reference_number, family_sub.x_family_reference_number if family_sub else ''),
-        'x_next_of_kin_name': keep_or_fill_text(contract.x_next_of_kin_name, family_sub.x_next_of_kin_name if family_sub else ''),
-        'x_next_of_kin_phone': keep_or_fill_text(contract.x_next_of_kin_phone, family_sub.x_next_of_kin_phone if family_sub else ''),
-        'x_blood_type': keep_or_fill_text(contract.x_blood_type, health_sub.x_blood_type if health_sub else ''),
+        'x_qualification_type': first_text(contract.x_qualification_type, qualification_sub.x_qualification_type if qualification_sub else '') or False,
+        'x_qualification_subject': first_text(contract.x_qualification_subject, qualification_sub.x_qualification_subject if qualification_sub else '') or False,
+        'x_family_paper_number': first_text(contract.x_family_paper_number, family_sub.x_family_paper_number if family_sub else '') or False,
+        'x_family_reference_number': first_text(contract.x_family_reference_number, family_sub.x_family_reference_number if family_sub else '') or False,
+        'x_next_of_kin_name': first_text(contract.x_next_of_kin_name, family_sub.x_next_of_kin_name if family_sub else '') or False,
+        'x_next_of_kin_phone': normalize_phone(family_sub.x_next_of_kin_phone if family_sub and family_sub.x_next_of_kin_phone else contract.x_next_of_kin_phone) or False,
+        'x_blood_type': normalize_blood_type(health_sub.x_blood_type if health_sub and health_sub.x_blood_type else contract.x_blood_type) or False,
 
         'x_job_id': job.id if job else False,
-        'x_job_title_ar': keep_or_fill_text(contract.x_job_title_ar, display_name_ar(job) if job else ''),
+        'x_job_title_ar': display_name_ar(job) if job else False,
         'x_department_id': department.id if department else False,
-        'x_department_name_ar': keep_or_fill_text(contract.x_department_name_ar, display_name_ar(department) if department else ''),
+        'x_department_name_ar': display_name_ar(department) if department else False,
         'x_contract_start_date': contract_start or False,
 
         'x_identity_source_submission_id': identity_sub.id if identity_sub else False,
@@ -788,14 +1056,14 @@ def refresh_contract_snapshot(contract, applicant):
         'x_snapshot_refreshed_by_user_id': env.user.id,
     }
 
-    clean_name = full_name or applicant.display_name or 'المتقدم'
-    vals['x_name'] = contract.x_name or ('عقد العمل - ' + clean_name)
+    vals['x_name'] = contract.x_name or ('عقد العمل - ' + (full_name or applicant.display_name or 'المتقدم'))
 
     missing = []
     for label, value in [
         ('الاسم الكامل', vals.get('x_full_name_ar')),
         ('الرقم الوطني', vals.get('x_national_id')),
         ('الجنس', vals.get('x_gender')),
+        ('مستند الهوية', vals.get('x_identity_document_number')),
         ('المسمى الوظيفي', vals.get('x_job_title_ar')),
         ('الوحدة الإدارية', vals.get('x_department_name_ar')),
         ('تاريخ بداية العقد', vals.get('x_contract_start_date')),
@@ -816,16 +1084,17 @@ def refresh_contract_snapshot(contract, applicant):
     contract.write(vals)
 
     if has_field(applicant, 'x_pool_id') or has_field(applicant, 'x_pool_conversion_request_id'):
-        applicant_bridge_vals = {}
+        bridge = {}
         if has_field(applicant, 'x_pool_id'):
-            applicant_bridge_vals['x_pool_id'] = pool.id if pool else False
+            bridge['x_pool_id'] = pool.id if pool else False
         if has_field(applicant, 'x_pool_conversion_request_id'):
-            applicant_bridge_vals['x_pool_conversion_request_id'] = req.id if req else False
-        if applicant_bridge_vals:
-            applicant.write(applicant_bridge_vals)
+            bridge['x_pool_conversion_request_id'] = req.id if req else False
+        if bridge:
+            applicant.write(bridge)
 
     sync_applicant(applicant, contract)
     return 'updated'
+
 
 def open_contract_action(contract):
     return {
@@ -837,6 +1106,7 @@ def open_contract_action(contract):
         'views': [(False, 'form')],
         'target': 'current',
     }
+
 
 applicant = records.sudo()[:1]
 
@@ -851,14 +1121,14 @@ else:
     if not contract:
         pool = find_pool(applicant)
         req = find_conversion_request(applicant, pool)
-        name = applicant_name(applicant, pool)
+        name = applicant_full_name(applicant, pool)
         contract = env['x_hr.applicant_employment_contract'].sudo().create({
             'x_name': 'عقد العمل - ' + (name or applicant.display_name or 'المتقدم'),
             'x_applicant_id': applicant.id,
             'x_pool_id': pool.id if pool else False,
             'x_conversion_request_id': req.id if req else False,
             'x_state': 'draft_data',
-            'x_contract_date': date_today(),
+            'x_contract_date': today_date(),
             'x_template_code': 'MCEP-HR-F-0005',
             'x_template_version': 'V.0.0.2015',
             'x_field_map_version': 'f0005-letter-overlay-v1',
@@ -905,27 +1175,7 @@ else:
             <field name="state">code</field>
             <field name="code">
 action = False
-
 LOCKED_STATES = ['generated', 'printed', 'signed_uploaded', 'ministry_accredited', 'handover_ready', 'cancelled']
-
-def clean_text(value):
-    if not value:
-        return ''
-    return str(value).strip()
-
-def duration_label(contract):
-    value = contract.x_contract_duration_value or 0
-    unit = clean_text(contract.x_contract_duration_unit)
-    if not value:
-        return ''
-    if unit == 'year':
-        return str(value) + ' سنة'
-    if unit == 'month':
-        return str(value) + ' شهر'
-    if unit == 'day':
-        return str(value) + ' يوم'
-    return str(value)
-
 record = records.sudo()[:1]
 
 if not record:
