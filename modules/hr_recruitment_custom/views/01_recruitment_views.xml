@@ -27,16 +27,11 @@
                     string="تهيئة التعاقد"
                     class="btn-primary"
                     invisible="not id" />
-                
                 <button type="action"
-                    name="hr_recruitment_custom.action_hr_applicant_generate_tor_pdf"
-                    string="Generate TOR PDF"
-                    class="btn-primary"
+                    name="hr_recruitment_custom.action_hr_applicant_refresh_preboarding_gate"
+                    string="تحديث جاهزية التوظيف"
+                    class="btn-secondary"
                     invisible="not id" />
-                <button type="action"
-                    name="hr_recruitment_custom.action_hr_applicant_send_tor_for_signature"
-                    string="Send TOR for Signature"
-                    invisible="not id or not x_tor_pdf_attachment_id or x_tor_state != 'generated'" />
             </xpath>
 
             <xpath expr="//sheet/div[@name='button_box']" position="inside">
@@ -321,62 +316,99 @@
                         <field name="x_board_decision_notes" nolabel="1"/>
                     </group>
                 </page>
-                <page string="Role and Duties">
-                    <group>
+                <page string="الوصف الوظيفي">
+                    <group string="حالة سير الوصف الوظيفي">
                         <group>
-                            <field name="x_tor_state" widget="statusbar"
+                            <field name="x_tor_state"
+                                string="حالة الوصف الوظيفي"
+                                widget="statusbar"
                                 options="{'clickable': false}"
                                 statusbar_visible="draft,generated,sent,signed,superseded"
                                 readonly="1" />
-                            <field name="x_tor_recipient_name" />
-                            <field name="x_tor_employee_id" />
-                            <field name="x_tor_department_name" />
-                            <field name="x_tor_job_title" />
-                            <field name="x_tor_direct_supervisor_name" />
-                            <field name="x_tor_date_of_receipt" />
+                        </group>
+                    </group>
+
+                    <group string="إجراءات الوصف الوظيفي" col="6">
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_normalize_tor_header_on_change"
+                            string="تحديث بيانات الوصف الوظيفي"
+                            class="btn-secondary"
+                            invisible="not id or x_tor_state not in ['draft', False]" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_generate_tor_pdf"
+                            string="توليد مسودة الوصف الوظيفي"
+                            class="btn-primary"
+                            invisible="not id or x_tor_state in ['sent', 'signed', 'superseded']" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_send_tor_for_signature"
+                            string="إرسال الوصف الوظيفي للتوقيع"
+                            class="btn-secondary"
+                            invisible="not id or not x_tor_pdf_attachment_id or x_tor_state != 'generated'" />
+                    </group>
+
+                    <group string="بيانات الوصف الوظيفي">
+                        <group>
+                            <field name="x_tor_recipient_name" string="اسم المستلم" />
+                            <field name="x_tor_employee_id" string="الرقم الوظيفي" />
+                            <field name="x_tor_department_name" string="القسم" />
+                            <field name="x_tor_job_title" string="الوظيفة" />
+                            <field name="x_tor_direct_supervisor_name" string="المسؤول المباشر" />
+                            <field name="x_tor_date_of_receipt" string="تاريخ الاستلام" />
                         </group>
                         <group>
-                            <field name="x_tor_department_id" />
-                            <field name="x_tor_version_label" readonly="1" />
-                            <field name="x_tor_document_reference" readonly="1" />
-                            <field name="x_tor_generated_on" readonly="1" />
-                            <field name="x_tor_sent_on" readonly="1" />
-                            <field name="x_tor_signed_on" readonly="1" />
-                            <field name="x_tor_pdf_attachment_id" readonly="1"
+                            <field name="x_tor_department_id"
+                                string="القسم المرتبط"
+                                options="{'no_create': True, 'no_create_edit': True}" />
+                            <field name="x_tor_version_label" string="إصدار الوصف الوظيفي" readonly="1" />
+                            <field name="x_tor_document_reference" string="مرجع الوصف الوظيفي" readonly="1" />
+                            <field name="x_tor_generated_on" string="تاريخ توليد المسودة" readonly="1" />
+                            <field name="x_tor_sent_on" string="تاريخ الإرسال للتوقيع" readonly="1" />
+                            <field name="x_tor_signed_on" string="تاريخ اكتمال التوقيع" readonly="1" />
+                        </group>
+                    </group>
+
+                    <group string="ملفات الوصف الوظيفي">
+                        <group>
+                            <field name="x_tor_pdf_attachment_id"
+                                string="مسودة الوصف الوظيفي"
+                                readonly="1"
                                 options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
                                 domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', id)]" />
+                        </group>
+                        <group>
                             <field name="x_tor_signed_attachment_id"
+                                string="النسخة الموقعة"
                                 options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
                                 domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', id)]"
                                 context="{'default_res_model': 'hr.applicant', 'default_res_id': id}" />
                         </group>
                     </group>
-                    <group>
-                        <field name="x_tor_notes"
-                            placeholder="Recruiter notes about this TOR version or signing workflow." />
-                    </group>
-                    <div class="text-muted">
-                        Upload the signed TOR PDF to the applicant Files/Chatter first, then select
-                        it in the Signed TOR PDF field to mark the TOR as signed.
-                    </div>
 
-                    <separator string="Negotiated Duties" />
+                    <separator string="المهام المتفق عليها" />
                     <field name="x_role_and_duty_line_ids" context="{'default_x_applicant_id': id}">
                         <list editable="bottom">
-                            <field name="x_sequence" widget="handle" />
-                            <field name="x_functional_area_id" />
+                            <field name="x_sequence" widget="handle" string="الترتيب" />
+                            <field name="x_functional_area_id" string="المجال الوظيفي" />
                             <field name="x_function_id"
+                                string="المهمة / الوظيفة المحكومة"
                                 domain="[('x_functional_area_id', '=', x_functional_area_id)]" />
                         </list>
-                        <form string="Applicant Function Line">
+                        <form string="تفصيل مهمة">
                             <group>
-                                <field name="x_functional_area_id" />
+                                <field name="x_functional_area_id" string="المجال الوظيفي" />
                                 <field name="x_function_id"
+                                    string="المهمة / الوظيفة المحكومة"
                                     domain="[('x_functional_area_id', '=', x_functional_area_id)]" />
-                                <field name="x_sequence" />
+                                <field name="x_sequence" string="الترتيب" />
                             </group>
                         </form>
                     </field>
+
+                    <group string="ملاحظات">
+                        <field name="x_tor_notes"
+                            nolabel="1"
+                            placeholder="ملاحظات الموارد البشرية حول نسخة الوصف الوظيفي أو مسار التوقيع." />
+                    </group>
                 </page>
                 <page string="Documents">
                     <group>
@@ -901,7 +933,7 @@
                             invisible="not id or not x_employment_contract_id"/>
                         <button type="action"
                             name="hr_recruitment_custom.action_hr_applicant_refresh_preboarding_gate"
-                            string="تحديث جاهزية بوابة ما قبل التوظيف"
+                            string="تحديث جاهزية التوظيف"
                             class="btn-secondary"
                             invisible="not id"/>
                     </group>

@@ -1,62 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="action_hr_applicant_generate_tor_pdf" model="ir.actions.server">
-        <field name="name">Generate TOR PDF</field>
+        <field name="name">توليد مسودة الوصف الوظيفي</field>
         <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
         <field name="state">code</field>
         <field name="code"><![CDATA[
-attachment = False
+action = False
+last_attachment = False
 
-for rec in records:
+
+def toast(title, message, kind='warning', sticky=False):
+    return {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': title,
+            'message': message,
+            'type': kind,
+            'sticky': sticky,
+        },
+    }
+
+
+def applicant_label(applicant):
+    return applicant.partner_name or applicant.name or applicant.display_name or 'Applicant'
+
+
+def current_version_number(applicant):
+    version_number = 1
+    if applicant.x_tor_pdf_attachment_id and applicant.x_tor_version_label and applicant.x_tor_version_label.startswith('TOR V'):
+        suffix = applicant.x_tor_version_label[5:]
+        if suffix.isdigit():
+            version_number = int(suffix) + 1
+        else:
+            version_number = 2
+    return version_number
+
+
+Registry = env['x_hr.recruitment_document'].sudo()
+
+for rec in records.sudo():
+    signed_registry_doc = Registry.search([
+        ('x_document_type', '=', 'tor'),
+        ('x_source_model', '=', 'hr.applicant'),
+        ('x_source_res_id', '=', rec.id),
+        ('x_state', '=', 'signed'),
+    ], order='id desc', limit=1)
+
+    if signed_registry_doc or rec.x_tor_state == 'signed' or rec.x_tor_signed_attachment_id:
+        msg = 'لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.'
+        rec.message_post(body=msg)
+        action = toast('إعادة التوليد موقوفة', msg, 'warning', True)
+        continue
+
+    active_signature_doc = Registry.search([
+        ('x_document_type', '=', 'tor'),
+        ('x_source_model', '=', 'hr.applicant'),
+        ('x_source_res_id', '=', rec.id),
+        ('x_state', '=', 'signature_requested'),
+    ], order='id desc', limit=1)
+
+    if active_signature_doc or rec.x_tor_state == 'sent':
+        msg = 'لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.'
+        rec.message_post(body=msg)
+        action = toast('طلب توقيع مفتوح', msg, 'warning', True)
+        continue
+
     initial_values = {}
-    if rec.partner_name:
+    if rec.partner_name and rec.x_tor_recipient_name != rec.partner_name:
         initial_values['x_tor_recipient_name'] = rec.partner_name
+
     if rec.job_id and rec.job_id.name:
-        initial_values['x_tor_job_title'] = rec.job_id.with_context(lang='ar_001').name or rec.job_id.name
+        translated_job_title = rec.job_id.with_context(lang='ar_001').name or rec.job_id.name
+        if translated_job_title and rec.x_tor_job_title != translated_job_title:
+            initial_values['x_tor_job_title'] = translated_job_title
+
     if rec.job_id and rec.job_id.department_id:
-        initial_values['x_tor_department_id'] = rec.job_id.department_id.id
-        initial_values['x_tor_department_name'] = rec.job_id.department_id.with_context(lang='ar_001').display_name or rec.job_id.department_id.display_name
+        department = rec.job_id.department_id
+        translated_department_name = department.with_context(lang='ar_001').display_name or department.display_name
+        if rec.x_tor_department_id != department:
+            initial_values['x_tor_department_id'] = department.id
+        if translated_department_name and rec.x_tor_department_name != translated_department_name:
+            initial_values['x_tor_department_name'] = translated_department_name
+
+        if not rec.x_tor_direct_supervisor_name and 'manager_id' in department._fields and department.manager_id:
+            initial_values['x_tor_direct_supervisor_name'] = department.manager_id.name
+
     if not rec.x_tor_state:
         initial_values['x_tor_state'] = 'draft'
     if not rec.x_tor_version_label:
         initial_values['x_tor_version_label'] = 'TOR V1'
     if rec.id and not rec.x_tor_document_reference:
         initial_values['x_tor_document_reference'] = 'MCEP-HR-F-0006-%05d' % rec.id
-    if initial_values:
-        rec.sudo().write(initial_values)
 
-    for line in rec.x_role_and_duty_line_ids:
+    if initial_values:
+        rec.write(initial_values)
+
+    for line in rec.x_role_and_duty_line_ids.sudo():
         line_values = {}
         if line.x_function_id:
             line_values['x_name'] = line.x_function_id.with_context(lang='ar_001').display_name or line.x_function_id.display_name
         if line.x_functional_area_id:
             line_values['x_print_functional_area_name'] = line.x_functional_area_id.with_context(lang='ar_001').display_name or line.x_functional_area_id.display_name
         if line_values:
-            line.sudo().write(line_values)
+            line.write(line_values)
 
+    missing = []
     if not rec.x_tor_recipient_name:
-        raise Warning('Set the TOR recipient name before generating the TOR PDF.')
+        missing.append('اسم المستلم')
     if not rec.x_tor_job_title:
-        raise Warning('Set the TOR job title before generating the TOR PDF.')
+        missing.append('الوظيفة')
     if not rec.x_tor_department_name:
-        raise Warning('Set the TOR department name before generating the TOR PDF.')
+        missing.append('القسم')
     if not rec.x_role_and_duty_line_ids:
-        raise Warning('Add at least one applicant duty line before generating the TOR PDF.')
+        missing.append('المهام المتفق عليها')
 
-    version_number = 1
-    if rec.x_tor_pdf_attachment_id and rec.x_tor_version_label and rec.x_tor_version_label.startswith('TOR V'):
-        suffix = rec.x_tor_version_label[5:]
-        if suffix.isdigit():
-            version_number = int(suffix) + 1
-        else:
-            version_number = 2
+    if missing:
+        msg = 'لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.' % ('، '.join(missing))
+        rec.message_post(body=msg)
+        action = toast('بيانات ناقصة', msg, 'warning', False)
+        continue
 
+    version_number = current_version_number(rec)
     version_label = 'TOR V%s' % version_number
+
     pdf_content, content_type = env['ir.actions.report'].sudo()._render_qweb_pdf(
         'hr_recruitment_custom.action_report_hr_applicant_tor',
         [rec.id],
     )
-    filename = '%s - %s.pdf' % ((rec.x_tor_recipient_name or rec.display_name or 'Applicant TOR'), version_label)
+
+    filename = '%s - الوصف الوظيفي - %s.pdf' % (
+        rec.x_tor_recipient_name or applicant_label(rec),
+        version_label,
+    )
 
     attachment = env['ir.attachment'].sudo().create({
         'name': filename,
@@ -66,13 +142,14 @@ for rec in records:
         'res_model': rec._name,
         'res_id': rec.id,
     })
+    last_attachment = attachment
 
     if rec.x_tor_pdf_attachment_id:
-        rec.message_post(body='Previous TOR PDF version superseded by a newer generated copy.')
+        rec.message_post(body='تم استبدال مسودة الوصف الوظيفي السابقة بمسودة أحدث غير موقعة.')
 
     generated_on = datetime.datetime.now()
 
-    rec.sudo().write({
+    rec.write({
         'x_tor_pdf_attachment_id': attachment.id,
         'x_tor_generated_on': generated_on,
         'x_tor_sent_on': False,
@@ -82,69 +159,62 @@ for rec in records:
         'x_tor_version_label': version_label,
     })
 
-    registry_model = env['x_hr.recruitment_document'].sudo()
-    registry_doc = registry_model.search([
+    registry_doc = Registry.search([
         ('x_document_type', '=', 'tor'),
         ('x_source_model', '=', 'hr.applicant'),
         ('x_source_res_id', '=', rec.id),
-    ], limit=1)
+        ('x_state', '!=', 'signed'),
+    ], order='id desc', limit=1)
+
+    registry_values = {
+        'x_name': 'الوصف الوظيفي - %s - v%s' % (applicant_label(rec), version_number),
+        'x_applicant_id': rec.id,
+        'x_document_type': 'tor',
+        'x_state': 'generated',
+        'x_generated_attachment_id': attachment.id,
+        'x_signed_attachment_id': False,
+        'x_signature_mode': False,
+        'x_sign_request_model': False,
+        'x_sign_request_res_id': False,
+        'x_sign_request_reference': False,
+        'x_sign_request_state': False,
+        'x_sign_request_url': False,
+        'x_sign_completed_attachment_id': False,
+        'x_sign_certificate_attachment_id': False,
+        'x_sign_completed_on': False,
+        'x_version': version_number,
+        'x_generated_on': generated_on,
+        'x_sent_on': False,
+        'x_signed_on': False,
+        'x_responsible_user_id': env.user.id,
+        'x_source_model': 'hr.applicant',
+        'x_source_res_id': rec.id,
+        'x_notes': 'تم توليد مسودة الوصف الوظيفي من سجل المتقدم. تم تصفير أي مسار توقيع سابق غير مكتمل لهذه النسخة.',
+    }
 
     if registry_doc:
-        registry_doc.write({
-            'x_name': 'TOR - %s - v%s' % (
-                rec.x_tor_recipient_name or rec.partner_name or rec.name or rec.display_name,
-                version_number,
-            ),
-            'x_applicant_id': rec.id,
-            'x_state': 'generated',
-            'x_generated_attachment_id': attachment.id,
-            'x_signed_attachment_id': False,
-            'x_version': version_number,
-            'x_generated_on': generated_on,
-            'x_sent_on': False,
-            'x_signed_on': False,
-            'x_responsible_user_id': env.user.id,
-            'x_source_model': 'hr.applicant',
-            'x_source_res_id': rec.id,
-            'x_notes': 'TOR PDF regenerated from the applicant TOR workflow. Previous sent/signed registry state was cleared for the new version.',
-        })
+        registry_doc.write(registry_values)
     else:
-        registry_doc = registry_model.create({
-            'x_name': 'TOR - %s - v%s' % (
-                rec.x_tor_recipient_name or rec.partner_name or rec.name or rec.display_name,
-                version_number,
-            ),
-            'x_applicant_id': rec.id,
-            'x_document_type': 'tor',
-            'x_state': 'generated',
-            'x_generated_attachment_id': attachment.id,
-            'x_signed_attachment_id': False,
-            'x_version': version_number,
-            'x_generated_on': generated_on,
-            'x_sent_on': False,
-            'x_signed_on': False,
-            'x_responsible_user_id': env.user.id,
-            'x_source_model': 'hr.applicant',
-            'x_source_res_id': rec.id,
-            'x_notes': 'TOR PDF generated from the applicant TOR workflow.',
-        })
+        registry_doc = Registry.create(registry_values)
 
-    rec.message_post(body='TOR PDF generated and attached to the applicant record. Recruitment document registry updated.')
+    rec.message_post(body='تم توليد مسودة الوصف الوظيفي وربطها بسجل المتقدم وتحديث سجل وثائق التوظيف.')
 
-if len(records) == 1 and attachment:
+if len(records) == 1 and last_attachment:
     action = {
         'type': 'ir.actions.act_window',
-        'name': 'Generated TOR PDF',
+        'name': 'مسودة الوصف الوظيفي',
         'res_model': 'ir.attachment',
         'view_mode': 'form',
-        'res_id': attachment.id,
+        'res_id': last_attachment.id,
         'target': 'new',
     }
+elif not action:
+    action = toast('لم يتم توليد مسودة', 'لم يتم توليد أي مسودة وصف وظيفي.', 'warning', False)
         ]]></field>
     </record>
 
     <record id="action_hr_applicant_send_tor_for_signature" model="ir.actions.server">
-        <field name="name">Send TOR for Signature</field>
+        <field name="name">إرسال الوصف الوظيفي للتوقيع</field>
         <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
         <field name="state">code</field>
         <field name="code"><![CDATA[
@@ -152,7 +222,7 @@ attachment = False
 
 for rec in records:
     if not rec.x_tor_pdf_attachment_id:
-        raise Warning('Generate the TOR PDF before sending it for signature.')
+        raise Warning('ولّد مسودة الوصف الوظيفي قبل إرسالها للتوقيع.')
 
     attachment = rec.x_tor_pdf_attachment_id
     sent_on = datetime.datetime.now()
@@ -175,7 +245,7 @@ for rec in records:
             'x_sent_on': sent_on,
             'x_responsible_user_id': env.user.id,
             'x_generated_attachment_id': attachment.id,
-            'x_notes': 'TOR marked as sent for signature through the guided-manual Sign workflow.',
+            'x_notes': 'تم وضع الوصف الوظيفي في حالة طلب التوقيع عبر المسار اليدوي المؤقت.',
         })
     else:
         registry_version = 1
@@ -185,7 +255,7 @@ for rec in records:
                 registry_version = int(suffix)
 
         registry_doc = registry_model.create({
-            'x_name': 'TOR - %s - v%s' % (
+            'x_name': 'الوصف الوظيفي - %s - v%s' % (
                 rec.x_tor_recipient_name or rec.partner_name or rec.name or rec.display_name,
                 registry_version,
             ),
@@ -201,22 +271,22 @@ for rec in records:
             'x_responsible_user_id': env.user.id,
             'x_source_model': 'hr.applicant',
             'x_source_res_id': rec.id,
-            'x_notes': 'TOR registry row was created during send-for-signature because no generated registry row was found.',
+            'x_notes': 'تم إنشاء سجل الوصف الوظيفي أثناء الإرسال للتوقيع لعدم وجود سجل توليد سابق.',
         })
 
     signer_email = rec.email_from or 'the applicant email address'
     rec.message_post(body=(
-        'TOR marked as sent for signature. Manual Sign workflow: '
-        '1) open the generated TOR PDF attachment, '
-        '2) upload it into Odoo Sign, '
-        '3) assign the applicant signer to %s, '
-        '4) once signed, upload the signed PDF to Files/Chatter and select it in the Signed TOR PDF field.'
+        'تم وضع الوصف الوظيفي في حالة الإرسال للتوقيع. المسار اليدوي المؤقت: '
+        '1) افتح مرفق مسودة الوصف الوظيفي، '
+        '2) ارفعه إلى تطبيق التوقيع في أودو، '
+        '3) عيّن الموقّع باستخدام بريد المتقدم: %s، '
+        '4) بعد التوقيع ارفع النسخة الموقعة إلى الملفات/المحادثة واخترها في حقل النسخة الموقعة.'
     ) % (signer_email,))
 
 if len(records) == 1 and attachment:
     action = {
         'type': 'ir.actions.act_window',
-        'name': 'Latest TOR PDF',
+        'name': 'مسودة الوصف الوظيفي',
         'res_model': 'ir.attachment',
         'view_mode': 'form',
         'res_id': attachment.id,

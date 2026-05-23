@@ -3,7 +3,7 @@
     <data noupdate="0">
 
         <record id="action_hr_applicant_refresh_preboarding_gate" model="ir.actions.server">
-            <field name="name">تحديث جاهزية بوابة ما قبل التوظيف</field>
+            <field name="name">تحديث جاهزية التوظيف</field>
             <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
             <field name="state">code</field>
             <field name="code"><![CDATA[
@@ -123,7 +123,7 @@ else:
     labels = {
         'board_decision': 'قرار التعيين',
         'employment_contract': 'عقد العمل',
-        'tor': 'TOR / F-0006',
+        'tor': 'الوصف الوظيفي',
         'policies_compliance_declaration': 'F-0007 إقرار السياسات والإجراءات',
         'non_disclosure_agreement': 'F-0009 اتفاقية عدم الإفصاح',
     }
@@ -161,7 +161,7 @@ else:
         applicant.message_post(body=note)
         action = toast('بوابة ما قبل التوظيف غير مكتملة', note, 'warning', False, reload_applicant(applicant))
     else:
-        note = 'اكتملت مستندات بوابة ما قبل التوظيف المطلوبة: قرار التعيين، عقد العمل، TOR/F-0006، F-0007، وF-0009. يمكن فتح مرحلة الترحيل اللاحقة دون إنشاء سجلات HR الأصلية تلقائياً في هذا pass.'
+        note = 'اكتملت مستندات بوابة ما قبل التوظيف المطلوبة: قرار التعيين، عقد العمل، الوصف الوظيفي، F-0007، وF-0009. يمكن فتح مرحلة الترحيل اللاحقة دون إنشاء سجلات HR الأصلية تلقائياً في هذا pass.'
         write_applicant_gate(applicant, 'ready', True, False, note)
         write_contract_gate(contract, True, False)
         applicant.message_post(body=note)
