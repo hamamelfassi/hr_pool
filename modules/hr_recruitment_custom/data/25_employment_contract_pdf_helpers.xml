@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="action_employment_contract_open_generated_pdf" model="ir.actions.server">
+            <field name="name">فتح مسودة العقد</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_employment_contract"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+record = records.sudo()[:1]
+if not record or not record.x_generated_attachment_id:
+    action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'لا توجد مسودة', 'message': 'لا يوجد ملف عقد مولد لفتحه.', 'type': 'warning', 'sticky': False}}
+else:
+    action = {'type': 'ir.actions.act_url', 'url': '/web/content/%s' % record.x_generated_attachment_id.id, 'target': 'new'}
+            ]]></field>
+        </record>
+
+        <record id="action_employment_contract_download_generated_pdf" model="ir.actions.server">
+            <field name="name">تنزيل مسودة العقد</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_employment_contract"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+record = records.sudo()[:1]
+if not record or not record.x_generated_attachment_id:
+    action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'لا توجد مسودة', 'message': 'لا يوجد ملف عقد مولد للتنزيل.', 'type': 'warning', 'sticky': False}}
+else:
+    action = {'type': 'ir.actions.act_url', 'url': '/web/content/%s?download=true' % record.x_generated_attachment_id.id, 'target': 'self'}
+            ]]></field>
+        </record>
+    </data>
+</odoo>

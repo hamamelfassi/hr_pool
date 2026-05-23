@@ -71,6 +71,14 @@
             <field name="ttype">date</field>
         </record>
 
+        <record id="field_employment_contract_x_contract_day_ar" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_contract_day_ar</field>
+            <field name="field_description">Contract Day Arabic</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
         <record id="field_employment_contract_x_template_code" model="ir.model.fields">
             <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
             <field name="name">x_template_code</field>

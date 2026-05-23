@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="img_f0005_page_01" model="ir.attachment">
+            <field name="name">F-0005 Background Page 01.png</field>
+            <field name="datas" type="base64" file="hr_recruitment_custom/static/src/img/f0005/page-01.png"/>
+            <field name="res_model">ir.ui.view</field>
+            <field name="public" eval="True"/>
+            <field name="mimetype">image/png</field>
+        </record>
+
+        <record id="img_f0005_page_02" model="ir.attachment">
+            <field name="name">F-0005 Background Page 02.png</field>
+            <field name="datas" type="base64" file="hr_recruitment_custom/static/src/img/f0005/page-02.png"/>
+            <field name="res_model">ir.ui.view</field>
+            <field name="public" eval="True"/>
+            <field name="mimetype">image/png</field>
+        </record>
+
+        <record id="img_f0005_page_03" model="ir.attachment">
+            <field name="name">F-0005 Background Page 03.png</field>
+            <field name="datas" type="base64" file="hr_recruitment_custom/static/src/img/f0005/page-03.png"/>
+            <field name="res_model">ir.ui.view</field>
+            <field name="public" eval="True"/>
+            <field name="mimetype">image/png</field>
+        </record>
+
+        <record id="img_f0005_page_04" model="ir.attachment">
+            <field name="name">F-0005 Background Page 04.png</field>
+            <field name="datas" type="base64" file="hr_recruitment_custom/static/src/img/f0005/page-04.png"/>
+            <field name="res_model">ir.ui.view</field>
+            <field name="public" eval="True"/>
+            <field name="mimetype">image/png</field>
+        </record>
+
+        <record id="img_f0005_page_05" model="ir.attachment">
+            <field name="name">F-0005 Background Page 05.png</field>
+            <field name="datas" type="base64" file="hr_recruitment_custom/static/src/img/f0005/page-05.png"/>
+            <field name="res_model">ir.ui.view</field>
+            <field name="public" eval="True"/>
+            <field name="mimetype">image/png</field>
+        </record>
+
+        <record id="img_f0005_page_06" model="ir.attachment">
+            <field name="name">F-0005 Background Page 06.png</field>
+            <field name="datas" type="base64" file="hr_recruitment_custom/static/src/img/f0005/page-06.png"/>
+            <field name="res_model">ir.ui.view</field>
+            <field name="public" eval="True"/>
+            <field name="mimetype">image/png</field>
+        </record>
+
+        <record id="img_f0005_page_07" model="ir.attachment">
+            <field name="name">F-0005 Background Page 07.png</field>
+            <field name="datas" type="base64" file="hr_recruitment_custom/static/src/img/f0005/page-07.png"/>
+            <field name="res_model">ir.ui.view</field>
+            <field name="public" eval="True"/>
+            <field name="mimetype">image/png</field>
+        </record>
+    </data>
+</odoo>

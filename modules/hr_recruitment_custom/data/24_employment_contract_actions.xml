@@ -60,6 +60,24 @@ def today_date():
     return datetime.date.today()
 
 
+def arabic_weekday(date_value):
+    if not date_value:
+        return ''
+    names = {
+        0: 'الإثنين',
+        1: 'الثلاثاء',
+        2: 'الأربعاء',
+        3: 'الخميس',
+        4: 'الجمعة',
+        5: 'السبت',
+        6: 'الأحد',
+    }
+    try:
+        return names.get(date_value.weekday(), '')
+    except Exception:
+        return ''
+
+
 def now_dt():
     return datetime.datetime.now()
 
@@ -365,6 +383,7 @@ def refresh_contract_snapshot(contract, applicant):
     preferred_phone = first_text(get_text_field(pool, 'x_phone'), get_text_field(applicant, 'partner_phone'), get_text_field(applicant, 'partner_mobile'))
     preferred_email = first_text(get_text_field(applicant, 'email_from'), get_text_field(pool, 'x_email'))
     contract_start = get_field(applicant, 'availability') or contract.x_contract_start_date or False
+    contract_date = contract.x_contract_date or today_date()
 
     identity_number = contract.x_identity_document_number
     identity_issue_place = contract.x_identity_document_issue_place
@@ -379,7 +398,8 @@ def refresh_contract_snapshot(contract, applicant):
     vals = {
         'x_pool_id': pool.id if pool else False,
         'x_conversion_request_id': req.id if req else False,
-        'x_contract_date': contract.x_contract_date or today_date(),
+        'x_contract_date': contract_date,
+        'x_contract_day_ar': arabic_weekday(contract_date),
         'x_template_code': 'MCEP-HR-F-0005',
         'x_template_version': 'V.0.0.2015',
         'x_field_map_version': 'f0005-letter-overlay-v1',
@@ -528,6 +548,7 @@ else:
             'x_conversion_request_id': req.id if req else False,
             'x_state': 'draft_data',
             'x_contract_date': today_date(),
+            'x_contract_day_ar': arabic_weekday(today_date()),
             'x_template_code': 'MCEP-HR-F-0005',
             'x_template_version': 'V.0.0.2015',
             'x_field_map_version': 'f0005-letter-overlay-v1',
@@ -661,6 +682,24 @@ def today_date():
     return datetime.date.today()
 
 
+def arabic_weekday(date_value):
+    if not date_value:
+        return ''
+    names = {
+        0: 'الإثنين',
+        1: 'الثلاثاء',
+        2: 'الأربعاء',
+        3: 'الخميس',
+        4: 'الجمعة',
+        5: 'السبت',
+        6: 'الأحد',
+    }
+    try:
+        return names.get(date_value.weekday(), '')
+    except Exception:
+        return ''
+
+
 def now_dt():
     return datetime.datetime.now()
 
@@ -966,6 +1005,7 @@ def refresh_contract_snapshot(contract, applicant):
     preferred_phone = first_text(get_text_field(pool, 'x_phone'), get_text_field(applicant, 'partner_phone'), get_text_field(applicant, 'partner_mobile'))
     preferred_email = first_text(get_text_field(applicant, 'email_from'), get_text_field(pool, 'x_email'))
     contract_start = get_field(applicant, 'availability') or contract.x_contract_start_date or False
+    contract_date = contract.x_contract_date or today_date()
 
     identity_number = contract.x_identity_document_number
     identity_issue_place = contract.x_identity_document_issue_place
@@ -980,7 +1020,8 @@ def refresh_contract_snapshot(contract, applicant):
     vals = {
         'x_pool_id': pool.id if pool else False,
         'x_conversion_request_id': req.id if req else False,
-        'x_contract_date': contract.x_contract_date or today_date(),
+        'x_contract_date': contract_date,
+        'x_contract_day_ar': arabic_weekday(contract_date),
         'x_template_code': 'MCEP-HR-F-0005',
         'x_template_version': 'V.0.0.2015',
         'x_field_map_version': 'f0005-letter-overlay-v1',
@@ -1129,6 +1170,7 @@ else:
             'x_conversion_request_id': req.id if req else False,
             'x_state': 'draft_data',
             'x_contract_date': today_date(),
+            'x_contract_day_ar': arabic_weekday(today_date()),
             'x_template_code': 'MCEP-HR-F-0005',
             'x_template_version': 'V.0.0.2015',
             'x_field_map_version': 'f0005-letter-overlay-v1',
@@ -1219,17 +1261,163 @@ else:
             <field name="model_id" ref="model_x_hr_applicant_employment_contract" />
             <field name="state">code</field>
             <field name="code">
-action = {
-    'type': 'ir.actions.client',
-    'tag': 'display_notification',
-    'params': {
-        'title': 'توليد مسودة العقد',
-        'message': 'توليد PDF باستخدام QWeb PNG overlay يأتي في 9D/9E بعد اكتمال بيانات العقد.',
-        'type': 'info',
-        'sticky': False,
-    },
-}
-            </field>
+action = False
+
+def clean_text(value):
+    if not value:
+        return ''
+    return str(value).strip()
+
+def toast(title, message, kind='warning', sticky=False):
+    return {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {'title': title, 'message': message, 'type': kind, 'sticky': sticky},
+    }
+
+def safe_filename(value):
+    value = clean_text(value)
+    for ch in ['/', '\\', ':', '*', '?', '"', '&lt;', '&gt;', '|']:
+        value = value.replace(ch, '-')
+    while '  ' in value:
+        value = value.replace('  ', ' ')
+    return value.strip()
+
+def field_allowed_selection(model, field_name, value):
+    if field_name not in model._fields:
+        return False
+    selection = model._fields[field_name].selection
+    if not selection:
+        return True
+    allowed = []
+    for item in selection:
+        if isinstance(item, (list, tuple)) and item:
+            allowed.append(item[0])
+    return value in allowed
+
+def registry_domain(registry_model, applicant, contract):
+    domain = []
+    if 'x_applicant_id' in registry_model._fields and applicant:
+        domain.append(('x_applicant_id', '=', applicant.id))
+    if 'x_source_model' in registry_model._fields:
+        domain.append(('x_source_model', '=', 'x_hr.applicant_employment_contract'))
+    if 'x_source_res_id' in registry_model._fields:
+        domain.append(('x_source_res_id', '=', contract.id))
+    if 'x_document_type' in registry_model._fields and field_allowed_selection(registry_model, 'x_document_type', 'employment_contract'):
+        domain.append(('x_document_type', '=', 'employment_contract'))
+    return domain
+
+def registry_values(registry_model, contract, applicant, attachment):
+    vals = {}
+    if 'x_name' in registry_model._fields:
+        vals['x_name'] = attachment.name
+    if 'x_applicant_id' in registry_model._fields and applicant:
+        vals['x_applicant_id'] = applicant.id
+    if 'x_document_type' in registry_model._fields and field_allowed_selection(registry_model, 'x_document_type', 'employment_contract'):
+        vals['x_document_type'] = 'employment_contract'
+    if 'x_state' in registry_model._fields and field_allowed_selection(registry_model, 'x_state', 'generated'):
+        vals['x_state'] = 'generated'
+    if 'x_generated_attachment_id' in registry_model._fields:
+        vals['x_generated_attachment_id'] = attachment.id
+    if 'x_version' in registry_model._fields:
+        version_field = registry_model._fields['x_version']
+        if version_field.type == 'integer':
+            vals['x_version'] = 1
+        elif version_field.type in ['char', 'text', 'html']:
+            vals['x_version'] = 'V.0.0.2015'
+        elif version_field.type == 'selection' and field_allowed_selection(registry_model, 'x_version', 'V.0.0.2015'):
+            vals['x_version'] = 'V.0.0.2015'
+    if 'x_generated_on' in registry_model._fields:
+        vals['x_generated_on'] = datetime.datetime.now()
+    if 'x_responsible_user_id' in registry_model._fields:
+        vals['x_responsible_user_id'] = env.user.id
+    if 'x_source_model' in registry_model._fields:
+        vals['x_source_model'] = 'x_hr.applicant_employment_contract'
+    if 'x_source_res_id' in registry_model._fields:
+        vals['x_source_res_id'] = contract.id
+    if 'x_notes' in registry_model._fields:
+        vals['x_notes'] = 'تم توليد مسودة عقد العمل الرسمي MCEP-HR-F-0005 من سجل بيانات العقد.'
+    return vals
+
+def sync_applicant_from_contract(applicant, contract):
+    vals = {}
+    mapping = {
+        'x_employment_contract_id': contract.id,
+        'x_employment_contract_state': contract.x_state or False,
+        'x_employment_contract_number': contract.x_contract_number or False,
+        'x_employment_contract_date': contract.x_contract_date or False,
+        'x_employment_contract_start_date': contract.x_contract_start_date or False,
+        'x_employment_contract_end_date': contract.x_contract_end_date or False,
+        'x_employment_contract_monthly_wage': contract.x_monthly_wage_amount or 0.0,
+        'x_employment_contract_job_id': contract.x_job_id.id if contract.x_job_id else False,
+        'x_employment_contract_department_id': contract.x_department_id.id if contract.x_department_id else False,
+        'x_employment_contract_document_id': contract.x_recruitment_document_id.id if contract.x_recruitment_document_id else False,
+        'x_employment_contract_generated_attachment_id': contract.x_generated_attachment_id.id if contract.x_generated_attachment_id else False,
+        'x_employment_contract_generated_on': contract.x_generated_on or False,
+        'x_employment_contract_signed_attachment_id': contract.x_signed_attachment_id.id if contract.x_signed_attachment_id else False,
+        'x_employment_contract_signed_uploaded_on': contract.x_signed_uploaded_on or False,
+        'x_employment_contract_ministry_attachment_id': contract.x_ministry_accredited_attachment_id.id if contract.x_ministry_accredited_attachment_id else False,
+        'x_employment_contract_ministry_accredited_on': contract.x_ministry_accredited_on or False,
+        'x_employment_contract_board_decision_id': contract.x_board_decision_instance_id.id if contract.x_board_decision_instance_id else False,
+    }
+    duration_value = contract.x_contract_duration_value or 0
+    duration_unit = contract.x_contract_duration_unit or ''
+    duration_label = ''
+    if duration_value:
+        if duration_unit == 'year':
+            duration_label = str(duration_value) + ' سنة'
+        elif duration_unit == 'month':
+            duration_label = str(duration_value) + ' شهر'
+        elif duration_unit == 'day':
+            duration_label = str(duration_value) + ' يوم'
+        else:
+            duration_label = str(duration_value)
+    mapping['x_employment_contract_duration_label'] = duration_label or False
+    for field_name in mapping:
+        if field_name in applicant._fields:
+            vals[field_name] = mapping[field_name]
+    if vals:
+        applicant.write(vals)
+
+def reload_contract(contract):
+    return {'type': 'ir.actions.act_window', 'name': contract.x_name or 'بيانات العقد', 'res_model': 'x_hr.applicant_employment_contract', 'res_id': contract.id, 'view_mode': 'form', 'views': [(False, 'form')], 'target': 'current'}
+
+contract = records.sudo()[:1]
+
+if not contract:
+    action = toast('لا يوجد عقد', 'افتح سجل عقد أولاً.', 'warning', False)
+elif contract.x_state not in ['ready_to_render', 'generated']:
+    action = toast('العقد غير جاهز للتوليد', 'يجب أن يكون العقد في حالة جاهز للتوليد قبل توليد المسودة.', 'warning', False)
+elif not contract.x_applicant_id:
+    action = toast('لا يوجد متقدم', 'العقد غير مرتبط بسجل متقدم.', 'warning', True)
+elif contract.x_state in ['printed', 'signed_uploaded', 'ministry_accredited', 'handover_ready', 'cancelled']:
+    action = toast('العقد مقفل', 'لا يمكن توليد مسودة جديدة بعد بدء التوقيع اليدوي أو الاعتماد أو الإلغاء.', 'warning', False)
+else:
+    applicant = contract.x_applicant_id.sudo()
+    report_service = env['ir.actions.report'].sudo()
+    pdf_content, _content_type = report_service._render_qweb_pdf('hr_recruitment_custom.action_report_employment_contract_f0005', [contract.id])
+
+    base_name = safe_filename(contract.x_name or ('عقد العمل - ' + (applicant.partner_name or applicant.display_name or 'المتقدم')))
+    filename = 'MCEP-HR-F-0005 - ' + base_name + '.pdf'
+
+    attachment = env['ir.attachment'].sudo().create({'name': filename, 'type': 'binary', 'raw': pdf_content, 'res_model': 'hr.applicant', 'res_id': applicant.id, 'mimetype': 'application/pdf'})
+
+    Registry = env['x_hr.recruitment_document'].sudo()
+    domain = registry_domain(Registry, applicant, contract)
+    registry = False
+    if domain:
+        registry = Registry.search(domain, order='id desc', limit=1)
+    vals = registry_values(Registry, contract, applicant, attachment)
+    if registry:
+        registry.write(vals)
+    else:
+        registry = Registry.create(vals)
+
+    contract.write({'x_generated_attachment_id': attachment.id, 'x_generated_on': datetime.datetime.now(), 'x_generated_by_user_id': env.user.id, 'x_recruitment_document_id': registry.id if registry else False, 'x_state': 'generated', 'x_render_status': 'generated', 'x_render_error': False})
+    sync_applicant_from_contract(applicant, contract)
+    applicant.message_post(body='تم توليد مسودة عقد العمل الرسمي MCEP-HR-F-0005 وربطها بسجل العقد.', attachment_ids=[attachment.id])
+    action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'تم توليد مسودة العقد', 'message': 'تم إنشاء ملف PDF وربطه بسجل العقد وسجل مستندات التوظيف.', 'type': 'success', 'sticky': False, 'next': reload_contract(contract)}}
+</field>
         </record>
 
     </data>

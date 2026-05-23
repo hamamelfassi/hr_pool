@@ -747,3 +747,47 @@ Lessons learned:
 Next step:
 
 - Install/upgrade, refresh an existing contract, test identity source switching, verify phone/blood-type normalization, then proceed to 9D QWeb overlay proof.
+
+## 9D-1 — F-0005 QWeb overlay generation proof
+
+Date: 2026-05-22
+
+Status: Patch generated; Odoo acceptance pending.
+
+Files touched:
+
+- `modules/hr_recruitment_custom/__manifest__.py`
+- `modules/hr_recruitment_custom/report/12_employment_contract_f0005_report_templates.xml`
+- `modules/hr_recruitment_custom/report/13_employment_contract_f0005_report_actions.xml`
+- `modules/hr_recruitment_custom/data/24_employment_contract_actions.xml`
+- `modules/hr_recruitment_custom/data/25_employment_contract_pdf_helpers.xml`
+- `modules/hr_recruitment_custom/views/08_employment_contract_views.xml`
+- `docs/modules/hr_recruitment_custom/phase_9_plan_tracker.md`
+
+What changed:
+
+- Added Letter-sized F-0005 QWeb report infrastructure matching the official source geometry: 8.5 × 11 in / 215.9 × 279.4 mm.
+- Added seven-page PNG background overlay template using the locked high-resolution page images.
+- Added first-pass overlay coordinates for selected fields on pages 1 and 2.
+- Replaced the placeholder `توليد مسودة العقد` server action with real PDF generation.
+- Generated PDFs are stored as applicant attachments and linked back to the employment contract.
+- Generation now creates/updates the `x_hr.recruitment_document` registry row for `employment_contract`.
+- Added controlled open/download actions for the generated draft.
+
+Acceptance result:
+
+- Pending Odoo SaaS install/upgrade and first PDF generation review.
+
+Issues / tracebacks:
+
+- None at patch generation stage.
+
+Lessons learned:
+
+- F-0005 remains a static official-template artifact using a PNG background overlay, not a recreated QWeb text form.
+- The source PDF is Letter geometry; do not force A4 in QWeb.
+- 9D proves the generation pipeline and first coordinates only. Full coordinate calibration remains 9E.
+
+Next step:
+
+- Install/upgrade, generate a PDF from a `جاهز للتوليد` contract, verify seven pages/backgrounds/registry linkage, then calibrate coordinates in 9E.
