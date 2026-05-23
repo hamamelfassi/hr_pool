@@ -42,6 +42,21 @@
                         string="توليد مسودة العقد"
                         class="btn-primary"
                         invisible="not id or x_state in ['printed', 'signed_uploaded', 'ministry_accredited', 'handover_ready', 'cancelled']"/>
+                    <button type="action"
+                        name="hr_recruitment_custom.action_employment_contract_mark_printed"
+                        string="اعتماد الطباعة"
+                        class="btn-secondary"
+                        invisible="not id or x_state != 'generated' or not x_generated_attachment_id"/>
+                    <button type="action"
+                        name="hr_recruitment_custom.action_employment_contract_confirm_signed_upload"
+                        string="تثبيت النسخة الموقعة"
+                        class="btn-primary"
+                        invisible="not id or x_state != 'printed' or not x_signed_attachment_id"/>
+                    <button type="action"
+                        name="hr_recruitment_custom.action_employment_contract_confirm_ministry_accredited_upload"
+                        string="تثبيت اعتماد وزارة العمل"
+                        class="btn-primary"
+                        invisible="not id or x_state != 'signed_uploaded' or not x_ministry_accredited_attachment_id"/>
                     <field name="x_state"
                         widget="statusbar"
                         statusbar_visible="draft_data,ready_to_render,generated,printed,signed_uploaded,ministry_accredited"
@@ -235,6 +250,8 @@
                                         options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
                                     <field name="x_generated_on" readonly="1"/>
                                     <field name="x_generated_by_user_id" readonly="1"/>
+                                    <field name="x_printed_on" readonly="1"/>
+                                    <field name="x_printed_by_user_id" readonly="1"/>
                                 </group>
                                 <group string="أوامر المسودة">
                                     <button type="action"
@@ -254,20 +271,65 @@
                                         class="btn-secondary"
                                         icon="fa-download"
                                         invisible="not x_generated_attachment_id"/>
+                                    <button type="action"
+                                        name="hr_recruitment_custom.action_employment_contract_mark_printed"
+                                        string="اعتماد الطباعة"
+                                        class="btn-secondary"
+                                        invisible="x_state != 'generated' or not x_generated_attachment_id"/>
                                 </group>
                             </group>
                             <group>
                                 <group string="النسخة الموقعة">
                                     <field name="x_signed_attachment_id"
+                                        readonly="x_state != 'printed'"
+                                        domain="[('res_model', 'in', ['hr.applicant', 'x_hr.applicant_employment_contract', False])]"
+                                        context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}"
                                         options="{'no_create': True, 'no_create_edit': True}"/>
                                     <field name="x_signed_uploaded_on" readonly="1"/>
                                     <field name="x_signed_uploaded_by_user_id" readonly="1"/>
+                                    <button type="action"
+                                        name="hr_recruitment_custom.action_employment_contract_confirm_signed_upload"
+                                        string="تثبيت النسخة الموقعة"
+                                        class="btn-primary"
+                                        invisible="x_state != 'printed' or not x_signed_attachment_id"/>
+                                    <button type="action"
+                                        name="hr_recruitment_custom.action_employment_contract_open_signed_pdf"
+                                        string="فتح النسخة الموقعة"
+                                        class="btn-secondary"
+                                        icon="fa-external-link"
+                                        invisible="not x_signed_attachment_id"/>
+                                    <button type="action"
+                                        name="hr_recruitment_custom.action_employment_contract_download_signed_pdf"
+                                        string="تنزيل النسخة الموقعة"
+                                        class="btn-secondary"
+                                        icon="fa-download"
+                                        invisible="not x_signed_attachment_id"/>
                                 </group>
                                 <group string="النسخة المعتمدة">
                                     <field name="x_ministry_accredited_attachment_id"
+                                        readonly="x_state != 'signed_uploaded'"
+                                        domain="[('res_model', 'in', ['hr.applicant', 'x_hr.applicant_employment_contract', False])]"
+                                        context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}"
                                         options="{'no_create': True, 'no_create_edit': True}"/>
                                     <field name="x_ministry_accredited_on" readonly="1"/>
                                     <field name="x_ministry_accredited_by_user_id" readonly="1"/>
+                                    <button type="action"
+                                        name="hr_recruitment_custom.action_employment_contract_confirm_ministry_accredited_upload"
+                                        string="تثبيت اعتماد وزارة العمل"
+                                        class="btn-primary"
+                                        invisible="x_state != 'signed_uploaded' or not x_ministry_accredited_attachment_id"/>
+                                    <button type="action"
+                                        name="hr_recruitment_custom.action_employment_contract_open_ministry_pdf"
+                                        string="فتح النسخة المعتمدة"
+                                        class="btn-secondary"
+                                        icon="fa-external-link"
+                                        invisible="not x_ministry_accredited_attachment_id"/>
+                                    <button type="action"
+                                        name="hr_recruitment_custom.action_employment_contract_download_ministry_pdf"
+                                        string="تنزيل النسخة المعتمدة"
+                                        class="btn-secondary"
+                                        icon="fa-download"
+                                        invisible="not x_ministry_accredited_attachment_id"/>
                                 </group>
                             </group>
                             <group string="حالة التوليد">
@@ -325,6 +387,11 @@
                                     <field name="x_handover_state" readonly="1"/>
                                     <field name="x_handover_ready" readonly="1"/>
                                     <field name="x_handover_blocking_notes" readonly="1"/>
+                                    <button type="action"
+                                        name="hr_recruitment_custom.action_employment_contract_refresh_preboarding_gate"
+                                        string="تحديث جاهزية بوابة الترحيل"
+                                        class="btn-secondary"
+                                        invisible="not id or x_state not in ['signed_uploaded', 'ministry_accredited']"/>
                                 </group>
                                 <group string="السجلات المستقبلية">
                                     <field name="x_employee_id" readonly="1"/>

@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="action_employment_contract_mark_printed" model="ir.actions.server">
+            <field name="name">اعتماد الطباعة وبدء التوقيع اليدوي</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_employment_contract"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {'title': title, 'message': message, 'type': kind, 'sticky': sticky}
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def reload_contract(contract):
+    return {'type': 'ir.actions.act_window', 'name': contract.x_name or 'عقد العمل', 'res_model': 'x_hr.applicant_employment_contract', 'res_id': contract.id, 'view_mode': 'form', 'views': [(False, 'form')], 'target': 'current'}
+
+
+def selection_allows(record_or_model, field_name, value):
+    if field_name not in record_or_model._fields:
+        return False
+    selection = record_or_model._fields[field_name].selection
+    if not selection:
+        return True
+    allowed = []
+    for item in selection:
+        if isinstance(item, (list, tuple)) and item:
+            allowed.append(item[0])
+    return value in allowed
+
+
+def append_note(registry, line):
+    if registry and 'x_notes' in registry._fields:
+        existing = registry.x_notes or ''
+        registry.sudo().write({'x_notes': (existing + '\n' + line).strip() if existing else line})
+
+
+def sync_registry_printed(contract):
+    registry = contract.x_recruitment_document_id.sudo() if contract.x_recruitment_document_id else False
+    if not registry:
+        return False
+    vals = {}
+    if selection_allows(registry, 'x_state', 'signature_requested'):
+        vals['x_state'] = 'signature_requested'
+    if selection_allows(registry, 'x_signature_mode', 'manual_attachment'):
+        vals['x_signature_mode'] = 'manual_attachment'
+    if 'x_sent_on' in registry._fields:
+        vals['x_sent_on'] = datetime.datetime.now()
+    if 'x_responsible_user_id' in registry._fields:
+        vals['x_responsible_user_id'] = env.user.id
+    if vals:
+        registry.write(vals)
+    append_note(registry, 'تم اعتماد طباعة عقد العمل وبدء مسار التوقيع اليدوي خارج Odoo Sign.')
+    return registry
+
+
+def sync_applicant(contract):
+    applicant = contract.x_applicant_id.sudo() if contract.x_applicant_id else False
+    if not applicant:
+        return
+    mapping = {
+        'x_employment_contract_id': contract.id,
+        'x_employment_contract_state': contract.x_state or False,
+        'x_employment_contract_document_id': contract.x_recruitment_document_id.id if contract.x_recruitment_document_id else False,
+        'x_employment_contract_generated_attachment_id': contract.x_generated_attachment_id.id if contract.x_generated_attachment_id else False,
+        'x_employment_contract_generated_on': contract.x_generated_on or False,
+        'x_employment_contract_signed_attachment_id': contract.x_signed_attachment_id.id if contract.x_signed_attachment_id else False,
+        'x_employment_contract_signed_uploaded_on': contract.x_signed_uploaded_on or False,
+        'x_employment_contract_ministry_attachment_id': contract.x_ministry_accredited_attachment_id.id if contract.x_ministry_accredited_attachment_id else False,
+        'x_employment_contract_ministry_accredited_on': contract.x_ministry_accredited_on or False,
+    }
+    vals = {}
+    for field_name, value in mapping.items():
+        if field_name in applicant._fields:
+            vals[field_name] = value
+    if vals:
+        applicant.write(vals)
+
+
+contract = records.sudo()[:1]
+if not contract:
+    action = toast('لا يوجد عقد', 'افتح سجل عقد أولاً.', 'warning')
+elif not contract.x_generated_attachment_id:
+    action = toast('لا توجد مسودة', 'يجب توليد مسودة العقد قبل اعتماد الطباعة.', 'warning')
+elif contract.x_state != 'generated':
+    action = toast('حالة غير صحيحة', 'يمكن اعتماد الطباعة فقط من حالة مسودة مولدة.', 'warning')
+else:
+    now = datetime.datetime.now()
+    vals = {'x_state': 'printed', 'x_render_status': 'printed_manual_signing'}
+    if 'x_printed_on' in contract._fields:
+        vals['x_printed_on'] = now
+    if 'x_printed_by_user_id' in contract._fields:
+        vals['x_printed_by_user_id'] = env.user.id
+    contract.write(vals)
+    sync_registry_printed(contract)
+    sync_applicant(contract)
+    if contract.x_applicant_id:
+        contract.x_applicant_id.message_post(body='تم اعتماد طباعة عقد العمل وبدء مسار التوقيع اليدوي.', attachment_ids=[contract.x_generated_attachment_id.id])
+    action = toast('تم اعتماد الطباعة', 'تم نقل العقد إلى مرحلة مطبوع / قيد التوقيع اليدوي.', 'success', False, reload_contract(contract))
+            ]]></field>
+        </record>
+
+        <record id="action_employment_contract_confirm_signed_upload" model="ir.actions.server">
+            <field name="name">تثبيت النسخة الموقعة</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_employment_contract"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {'title': title, 'message': message, 'type': kind, 'sticky': sticky}
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def reload_contract(contract):
+    return {'type': 'ir.actions.act_window', 'name': contract.x_name or 'عقد العمل', 'res_model': 'x_hr.applicant_employment_contract', 'res_id': contract.id, 'view_mode': 'form', 'views': [(False, 'form')], 'target': 'current'}
+
+
+def selection_allows(record_or_model, field_name, value):
+    if field_name not in record_or_model._fields:
+        return False
+    selection = record_or_model._fields[field_name].selection
+    if not selection:
+        return True
+    allowed = []
+    for item in selection:
+        if isinstance(item, (list, tuple)) and item:
+            allowed.append(item[0])
+    return value in allowed
+
+
+def append_note(registry, line):
+    if registry and 'x_notes' in registry._fields:
+        existing = registry.x_notes or ''
+        registry.sudo().write({'x_notes': (existing + '\n' + line).strip() if existing else line})
+
+
+def attach_to_applicant(attachment, applicant):
+    # Do not retarget ir.attachment here.
+    # In Odoo Enterprise Documents, the uploaded attachment may already have a
+    # documents.document row. Rewriting res_model/res_id can make Documents try
+    # to create another documents.document for the same attachment_id, causing:
+    # documents_document_attachment_unique.
+    #
+    # Keep linkage through:
+    # - contract.x_signed_attachment_id / x_ministry_accredited_attachment_id
+    # - x_hr.recruitment_document existing attachment fields where available
+    # - applicant chatter note / already-uploaded applicant file
+    return False
+
+
+def sync_registry_signed(contract, attachment):
+    registry = contract.x_recruitment_document_id.sudo() if contract.x_recruitment_document_id else False
+    if not registry:
+        return False
+    now = datetime.datetime.now()
+    vals = {}
+    if selection_allows(registry, 'x_state', 'signed'):
+        vals['x_state'] = 'signed'
+    if selection_allows(registry, 'x_signature_mode', 'manual_attachment'):
+        vals['x_signature_mode'] = 'manual_attachment'
+    if 'x_signed_attachment_id' in registry._fields:
+        vals['x_signed_attachment_id'] = attachment.id
+    if 'x_signed_on' in registry._fields:
+        vals['x_signed_on'] = now
+    if 'x_sign_completed_on' in registry._fields:
+        vals['x_sign_completed_on'] = now
+    if 'x_sign_completed_attachment_id' in registry._fields:
+        vals['x_sign_completed_attachment_id'] = attachment.id
+    if 'x_responsible_user_id' in registry._fields:
+        vals['x_responsible_user_id'] = env.user.id
+    if vals:
+        registry.write(vals)
+    append_note(registry, 'تم تثبيت النسخة الموقعة يدوياً من عقد العمل. يبقى انتقال مرحلة الترحيل النهائية مشروطاً باستكمال قرار التعيين وTOR وF-0007 وF-0009.')
+    return registry
+
+
+def sync_applicant(contract):
+    applicant = contract.x_applicant_id.sudo() if contract.x_applicant_id else False
+    if not applicant:
+        return
+    mapping = {
+        'x_employment_contract_id': contract.id,
+        'x_employment_contract_state': contract.x_state or False,
+        'x_employment_contract_document_id': contract.x_recruitment_document_id.id if contract.x_recruitment_document_id else False,
+        'x_employment_contract_signed_attachment_id': contract.x_signed_attachment_id.id if contract.x_signed_attachment_id else False,
+        'x_employment_contract_signed_uploaded_on': contract.x_signed_uploaded_on or False,
+    }
+    vals = {}
+    for field_name, value in mapping.items():
+        if field_name in applicant._fields:
+            vals[field_name] = value
+    if vals:
+        applicant.write(vals)
+
+
+contract = records.sudo()[:1]
+if not contract:
+    action = toast('لا يوجد عقد', 'افتح سجل عقد أولاً.', 'warning')
+elif contract.x_state != 'printed':
+    action = toast('حالة غير صحيحة', 'يجب اعتماد الطباعة قبل تثبيت النسخة الموقعة.', 'warning')
+elif not contract.x_signed_attachment_id:
+    action = toast('ارفع النسخة الموقعة', 'ارفع ملف العقد الموقع أولاً ثم اضغط تثبيت النسخة الموقعة.', 'warning')
+else:
+    now = datetime.datetime.now()
+    applicant = contract.x_applicant_id.sudo() if contract.x_applicant_id else False
+    attachment = contract.x_signed_attachment_id.sudo()
+    attach_to_applicant(attachment, applicant)
+    contract.write({'x_state': 'signed_uploaded', 'x_signed_uploaded_on': now, 'x_signed_uploaded_by_user_id': env.user.id})
+    sync_registry_signed(contract, attachment)
+    sync_applicant(contract)
+    if applicant:
+        applicant.message_post(body='تم رفع وتثبيت النسخة الموقعة يدوياً من عقد العمل.', attachment_ids=[attachment.id])
+    action = toast('تم تثبيت النسخة الموقعة', 'تم تحديث حالة العقد وسجل مستندات التوظيف.', 'success', False, reload_contract(contract))
+            ]]></field>
+        </record>
+
+        <record id="action_employment_contract_confirm_ministry_accredited_upload" model="ir.actions.server">
+            <field name="name">تثبيت اعتماد وزارة العمل</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_employment_contract"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {'title': title, 'message': message, 'type': kind, 'sticky': sticky}
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def reload_contract(contract):
+    return {'type': 'ir.actions.act_window', 'name': contract.x_name or 'عقد العمل', 'res_model': 'x_hr.applicant_employment_contract', 'res_id': contract.id, 'view_mode': 'form', 'views': [(False, 'form')], 'target': 'current'}
+
+
+def append_note(registry, line):
+    if registry and 'x_notes' in registry._fields:
+        existing = registry.x_notes or ''
+        registry.sudo().write({'x_notes': (existing + '\n' + line).strip() if existing else line})
+
+
+def attach_to_applicant(attachment, applicant):
+    # Do not retarget ir.attachment here.
+    # In Odoo Enterprise Documents, the uploaded attachment may already have a
+    # documents.document row. Rewriting res_model/res_id can make Documents try
+    # to create another documents.document for the same attachment_id, causing:
+    # documents_document_attachment_unique.
+    #
+    # Keep linkage through:
+    # - contract.x_signed_attachment_id / x_ministry_accredited_attachment_id
+    # - x_hr.recruitment_document existing attachment fields where available
+    # - applicant chatter note / already-uploaded applicant file
+    return False
+
+
+def sync_applicant(contract):
+    applicant = contract.x_applicant_id.sudo() if contract.x_applicant_id else False
+    if not applicant:
+        return
+    mapping = {
+        'x_employment_contract_id': contract.id,
+        'x_employment_contract_state': contract.x_state or False,
+        'x_employment_contract_document_id': contract.x_recruitment_document_id.id if contract.x_recruitment_document_id else False,
+        'x_employment_contract_ministry_attachment_id': contract.x_ministry_accredited_attachment_id.id if contract.x_ministry_accredited_attachment_id else False,
+        'x_employment_contract_ministry_accredited_on': contract.x_ministry_accredited_on or False,
+    }
+    vals = {}
+    for field_name, value in mapping.items():
+        if field_name in applicant._fields:
+            vals[field_name] = value
+    if vals:
+        applicant.write(vals)
+
+
+contract = records.sudo()[:1]
+if not contract:
+    action = toast('لا يوجد عقد', 'افتح سجل عقد أولاً.', 'warning')
+elif contract.x_state != 'signed_uploaded':
+    action = toast('حالة غير صحيحة', 'يجب تثبيت النسخة الموقعة قبل اعتماد وزارة العمل.', 'warning')
+elif not contract.x_ministry_accredited_attachment_id:
+    action = toast('ارفع النسخة المعتمدة', 'ارفع ملف النسخة المعتمدة من وزارة العمل أولاً.', 'warning')
+else:
+    now = datetime.datetime.now()
+    applicant = contract.x_applicant_id.sudo() if contract.x_applicant_id else False
+    attachment = contract.x_ministry_accredited_attachment_id.sudo()
+    attach_to_applicant(attachment, applicant)
+    contract.write({
+        'x_state': 'ministry_accredited',
+        'x_ministry_accredited_on': now,
+        'x_ministry_accredited_by_user_id': env.user.id,
+        'x_handover_state': 'blocked',
+        'x_handover_ready': False,
+        'x_handover_blocking_notes': 'عقد العمل معتمد من وزارة العمل، لكن بوابة الترحيل النهائية لا تكتمل إلا بعد اكتمال قرار التعيين وTOR/F-0006 وF-0007 وF-0009 في سجل مستندات التوظيف.',
+    })
+    append_note(contract.x_recruitment_document_id, 'تم رفع النسخة المعتمدة من وزارة العمل لعقد العمل. لا يتم إغلاق بوابة الترحيل النهائية هنا لأن TOR/F-0006 وF-0007 وF-0009 ما زالت ضمن نطاق لاحق.')
+    sync_applicant(contract)
+    if applicant:
+        applicant.message_post(body='تم رفع وتثبيت النسخة المعتمدة من وزارة العمل لعقد العمل. لا يزال الترحيل النهائي مشروطاً باستكمال بقية مستندات ما قبل التوظيف.', attachment_ids=[attachment.id])
+    action = toast('تم تثبيت الاعتماد', 'تم حفظ نسخة وزارة العمل. بقيت جاهزية الترحيل النهائية مشروطة ببقية مستندات preboarding.', 'success', False, reload_contract(contract))
+            ]]></field>
+        </record>
+
+        <record id="action_employment_contract_open_signed_pdf" model="ir.actions.server">
+            <field name="name">فتح النسخة الموقعة</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_employment_contract"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+record = records.sudo()[:1]
+if not record or not record.x_signed_attachment_id:
+    action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'لا توجد نسخة موقعة', 'message': 'لا يوجد ملف موقع لفتحه.', 'type': 'warning', 'sticky': False}}
+else:
+    action = {'type': 'ir.actions.act_url', 'url': '/web/content/%s' % record.x_signed_attachment_id.id, 'target': 'new'}
+            ]]></field>
+        </record>
+
+        <record id="action_employment_contract_download_signed_pdf" model="ir.actions.server">
+            <field name="name">تنزيل النسخة الموقعة</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_employment_contract"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+record = records.sudo()[:1]
+if not record or not record.x_signed_attachment_id:
+    action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'لا توجد نسخة موقعة', 'message': 'لا يوجد ملف موقع للتنزيل.', 'type': 'warning', 'sticky': False}}
+else:
+    action = {'type': 'ir.actions.act_url', 'url': '/web/content/%s?download=true' % record.x_signed_attachment_id.id, 'target': 'self'}
+            ]]></field>
+        </record>
+
+        <record id="action_employment_contract_open_ministry_pdf" model="ir.actions.server">
+            <field name="name">فتح النسخة المعتمدة</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_employment_contract"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+record = records.sudo()[:1]
+if not record or not record.x_ministry_accredited_attachment_id:
+    action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'لا توجد نسخة معتمدة', 'message': 'لا يوجد ملف اعتماد لفتحه.', 'type': 'warning', 'sticky': False}}
+else:
+    action = {'type': 'ir.actions.act_url', 'url': '/web/content/%s' % record.x_ministry_accredited_attachment_id.id, 'target': 'new'}
+            ]]></field>
+        </record>
+
+        <record id="action_employment_contract_download_ministry_pdf" model="ir.actions.server">
+            <field name="name">تنزيل النسخة المعتمدة</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_employment_contract"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+record = records.sudo()[:1]
+if not record or not record.x_ministry_accredited_attachment_id:
+    action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': 'لا توجد نسخة معتمدة', 'message': 'لا يوجد ملف اعتماد للتنزيل.', 'type': 'warning', 'sticky': False}}
+else:
+    action = {'type': 'ir.actions.act_url', 'url': '/web/content/%s?download=true' % record.x_ministry_accredited_attachment_id.id, 'target': 'self'}
+            ]]></field>
+        </record>
+
+
+
+        <record id="action_employment_contract_refresh_preboarding_gate" model="ir.actions.server">
+            <field name="name">تحديث جاهزية بوابة الترحيل</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_employment_contract"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {'title': title, 'message': message, 'type': kind, 'sticky': sticky}
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def reload_contract(contract):
+    return {
+        'type': 'ir.actions.act_window',
+        'name': contract.x_name or 'عقد العمل',
+        'res_model': 'x_hr.applicant_employment_contract',
+        'res_id': contract.id,
+        'view_mode': 'form',
+        'views': [(False, 'form')],
+        'target': 'current',
+    }
+
+
+def sync_applicant_notes(contract):
+    applicant = contract.x_applicant_id.sudo() if contract.x_applicant_id else False
+    if not applicant:
+        return
+    vals = {}
+    if 'x_employment_contract_state' in applicant._fields:
+        vals['x_employment_contract_state'] = contract.x_state or False
+    if 'x_employment_contract_notes' in applicant._fields:
+        vals['x_employment_contract_notes'] = contract.x_handover_blocking_notes or False
+    if vals:
+        applicant.write(vals)
+
+
+def signed_doc_map(applicant):
+    result = {}
+    if not applicant:
+        return result
+
+    Document = env['x_hr.recruitment_document'].sudo()
+    docs = Document.search([
+        ('x_applicant_id', '=', applicant.id),
+        ('x_state', '=', 'signed'),
+        ('x_document_type', 'in', [
+            'board_decision',
+            'employment_contract',
+            'tor',
+            'policies_compliance_declaration',
+            'non_disclosure_agreement',
+        ]),
+    ])
+
+    for doc in docs:
+        dtype = doc.x_document_type
+        if dtype and dtype not in result:
+            result[dtype] = doc
+
+    return result
+
+
+contract = records.sudo()[:1]
+
+if not contract:
+    action = toast('لا يوجد عقد', 'افتح سجل عقد أولاً.', 'warning')
+else:
+    applicant = contract.x_applicant_id.sudo() if contract.x_applicant_id else False
+
+    labels = {
+        'board_decision': 'قرار التعيين',
+        'employment_contract': 'عقد العمل',
+        'tor': 'TOR / F-0006',
+        'policies_compliance_declaration': 'F-0007 إقرار السياسات والإجراءات',
+        'non_disclosure_agreement': 'F-0009 اتفاقية عدم الإفصاح',
+    }
+
+    required = [
+        'board_decision',
+        'employment_contract',
+        'tor',
+        'policies_compliance_declaration',
+        'non_disclosure_agreement',
+    ]
+
+    signed = signed_doc_map(applicant)
+    missing = []
+
+    for dtype in required:
+        if dtype not in signed:
+            missing.append(labels[dtype])
+
+    if contract.x_state != 'ministry_accredited' or not contract.x_ministry_accredited_attachment_id:
+        missing.append('اعتماد وزارة العمل لعقد العمل')
+
+    if missing:
+        note = 'بوابة الترحيل غير مكتملة. المتبقي: %s.' % '، '.join(missing)
+        contract.write({
+            'x_handover_state': 'blocked',
+            'x_handover_ready': False,
+            'x_handover_blocking_notes': note,
+        })
+        sync_applicant_notes(contract)
+        action = toast('بوابة الترحيل غير مكتملة', note, 'warning', False, reload_contract(contract))
+    else:
+        contract.write({
+            'x_handover_state': 'ready',
+            'x_handover_ready': True,
+            'x_handover_blocking_notes': False,
+        })
+        sync_applicant_notes(contract)
+        action = toast(
+            'جاهز للترحيل',
+            'اكتملت مستندات preboarding المطلوبة وأصبح العقد جاهزاً لمرحلة الترحيل اللاحقة.',
+            'success',
+            False,
+            reload_contract(contract)
+        )
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>

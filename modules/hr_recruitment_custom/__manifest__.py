@@ -69,6 +69,7 @@
         "views/05_required_document_submission_request_views.xml",
         "views/06_applicant_declaration_views.xml",
         "data/25_employment_contract_pdf_helpers.xml",
+        "data/27_employment_contract_lifecycle_actions.xml",
         "views/08_employment_contract_views.xml",
         "views/07_decision_instance_document_signature_views.xml",
     ],

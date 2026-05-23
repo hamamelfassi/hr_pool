@@ -144,6 +144,22 @@
             <field name="on_delete">set null</field>
         </record>
 
+        <record id="field_employment_contract_x_printed_on" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_printed_on</field>
+            <field name="field_description">Printed / Manual Signing Started On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_employment_contract_x_printed_by_user_id" model="ir.model.fields">
+            <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
+            <field name="name">x_printed_by_user_id</field>
+            <field name="field_description">Printed / Manual Signing Started By</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
         <record id="field_employment_contract_x_signed_attachment_id" model="ir.model.fields">
             <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
             <field name="name">x_signed_attachment_id</field>

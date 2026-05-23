@@ -9,7 +9,7 @@
             <field name="code">
 action = False
 
-LOCKED_STATES = ['generated', 'printed', 'signed_uploaded', 'ministry_accredited', 'handover_ready', 'cancelled']
+LOCKED_STATES = ['printed', 'signed_uploaded', 'ministry_accredited', 'handover_ready', 'cancelled']
 
 AR_DIGIT_MAP = {
     '٠': '0', '١': '1', '٢': '2', '٣': '3', '٤': '4',
@@ -568,7 +568,7 @@ else:
             'tag': 'display_notification',
             'params': {
                 'title': 'العقد مقفل',
-                'message': 'لا يمكن تحديث بيانات العقد بعد توليد المسودة أو رفع النسخ. افتح السجل للمراجعة فقط.',
+                'message': 'لا يمكن تحديث بيانات العقد بعد اعتماد الطباعة أو رفع النسخ. افتح السجل للمراجعة فقط.',
                 'type': 'warning',
                 'sticky': False,
                 'next': open_contract_action(contract),
@@ -631,7 +631,7 @@ else:
             <field name="code">
 action = False
 
-LOCKED_STATES = ['generated', 'printed', 'signed_uploaded', 'ministry_accredited', 'handover_ready', 'cancelled']
+LOCKED_STATES = ['printed', 'signed_uploaded', 'ministry_accredited', 'handover_ready', 'cancelled']
 
 AR_DIGIT_MAP = {
     '٠': '0', '١': '1', '٢': '2', '٣': '3', '٤': '4',
@@ -1190,7 +1190,7 @@ else:
             'tag': 'display_notification',
             'params': {
                 'title': 'العقد مقفل',
-                'message': 'لا يمكن تحديث بيانات العقد بعد توليد المسودة أو رفع النسخ. افتح السجل للمراجعة فقط.',
+                'message': 'لا يمكن تحديث بيانات العقد بعد اعتماد الطباعة أو رفع النسخ. افتح السجل للمراجعة فقط.',
                 'type': 'warning',
                 'sticky': False,
                 'next': open_contract_action(contract),
@@ -1217,7 +1217,7 @@ else:
             <field name="state">code</field>
             <field name="code">
 action = False
-LOCKED_STATES = ['generated', 'printed', 'signed_uploaded', 'ministry_accredited', 'handover_ready', 'cancelled']
+LOCKED_STATES = ['printed', 'signed_uploaded', 'ministry_accredited', 'handover_ready', 'cancelled']
 record = records.sudo()[:1]
 
 if not record:
@@ -1230,7 +1230,7 @@ elif record.x_state in LOCKED_STATES:
     action = {
         'type': 'ir.actions.client',
         'tag': 'display_notification',
-        'params': {'title': 'العقد مقفل', 'message': 'لا يمكن تحديث بيانات العقد بعد توليد المسودة أو رفع النسخ.', 'type': 'warning', 'sticky': False},
+        'params': {'title': 'العقد مقفل', 'message': 'لا يمكن تحديث بيانات العقد بعد اعتماد الطباعة أو رفع النسخ.', 'type': 'warning', 'sticky': False},
     }
 elif not record.x_applicant_id:
     action = {

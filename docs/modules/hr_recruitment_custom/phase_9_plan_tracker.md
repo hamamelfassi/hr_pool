@@ -791,3 +791,35 @@ Lessons learned:
 Next step:
 
 - Install/upgrade, generate a PDF from a `جاهز للتوليد` contract, verify seven pages/backgrounds/registry linkage, then calibrate coordinates in 9E.
+
+
+## 9E-1 — Contract manual signature and accreditation lifecycle
+
+Date: 2026-05-23
+
+Status: Patch generated; Odoo acceptance pending.
+
+Files touched:
+
+- `modules/hr_recruitment_custom/__manifest__.py`
+- `modules/hr_recruitment_custom/models/08_employment_contract.xml`
+- `modules/hr_recruitment_custom/data/24_employment_contract_actions.xml`
+- `modules/hr_recruitment_custom/data/27_employment_contract_lifecycle_actions.xml`
+- `modules/hr_recruitment_custom/views/08_employment_contract_views.xml`
+
+What changed:
+
+- Re-baselined Pass 9E around the post-render manual lifecycle: generated draft, printed/manual signing, signed upload, and Ministry of Labour accredited upload.
+- Did not redefine or extend `x_hr.recruitment_document`; consumed the existing registry fields only.
+- Signed employment contract updates the existing `employment_contract` registry artifact to signed/manual attachment.
+- Ministry accreditation is stored on the contract/applicant and appended to registry notes without introducing a new registry state.
+- Final handover readiness remains blocked until the full preboarding gate is complete: Board Decision, Employment Contract, TOR/F-0006, F-0007, and F-0009.
+
+Acceptance result:
+
+- Pending Odoo SaaS install/upgrade and manual lifecycle test.
+
+Lessons learned:
+
+- The employment contract is necessary but not sufficient for the final Contract Signed / handover gate.
+- Pass 9 must not move the applicant to final employment handover before TOR and final declarations are implemented.
