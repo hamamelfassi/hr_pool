@@ -10,8 +10,8 @@
                 decoration-info="x_state in ['ready_to_render', 'generated']"
                 decoration-success="x_state in ['signed_uploaded', 'ministry_accredited', 'handover_ready']"
                 decoration-danger="x_state == 'cancelled'">
-                <field name="x_name" readonly="x_state not in ['draft_data', 'ready_to_render']" string="اسم العقد"/>
-                <field name="x_contract_number" readonly="x_state not in ['draft_data', 'ready_to_render']" string="رقم العقد"/>
+                <field name="x_name" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']" string="اسم العقد"/>
+                <field name="x_contract_number" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']" string="رقم العقد"/>
                 <field name="x_applicant_id" string="المتقدم"/>
                 <field name="x_state" string="الحالة" widget="badge"
                     decoration-muted="x_state == 'draft_data'"
@@ -50,9 +50,9 @@
                 <sheet>
                     <group>
                         <group string="هوية العقد">
-                            <field name="x_name" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                            <field name="x_contract_number" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                            <field name="x_contract_date" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
+                            <field name="x_name" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                            <field name="x_contract_number" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                            <field name="x_contract_date" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                             <field name="x_contract_day_ar" readonly="1"/>
                             <field name="x_template_code" readonly="1"/>
                             <field name="x_template_version" readonly="1"/>
@@ -81,7 +81,7 @@
                         <page string="بيانات العقد">
                             <group>
                                 <group string="بيانات أساسية">
-                                    <field name="x_name" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
+                                    <field name="x_name" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_state" widget="badge"
                                         decoration-muted="x_state == 'draft_data'"
                                         decoration-info="x_state in ['ready_to_render', 'generated']"
@@ -89,8 +89,8 @@
                                         decoration-success="x_state in ['signed_uploaded', 'ministry_accredited', 'handover_ready']"
                                         decoration-danger="x_state == 'cancelled'"
                                         readonly="1"/>
-                                    <field name="x_contract_number" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_contract_date" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
+                                    <field name="x_contract_number" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_contract_date" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                             <field name="x_contract_day_ar" readonly="1"/>
                                 </group>
                                 <group string="القالب والسجل">
@@ -105,14 +105,14 @@
                         <page string="الطرف الأول">
                             <group>
                                 <group string="جهة العمل">
-                                    <field name="x_company_name_ar" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_company_registration_number" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_company_address_ar" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
+                                    <field name="x_company_name_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_company_registration_number" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_company_address_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                 </group>
                                 <group string="الممثل القانوني">
-                                    <field name="x_representative_name_ar" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_representative_title_ar" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_representative_nationality_ar" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
+                                    <field name="x_representative_name_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_representative_title_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_representative_nationality_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                 </group>
                             </group>
                         </page>
@@ -120,22 +120,22 @@
                         <page string="الطرف الثاني">
                             <group>
                                 <group string="الاسم والهوية">
-                                    <field name="x_full_name_ar" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_first_name_ar" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_father_name_ar" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_grandfather_name_ar" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_surname_ar" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_national_id" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
+                                    <field name="x_full_name_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_first_name_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_father_name_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_grandfather_name_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_surname_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_national_id" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                 </group>
                                 <group string="البيانات الشخصية">
-                                    <field name="x_date_of_birth" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_gender" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_marital_status" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_nationality_ar" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_email" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_phone" readonly="x_state not in ['draft_data', 'ready_to_render']" widget="phone"/>
-                                    <field name="x_mobile_1" readonly="x_state not in ['draft_data', 'ready_to_render']" widget="phone"/>
-                                    <field name="x_mobile_2" readonly="x_state not in ['draft_data', 'ready_to_render']" widget="phone"/>
+                                    <field name="x_date_of_birth" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_gender" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_marital_status" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_nationality_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_email" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_phone" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']" widget="phone"/>
+                                    <field name="x_mobile_1" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']" widget="phone"/>
+                                    <field name="x_mobile_2" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']" widget="phone"/>
                                 </group>
                             </group>
                         </page>
@@ -148,19 +148,19 @@
                                         string="تحديث مستند الهوية"
                                         class="btn-secondary"
                                         invisible="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_identity_document_source" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_identity_document_number" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_identity_document_issue_place" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_identity_document_issue_date" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_identity_document_expiry_date" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
+                                    <field name="x_identity_document_source" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_identity_document_number" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_identity_document_issue_place" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_identity_document_issue_date" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_identity_document_expiry_date" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                 </group>
                                 <group string="الإقامة">
-                                    <field name="x_residence_region_id" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_residence_district_id" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_residence_municipality_id" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_residence_location_id" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_home_phone" readonly="x_state not in ['draft_data', 'ready_to_render']" widget="phone"/>
-                                    <field name="x_residence_address_text" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
+                                    <field name="x_residence_region_id" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_residence_district_id" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_residence_municipality_id" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_residence_location_id" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_home_phone" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']" widget="phone"/>
+                                    <field name="x_residence_address_text" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                 </group>
                             </group>
                         </page>
@@ -168,19 +168,19 @@
                         <page string="المصرف والمؤهلات والصحة">
                             <group>
                                 <group string="المصرف">
-                                    <field name="x_bank_name" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_bank_branch" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_bank_account_number" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_iban" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
+                                    <field name="x_bank_name" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_bank_branch" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_bank_account_number" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_iban" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                 </group>
                                 <group string="المؤهل والأسرة والصحة">
-                                    <field name="x_qualification_type" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_qualification_subject" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_family_paper_number" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_family_reference_number" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_next_of_kin_name" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_next_of_kin_phone" readonly="x_state not in ['draft_data', 'ready_to_render']" widget="phone"/>
-                                    <field name="x_blood_type" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
+                                    <field name="x_qualification_type" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_qualification_subject" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_family_paper_number" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_family_reference_number" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_next_of_kin_name" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_next_of_kin_phone" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']" widget="phone"/>
+                                    <field name="x_blood_type" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                 </group>
                             </group>
                         </page>
@@ -192,15 +192,15 @@
                                     <field name="x_job_title_ar" readonly="1"/>
                                     <field name="x_department_id" readonly="1"/>
                                     <field name="x_department_name_ar" readonly="1"/>
-                                    <field name="x_work_location" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
+                                    <field name="x_work_location" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                 </group>
                                 <group string="مدة العقد">
                                     <field name="x_contract_start_date" readonly="1"/>
-                                    <field name="x_contract_end_date" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_contract_duration_value" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_contract_duration_unit" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_renewal_duration_value" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_renewal_duration_unit" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
+                                    <field name="x_contract_end_date" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_contract_duration_value" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_contract_duration_unit" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_renewal_duration_value" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_renewal_duration_unit" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                 </group>
                             </group>
                         </page>
@@ -208,14 +208,14 @@
                         <page string="الأجر والمزايا">
                             <group>
                                 <group string="الأجر">
-                                    <field name="x_monthly_wage_amount" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_monthly_wage_text_ar" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_annual_leave_days" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
+                                    <field name="x_monthly_wage_amount" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_monthly_wage_text_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_annual_leave_days" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                 </group>
                                 <group string="المزايا والبدلات">
-                                    <field name="x_allowances_text_ar" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_benefits_text_ar" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
-                                    <field name="x_compensation_notes" readonly="x_state not in ['draft_data', 'ready_to_render']"/>
+                                    <field name="x_allowances_text_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_benefits_text_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
+                                    <field name="x_compensation_notes" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                 </group>
                             </group>
                         </page>
@@ -336,7 +336,7 @@
 
                         <page string="ملاحظات">
                             <group>
-                                <field name="x_notes" readonly="x_state not in ['draft_data', 'ready_to_render']" nolabel="1"/>
+                                <field name="x_notes" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']" nolabel="1"/>
                             </group>
                         </page>
                     </notebook>
