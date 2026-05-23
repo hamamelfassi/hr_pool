@@ -1160,3 +1160,37 @@ Locked scope:
 Canonical tracker:
 
 - `docs/modules/hr_recruitment_custom/phase_9_plan_tracker.md`
+
+## Current phase update — Pass 9 locked
+
+Date: 2026-05-23
+
+Pass 9 is now functionally locked.
+
+Completed:
+
+- F-0005 contract snapshot model and applicant contract tab.
+- Full seven-page official contract QWeb overlay rendering.
+- Manual print/sign/upload lifecycle.
+- Signed-copy confirmation.
+- Ministry-accredited-copy confirmation.
+- Existing recruitment document registry sync without registry schema extension.
+- Applicant-level preboarding gate scaffold.
+- Arabic translation/UI hardening sufficient for Pass 9 closure.
+
+Explicitly deferred:
+
+- TOR/F-0006 completion.
+- F-0007 generation/signing.
+- F-0009 generation/signing.
+- Native `hr.employee` / `hr.contract` / payroll / bank handover.
+
+Next implementation focus:
+
+```text
+Resume preboarding package completion:
+1. TOR / F-0006
+2. F-0007
+3. F-0009
+4. Native handover only after the package gate is complete
+```

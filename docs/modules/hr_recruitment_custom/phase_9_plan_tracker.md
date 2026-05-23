@@ -823,3 +823,143 @@ Lessons learned:
 
 - The employment contract is necessary but not sufficient for the final Contract Signed / handover gate.
 - Pass 9 must not move the applicant to final employment handover before TOR and final declarations are implemented.
+
+## 9H — Documentation, translation, and Pass 9 final lock
+
+Date: 2026-05-23
+
+Status: Locked after Odoo SaaS acceptance.
+
+Files updated in this documentation pass:
+
+- `docs/modules/hr_recruitment_custom/phase_9_plan_tracker.md`
+- `docs/resources/current_phase_execution_plan.md`
+- `docs/architecture/03_stage_2_hr_recruitment_custom_spec.md`
+- `docs/architecture/01_two_stage_recruitment_program_plan.md`
+- `docs/modules/hr_recruitment_custom/README.md`
+
+### Implementation reality locked
+
+Pass 9 has been compacted from the original plan:
+
+- **9D** absorbed the original full QWeb overlay scope and locked the seven-page F-0005 rendering baseline.
+- **9E** absorbed the manual signature/accreditation lifecycle originally planned for later slices.
+- **9F** became Arabic translation and UI hardening.
+- **9G** became applicant-level preboarding gate scaffold.
+- **9H** is this documentation and final-lock pass.
+
+### F-0005 rendering lock
+
+The official employment contract is implemented as:
+
+```text
+official PNG page backgrounds
++ QWeb absolute-position overlays
++ frozen contract snapshot values
+```
+
+Locked rules:
+
+- The official government template text is not recreated, edited, or corrected.
+- The renderer uses the proven Al Yamama Arabic report font pattern for dynamic overlays.
+- The template pages are treated as visual source material.
+- Numeric/date/national-ID fields use controlled LTR rendering where needed.
+- Generated files are stored as Odoo attachments and linked back to the applicant, contract cockpit, and recruitment document registry.
+
+### F-0005 lifecycle lock
+
+The accepted manual lifecycle is:
+
+```text
+مسودة بيانات
+→ جاهز للتوليد
+→ مسودة مولدة
+→ مطبوع / قيد التوقيع اليدوي
+→ موقع ومرفوع
+→ معتمد من وزارة العمل
+```
+
+This lifecycle is controlled through the standalone `x_hr.applicant_employment_contract` cockpit.
+
+Odoo Sign is not used for F-0005 in Pass 9.
+
+### Attachment handling lesson
+
+Do not retarget existing `ir.attachment` records during signed/ministry confirmation.
+
+On Odoo Enterprise Documents, changing `res_model` / `res_id` on an attachment that already has a `documents.document` row can trigger a duplicate document creation attempt and raise:
+
+```text
+documents_document_attachment_unique
+```
+
+Therefore Pass 9 keeps linkage through:
+
+- the contract attachment fields;
+- the existing recruitment document registry attachment fields where available;
+- applicant chatter/files;
+- contract cockpit links.
+
+### Recruitment document registry boundary
+
+Pass 9 does not redefine, extend, or structurally modify `x_hr.recruitment_document`.
+
+The registry remains the authoritative artifact lifecycle source, but the employment contract artifact is only one member of the final preboarding package.
+
+### Preboarding gate lock
+
+Final preboarding / handover readiness requires all of:
+
+```text
+board_decision
+employment_contract
+tor
+policies_compliance_declaration
+non_disclosure_agreement
+```
+
+Human labels:
+
+- Board Decision
+- Employment Contract / F-0005
+- TOR / F-0006
+- F-0007 Policies Compliance Declaration
+- F-0009 Non-Disclosure Agreement
+
+The employment contract becoming ministry-accredited does **not** by itself authorize native HR handover.
+
+### Handover deferral
+
+Pass 9 creates no:
+
+- `hr.employee`
+- native Odoo `hr.contract`
+- payroll records
+- `res.partner.bank`
+- timesheet records
+
+Native employment handover remains deferred to the later handover pass.
+
+### Acceptance result
+
+Accepted in Odoo SaaS after:
+
+- F-0005 PDF generation succeeded.
+- Manual print/sign lifecycle succeeded.
+- Signed copy confirmation succeeded without attachment-retargeting traceback.
+- Ministry-accredited copy confirmation succeeded.
+- Contract cockpit and applicant mirror fields displayed the expected links/states.
+- Applicant-level preboarding gate stayed blocked while TOR/F-0006, F-0007, and F-0009 remain incomplete.
+- Arabic labels were materially improved; remaining manual Studio state translations should be merged into a later PO export.
+
+### Remaining known non-blockers
+
+- Some registry selection translations were manually corrected in Studio and should be captured in a later Arabic PO export.
+- Phone-number bidi presentation remains cosmetic.
+- TOR/F-0006 remains half-baked and must be resumed in the next pass.
+- F-0007 and F-0009 remain future declaration passes.
+- Final native HR handover remains deferred.
+
+### Recommended next pass
+
+Proceed to TOR/F-0006 repositioning and completion before final declarations and native handover.

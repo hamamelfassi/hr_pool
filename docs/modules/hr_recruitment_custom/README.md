@@ -195,3 +195,31 @@ For implementation/testing, the hard stage guard is deferred because the require
 - automatic sequence hardening;
 - amendment/cancellation governance.
 
+## Pass 9 lock — F-0005 Employment Contract
+
+Date: 2026-05-23
+
+Pass 9 adds and locks the official F-0005 employment contract workflow.
+
+Implemented:
+
+- `x_hr.applicant_employment_contract` contract snapshot/cockpit model.
+- Applicant `العقد` tab mirror/control surface.
+- Full seven-page official F-0005 QWeb overlay rendering.
+- Generated draft PDF attachment.
+- Manual print/sign lifecycle.
+- Signed contract upload/confirmation.
+- Ministry-accredited contract upload/confirmation.
+- Existing `x_hr.recruitment_document` employment-contract artifact sync.
+- Applicant-level preboarding gate check.
+
+Important boundaries:
+
+- No Odoo Sign dependency for F-0005.
+- No registry schema extension in Pass 9.
+- No native `hr.employee` or native `hr.contract` creation in Pass 9.
+- Final preboarding gate remains blocked until Board Decision, Employment Contract, TOR/F-0006, F-0007, and F-0009 are complete.
+
+Operational warning:
+
+- Do not retarget selected `ir.attachment` records during lifecycle confirmation. Odoo Enterprise Documents can raise a duplicate `documents_document_attachment_unique` constraint if an attachment already has a document row.

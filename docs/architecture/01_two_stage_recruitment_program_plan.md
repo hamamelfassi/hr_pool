@@ -257,3 +257,27 @@ Each pass should be:
 6. committed before the next pass begins.
 
 No parallel implementation tracks.
+
+## Pass 9 implementation lock — Employment Contract / F-0005
+
+Date: 2026-05-23
+
+The Stage 2 employment contract pass is locked.
+
+The F-0005 official labor contract is no longer treated as a future external/static-only artifact. It is now generated from the recruitment system using the official template page images as immutable QWeb backgrounds.
+
+The applicant contract tab is the compact operational surface. The standalone `x_hr.applicant_employment_contract` form is the detailed contract cockpit.
+
+F-0005 completion remains one part of the Contract Proposal / Preboarding package. It does not alone unlock native employment handover.
+
+The required preboarding package remains:
+
+```text
+Board Decision
+Employment Contract / F-0005
+TOR / F-0006
+F-0007
+F-0009
+```
+
+Native handover remains deferred until the full package is complete.

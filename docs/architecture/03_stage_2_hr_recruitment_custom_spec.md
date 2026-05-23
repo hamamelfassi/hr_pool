@@ -743,3 +743,105 @@ For implementation/testing, the hard stage guard is deferred because the require
 - automatic sequence hardening;
 - amendment/cancellation governance.
 
+## Pass 9 lock addendum — F-0005 official employment contract
+
+Date: 2026-05-23
+
+This addendum supersedes any earlier wording that treated the official labor contract as only a static uploaded artifact.
+
+### Locked F-0005 implementation
+
+The official labor contract `MCEP-HR-F-0005` is implemented as a controlled QWeb overlay using official page-image backgrounds.
+
+The implementation does not recreate the government template text. It uses the official pages as immutable visual backgrounds and overlays only applicant/company/contract values from a frozen contract snapshot.
+
+Primary model:
+
+```text
+x_hr.applicant_employment_contract
+```
+
+Primary applicant surface:
+
+```text
+hr.applicant / العقد
+```
+
+Primary detailed cockpit:
+
+```text
+x_hr.applicant_employment_contract
+```
+
+### Contract snapshot doctrine
+
+F-0005 renders from stored snapshot fields, not fragile live joins.
+
+Snapshot sources include:
+
+- `hr.applicant`
+- linked `hr_pool` candidate
+- linked `x_hr.pool_conversion_request`
+- accepted required-document submissions
+- `grc_backbone` location hierarchy
+- fixed Marsellia company defaults
+- manual contract snapshot fields
+
+### Manual lifecycle doctrine
+
+F-0005 does not use Odoo Sign by default.
+
+The accepted lifecycle is:
+
+```text
+مسودة بيانات
+→ جاهز للتوليد
+→ مسودة مولدة
+→ مطبوع / قيد التوقيع اليدوي
+→ موقع ومرفوع
+→ معتمد من وزارة العمل
+```
+
+The signed and ministry-accredited copies are uploaded/selected as controlled attachments and linked through the contract cockpit, applicant files/chatter, and existing recruitment document registry fields.
+
+### Odoo Documents attachment rule
+
+Do not retarget existing signed/ministry `ir.attachment` records by rewriting `res_model` / `res_id`.
+
+Odoo Enterprise Documents may already have a `documents.document` row for the attachment. Retargeting can attempt to create a duplicate document for the same attachment and violate the `documents_document_attachment_unique` constraint.
+
+### Recruitment document registry boundary
+
+Pass 9 consumes the existing `x_hr.recruitment_document` registry.
+
+It does not add new registry fields or new registry states.
+
+For F-0005, the registry tracks the generated and signed employment contract artifact using existing fields.
+
+Ministry accreditation is stored on the contract cockpit and applicant mirror fields, and may be referenced in registry notes without changing the registry schema.
+
+### Final preboarding gate doctrine
+
+The official employment contract is required but not sufficient for final handover.
+
+The final preboarding gate requires:
+
+1. Board Decision
+2. Employment Contract / F-0005
+3. TOR / F-0006
+4. F-0007 Policies Compliance Declaration
+5. F-0009 Non-Disclosure Agreement
+
+Until all five are complete, the applicant-level preboarding gate remains blocked.
+
+### Native HR handover deferral
+
+Pass 9 does not create:
+
+- `hr.employee`
+- native Odoo `hr.contract`
+- payroll records
+- bank records
+- timesheet records
+
+Native handover remains a later pass after the preboarding package is complete.
