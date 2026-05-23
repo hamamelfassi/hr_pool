@@ -584,7 +584,7 @@ msgstr "الإقرارات"
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_hr_applicant_tor_document
 msgid "Department"
-msgstr ""
+msgstr "القسم"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_hr_applicant_tor_document
@@ -601,7 +601,7 @@ msgstr "إهمال"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_form
 msgid "Document"
-msgstr ""
+msgstr "المستند"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_request_line_x_document_code
@@ -622,7 +622,7 @@ msgstr "الكود"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_name
 msgid "Document Name"
-msgstr ""
+msgstr "اسم المستند"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_type_x_name_ar
@@ -654,7 +654,7 @@ msgstr "رقم المستند"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_type_x_name
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_document_type
 msgid "Document Type"
-msgstr ""
+msgstr "نوع المستند"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_request_line_x_document_type_param_name
@@ -686,7 +686,7 @@ msgstr "تنزيل شهادة التوقيع"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
 msgid "Download Draft PDF"
-msgstr "تنزيل المسودة"
+msgstr "تنزيل مسودة PDF"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
@@ -730,7 +730,7 @@ msgstr "تنزيل المستند الموقّع"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
 msgid "Download Signed PDF"
-msgstr "تنزيل النسخة الموقعة"
+msgstr "تنزيل ملف PDF الموقع"
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.server,name:hr_recruitment_custom.action_required_document_submission_download_submitted_attachment
@@ -747,7 +747,7 @@ msgstr "مسودة"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
 msgid "Draft PDF"
-msgstr "مسودة"
+msgstr "مسودة PDF"
 
 #. module: hr_recruitment_custom
 #: model:x_hr.recruitment_required_document_type,x_name:hr_recruitment_custom.required_document_type_driving_license
@@ -968,12 +968,12 @@ msgstr "طباعة الوصف الوظيفي"
 #: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_hr_applicant_tor_state_generated
 #: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_document_state_generated
 msgid "Generated"
-msgstr "منشأ"
+msgstr "مولد"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_generated_attachment_id
 msgid "Generated / Uploaded Artifact"
-msgstr "المستند المنشأ / المرفوع"
+msgstr "المستند المولد / المرفوع"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_request_x_generated_url
@@ -983,13 +983,13 @@ msgstr "رابط التقديم"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_checklist_x_pdf_attachment_id
 msgid "Generated F-0003 PDF"
-msgstr "مسودة"
+msgstr "ملف F-0003 المولد"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_checklist_x_generated_on
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_generated_on
 msgid "Generated On"
-msgstr "تاريخ الإنشاء"
+msgstr "تاريخ التوليد"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.actions.act_window,help:hr_recruitment_custom.action_hr_recruitment_document_for_applicant
@@ -1047,7 +1047,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_line_x_iban
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_x_iban
 msgid "IBAN"
-msgstr ""
+msgstr "رقم IBAN"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
@@ -1192,7 +1192,7 @@ msgstr "آخر رد"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_line_x_latest_accepted_attachment_id
 msgid "Latest Accepted Attachment"
-msgstr "آخر مستند مقبول"
+msgstr "آخر مرفق مقبول"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_line_x_latest_accepted_submission_id
@@ -1213,7 +1213,7 @@ msgstr "آخر تقديم"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_tor_pdf_attachment_id
 msgid "Latest TOR PDF"
-msgstr "أحدث ملف PDF للاختصاصات"
+msgstr "آخر ملف TOR"
 
 #. module: hr_recruitment_custom
 #: model:x_hr.recruitment_required_document_type,x_name:hr_recruitment_custom.required_document_type_identity_document_copy
@@ -1223,12 +1223,12 @@ msgstr "بند الهوية المركب القديم"
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
 msgid "Lifecycle"
-msgstr "الدورة المستندية"
+msgstr "دورة الحياة"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_form
 msgid "Lifecycle Dates"
-msgstr ""
+msgstr "تواريخ دورة الحياة"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_form_controlled
@@ -1335,12 +1335,12 @@ msgstr "الاسم الإنجليزي"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_national_id
 msgid "National ID"
-msgstr "رقم الهوية"
+msgstr "الرقم الوطني"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_form
 msgid "Native Sign"
-msgstr "Odoo توقيع"
+msgstr "توقيع Odoo"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
@@ -1463,12 +1463,12 @@ msgstr "ملاحظات"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_sign_certificate_attachment_id
 msgid "Odoo Sign Certificate"
-msgstr ""
+msgstr "شهادة Odoo Sign"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_sign_completed_attachment_id
 msgid "Odoo Sign Completed Artifact"
-msgstr ""
+msgstr "مستند Odoo Sign المكتمل"
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.server,name:hr_recruitment_custom.action_required_document_submission_request_open_url
@@ -1601,7 +1601,7 @@ msgstr "المؤهل"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_line_x_qualification_subject
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_x_qualification_subject
 msgid "Qualification Subject"
-msgstr "تخصص المؤهل"
+msgstr "التخصص"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_line_x_qualification_type
@@ -1630,7 +1630,7 @@ msgstr "السؤال (إنجليزي)"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_ready_for_pdf
 msgid "Ready for PDF"
-msgstr "جاهز لإنشاء المستند"
+msgstr "جاهز للتوليد"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_career_reasonable
@@ -1656,7 +1656,7 @@ msgstr ""
 #: model:ir.model,name:hr_recruitment_custom.model_x_hr_recruitment_document
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_form
 msgid "Recruitment Document"
-msgstr "مستند توظيف"
+msgstr "مستند التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.act_window,name:hr_recruitment_custom.action_hr_recruitment_document_for_applicant
@@ -1868,7 +1868,7 @@ msgstr "نوع المستند"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_mcep_required_document_checklist_document
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Required Documents Checklist"
-msgstr ""
+msgstr "قائمة المستندات المطلوبة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_line_x_requires_attachment
@@ -1911,7 +1911,7 @@ msgstr "شهادة الإقامة"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_responsible_user_id
 msgid "Responsible User"
-msgstr ""
+msgstr "المستخدم المسؤول"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
@@ -2066,22 +2066,22 @@ msgstr ""
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_sign_completed_on
 msgid "Sign Completed On"
-msgstr ""
+msgstr "تاريخ اكتمال التوقيع"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_sign_request_model
 msgid "Sign Request Model"
-msgstr ""
+msgstr "نموذج طلب التوقيع"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_sign_request_res_id
 msgid "Sign Request Record ID"
-msgstr ""
+msgstr "معرف سجل طلب التوقيع"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_sign_request_reference
 msgid "Sign Request Reference"
-msgstr "إشاري طلب التوقيع"
+msgstr "إشارة طلب التوقيع"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_sign_request_state
@@ -2091,7 +2091,7 @@ msgstr "حالة طلب التوقيع"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_sign_request_url
 msgid "Sign Request URL"
-msgstr ""
+msgstr "رابط طلب التوقيع"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_signature_mode
@@ -2102,17 +2102,17 @@ msgstr "طريقة التوقيع"
 #: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_hr_applicant_tor_state_signed
 #: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_document_state_signed
 msgid "Signed"
-msgstr "موقّع"
+msgstr "موقع"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_signed_attachment_id
 msgid "Signed Artifact"
-msgstr "المستند الموقّع"
+msgstr "المستند الموقع"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_checklist_x_signed_attachment_id
 msgid "Signed F-0003 PDF"
-msgstr "مستند موقع"
+msgstr "ملف F-0003 الموقع"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_signed_attachment_id
@@ -2129,12 +2129,12 @@ msgstr "تاريخ التوقيع"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
 msgid "Signed PDF"
-msgstr "مستند موقع"
+msgstr "ملف PDF الموقع"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_tor_signed_attachment_id
 msgid "Signed TOR PDF"
-msgstr "ملف PDF للاختصاصات الموقعة"
+msgstr "ملف TOR الموقع"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
@@ -2146,26 +2146,26 @@ msgstr "المصدر"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_source_model
 msgid "Source Model"
-msgstr ""
+msgstr "نموذج المصدر"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_source_res_id
 msgid "Source Record ID"
-msgstr ""
+msgstr "معرف سجل المصدر"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_x_source_reference
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_form_controlled
 msgid "Source Reference"
-msgstr "إشاري المصدر"
+msgstr "مرجع المصدر"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_x_source_submission_id
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_form_controlled
 msgid "Source Submission ID"
-msgstr "معرّف مصدر التقديم"
+msgstr "معرف التقديم المصدر"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_state
@@ -2268,7 +2268,7 @@ msgstr "التقديمات"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_x_attachment_id
 msgid "Submitted Attachment"
-msgstr "المستند"
+msgstr "المرفق المقدم"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_x_submitted_by_user_id
@@ -2478,7 +2478,7 @@ msgstr ""
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_version
 msgid "Version"
-msgstr ""
+msgstr "الإصدار"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_grade_very_good
@@ -2863,3 +2863,1023 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_hr_applicant_tor_document
 msgid "يمنع نقل أو تسليم ادوات العمل المستلمة لشخص آخر دون موافقة الإدارة."
 msgstr ""
+
+#. module: hr_recruitment_custom
+#: model:ir.model,name:hr_recruitment_custom.model_x_hr_applicant_employment_contract
+msgid "Applicant Employment Contract"
+msgstr "عقد عمل المتقدم"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_name
+msgid "Contract Name"
+msgstr "اسم العقد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_applicant_id
+msgid "Applicant"
+msgstr "المتقدم"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_pool_id
+msgid "Pool Candidate"
+msgstr "مرشح خزان الموارد البشرية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_state
+msgid "Contract State"
+msgstr "حالة العقد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_contract_number
+msgid "Contract Number"
+msgstr "رقم العقد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_contract_date
+msgid "Contract Date"
+msgstr "تاريخ العقد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_contract_day_ar
+msgid "Contract Day Arabic"
+msgstr "يوم العقد بالعربية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_template_code
+msgid "Template Code"
+msgstr "رمز القالب"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_template_version
+msgid "Template Version"
+msgstr "إصدار القالب"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_field_map_version
+msgid "Field Map Version"
+msgstr "إصدار خريطة الحقول"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_board_decision_instance_id
+msgid "Board Decision Instance"
+msgstr "نسخة قرار التعيين"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_recruitment_document_id
+msgid "Recruitment Document Registry Record"
+msgstr "سجل مستند التوظيف"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_generated_attachment_id
+msgid "Generated Contract PDF"
+msgstr "مسودة العقد المولدة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_generated_on
+msgid "Generated On"
+msgstr "تاريخ التوليد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_generated_by_user_id
+msgid "Generated By"
+msgstr "تم التوليد بواسطة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_printed_on
+msgid "Printed / Manual Signing Started On"
+msgstr "تاريخ اعتماد الطباعة وبدء التوقيع اليدوي"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_printed_by_user_id
+msgid "Printed / Manual Signing Started By"
+msgstr "اعتمد الطباعة وبدأ التوقيع اليدوي بواسطة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_signed_attachment_id
+msgid "Signed Uploaded Contract"
+msgstr "النسخة الموقعة المرفوعة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_signed_uploaded_on
+msgid "Signed Uploaded On"
+msgstr "تاريخ رفع النسخة الموقعة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_signed_uploaded_by_user_id
+msgid "Signed Uploaded By"
+msgstr "رفعت النسخة الموقعة بواسطة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_ministry_accredited_attachment_id
+msgid "Ministry Accredited Contract"
+msgstr "النسخة المعتمدة من وزارة العمل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_ministry_accredited_on
+msgid "Ministry Accredited On"
+msgstr "تاريخ اعتماد وزارة العمل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_ministry_accredited_by_user_id
+msgid "Ministry Accredited Uploaded By"
+msgstr "رفعت نسخة اعتماد وزارة العمل بواسطة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_render_status
+msgid "Render Status"
+msgstr "حالة التوليد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_render_error
+msgid "Render Error"
+msgstr "خطأ التوليد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_company_name_ar
+msgid "Company Name Arabic"
+msgstr "اسم جهة العمل بالعربية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_company_registration_number
+msgid "Company Registration Number"
+msgstr "رقم قيد الشركة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_company_address_ar
+msgid "Company Address Arabic"
+msgstr "عنوان جهة العمل بالعربية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_representative_name_ar
+msgid "Representative Name Arabic"
+msgstr "اسم الممثل القانوني بالعربية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_representative_title_ar
+msgid "Representative Title Arabic"
+msgstr "صفة الممثل القانوني بالعربية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_representative_nationality_ar
+msgid "Representative Nationality Arabic"
+msgstr "جنسية الممثل القانوني بالعربية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_full_name_ar
+msgid "Full Name Arabic"
+msgstr "الاسم الكامل بالعربية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_first_name_ar
+msgid "First Name Arabic"
+msgstr "الاسم الأول بالعربية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_father_name_ar
+msgid "Father Name Arabic"
+msgstr "اسم الأب بالعربية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_grandfather_name_ar
+msgid "Grandfather Name Arabic"
+msgstr "اسم الجد بالعربية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_surname_ar
+msgid "Surname Arabic"
+msgstr "اللقب بالعربية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_date_of_birth
+msgid "Date of Birth"
+msgstr "تاريخ الميلاد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_gender
+msgid "Gender"
+msgstr "الجنس"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_marital_status
+msgid "Marital Status"
+msgstr "الحالة الاجتماعية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_nationality_ar
+msgid "Nationality Arabic"
+msgstr "الجنسية بالعربية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_national_id
+msgid "National ID"
+msgstr "الرقم الوطني"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_email
+msgid "Email"
+msgstr "البريد الإلكتروني"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_phone
+msgid "Phone"
+msgstr "الهاتف"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_mobile_1
+msgid "Mobile 1"
+msgstr "نقال 1"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_mobile_2
+msgid "Mobile 2"
+msgstr "نقال 2"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_identity_document_source
+msgid "Identity Document Source"
+msgstr "مصدر مستند الهوية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_identity_document_number
+msgid "Identity Document Number"
+msgstr "رقم مستند الهوية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_identity_document_issue_place
+msgid "Identity Document Issue Place"
+msgstr "مكان إصدار مستند الهوية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_identity_document_issue_date
+msgid "Identity Document Issue Date"
+msgstr "تاريخ إصدار مستند الهوية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_identity_document_expiry_date
+msgid "Identity Document Expiry Date"
+msgstr "تاريخ انتهاء مستند الهوية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_residence_region_id
+msgid "Residence Region"
+msgstr "إقليم الإقامة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_residence_district_id
+msgid "Residence District"
+msgstr "منطقة الإقامة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_residence_municipality_id
+msgid "Residence Municipality"
+msgstr "بلدية الإقامة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_residence_location_id
+msgid "Residence Location"
+msgstr "محلة الإقامة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_residence_address_text
+msgid "Residence Address Text"
+msgstr "عنوان الإقامة النصي"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_home_phone
+msgid "Home Phone"
+msgstr "هاتف السكن"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_bank_name
+msgid "Bank Name"
+msgstr "اسم المصرف"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_bank_branch
+msgid "Bank Branch"
+msgstr "فرع المصرف"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_bank_account_number
+msgid "Bank Account Number"
+msgstr "رقم الحساب المصرفي"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_iban
+msgid "IBAN"
+msgstr "رقم IBAN"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_qualification_type
+msgid "Qualification Type"
+msgstr "نوع المؤهل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_qualification_subject
+msgid "Qualification Subject"
+msgstr "التخصص"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_family_paper_number
+msgid "Family Paper Number"
+msgstr "رقم ورقة العائلة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_family_reference_number
+msgid "Family Reference Number"
+msgstr "رقم القيد العائلي"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_next_of_kin_name
+msgid "Next of Kin Name"
+msgstr "اسم أقرب الأقارب"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_next_of_kin_phone
+msgid "Next of Kin Phone"
+msgstr "هاتف أقرب الأقارب"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_blood_type
+msgid "Blood Type"
+msgstr "فصيلة الدم"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_job_id
+msgid "Job"
+msgstr "الوظيفة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_job_title_ar
+msgid "Job Title Arabic"
+msgstr "المسمى الوظيفي بالعربية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_department_id
+msgid "Department"
+msgstr "الإدارة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_department_name_ar
+msgid "Department Name Arabic"
+msgstr "اسم الإدارة بالعربية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_contract_start_date
+msgid "Contract Start Date"
+msgstr "تاريخ بداية العقد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_contract_end_date
+msgid "Contract End Date"
+msgstr "تاريخ نهاية العقد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_contract_duration_value
+msgid "Contract Duration Value"
+msgstr "قيمة مدة العقد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_contract_duration_unit
+msgid "Contract Duration Unit"
+msgstr "وحدة مدة العقد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_renewal_duration_value
+msgid "Renewal Duration Value"
+msgstr "قيمة مدة التجديد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_renewal_duration_unit
+msgid "Renewal Duration Unit"
+msgstr "وحدة مدة التجديد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_work_location
+msgid "Work Location"
+msgstr "موقع العمل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_monthly_wage_amount
+msgid "Monthly Wage Amount"
+msgstr "قيمة الأجر الشهري"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_monthly_wage_text_ar
+msgid "Monthly Wage Arabic Text"
+msgstr "الأجر الشهري كتابة بالعربية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_allowances_text_ar
+msgid "Allowances Arabic Text"
+msgstr "البدلات بالعربية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_benefits_text_ar
+msgid "Benefits Arabic Text"
+msgstr "المزايا بالعربية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_annual_leave_days
+msgid "Annual Leave Days"
+msgstr "أيام الإجازة السنوية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_compensation_notes
+msgid "Compensation Notes"
+msgstr "ملاحظات الأجر والمزايا"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_handover_state
+msgid "Handover State"
+msgstr "حالة الترحيل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_employee_id
+msgid "Employee"
+msgstr "الموظف"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_hr_contract_id
+msgid "Native HR Contract Reference"
+msgstr "مرجع عقد الموارد البشرية الأصلي"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_partner_bank_id
+msgid "Partner Bank"
+msgstr "الحساب البنكي للموظف"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_handover_ready
+msgid "Handover Ready"
+msgstr "جاهز للترحيل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_handover_blocking_notes
+msgid "Handover Blocking Notes"
+msgstr "ملاحظات منع الترحيل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_notes
+msgid "Notes"
+msgstr "ملاحظات"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_ids
+msgid "Employment Contracts"
+msgstr "عقود العمل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_id
+msgid "Active Employment Contract"
+msgstr "عقد العمل النشط"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_state
+msgid "Employment Contract State"
+msgstr "حالة عقد العمل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_number
+msgid "Employment Contract Number"
+msgstr "رقم عقد العمل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_date
+msgid "Employment Contract Date"
+msgstr "تاريخ عقد العمل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_start_date
+msgid "Employment Contract Start Date"
+msgstr "تاريخ بداية عقد العمل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_end_date
+msgid "Employment Contract End Date"
+msgstr "تاريخ نهاية عقد العمل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_duration_label
+msgid "Employment Contract Duration Label"
+msgstr "مدة عقد العمل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_monthly_wage
+msgid "Employment Contract Monthly Wage"
+msgstr "الأجر الشهري في عقد العمل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_job_id
+msgid "Employment Contract Job"
+msgstr "وظيفة عقد العمل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_department_id
+msgid "Employment Contract Department"
+msgstr "إدارة عقد العمل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_document_id
+msgid "Employment Contract Registry Document"
+msgstr "سجل مستند عقد العمل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_generated_attachment_id
+msgid "Generated Employment Contract"
+msgstr "عقد العمل المولد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_generated_on
+msgid "Employment Contract Generated On"
+msgstr "تاريخ توليد عقد العمل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_signed_attachment_id
+msgid "Signed Employment Contract"
+msgstr "عقد العمل الموقع"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_signed_uploaded_on
+msgid "Employment Contract Signed Uploaded On"
+msgstr "تاريخ رفع عقد العمل الموقع"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_ministry_attachment_id
+msgid "Ministry Accredited Employment Contract"
+msgstr "عقد العمل المعتمد من وزارة العمل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_ministry_accredited_on
+msgid "Employment Contract Ministry Accredited On"
+msgstr "تاريخ اعتماد وزارة العمل لعقد العمل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_board_decision_id
+msgid "Linked Board Decision"
+msgstr "قرار التعيين المرتبط"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_notes
+msgid "Employment Contract Notes"
+msgstr "ملاحظات عقد العمل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_conversion_request_id
+msgid "Pool Conversion Request"
+msgstr "طلب تحويل من خزان الموارد البشرية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_snapshot_refreshed_on
+msgid "Snapshot Refreshed On"
+msgstr "تاريخ تحديث اللقطة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_snapshot_refreshed_by_user_id
+msgid "Snapshot Refreshed By"
+msgstr "تم تحديث اللقطة بواسطة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_missing_snapshot_notes
+msgid "Missing Snapshot Notes"
+msgstr "ملاحظات النواقص في اللقطة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_identity_source_submission_id
+msgid "Identity Source Submission"
+msgstr "تقديم مصدر الهوية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_identity_source_attachment_id
+msgid "Identity Source Attachment"
+msgstr "مرفق مصدر الهوية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_birth_source_submission_id
+msgid "Birth Source Submission"
+msgstr "تقديم مصدر الميلاد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_birth_source_attachment_id
+msgid "Birth Source Attachment"
+msgstr "مرفق مصدر الميلاد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_residence_source_submission_id
+msgid "Residence Source Submission"
+msgstr "تقديم مصدر الإقامة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_residence_source_attachment_id
+msgid "Residence Source Attachment"
+msgstr "مرفق مصدر الإقامة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_family_source_submission_id
+msgid "Family Source Submission"
+msgstr "تقديم مصدر الوضع العائلي"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_family_source_attachment_id
+msgid "Family Source Attachment"
+msgstr "مرفق مصدر الوضع العائلي"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_health_source_submission_id
+msgid "Health Source Submission"
+msgstr "تقديم مصدر الصحة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_health_source_attachment_id
+msgid "Health Source Attachment"
+msgstr "مرفق مصدر الصحة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_bank_source_submission_id
+msgid "Bank Source Submission"
+msgstr "تقديم مصدر الحساب المصرفي"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_bank_source_attachment_id
+msgid "Bank Source Attachment"
+msgstr "مرفق مصدر الحساب المصرفي"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_qualification_source_submission_id
+msgid "Qualification Source Submission"
+msgstr "تقديم مصدر المؤهل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_qualification_source_attachment_id
+msgid "Qualification Source Attachment"
+msgstr "مرفق مصدر المؤهل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_pool_id
+msgid "HR Pool Candidate"
+msgstr "مرشح خزان الموارد البشرية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_pool_conversion_request_id
+msgid "HR Pool Conversion Request"
+msgstr "طلب تحويل خزان الموارد البشرية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_recruitment_document__x_state__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_recruitment_document__x_state__generated
+msgid "Generated"
+msgstr "مولد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_recruitment_document__x_state__signature_requested
+msgid "Signature Requested"
+msgstr "طلب توقيع"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_recruitment_document__x_state__partially_signed
+msgid "Partially Signed"
+msgstr "موقع جزئياً"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_recruitment_document__x_state__signed
+msgid "Signed"
+msgstr "موقع"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_recruitment_document__x_state__cancelled
+msgid "Cancelled"
+msgstr "ملغى"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_recruitment_document__x_state__superseded
+msgid "Superseded"
+msgstr "مستبدل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_recruitment_document__x_document_type__interview_evaluation
+msgid "Interview Evaluation (F-0002)"
+msgstr "تقييم المقابلة (F-0002)"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_recruitment_document__x_document_type__required_documents_checklist
+msgid "Required Documents Checklist (F-0003)"
+msgstr "قائمة المستندات المطلوبة (F-0003)"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_recruitment_document__x_document_type__legal_documents_validity_declaration
+msgid "Legal Documents Validity Declaration (F-0004)"
+msgstr "إقرار صحة المستندات القانونية (F-0004)"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_recruitment_document__x_document_type__board_decision
+msgid "Board Decision"
+msgstr "قرار التعيين"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_recruitment_document__x_document_type__employment_contract
+msgid "Employment Contract"
+msgstr "عقد العمل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_recruitment_document__x_document_type__tor
+msgid "TOR / Role and Duties (F-0006)"
+msgstr "الوصف الوظيفي والمهام (F-0006)"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_recruitment_document__x_document_type__policies_compliance_declaration
+msgid "Policies Compliance Declaration (F-0007)"
+msgstr "إقرار الالتزام بالسياسات والإجراءات (F-0007)"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_recruitment_document__x_document_type__non_disclosure_agreement
+msgid "Non-Disclosure Agreement (F-0009)"
+msgstr "اتفاقية عدم الإفصاح (F-0009)"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_recruitment_document__x_document_type__other
+msgid "Other"
+msgstr "أخرى"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_recruitment_document__x_signature_mode__manual_attachment
+msgid "Manual Signed Attachment"
+msgstr "مرفق موقع يدوياً"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_recruitment_document__x_signature_mode__native_sign
+msgid "Native Odoo Sign"
+msgstr "توقيع Odoo الأصلي"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_applicant_employment_contract__x_state__draft_data
+msgid "مسودة بيانات"
+msgstr "مسودة بيانات"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_applicant_employment_contract__x_state__ready_to_render
+msgid "جاهز للتوليد"
+msgstr "جاهز للتوليد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_applicant_employment_contract__x_state__generated
+msgid "مسودة مولدة"
+msgstr "مسودة مولدة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_applicant_employment_contract__x_state__printed
+msgid "مطبوع / قيد التوقيع اليدوي"
+msgstr "مطبوع / قيد التوقيع اليدوي"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_applicant_employment_contract__x_state__signed_uploaded
+msgid "موقع ومرفوع"
+msgstr "موقع ومرفوع"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_applicant_employment_contract__x_state__ministry_accredited
+msgid "معتمد من وزارة العمل"
+msgstr "معتمد من وزارة العمل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_applicant_employment_contract__x_state__handover_ready
+msgid "جاهز للترحيل"
+msgstr "جاهز للترحيل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_applicant_employment_contract__x_state__cancelled
+msgid "ملغى"
+msgstr "ملغى"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_applicant_employment_contract__x_handover_state__blocked
+msgid "blocked"
+msgstr "متوقف"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_applicant_employment_contract__x_handover_state__ready
+msgid "ready"
+msgstr "جاهز"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_applicant_employment_contract__x_handover_state__done
+msgid "done"
+msgstr "تم الترحيل"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_form
+msgid "DOCUMENT"
+msgstr "المستند"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_form
+msgid "Document"
+msgstr "المستند"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_form
+msgid "Artifacts"
+msgstr "المرفقات الرسمية"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_form
+msgid "Lifecycle Dates"
+msgstr "تواريخ دورة الحياة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_form
+msgid "Native Sign"
+msgstr "توقيع Odoo"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_form
+msgid "Source"
+msgstr "المصدر"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_form
+msgid "Recruitment Document"
+msgstr "مستند التوظيف"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_form
+msgid "Recruitment Documents"
+msgstr "مستندات التوظيف"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_form
+msgid "Official Employment Contract"
+msgstr "عقد العمل الرسمي"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_form
+msgid "Employment Contracts"
+msgstr "عقود العمل"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_list
+msgid "DOCUMENT"
+msgstr "المستند"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_list
+msgid "Document"
+msgstr "المستند"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_list
+msgid "Artifacts"
+msgstr "المرفقات الرسمية"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_list
+msgid "Lifecycle Dates"
+msgstr "تواريخ دورة الحياة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_list
+msgid "Native Sign"
+msgstr "توقيع Odoo"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_list
+msgid "Source"
+msgstr "المصدر"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_list
+msgid "Recruitment Document"
+msgstr "مستند التوظيف"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_list
+msgid "Recruitment Documents"
+msgstr "مستندات التوظيف"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_list
+msgid "Official Employment Contract"
+msgstr "عقد العمل الرسمي"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_list
+msgid "Employment Contracts"
+msgstr "عقود العمل"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_form
+msgid "DOCUMENT"
+msgstr "المستند"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_form
+msgid "Recruitment Documents"
+msgstr "مستندات التوظيف"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_form
+msgid "Official Employment Contract"
+msgstr "عقد العمل الرسمي"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_form
+msgid "Employment Contracts"
+msgstr "عقود العمل"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_list
+msgid "DOCUMENT"
+msgstr "المستند"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_list
+msgid "Document"
+msgstr "المستند"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_list
+msgid "Artifacts"
+msgstr "المرفقات الرسمية"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_list
+msgid "Lifecycle Dates"
+msgstr "تواريخ دورة الحياة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_list
+msgid "Native Sign"
+msgstr "توقيع Odoo"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_list
+msgid "Source"
+msgstr "المصدر"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_list
+msgid "Recruitment Document"
+msgstr "مستند التوظيف"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_list
+msgid "Official Employment Contract"
+msgstr "عقد العمل الرسمي"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_list
+msgid "Employment Contracts"
+msgstr "عقود العمل"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_preboarding_gate_state
+msgid "Preboarding Gate State"
+msgstr "حالة بوابة ما قبل التوظيف"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_preboarding_gate_ready
+msgid "Preboarding Gate Ready"
+msgstr "جاهزية بوابة ما قبل التوظيف"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_preboarding_gate_checked_on
+msgid "Preboarding Gate Checked On"
+msgstr "تاريخ فحص بوابة ما قبل التوظيف"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_preboarding_gate_checked_by_user_id
+msgid "Preboarding Gate Checked By"
+msgstr "تم فحص بوابة ما قبل التوظيف بواسطة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_preboarding_gate_missing_summary
+msgid "Preboarding Gate Missing Summary"
+msgstr "ملخص مستندات ما قبل التوظيف المتبقية"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_preboarding_gate_notes
+msgid "Preboarding Gate Notes"
+msgstr "ملاحظات بوابة ما قبل التوظيف"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__hr_applicant__x_preboarding_gate_state__not_checked
+msgid "Not Checked"
+msgstr "لم يتم الفحص"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__hr_applicant__x_preboarding_gate_state__blocked
+msgid "Blocked"
+msgstr "متوقفة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__hr_applicant__x_preboarding_gate_state__ready
+msgid "Ready"
+msgstr "جاهزة"
+
+#. module: hr_recruitment_custom
+#: model:ir.actions.server,name:hr_recruitment_custom.action_hr_applicant_refresh_preboarding_gate
+msgid "تحديث جاهزية بوابة ما قبل التوظيف"
+msgstr "تحديث جاهزية بوابة ما قبل التوظيف"

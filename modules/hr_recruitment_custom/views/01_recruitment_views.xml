@@ -899,6 +899,11 @@
                             string="فتح بيانات العقد"
                             class="btn-secondary"
                             invisible="not id or not x_employment_contract_id"/>
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_refresh_preboarding_gate"
+                            string="تحديث جاهزية بوابة ما قبل التوظيف"
+                            class="btn-secondary"
+                            invisible="not id"/>
                     </group>
 
                     <group>
@@ -963,6 +968,37 @@
                                 string="النسخة المعتمدة من وزارة العمل"
                                 readonly="1"
                                 options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
+                        </group>
+                    </group>
+
+                    <group string="بوابة ما قبل التوظيف">
+                        <group string="حالة البوابة">
+                            <field name="x_preboarding_gate_state"
+                                string="حالة بوابة ما قبل التوظيف"
+                                widget="badge"
+                                decoration-muted="x_preboarding_gate_state == 'not_checked'"
+                                decoration-warning="x_preboarding_gate_state == 'blocked'"
+                                decoration-success="x_preboarding_gate_state == 'ready'"
+                                readonly="1"/>
+                            <field name="x_preboarding_gate_ready"
+                                string="جاهزية بوابة ما قبل التوظيف"
+                                readonly="1"/>
+                            <field name="x_preboarding_gate_checked_on"
+                                string="تاريخ آخر فحص للبوابة"
+                                readonly="1"/>
+                            <field name="x_preboarding_gate_checked_by_user_id"
+                                string="فحصت بواسطة"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
+                        </group>
+                        <group string="النواقص">
+                            <field name="x_preboarding_gate_missing_summary"
+                                string="المستندات المتبقية"
+                                readonly="1"/>
+                            <field name="x_preboarding_gate_notes"
+                                string="ملاحظات بوابة ما قبل التوظيف"
+                                readonly="1"
+                                nolabel="1"/>
                         </group>
                     </group>
 

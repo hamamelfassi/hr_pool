@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="action_hr_applicant_refresh_preboarding_gate" model="ir.actions.server">
+            <field name="name">تحديث جاهزية بوابة ما قبل التوظيف</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {'title': title, 'message': message, 'type': kind, 'sticky': sticky}
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def reload_applicant(applicant):
+    return {
+        'type': 'ir.actions.act_window',
+        'name': applicant.name or 'Applicant',
+        'res_model': 'hr.applicant',
+        'res_id': applicant.id,
+        'view_mode': 'form',
+        'views': [(False, 'form')],
+        'target': 'current',
+    }
+
+
+def document_complete(doc):
+    if not doc:
+        return False
+    if doc.x_state != 'signed':
+        return False
+
+    if 'x_signed_attachment_id' in doc._fields and doc.x_signed_attachment_id:
+        return True
+    if 'x_sign_completed_attachment_id' in doc._fields and doc.x_sign_completed_attachment_id:
+        return True
+
+    # Legacy tolerance: some older signed rows may not have their artifact in
+    # the newer registry attachment fields.
+    return True
+
+
+def signed_registry_map(applicant):
+    result = {}
+    Document = env['x_hr.recruitment_document'].sudo()
+    docs = Document.search([
+        ('x_applicant_id', '=', applicant.id),
+        ('x_document_type', 'in', [
+            'board_decision',
+            'employment_contract',
+            'tor',
+            'policies_compliance_declaration',
+            'non_disclosure_agreement',
+        ]),
+    ], order='id desc')
+
+    for doc in docs:
+        dtype = doc.x_document_type
+        if dtype and dtype not in result and document_complete(doc):
+            result[dtype] = doc
+
+    return result
+
+
+def find_active_contract(applicant):
+    if 'x_employment_contract_id' in applicant._fields and applicant.x_employment_contract_id:
+        return applicant.x_employment_contract_id.sudo()
+    Contract = env['x_hr.applicant_employment_contract'].sudo()
+    return Contract.search([('x_applicant_id', '=', applicant.id)], order='id desc', limit=1)
+
+
+def write_applicant_gate(applicant, state, ready, missing_summary, notes):
+    vals = {}
+    mapping = {
+        'x_preboarding_gate_state': state,
+        'x_preboarding_gate_ready': ready,
+        'x_preboarding_gate_checked_on': datetime.datetime.now(),
+        'x_preboarding_gate_checked_by_user_id': env.user.id,
+        'x_preboarding_gate_missing_summary': missing_summary or False,
+        'x_preboarding_gate_notes': notes or False,
+        'x_employment_contract_notes': notes or False,
+    }
+    for field_name, value in mapping.items():
+        if field_name in applicant._fields:
+            vals[field_name] = value
+    if vals:
+        applicant.write(vals)
+
+
+def write_contract_gate(contract, ready, notes):
+    if not contract:
+        return
+    vals = {}
+    if 'x_handover_state' in contract._fields:
+        vals['x_handover_state'] = 'ready' if ready else 'blocked'
+    if 'x_handover_ready' in contract._fields:
+        vals['x_handover_ready'] = bool(ready)
+    if 'x_handover_blocking_notes' in contract._fields:
+        vals['x_handover_blocking_notes'] = False if ready else notes
+    if vals:
+        contract.write(vals)
+
+
+applicant = records.sudo()[:1]
+if not applicant:
+    action = toast('لا يوجد متقدم', 'افتح سجل متقدم أولاً.', 'warning')
+else:
+    labels = {
+        'board_decision': 'قرار التعيين',
+        'employment_contract': 'عقد العمل',
+        'tor': 'TOR / F-0006',
+        'policies_compliance_declaration': 'F-0007 إقرار السياسات والإجراءات',
+        'non_disclosure_agreement': 'F-0009 اتفاقية عدم الإفصاح',
+    }
+
+    required = [
+        'board_decision',
+        'employment_contract',
+        'tor',
+        'policies_compliance_declaration',
+        'non_disclosure_agreement',
+    ]
+
+    signed = signed_registry_map(applicant)
+    missing = []
+
+    for dtype in required:
+        if dtype not in signed:
+            missing.append(labels[dtype])
+
+    contract = find_active_contract(applicant)
+    ministry_ok = bool(
+        contract
+        and contract.x_state == 'ministry_accredited'
+        and contract.x_ministry_accredited_attachment_id
+    )
+
+    if not ministry_ok:
+        missing.append('اعتماد وزارة العمل لعقد العمل')
+
+    if missing:
+        summary = '، '.join(missing)
+        note = 'بوابة ما قبل التوظيف غير مكتملة. المتبقي: %s.' % summary
+        write_applicant_gate(applicant, 'blocked', False, summary, note)
+        write_contract_gate(contract, False, note)
+        applicant.message_post(body=note)
+        action = toast('بوابة ما قبل التوظيف غير مكتملة', note, 'warning', False, reload_applicant(applicant))
+    else:
+        note = 'اكتملت مستندات بوابة ما قبل التوظيف المطلوبة: قرار التعيين، عقد العمل، TOR/F-0006، F-0007، وF-0009. يمكن فتح مرحلة الترحيل اللاحقة دون إنشاء سجلات HR الأصلية تلقائياً في هذا pass.'
+        write_applicant_gate(applicant, 'ready', True, False, note)
+        write_contract_gate(contract, True, False)
+        applicant.message_post(body=note)
+        action = toast('بوابة ما قبل التوظيف جاهزة', note, 'success', False, reload_applicant(applicant))
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>
