@@ -18,9 +18,19 @@ def toast(title, message, kind='warning', sticky=False, next_action=False):
 
 
 def reload_applicant(applicant):
+    title = 'Applicant'
+    if 'partner_name' in applicant._fields and applicant.partner_name:
+        title = applicant.partner_name
+    elif 'display_name' in applicant._fields and applicant.display_name:
+        title = applicant.display_name
+    elif 'x_full_name_arabic' in applicant._fields and applicant.x_full_name_arabic:
+        title = applicant.x_full_name_arabic
+    elif 'x_full_name_ar' in applicant._fields and applicant.x_full_name_ar:
+        title = applicant.x_full_name_ar
+
     return {
         'type': 'ir.actions.act_window',
-        'name': applicant.name or 'Applicant',
+        'name': title,
         'res_model': 'hr.applicant',
         'res_id': applicant.id,
         'view_mode': 'form',
