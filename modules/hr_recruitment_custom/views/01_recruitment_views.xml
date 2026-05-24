@@ -874,7 +874,7 @@
                                 <button type="action"
                                     name="hr_recruitment_custom.action_applicant_declaration_download_generated_pdf"
                                     string=""
-                                    title="تنزيل ملف F-0004 المنشأ"
+                                    title="تنزيل المستند المنشأ"
                                     icon="fa-download"
                                     class="btn-link"
                                     invisible="not x_pdf_attachment_id" />
@@ -891,7 +891,7 @@
                                 <button type="action"
                                     name="hr_recruitment_custom.action_applicant_declaration_download_signed_pdf"
                                     string=""
-                                    title="تنزيل ملف F-0004 الموقع"
+                                    title="تنزيل المستند الموقع"
                                     icon="fa-file-pdf-o"
                                     class="btn-link"
                                     invisible="not x_signed_attachment_id" />

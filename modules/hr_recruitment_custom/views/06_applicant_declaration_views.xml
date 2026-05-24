@@ -31,31 +31,16 @@
                         statusbar_visible="draft,generated,signature_requested,signed"
                         readonly="1" />
                     <button type="action"
-                        name="hr_recruitment_custom.action_applicant_declaration_generate_f0004_pdf"
-                        string="إنشاء ملف F-0004"
-                        class="btn-primary"
-                        invisible="x_declaration_type != 'legal_documents_validity_declaration' or x_state != 'draft'" />
-                    <button type="action"
                         name="hr_recruitment_custom.action_applicant_declaration_download_generated_pdf"
                         string=""
-                        title="تنزيل ملف F-0004 المنشأ"
+                        title="تنزيل المستند المنشأ"
                         icon="fa-download"
                         class="btn-link"
                         invisible="not x_pdf_attachment_id" />
                     <button type="action"
-                        name="hr_recruitment_custom.action_applicant_declaration_send_f0004_native_sign"
-                        string="إرسال F-0004 للتوقيع"
-                        class="btn-secondary"
-                        invisible="x_declaration_type != 'legal_documents_validity_declaration' or x_state != 'generated' or not x_pdf_attachment_id" />
-                    <button type="action"
-                        name="hr_recruitment_custom.action_applicant_declaration_sync_f0004_native_sign_completion"
-                        string="مزامنة نتيجة التوقيع"
-                        class="btn-secondary"
-                        invisible="x_declaration_type != 'legal_documents_validity_declaration' or x_state != 'signature_requested'" />
-                    <button type="action"
                         name="hr_recruitment_custom.action_applicant_declaration_download_signed_pdf"
                         string=""
-                        title="تنزيل ملف F-0004 الموقع"
+                        title="تنزيل المستند الموقع"
                         icon="fa-file-pdf-o"
                         class="btn-link"
                         invisible="not x_signed_attachment_id" />
@@ -68,6 +53,60 @@
                         invisible="x_state != 'signed'" />
                 </header>
                 <sheet>
+                    <!-- 11F-A declaration workflow buttons: start -->
+                    <div name="mcep_declaration_workflow_actions"
+                         class="o_mcep_declaration_workflow_actions"
+                         style="direction: ltr; text-align: left; display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 8px; margin: 0 0 16px 0;">
+                        <button type="action"
+                            name="hr_recruitment_custom.action_applicant_declaration_generate_f0004_pdf"
+                            string="إنشاء ملف F-0004"
+                            class="btn-primary"
+                            invisible="x_declaration_type != 'legal_documents_validity_declaration' or x_state != 'draft'" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_applicant_declaration_generate_f0007_pdf"
+                            string="إنشاء ملف F-0007"
+                            class="btn-primary"
+                            invisible="x_declaration_type != 'policies_compliance_declaration' or x_state in ['signature_requested', 'signed', 'cancelled', 'superseded']" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_applicant_declaration_generate_f0009_pdf"
+                            string="إنشاء ملف F-0009"
+                            class="btn-primary"
+                            invisible="x_declaration_type != 'non_disclosure_agreement' or x_state in ['signature_requested', 'signed', 'cancelled', 'superseded']" />
+
+                        <button type="action"
+                            name="hr_recruitment_custom.action_applicant_declaration_send_f0004_native_sign"
+                            string="إرسال F-0004 للتوقيع"
+                            class="btn-secondary"
+                            invisible="x_declaration_type != 'legal_documents_validity_declaration' or x_state != 'generated' or not x_pdf_attachment_id" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_applicant_declaration_send_f0007_native_sign"
+                            string="إرسال F-0007 للتوقيع"
+                            class="btn-secondary"
+                            invisible="x_declaration_type != 'policies_compliance_declaration' or x_state != 'generated' or not x_pdf_attachment_id" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_applicant_declaration_send_f0009_native_sign"
+                            string="إرسال F-0009 للتوقيع"
+                            class="btn-secondary"
+                            invisible="x_declaration_type != 'non_disclosure_agreement' or x_state != 'generated' or not x_pdf_attachment_id" />
+
+                        <button type="action"
+                            name="hr_recruitment_custom.action_applicant_declaration_sync_f0004_native_sign_completion"
+                            string="مزامنة نتيجة التوقيع"
+                            class="btn-secondary"
+                            invisible="x_declaration_type != 'legal_documents_validity_declaration' or x_state not in ['signature_requested', 'signed']" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_applicant_declaration_sync_f0007_native_sign_completion"
+                            string="مزامنة توقيع F-0007"
+                            class="btn-secondary"
+                            invisible="x_declaration_type != 'policies_compliance_declaration' or x_state not in ['signature_requested', 'signed']" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_applicant_declaration_sync_f0009_native_sign_completion"
+                            string="مزامنة توقيع F-0009"
+                            class="btn-secondary"
+                            invisible="x_declaration_type != 'non_disclosure_agreement' or x_state not in ['signature_requested', 'signed']" />
+                    </div>
+                    <!-- 11F-A declaration workflow buttons: end -->
+
                     <group>
                         <group string="بيانات الإقرار">
                             <field name="x_name" readonly="1" />
