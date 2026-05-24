@@ -280,6 +280,46 @@
                             max-width: 260px;
                             max-height: 78px;
                         }
+
+                        /* 10C-B3: page 2 annex header must match page 1 geometry.
+                           The annex body is RTL, so force only the header table layout back to LTR:
+                           logo cell on the left, metadata cell on the right. */
+                        .tor-annex-visible-header,
+                        .tor-annex-visible-header .tor-header-table {
+                            direction: ltr;
+                            unicode-bidi: embed;
+                        }
+                        .tor-annex-visible-header .tor-logo-wrap {
+                            width: 38%;
+                            text-align: left;
+                            direction: ltr;
+                            vertical-align: middle;
+                        }
+                        .tor-annex-visible-header .tor-header-meta {
+                            width: 62%;
+                            text-align: right;
+                            direction: rtl;
+                            unicode-bidi: embed;
+                            vertical-align: middle;
+                            font-size: 11.5px;
+                            line-height: 1.32;
+                        }
+                        .tor-annex-visible-header .tor-header-meta .row {
+                            direction: rtl;
+                            text-align: right;
+                            margin-bottom: 2px;
+                            white-space: nowrap;
+                        }
+                        .tor-annex-visible-header .tor-header-meta .label {
+                            direction: rtl;
+                            unicode-bidi: embed;
+                        }
+                        .tor-annex-visible-header .tor-header-meta .value,
+                        .tor-annex-visible-header .tor-header-meta .pagecount {
+                            direction: ltr;
+                            unicode-bidi: embed;
+                            display: inline-block;
+                        }
                         .tor-annex .tor-title {
                             font-size: 30px;
                             margin-bottom: 5px;
