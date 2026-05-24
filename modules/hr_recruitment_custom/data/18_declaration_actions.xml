@@ -311,9 +311,19 @@ for rec in records.sudo():
         'mimetype': 'application/pdf',
     })
 
+    previous_pdf_attachment = rec.x_pdf_attachment_id
+
+    previous_pdf_attachment = rec.x_pdf_attachment_id
+
     rec.write({
         'x_pdf_attachment_id': attachment.id,
     })
+
+    if previous_pdf_attachment:
+        rec.message_post(body='تم استبدال نسخة F-0009 المنشأة السابقة بنسخة اختبار/توليد أحدث.')
+
+    if previous_pdf_attachment:
+        rec.message_post(body='تم استبدال نسخة F-0007 المنشأة السابقة بنسخة اختبار/توليد أحدث.')
 
     latest_any = registry_model.search([
         ('x_document_type', '=', 'legal_documents_validity_declaration'),
@@ -372,6 +382,293 @@ if not action:
     action = {'type': 'ir.actions.client', 'tag': 'reload'}
         ]]></field>
     </record>
+
+    <record id="action_applicant_declaration_generate_f0007_pdf" model="ir.actions.server">
+        <field name="name">إنشاء ملف F-0007</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+        <field name="binding_model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+registry_model = env['x_hr.recruitment_document'].sudo()
+attachment_model = env['ir.attachment'].sudo()
+report_service = env['ir.actions.report'].sudo()
+action = False
+
+for rec in records.sudo():
+    if rec.x_declaration_type != 'policies_compliance_declaration':
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'نوع إقرار غير مدعوم',
+                'message': 'إنشاء PDF هذا مخصص فقط لإقرار F-0007 الالتزام باللوائح والسياسات.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    if rec.x_state in ['signature_requested', 'signed'] or rec.x_signed_attachment_id:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'لا يمكن إعادة إنشاء F-0007',
+                'message': 'لا يمكن إعادة إنشاء ملف F-0007 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    applicant = rec.x_applicant_id
+    if not applicant:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'لا يوجد متقدم',
+                'message': 'لا يمكن إنشاء F-0007 بدون ربط الإقرار بمتقدم.',
+                'type': 'warning',
+                'sticky': True,
+            }
+        }
+        continue
+
+    generated_on = datetime.datetime.now()
+    applicant_name = applicant.partner_name or applicant.name or applicant.display_name
+    reference = rec.x_document_reference or ('MCEP-HR-F-0007-%05d-%02d' % (applicant.id, rec.x_sequence or 1))
+
+    rec.write({
+        'x_document_reference': reference,
+        'x_declaration_code': 'MCEP-HR-F-0007',
+        'x_state': 'generated',
+        'x_generated_on': generated_on,
+        'x_prepared_by_user_id': rec.x_prepared_by_user_id.id or env.user.id,
+        'x_prepared_on': rec.x_prepared_on or generated_on,
+    })
+
+    pdf_content, _content_type = report_service._render_qweb_pdf(
+        'hr_recruitment_custom.action_report_mcep_policies_compliance_declaration',
+        [rec.id]
+    )
+
+    filename = '%s - F-0007 إقرار الالتزام باللوائح والسياسات.pdf' % applicant_name
+
+    attachment = attachment_model.create({
+        'name': filename,
+        'type': 'binary',
+        'raw': pdf_content,
+        'res_model': 'hr.applicant',
+        'res_id': applicant.id,
+        'mimetype': 'application/pdf',
+    })
+
+    rec.write({
+        'x_pdf_attachment_id': attachment.id,
+    })
+
+    latest_any = registry_model.search([
+        ('x_document_type', '=', 'policies_compliance_declaration'),
+        ('x_applicant_id', '=', applicant.id),
+    ], order='x_version desc, id desc', limit=1)
+
+    registry_doc = registry_model.search([
+        ('x_document_type', '=', 'policies_compliance_declaration'),
+        ('x_source_model', '=', 'x_hr.applicant_declaration'),
+        ('x_source_res_id', '=', rec.id),
+        ('x_state', '!=', 'signed'),
+    ], order='x_version desc, id desc', limit=1)
+
+    registry_name = 'إقرار الالتزام باللوائح والسياسات - %s - v%s'
+
+    if registry_doc:
+        registry_doc.write({
+            'x_name': registry_name % (applicant_name, registry_doc.x_version or 1),
+            'x_applicant_id': applicant.id,
+            'x_state': 'generated',
+            'x_generated_attachment_id': attachment.id,
+            'x_generated_on': generated_on,
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'x_hr.applicant_declaration',
+            'x_source_res_id': rec.id,
+            'x_notes': 'تم إنشاء ملف F-0007 PDF من سجل إقرار المتقدم.',
+        })
+    else:
+        next_version = (latest_any.x_version or 0) + 1 if latest_any else 1
+        registry_model.create({
+            'x_name': registry_name % (applicant_name, next_version),
+            'x_applicant_id': applicant.id,
+            'x_document_type': 'policies_compliance_declaration',
+            'x_state': 'generated',
+            'x_generated_attachment_id': attachment.id,
+            'x_version': next_version,
+            'x_generated_on': generated_on,
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'x_hr.applicant_declaration',
+            'x_source_res_id': rec.id,
+            'x_notes': 'تم إنشاء ملف F-0007 PDF من سجل إقرار المتقدم.',
+        })
+
+    rec.message_post(body='تم إنشاء ملف F-0007 وربطه بسجل الإقرار.')
+    applicant.message_post(body='تم إنشاء ملف F-0007 وربطه بسجل مستندات التوظيف.')
+
+    action = {
+        'type': 'ir.actions.act_url',
+        'url': '/web/content/%s?download=true' % attachment.id,
+        'target': 'new',
+    }
+
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+
+    <record id="action_applicant_declaration_generate_f0009_pdf" model="ir.actions.server">
+        <field name="name">إنشاء ملف F-0009</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+        <field name="binding_model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+registry_model = env['x_hr.recruitment_document'].sudo()
+attachment_model = env['ir.attachment'].sudo()
+report_service = env['ir.actions.report'].sudo()
+action = False
+
+for rec in records.sudo():
+    if rec.x_declaration_type != 'non_disclosure_agreement':
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'نوع إقرار غير مدعوم',
+                'message': 'إنشاء PDF هذا مخصص فقط لإقرار F-0009 السرية وعدم الإفصاح.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    if rec.x_state in ['signature_requested', 'signed'] or rec.x_signed_attachment_id:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'لا يمكن إعادة إنشاء F-0009',
+                'message': 'لا يمكن إعادة إنشاء ملف F-0009 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    applicant = rec.x_applicant_id
+    if not applicant:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'لا يوجد متقدم',
+                'message': 'لا يمكن إنشاء F-0009 بدون ربط الإقرار بمتقدم.',
+                'type': 'warning',
+                'sticky': True,
+            }
+        }
+        continue
+
+    generated_on = datetime.datetime.now()
+    applicant_name = applicant.partner_name or applicant.name or applicant.display_name
+    reference = rec.x_document_reference or ('MCEP-HR-F-0009-%05d-%02d' % (applicant.id, rec.x_sequence or 1))
+
+    rec.write({
+        'x_document_reference': reference,
+        'x_declaration_code': 'MCEP-HR-F-0009',
+        'x_state': 'generated',
+        'x_generated_on': generated_on,
+        'x_prepared_by_user_id': rec.x_prepared_by_user_id.id or env.user.id,
+        'x_prepared_on': rec.x_prepared_on or generated_on,
+    })
+
+    pdf_content, _content_type = report_service._render_qweb_pdf(
+        'hr_recruitment_custom.action_report_mcep_non_disclosure_agreement',
+        [rec.id]
+    )
+
+    filename = '%s - F-0009 إقرار السرية وعدم الإفصاح.pdf' % applicant_name
+
+    attachment = attachment_model.create({
+        'name': filename,
+        'type': 'binary',
+        'raw': pdf_content,
+        'res_model': 'hr.applicant',
+        'res_id': applicant.id,
+        'mimetype': 'application/pdf',
+    })
+
+    rec.write({
+        'x_pdf_attachment_id': attachment.id,
+    })
+
+    latest_any = registry_model.search([
+        ('x_document_type', '=', 'non_disclosure_agreement'),
+        ('x_applicant_id', '=', applicant.id),
+    ], order='x_version desc, id desc', limit=1)
+
+    registry_doc = registry_model.search([
+        ('x_document_type', '=', 'non_disclosure_agreement'),
+        ('x_source_model', '=', 'x_hr.applicant_declaration'),
+        ('x_source_res_id', '=', rec.id),
+        ('x_state', '!=', 'signed'),
+    ], order='x_version desc, id desc', limit=1)
+
+    registry_name = 'إقرار السرية وعدم الإفصاح - %s - v%s'
+
+    if registry_doc:
+        registry_doc.write({
+            'x_name': registry_name % (applicant_name, registry_doc.x_version or 1),
+            'x_applicant_id': applicant.id,
+            'x_state': 'generated',
+            'x_generated_attachment_id': attachment.id,
+            'x_generated_on': generated_on,
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'x_hr.applicant_declaration',
+            'x_source_res_id': rec.id,
+            'x_notes': 'تم إنشاء ملف F-0009 PDF من سجل إقرار المتقدم.',
+        })
+    else:
+        next_version = (latest_any.x_version or 0) + 1 if latest_any else 1
+        registry_model.create({
+            'x_name': registry_name % (applicant_name, next_version),
+            'x_applicant_id': applicant.id,
+            'x_document_type': 'non_disclosure_agreement',
+            'x_state': 'generated',
+            'x_generated_attachment_id': attachment.id,
+            'x_version': next_version,
+            'x_generated_on': generated_on,
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'x_hr.applicant_declaration',
+            'x_source_res_id': rec.id,
+            'x_notes': 'تم إنشاء ملف F-0009 PDF من سجل إقرار المتقدم.',
+        })
+
+    rec.message_post(body='تم إنشاء ملف F-0009 وربطه بسجل الإقرار.')
+    applicant.message_post(body='تم إنشاء ملف F-0009 وربطه بسجل مستندات التوظيف.')
+
+    action = {
+        'type': 'ir.actions.act_url',
+        'url': '/web/content/%s?download=true' % attachment.id,
+        'target': 'new',
+    }
+
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+
 
     <record id="action_applicant_declaration_download_generated_pdf" model="ir.actions.server">
         <field name="name">تنزيل ملف F-0004 المنشأ</field>
@@ -738,6 +1035,583 @@ if not action:
     action = {'type': 'ir.actions.client', 'tag': 'reload'}
         ]]></field>
     </record>
+
+
+
+    <record id="action_applicant_declaration_send_f0007_native_sign" model="ir.actions.server">
+        <field name="name">إرسال F-0007 عبر توقيع أودو</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+        <field name="binding_model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+registry_model = env['x_hr.recruitment_document'].sudo()
+sign_template_model = env['sign.template'].sudo()
+sign_document_model = env['sign.document'].sudo()
+sign_item_model = env['sign.item'].sudo()
+sign_role_model = env['sign.item.role'].sudo()
+sign_send_model = env['sign.send.request'].sudo()
+sign_send_signer_model = env['sign.send.request.signer'].sudo()
+sign_request_model = env['sign.request'].sudo()
+partner_model = env['res.partner'].sudo()
+
+signature_type = env.ref('sign.sign_item_type_signature', raise_if_not_found=False)
+date_type = env.ref('sign.sign_item_type_date', raise_if_not_found=False)
+# Native Sign date item note:
+# exported sign.item fields expose placement/role/type only, not date script,
+# font, color, or display format. Date output is controlled by Odoo Sign
+# rendering and signer/session locale. If Western digits are mandatory after
+# final calibration, use signer locale policy or replace with a text field
+# instruction in a later controlled slice.
+
+applicant_role = (
+    sign_role_model.search([('name', '=', 'Applicant')], order='id asc', limit=1)
+    or sign_role_model.search([('name', '=', 'Employee')], order='id asc', limit=1)
+    or sign_role_model.search([('name', '=', 'Customer')], order='id asc', limit=1)
+    or sign_role_model.search([('name', '=', 'Signatory')], order='id asc', limit=1)
+    or sign_role_model.search([], order='id asc', limit=1)
+)
+
+action = False
+setup_error = False
+
+if not signature_type:
+    setup_error = 'Odoo Sign signature field type could not be found: sign.sign_item_type_signature.'
+elif not applicant_role:
+    setup_error = 'No Odoo Sign signer role was found. Create an Applicant, Employee, Customer, or Signatory role before sending F-0007.'
+
+
+def toast(title, message, kind='warning', sticky=False):
+    return {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': title,
+            'message': message,
+            'type': kind,
+            'sticky': sticky,
+        },
+    }
+
+
+for rec in records.sudo():
+    if setup_error:
+        action = toast('إعداد توقيع أودو غير مكتمل', setup_error, 'warning', True)
+        continue
+
+    if rec.x_declaration_type != 'policies_compliance_declaration':
+        action = toast('نوع إقرار غير مدعوم', 'الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0007.', 'warning', False)
+        continue
+
+    if rec.x_state == 'signed' or rec.x_signed_attachment_id:
+        action = toast('F-0007 موقّع مسبقاً', 'هذا الإقرار موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.', 'warning', False)
+        continue
+
+    if rec.x_state != 'generated' or not rec.x_pdf_attachment_id:
+        action = toast('F-0007 غير جاهز للإرسال', 'أنشئ ملف F-0007 PDF قبل إرساله عبر توقيع أودو.', 'warning', False)
+        continue
+
+    applicant = rec.x_applicant_id
+    if not applicant:
+        action = toast('لا يوجد متقدم', 'لا يمكن إرسال F-0007 بدون متقدم مرتبط.', 'warning', True)
+        continue
+
+    applicant_name = applicant.partner_name or applicant.name or applicant.display_name
+    applicant_email = applicant.email_from or False
+
+    applicant_partner = False
+    if 'partner_id' in applicant._fields and applicant.partner_id:
+        applicant_partner = applicant.partner_id.sudo()
+
+    if not applicant_partner and applicant_email:
+        applicant_partner = partner_model.search([('email', '=', applicant_email)], order='id asc', limit=1)
+
+    if not applicant_partner and applicant_email:
+        applicant_partner = partner_model.create({
+            'name': applicant_name or applicant_email,
+            'email': applicant_email,
+        })
+
+    if not applicant_partner or not (applicant_partner.email or applicant_email):
+        action = toast('بريد المتقدم غير موجود', 'أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0007 عبر توقيع أودو.', 'warning', True)
+        continue
+
+    pdf_attachment = rec.x_pdf_attachment_id
+    filename = pdf_attachment.name or ('%s - F-0007 إقرار الالتزام باللوائح والسياسات.pdf' % applicant_name)
+
+    registry_doc = registry_model.search([
+        ('x_document_type', '=', 'policies_compliance_declaration'),
+        ('x_source_model', '=', 'x_hr.applicant_declaration'),
+        ('x_source_res_id', '=', rec.id),
+    ], order='x_version desc, id desc', limit=1)
+
+    if not registry_doc:
+        latest_any = registry_model.search([
+            ('x_document_type', '=', 'policies_compliance_declaration'),
+            ('x_applicant_id', '=', applicant.id),
+        ], order='x_version desc, id desc', limit=1)
+
+        next_version = (latest_any.x_version or 0) + 1 if latest_any else 1
+
+        registry_doc = registry_model.create({
+            'x_name': 'إقرار الالتزام باللوائح والسياسات - %s - v%s' % (applicant_name, next_version),
+            'x_applicant_id': applicant.id,
+            'x_document_type': 'policies_compliance_declaration',
+            'x_state': 'generated',
+            'x_generated_attachment_id': pdf_attachment.id,
+            'x_version': next_version,
+            'x_generated_on': rec.x_generated_on or datetime.datetime.now(),
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'x_hr.applicant_declaration',
+            'x_source_res_id': rec.id,
+            'x_notes': 'تم استرداد سجل F-0007 في سجل مستندات التوظيف أثناء الإرسال عبر توقيع أودو.',
+        })
+
+    if registry_doc.x_state == 'signed':
+        action = toast('F-0007 موقّع مسبقاً', 'سجل مستندات التوظيف لهذا الإقرار موقّع مسبقاً.', 'warning', False)
+        continue
+
+    if registry_doc.x_sign_request_res_id:
+        existing_request = sign_request_model.browse(registry_doc.x_sign_request_res_id)
+        if existing_request.exists():
+            existing_state = existing_request.state or registry_doc.x_sign_request_state or 'unknown'
+            if existing_state not in ['cancelled', 'canceled']:
+                if existing_state == 'signed':
+                    message = 'طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة نتيجة التوقيع لإغلاق السجل.'
+                else:
+                    message = 'يوجد طلب توقيع أودو نشط لهذا الإقرار بحالة "%s". لن يتم إنشاء طلب مكرر.' % existing_state
+                action = toast('تم منع طلب توقيع مكرر', message, 'warning', True)
+                continue
+
+    sent_on = datetime.datetime.now()
+    validity_date = datetime.date.today() + datetime.timedelta(days=60)
+
+    sign_template = sign_template_model.create({
+        'name': filename,
+        'user_id': env.user.id,
+        'signature_request_validity': 60,
+    })
+
+    sign_document = sign_document_model.create({
+        'template_id': sign_template.id,
+        'attachment_id': pdf_attachment.id,
+        'name': filename,
+        'sequence': 1,
+    })
+
+    # F-0007 applicant-only Sign profile.
+    # Locked one-page PDF: signature/date rows near bottom of page 1.
+    # 11D-A calibrated profile: signature item in signature row, date item in date row.
+    # Adjust only posX/posY/width/height after Sign preview if needed.
+    sign_item_model.create({
+        'document_id': sign_document.id,
+        'type_id': signature_type.id,
+        'responsible_id': applicant_role.id,
+        'page': 1,
+        'posX': 0.220,
+        'posY': 0.790,
+        'width': 0.480,
+        'height': 0.050,
+        'required': True,
+        'name': 'Applicant Signature',
+        'alignment': 'left',
+        'constant': False,
+    })
+
+    if date_type:
+        sign_item_model.create({
+            'document_id': sign_document.id,
+            'type_id': date_type.id,
+            'responsible_id': applicant_role.id,
+            'page': 1,
+            'posX': 0.245,
+            'posY': 0.848,
+            'width': 0.250,
+            'height': 0.026,
+            'required': True,
+            'name': 'Signing Date',
+            'alignment': 'left',
+            'constant': False,
+        })
+
+    subject = 'Signature Request - %s' % filename
+    body = '<p>Please review and sign the attached F-0007 Policies Compliance Declaration.</p>'
+
+    send_request = sign_send_model.create({
+        'template_id': sign_template.id,
+        'signer_id': applicant_partner.id,
+        'subject': subject,
+        'body': body,
+        'validity': validity_date,
+        'certificate_reference': False,
+        'reminder_enabled': False,
+        'model': 'x_hr.applicant_declaration',
+        'res_ids': str([rec.id]),
+    })
+
+    if send_request.signer_ids:
+        signer_line = send_request.signer_ids.filtered(lambda line: line.role_id.id == applicant_role.id)[:1]
+        if not signer_line:
+            signer_line = send_request.signer_ids[:1]
+        signer_line.sudo().write({
+            'partner_id': applicant_partner.id,
+            'mail_sent_order': 1,
+        })
+    else:
+        sign_send_signer_model.create({
+            'sign_send_request_id': send_request.id,
+            'role_id': applicant_role.id,
+            'partner_id': applicant_partner.id,
+            'mail_sent_order': 1,
+        })
+
+    send_request.send_request()
+
+    generated_request = sign_request_model.search([
+        ('template_id', '=', sign_template.id),
+        ('request_item_ids.partner_id', '=', applicant_partner.id),
+    ], order='create_date desc, id desc', limit=1)
+
+    if generated_request:
+        registry_doc.write({
+            'x_state': 'signature_requested',
+            'x_sent_on': sent_on,
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'x_hr.applicant_declaration',
+            'x_source_res_id': rec.id,
+            'x_signature_mode': 'native_sign',
+            'x_sign_request_model': 'sign.request',
+            'x_sign_request_res_id': generated_request.id,
+            'x_sign_request_reference': generated_request.reference or filename,
+            'x_sign_request_state': generated_request.state or 'sent',
+            'x_sign_request_url': '/odoo/sign/%s' % generated_request.id,
+            'x_generated_attachment_id': pdf_attachment.id,
+            'x_notes': ((registry_doc.x_notes or '') + '\\nNative Odoo Sign request created for F-0007 on %s. Request ID: %s. Applicant: %s. Date item: %s.' % (sent_on, generated_request.id, applicant_partner.display_name, 'yes' if date_type else 'no')).strip(),
+        })
+
+        rec.write({
+            'x_state': 'signature_requested',
+            'x_sent_on': sent_on,
+        })
+
+        applicant.message_post(body='تم إرسال F-0007 عبر توقيع أودو إلى المتقدم %s. رقم طلب التوقيع: %s.' % (applicant_partner.display_name, generated_request.id))
+
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'تم إرسال F-0007 للتوقيع',
+                'message': 'تم إنشاء طلب توقيع أودو وإرساله إلى المتقدم.',
+                'type': 'success',
+                'sticky': False,
+                'next': {'type': 'ir.actions.client', 'tag': 'reload'},
+            }
+        }
+    else:
+        registry_doc.write({
+            'x_signature_mode': 'native_sign',
+            'x_sign_request_model': 'sign.request',
+            'x_sign_request_reference': filename,
+            'x_sign_request_state': 'lookup_failed_after_send_request',
+            'x_generated_attachment_id': pdf_attachment.id,
+            'x_notes': ((registry_doc.x_notes or '') + '\\nNative Odoo Sign send_request() executed for F-0007 on %s, but the generated sign.request could not be located automatically. Dynamic template ID: %s.' % (sent_on, sign_template.id)).strip(),
+        })
+
+        action = toast('تعذر العثور على طلب التوقيع', 'تم تنفيذ الإرسال، لكن لم يتم العثور على sign.request تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.', 'warning', True)
+
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+
+    <record id="action_applicant_declaration_send_f0009_native_sign" model="ir.actions.server">
+        <field name="name">إرسال F-0009 عبر توقيع أودو</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+        <field name="binding_model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+registry_model = env['x_hr.recruitment_document'].sudo()
+sign_template_model = env['sign.template'].sudo()
+sign_document_model = env['sign.document'].sudo()
+sign_item_model = env['sign.item'].sudo()
+sign_role_model = env['sign.item.role'].sudo()
+sign_send_model = env['sign.send.request'].sudo()
+sign_send_signer_model = env['sign.send.request.signer'].sudo()
+sign_request_model = env['sign.request'].sudo()
+partner_model = env['res.partner'].sudo()
+
+signature_type = env.ref('sign.sign_item_type_signature', raise_if_not_found=False)
+date_type = env.ref('sign.sign_item_type_date', raise_if_not_found=False)
+# Native Sign date item note:
+# exported sign.item fields expose placement/role/type only, not date script,
+# font, color, or display format. Date output is controlled by Odoo Sign
+# rendering and signer/session locale. If Western digits are mandatory after
+# final calibration, use signer locale policy or replace with a text field
+# instruction in a later controlled slice.
+
+applicant_role = (
+    sign_role_model.search([('name', '=', 'Applicant')], order='id asc', limit=1)
+    or sign_role_model.search([('name', '=', 'Employee')], order='id asc', limit=1)
+    or sign_role_model.search([('name', '=', 'Customer')], order='id asc', limit=1)
+    or sign_role_model.search([('name', '=', 'Signatory')], order='id asc', limit=1)
+    or sign_role_model.search([], order='id asc', limit=1)
+)
+
+action = False
+setup_error = False
+
+if not signature_type:
+    setup_error = 'Odoo Sign signature field type could not be found: sign.sign_item_type_signature.'
+elif not applicant_role:
+    setup_error = 'No Odoo Sign signer role was found. Create an Applicant, Employee, Customer, or Signatory role before sending F-0009.'
+
+
+def toast(title, message, kind='warning', sticky=False):
+    return {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': title,
+            'message': message,
+            'type': kind,
+            'sticky': sticky,
+        },
+    }
+
+
+for rec in records.sudo():
+    if setup_error:
+        action = toast('إعداد توقيع أودو غير مكتمل', setup_error, 'warning', True)
+        continue
+
+    if rec.x_declaration_type != 'non_disclosure_agreement':
+        action = toast('نوع إقرار غير مدعوم', 'الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0009.', 'warning', False)
+        continue
+
+    if rec.x_state == 'signed' or rec.x_signed_attachment_id:
+        action = toast('F-0009 موقّع مسبقاً', 'هذا الإقرار موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.', 'warning', False)
+        continue
+
+    if rec.x_state != 'generated' or not rec.x_pdf_attachment_id:
+        action = toast('F-0009 غير جاهز للإرسال', 'أنشئ ملف F-0009 PDF قبل إرساله عبر توقيع أودو.', 'warning', False)
+        continue
+
+    applicant = rec.x_applicant_id
+    if not applicant:
+        action = toast('لا يوجد متقدم', 'لا يمكن إرسال F-0009 بدون متقدم مرتبط.', 'warning', True)
+        continue
+
+    applicant_name = applicant.partner_name or applicant.name or applicant.display_name
+    applicant_email = applicant.email_from or False
+
+    applicant_partner = False
+    if 'partner_id' in applicant._fields and applicant.partner_id:
+        applicant_partner = applicant.partner_id.sudo()
+
+    if not applicant_partner and applicant_email:
+        applicant_partner = partner_model.search([('email', '=', applicant_email)], order='id asc', limit=1)
+
+    if not applicant_partner and applicant_email:
+        applicant_partner = partner_model.create({
+            'name': applicant_name or applicant_email,
+            'email': applicant_email,
+        })
+
+    if not applicant_partner or not (applicant_partner.email or applicant_email):
+        action = toast('بريد المتقدم غير موجود', 'أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0009 عبر توقيع أودو.', 'warning', True)
+        continue
+
+    pdf_attachment = rec.x_pdf_attachment_id
+    filename = pdf_attachment.name or ('%s - F-0009 إقرار السرية وعدم الإفصاح.pdf' % applicant_name)
+
+    registry_doc = registry_model.search([
+        ('x_document_type', '=', 'non_disclosure_agreement'),
+        ('x_source_model', '=', 'x_hr.applicant_declaration'),
+        ('x_source_res_id', '=', rec.id),
+    ], order='x_version desc, id desc', limit=1)
+
+    if not registry_doc:
+        latest_any = registry_model.search([
+            ('x_document_type', '=', 'non_disclosure_agreement'),
+            ('x_applicant_id', '=', applicant.id),
+        ], order='x_version desc, id desc', limit=1)
+
+        next_version = (latest_any.x_version or 0) + 1 if latest_any else 1
+
+        registry_doc = registry_model.create({
+            'x_name': 'إقرار السرية وعدم الإفصاح - %s - v%s' % (applicant_name, next_version),
+            'x_applicant_id': applicant.id,
+            'x_document_type': 'non_disclosure_agreement',
+            'x_state': 'generated',
+            'x_generated_attachment_id': pdf_attachment.id,
+            'x_version': next_version,
+            'x_generated_on': rec.x_generated_on or datetime.datetime.now(),
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'x_hr.applicant_declaration',
+            'x_source_res_id': rec.id,
+            'x_notes': 'تم استرداد سجل F-0009 في سجل مستندات التوظيف أثناء الإرسال عبر توقيع أودو.',
+        })
+
+    if registry_doc.x_state == 'signed':
+        action = toast('F-0009 موقّع مسبقاً', 'سجل مستندات التوظيف لهذا الإقرار موقّع مسبقاً.', 'warning', False)
+        continue
+
+    if registry_doc.x_sign_request_res_id:
+        existing_request = sign_request_model.browse(registry_doc.x_sign_request_res_id)
+        if existing_request.exists():
+            existing_state = existing_request.state or registry_doc.x_sign_request_state or 'unknown'
+            if existing_state not in ['cancelled', 'canceled']:
+                if existing_state == 'signed':
+                    message = 'طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة نتيجة التوقيع لإغلاق السجل.'
+                else:
+                    message = 'يوجد طلب توقيع أودو نشط لهذا الإقرار بحالة "%s". لن يتم إنشاء طلب مكرر.' % existing_state
+                action = toast('تم منع طلب توقيع مكرر', message, 'warning', True)
+                continue
+
+    sent_on = datetime.datetime.now()
+    validity_date = datetime.date.today() + datetime.timedelta(days=60)
+
+    sign_template = sign_template_model.create({
+        'name': filename,
+        'user_id': env.user.id,
+        'signature_request_validity': 60,
+    })
+
+    sign_document = sign_document_model.create({
+        'template_id': sign_template.id,
+        'attachment_id': pdf_attachment.id,
+        'name': filename,
+        'sequence': 1,
+    })
+
+    # F-0009 applicant-only Sign profile.
+    # Locked one-page PDF: signature/date rows near bottom of page 1.
+    # 11D-A calibrated profile: signature item in signature row, date item in date row.
+    # Adjust only posX/posY/width/height after Sign preview if needed.
+    sign_item_model.create({
+        'document_id': sign_document.id,
+        'type_id': signature_type.id,
+        'responsible_id': applicant_role.id,
+        'page': 1,
+        'posX': 0.220,
+        'posY': 0.745,
+        'width': 0.480,
+        'height': 0.050,
+        'required': True,
+        'name': 'Applicant Signature',
+        'alignment': 'left',
+        'constant': False,
+    })
+
+    if date_type:
+        sign_item_model.create({
+            'document_id': sign_document.id,
+            'type_id': date_type.id,
+            'responsible_id': applicant_role.id,
+            'page': 1,
+            'posX': 0.245,
+            'posY': 0.810,
+            'width': 0.250,
+            'height': 0.026,
+            'required': True,
+            'name': 'Signing Date',
+            'alignment': 'left',
+            'constant': False,
+        })
+
+    subject = 'Signature Request - %s' % filename
+    body = '<p>Please review and sign the attached F-0009 Non-Disclosure Agreement.</p>'
+
+    send_request = sign_send_model.create({
+        'template_id': sign_template.id,
+        'signer_id': applicant_partner.id,
+        'subject': subject,
+        'body': body,
+        'validity': validity_date,
+        'certificate_reference': False,
+        'reminder_enabled': False,
+        'model': 'x_hr.applicant_declaration',
+        'res_ids': str([rec.id]),
+    })
+
+    if send_request.signer_ids:
+        signer_line = send_request.signer_ids.filtered(lambda line: line.role_id.id == applicant_role.id)[:1]
+        if not signer_line:
+            signer_line = send_request.signer_ids[:1]
+        signer_line.sudo().write({
+            'partner_id': applicant_partner.id,
+            'mail_sent_order': 1,
+        })
+    else:
+        sign_send_signer_model.create({
+            'sign_send_request_id': send_request.id,
+            'role_id': applicant_role.id,
+            'partner_id': applicant_partner.id,
+            'mail_sent_order': 1,
+        })
+
+    send_request.send_request()
+
+    generated_request = sign_request_model.search([
+        ('template_id', '=', sign_template.id),
+        ('request_item_ids.partner_id', '=', applicant_partner.id),
+    ], order='create_date desc, id desc', limit=1)
+
+    if generated_request:
+        registry_doc.write({
+            'x_state': 'signature_requested',
+            'x_sent_on': sent_on,
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'x_hr.applicant_declaration',
+            'x_source_res_id': rec.id,
+            'x_signature_mode': 'native_sign',
+            'x_sign_request_model': 'sign.request',
+            'x_sign_request_res_id': generated_request.id,
+            'x_sign_request_reference': generated_request.reference or filename,
+            'x_sign_request_state': generated_request.state or 'sent',
+            'x_sign_request_url': '/odoo/sign/%s' % generated_request.id,
+            'x_generated_attachment_id': pdf_attachment.id,
+            'x_notes': ((registry_doc.x_notes or '') + '\\nNative Odoo Sign request created for F-0009 on %s. Request ID: %s. Applicant: %s. Date item: %s.' % (sent_on, generated_request.id, applicant_partner.display_name, 'yes' if date_type else 'no')).strip(),
+        })
+
+        rec.write({
+            'x_state': 'signature_requested',
+            'x_sent_on': sent_on,
+        })
+
+        applicant.message_post(body='تم إرسال F-0009 عبر توقيع أودو إلى المتقدم %s. رقم طلب التوقيع: %s.' % (applicant_partner.display_name, generated_request.id))
+
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'تم إرسال F-0009 للتوقيع',
+                'message': 'تم إنشاء طلب توقيع أودو وإرساله إلى المتقدم.',
+                'type': 'success',
+                'sticky': False,
+                'next': {'type': 'ir.actions.client', 'tag': 'reload'},
+            }
+        }
+    else:
+        registry_doc.write({
+            'x_signature_mode': 'native_sign',
+            'x_sign_request_model': 'sign.request',
+            'x_sign_request_reference': filename,
+            'x_sign_request_state': 'lookup_failed_after_send_request',
+            'x_generated_attachment_id': pdf_attachment.id,
+            'x_notes': ((registry_doc.x_notes or '') + '\\nNative Odoo Sign send_request() executed for F-0009 on %s, but the generated sign.request could not be located automatically. Dynamic template ID: %s.' % (sent_on, sign_template.id)).strip(),
+        })
+
+        action = toast('تعذر العثور على طلب التوقيع', 'تم تنفيذ الإرسال، لكن لم يتم العثور على sign.request تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.', 'warning', True)
+
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+
 
     <record id="action_applicant_declaration_sync_f0004_native_sign_completion" model="ir.actions.server">
         <field name="name">مزامنة نتيجة توقيع F-0004</field>
