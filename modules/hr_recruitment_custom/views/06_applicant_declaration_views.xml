@@ -62,7 +62,7 @@
                     <button type="action"
                         name="hr_recruitment_custom.action_applicant_declaration_download_sign_certificate"
                         string=""
-                        title="تنزيل شهادة توقيع F-0004"
+                        title="تنزيل شهادة التوقيع"
                         icon="fa-certificate"
                         class="btn-link"
                         invisible="x_state != 'signed'" />

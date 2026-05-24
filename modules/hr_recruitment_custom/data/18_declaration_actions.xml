@@ -1613,6 +1613,523 @@ if not action:
     </record>
 
 
+
+    <record id="action_applicant_declaration_sync_f0007_native_sign_completion" model="ir.actions.server">
+        <field name="name">مزامنة نتيجة توقيع F-0007</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+        <field name="binding_model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+target_declaration_type = 'policies_compliance_declaration'
+target_document_type = 'policies_compliance_declaration'
+target_code = 'F-0007'
+
+registry_model = env['x_hr.recruitment_document'].sudo()
+sign_request_model = env['sign.request'].sudo()
+attachment_model = env['ir.attachment'].sudo()
+action = False
+
+
+def toast(title, message, kind='warning', sticky=False, reload=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if reload:
+        params['next'] = {'type': 'ir.actions.client', 'tag': 'reload'}
+    return {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': params,
+    }
+
+
+def looks_like_certificate(attachment):
+    name = (attachment.name or '').lower()
+    return (
+        'certificate' in name
+        or 'completion' in name
+        or 'completed' in name
+        or 'history' in name
+        or 'audit' in name
+        or 'trail' in name
+        or 'شهادة' in name
+        or 'إكمال' in name
+        or 'اكمال' in name
+    )
+
+
+for rec in records.sudo():
+    if rec.x_declaration_type != target_declaration_type:
+        action = toast(
+            'نوع إقرار غير مدعوم',
+            'هذه المزامنة مخصصة فقط للنموذج %s.' % target_code,
+            'warning',
+            False,
+        )
+        continue
+
+    applicant = rec.x_applicant_id
+    if not applicant:
+        action = toast('لا يوجد متقدم', 'لا يمكن مزامنة %s بدون متقدم مرتبط.' % target_code, 'warning', True)
+        continue
+
+    registry_doc = registry_model.search([
+        ('x_document_type', '=', target_document_type),
+        ('x_source_model', '=', 'x_hr.applicant_declaration'),
+        ('x_source_res_id', '=', rec.id),
+        ('x_signature_mode', '=', 'native_sign'),
+        ('x_sign_request_res_id', '!=', False),
+    ], order='x_version desc, id desc', limit=1)
+
+    if not registry_doc:
+        registry_doc = registry_model.search([
+            ('x_document_type', '=', target_document_type),
+            ('x_applicant_id', '=', applicant.id),
+            ('x_signature_mode', '=', 'native_sign'),
+            ('x_sign_request_res_id', '!=', False),
+        ], order='x_version desc, id desc', limit=1)
+
+    if not registry_doc:
+        action = toast(
+            'لا يوجد طلب توقيع مرتبط',
+            'لم يتم العثور على سجل %s مرتبط بطلب توقيع أودو.' % target_code,
+            'warning',
+            True,
+        )
+        continue
+
+    sign_request = sign_request_model.browse(registry_doc.x_sign_request_res_id)
+    if not sign_request.exists():
+        registry_doc.write({'x_sign_request_state': 'missing_sign_request'})
+        action = toast('طلب التوقيع غير موجود', 'طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.', 'warning', True)
+        continue
+
+    request_state = sign_request.state or 'unknown'
+
+    registry_doc.write({
+        'x_sign_request_state': request_state,
+        'x_sign_request_reference': sign_request.reference or registry_doc.x_sign_request_reference,
+    })
+
+    if request_state != 'signed':
+        rec.message_post(body='طلب توقيع %s لم يكتمل بعد. حالة الطلب الحالية: %s.' % (target_code, request_state))
+        applicant.message_post(body='تم فحص حالة توقيع %s. الحالة الحالية: %s.' % (target_code, request_state))
+        action = toast('%s لم يكتمل توقيعه' % target_code, 'طلب توقيع أودو لا يزال بحالة: %s.' % request_state, 'warning', False)
+        continue
+
+    completed_attachments = sign_request.completed_document_attachment_ids
+
+    related_attachments = attachment_model.search([
+        ('res_model', '=', 'sign.request'),
+        ('res_id', '=', sign_request.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    applicant_attachments = attachment_model.search([
+        ('res_model', '=', 'hr.applicant'),
+        ('res_id', '=', applicant.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    declaration_attachments = attachment_model.search([
+        ('res_model', '=', 'x_hr.applicant_declaration'),
+        ('res_id', '=', rec.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    all_completed_attachments = completed_attachments | related_attachments | applicant_attachments | declaration_attachments
+
+    if not all_completed_attachments:
+        registry_doc.write({
+            'x_sign_request_state': 'signed_no_completed_attachment_found',
+            'x_notes': ((registry_doc.x_notes or '') + '\\nOdoo Sign request %s is signed, but no completed document attachments were found during %s sync on %s.' % (sign_request.id, target_code, datetime.datetime.now())).strip(),
+        })
+        action = toast('المستند الموقع غير موجود', 'طلب التوقيع موقّع، لكن لم يتم العثور على مرفقات المستند المكتمل.', 'warning', True)
+        continue
+
+    signed_native = False
+    certificate_native = False
+
+    for attachment in all_completed_attachments:
+        if rec.x_pdf_attachment_id and attachment.id == rec.x_pdf_attachment_id.id:
+            continue
+
+        if looks_like_certificate(attachment):
+            if not certificate_native:
+                certificate_native = attachment
+        elif not signed_native:
+            signed_native = attachment
+
+    if not signed_native:
+        registry_doc.write({
+            'x_sign_request_state': 'signed_no_business_document_found',
+            'x_notes': ((registry_doc.x_notes or '') + '\\nOdoo Sign request %s is signed, but only certificate/history attachments were found during %s sync on %s.' % (sign_request.id, target_code, datetime.datetime.now())).strip(),
+        })
+        action = toast('النسخة الموقعة غير موجودة', 'تم العثور على شهادة/سجل التوقيع فقط، ولم يتم العثور على نسخة %s الموقعة.' % target_code, 'warning', True)
+        continue
+
+    signed_copy = rec.x_signed_attachment_id or registry_doc.x_signed_attachment_id
+
+    if signed_copy and looks_like_certificate(signed_copy):
+        if not certificate_native:
+            certificate_native = signed_copy
+        signed_copy = False
+
+    if signed_copy and rec.x_pdf_attachment_id and signed_copy.id == rec.x_pdf_attachment_id.id:
+        signed_copy = False
+
+    certificate_copy = registry_doc.x_sign_certificate_attachment_id
+
+    if not certificate_copy and certificate_native:
+        certificate_name = certificate_native.name or ('Certificate of completion - %s - %s.pdf' % (target_code, applicant.partner_name or applicant.name or applicant.display_name))
+        if certificate_native.res_model == 'hr.applicant' and certificate_native.res_id == applicant.id:
+            certificate_copy = certificate_native
+        else:
+            certificate_copy = certificate_native.copy({
+                'name': certificate_name,
+                'res_model': 'hr.applicant',
+                'res_id': applicant.id,
+            })
+
+    if not signed_copy:
+        signed_name = signed_native.name or ('Signed %s - %s.pdf' % (target_code, applicant.partner_name or applicant.name or applicant.display_name))
+        if signed_native.res_model == 'hr.applicant' and signed_native.res_id == applicant.id:
+            signed_copy = signed_native
+        else:
+            signed_copy = signed_native.copy({
+                'name': signed_name,
+                'res_model': 'hr.applicant',
+                'res_id': applicant.id,
+            })
+
+    signed_on = False
+
+    if sign_request.write_date:
+        signed_on = sign_request.write_date
+
+    signer_items = sign_request.request_item_ids.filtered(lambda item: item.state == 'completed')
+    for signer_item in signer_items:
+        if signer_item.write_date and (not signed_on or signer_item.write_date > signed_on):
+            signed_on = signer_item.write_date
+
+    if not signed_on and sign_request.completion_date:
+        signed_on = datetime.datetime.combine(sign_request.completion_date, datetime.time(12, 0, 0))
+
+    if not signed_on:
+        signed_on = datetime.datetime.now()
+
+    registry_values = {
+        'x_state': 'signed',
+        'x_signed_attachment_id': signed_copy.id,
+        'x_sign_completed_attachment_id': signed_copy.id,
+        'x_sign_completed_on': signed_on,
+        'x_signed_on': signed_on,
+        'x_sign_request_state': request_state,
+        'x_sign_request_reference': sign_request.reference or registry_doc.x_sign_request_reference,
+        'x_responsible_user_id': env.user.id,
+        'x_source_model': 'x_hr.applicant_declaration',
+        'x_source_res_id': rec.id,
+        'x_notes': ((registry_doc.x_notes or '') + '\\nNative Odoo Sign completion synced for %s on %s. Sign request ID: %s. Signed artifact: %s.' % (target_code, datetime.datetime.now(), sign_request.id, signed_copy.name)).strip(),
+    }
+
+    if not registry_doc.x_sent_on:
+        registry_values['x_sent_on'] = rec.x_sent_on or sign_request.create_date or signed_on
+
+    if certificate_copy:
+        registry_values['x_sign_certificate_attachment_id'] = certificate_copy.id
+
+    registry_doc.write(registry_values)
+
+    rec.write({
+        'x_state': 'signed',
+        'x_signed_on': signed_on,
+        'x_signed_attachment_id': signed_copy.id,
+    })
+
+    rec.message_post(
+        body='تمت مزامنة توقيع %s وربط المستند الموقع: %s.' % (target_code, signed_copy.name),
+        attachment_ids=[signed_copy.id],
+    )
+
+    applicant_attachment_ids = [signed_copy.id]
+    if certificate_copy:
+        applicant_attachment_ids.append(certificate_copy.id)
+
+    applicant.message_post(
+        body='تم توقيع %s عبر توقيع أودو وربط المستند الموقع والشهادة، عند توفرها، بسجل مستندات التوظيف.' % target_code,
+        attachment_ids=applicant_attachment_ids,
+    )
+
+    action = toast('تم توقيع %s' % target_code, 'تمت مزامنة نتيجة التوقيع وربط المستند الموقع والشهادة عند توفرها.', 'success', False, True)
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+
+
+    <record id="action_applicant_declaration_sync_f0009_native_sign_completion" model="ir.actions.server">
+        <field name="name">مزامنة نتيجة توقيع F-0009</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+        <field name="binding_model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+target_declaration_type = 'non_disclosure_agreement'
+target_document_type = 'non_disclosure_agreement'
+target_code = 'F-0009'
+
+registry_model = env['x_hr.recruitment_document'].sudo()
+sign_request_model = env['sign.request'].sudo()
+attachment_model = env['ir.attachment'].sudo()
+action = False
+
+
+def toast(title, message, kind='warning', sticky=False, reload=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if reload:
+        params['next'] = {'type': 'ir.actions.client', 'tag': 'reload'}
+    return {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': params,
+    }
+
+
+def looks_like_certificate(attachment):
+    name = (attachment.name or '').lower()
+    return (
+        'certificate' in name
+        or 'completion' in name
+        or 'completed' in name
+        or 'history' in name
+        or 'audit' in name
+        or 'trail' in name
+        or 'شهادة' in name
+        or 'إكمال' in name
+        or 'اكمال' in name
+    )
+
+
+for rec in records.sudo():
+    if rec.x_declaration_type != target_declaration_type:
+        action = toast(
+            'نوع إقرار غير مدعوم',
+            'هذه المزامنة مخصصة فقط للنموذج %s.' % target_code,
+            'warning',
+            False,
+        )
+        continue
+
+    applicant = rec.x_applicant_id
+    if not applicant:
+        action = toast('لا يوجد متقدم', 'لا يمكن مزامنة %s بدون متقدم مرتبط.' % target_code, 'warning', True)
+        continue
+
+    registry_doc = registry_model.search([
+        ('x_document_type', '=', target_document_type),
+        ('x_source_model', '=', 'x_hr.applicant_declaration'),
+        ('x_source_res_id', '=', rec.id),
+        ('x_signature_mode', '=', 'native_sign'),
+        ('x_sign_request_res_id', '!=', False),
+    ], order='x_version desc, id desc', limit=1)
+
+    if not registry_doc:
+        registry_doc = registry_model.search([
+            ('x_document_type', '=', target_document_type),
+            ('x_applicant_id', '=', applicant.id),
+            ('x_signature_mode', '=', 'native_sign'),
+            ('x_sign_request_res_id', '!=', False),
+        ], order='x_version desc, id desc', limit=1)
+
+    if not registry_doc:
+        action = toast(
+            'لا يوجد طلب توقيع مرتبط',
+            'لم يتم العثور على سجل %s مرتبط بطلب توقيع أودو.' % target_code,
+            'warning',
+            True,
+        )
+        continue
+
+    sign_request = sign_request_model.browse(registry_doc.x_sign_request_res_id)
+    if not sign_request.exists():
+        registry_doc.write({'x_sign_request_state': 'missing_sign_request'})
+        action = toast('طلب التوقيع غير موجود', 'طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.', 'warning', True)
+        continue
+
+    request_state = sign_request.state or 'unknown'
+
+    registry_doc.write({
+        'x_sign_request_state': request_state,
+        'x_sign_request_reference': sign_request.reference or registry_doc.x_sign_request_reference,
+    })
+
+    if request_state != 'signed':
+        rec.message_post(body='طلب توقيع %s لم يكتمل بعد. حالة الطلب الحالية: %s.' % (target_code, request_state))
+        applicant.message_post(body='تم فحص حالة توقيع %s. الحالة الحالية: %s.' % (target_code, request_state))
+        action = toast('%s لم يكتمل توقيعه' % target_code, 'طلب توقيع أودو لا يزال بحالة: %s.' % request_state, 'warning', False)
+        continue
+
+    completed_attachments = sign_request.completed_document_attachment_ids
+
+    related_attachments = attachment_model.search([
+        ('res_model', '=', 'sign.request'),
+        ('res_id', '=', sign_request.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    applicant_attachments = attachment_model.search([
+        ('res_model', '=', 'hr.applicant'),
+        ('res_id', '=', applicant.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    declaration_attachments = attachment_model.search([
+        ('res_model', '=', 'x_hr.applicant_declaration'),
+        ('res_id', '=', rec.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    all_completed_attachments = completed_attachments | related_attachments | applicant_attachments | declaration_attachments
+
+    if not all_completed_attachments:
+        registry_doc.write({
+            'x_sign_request_state': 'signed_no_completed_attachment_found',
+            'x_notes': ((registry_doc.x_notes or '') + '\\nOdoo Sign request %s is signed, but no completed document attachments were found during %s sync on %s.' % (sign_request.id, target_code, datetime.datetime.now())).strip(),
+        })
+        action = toast('المستند الموقع غير موجود', 'طلب التوقيع موقّع، لكن لم يتم العثور على مرفقات المستند المكتمل.', 'warning', True)
+        continue
+
+    signed_native = False
+    certificate_native = False
+
+    for attachment in all_completed_attachments:
+        if rec.x_pdf_attachment_id and attachment.id == rec.x_pdf_attachment_id.id:
+            continue
+
+        if looks_like_certificate(attachment):
+            if not certificate_native:
+                certificate_native = attachment
+        elif not signed_native:
+            signed_native = attachment
+
+    if not signed_native:
+        registry_doc.write({
+            'x_sign_request_state': 'signed_no_business_document_found',
+            'x_notes': ((registry_doc.x_notes or '') + '\\nOdoo Sign request %s is signed, but only certificate/history attachments were found during %s sync on %s.' % (sign_request.id, target_code, datetime.datetime.now())).strip(),
+        })
+        action = toast('النسخة الموقعة غير موجودة', 'تم العثور على شهادة/سجل التوقيع فقط، ولم يتم العثور على نسخة %s الموقعة.' % target_code, 'warning', True)
+        continue
+
+    signed_copy = rec.x_signed_attachment_id or registry_doc.x_signed_attachment_id
+
+    if signed_copy and looks_like_certificate(signed_copy):
+        if not certificate_native:
+            certificate_native = signed_copy
+        signed_copy = False
+
+    if signed_copy and rec.x_pdf_attachment_id and signed_copy.id == rec.x_pdf_attachment_id.id:
+        signed_copy = False
+
+    certificate_copy = registry_doc.x_sign_certificate_attachment_id
+
+    if not certificate_copy and certificate_native:
+        certificate_name = certificate_native.name or ('Certificate of completion - %s - %s.pdf' % (target_code, applicant.partner_name or applicant.name or applicant.display_name))
+        if certificate_native.res_model == 'hr.applicant' and certificate_native.res_id == applicant.id:
+            certificate_copy = certificate_native
+        else:
+            certificate_copy = certificate_native.copy({
+                'name': certificate_name,
+                'res_model': 'hr.applicant',
+                'res_id': applicant.id,
+            })
+
+    if not signed_copy:
+        signed_name = signed_native.name or ('Signed %s - %s.pdf' % (target_code, applicant.partner_name or applicant.name or applicant.display_name))
+        if signed_native.res_model == 'hr.applicant' and signed_native.res_id == applicant.id:
+            signed_copy = signed_native
+        else:
+            signed_copy = signed_native.copy({
+                'name': signed_name,
+                'res_model': 'hr.applicant',
+                'res_id': applicant.id,
+            })
+
+    signed_on = False
+
+    if sign_request.write_date:
+        signed_on = sign_request.write_date
+
+    signer_items = sign_request.request_item_ids.filtered(lambda item: item.state == 'completed')
+    for signer_item in signer_items:
+        if signer_item.write_date and (not signed_on or signer_item.write_date > signed_on):
+            signed_on = signer_item.write_date
+
+    if not signed_on and sign_request.completion_date:
+        signed_on = datetime.datetime.combine(sign_request.completion_date, datetime.time(12, 0, 0))
+
+    if not signed_on:
+        signed_on = datetime.datetime.now()
+
+    registry_values = {
+        'x_state': 'signed',
+        'x_signed_attachment_id': signed_copy.id,
+        'x_sign_completed_attachment_id': signed_copy.id,
+        'x_sign_completed_on': signed_on,
+        'x_signed_on': signed_on,
+        'x_sign_request_state': request_state,
+        'x_sign_request_reference': sign_request.reference or registry_doc.x_sign_request_reference,
+        'x_responsible_user_id': env.user.id,
+        'x_source_model': 'x_hr.applicant_declaration',
+        'x_source_res_id': rec.id,
+        'x_notes': ((registry_doc.x_notes or '') + '\\nNative Odoo Sign completion synced for %s on %s. Sign request ID: %s. Signed artifact: %s.' % (target_code, datetime.datetime.now(), sign_request.id, signed_copy.name)).strip(),
+    }
+
+    if not registry_doc.x_sent_on:
+        registry_values['x_sent_on'] = rec.x_sent_on or sign_request.create_date or signed_on
+
+    if certificate_copy:
+        registry_values['x_sign_certificate_attachment_id'] = certificate_copy.id
+
+    registry_doc.write(registry_values)
+
+    rec.write({
+        'x_state': 'signed',
+        'x_signed_on': signed_on,
+        'x_signed_attachment_id': signed_copy.id,
+    })
+
+    rec.message_post(
+        body='تمت مزامنة توقيع %s وربط المستند الموقع: %s.' % (target_code, signed_copy.name),
+        attachment_ids=[signed_copy.id],
+    )
+
+    applicant_attachment_ids = [signed_copy.id]
+    if certificate_copy:
+        applicant_attachment_ids.append(certificate_copy.id)
+
+    applicant.message_post(
+        body='تم توقيع %s عبر توقيع أودو وربط المستند الموقع والشهادة، عند توفرها، بسجل مستندات التوظيف.' % target_code,
+        attachment_ids=applicant_attachment_ids,
+    )
+
+    action = toast('تم توقيع %s' % target_code, 'تمت مزامنة نتيجة التوقيع وربط المستند الموقع والشهادة عند توفرها.', 'success', False, True)
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+
+
     <record id="action_applicant_declaration_sync_f0004_native_sign_completion" model="ir.actions.server">
         <field name="name">مزامنة نتيجة توقيع F-0004</field>
         <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
@@ -1959,65 +2476,197 @@ if not action:
 
 
     <record id="action_applicant_declaration_download_sign_certificate" model="ir.actions.server">
-        <field name="name">تنزيل شهادة توقيع F-0004</field>
+        <field name="name">تنزيل شهادة التوقيع</field>
         <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
         <field name="binding_model_id" ref="hr_recruitment_custom.model_x_hr_applicant_declaration"/>
         <field name="state">code</field>
         <field name="code"><![CDATA[
 registry_model = env['x_hr.recruitment_document'].sudo()
+sign_request_model = env['sign.request'].sudo()
+attachment_model = env['ir.attachment'].sudo()
 action = False
 
-for rec in records.sudo():
-    registry_doc = registry_model.search([
-        ('x_document_type', '=', 'legal_documents_validity_declaration'),
+
+def toast(title, message, kind='warning', sticky=False):
+    return {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': title,
+            'message': message,
+            'type': kind,
+            'sticky': sticky,
+        },
+    }
+
+
+def document_type_for(declaration):
+    mapping = {
+        'legal_documents_validity_declaration': 'legal_documents_validity_declaration',
+        'policies_compliance_declaration': 'policies_compliance_declaration',
+        'non_disclosure_agreement': 'non_disclosure_agreement',
+    }
+    return mapping.get(declaration.x_declaration_type) or declaration.x_declaration_type
+
+
+def looks_like_certificate(attachment):
+    name = (attachment.name or '').lower()
+    return (
+        'certificate' in name
+        or 'completion' in name
+        or 'completed' in name
+        or 'history' in name
+        or 'audit' in name
+        or 'trail' in name
+        or 'شهادة' in name
+        or 'إكمال' in name
+        or 'اكمال' in name
+    )
+
+
+def looks_like_business_document(attachment):
+    name = (attachment.name or '').lower()
+    return (
+        'f-0004' in name
+        or 'f-0007' in name
+        or 'f-0009' in name
+        or 'إقرار' in name
+        or 'اقرار' in name
+        or 'declaration' in name
+        or 'agreement' in name
+        or 'validity' in name
+        or 'policies' in name
+        or 'non-disclosure' in name
+        or 'nda' in name
+    )
+
+
+def find_registry(declaration):
+    applicant = declaration.x_applicant_id
+    doc_type = document_type_for(declaration)
+
+    registry = registry_model.search([
+        ('x_document_type', '=', doc_type),
         ('x_source_model', '=', 'x_hr.applicant_declaration'),
-        ('x_source_res_id', '=', rec.id),
-    ], order='id desc', limit=1)
+        ('x_source_res_id', '=', declaration.id),
+    ], order='x_version desc, id desc', limit=1)
 
-    certificate_attachment = registry_doc.x_sign_certificate_attachment_id if registry_doc else False
+    if registry:
+        return registry
 
-    # Fallback for older bad test syncs where the certificate was accidentally linked
-    # as the signed document before the separation logic was hardened.
-    if not certificate_attachment:
-        candidates = rec.x_signed_attachment_id
-        if registry_doc:
-            candidates = candidates | registry_doc.x_signed_attachment_id | registry_doc.x_sign_completed_attachment_id
+    if applicant:
+        registry = registry_model.search([
+            ('x_document_type', '=', doc_type),
+            ('x_applicant_id', '=', applicant.id),
+            ('x_signature_mode', '=', 'native_sign'),
+            ('x_sign_request_res_id', '!=', False),
+        ], order='x_version desc, id desc', limit=1)
 
-        for attachment in candidates:
-            attachment_name = (attachment.name or '').lower()
-            looks_like_certificate = (
-                'certificate' in attachment_name
-                or 'completion' in attachment_name
-                or 'history' in attachment_name
-                or 'audit' in attachment_name
-                or 'شهادة' in attachment_name
-            )
-            if looks_like_certificate:
-                certificate_attachment = attachment
+    return registry
+
+
+for rec in records.sudo():
+    applicant = rec.x_applicant_id
+    registry_doc = find_registry(rec)
+
+    certificate = False
+    candidate_attachments = attachment_model.browse([])
+
+    if registry_doc and registry_doc.x_sign_certificate_attachment_id:
+        certificate = registry_doc.x_sign_certificate_attachment_id
+
+    sign_request = False
+    if registry_doc and registry_doc.x_sign_request_res_id:
+        sign_request = sign_request_model.browse(registry_doc.x_sign_request_res_id)
+        if sign_request.exists():
+            candidate_attachments |= sign_request.completed_document_attachment_ids
+            candidate_attachments |= attachment_model.search([
+                ('res_model', '=', 'sign.request'),
+                ('res_id', '=', sign_request.id),
+                ('mimetype', '=', 'application/pdf'),
+            ], order='create_date desc, id desc')
+
+    if applicant:
+        candidate_attachments |= attachment_model.search([
+            ('res_model', '=', 'hr.applicant'),
+            ('res_id', '=', applicant.id),
+            ('mimetype', '=', 'application/pdf'),
+        ], order='create_date desc, id desc')
+
+    candidate_attachments |= attachment_model.search([
+        ('res_model', '=', 'x_hr.applicant_declaration'),
+        ('res_id', '=', rec.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    excluded_ids = []
+    if rec.x_pdf_attachment_id:
+        excluded_ids.append(rec.x_pdf_attachment_id.id)
+    if rec.x_signed_attachment_id:
+        excluded_ids.append(rec.x_signed_attachment_id.id)
+
+    if registry_doc:
+        if registry_doc.x_generated_attachment_id:
+            excluded_ids.append(registry_doc.x_generated_attachment_id.id)
+        if registry_doc.x_signed_attachment_id:
+            excluded_ids.append(registry_doc.x_signed_attachment_id.id)
+        if registry_doc.x_sign_completed_attachment_id:
+            excluded_ids.append(registry_doc.x_sign_completed_attachment_id.id)
+
+    if not certificate:
+        for attachment in candidate_attachments:
+            if attachment.id in excluded_ids:
+                continue
+            if looks_like_certificate(attachment):
+                certificate = attachment
                 break
 
-    if certificate_attachment:
+    if not certificate:
+        for attachment in candidate_attachments:
+            if attachment.id in excluded_ids:
+                continue
+            if not looks_like_business_document(attachment):
+                certificate = attachment
+                break
+
+    if certificate and applicant and not (certificate.res_model == 'hr.applicant' and certificate.res_id == applicant.id):
+        certificate = certificate.copy({
+            'name': certificate.name or ('Certificate of completion - %s.pdf' % (rec.x_declaration_code or rec.x_name or 'Declaration')),
+            'res_model': 'hr.applicant',
+            'res_id': applicant.id,
+        })
+
+    if certificate and registry_doc and (not registry_doc.x_sign_certificate_attachment_id or registry_doc.x_sign_certificate_attachment_id.id != certificate.id):
+        registry_doc.write({
+            'x_sign_certificate_attachment_id': certificate.id,
+            'x_notes': ((registry_doc.x_notes or '') + '\\nSignature certificate backfilled by generic declaration certificate helper on %s. Certificate attachment: %s.' % (datetime.datetime.now(), certificate.name)).strip(),
+        })
+
+    if certificate:
         action = {
             'type': 'ir.actions.act_url',
-            'url': '/web/content/%s?download=true' % certificate_attachment.id,
+            'url': '/web/content/%s?download=true' % certificate.id,
             'target': 'self',
         }
     else:
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'لا توجد شهادة توقيع',
-                'message': 'لا توجد شهادة توقيع مرتبطة بهذا الإقرار حتى الآن.',
-                'type': 'warning',
-                'sticky': False,
-            }
-        }
+        doc_type = document_type_for(rec)
+        debug_hint = 'document_type=%s' % doc_type
+        if registry_doc:
+            debug_hint += ', registry_id=%s, sign_request_id=%s, candidates=%s' % (
+                registry_doc.id,
+                registry_doc.x_sign_request_res_id or 'none',
+                len(candidate_attachments),
+            )
+        action = toast(
+            'لا توجد شهادة توقيع',
+            'لم يتم العثور على شهادة توقيع في سجل المستندات أو طلب التوقيع أو مرفقات المتقدم. %s' % debug_hint,
+            'warning',
+            True,
+        )
     break
 
 if not action:
     action = {'type': 'ir.actions.client', 'tag': 'reload'}
         ]]></field>
     </record>
-
 </odoo>
