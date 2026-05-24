@@ -10,4 +10,27 @@
         <field name="attachment_use" eval="False"/>
         <field name="print_report_name">'F-0004 Legal Documents Validity Declaration - %s' % (object.x_applicant_id.partner_name or object.x_applicant_id.name or object.x_name or 'Applicant')</field>
     </record>
+
+    <record id="action_report_mcep_policies_compliance_declaration" model="ir.actions.report">
+        <field name="name">F-0007 Policies Compliance Declaration</field>
+        <field name="model">x_hr.applicant_declaration</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hr_recruitment_custom.report_mcep_policies_compliance_declaration_document</field>
+        <field name="report_file">hr_recruitment_custom.report_mcep_policies_compliance_declaration_document</field>
+        <field name="paperformat_id" ref="hr_recruitment_custom.paperformat_hr_applicant_tor"/>
+        <field name="attachment_use" eval="False"/>
+        <field name="print_report_name">'F-0007 إقرار الالتزام باللوائح والسياسات - %s' % (object.x_applicant_id.partner_name or object.x_applicant_id.name or object.x_name or 'Applicant')</field>
+    </record>
+
+    <record id="action_report_mcep_non_disclosure_agreement" model="ir.actions.report">
+        <field name="name">F-0009 Non-Disclosure Agreement</field>
+        <field name="model">x_hr.applicant_declaration</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hr_recruitment_custom.report_mcep_non_disclosure_agreement_document</field>
+        <field name="report_file">hr_recruitment_custom.report_mcep_non_disclosure_agreement_document</field>
+        <field name="paperformat_id" ref="hr_recruitment_custom.paperformat_hr_applicant_tor"/>
+        <field name="attachment_use" eval="False"/>
+        <field name="print_report_name">'F-0009 إقرار السرية وعدم الإفصاح - %s' % (object.x_applicant_id.partner_name or object.x_applicant_id.name or object.x_name or 'Applicant')</field>
+    </record>
+
 </odoo>

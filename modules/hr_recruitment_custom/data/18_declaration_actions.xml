@@ -75,16 +75,75 @@ if not action:
         <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
         <field name="state">code</field>
         <field name="code"><![CDATA[
-action = {
-    'type': 'ir.actions.client',
-    'tag': 'display_notification',
-    'params': {
-        'title': 'F-0007',
-        'message': 'سيتم تنفيذ إقرار F-0007 في تمريرة لاحقة.',
-        'type': 'warning',
-        'sticky': False,
+declaration_model = env['x_hr.applicant_declaration'].sudo()
+action = False
+
+for applicant in records.sudo():
+    if not applicant.id:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'لا يوجد متقدم',
+                'message': 'احفظ سجل المتقدم قبل إنشاء إقرار الالتزام باللوائح والسياسات.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    declaration = declaration_model.search([
+        ('x_applicant_id', '=', applicant.id),
+        ('x_declaration_type', '=', 'policies_compliance_declaration'),
+        ('x_state', 'not in', ['signed', 'cancelled', 'superseded']),
+    ], order='id desc', limit=1)
+
+    created_now = False
+
+    if not declaration:
+        sequence = declaration_model.search_count([
+            ('x_applicant_id', '=', applicant.id),
+            ('x_declaration_type', '=', 'policies_compliance_declaration'),
+        ]) + 1
+
+        applicant_name = applicant.partner_name or applicant.name or applicant.display_name
+
+        declaration = declaration_model.create({
+            'x_name': 'إقرار الالتزام باللوائح والسياسات - %s - #%s' % (applicant_name, sequence),
+            'x_applicant_id': applicant.id,
+            'x_declaration_type': 'policies_compliance_declaration',
+            'x_declaration_code': 'MCEP-HR-F-0007',
+            'x_sequence': sequence,
+            'x_document_reference': 'MCEP-HR-F-0007-%05d-%02d' % (applicant.id, sequence),
+            'x_state': 'draft',
+            'x_prepared_by_user_id': env.user.id,
+            'x_prepared_on': datetime.datetime.now(),
+        })
+
+        created_now = True
+        applicant.message_post(body='تم إنشاء سجل إقرار الالتزام باللوائح والسياسات F-0007.')
+
+    view = env.ref('hr_recruitment_custom.view_applicant_declaration_form', raise_if_not_found=False)
+
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': declaration.x_name or 'إقرار الالتزام باللوائح والسياسات F-0007',
+        'res_model': 'x_hr.applicant_declaration',
+        'res_id': declaration.id,
+        'view_mode': 'form',
+        'target': 'current',
     }
-}
+
+    if view:
+        action['views'] = [(view.id, 'form')]
+
+    if not created_now:
+        applicant.message_post(body='تم فتح سجل إقرار الالتزام باللوائح والسياسات F-0007 القائم دون إنشاء نسخة مكررة.')
+
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
         ]]></field>
     </record>
 
@@ -93,16 +152,75 @@ action = {
         <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
         <field name="state">code</field>
         <field name="code"><![CDATA[
-action = {
-    'type': 'ir.actions.client',
-    'tag': 'display_notification',
-    'params': {
-        'title': 'F-0009',
-        'message': 'سيتم تنفيذ إقرار F-0009 في تمريرة لاحقة.',
-        'type': 'warning',
-        'sticky': False,
+declaration_model = env['x_hr.applicant_declaration'].sudo()
+action = False
+
+for applicant in records.sudo():
+    if not applicant.id:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'لا يوجد متقدم',
+                'message': 'احفظ سجل المتقدم قبل إنشاء إقرار السرية وعدم الإفصاح.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    declaration = declaration_model.search([
+        ('x_applicant_id', '=', applicant.id),
+        ('x_declaration_type', '=', 'non_disclosure_agreement'),
+        ('x_state', 'not in', ['signed', 'cancelled', 'superseded']),
+    ], order='id desc', limit=1)
+
+    created_now = False
+
+    if not declaration:
+        sequence = declaration_model.search_count([
+            ('x_applicant_id', '=', applicant.id),
+            ('x_declaration_type', '=', 'non_disclosure_agreement'),
+        ]) + 1
+
+        applicant_name = applicant.partner_name or applicant.name or applicant.display_name
+
+        declaration = declaration_model.create({
+            'x_name': 'إقرار السرية وعدم الإفصاح - %s - #%s' % (applicant_name, sequence),
+            'x_applicant_id': applicant.id,
+            'x_declaration_type': 'non_disclosure_agreement',
+            'x_declaration_code': 'MCEP-HR-F-0009',
+            'x_sequence': sequence,
+            'x_document_reference': 'MCEP-HR-F-0009-%05d-%02d' % (applicant.id, sequence),
+            'x_state': 'draft',
+            'x_prepared_by_user_id': env.user.id,
+            'x_prepared_on': datetime.datetime.now(),
+        })
+
+        created_now = True
+        applicant.message_post(body='تم إنشاء سجل إقرار السرية وعدم الإفصاح F-0009.')
+
+    view = env.ref('hr_recruitment_custom.view_applicant_declaration_form', raise_if_not_found=False)
+
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': declaration.x_name or 'إقرار السرية وعدم الإفصاح F-0009',
+        'res_model': 'x_hr.applicant_declaration',
+        'res_id': declaration.id,
+        'view_mode': 'form',
+        'target': 'current',
     }
-}
+
+    if view:
+        action['views'] = [(view.id, 'form')]
+
+    if not created_now:
+        applicant.message_post(body='تم فتح سجل إقرار السرية وعدم الإفصاح F-0009 القائم دون إنشاء نسخة مكررة.')
+
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
         ]]></field>
     </record>
 
