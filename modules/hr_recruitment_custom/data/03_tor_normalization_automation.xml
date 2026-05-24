@@ -130,11 +130,16 @@ for rec in records:
     if not rec.x_tor_signed_attachment_id:
         continue
 
+    # Native Odoo Sign sync writes x_tor_signed_attachment_id and x_tor_signed_on
+    # deliberately. Do not overwrite that controlled timestamp or spam chatter.
+    if rec.x_tor_state == 'signed' and rec.x_tor_signed_on:
+        continue
+
     rec.sudo().write({
         'x_tor_state': 'signed',
-        'x_tor_signed_on': datetime.datetime.now(),
+        'x_tor_signed_on': rec.x_tor_signed_on or datetime.datetime.now(),
     })
-    rec.message_post(body='Signed TOR PDF linked to the applicant record.')
+    rec.message_post(body='تم ربط نسخة الوصف الوظيفي الموقعة بسجل المتقدم.')
         ]]></field>
     </record>
 
