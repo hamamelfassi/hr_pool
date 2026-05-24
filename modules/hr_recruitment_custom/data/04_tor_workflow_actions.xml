@@ -86,6 +86,9 @@ for rec in records.sudo():
         if not rec.x_tor_direct_supervisor_name and 'manager_id' in department._fields and department.manager_id:
             initial_values['x_tor_direct_supervisor_name'] = department.manager_id.name
 
+    if not rec.x_tor_direct_supervisor_name and 'x_tor_direct_supervisor_name' not in initial_values and env.user:
+        initial_values['x_tor_direct_supervisor_name'] = env.user.name
+
     if not rec.x_tor_state:
         initial_values['x_tor_state'] = 'draft'
     if not rec.x_tor_version_label:
@@ -218,36 +221,127 @@ elif not action:
         <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
         <field name="state">code</field>
         <field name="code"><![CDATA[
-attachment = False
+action = False
 
-for rec in records:
-    if not rec.x_tor_pdf_attachment_id:
-        raise Warning('ولّد مسودة الوصف الوظيفي قبل إرسالها للتوقيع.')
+registry_model = env['x_hr.recruitment_document'].sudo()
+sign_template_model = env['sign.template'].sudo()
+sign_document_model = env['sign.document'].sudo()
+sign_item_model = env['sign.item'].sudo()
+sign_role_model = env['sign.item.role'].sudo()
+sign_send_model = env['sign.send.request'].sudo()
+sign_send_signer_model = env['sign.send.request.signer'].sudo()
+sign_request_model = env['sign.request'].sudo()
+partner_model = env['res.partner'].sudo()
 
-    attachment = rec.x_tor_pdf_attachment_id
-    sent_on = datetime.datetime.now()
+signature_type = env.ref('sign.sign_item_type_signature', raise_if_not_found=False)
 
-    rec.sudo().write({
-        'x_tor_state': 'sent',
-        'x_tor_sent_on': sent_on,
-    })
+manager_role = (
+    sign_role_model.search([('name', '=', 'Responsible Manager')], order='id asc', limit=1)
+    or sign_role_model.search([('name', '=', 'Reviewer')], order='id asc', limit=1)
+    or sign_role_model.search([('name', '=', 'Manager')], order='id asc', limit=1)
+)
 
-    registry_model = env['x_hr.recruitment_document'].sudo()
+applicant_role = (
+    sign_role_model.search([('name', '=', 'Applicant')], order='id asc', limit=1)
+    or sign_role_model.search([('name', '=', 'Employee')], order='id asc', limit=1)
+    or sign_role_model.search([('name', '=', 'Customer')], order='id asc', limit=1)
+    or sign_role_model.search([('name', '=', 'Signatory')], order='id asc', limit=1)
+)
+
+def toast(title, message, kind='warning', sticky=False):
+    return {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': title,
+            'message': message,
+            'type': kind,
+            'sticky': sticky,
+        },
+    }
+
+def applicant_label(applicant):
+    return applicant.partner_name or applicant.name or applicant.display_name or 'Applicant'
+
+setup_error = False
+if not signature_type:
+    setup_error = 'لم يتم العثور على نوع حقل التوقيع في Odoo Sign: sign.sign_item_type_signature.'
+elif not manager_role:
+    setup_error = 'لم يتم العثور على دور توقيع للمدير المسؤول. أنشئ دور Responsible Manager أو Reviewer أو Manager في Odoo Sign.'
+elif not applicant_role:
+    setup_error = 'لم يتم العثور على دور توقيع للمتقدم/الموظف. أنشئ دور Applicant أو Employee أو Customer أو Signatory في Odoo Sign.'
+elif manager_role.id == applicant_role.id:
+    setup_error = 'دورا توقيع المدير المسؤول والمتقدم متطابقان. يجب توفر دورين منفصلين في Odoo Sign حتى يوقّع كل طرف في موضعه.'
+
+for rec in records.sudo():
+    if setup_error:
+        action = toast('إعداد توقيع أودو غير مكتمل', setup_error, 'warning', True)
+        continue
+
+    if rec.x_tor_state == 'signed' or rec.x_tor_signed_attachment_id:
+        action = toast('الوصف الوظيفي موقّع مسبقاً', 'هذا الوصف الوظيفي موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.', 'warning', False)
+        continue
+
+    if rec.x_tor_state != 'generated' or not rec.x_tor_pdf_attachment_id:
+        action = toast('المسودة غير جاهزة', 'ولّد مسودة الوصف الوظيفي قبل إرسالها عبر توقيع أودو.', 'warning', False)
+        continue
+
+    applicant_name = applicant_label(rec)
+    applicant_email = rec.email_from or False
+
+    applicant_partner = False
+    if 'partner_id' in rec._fields and rec.partner_id:
+        applicant_partner = rec.partner_id.sudo()
+
+    if not applicant_partner and applicant_email:
+        applicant_partner = partner_model.search([('email', '=', applicant_email)], order='id asc', limit=1)
+
+    if not applicant_partner and applicant_email:
+        applicant_partner = partner_model.create({
+            'name': applicant_name or applicant_email,
+            'email': applicant_email,
+        })
+
+    if not applicant_partner or not (applicant_partner.email or applicant_email):
+        action = toast('بريد المتقدم غير موجود', 'أضف بريداً إلكترونياً للمتقدم قبل إرسال الوصف الوظيفي عبر توقيع أودو.', 'warning', True)
+        continue
+
+    manager_user = env.user
+    manager_partner = manager_user.partner_id if manager_user else False
+    manager_email = manager_partner.email if manager_partner else False
+    if not manager_email and manager_user:
+        manager_email = manager_user.email
+
+    if not manager_partner:
+        action = toast('جهة اتصال المدير المسؤول غير موجودة', 'المستخدم الحالي لا يملك جهة اتصال مرتبطة ولا يمكن استخدامه كموقّع للمدير المسؤول.', 'warning', True)
+        continue
+
+    if not manager_email:
+        action = toast('بريد المدير المسؤول غير موجود', 'أضف بريداً إلكترونياً إلى جهة اتصال المستخدم الحالي قبل إرسال الوصف الوظيفي للتوقيع.', 'warning', True)
+        continue
+
+    if not rec.x_tor_direct_supervisor_name:
+        rec.write({'x_tor_direct_supervisor_name': manager_user.name})
+
+    pdf_attachment = rec.x_tor_pdf_attachment_id
+    filename = pdf_attachment.name or ('%s - الوصف الوظيفي.pdf' % applicant_name)
+
     registry_doc = registry_model.search([
         ('x_document_type', '=', 'tor'),
         ('x_source_model', '=', 'hr.applicant'),
         ('x_source_res_id', '=', rec.id),
-    ], limit=1)
+        ('x_state', '!=', 'signed'),
+    ], order='x_version desc, id desc', limit=1)
 
-    if registry_doc:
-        registry_doc.write({
-            'x_state': 'signature_requested',
-            'x_sent_on': sent_on,
-            'x_responsible_user_id': env.user.id,
-            'x_generated_attachment_id': attachment.id,
-            'x_notes': 'تم وضع الوصف الوظيفي في حالة طلب التوقيع عبر المسار اليدوي المؤقت.',
-        })
-    else:
+    if not registry_doc:
+        registry_doc = registry_model.search([
+            ('x_document_type', '=', 'tor'),
+            ('x_applicant_id', '=', rec.id),
+            ('x_generated_attachment_id', '=', pdf_attachment.id),
+            ('x_state', '!=', 'signed'),
+        ], order='x_version desc, id desc', limit=1)
+
+    if not registry_doc:
         registry_version = 1
         if rec.x_tor_version_label and rec.x_tor_version_label.startswith('TOR V'):
             suffix = rec.x_tor_version_label[5:]
@@ -255,43 +349,229 @@ for rec in records:
                 registry_version = int(suffix)
 
         registry_doc = registry_model.create({
-            'x_name': 'الوصف الوظيفي - %s - v%s' % (
-                rec.x_tor_recipient_name or rec.partner_name or rec.name or rec.display_name,
-                registry_version,
-            ),
+            'x_name': 'الوصف الوظيفي - %s - v%s' % (applicant_name, registry_version),
             'x_applicant_id': rec.id,
             'x_document_type': 'tor',
-            'x_state': 'signature_requested',
-            'x_generated_attachment_id': attachment.id,
-            'x_signed_attachment_id': False,
+            'x_state': 'generated',
+            'x_generated_attachment_id': pdf_attachment.id,
             'x_version': registry_version,
-            'x_generated_on': rec.x_tor_generated_on or sent_on,
-            'x_sent_on': sent_on,
-            'x_signed_on': False,
+            'x_generated_on': rec.x_tor_generated_on or datetime.datetime.now(),
             'x_responsible_user_id': env.user.id,
             'x_source_model': 'hr.applicant',
             'x_source_res_id': rec.id,
-            'x_notes': 'تم إنشاء سجل الوصف الوظيفي أثناء الإرسال للتوقيع لعدم وجود سجل توليد سابق.',
+            'x_notes': 'تم إنشاء سجل الوصف الوظيفي أثناء الإرسال عبر توقيع أودو لعدم وجود سجل توليد سابق.',
         })
 
-    signer_email = rec.email_from or 'the applicant email address'
-    rec.message_post(body=(
-        'تم وضع الوصف الوظيفي في حالة الإرسال للتوقيع. المسار اليدوي المؤقت: '
-        '1) افتح مرفق مسودة الوصف الوظيفي، '
-        '2) ارفعه إلى تطبيق التوقيع في أودو، '
-        '3) عيّن الموقّع باستخدام بريد المتقدم: %s، '
-        '4) بعد التوقيع ارفع النسخة الموقعة إلى الملفات/المحادثة واخترها في حقل النسخة الموقعة.'
-    ) % (signer_email,))
+    if registry_doc.x_state == 'signed':
+        action = toast('الوصف الوظيفي موقّع مسبقاً', 'سجل مستندات التوظيف لهذا الوصف الوظيفي موقّع مسبقاً.', 'warning', False)
+        continue
 
-if len(records) == 1 and attachment:
-    action = {
-        'type': 'ir.actions.act_window',
-        'name': 'مسودة الوصف الوظيفي',
-        'res_model': 'ir.attachment',
-        'view_mode': 'form',
-        'res_id': attachment.id,
-        'target': 'new',
-    }
+    if registry_doc.x_sign_request_res_id:
+        existing_request = sign_request_model.browse(registry_doc.x_sign_request_res_id)
+        if existing_request.exists():
+            existing_state = existing_request.state or registry_doc.x_sign_request_state or 'unknown'
+            if existing_state not in ['cancelled', 'canceled']:
+                if existing_state == 'signed':
+                    message = 'طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة التوقيع لإغلاق السجل.'
+                else:
+                    message = 'يوجد طلب توقيع أودو نشط لهذا الوصف الوظيفي بحالة "%s". لن يتم إنشاء طلب مكرر.' % existing_state
+                action = toast('تم منع طلب توقيع مكرر', message, 'warning', True)
+                continue
+
+    sent_on = datetime.datetime.now()
+    validity_date = datetime.date.today() + datetime.timedelta(days=60)
+
+    sign_template = sign_template_model.create({
+        'name': filename,
+        'user_id': env.user.id,
+        'signature_request_validity': 60,
+    })
+
+    sign_document = sign_document_model.create({
+        'template_id': sign_template.id,
+        'attachment_id': pdf_attachment.id,
+        'name': filename,
+        'sequence': 1,
+    })
+
+    # F-0006 / الوصف الوظيفي native Sign profile.
+    #
+    # Locked report layout:
+    # - page 1: fixed signing page
+    # - page 2+: duties annex
+    #
+    # Signers:
+    # - Responsible Manager: current user creating/sending TOR for now
+    # - Applicant / Employee: applicant partner/email
+    #
+    # If placement is visibly off in Odoo Sign preview, adjust only these
+    # posX/posY/width/height numbers.
+    sign_item_model.create({
+        'document_id': sign_document.id,
+        'type_id': signature_type.id,
+        'responsible_id': manager_role.id,
+        'page': 1,
+        'posX': 0.565,
+        'posY': 0.812,
+        'width': 0.340,
+        'height': 0.065,
+        'required': True,
+        'name': 'Responsible Manager Signature',
+        'alignment': 'left',
+        'constant': False,
+    })
+
+    sign_item_model.create({
+        'document_id': sign_document.id,
+        'type_id': signature_type.id,
+        'responsible_id': applicant_role.id,
+        'page': 1,
+        'posX': 0.095,
+        'posY': 0.812,
+        'width': 0.340,
+        'height': 0.065,
+        'required': True,
+        'name': 'Applicant Signature',
+        'alignment': 'left',
+        'constant': False,
+    })
+
+    subject = 'Signature Request - %s' % filename
+    body = '<p>Please review and sign the attached Job Description / Terms of Responsibilities.</p>'
+
+    send_request = sign_send_model.create({
+        'template_id': sign_template.id,
+        'signer_id': applicant_partner.id,
+        'subject': subject,
+        'body': body,
+        'validity': validity_date,
+        'certificate_reference': False,
+        'reminder_enabled': False,
+        'model': 'hr.applicant',
+        'res_ids': str([rec.id]),
+    })
+
+    signer_profiles = [
+        (manager_role, manager_partner, 1),
+        (applicant_role, applicant_partner, 2),
+    ]
+
+    for role, partner, order in signer_profiles:
+        signer_line = False
+        if send_request.signer_ids:
+            signer_line = send_request.signer_ids.filtered(lambda line: line.role_id.id == role.id)[:1]
+        if signer_line:
+            signer_line.sudo().write({
+                'partner_id': partner.id,
+                'mail_sent_order': order,
+            })
+        else:
+            sign_send_signer_model.create({
+                'sign_send_request_id': send_request.id,
+                'role_id': role.id,
+                'partner_id': partner.id,
+                'mail_sent_order': order,
+            })
+
+    send_request.send_request()
+
+    generated_request = sign_request_model.search([
+        ('template_id', '=', sign_template.id),
+    ], order='create_date desc, id desc', limit=1)
+
+    if generated_request:
+        # 10D-3: Native applicant anchor hardening.
+        #
+        # The send wizard is already created with:
+        #   model='hr.applicant'
+        #   res_ids=str([rec.id])
+        #
+        # Some Odoo Sign applicant smart buttons/counters read linkage from the
+        # resulting sign.request itself rather than only the transient
+        # sign.send.request wizard. Since SaaS schemas can vary, write only
+        # fields that exist on sign.request and tolerate readonly restrictions.
+        applicant_anchor_note = 'No direct sign.request applicant anchor fields were detected on this SaaS schema.'
+        applicant_anchor_vals = {}
+        applicant_anchor_model = 'hr.applicant'
+        applicant_anchor_res_id = rec.id
+
+        if 'model' in generated_request._fields:
+            applicant_anchor_vals['model'] = applicant_anchor_model
+        if 'res_model' in generated_request._fields:
+            applicant_anchor_vals['res_model'] = applicant_anchor_model
+        if 'res_id' in generated_request._fields:
+            applicant_anchor_vals['res_id'] = applicant_anchor_res_id
+        if 'res_ids' in generated_request._fields:
+            res_ids_field_type = generated_request._fields['res_ids'].type
+            if res_ids_field_type in ['char', 'text']:
+                applicant_anchor_vals['res_ids'] = str([applicant_anchor_res_id])
+        if 'res_model_id' in generated_request._fields:
+            model_rec = env['ir.model'].sudo().search([('model', '=', applicant_anchor_model)], limit=1)
+            if model_rec and generated_request._fields['res_model_id'].type == 'many2one':
+                applicant_anchor_vals['res_model_id'] = model_rec.id
+        if 'reference_doc' in generated_request._fields:
+            reference_doc_type = generated_request._fields['reference_doc'].type
+            if reference_doc_type == 'reference':
+                applicant_anchor_vals['reference_doc'] = '%s,%s' % (applicant_anchor_model, applicant_anchor_res_id)
+
+        if applicant_anchor_vals:
+            try:
+                generated_request.sudo().write(applicant_anchor_vals)
+                applicant_anchor_note = 'Native applicant anchor written on sign.request fields: %s.' % ', '.join(sorted(applicant_anchor_vals.keys()))
+            except:
+                applicant_anchor_note = 'Native applicant anchor fields were detected but Odoo prevented writing them on sign.request; send wizard remains anchored to hr.applicant/res_ids.'
+
+        registry_doc.write({
+            'x_state': 'signature_requested',
+            'x_sent_on': sent_on,
+            'x_responsible_user_id': env.user.id,
+            'x_source_model': 'hr.applicant',
+            'x_source_res_id': rec.id,
+            'x_signature_mode': 'native_sign',
+            'x_sign_request_model': 'sign.request',
+            'x_sign_request_res_id': generated_request.id,
+            'x_sign_request_reference': generated_request.reference or filename,
+            'x_sign_request_state': generated_request.state or 'sent',
+            'x_sign_request_url': '/odoo/sign/%s' % generated_request.id,
+            'x_generated_attachment_id': pdf_attachment.id,
+            'x_notes': ((registry_doc.x_notes or '') + '\\nNative Odoo Sign request created for F-0006 / الوصف الوظيفي on %s. Request ID: %s. Responsible Manager: %s. Applicant: %s.' % (sent_on, generated_request.id, manager_partner.display_name, applicant_partner.display_name)).strip(),
+        })
+
+        rec.write({
+            'x_tor_state': 'sent',
+            'x_tor_sent_on': sent_on,
+        })
+
+        rec.message_post(body='تم إرسال الوصف الوظيفي عبر توقيع أودو إلى المدير المسؤول %s والمتقدم %s. رقم طلب التوقيع: %s. %s' % (manager_partner.display_name, applicant_partner.display_name, generated_request.id, applicant_anchor_note))
+
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'تم إرسال الوصف الوظيفي للتوقيع',
+                'message': 'تم إنشاء طلب توقيع أودو وإرساله إلى المدير المسؤول والمتقدم.',
+                'type': 'success',
+                'sticky': False,
+                'next': {'type': 'ir.actions.client', 'tag': 'reload'},
+            }
+        }
+    else:
+        registry_doc.write({
+            'x_state': 'generated',
+            'x_signature_mode': 'native_sign',
+            'x_sign_request_model': 'sign.request',
+            'x_sign_request_reference': filename,
+            'x_sign_request_state': 'lookup_failed_after_send_request',
+            'x_generated_attachment_id': pdf_attachment.id,
+            'x_notes': ((registry_doc.x_notes or '') + '\\nNative Odoo Sign send_request() executed for F-0006 / الوصف الوظيفي on %s, but the generated sign.request could not be located automatically. Dynamic template ID: %s.' % (sent_on, sign_template.id)).strip(),
+        })
+
+        action = toast('تعذر العثور على طلب التوقيع', 'تم تنفيذ الإرسال، لكن لم يتم العثور على sign.request تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.', 'warning', True)
+
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
         ]]></field>
     </record>
 </odoo>
