@@ -340,10 +340,40 @@
                             class="btn-primary"
                             invisible="not id or x_tor_state in ['sent', 'signed', 'superseded']" />
                         <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_open_tor_generated_pdf"
+                            string="فتح المسودة"
+                            class="btn-secondary"
+                            invisible="not id or not x_tor_pdf_attachment_id" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_download_tor_generated_pdf"
+                            string="تنزيل المسودة"
+                            class="btn-secondary"
+                            invisible="not id or not x_tor_pdf_attachment_id" />
+                        <button type="action"
                             name="hr_recruitment_custom.action_hr_applicant_send_tor_for_signature"
                             string="إرسال الوصف الوظيفي للتوقيع"
                             class="btn-secondary"
                             invisible="not id or not x_tor_pdf_attachment_id or x_tor_state != 'generated'" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_sync_tor_native_sign_completion"
+                            string="مزامنة التوقيع"
+                            class="btn-primary"
+                            invisible="not id or x_tor_state not in ['sent', 'signed']" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_open_tor_signed_pdf"
+                            string="فتح النسخة الموقعة"
+                            class="btn-secondary"
+                            invisible="not id or not x_tor_signed_attachment_id" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_download_tor_signed_pdf"
+                            string="تنزيل النسخة الموقعة"
+                            class="btn-secondary"
+                            invisible="not id or not x_tor_signed_attachment_id" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_download_tor_sign_certificate"
+                            string="تنزيل شهادة التوقيع"
+                            class="btn-secondary"
+                            invisible="not id or x_tor_state != 'signed'" />
                     </group>
 
                     <group string="بيانات الوصف الوظيفي">

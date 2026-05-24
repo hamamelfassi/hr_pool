@@ -834,4 +834,253 @@ if not action:
         ]]></field>
     </record>
 
+
+    <record id="action_hr_applicant_open_tor_generated_pdf" model="ir.actions.server">
+        <field name="name">فتح مسودة الوصف الوظيفي</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+action = False
+
+def toast(title, message, kind='warning', sticky=False):
+    return {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': title,
+            'message': message,
+            'type': kind,
+            'sticky': sticky,
+        },
+    }
+
+for rec in records.sudo():
+    attachment = rec.x_tor_pdf_attachment_id
+    if not attachment:
+        action = toast('لا توجد مسودة', 'لم يتم توليد مسودة الوصف الوظيفي لهذا المتقدم بعد.', 'warning', False)
+        continue
+
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': 'مسودة الوصف الوظيفي',
+        'res_model': 'ir.attachment',
+        'view_mode': 'form',
+        'res_id': attachment.id,
+        'target': 'new',
+    }
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+
+    <record id="action_hr_applicant_download_tor_generated_pdf" model="ir.actions.server">
+        <field name="name">تنزيل مسودة الوصف الوظيفي</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+action = False
+
+def toast(title, message, kind='warning', sticky=False):
+    return {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': title,
+            'message': message,
+            'type': kind,
+            'sticky': sticky,
+        },
+    }
+
+for rec in records.sudo():
+    attachment = rec.x_tor_pdf_attachment_id
+    if not attachment:
+        action = toast('لا توجد مسودة', 'لم يتم توليد مسودة الوصف الوظيفي لهذا المتقدم بعد.', 'warning', False)
+        continue
+
+    action = {
+        'type': 'ir.actions.act_url',
+        'url': '/web/content/%s?download=true' % attachment.id,
+        'target': 'self',
+    }
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+
+    <record id="action_hr_applicant_open_tor_signed_pdf" model="ir.actions.server">
+        <field name="name">فتح النسخة الموقعة للوصف الوظيفي</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+registry_model = env['x_hr.recruitment_document'].sudo()
+action = False
+
+def toast(title, message, kind='warning', sticky=False):
+    return {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': title,
+            'message': message,
+            'type': kind,
+            'sticky': sticky,
+        },
+    }
+
+def find_registry(applicant):
+    return registry_model.search([
+        ('x_document_type', '=', 'tor'),
+        ('x_source_model', '=', 'hr.applicant'),
+        ('x_source_res_id', '=', applicant.id),
+    ], order='x_version desc, id desc', limit=1) or registry_model.search([
+        ('x_document_type', '=', 'tor'),
+        ('x_applicant_id', '=', applicant.id),
+    ], order='x_version desc, id desc', limit=1)
+
+for rec in records.sudo():
+    registry_doc = find_registry(rec)
+    attachment = rec.x_tor_signed_attachment_id or registry_doc.x_signed_attachment_id or registry_doc.x_sign_completed_attachment_id
+
+    if not attachment:
+        action = toast('لا توجد نسخة موقعة', 'لم يتم ربط النسخة الموقعة من الوصف الوظيفي بعد. استخدم مزامنة التوقيع أولاً.', 'warning', False)
+        continue
+
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': 'النسخة الموقعة للوصف الوظيفي',
+        'res_model': 'ir.attachment',
+        'view_mode': 'form',
+        'res_id': attachment.id,
+        'target': 'new',
+    }
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+
+    <record id="action_hr_applicant_download_tor_signed_pdf" model="ir.actions.server">
+        <field name="name">تنزيل النسخة الموقعة للوصف الوظيفي</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+registry_model = env['x_hr.recruitment_document'].sudo()
+action = False
+
+def toast(title, message, kind='warning', sticky=False):
+    return {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': title,
+            'message': message,
+            'type': kind,
+            'sticky': sticky,
+        },
+    }
+
+def find_registry(applicant):
+    return registry_model.search([
+        ('x_document_type', '=', 'tor'),
+        ('x_source_model', '=', 'hr.applicant'),
+        ('x_source_res_id', '=', applicant.id),
+    ], order='x_version desc, id desc', limit=1) or registry_model.search([
+        ('x_document_type', '=', 'tor'),
+        ('x_applicant_id', '=', applicant.id),
+    ], order='x_version desc, id desc', limit=1)
+
+for rec in records.sudo():
+    registry_doc = find_registry(rec)
+    attachment = rec.x_tor_signed_attachment_id or registry_doc.x_signed_attachment_id or registry_doc.x_sign_completed_attachment_id
+
+    if not attachment:
+        action = toast('لا توجد نسخة موقعة', 'لم يتم ربط النسخة الموقعة من الوصف الوظيفي بعد. استخدم مزامنة التوقيع أولاً.', 'warning', False)
+        continue
+
+    action = {
+        'type': 'ir.actions.act_url',
+        'url': '/web/content/%s?download=true' % attachment.id,
+        'target': 'self',
+    }
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+
+    <record id="action_hr_applicant_download_tor_sign_certificate" model="ir.actions.server">
+        <field name="name">تنزيل شهادة توقيع الوصف الوظيفي</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+registry_model = env['x_hr.recruitment_document'].sudo()
+attachment_model = env['ir.attachment'].sudo()
+action = False
+
+def toast(title, message, kind='warning', sticky=False):
+    return {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': title,
+            'message': message,
+            'type': kind,
+            'sticky': sticky,
+        },
+    }
+
+def looks_like_certificate(attachment):
+    name = (attachment.name or '').lower()
+    return (
+        'certificate' in name
+        or 'completion' in name
+        or 'history' in name
+        or 'audit' in name
+        or 'شهادة' in name
+    )
+
+def find_registry(applicant):
+    return registry_model.search([
+        ('x_document_type', '=', 'tor'),
+        ('x_source_model', '=', 'hr.applicant'),
+        ('x_source_res_id', '=', applicant.id),
+    ], order='x_version desc, id desc', limit=1) or registry_model.search([
+        ('x_document_type', '=', 'tor'),
+        ('x_applicant_id', '=', applicant.id),
+    ], order='x_version desc, id desc', limit=1)
+
+for rec in records.sudo():
+    registry_doc = find_registry(rec)
+    certificate = registry_doc.x_sign_certificate_attachment_id
+
+    if not certificate and registry_doc.x_sign_request_res_id:
+        certificate = attachment_model.search([
+            ('res_model', '=', 'hr.applicant'),
+            ('res_id', '=', rec.id),
+            ('mimetype', '=', 'application/pdf'),
+        ], order='create_date desc, id desc').filtered(lambda att: looks_like_certificate(att))[:1]
+
+    if not certificate:
+        action = toast('لا توجد شهادة توقيع', 'لم يتم العثور على شهادة توقيع للوصف الوظيفي. استخدم مزامنة التوقيع أولاً أو راجع مرفقات أودو Sign.', 'warning', False)
+        continue
+
+    action = {
+        'type': 'ir.actions.act_url',
+        'url': '/web/content/%s?download=true' % certificate.id,
+        'target': 'self',
+    }
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+
 </odoo>
