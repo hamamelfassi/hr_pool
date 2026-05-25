@@ -124,8 +124,8 @@ else:
         'board_decision': 'قرار التعيين',
         'employment_contract': 'عقد العمل',
         'tor': 'الوصف الوظيفي',
-        'policies_compliance_declaration': 'F-0007 إقرار السياسات والإجراءات',
-        'non_disclosure_agreement': 'F-0009 اتفاقية عدم الإفصاح',
+        'policies_compliance_declaration': 'F-0007 إقرار الالتزام باللوائح والسياسات',
+        'non_disclosure_agreement': 'F-0009 إقرار السرية وعدم الإفصاح',
     }
 
     required = [
@@ -144,28 +144,28 @@ else:
             missing.append(labels[dtype])
 
     contract = find_active_contract(applicant)
-    ministry_ok = bool(
+    signed_uploaded_ok = bool(
         contract
-        and contract.x_state == 'ministry_accredited'
-        and contract.x_ministry_accredited_attachment_id
+        and contract.x_state in ['signed_uploaded', 'ministry_accredited']
+        and contract.x_signed_attachment_id
     )
 
-    if not ministry_ok:
-        missing.append('اعتماد وزارة العمل لعقد العمل')
+    if not signed_uploaded_ok:
+        missing.append('نسخة عقد العمل الموقعة والمرفوعة')
 
     if missing:
         summary = '، '.join(missing)
-        note = 'بوابة ما قبل التوظيف غير مكتملة. المتبقي: %s.' % summary
+        note = 'جاهزية التوظيف غير مكتملة. المتبقي: %s.' % summary
         write_applicant_gate(applicant, 'blocked', False, summary, note)
         write_contract_gate(contract, False, note)
         applicant.message_post(body=note)
-        action = toast('بوابة ما قبل التوظيف غير مكتملة', note, 'warning', False, reload_applicant(applicant))
+        action = toast('جاهزية التوظيف غير مكتملة', note, 'warning', False, reload_applicant(applicant))
     else:
-        note = 'اكتملت مستندات بوابة ما قبل التوظيف المطلوبة: قرار التعيين، عقد العمل، الوصف الوظيفي، F-0007، وF-0009. يمكن فتح مرحلة الترحيل اللاحقة دون إنشاء سجلات HR الأصلية تلقائياً في هذا pass.'
+        note = 'اكتملت مستندات جاهزية التوظيف المطلوبة: قرار التعيين، عقد العمل، الوصف الوظيفي، F-0007، وF-0009. يمكن فتح مرحلة الترحيل اللاحقة دون إنشاء سجلات HR الأصلية تلقائياً في هذا pass.'
         write_applicant_gate(applicant, 'ready', True, False, note)
         write_contract_gate(contract, True, False)
         applicant.message_post(body=note)
-        action = toast('بوابة ما قبل التوظيف جاهزة', note, 'success', False, reload_applicant(applicant))
+        action = toast('جاهزية التوظيف مكتملة', note, 'success', False, reload_applicant(applicant))
             ]]></field>
         </record>
 

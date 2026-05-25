@@ -297,15 +297,12 @@ else:
         'x_state': 'ministry_accredited',
         'x_ministry_accredited_on': now,
         'x_ministry_accredited_by_user_id': env.user.id,
-        'x_handover_state': 'blocked',
-        'x_handover_ready': False,
-        'x_handover_blocking_notes': 'عقد العمل معتمد من وزارة العمل، لكن بوابة الترحيل النهائية لا تكتمل إلا بعد اكتمال قرار التعيين وTOR/F-0006 وF-0007 وF-0009 في سجل مستندات التوظيف.',
     })
-    append_note(contract.x_recruitment_document_id, 'تم رفع النسخة المعتمدة من وزارة العمل لعقد العمل. لا يتم إغلاق بوابة الترحيل النهائية هنا لأن TOR/F-0006 وF-0007 وF-0009 ما زالت ضمن نطاق لاحق.')
+    append_note(contract.x_recruitment_document_id, 'تم رفع النسخة المعتمدة من وزارة العمل لعقد العمل. اعتماد الوزارة إجراء توثيقي لاحق ولا يُعد مانعاً لجاهزية التوظيف إذا كانت النسخة الموقعة مرفوعة وبقية المستندات مكتملة.')
     sync_applicant(contract)
     if applicant:
-        applicant.message_post(body='تم رفع وتثبيت النسخة المعتمدة من وزارة العمل لعقد العمل. لا يزال الترحيل النهائي مشروطاً باستكمال بقية مستندات ما قبل التوظيف.', attachment_ids=[attachment.id])
-    action = toast('تم تثبيت الاعتماد', 'تم حفظ نسخة وزارة العمل. بقيت جاهزية الترحيل النهائية مشروطة ببقية مستندات preboarding.', 'success', False, reload_contract(contract))
+        applicant.message_post(body='تم رفع وتثبيت النسخة المعتمدة من وزارة العمل لعقد العمل. اعتماد الوزارة موثق في السجل ولا يغيّر شرط جاهزية التوظيف الأساسي: النسخة الموقعة والمرفوعة وبقية المستندات المكتملة.', attachment_ids=[attachment.id])
+    action = toast('تم تثبيت الاعتماد', 'تم حفظ نسخة وزارة العمل كتوثيق لاحق. لا يُعد اعتماد الوزارة مانعاً لجاهزية التوظيف.', 'success', False, reload_contract(contract))
             ]]></field>
         </record>
 
@@ -463,8 +460,8 @@ else:
         if dtype not in signed:
             missing.append(labels[dtype])
 
-    if contract.x_state != 'ministry_accredited' or not contract.x_ministry_accredited_attachment_id:
-        missing.append('اعتماد وزارة العمل لعقد العمل')
+    if contract.x_state not in ['signed_uploaded', 'ministry_accredited'] or not contract.x_signed_attachment_id:
+        missing.append('نسخة عقد العمل الموقعة والمرفوعة')
 
     if missing:
         note = 'بوابة الترحيل غير مكتملة. المتبقي: %s.' % '، '.join(missing)
