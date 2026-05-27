@@ -954,6 +954,52 @@
         </record>
 
 
+
+        <!-- Pass 13C employment handover shell fields -->
+        <record id="field_hr_applicant_x_employment_handover_state" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_handover_state</field>
+            <field name="field_description">Employment Handover State</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('not_started', 'Not Started'),
+                ('blocked', 'Blocked'),
+                ('ready', 'Ready'),
+                ('onboarded', 'Onboarded')
+                ]</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_handover_ready" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_handover_ready</field>
+            <field name="field_description">Employment Handover Ready</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_handover_checked_on" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_handover_checked_on</field>
+            <field name="field_description">Employment Handover Checked On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_handover_checked_by_user_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_handover_checked_by_user_id</field>
+            <field name="field_description">Employment Handover Checked By</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_handover_notes" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_handover_notes</field>
+            <field name="field_description">Employment Handover Notes</field>
+            <field name="ttype">text</field>
+        </record>
+
+
         <!-- Pass 9C source / provenance fields -->
         <record id="field_employment_contract_x_conversion_request_id" model="ir.model.fields">
             <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>

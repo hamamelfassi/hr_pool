@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="action_hr_applicant_onboard_now_shell" model="ir.actions.server">
+            <field name="name">بدء التوظيف</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {'title': title, 'message': message, 'type': kind, 'sticky': sticky}
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def reload_applicant(applicant):
+    title = applicant.partner_name or applicant.display_name or 'Applicant'
+    return {
+        'type': 'ir.actions.act_window',
+        'name': title,
+        'res_model': 'hr.applicant',
+        'res_id': applicant.id,
+        'view_mode': 'form',
+        'views': [(False, 'form')],
+        'target': 'current',
+    }
+
+
+def write_handover(applicant, state, ready, notes):
+    vals = {}
+    mapping = {
+        'x_employment_handover_state': state,
+        'x_employment_handover_ready': bool(ready),
+        'x_employment_handover_checked_on': datetime.datetime.now(),
+        'x_employment_handover_checked_by_user_id': env.user.id,
+        'x_employment_handover_notes': notes or False,
+    }
+    for field_name, value in mapping.items():
+        if field_name in applicant._fields:
+            vals[field_name] = value
+    if vals:
+        applicant.write(vals)
+
+
+applicant = records.sudo()[:1]
+
+if not applicant:
+    action = toast('لا يوجد متقدم', 'افتح سجل متقدم أولاً.', 'warning')
+else:
+    gate_ready = bool(
+        'x_preboarding_gate_ready' in applicant._fields
+        and applicant.x_preboarding_gate_ready
+    )
+    gate_state = applicant.x_preboarding_gate_state if 'x_preboarding_gate_state' in applicant._fields else False
+
+    if not gate_ready or gate_state != 'ready':
+        missing = applicant.x_preboarding_gate_missing_summary if 'x_preboarding_gate_missing_summary' in applicant._fields else False
+        if not missing:
+            missing = 'يرجى تشغيل تحديث جاهزية التوظيف والتأكد من اكتمال قرار التعيين، العقد، الوصف الوظيفي، F-0007، وF-0009.'
+
+        note = 'لا يمكن بدء التوظيف لأن جاهزية التوظيف غير مكتملة. المتبقي/المطلوب: %s' % missing
+        write_handover(applicant, 'blocked', False, note)
+        applicant.message_post(body=note)
+        action = toast('لا يمكن بدء التوظيف', note, 'warning', True, reload_applicant(applicant))
+    else:
+        note = 'تم تأكيد جاهزية بدء التوظيف. هذا الإجراء في Pass 13C هو غلاف تحقق فقط ولا ينشئ hr.employee أو hr.contract أو res.partner.bank بعد.'
+        write_handover(applicant, 'ready', True, note)
+        applicant.message_post(body=note)
+        action = toast('جاهز لبدء التوظيف', note, 'success', False, reload_applicant(applicant))
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>

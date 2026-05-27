@@ -32,6 +32,11 @@
                     string="تحديث جاهزية التوظيف"
                     class="btn-secondary"
                     invisible="not id" />
+                <button type="action"
+                    name="hr_recruitment_custom.action_hr_applicant_onboard_now_shell"
+                    string="بدء التوظيف"
+                    class="btn-primary"
+                    invisible="not id or not x_preboarding_gate_ready" />
             </xpath>
 
             <xpath expr="//sheet/div[@name='button_box']" position="inside">
@@ -1059,6 +1064,35 @@
                                 readonly="1"/>
                             <field name="x_preboarding_gate_notes"
                                 string="ملاحظات بوابة ما قبل التوظيف"
+                                readonly="1"
+                                nolabel="1"/>
+                        </group>
+                    </group>
+
+                    <group string="بدء التوظيف">
+                        <group string="حالة الترحيل">
+                            <field name="x_employment_handover_state"
+                                string="حالة بدء التوظيف"
+                                widget="badge"
+                                decoration-muted="x_employment_handover_state in [False, 'not_started']"
+                                decoration-warning="x_employment_handover_state == 'blocked'"
+                                decoration-info="x_employment_handover_state == 'ready'"
+                                decoration-success="x_employment_handover_state == 'onboarded'"
+                                readonly="1"/>
+                            <field name="x_employment_handover_ready"
+                                string="جاهز لبدء التوظيف"
+                                readonly="1"/>
+                            <field name="x_employment_handover_checked_on"
+                                string="تاريخ فحص بدء التوظيف"
+                                readonly="1"/>
+                            <field name="x_employment_handover_checked_by_user_id"
+                                string="فحصت بواسطة"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
+                        </group>
+                        <group string="ملاحظات بدء التوظيف">
+                            <field name="x_employment_handover_notes"
+                                string="ملاحظات بدء التوظيف"
                                 readonly="1"
                                 nolabel="1"/>
                         </group>
