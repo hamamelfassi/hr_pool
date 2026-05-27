@@ -335,4 +335,41 @@
             </form>
         </field>
     </record>
+
+    <record id="view_hr_applicant_form_inherit_hr_pool_photo" model="ir.ui.view">
+        <field name="name">hr.applicant.form.inherit.hr.pool.photo</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[contains(@class, 'oe_title')]/h1/field[@name='partner_name']" position="before">
+                <div name="mcep_applicant_title_photo" class="me-3 d-inline-flex align-items-center">
+                    <field name="x_profile_photo_1920"
+                           widget="image"
+                           class="oe_avatar"
+                           nolabel="1"
+                           options="{'preview_image': 'x_profile_photo_1920', 'size': [96, 96]}"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_applicant_kanban_inherit_hr_pool_photo" model="ir.ui.view">
+        <field name="name">hr.applicant.kanban.inherit.hr.pool.photo</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_kanban_view_applicant"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="inside">
+                <field name="x_profile_photo_1920"/>
+            </xpath>
+            <xpath expr="//templates/t[@t-name='card']/field[@name='partner_name']" position="before">
+                <div name="mcep_applicant_kanban_photo"
+                     class="d-flex justify-content-start mb-2">
+                    <field name="x_profile_photo_1920"
+                           widget="image"
+                           class="oe_avatar"
+                           options="{'preview_image': 'x_profile_photo_1920', 'size': [72, 72]}"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
 </odoo>

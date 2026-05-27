@@ -380,4 +380,12 @@
         <field name="index" eval="True" />
     </record>
 
+
+    <record id="field_hr_applicant_x_profile_photo_1920" model="ir.model.fields">
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="name">x_profile_photo_1920</field>
+        <field name="field_description">Applicant Photo 1920</field>
+        <field name="ttype">binary</field>
+        <field name="help">High-quality applicant photo propagated from the Stage 1 HR pool intake and later handed over to hr.employee.image_1920.</field>
+    </record>
 </odoo>

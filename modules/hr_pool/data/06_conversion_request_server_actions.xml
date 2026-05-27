@@ -142,11 +142,12 @@ for req in records:
 
     pool = req.x_pool_id.sudo()
     applicant = pool.x_applicant_id or req.x_applicant_id
+    Applicant = env['hr.applicant'].sudo()
+    fields_map = Applicant._fields
+
     if not applicant:
-        Applicant = env['hr.applicant'].sudo()
         applicant_vals = {'job_id': req.x_job_id.id}
         candidate_label = pool.x_name or pool.x_intake_reference or req.x_name or pool.display_name or 'Converted Candidate'
-        fields_map = Applicant._fields
 
         if 'name' in fields_map:
             applicant_vals['name'] = candidate_label
@@ -201,7 +202,26 @@ for req in records:
                 ] if part
             ])
 
+        if 'x_profile_photo_1920' in fields_map and pool.x_profile_photo:
+            applicant_vals['x_profile_photo_1920'] = pool.x_profile_photo
+        if 'x_pool_id' in fields_map:
+            applicant_vals['x_pool_id'] = pool.id
+        if 'x_pool_conversion_request_id' in fields_map:
+            applicant_vals['x_pool_conversion_request_id'] = req.id
+
         applicant = Applicant.create(applicant_vals)
+
+    applicant_update_vals = {}
+    if 'x_profile_photo_1920' in fields_map and pool.x_profile_photo and not applicant.x_profile_photo_1920:
+        applicant_update_vals['x_profile_photo_1920'] = pool.x_profile_photo
+    if 'x_pool_id' in fields_map and not applicant.x_pool_id:
+        applicant_update_vals['x_pool_id'] = pool.id
+    if 'x_pool_conversion_request_id' in fields_map and not applicant.x_pool_conversion_request_id:
+        applicant_update_vals['x_pool_conversion_request_id'] = req.id
+
+    if applicant_update_vals:
+        applicant.sudo().write(applicant_update_vals)
+        applicant.message_post(body='تم تحديث بيانات الربط من سجل التجمع، بما في ذلك صورة المرشح عند توفرها.')
 
     req.sudo().write({
         'x_state': 'approved',

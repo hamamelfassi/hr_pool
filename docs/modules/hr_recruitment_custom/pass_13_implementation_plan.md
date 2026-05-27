@@ -404,7 +404,60 @@ passed
 
 ### 13B implementation log
 
-Pending.
+#### 13B1–13B5 — Pool photo propagation and applicant UI placement
+
+Patch/script applied:
+
+```text
+Added hr.applicant.x_profile_photo_1920 in hr_pool.
+Mapped x_hr.pool.x_profile_photo to hr.applicant.x_profile_photo_1920 during conversion approval.
+Backfilled photo/source links when conversion approval finds an existing applicant with missing bridge data.
+Displayed applicant photo beside the applicant title/name area.
+Displayed applicant photo in applicant kanban cards.
+```
+
+Sanity result:
+
+```text
+13B sanity checks passed.
+13B refined view sanity checks passed.
+```
+
+Odoo result:
+
+```text
+hr_pool rebuilt and installed cleanly.
+New test pool candidate converted successfully.
+Converted hr.applicant received the propagated photo.
+Applicant form displays the photo reasonably beside the applicant title/name area.
+Applicant kanban displays the photo.
+```
+
+Acceptance result:
+
+```text
+passed
+```
+
+Notes:
+
+- Existing old test applicants were not backfilled through reconversion because conversion actions are guarded and not exposed for already converted records.
+- This is acceptable because current historical records are test records.
+- Missing applicant photo remains non-blocking for future On-board Now.
+- Sign Requests smart-button leakage was observed during 13B testing and is logged separately for hr_recruitment_custom correction during Pass 13.
+
+Lessons learned:
+
+- The applicant form does not contain a `description` field; the safe form anchor is the applicant title/name area.
+- The applicant kanban external ID is `hr_recruitment.hr_kanban_view_applicant`.
+- Kanban placement is stable when anchored before the card `partner_name` field.
+- Photo storage should remain one applicant bridge field, `x_profile_photo_1920`, then hand over to native `hr.employee.image_1920` in 13D.
+
+Status:
+
+```text
+passed
+```
 
 ### 13C implementation log
 
@@ -429,6 +482,28 @@ Pending.
 ### 13H implementation log
 
 Pending.
+
+
+### 13B implementation note — Sign Requests smart-button leakage
+
+During 13B acceptance testing, a newly converted applicant showed Sign Requests belonging to another applicant.
+
+Observed issue:
+
+- new applicant had no generated/signed documents yet;
+- applicant top-bar Sign Requests smart button still showed F-0004, F-0006, F-0007, and F-0009 requests for another applicant;
+- therefore existing recruitment Sign request anchoring/domain behavior is not filtered tightly enough by the active applicant.
+
+Decision:
+
+- do not patch this in hr_pool;
+- fix under hr_recruitment_custom during Pass 13 because the affected Sign flows belong to recruitment/preboarding documents;
+- target fix should ensure applicant Sign Requests smart button only shows sign.request records linked to the active hr.applicant/source record.
+
+Status:
+
+pending Pass 13 hr_recruitment_custom fix.
+
 
 ## 8. Tracebacks and fixes
 
