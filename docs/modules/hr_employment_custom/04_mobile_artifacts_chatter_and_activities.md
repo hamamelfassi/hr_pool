@@ -1,73 +1,323 @@
-# Mobile Artifacts, Chatter, Activities, and Approvals
+# Mobile Artifacts, Chatter, Activities, Notifications, and Approvals Doctrine
 
-## Mobile artifact problem
+## Purpose
 
-Direct `/web/content/<attachment_id>?download=true` actions can work on desktop but fail or behave inconsistently inside Odoo's native mobile app.
+This document defines the operational coordination layer for `hr_employment_custom`.
 
-Chatter/files attachments have proven more reliable for mobile access.
+It covers:
 
-## Locked artifact rule
+```text
+mobile artifact access
+employee chatter/files
+source process chatter
+activities
+notifications
+Odoo Approvals app
+Sign Requests visibility
+cross-module integration posture
+```
 
-For every generated/signed/certificate artifact:
+---
 
-1. store the attachment on the source process record;
-2. copy signed and certificate artifacts to `hr.employee` chatter/files;
-3. keep icon buttons as desktop convenience controls;
-4. do not rely on URL buttons as the only artifact access method;
-5. use chatter messages to identify artifact type and lifecycle event.
+## Core rule
 
-A process is not mobile-safe unless the user can open the final signed artifact from the employee record's chatter/files in the mobile app.
+```text
+Native Odoo state/workflow = operational truth
+Custom HR process record = Marsellia business context
+QWeb + Odoo Sign = official documentary evidence
+Chatter + activities = coordination and audit
+```
 
-## Chatter
+Do not turn HR into a pure paperwork simulator.
+
+---
+
+## Chatter doctrine
 
 Chatter is the durable audit stream.
 
-Post messages for:
+Every important process event should post a message on the source record and, where relevant, on `hr.employee`.
 
-- record creation;
-- PDF generation;
-- send for signature;
-- signature sync;
-- approval/rejection;
-- manual decision attachment;
-- state transition;
-- handover/offboarding completion.
+### Standard chatter events
 
-## Activities
+```text
+record created
+submitted for review
+PDF generated
+sent for signature
+signature synced
+signed artifact linked
+certificate linked
+manual decision attachment uploaded
+approved/rejected
+state changed
+handover/clearance completed
+```
 
-Activities drive the next human action.
+### Employee chatter/files rule
+
+For every final signed artifact:
+
+```text
+copy/post signed PDF to hr.employee chatter/files
+copy/post certificate to hr.employee chatter/files where available
+name the artifact type in the chatter message
+```
+
+This is the mobile-safe access path.
+
+---
+
+## Mobile artifact doctrine
+
+Direct `/web/content/<attachment_id>?download=true` actions can work on desktop but fail or behave inconsistently in the Odoo mobile app.
+
+Therefore:
+
+```text
+URL/icon download buttons are convenience controls.
+Employee chatter/files is the required mobile-safe access path.
+```
+
+A workflow is not mobile-safe unless the signed artifact can be opened from the employee record's chatter/files in the native mobile app.
+
+---
+
+## Activity doctrine
+
+Activities drive next human action. They are not the workflow truth.
+
+Good uses:
+
+```text
+HR must review employee profile
+manager must approve permission
+HR must verify leave balance
+employee must submit training certificate
+IT must clear systems access
+stores must verify custody returns
+finance must verify final settlement
+GM must approve separation/clearance
+```
+
+Bad uses:
+
+```text
+activity as permanent state
+activity as signed evidence
+activity as only approval record
+activity as legal document
+```
+
+The model state remains the source of truth.
+
+---
+
+## Standard activity pattern
+
+At each workflow transition:
+
+```text
+submit → create activity for next reviewer
+approve → close prior activity and create next activity
+reject → close activity and post rejection reason
+final approval → close all pending workflow activities
+```
+
+Where practical, activity types should be seeded for:
+
+```text
+HR Review
+Manager Approval
+GM Approval
+Certificate Follow-up
+Custody Return
+Clearance Review
+```
+
+---
+
+## Toast notification doctrine
+
+Use toast notifications only for immediate feedback.
 
 Examples:
 
-- manager approval;
-- HR review;
-- certificate submission;
-- custody return;
-- IT account deactivation;
-- finance final settlement;
-- stores/transport clearance.
+```text
+PDF generated
+sent for signature
+sync successful
+blocked due to missing data
+duplicate send prevented
+certificate not found
+```
 
-Activities do not replace the workflow state. The source record state remains the source of truth.
+Do not rely on toast messages as durable audit.
 
-## Odoo Approvals app
+Every important event should also produce chatter.
 
-Use Odoo Approvals selectively.
+---
 
-Good candidates:
+## Odoo Approvals app doctrine
 
-- administrative permissions;
-- training funding;
-- special work assignment;
-- exceptional custody issuance;
-- overtime authorization.
+The native Odoo Approvals app can be used selectively.
 
-Do not make `approval.request` the source of truth for native HR objects such as `hr.leave` or `hr.appraisal`.
+It is not the main HR workflow spine.
 
-Rule:
+### Use native HR engines first
+
+| Process | Primary engine |
+|---|---|
+| Leave | `hr.leave` |
+| Appraisal | `hr.appraisal` |
+| Employee profile | `hr.employee` |
+| Contract/payroll | `hr.contract`, payroll models |
+| Attendance | `hr.attendance` / work entries later |
+
+### Where `approval.request` may help
 
 ```text
-Approval authorizes the action.
-Sign evidences the official document.
-Chatter records the history.
-Activities drive the next human step.
+administrative permissions
+training funding
+special work assignment
+equipment/custody issuance exception
+exceptional overtime authorization
 ```
+
+Canonical rule:
+
+```text
+approval.request may be linked as an auxiliary approval surface
+```
+
+The custom process record remains the source of truth.
+
+---
+
+## Approval vs Sign vs Activity
+
+Use each layer correctly:
+
+| Layer | Purpose |
+|---|---|
+| Model state | workflow truth |
+| Approval/request/action | authorization |
+| Native Sign | legal/documentary evidence |
+| Chatter | durable audit trail |
+| Activity | next human task |
+| Toast | immediate UI feedback |
+
+Do not force all layers onto every workflow.
+
+---
+
+## Sign Requests visibility
+
+For every Sign workflow, attempt native anchoring so employee Sign Requests remain useful.
+
+Send actions should anchor to:
+
+```text
+source process model
+source process record ID
+```
+
+Where Odoo schema permits, also maintain visible employee linkage through:
+
+```text
+employee chatter/files
+employee source fields
+best-effort Sign request model/res_ids anchor
+```
+
+Lifecycle closure must always use source model fields, not only Sign Requests smart-button visibility.
+
+---
+
+## Cross-module integration posture
+
+### Documents
+
+Do not make Documents app integration a blocker for Pass 13 or first lifecycle passes.
+
+Use attachments/chatter first.
+
+Later Documents integration can add:
+
+```text
+folder policy
+tag policy
+retention policy
+confidentiality classes
+access groups
+```
+
+### Payroll/accounting
+
+Do not generate payroll/accounting entries from early lifecycle forms unless explicitly scoped.
+
+Design fields now for later integration:
+
+```text
+training cost
+training recovery amount
+salary deduction authorization
+custody replacement fee
+final settlement status
+```
+
+### Inventory/fleet
+
+Custody models should later integrate with inventory/fleet, but first they must structurally track custody items and status.
+
+### Planning/projects/timesheets
+
+Work assignments should later integrate with planning, project, timesheets, work entries, and overtime.
+
+First implementation captures the assignment and approval artifact only.
+
+### IT / Microsoft 365
+
+Clearance should begin with IT checklist activities.
+
+System automation can come later.
+
+---
+
+## Manual decision metadata
+
+Use manual decision metadata until GRC decision-instance integration is explicitly implemented:
+
+```text
+x_manual_decision_number
+x_manual_decision_date
+x_manual_decision_attachment_id
+```
+
+Use this on:
+
+```text
+leave
+permission
+training funding
+work assignment
+appraisal outcome
+separation
+clearance override
+```
+
+---
+
+## Acceptance checklist
+
+A workflow has acceptable operational coordination when:
+
+- source record state is authoritative;
+- chatter records all major lifecycle events;
+- employee chatter/files contains final signed artifacts;
+- activities are created for next human owners;
+- activities close when transitions complete;
+- toast messages are used only for immediate UI feedback;
+- Odoo Approvals is auxiliary where used;
+- mobile access works through employee files/chatter;
+- native smart buttons remain useful and unbroken.

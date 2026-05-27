@@ -1,71 +1,274 @@
 # Employee Form Tabs and UI Doctrine
 
+## Purpose
+
+This document defines the `hr.employee` UI extension doctrine for `hr_employment_custom`.
+
+The employee form must remain a native Odoo employee form enhanced with Marsellia process tabs, not a replacement cockpit.
+
+---
+
 ## Native tabs to preserve
 
-The employee form should remain native and familiar.
+Preserve and enrich native Odoo tabs:
 
-Preserve and enrich:
+```text
+Work
+Resume
+Personal
+Payroll
+Salary Adjustments
+Settings
+```
 
-- Work;
-- Resume;
-- Personal;
-- Payroll;
-- Salary Adjustments;
-- Settings.
+Do not duplicate native Odoo fields into custom tabs unless a Marsellia workflow requires a distinct process surface.
 
-Do not duplicate native fields into custom tabs unless a Marsellia workflow requires a distinct process surface.
+---
 
-## Custom tabs
+## Custom tabs to add
 
 Add these custom tabs to `hr.employee`:
 
-1. `الإقرارات`
-2. `العهد والممتلكات`
-3. `التدريب والشهادات`
-4. `التكليفات`
-5. `الإجازات`
-6. `الأذونات`
-7. `تقييم الأداء`
-8. `إنهاء الخدمة`
-9. `إخلاء الطرف`
+```text
+الإقرارات
+العهد والممتلكات
+التدريب والشهادات
+التكليفات
+الإجازات
+الأذونات
+تقييم الأداء
+إنهاء الخدمة
+إخلاء الطرف
+```
 
-## Process view pattern
+### Tab ownership
 
-Each custom tab should show one2many process records.
+| Tab | Purpose |
+|---|---|
+| `الإقرارات` | Employee declarations and HSE undertakings |
+| `العهد والممتلكات` | Custody items, ID cards, PPE, tools, vehicles, radios, laptops |
+| `التدريب والشهادات` | Training commitments, certification evidence, resume/skill integration |
+| `التكليفات` | Work assignments, future overtime/project/planning hooks |
+| `الإجازات` | Native `hr.leave` overlay and official Marsellia leave form |
+| `الأذونات` | Typed administrative permission requests |
+| `تقييم الأداء` | Native `hr.appraisal` overlay and scoring lines |
+| `إنهاء الخدمة` | Separation/resignation/non-renewal requests |
+| `إخلاء الطرف` | Final clearance, custody closure, IT/finance/HR/stores clearances |
 
-The opened process form should include:
+---
 
-- statusbar/state at the top;
-- icon-only artifact controls in header where practical;
-- workflow action row below the statusbar/header, not between icons;
-- grouped business fields;
-- readonly derived/action-written fields;
-- badge/state decoration in list/inline rows;
-- generated/signed/certificate attachment fields;
-- notes;
-- chatter.
+## One2many tab pattern
+
+Each custom tab should show process records in a one2many/list surface.
+
+Inline/list rows should show:
+
+```text
+reference
+type
+date
+state badge
+responsible user
+generated/signed status
+next action if useful
+```
+
+Open the record for the full workflow form.
+
+Do not overload the employee main form header with workflow-specific buttons.
+
+---
+
+## Process form pattern
+
+Each opened process form should use this structure:
+
+```text
+header/statusbar
+artifact icon controls if safe
+workflow action row below header/statusbar
+business data sections
+generated/signed/certificate attachment fields
+manual decision metadata where applicable
+notes
+chatter
+```
+
+### Button placement rule
+
+Workflow buttons belong in a clear workflow action row below the statusbar/header or within the relevant tab.
+
+Do not place workflow buttons between artifact icons.
+
+Do not place process-specific workflow buttons in the global employee header.
+
+---
+
+## Header and artifact controls
+
+Header may include:
+
+```text
+statusbar/state
+download/open generated icon
+download/open signed icon
+download/open certificate icon
+```
+
+Only if visually clean.
+
+If the header becomes crowded, artifact controls should move into an artifact group inside the sheet.
+
+---
 
 ## State decoration rule
 
-All process states should use Odoo-native statusbar and badge decoration signals where possible.
+All process state fields should use native Odoo statusbar/badge decoration where practical.
 
 Typical mapping:
 
-- draft: muted/secondary;
-- generated: info;
-- signature requested/submitted: warning;
-- approved/signed/complete: success;
-- rejected/cancelled/blocked: danger;
-- superseded/archived: muted.
+| State | Decoration |
+|---|---|
+| draft | muted / secondary |
+| generated | info |
+| submitted | info |
+| signature_requested | warning |
+| manager_review / hr_review / gm_approval | warning |
+| approved / signed / complete / cleared | success |
+| rejected / cancelled / blocked | danger |
+| superseded / archived | muted |
 
-## Button placement rule
+Use consistent colors across process lists and forms.
 
-Workflow buttons must not be placed between artifact icon controls.
+---
 
-Use this order:
+## Readonly doctrine
 
-1. header/statusbar;
-2. icon-only artifact controls where appropriate;
-3. separate workflow action row;
-4. business fields;
-5. notes/chatter.
+Fields written by workflow actions should be readonly in the normal UI.
+
+Readonly/action-written examples:
+
+```text
+x_reference_code
+x_document_reference
+x_pdf_attachment_id
+x_signed_attachment_id
+x_sign_certificate_attachment_id
+x_sign_request_res_id
+x_sign_request_state
+x_generated_on
+x_sent_on
+x_signed_on
+computed total score fields
+source handover fields
+```
+
+Editable business-input fields should remain editable only while the process is in the appropriate early state.
+
+Example:
+
+```text
+draft: business fields editable
+generated: business fields mostly readonly
+signature_requested: business fields readonly
+signed: fully locked except notes where policy allows
+```
+
+---
+
+## Derived field doctrine
+
+Derived/inherited/snapshot fields must be labelled clearly and normally readonly.
+
+Examples:
+
+```text
+employee name snapshot
+department snapshot
+job title snapshot
+manager snapshot
+contract/payroll snapshot
+bank-source snapshot
+```
+
+Do not allow casual edits to derived fields that are meant to preserve legal/signature context.
+
+---
+
+## Mobile UI rule
+
+If an artifact button works on desktop but fails on mobile, the workflow is still acceptable only if the artifact is accessible through employee chatter/files.
+
+For mobile-safe process design:
+
+```text
+post signed PDF to employee chatter/files
+post certificate to employee chatter/files where available
+write clear chatter body naming the artifact type
+do not rely only on /web/content act_url buttons
+```
+
+---
+
+## Employee smart button preservation
+
+Do not break or replace native smart buttons such as:
+
+```text
+Documents
+Appraisals
+Goals
+Time Off
+Payslips
+Monthly Hours
+Contacts
+History
+Sign Requests
+```
+
+Custom process records should anchor/link to native models so native smart buttons remain useful.
+
+---
+
+## Employee photo/avatar UI doctrine
+
+Employee photo display should rely on native `hr.employee.image_1920` as the canonical image target after handover.
+
+Do not manually populate derivative avatar fields unless actual field metadata proves a safe need.
+
+---
+
+## Arabic UI naming rule
+
+Use normalized Arabic process names in the UI.
+
+Reference numbers remain technical metadata.
+
+Examples:
+
+| UI name | Technical reference |
+|---|---|
+| إقرار العمل الحصري وعدم الازدواج | F-0010 |
+| استلام البطاقة التعريفية | F-0011 |
+| إقرار السلامة المهنية | F-0013 |
+| طلب إجازة | F-0016 |
+| تكليف عمل | F-0017 |
+| تقييم الأداء | F-0018 |
+| طلب إنهاء خدمة | F-0019 |
+| إخلاء الطرف | F-0020 |
+
+---
+
+## Acceptance checklist for a process UI
+
+A process UI is acceptable only when:
+
+- custom buttons are inside the correct tab or process form;
+- the employee global header remains clean;
+- state is visually decorated;
+- action-written fields are readonly;
+- generated/signed/certificate artifacts are visible;
+- desktop icon controls work where present;
+- mobile-safe chatter/files access exists;
+- chatter records lifecycle events;
+- activities identify next owners where needed.
