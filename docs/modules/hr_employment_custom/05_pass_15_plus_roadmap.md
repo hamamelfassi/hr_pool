@@ -1,16 +1,9 @@
 # Pass 15+ Employment Lifecycle Roadmap
 
-This roadmap is the implementation sequence. The detailed model/field/process specifications are consolidated in:
+This roadmap is the implementation sequence. 
+The detailed model/field/process specifications are consolidated in `docs/modules/hr_employment_custom/01_employee_lifecycle_processes.md`
 
-```text
-docs/modules/hr_employment_custom/01_employee_lifecycle_processes.md
-```
-
-Pass 13 is not implemented here. Pass 13 is owned by:
-
-```text
-docs/modules/hr_recruitment_custom/pass_13_recruitment_to_employment_handover.md
-```
+Pass 13 is not implemented here. Pass 13 is owned by `docs/modules/hr_recruitment_custom/pass_13_recruitment_to_employment_handover.md`
 
 
 ## Pass 15 — Employee declarations
