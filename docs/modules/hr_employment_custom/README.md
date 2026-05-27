@@ -41,3 +41,9 @@ Native Odoo HR models remain the operational source of truth.
 
 - Pool to applicant handover: `docs/modules/hr_pool/03_pool_to_applicant_handover.md`
 - Applicant to employee handover: `docs/modules/hr_recruitment_custom/pass_13_recruitment_to_employment_handover.md`
+
+## Implementation reference
+
+- Detailed process model specifications are consolidated in `01_employee_lifecycle_processes.md`.
+- Pass 13 handover is owned by `docs/modules/hr_recruitment_custom/pass_13_recruitment_to_employment_handover.md`.
+- Stage 1 pool-to-applicant handover is owned by `docs/modules/hr_pool/03_pool_to_applicant_handover.md`.
