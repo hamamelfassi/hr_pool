@@ -1,9 +1,8 @@
-
 # Pass 15+ Employment Lifecycle Roadmap
 
 ## Pass 15 — Employee declarations
 
-- `x_hr.employee_declaration`
+- `x_hr.employee_declaration`;
 - exclusive work declaration;
 - occupational safety acknowledgment;
 - human waste handling undertaking;
@@ -62,7 +61,7 @@
 - 12 criteria scoring;
 - total/grade;
 - QWeb/sign;
-- hr.skill linkage strategy.
+- `hr.skill` linkage strategy.
 
 ## Pass 22 — Separation request
 

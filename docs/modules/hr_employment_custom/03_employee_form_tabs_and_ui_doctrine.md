@@ -1,5 +1,4 @@
-
-# Employee Form Tabs and View Architecture
+# Employee Form Tabs and UI Doctrine
 
 ## Native tabs to preserve
 
@@ -21,51 +20,14 @@ Do not duplicate native fields into custom tabs unless a Marsellia workflow requ
 Add these custom tabs to `hr.employee`:
 
 1. `الإقرارات`
-   - work exclusivity declaration;
-   - occupational safety declaration;
-   - HSE/human-waste employee undertaking;
-   - HSE/human-waste supervisor undertaking.
-
 2. `العهد والممتلكات`
-   - ID card;
-   - PPE;
-   - uniforms;
-   - access cards;
-   - vehicles;
-   - laptops;
-   - radios;
-   - future inventory/fleet integration.
-
 3. `التدريب والشهادات`
-   - training commitments;
-   - certificate tracking;
-   - resume line integration;
-   - skills/certifications integration.
-
 4. `التكليفات`
-   - work assignment records;
-   - future overtime/payroll/planning/project hooks.
-
 5. `الإجازات`
-   - native `hr.leave` overlay;
-   - Marsellia leave form;
-   - official PDF/signing if required.
-
 6. `الأذونات`
-   - typed administrative permission requests.
-
 7. `تقييم الأداء`
-   - native `hr.appraisal` extension;
-   - scoring/evaluation lines;
-   - QWeb/sign workflow.
-
 8. `إنهاء الخدمة`
-   - separation/resignation/non-renewal request.
-
 9. `إخلاء الطرف`
-   - final clearance workflow;
-   - custody closure;
-   - IT/finance/stores/HR clearances.
 
 ## Process view pattern
 
@@ -95,3 +57,15 @@ Typical mapping:
 - approved/signed/complete: success;
 - rejected/cancelled/blocked: danger;
 - superseded/archived: muted.
+
+## Button placement rule
+
+Workflow buttons must not be placed between artifact icon controls.
+
+Use this order:
+
+1. header/statusbar;
+2. icon-only artifact controls where appropriate;
+3. separate workflow action row;
+4. business fields;
+5. notes/chatter.

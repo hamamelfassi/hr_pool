@@ -39,3 +39,14 @@ Add future integration notes, field maps, webhook payload examples, and deployme
   program-level employment lifecycle plan after Stage 2 recruitment.
 - `modules/hr_employment_custom/`
   architecture and implementation specs for the employment lifecycle custom module.
+
+<!-- MCEP_EMPLOYMENT_DOCS_START -->
+## Employment lifecycle documentation
+
+- `modules/hr_pool/03_pool_to_applicant_handover.md`
+  Stage 1 intake to applicant handover, including candidate photo propagation.
+- `modules/hr_recruitment_custom/pass_13_recruitment_to_employment_handover.md`
+  Applicant to employee/contract/bank/payroll-ready handover.
+- `modules/hr_employment_custom/`
+  Employee lifecycle after the employee exists.
+<!-- MCEP_EMPLOYMENT_DOCS_END -->
