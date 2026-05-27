@@ -1000,6 +1000,61 @@
         </record>
 
 
+
+        <!-- Pass 13D applicant / employee handover link fields -->
+        <record id="field_hr_applicant_x_employment_employee_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_employee_id</field>
+            <field name="field_description">Employment Employee</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.employee</field>
+            <field name="on_delete">set null</field>
+            <field name="help">Native employee record created or linked during the controlled recruitment-to-employment handover.</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_employee_created_on" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_employee_created_on</field>
+            <field name="field_description">Employment Employee Created On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_employee_created_by_user_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_employee_created_by_user_id</field>
+            <field name="field_description">Employment Employee Created By</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_hr_employee_x_source_applicant_id" model="ir.model.fields">
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="name">x_source_applicant_id</field>
+            <field name="field_description">Source Applicant</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.applicant</field>
+            <field name="on_delete">set null</field>
+            <field name="help">Recruitment applicant that created or linked this employee during Pass 13 handover.</field>
+        </record>
+
+        <record id="field_hr_employee_x_employment_handover_on" model="ir.model.fields">
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="name">x_employment_handover_on</field>
+            <field name="field_description">Employment Handover On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_hr_employee_x_employment_handover_by_user_id" model="ir.model.fields">
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="name">x_employment_handover_by_user_id</field>
+            <field name="field_description">Employment Handover By</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+
         <!-- Pass 9C source / provenance fields -->
         <record id="field_employment_contract_x_conversion_request_id" model="ir.model.fields">
             <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>

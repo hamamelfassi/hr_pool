@@ -46,6 +46,118 @@ def write_handover(applicant, state, ready, notes):
         applicant.write(vals)
 
 
+def first_value(record, field_names):
+    if not record:
+        return False
+    record_fields = record._fields
+    for field_name in field_names:
+        if field_name in record_fields and record[field_name]:
+            return record[field_name]
+    return False
+
+
+def get_pool_from_applicant(applicant):
+    if 'x_pool_id' in applicant._fields and applicant.x_pool_id:
+        return applicant.x_pool_id.sudo()
+    return False
+
+
+def compute_employee_vals(applicant, employee=False):
+    Employee = env['hr.employee'].sudo()
+    employee_fields = Employee._fields
+    applicant_fields = applicant._fields
+    pool = get_pool_from_applicant(applicant)
+
+    vals = {}
+
+    employee_name = applicant.partner_name or applicant.display_name or applicant.name or 'New Employee'
+    if 'name' in employee_fields:
+        vals['name'] = employee_name
+
+    if 'x_source_applicant_id' in employee_fields:
+        vals['x_source_applicant_id'] = applicant.id
+    if 'x_employment_handover_on' in employee_fields:
+        vals['x_employment_handover_on'] = datetime.datetime.now()
+    if 'x_employment_handover_by_user_id' in employee_fields:
+        vals['x_employment_handover_by_user_id'] = env.user.id
+
+    if 'image_1920' in employee_fields and 'x_profile_photo_1920' in applicant_fields and applicant.x_profile_photo_1920:
+        # Do not overwrite an existing employee photo during rerun unless the employee has no image.
+        if not employee or not employee.image_1920:
+            vals['image_1920'] = applicant.x_profile_photo_1920
+
+    if 'job_id' in employee_fields and 'job_id' in applicant_fields and applicant.job_id:
+        vals['job_id'] = applicant.job_id.id
+
+    department = False
+    if 'department_id' in applicant_fields and applicant.department_id:
+        department = applicant.department_id
+    elif 'x_department_id' in applicant_fields and applicant.x_department_id:
+        department = applicant.x_department_id
+    elif 'job_id' in applicant_fields and applicant.job_id and 'department_id' in applicant.job_id._fields and applicant.job_id.department_id:
+        department = applicant.job_id.department_id
+
+    if department and 'department_id' in employee_fields:
+        vals['department_id'] = department.id
+
+    # Manager derives from the linked department manager where available.
+    if department and 'parent_id' in employee_fields and 'manager_id' in department._fields and department.manager_id:
+        if not employee or employee.id != department.manager_id.id:
+            vals['parent_id'] = department.manager_id.id
+
+    if 'job_title' in employee_fields:
+        job_title = False
+        if 'x_tor_job_title' in applicant_fields and applicant.x_tor_job_title:
+            job_title = applicant.x_tor_job_title
+        elif 'job_id' in applicant_fields and applicant.job_id:
+            job_title = applicant.job_id.name
+        if job_title:
+            vals['job_title'] = job_title
+
+    # Prefer original pool contact data when available because applicant phone
+    # fields may carry recruitment reference values in some configurations.
+    email_value = first_value(pool, ['x_email', 'email', 'email_from']) or first_value(applicant, [
+        'email_from',
+        'x_email',
+        'x_personal_email',
+        'email_cc',
+    ])
+    if email_value:
+        if 'work_email' in employee_fields:
+            vals['work_email'] = email_value
+        if 'private_email' in employee_fields:
+            vals['private_email'] = email_value
+
+    phone_value = first_value(pool, ['x_phone', 'x_mobile', 'phone', 'mobile']) or first_value(applicant, [
+        'partner_mobile',
+        'x_mobile',
+        'x_phone',
+        'x_work_phone',
+        'partner_phone',
+    ])
+    if phone_value:
+        if 'work_phone' in employee_fields:
+            vals['work_phone'] = phone_value
+        if 'mobile_phone' in employee_fields:
+            vals['mobile_phone'] = phone_value
+        if 'work_mobile' in employee_fields:
+            vals['work_mobile'] = phone_value
+        if 'private_phone' in employee_fields:
+            vals['private_phone'] = phone_value
+
+    national_id_value = first_value(applicant, [
+        'x_national_id',
+        'x_national_id_number',
+        'x_identity_number',
+        'x_applicant_national_id',
+    ]) or first_value(pool, ['x_national_id'])
+
+    if national_id_value and 'identification_id' in employee_fields:
+        vals['identification_id'] = national_id_value
+
+    return vals, national_id_value
+
+
 applicant = records.sudo()[:1]
 
 if not applicant:
@@ -67,10 +179,79 @@ else:
         applicant.message_post(body=note)
         action = toast('لا يمكن بدء التوظيف', note, 'warning', True, reload_applicant(applicant))
     else:
-        note = 'تم تأكيد جاهزية بدء التوظيف. هذا الإجراء في Pass 13C هو غلاف تحقق فقط ولا ينشئ hr.employee أو hr.contract أو res.partner.bank بعد.'
-        write_handover(applicant, 'ready', True, note)
-        applicant.message_post(body=note)
-        action = toast('جاهز لبدء التوظيف', note, 'success', False, reload_applicant(applicant))
+        Employee = env['hr.employee'].sudo()
+        employee_fields = Employee._fields
+        applicant_fields = applicant._fields
+
+        existing_employee = False
+
+        if 'x_employment_employee_id' in applicant_fields and applicant.x_employment_employee_id:
+            existing_employee = applicant.x_employment_employee_id.sudo()
+
+        if not existing_employee and 'x_source_applicant_id' in employee_fields:
+            existing_employee = Employee.search([
+                ('x_source_applicant_id', '=', applicant.id),
+            ], limit=1)
+
+        employee_vals, national_id_value = compute_employee_vals(applicant, existing_employee)
+
+        if not existing_employee and national_id_value and 'identification_id' in employee_fields:
+            duplicate_employees = Employee.search([
+                ('identification_id', '=', national_id_value),
+            ], limit=2)
+            if len(duplicate_employees) == 1:
+                note = 'تم العثور على موظف حالي بنفس الرقم الوطني/التعريفي. لم يتم إنشاء موظف جديد لتجنب التكرار. يرجى مراجعة الموظف الحالي وربطه يدوياً إذا كان هو نفس الشخص.'
+                write_handover(applicant, 'blocked', False, note)
+                applicant.message_post(body=note)
+                action = toast('احتمال تكرار موظف', note, 'warning', True, reload_applicant(applicant))
+            elif len(duplicate_employees) > 1:
+                note = 'تم العثور على أكثر من موظف بنفس الرقم الوطني/التعريفي. لا يمكن بدء التوظيف آلياً قبل تنظيف التكرارات.'
+                write_handover(applicant, 'blocked', False, note)
+                applicant.message_post(body=note)
+                action = toast('تكرار بيانات موظفين', note, 'danger', True, reload_applicant(applicant))
+
+        if not action:
+            if existing_employee:
+                employee = existing_employee
+
+                # Rerun is idempotent: reuse linked employee, but sync corrected handover values.
+                sync_vals = dict(employee_vals)
+                if sync_vals:
+                    employee.write(sync_vals)
+
+                link_vals = {}
+                if 'x_employment_employee_id' in applicant_fields and applicant.x_employment_employee_id.id != employee.id:
+                    link_vals['x_employment_employee_id'] = employee.id
+                if 'x_employment_employee_created_on' in applicant_fields and not applicant.x_employment_employee_created_on:
+                    link_vals['x_employment_employee_created_on'] = datetime.datetime.now()
+                if 'x_employment_employee_created_by_user_id' in applicant_fields and not applicant.x_employment_employee_created_by_user_id:
+                    link_vals['x_employment_employee_created_by_user_id'] = env.user.id
+                if link_vals:
+                    applicant.write(link_vals)
+
+                note = 'تم ربط الموظف. تم العثور على سجل موظف مرتبط بهذا المتقدم، ولم يتم إنشاء موظف جديد. سيستكمل Pass 13 اللاحق إنشاء العقد والبنك والمرفقات.'
+                write_handover(applicant, 'onboarded', True, note)
+                applicant.message_post(body=note)
+                employee.message_post(body='تم تأكيد الربط والتحديث من المتقدم: %s.' % (applicant.partner_name or applicant.display_name))
+                action = toast('تم ربط الموظف', note, 'success', False, reload_applicant(applicant))
+            else:
+                employee = Employee.create(employee_vals)
+
+                applicant_vals = {}
+                if 'x_employment_employee_id' in applicant_fields:
+                    applicant_vals['x_employment_employee_id'] = employee.id
+                if 'x_employment_employee_created_on' in applicant_fields:
+                    applicant_vals['x_employment_employee_created_on'] = datetime.datetime.now()
+                if 'x_employment_employee_created_by_user_id' in applicant_fields:
+                    applicant_vals['x_employment_employee_created_by_user_id'] = env.user.id
+                if applicant_vals:
+                    applicant.write(applicant_vals)
+
+                note = 'تم إنشاء سجل الموظف وربطه بالمتقدم. لم يتم بعد إنشاء العقد أو الحساب البنكي أو ترحيل المرفقات في هذا الجزء من Pass 13.'
+                write_handover(applicant, 'onboarded', True, note)
+                applicant.message_post(body=note)
+                employee.message_post(body='تم إنشاء هذا الموظف من المتقدم: %s.' % (applicant.partner_name or applicant.display_name))
+                action = toast('تم إنشاء الموظف', note, 'success', False, reload_applicant(applicant))
 
 if not action:
     action = {'type': 'ir.actions.client', 'tag': 'reload'}

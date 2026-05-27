@@ -1082,6 +1082,17 @@
                             <field name="x_employment_handover_ready"
                                 string="جاهز لبدء التوظيف"
                                 readonly="1"/>
+                            <field name="x_employment_employee_id"
+                                string="الموظف المرتبط"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="x_employment_employee_created_on"
+                                string="تاريخ إنشاء الموظف"
+                                readonly="1"/>
+                            <field name="x_employment_employee_created_by_user_id"
+                                string="أنشئ بواسطة"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
                             <field name="x_employment_handover_checked_on"
                                 string="تاريخ فحص بدء التوظيف"
                                 readonly="1"/>
