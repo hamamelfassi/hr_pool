@@ -324,3 +324,26 @@ Create/link `hr.employee`, `hr.contract`, bank details, and signed artifact hist
 ### Pass 13 — Employment lifecycle architecture
 
 Start a separate post-recruitment employment lifecycle architecture.
+
+
+## Employment lifecycle / `hr_employment_custom`
+
+After Stage 2 recruitment is complete, the employee lifecycle is owned by a new custom module:
+
+```text
+hr_employment_custom
+```
+
+This module starts with recruitment-to-employment handover and then extends native Odoo HR models for employee declarations, custody, training, leave, permissions, assignments, appraisals, separation, and clearance.
+
+The module must use native Odoo HR models as the operational source of truth:
+
+- `hr.employee`
+- `hr.contract`
+- `res.partner.bank`
+- `hr.leave`
+- `hr.attendance`
+- `hr.appraisal`
+- payroll models where available.
+
+The employment module must not create a recruitment-style document registry. Instead, each employment process model uses a reusable document artifact pattern and copies final signed/certificate artifacts to `hr.employee` chatter/files for mobile-safe access.

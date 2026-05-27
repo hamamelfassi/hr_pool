@@ -869,3 +869,21 @@ Hybrid:
 Use Hybrid Mode.
 Explain the design manually, script the repetitive patch, then walk me through the calibration/review.
 ```
+
+
+## Employment lifecycle UI and artifact doctrine
+
+The employment lifecycle repeats the UI patterns learned during Passes 10 and 11.
+
+Rules:
+
+- workflow buttons belong inside the process form, not in the global employee header;
+- artifact icon controls can remain in the form header where practical;
+- visible workflow buttons should sit in a dedicated row below the statusbar/header;
+- all state fields should use statusbar or decorated badge signals;
+- derived/action-written fields should be readonly;
+- signed/certificate artifacts must be copied to `hr.employee` chatter/files for mobile-safe access;
+- `/web/content/...` download buttons are convenience controls, not the only access path;
+- chatter is the durable audit stream;
+- activities drive the next human action;
+- manual decision metadata is used until future GRC decision-instance integration.

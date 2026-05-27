@@ -845,3 +845,27 @@ Pass 9 does not create:
 - timesheet records
 
 Native handover remains a later pass after the preboarding package is complete.
+
+
+## Boundary with employment lifecycle
+
+`hr_recruitment_custom` owns Stage 2 recruitment/preboarding up to employment readiness and On-board Now handover eligibility.
+
+It does not own the full employee lifecycle.
+
+The downstream module `hr_employment_custom` owns:
+
+- `hr.employee` creation/linkage;
+- `hr.contract` creation/linkage;
+- bank/payroll readiness;
+- employee declarations;
+- custody;
+- training;
+- leave overlays;
+- permissions;
+- assignments;
+- appraisals;
+- separation;
+- clearance/offboarding.
+
+Stage 2 recruitment remains the source of signed recruitment artifacts, while `hr_employment_custom` copies the final artifact history to the employee record during handover.

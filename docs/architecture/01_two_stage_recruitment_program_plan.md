@@ -281,3 +281,18 @@ F-0009
 ```
 
 Native handover remains deferred until the full package is complete.
+
+
+## Handover endpoint to `hr_employment_custom`
+
+The two-stage recruitment program ends when the applicant is ready for formal employment handover.
+
+The handover is implemented by `hr_employment_custom` Pass 13 and creates/links:
+
+- `hr.employee`;
+- `hr.contract`;
+- native `res.partner.bank` bank account;
+- payroll-readiness fields;
+- signed recruitment artifact history on the employee chatter/files.
+
+The final recruitment gate requires Board Decision, F-0005, F-0006, F-0007, and F-0009 completion. Ministry accreditation is tracked but is not a handover blocker.

@@ -434,3 +434,12 @@ F-0002 is the primary style and skeleton reference.
 F-0003 confirms the checklist/table/signature pattern and the importance of the paperformat dependency.
 
 
+## Reuse by `hr_employment_custom`
+
+`hr_employment_custom` reports must reuse the same QWeb/font/report-generation discipline proven in recruitment:
+
+- stable page geometry before Sign placement;
+- Alyamama/TOR font aliasing where Arabic PDF output requires it;
+- one-page formats where the source form requires it;
+- fixed signature/date rows for Odoo Sign coordinates;
+- generated PDF must be tested as PDF, not only as HTML preview.

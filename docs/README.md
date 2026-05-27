@@ -31,3 +31,11 @@ Documentation workflow:
 - after completing a pass, create a separate implementation summary file in `docs/`
 
 Add future integration notes, field maps, webhook payload examples, and deployment notes here.
+
+
+## Employment lifecycle documentation
+
+- `architecture/05_employment_lifecycle_program_plan.md`
+  program-level employment lifecycle plan after Stage 2 recruitment.
+- `modules/hr_employment_custom/`
+  architecture and implementation specs for the employment lifecycle custom module.

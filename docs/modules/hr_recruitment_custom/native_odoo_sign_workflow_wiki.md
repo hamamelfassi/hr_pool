@@ -827,3 +827,19 @@ This pattern does not currently:
 
 Those are separate future passes.
 
+
+## Cross-module reuse in `hr_employment_custom`
+
+Employment workflows reuse the proven native Odoo Sign pattern:
+
+```text
+source record
+→ generated QWeb PDF attachment
+→ dynamic sign.template / sign.document / sign.item
+→ sign.send.request
+→ linked sign.request
+→ explicit sync action
+→ signed PDF/certificate copied back to source record and employee chatter/files
+```
+
+Unlike recruitment, employment workflows should not depend on a central recruitment document registry. Each source employment process record owns its own artifact fields.
