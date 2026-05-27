@@ -364,7 +364,43 @@ Append implementation details here as slices are implemented.
 
 ### 13A implementation log
 
-Pending.
+#### 13A1 — Baseline inspection and ownership confirmation
+
+Patch/script applied:
+
+```text
+Repo preflight inspection against hr_pool and hr_recruitment_custom.
+```
+
+Sanity result:
+
+```text
+13A repo preflight passed.
+```
+
+Findings:
+
+- `x_hr.pool.x_profile_photo` exists and is the canonical Stage 1 source photo field.
+- The exported `hr.applicant` field roster has no native/custom image, avatar, photo, picture, or `image_1920` field.
+- Pool-to-applicant conversion currently creates/links `hr.applicant` but does not map the photo.
+- `hr_recruitment_custom` already provides applicant source bridge fields:
+  - `x_pool_id`
+  - `x_pool_conversion_request_id`
+- Pass 13B must add `hr.applicant.x_profile_photo_1920` through `hr_pool`, display it on the applicant form, and map `x_hr.pool.x_profile_photo` into it during conversion approval.
+- Pass 13D must write `hr.applicant.x_profile_photo_1920` into `hr.employee.image_1920` during On-board Now.
+- Missing applicant photo must not block onboarding; it should create a warning/chatter note only.
+
+Lessons learned:
+
+- Applicant photo belongs to the pool-to-applicant bridge because the photo originates in Stage 1.
+- Employee avatar handling belongs to the applicant-to-employee handover because `hr.employee.image_1920` is the native employee target.
+- Do not create a separate applicant avatar derivative family; keep one applicant source image field and let `hr.employee` handle its native image behavior after handover.
+
+Status:
+
+```text
+passed
+```
 
 ### 13B implementation log
 
