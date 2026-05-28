@@ -1158,6 +1158,106 @@
         </record>
 
 
+
+        <!-- Pass 13F applicant bank handover status fields -->
+        <record id="field_hr_applicant_x_employment_partner_bank_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_partner_bank_id</field>
+            <field name="field_description">Employment Partner Bank</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.partner.bank</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_bank_ready" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_bank_ready</field>
+            <field name="field_description">Employment Bank Ready</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_bank_checked_on" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_bank_checked_on</field>
+            <field name="field_description">Employment Bank Checked On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_bank_checked_by_user_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_bank_checked_by_user_id</field>
+            <field name="field_description">Employment Bank Checked By</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_bank_notes" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_bank_notes</field>
+            <field name="field_description">Employment Bank Notes</field>
+            <field name="ttype">text</field>
+        </record>
+
+        <!-- Pass 13F source traceability fields on native res.partner.bank -->
+        <record id="field_res_partner_bank_x_iban" model="ir.model.fields">
+            <field name="model_id" search="[('model', '=', 'res.partner.bank')]"/>
+            <field name="name">x_iban</field>
+            <field name="field_description">IBAN</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_res_partner_bank_x_bank_name_snapshot" model="ir.model.fields">
+            <field name="model_id" search="[('model', '=', 'res.partner.bank')]"/>
+            <field name="name">x_bank_name_snapshot</field>
+            <field name="field_description">Bank Name Snapshot</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_res_partner_bank_x_bank_branch_snapshot" model="ir.model.fields">
+            <field name="model_id" search="[('model', '=', 'res.partner.bank')]"/>
+            <field name="name">x_bank_branch_snapshot</field>
+            <field name="field_description">Bank Branch Snapshot</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_res_partner_bank_x_source_applicant_id" model="ir.model.fields">
+            <field name="model_id" search="[('model', '=', 'res.partner.bank')]"/>
+            <field name="name">x_source_applicant_id</field>
+            <field name="field_description">Source Applicant</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.applicant</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_res_partner_bank_x_source_applicant_employment_contract_id" model="ir.model.fields">
+            <field name="model_id" search="[('model', '=', 'res.partner.bank')]"/>
+            <field name="name">x_source_applicant_employment_contract_id</field>
+            <field name="field_description">Source Applicant Employment Contract</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.applicant_employment_contract</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_res_partner_bank_x_source_required_document_submission_id" model="ir.model.fields">
+            <field name="model_id" search="[('model', '=', 'res.partner.bank')]"/>
+            <field name="name">x_source_required_document_submission_id</field>
+            <field name="field_description">Source Required Document Submission</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.applicant_required_document_submission</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_res_partner_bank_x_source_bank_attachment_id" model="ir.model.fields">
+            <field name="model_id" search="[('model', '=', 'res.partner.bank')]"/>
+            <field name="name">x_source_bank_attachment_id</field>
+            <field name="field_description">Source Bank Attachment</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+
         <!-- Pass 9C source / provenance fields -->
         <record id="field_employment_contract_x_conversion_request_id" model="ir.model.fields">
             <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>

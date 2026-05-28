@@ -1130,6 +1130,20 @@
                                 string="فحص الرواتب بواسطة"
                                 readonly="1"
                                 options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="x_employment_partner_bank_id"
+                                string="الحساب البنكي المرتبط"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="x_employment_bank_ready"
+                                string="جاهزية الحساب البنكي"
+                                readonly="1"/>
+                            <field name="x_employment_bank_checked_on"
+                                string="تاريخ فحص البنك"
+                                readonly="1"/>
+                            <field name="x_employment_bank_checked_by_user_id"
+                                string="فحص البنك بواسطة"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
                             <field name="x_employment_handover_checked_on"
                                 string="تاريخ فحص بدء التوظيف"
                                 readonly="1"/>
@@ -1145,6 +1159,10 @@
                                 nolabel="1"/>
                             <field name="x_employment_payroll_notes"
                                 string="ملاحظات جاهزية الرواتب"
+                                readonly="1"
+                                nolabel="1"/>
+                            <field name="x_employment_bank_notes"
+                                string="ملاحظات الحساب البنكي"
                                 readonly="1"
                                 nolabel="1"/>
                         </group>
@@ -1330,6 +1348,20 @@
                 <field name="x_default_max_score" />
                 <field name="x_active" />
             </list>
+        </field>
+    </record>
+
+    <record id="view_res_partner_bank_form_inherit_hr_recruitment_custom_iban_branch" model="ir.ui.view">
+        <field name="name">res.partner.bank.form.inherit.hr.recruitment.custom.iban.branch</field>
+        <field name="model">res.partner.bank</field>
+        <field name="inherit_id" ref="base.view_partner_bank_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='account_number']" position="after">
+                <field name="x_iban" string="IBAN"/>
+            </xpath>
+            <xpath expr="//field[@name='bank_name']" position="after">
+                <field name="x_bank_branch_snapshot" string="Bank Branch"/>
+            </xpath>
         </field>
     </record>
 </odoo>

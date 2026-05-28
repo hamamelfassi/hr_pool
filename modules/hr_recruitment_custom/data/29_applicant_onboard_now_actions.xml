@@ -465,6 +465,343 @@ def sync_employee_payroll(applicant, employee):
     return payroll_ready, note
 
 
+def accepted_bank_submission(applicant):
+    try:
+        Submission = env['x_hr.applicant_required_document_submission'].sudo()
+    except Exception:
+        return False
+
+    fields = Submission._fields
+    domain = []
+
+    if 'x_applicant_id' in fields:
+        domain.append(('x_applicant_id', '=', applicant.id))
+    else:
+        return False
+
+    if 'x_state' in fields:
+        domain.append(('x_state', '=', 'accepted'))
+
+    if 'x_document_code' in fields:
+        domain.append(('x_document_code', 'in', ['bank_information', 'bank_account', 'bank']))
+    elif 'x_document_type' in fields:
+        domain.append(('x_document_type', 'in', ['bank_information', 'bank_account', 'bank']))
+
+    order_parts = []
+    for f in ['x_reviewed_on', 'x_submitted_on', 'write_date', 'create_date']:
+        if f in fields:
+            order_parts.append('%s desc' % f)
+    order_parts.append('id desc')
+
+    try:
+        return Submission.search(domain, order=', '.join(order_parts), limit=1)
+    except Exception:
+        return False
+
+
+def clean_bank_text(value):
+    if not value:
+        return False
+    value = str(value).strip()
+    return value or False
+
+
+def compact_account(value):
+    value = clean_bank_text(value)
+    if not value:
+        return False
+    return ''.join(value.split())
+
+
+def read_first_field(record, field_names):
+    if not record:
+        return False
+    fields = record._fields
+    for field_name in field_names:
+        if field_name in fields and record[field_name]:
+            return record[field_name]
+    return False
+
+
+def get_bank_source_data(applicant):
+    source_contract = get_source_employment_contract(applicant)
+    bank_submission = accepted_bank_submission(applicant)
+
+    bank_name = read_first_field(source_contract, ['x_bank_name', 'x_bank'])
+    bank_branch = read_first_field(source_contract, ['x_bank_branch', 'x_branch'])
+    account_number = read_first_field(source_contract, ['x_bank_account_number', 'x_account_number'])
+    iban = read_first_field(source_contract, ['x_iban', 'x_bank_iban', 'x_iban_number', 'x_bank_account_iban'])
+    source_attachment = read_first_field(source_contract, ['x_bank_source_attachment_id', 'x_bank_attachment_id'])
+
+    if bank_submission:
+        bank_name = bank_name or read_first_field(bank_submission, ['x_bank_name', 'x_bank'])
+        bank_branch = bank_branch or read_first_field(bank_submission, ['x_bank_branch', 'x_branch'])
+        account_number = account_number or read_first_field(bank_submission, ['x_bank_account_number', 'x_account_number'])
+        iban = iban or read_first_field(bank_submission, ['x_iban', 'x_bank_iban', 'x_iban_number', 'x_bank_account_iban'])
+        source_attachment = source_attachment or read_first_field(bank_submission, ['x_attachment_id', 'x_bank_source_attachment_id', 'x_bank_attachment_id'])
+
+    return {
+        'source_contract': source_contract,
+        'bank_submission': bank_submission,
+        'bank_name': clean_bank_text(bank_name),
+        'bank_branch': clean_bank_text(bank_branch),
+        'account_number': compact_account(account_number),
+        'iban': compact_account(iban),
+        'source_attachment': source_attachment,
+    }
+
+
+def write_bank_status(applicant, bank_ready, bank_account, notes):
+    vals = {}
+    mapping = {
+        'x_employment_bank_ready': bool(bank_ready),
+        'x_employment_partner_bank_id': bank_account.id if bank_account else False,
+        'x_employment_bank_checked_on': datetime.datetime.now(),
+        'x_employment_bank_checked_by_user_id': env.user.id,
+        'x_employment_bank_notes': notes or False,
+    }
+    for field_name, value in mapping.items():
+        if field_name in applicant._fields:
+            vals[field_name] = value
+    if vals:
+        applicant.write(vals)
+
+
+def resolve_bank_partner(applicant, employee):
+    employee_fields = employee._fields
+
+    partner = False
+
+    # Payroll Bank Accounts domain is partner_id = employee.work_contact_id.
+    # Prefer work_contact_id so the bank account appears in the employee Personal tab.
+    if 'work_contact_id' in employee_fields and employee.work_contact_id:
+        partner = employee.work_contact_id
+
+    if not partner and 'partner_id' in applicant._fields and applicant.partner_id:
+        partner = applicant.partner_id
+
+    if not partner and 'user_id' in employee_fields and employee.user_id and employee.user_id.partner_id:
+        partner = employee.user_id.partner_id
+
+    if not partner:
+        partner_vals = {
+            'name': employee.name or applicant.partner_name or applicant.display_name or 'Employee',
+        }
+
+        email_value = False
+        for field_name in ['work_email', 'private_email']:
+            if field_name in employee_fields and employee[field_name]:
+                email_value = employee[field_name]
+                break
+        if email_value:
+            partner_vals['email'] = email_value
+
+        phone_value = False
+        for field_name in ['mobile_phone', 'work_phone', 'private_phone']:
+            if field_name in employee_fields and employee[field_name]:
+                phone_value = employee[field_name]
+                break
+        if phone_value:
+            partner_vals['phone'] = phone_value
+
+        partner = env['res.partner'].sudo().create(partner_vals)
+
+    # Ensure the employee work contact points to the partner used by payroll bank accounts.
+    if partner and 'work_contact_id' in employee_fields:
+        try:
+            if not employee.work_contact_id or employee.work_contact_id.id != partner.id:
+                employee.write({'work_contact_id': partner.id})
+        except Exception:
+            pass
+
+    # Private address can remain separately managed; do not use it as the primary bank partner.
+    return partner
+
+
+def copy_bank_attachment_to_employee(source_attachment, employee):
+    if not source_attachment:
+        return False
+    try:
+        return source_attachment.sudo().copy({
+            'name': 'Bank proof - %s' % (source_attachment.name or employee.name or 'employee'),
+            'res_model': 'hr.employee',
+            'res_id': employee.id,
+        })
+    except Exception:
+        return False
+
+
+def sync_employee_bank_account(applicant, employee):
+    bank_data = get_bank_source_data(applicant)
+    account_number = bank_data.get('account_number')
+    iban = bank_data.get('iban')
+    bank_name = bank_data.get('bank_name')
+    bank_branch = bank_data.get('bank_branch')
+    source_contract = bank_data.get('source_contract')
+    bank_submission = bank_data.get('bank_submission')
+    source_attachment = bank_data.get('source_attachment')
+
+    if not account_number and not iban:
+        note = 'لا توجد بيانات حساب مصرفي مقبولة لهذا المتقدم حتى الآن. لم يتم إنشاء حساب بنكي للموظف.'
+        write_bank_status(applicant, False, False, note)
+        applicant.message_post(body=note)
+        employee.message_post(body=note)
+        return False, False, note
+
+    PartnerBank = env['res.partner.bank'].sudo()
+    bank_fields = PartnerBank._fields
+    employee_fields = employee._fields
+
+    if 'account_number' not in bank_fields:
+        note = 'لا يمكن إنشاء الحساب البنكي لأن نموذج res.partner.bank لا يحتوي على الحقل account_number في هذه القاعدة.'
+        write_bank_status(applicant, False, False, note)
+        applicant.message_post(body=note)
+        employee.message_post(body=note)
+        return False, False, note
+
+    partner = resolve_bank_partner(applicant, employee)
+    bank_account = False
+
+    if source_contract and 'x_partner_bank_id' in source_contract._fields and source_contract.x_partner_bank_id:
+        bank_account = source_contract.x_partner_bank_id.sudo()
+
+    if not bank_account:
+        search_domains = []
+
+        if account_number:
+            domain = [('account_number', '=', account_number)]
+            if partner and 'partner_id' in bank_fields:
+                domain.append(('partner_id', '=', partner.id))
+            search_domains.append(domain)
+
+        if iban and 'x_iban' in bank_fields:
+            domain = [('x_iban', '=', iban)]
+            if partner and 'partner_id' in bank_fields:
+                domain.append(('partner_id', '=', partner.id))
+            search_domains.append(domain)
+
+        for domain in search_domains:
+            try:
+                bank_account = PartnerBank.search(domain, limit=1)
+            except Exception:
+                bank_account = False
+            if bank_account:
+                break
+
+    bank_vals = {
+        'account_number': account_number or iban,
+    }
+
+    if partner and 'partner_id' in bank_fields:
+        bank_vals['partner_id'] = partner.id
+
+    if 'holder_name' in bank_fields:
+        bank_vals['holder_name'] = employee.name or applicant.partner_name or applicant.display_name
+
+    if bank_name and 'bank_name' in bank_fields:
+        bank_vals['bank_name'] = bank_name
+
+    if bank_branch and 'city' in bank_fields:
+        bank_vals['city'] = bank_branch
+
+    if iban and 'x_iban' in bank_fields:
+        bank_vals['x_iban'] = iban
+
+    if bank_name and 'x_bank_name_snapshot' in bank_fields:
+        bank_vals['x_bank_name_snapshot'] = bank_name
+
+    if bank_branch and 'x_bank_branch_snapshot' in bank_fields:
+        bank_vals['x_bank_branch_snapshot'] = bank_branch
+
+    if 'x_source_applicant_id' in bank_fields:
+        bank_vals['x_source_applicant_id'] = applicant.id
+
+    if source_contract and 'x_source_applicant_employment_contract_id' in bank_fields:
+        bank_vals['x_source_applicant_employment_contract_id'] = source_contract.id
+
+    if bank_submission and 'x_source_required_document_submission_id' in bank_fields:
+        bank_vals['x_source_required_document_submission_id'] = bank_submission.id
+
+    if source_attachment and 'x_source_bank_attachment_id' in bank_fields:
+        bank_vals['x_source_bank_attachment_id'] = source_attachment.id
+
+    # Finance payment trust remains a later control; this action only creates/links the bank account.
+
+    try:
+        if bank_account:
+            bank_account.write(bank_vals)
+            created = False
+        else:
+            bank_account = PartnerBank.create(bank_vals)
+            created = True
+    except Exception as e:
+        note = 'تعذر إنشاء/تحديث الحساب البنكي الأصلي للموظف: %s' % str(e)
+        write_bank_status(applicant, False, False, note)
+        applicant.message_post(body=note)
+        employee.message_post(body=note)
+        return False, False, note
+
+    link_warnings = []
+
+    if 'bank_account_ids' in employee_fields:
+        try:
+            if bank_account.id not in employee.bank_account_ids.ids:
+                employee.write({'bank_account_ids': [(4, bank_account.id)]})
+        except Exception as e:
+            link_warnings.append('تعذر ربط الحساب عبر bank_account_ids: %s' % str(e))
+
+    for field_name in ['primary_bank_account_id', 'bank_account_id']:
+        if field_name in employee_fields:
+            try:
+                if not employee[field_name] or employee[field_name].id != bank_account.id:
+                    employee.write({field_name: bank_account.id})
+            except Exception as e:
+                link_warnings.append('تعذر ضبط %s: %s' % (field_name, str(e)))
+
+    if source_contract:
+        source_vals = {}
+        if 'x_partner_bank_id' in source_contract._fields:
+            source_vals['x_partner_bank_id'] = bank_account.id
+        if source_vals:
+            source_contract.write(source_vals)
+
+    copied_attachment = copy_bank_attachment_to_employee(source_attachment, employee)
+
+    if created:
+        phrase = 'تم إنشاء حساب بنكي أصلي للموظف وربطه بسجل الموظف.'
+    else:
+        phrase = 'تم العثور على حساب بنكي أصلي قائم وتحديثه وربطه بسجل الموظف.'
+
+    detail_parts = [phrase]
+
+    if iban:
+        detail_parts.append('تم حفظ IBAN في الحقل المخصص على حساب البنك.')
+
+    if copied_attachment:
+        detail_parts.append('تم نسخ مرفق إثبات الحساب البنكي إلى سجل الموظف.')
+
+    if link_warnings:
+        detail_parts.append('تنبيهات الربط: %s' % ' | '.join(link_warnings))
+
+    note = ' '.join(detail_parts)
+    bank_ready = bool(bank_account) and not link_warnings
+    write_bank_status(applicant, bank_ready, bank_account, note)
+
+    applicant.message_post(body=note)
+    if copied_attachment:
+        employee.message_post(body=note, attachment_ids=[copied_attachment.id])
+    else:
+        employee.message_post(body=note)
+
+    if 'message_ids' in bank_fields:
+        try:
+            bank_account.message_post(body='تم إنشاء/تحديث هذا الحساب البنكي من المتقدم: %s.' % (applicant.partner_name or applicant.display_name))
+        except Exception:
+            pass
+
+    return bank_ready, bank_account, note
+
+
 applicant = records.sudo()[:1]
 
 if not applicant:
@@ -536,8 +873,9 @@ else:
                     applicant.write(link_vals)
 
                 payroll_ready, payroll_note = sync_employee_payroll(applicant, employee)
+                bank_ready, bank_account, bank_note = sync_employee_bank_account(applicant, employee)
 
-                note = 'تم ربط الموظف. تم العثور على سجل موظف مرتبط بهذا المتقدم، ولم يتم إنشاء موظف جديد. تم تحديث جاهزية الرواتب/العقد على سجل الموظف. سيستكمل Pass 13 اللاحق الحساب البنكي وترحيل المرفقات.'
+                note = 'تم ربط الموظف. تم العثور على سجل موظف مرتبط بهذا المتقدم، ولم يتم إنشاء موظف جديد. تم تحديث جاهزية الرواتب/العقد على سجل الموظف. سيستكمل Pass 13 اللاحق ترحيل المرفقات.'
                 write_handover(applicant, 'onboarded', True, note)
                 applicant.message_post(body=note)
                 employee.message_post(body='تم تأكيد الربط والتحديث من المتقدم: %s.' % (applicant.partner_name or applicant.display_name))
@@ -556,8 +894,9 @@ else:
                     applicant.write(applicant_vals)
 
                 payroll_ready, payroll_note = sync_employee_payroll(applicant, employee)
+                bank_ready, bank_account, bank_note = sync_employee_bank_account(applicant, employee)
 
-                note = 'تم إنشاء سجل الموظف وربطه بالمتقدم. تم تحديث جاهزية الرواتب/العقد على سجل الموظف. لم يتم بعد إنشاء الحساب البنكي أو ترحيل المرفقات في هذا الجزء من Pass 13.'
+                note = 'تم إنشاء سجل الموظف وربطه بالمتقدم. تم تحديث جاهزية الرواتب/العقد على سجل الموظف. لم يتم بعد ترحيل المرفقات في هذا الجزء من Pass 13.'
                 write_handover(applicant, 'onboarded', True, note)
                 applicant.message_post(body=note)
                 employee.message_post(body='تم إنشاء هذا الموظف من المتقدم: %s.' % (applicant.partner_name or applicant.display_name))
