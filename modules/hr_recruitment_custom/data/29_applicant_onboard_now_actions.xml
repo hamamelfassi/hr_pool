@@ -46,6 +46,21 @@ def write_handover(applicant, state, ready, notes):
         applicant.write(vals)
 
 
+def write_payroll_status(applicant, ready, notes):
+    vals = {}
+    mapping = {
+        'x_employment_payroll_ready': bool(ready),
+        'x_employment_payroll_checked_on': datetime.datetime.now(),
+        'x_employment_payroll_checked_by_user_id': env.user.id,
+        'x_employment_payroll_notes': notes or False,
+    }
+    for field_name, value in mapping.items():
+        if field_name in applicant._fields:
+            vals[field_name] = value
+    if vals:
+        applicant.write(vals)
+
+
 def first_value(record, field_names):
     if not record:
         return False
@@ -59,6 +74,39 @@ def first_value(record, field_names):
 def get_pool_from_applicant(applicant):
     if 'x_pool_id' in applicant._fields and applicant.x_pool_id:
         return applicant.x_pool_id.sudo()
+    return False
+
+
+def get_source_employment_contract(applicant):
+    if 'x_employment_contract_id' in applicant._fields and applicant.x_employment_contract_id:
+        return applicant.x_employment_contract_id.sudo()
+    ContractCockpit = env['x_hr.applicant_employment_contract'].sudo()
+    return ContractCockpit.search([
+        ('x_applicant_id', '=', applicant.id),
+        ('x_state', 'in', ['signed_uploaded', 'ministry_accredited']),
+    ], order='id desc', limit=1)
+
+
+def selection_contains(model, field_name, key):
+    if field_name not in model._fields:
+        return False
+    selection = model._fields[field_name].selection or []
+    try:
+        keys = [item[0] for item in selection]
+    except Exception:
+        keys = []
+    return key in keys
+
+
+def find_first(model_name, domains):
+    try:
+        model = env[model_name].sudo()
+    except Exception:
+        return False
+    for domain in domains:
+        rec = model.search(domain, limit=1)
+        if rec:
+            return rec
     return False
 
 
@@ -82,7 +130,6 @@ def compute_employee_vals(applicant, employee=False):
         vals['x_employment_handover_by_user_id'] = env.user.id
 
     if 'image_1920' in employee_fields and 'x_profile_photo_1920' in applicant_fields and applicant.x_profile_photo_1920:
-        # Do not overwrite an existing employee photo during rerun unless the employee has no image.
         if not employee or not employee.image_1920:
             vals['image_1920'] = applicant.x_profile_photo_1920
 
@@ -100,7 +147,6 @@ def compute_employee_vals(applicant, employee=False):
     if department and 'department_id' in employee_fields:
         vals['department_id'] = department.id
 
-    # Manager derives from the linked department manager where available.
     if department and 'parent_id' in employee_fields and 'manager_id' in department._fields and department.manager_id:
         if not employee or employee.id != department.manager_id.id:
             vals['parent_id'] = department.manager_id.id
@@ -114,8 +160,6 @@ def compute_employee_vals(applicant, employee=False):
         if job_title:
             vals['job_title'] = job_title
 
-    # Prefer original pool contact data when available because applicant phone
-    # fields may carry recruitment reference values in some configurations.
     email_value = first_value(pool, ['x_email', 'email', 'email_from']) or first_value(applicant, [
         'email_from',
         'x_email',
@@ -156,6 +200,269 @@ def compute_employee_vals(applicant, employee=False):
         vals['identification_id'] = national_id_value
 
     return vals, national_id_value
+
+
+def prepare_applicant_payroll_defaults(applicant):
+    """Populate editable applicant handover defaults before writing employee Payroll tab fields.
+
+    Source precedence:
+    F-0005 cockpit values
+    → existing applicant employment contract fields
+    → applicant availability/defaults
+    → safe payroll defaults.
+    """
+    applicant_fields = applicant._fields
+    source_contract = get_source_employment_contract(applicant)
+    vals = {}
+
+    source_start = False
+    source_end = False
+    source_wage = False
+
+    if source_contract:
+        sc_fields = source_contract._fields
+        if 'x_contract_start_date' in sc_fields and source_contract.x_contract_start_date:
+            source_start = source_contract.x_contract_start_date
+        if 'x_contract_end_date' in sc_fields and source_contract.x_contract_end_date:
+            source_end = source_contract.x_contract_end_date
+        if 'x_monthly_wage_amount' in sc_fields and source_contract.x_monthly_wage_amount:
+            source_wage = source_contract.x_monthly_wage_amount
+
+    if not source_start and 'x_employment_contract_start_date' in applicant_fields and applicant.x_employment_contract_start_date:
+        source_start = applicant.x_employment_contract_start_date
+    if not source_start and 'availability' in applicant_fields and applicant.availability:
+        source_start = applicant.availability
+
+    if not source_end and 'x_employment_contract_end_date' in applicant_fields and applicant.x_employment_contract_end_date:
+        source_end = applicant.x_employment_contract_end_date
+
+    if not source_wage and 'x_employment_contract_monthly_wage' in applicant_fields and applicant.x_employment_contract_monthly_wage:
+        source_wage = applicant.x_employment_contract_monthly_wage
+
+    # F-0005/applicant contract dates and wage are the authoritative handover snapshot
+    # values and should be written to the editable handover fields before payroll sync.
+    if 'x_handover_contract_date_start' in applicant_fields and source_start:
+        if applicant.x_handover_contract_date_start != source_start:
+            vals['x_handover_contract_date_start'] = source_start
+
+    if 'x_handover_contract_date_end' in applicant_fields and source_end:
+        if applicant.x_handover_contract_date_end != source_end:
+            vals['x_handover_contract_date_end'] = source_end
+
+    if 'x_handover_wage' in applicant_fields and source_wage:
+        if applicant.x_handover_wage != source_wage:
+            vals['x_handover_wage'] = source_wage
+
+    # Operational defaults: write only when empty so HR can manually override.
+    if 'x_handover_wage_type' in applicant_fields and not applicant.x_handover_wage_type:
+        vals['x_handover_wage_type'] = 'monthly'
+
+    if 'x_handover_work_entry_source' in applicant_fields and not applicant.x_handover_work_entry_source:
+        vals['x_handover_work_entry_source'] = 'calendar'
+
+    if 'x_handover_resource_calendar_id' in applicant_fields and not applicant.x_handover_resource_calendar_id:
+        resource_calendar = find_first('resource.calendar', [
+            [('name', '=', 'Standard 40 hours/week'), ('company_id', 'in', [env.company.id, False])],
+            [('name', 'ilike', 'Standard 40'), ('company_id', 'in', [env.company.id, False])],
+            [('company_id', 'in', [env.company.id, False])],
+            [],
+        ])
+        if resource_calendar:
+            vals['x_handover_resource_calendar_id'] = resource_calendar.id
+
+    if 'x_handover_contract_type_id' in applicant_fields and not applicant.x_handover_contract_type_id:
+        contract_type = find_first('hr.contract.type', [
+            [('name', '=', 'Employee')],
+            [('name', '=', 'Full-Time')],
+            [('name', '=', 'Permanent')],
+            [],
+        ])
+        if contract_type:
+            vals['x_handover_contract_type_id'] = contract_type.id
+
+    if 'x_handover_structure_type_id' in applicant_fields and not applicant.x_handover_structure_type_id:
+        structure_type = find_first('hr.payroll.structure.type', [
+            [('name', '=', 'Fixed Month - Regular')],
+            [('name', 'ilike', 'Fixed Month')],
+            [('name', '=', 'Employee')],
+            [],
+        ])
+        if structure_type:
+            vals['x_handover_structure_type_id'] = structure_type.id
+
+    if vals:
+        applicant.write(vals)
+        applicant.message_post(
+            body='تم تحديث إعدادات الرواتب الافتراضية للترحيل من بيانات العقد/المتقدم والقيم الافتراضية الآمنة: %s.'
+            % ', '.join(sorted(vals.keys()))
+        )
+
+    return vals
+
+
+def compute_payroll_vals(applicant, employee):
+    Employee = env['hr.employee'].sudo()
+    employee_fields = Employee._fields
+    applicant_fields = applicant._fields
+    source_contract = get_source_employment_contract(applicant)
+
+    vals = {}
+    warnings = []
+
+    date_start = False
+    date_end = False
+    wage = False
+    contract_number = False
+
+    if source_contract:
+        sc_fields = source_contract._fields
+        if 'x_contract_start_date' in sc_fields and source_contract.x_contract_start_date:
+            date_start = source_contract.x_contract_start_date
+        if 'x_contract_end_date' in sc_fields and source_contract.x_contract_end_date:
+            date_end = source_contract.x_contract_end_date
+        if 'x_monthly_wage_amount' in sc_fields and source_contract.x_monthly_wage_amount:
+            wage = source_contract.x_monthly_wage_amount
+        if 'x_contract_number' in sc_fields and source_contract.x_contract_number:
+            contract_number = source_contract.x_contract_number
+
+    if not date_start and 'x_handover_contract_date_start' in applicant_fields and applicant.x_handover_contract_date_start:
+        date_start = applicant.x_handover_contract_date_start
+    if not date_start and 'x_employment_contract_start_date' in applicant_fields and applicant.x_employment_contract_start_date:
+        date_start = applicant.x_employment_contract_start_date
+    if not date_start and 'availability' in applicant_fields and applicant.availability:
+        date_start = applicant.availability
+    if not date_start:
+        date_start = datetime.date.today()
+        warnings.append('لم يتم العثور على تاريخ بداية عقد مؤكد؛ تم استخدام تاريخ اليوم كقيمة تشغيلية مؤقتة.')
+
+    if not date_end and 'x_handover_contract_date_end' in applicant_fields and applicant.x_handover_contract_date_end:
+        date_end = applicant.x_handover_contract_date_end
+    if not date_end and 'x_employment_contract_end_date' in applicant_fields and applicant.x_employment_contract_end_date:
+        date_end = applicant.x_employment_contract_end_date
+
+    if not wage and 'x_handover_wage' in applicant_fields and applicant.x_handover_wage:
+        wage = applicant.x_handover_wage
+    if not wage and 'x_employment_contract_monthly_wage' in applicant_fields and applicant.x_employment_contract_monthly_wage:
+        wage = applicant.x_employment_contract_monthly_wage
+    if not wage:
+        wage = 0.0
+        warnings.append('لم يتم العثور على قيمة راتب شهرية؛ تم ضبط الأجر على 0.0 مؤقتاً ويجب على الموارد البشرية/الرواتب مراجعته.')
+
+    for start_field in ['contract_date_start', 'date_start']:
+        if start_field in employee_fields:
+            vals[start_field] = date_start
+            break
+
+    for end_field in ['contract_date_end', 'date_end']:
+        if date_end and end_field in employee_fields:
+            vals[end_field] = date_end
+            break
+
+    if 'wage' in employee_fields:
+        vals['wage'] = wage
+
+    wage_type = False
+    if 'x_handover_wage_type' in applicant_fields and applicant.x_handover_wage_type:
+        wage_type = applicant.x_handover_wage_type
+    if not wage_type:
+        wage_type = 'monthly'
+    if 'wage_type' in employee_fields and selection_contains(Employee, 'wage_type', wage_type):
+        vals['wage_type'] = wage_type
+
+    work_entry_source = False
+    if 'x_handover_work_entry_source' in applicant_fields and applicant.x_handover_work_entry_source:
+        work_entry_source = applicant.x_handover_work_entry_source
+    if not work_entry_source:
+        work_entry_source = 'calendar'
+    if 'work_entry_source' in employee_fields and selection_contains(Employee, 'work_entry_source', work_entry_source):
+        vals['work_entry_source'] = work_entry_source
+
+    resource_calendar = False
+    if 'x_handover_resource_calendar_id' in applicant_fields and applicant.x_handover_resource_calendar_id:
+        resource_calendar = applicant.x_handover_resource_calendar_id
+    if not resource_calendar:
+        resource_calendar = find_first('resource.calendar', [
+            [('name', '=', 'Standard 40 hours/week'), ('company_id', 'in', [env.company.id, False])],
+            [('name', 'ilike', 'Standard 40'), ('company_id', 'in', [env.company.id, False])],
+            [('company_id', 'in', [env.company.id, False])],
+            [],
+        ])
+    if resource_calendar and 'resource_calendar_id' in employee_fields:
+        vals['resource_calendar_id'] = resource_calendar.id
+    elif 'resource_calendar_id' in employee_fields:
+        warnings.append('لم يتم العثور على جدول عمل افتراضي مناسب للموظف.')
+
+    contract_type = False
+    if 'x_handover_contract_type_id' in applicant_fields and applicant.x_handover_contract_type_id:
+        contract_type = applicant.x_handover_contract_type_id
+    if not contract_type:
+        contract_type = find_first('hr.contract.type', [
+            [('name', '=', 'Employee')],
+            [('name', '=', 'Full-Time')],
+            [('name', '=', 'Permanent')],
+            [],
+        ])
+    if contract_type and 'contract_type_id' in employee_fields:
+        vals['contract_type_id'] = contract_type.id
+
+    structure_type = False
+    if 'x_handover_structure_type_id' in applicant_fields and applicant.x_handover_structure_type_id:
+        structure_type = applicant.x_handover_structure_type_id
+    if not structure_type:
+        structure_type = find_first('hr.payroll.structure.type', [
+            [('name', '=', 'Fixed Month - Regular')],
+            [('name', 'ilike', 'Fixed Month')],
+            [('name', '=', 'Employee')],
+            [],
+        ])
+    if structure_type and 'structure_type_id' in employee_fields:
+        vals['structure_type_id'] = structure_type.id
+    elif 'structure_type_id' in employee_fields:
+        warnings.append('لم يتم العثور على فئة أجر/هيكل راتب افتراضي مناسب.')
+
+    if 'employee_type' in employee_fields and selection_contains(Employee, 'employee_type', 'employee'):
+        vals['employee_type'] = 'employee'
+
+    if not contract_number and 'x_employment_contract_number' in applicant_fields and applicant.x_employment_contract_number:
+        contract_number = applicant.x_employment_contract_number
+    if contract_number:
+        for ref_field in ['registration_number', 'contract_reference', 'reference']:
+            if ref_field in employee_fields:
+                vals[ref_field] = contract_number
+                break
+
+    return vals, warnings, source_contract
+
+
+def sync_employee_payroll(applicant, employee):
+    prepare_applicant_payroll_defaults(applicant)
+    payroll_vals, warnings, source_contract = compute_payroll_vals(applicant, employee)
+
+    if payroll_vals:
+        employee.write(payroll_vals)
+
+    if source_contract:
+        source_vals = {}
+        if 'x_employee_id' in source_contract._fields:
+            source_vals['x_employee_id'] = employee.id
+        if source_vals:
+            source_contract.write(source_vals)
+
+    notes = []
+    if payroll_vals:
+        notes.append('تم تحديث حقول الرواتب/العقد على سجل الموظف: %s.' % ', '.join(sorted(payroll_vals.keys())))
+    else:
+        notes.append('لم توجد حقول رواتب/عقد قابلة للتحديث على سجل الموظف في هذه القاعدة.')
+
+    if warnings:
+        notes.append('تنبيهات: %s' % ' | '.join(warnings))
+
+    payroll_ready = bool(payroll_vals) and not warnings
+    note = ' '.join(notes)
+    write_payroll_status(applicant, payroll_ready, note)
+    employee.message_post(body=note)
+
+    return payroll_ready, note
 
 
 applicant = records.sudo()[:1]
@@ -214,7 +521,6 @@ else:
             if existing_employee:
                 employee = existing_employee
 
-                # Rerun is idempotent: reuse linked employee, but sync corrected handover values.
                 sync_vals = dict(employee_vals)
                 if sync_vals:
                     employee.write(sync_vals)
@@ -229,11 +535,13 @@ else:
                 if link_vals:
                     applicant.write(link_vals)
 
-                note = 'تم ربط الموظف. تم العثور على سجل موظف مرتبط بهذا المتقدم، ولم يتم إنشاء موظف جديد. سيستكمل Pass 13 اللاحق إنشاء العقد والبنك والمرفقات.'
+                payroll_ready, payroll_note = sync_employee_payroll(applicant, employee)
+
+                note = 'تم ربط الموظف. تم العثور على سجل موظف مرتبط بهذا المتقدم، ولم يتم إنشاء موظف جديد. تم تحديث جاهزية الرواتب/العقد على سجل الموظف. سيستكمل Pass 13 اللاحق الحساب البنكي وترحيل المرفقات.'
                 write_handover(applicant, 'onboarded', True, note)
                 applicant.message_post(body=note)
                 employee.message_post(body='تم تأكيد الربط والتحديث من المتقدم: %s.' % (applicant.partner_name or applicant.display_name))
-                action = toast('تم ربط الموظف', note, 'success', False, reload_applicant(applicant))
+                action = toast('تم ربط الموظف وتحديث الرواتب', note, 'success', False, reload_applicant(applicant))
             else:
                 employee = Employee.create(employee_vals)
 
@@ -247,11 +555,13 @@ else:
                 if applicant_vals:
                     applicant.write(applicant_vals)
 
-                note = 'تم إنشاء سجل الموظف وربطه بالمتقدم. لم يتم بعد إنشاء العقد أو الحساب البنكي أو ترحيل المرفقات في هذا الجزء من Pass 13.'
+                payroll_ready, payroll_note = sync_employee_payroll(applicant, employee)
+
+                note = 'تم إنشاء سجل الموظف وربطه بالمتقدم. تم تحديث جاهزية الرواتب/العقد على سجل الموظف. لم يتم بعد إنشاء الحساب البنكي أو ترحيل المرفقات في هذا الجزء من Pass 13.'
                 write_handover(applicant, 'onboarded', True, note)
                 applicant.message_post(body=note)
                 employee.message_post(body='تم إنشاء هذا الموظف من المتقدم: %s.' % (applicant.partner_name or applicant.display_name))
-                action = toast('تم إنشاء الموظف', note, 'success', False, reload_applicant(applicant))
+                action = toast('تم إنشاء الموظف وتحديث الرواتب', note, 'success', False, reload_applicant(applicant))
 
 if not action:
     action = {'type': 'ir.actions.client', 'tag': 'reload'}

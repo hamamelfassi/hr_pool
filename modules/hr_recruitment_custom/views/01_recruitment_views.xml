@@ -1069,6 +1069,33 @@
                         </group>
                     </group>
 
+
+                    <group string="إعدادات الرواتب الافتراضية">
+                        <group string="مصادر البيانات">
+                            <field name="x_handover_contract_date_start"
+                                string="تاريخ بداية العقد للترحيل"/>
+                            <field name="x_handover_contract_date_end"
+                                string="تاريخ نهاية العقد للترحيل"/>
+                            <field name="x_handover_wage"
+                                string="الأجر للترحيل"/>
+                            <field name="x_handover_wage_type"
+                                string="نوع الأجر للترحيل"/>
+                        </group>
+                        <group string="إعدادات الرواتب">
+                            <field name="x_handover_contract_type_id"
+                                string="نوع العقد للترحيل"
+                                options="{'no_create_edit': True}"/>
+                            <field name="x_handover_structure_type_id"
+                                string="فئة الأجر للترحيل"
+                                options="{'no_create_edit': True}"/>
+                            <field name="x_handover_work_entry_source"
+                                string="مصدر قيود العمل للترحيل"/>
+                            <field name="x_handover_resource_calendar_id"
+                                string="ساعات العمل للترحيل"
+                                options="{'no_create_edit': True}"/>
+                        </group>
+                    </group>
+
                     <group string="بدء التوظيف">
                         <group string="حالة الترحيل">
                             <field name="x_employment_handover_state"
@@ -1093,6 +1120,16 @@
                                 string="أنشئ بواسطة"
                                 readonly="1"
                                 options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="x_employment_payroll_ready"
+                                string="جاهزية الرواتب"
+                                readonly="1"/>
+                            <field name="x_employment_payroll_checked_on"
+                                string="تاريخ فحص الرواتب"
+                                readonly="1"/>
+                            <field name="x_employment_payroll_checked_by_user_id"
+                                string="فحص الرواتب بواسطة"
+                                readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True}"/>
                             <field name="x_employment_handover_checked_on"
                                 string="تاريخ فحص بدء التوظيف"
                                 readonly="1"/>
@@ -1104,6 +1141,10 @@
                         <group string="ملاحظات بدء التوظيف">
                             <field name="x_employment_handover_notes"
                                 string="ملاحظات بدء التوظيف"
+                                readonly="1"
+                                nolabel="1"/>
+                            <field name="x_employment_payroll_notes"
+                                string="ملاحظات جاهزية الرواتب"
                                 readonly="1"
                                 nolabel="1"/>
                         </group>

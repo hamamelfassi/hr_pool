@@ -1055,6 +1055,109 @@
         </record>
 
 
+
+        <!-- Pass 13E-R payroll readiness fields on applicant -->
+        <record id="field_hr_applicant_x_handover_contract_date_start" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_handover_contract_date_start</field>
+            <field name="field_description">Handover Contract Start Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_hr_applicant_x_handover_contract_date_end" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_handover_contract_date_end</field>
+            <field name="field_description">Handover Contract End Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_hr_applicant_x_handover_wage" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_handover_wage</field>
+            <field name="field_description">Handover Wage</field>
+            <field name="ttype">float</field>
+        </record>
+
+        <record id="field_hr_applicant_x_handover_wage_type" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_handover_wage_type</field>
+            <field name="field_description">Handover Wage Type</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('monthly', 'Fixed Wage'),
+                ('hourly', 'Hourly Wage')
+                ]</field>
+        </record>
+
+        <record id="field_hr_applicant_x_handover_work_entry_source" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_handover_work_entry_source</field>
+            <field name="field_description">Handover Work Entry Source</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('calendar', 'Working Schedule'),
+                ('attendance', 'Attendances')
+                ]</field>
+        </record>
+
+        <record id="field_hr_applicant_x_handover_resource_calendar_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_handover_resource_calendar_id</field>
+            <field name="field_description">Handover Working Hours</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">resource.calendar</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_hr_applicant_x_handover_contract_type_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_handover_contract_type_id</field>
+            <field name="field_description">Handover Contract Type</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.contract.type</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_hr_applicant_x_handover_structure_type_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_handover_structure_type_id</field>
+            <field name="field_description">Handover Pay Category</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.payroll.structure.type</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_payroll_ready" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_payroll_ready</field>
+            <field name="field_description">Employment Payroll Ready</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_payroll_checked_on" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_payroll_checked_on</field>
+            <field name="field_description">Employment Payroll Checked On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_payroll_checked_by_user_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_payroll_checked_by_user_id</field>
+            <field name="field_description">Employment Payroll Checked By</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_payroll_notes" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_payroll_notes</field>
+            <field name="field_description">Employment Payroll Notes</field>
+            <field name="ttype">text</field>
+        </record>
+
+
         <!-- Pass 9C source / provenance fields -->
         <record id="field_employment_contract_x_conversion_request_id" model="ir.model.fields">
             <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
