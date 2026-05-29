@@ -30,6 +30,7 @@ Do not duplicate native Odoo fields into custom tabs unless a Marsellia workflow
 Add these custom tabs to `hr.employee`:
 
 ```text
+الهوية
 الإقرارات
 العهد والممتلكات
 التدريب والشهادات
@@ -45,6 +46,7 @@ Add these custom tabs to `hr.employee`:
 
 | Tab | Purpose |
 |---|---|
+| `الهوية` | Typed employee identification documents: ID card, passport, driving license, and company ID card |
 | `الإقرارات` | Employee declarations and HSE undertakings |
 | `العهد والممتلكات` | Custody items, ID cards, PPE, tools, vehicles, radios, laptops |
 | `التدريب والشهادات` | Training commitments, certification evidence, resume/skill integration |
@@ -54,6 +56,46 @@ Add these custom tabs to `hr.employee`:
 | `تقييم الأداء` | Native `hr.appraisal` overlay and scoring lines |
 | `إنهاء الخدمة` | Separation/resignation/non-renewal requests |
 | `إخلاء الطرف` | Final clearance, custody closure, IT/finance/HR/stores clearances |
+
+---
+
+## Identification tab doctrine
+
+The `الهوية` tab stores reusable employee identification data for downstream employment lifecycle forms.
+
+Model:
+
+```text
+x_hr.employee_identification_document
+```
+
+Allowed first document types:
+
+```text
+id_card
+passport
+driving_license
+company_id_card
+```
+
+Use one typed model, not four separate models.
+
+The tab may display four visually separated sections for the four document types, but each section should write to the same model.
+
+The standard fields are intentionally limited:
+
+```text
+document type
+number
+issued by
+issue place
+issue date
+expiry date
+attachment
+notes
+```
+
+Declaration and other process forms should select a specific employee identification line when a form needs a typed ID value.
 
 ---
 
@@ -192,6 +234,8 @@ bank-source snapshot
 ```
 
 Do not allow casual edits to derived fields that are meant to preserve legal/signature context.
+
+For employee declarations, avoid broad duplicate snapshot fields for values already held on `hr.employee`. Read employee name, department, job title, manager, national ID, and start-date source values directly during QWeb generation. The generated PDF attachment is the frozen evidence snapshot.
 
 ---
 

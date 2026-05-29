@@ -171,7 +171,7 @@ It is not the main HR workflow spine.
 | Leave | `hr.leave` |
 | Appraisal | `hr.appraisal` |
 | Employee profile | `hr.employee` |
-| Contract/payroll | `hr.contract`, payroll models |
+| Contract/payroll | Native `hr.employee` Payroll tab readiness fields until `hr.contract` is proven safe; payroll models later |
 | Attendance | `hr.attendance` / work entries later |
 
 ### Where `approval.request` may help
@@ -251,6 +251,15 @@ retention policy
 confidentiality classes
 access groups
 ```
+
+
+### Contract/payroll SaaS posture
+
+Do not assume `hr.contract` is available as an importable target in the current Odoo.com SaaS 19.2 database.
+
+Pass 13 writes payroll/contract overview readiness directly to native `hr.employee` Payroll tab fields and does not create `hr.contract`, payslips, pay runs, or work entries.
+
+Early employment lifecycle workflows must not introduce payroll/accounting side effects unless a later pass explicitly scopes and preflights them.
 
 ### Payroll/accounting
 

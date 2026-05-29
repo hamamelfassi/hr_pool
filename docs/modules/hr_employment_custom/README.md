@@ -28,6 +28,8 @@ Native Odoo HR models remain the operational source of truth.
 
 `hr_employment_custom` adds Marsellia-specific process records, tabs, QWeb forms, Odoo Sign flows, mobile-safe artifact handling, chatter history, activities, manual decision metadata, and GRC hooks.
 
+The first implementation baseline also adds a thin employee identification document model/tab so employment lifecycle forms can reuse typed ID card, passport, driving-license, and company-ID data without duplicating those values into every declaration or process record.
+
 ## Canonical documents
 
 - `00_module_architecture.md`

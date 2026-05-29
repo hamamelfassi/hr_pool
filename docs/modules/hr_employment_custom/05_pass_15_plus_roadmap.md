@@ -6,17 +6,41 @@ The detailed model/field/process specifications are consolidated in `docs/module
 Pass 13 is not implemented here. Pass 13 is owned by `docs/modules/hr_recruitment_custom/pass_13_recruitment_to_employment_handover.md`
 
 
-## Pass 15 — Employee declarations
+## Pass 15 — Employee identification foundation and declarations
+
+Pass 15 is split to keep the foundation clean before declaration implementation:
+
+### Pass 15A — Documentation/dependency correction
+
+- remove unsafe `hr_contract`/payroll/account dependency assumptions;
+- align docs with Pass 13 SaaS finding that payroll readiness is on native `hr.employee` Payroll tab fields;
+- lock thin declaration-record posture.
+
+### Pass 15B — Employee Identification tab/model
+
+- scaffold `hr_employment_custom`;
+- add `x_hr.employee_identification_document`;
+- add employee `الهوية` tab;
+- support typed records for `id_card`, `passport`, `driving_license`, and `company_id_card`.
+
+### Pass 13J — Recruitment handover identity sync
+
+Owned by `hr_recruitment_custom` because the source action is still `hr.applicant`.
+
+- update On-board Now to populate employee identification lines when `x_hr.employee_identification_document` exists;
+- keep the action soft-coupled to avoid circular module dependency.
+
+### Pass 15C+ — Employee declarations
 
 - `x_hr.employee_declaration`;
 - exclusive work declaration;
 - occupational safety acknowledgment;
 - human waste handling undertaking;
 - human waste storage supervisor undertaking;
-- QWeb reports;
-- native Odoo Sign send/sync;
+- QWeb reports that read common values from `hr.employee` and selected employee identification lines;
+- native Odoo Sign send/sync with strict source-record anchoring;
 - employee chatter/files artifact copy;
-- GRC role/function hooks.
+- basic GRC role/function hooks.
 
 ## Pass 16 — Custody and assets
 

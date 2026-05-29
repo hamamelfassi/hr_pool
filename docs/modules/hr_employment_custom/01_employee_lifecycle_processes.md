@@ -18,7 +18,7 @@ Stage 1 pool-to-applicant handover is owned by:
 docs/modules/hr_pool/03_pool_to_applicant_handover.md
 ```
 
-`hr_employment_custom` owns the employee lifecycle after the employee and payroll-ready contract footprint exist.
+`hr_employment_custom` owns the employee lifecycle after the employee exists and the Pass 13 handover has prepared the native `hr.employee` Payroll tab readiness footprint.
 
 ---
 
@@ -33,10 +33,10 @@ Use custom models only where Marsellia has a process object Odoo does not native
 | Lifecycle area | Native source of truth |
 |---|---|
 | Employee master | `hr.employee` |
-| Contract/payroll bridge | `hr.contract` |
+| Contract/payroll overview | Native `hr.employee` Payroll tab fields populated by Pass 13 until `hr.contract` is proven safe in the current SaaS database |
 | Leave | `hr.leave` |
 | Attendance | `hr.attendance` |
-| Payroll | `hr.payroll`, `hr.payslip`, salary structures/work entries |
+| Payroll | Future payroll models/work entries only after Pass 25 preflight; no payroll entries in early lifecycle passes |
 | Appraisal | `hr.appraisal` |
 | Bank accounts | `res.partner.bank` |
 
@@ -44,6 +44,7 @@ Use custom models only where Marsellia has a process object Odoo does not native
 
 | Lifecycle area | Custom model family |
 |---|---|
+| Employee identification documents | `x_hr.employee_identification_document` |
 | Employee declarations | `x_hr.employee_declaration` |
 | Custody/assets | `x_hr.employee_custody_type`, `x_hr.employee_custody_item` |
 | Training/certifications | `x_hr.employee_training_commitment` |
@@ -140,6 +141,87 @@ cancelled
 
 ---
 
+## 0. Employee identification documents
+
+### Model
+
+```text
+x_hr.employee_identification_document
+```
+
+### Purpose
+
+Reusable typed employee identification records for employment lifecycle forms.
+
+This is a small master-data extension on `hr.employee`, not a workflow registry and not a custody receipt.
+
+Initial document types:
+
+```text
+id_card
+passport
+driving_license
+company_id_card
+```
+
+### Core fields
+
+```text
+x_employee_id
+x_document_type
+x_document_number
+x_issued_by
+x_issue_place
+x_issue_date
+x_expiry_date
+x_attachment_id
+x_source_submission_id
+x_source_attachment_id
+x_notes
+```
+
+### Employee UI
+
+Show these records on the employee form in a dedicated tab:
+
+```text
+الهوية / Identification
+```
+
+The UI may group the same one2many data into four sections:
+
+```text
+بطاقة شخصية
+جواز سفر
+رخصة قيادة
+بطاقة الشركة
+```
+
+Do not create four separate models for the four document types.
+
+### Handover integration
+
+Pass 13J is owned by `hr_recruitment_custom` because the source action remains `hr.applicant`.
+
+The handover action should soft-detect this model and create/update identification lines only when `x_hr.employee_identification_document` exists. This avoids a hard circular dependency between `hr_recruitment_custom` and `hr_employment_custom`.
+
+### Consumption rule
+
+Employment lifecycle documents should select an employee identification line only where the target form needs a typed ID document number or related issue/expiry metadata.
+
+Common employee values should still be read directly from `hr.employee`:
+
+```text
+name
+department_id.name
+job_title
+parent_id.name
+identification_id
+Payroll tab start-date field where available
+```
+
+---
+
 ## 1. Employee declarations
 
 ### Model
@@ -163,9 +245,12 @@ human_waste_storage_supervisor_undertaking
 
 ### Core fields
 
+Keep declaration records thin. Store lifecycle, document, signing, and light governance fields only.
+
 ```text
 x_employee_id
 x_declaration_type
+x_selected_identification_document_id
 x_reference_code
 x_document_reference
 x_state
@@ -177,11 +262,42 @@ x_pdf_attachment_id
 x_signed_attachment_id
 x_sign_certificate_attachment_id
 x_sign_request_res_id
+x_sign_request_state
+x_sign_request_reference
+x_sign_request_url
 x_generated_on
 x_sent_on
 x_signed_on
+x_responsible_user_id
 x_notes
 ```
+
+Do not add broad declaration snapshot fields for employee name, department, job title, manager, national ID, or passport number during Pass 15. The QWeb reports should read those values from `hr.employee` and the selected `x_hr.employee_identification_document` record.
+
+### Source value doctrine for Pass 15 declaration PDFs
+
+Recommended report object mapping:
+
+```text
+o      = x_hr.employee_declaration
+e      = o.x_employee_id
+id_doc = o.x_selected_identification_document_id
+```
+
+Use native employee fields first:
+
+| PDF value | Source |
+|---|---|
+| Employee name / full name | `e.name` |
+| Department/division | `e.department_id.name` |
+| Job title | `e.job_title` or safe native fallback |
+| Direct supervisor | `e.parent_id.name` |
+| National ID | `e.identification_id` |
+| Personal ID / ID Passport No. | `id_doc.x_document_number` |
+| Passport number | selected passport identity line, else native `e.passport_id` where available |
+| Starting date | native employee Payroll tab start-date field populated by Pass 13 where available |
+
+The generated QWeb PDF attachment is the locked evidence snapshot for the declaration lifecycle.
 
 ### Workflow
 
@@ -766,7 +882,10 @@ x_manual_decision_attachment_id
 ## First implementation order
 
 ```text
-Pass 15 — Employee declarations
+Pass 15A — Documentation/dependency correction
+Pass 15B — Scaffold hr_employment_custom and employee Identification tab/model
+Pass 13J — Recruitment handover update to populate employee identification lines if the model exists
+Pass 15C+ — Employee declarations using thin declaration records and employee/identity source values
 Pass 16 — Custody and assets
 Pass 17 — Training and certifications
 Pass 18 — Leave requests
