@@ -330,3 +330,26 @@ A workflow has acceptable operational coordination when:
 - Odoo Approvals is auxiliary where used;
 - mobile access works through employee files/chatter;
 - native smart buttons remain useful and unbroken.
+
+## Accepted Pass 15 mobile-safe artifact behavior
+
+Pass 15 confirmed the mobile-safe artifact rule:
+
+- generated declaration PDFs are posted to the linked employee chatter/files;
+- signed PDFs are copied/posted to the linked employee chatter/files after Sign sync;
+- Sign certificates are copied/posted to the linked employee chatter/files when Odoo exposes them;
+- source declaration process fields keep lifecycle truth, but employee chatter/files is the operational mobile access layer.
+
+Avoid making users open technical `ir.attachment` forms.
+
+User-facing declaration forms should expose explicit download buttons for available artifacts:
+
+```text
+Download Generated PDF
+Download Signed PDF
+Download Sign Certificate
+```
+
+These buttons should resolve to `/web/content/<attachment_id>?download=true`.
+
+This pattern should be reused in later custody, training, assignment, separation, and clearance forms.

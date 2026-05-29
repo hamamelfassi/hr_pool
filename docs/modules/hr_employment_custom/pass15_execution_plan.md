@@ -556,9 +556,10 @@ The pass cannot close until all gates pass:
 - [x] happy path acceptance passes for identity line creation/editing.
 - [x] chatter behavior is verified for identity update.
 - [x] generated files are not committed.
-- [ ] 15B commit message recorded.
-- [ ] 13J standalone identity sync passes.
-- [ ] 15C+ declaration lifecycle passes.
+- [x] 15B commit message recorded.
+- [x] 13J standalone identity sync passes.
+- [x] 15C+ declaration lifecycle passes.
+- [x] Pass 15 employee declaration QWeb, Sign, sync, artifact, and translation polish accepted.
 
 ## 9. Commit log
 
@@ -847,3 +848,201 @@ Scope guard:
 
 - Do not begin Sign send/sync until the selected declaration QWeb/PDF templates are accepted.
 - Do not add payroll, work-entry, custody, training, leave, clearance, or GRC decision-instance logic in these QWeb generation slices.
+
+## 13. Progress update — Pass 15G through 15N declaration lifecycle locked
+
+### 15G accepted state — F-0013 QWeb/PDF generation
+
+Pass 15G is functionally accepted and committed.
+
+Locked outcomes:
+
+- Added F-0013 Occupational Safety Acknowledgment QWeb/PDF generation.
+- F-0013 uses the shared declaration report asset/header pattern.
+- F-0013 generates as a one-page PDF.
+- Starting date is rendered in date-only format.
+- Generated PDF is saved to `x_pdf_attachment_id`.
+- Generated PDF is posted to the linked employee chatter/files.
+- Bottom report footers were removed from the declaration report family after footer collision in QWeb/wkhtml output.
+- Page labels now live in the shared header metadata area.
+
+### 15H accepted state — F-0021 QWeb/PDF generation
+
+Pass 15H is functionally accepted and committed.
+
+Locked outcomes:
+
+- Added F-0021 Human Waste Handling Employee Undertaking QWeb/PDF generation.
+- F-0021 generates as a one-page PDF using the shared report header.
+- The form includes employee information, Arabic declaration text, English summary, supervisor fingerprint/signature area, employee signature area, and employee date area.
+- Generated PDF artifact and employee chatter/file copy follow the same pattern as F-0010 and F-0013.
+
+### 15I accepted state — F-0022 QWeb/PDF generation
+
+Pass 15I is functionally accepted and committed.
+
+Locked outcomes:
+
+- Added F-0022 Human Waste Storage Supervisor Undertaking QWeb/PDF generation.
+- F-0022 generates as a one-page PDF using the shared report header.
+- The form is supervisor-focused and includes supervisor information, Arabic declaration text, English summary, signature row, and date row.
+- F-0022 body spacing was loosened while preserving personal information and signature table row spacing.
+
+### 15J accepted state — F-0010 Odoo Sign send/sync
+
+Pass 15J is functionally accepted and committed.
+
+Locked outcomes:
+
+- Added F-0010 `Send to Sign` and `Sync` buttons beside `Generate PDF`.
+- F-0010 uses two signer roles:
+  - employee;
+  - HR responsible user.
+- F-0010 creates four Sign items:
+  - employee signature;
+  - employee signing date;
+  - HR responsible signature;
+  - HR responsible signing date.
+- F-0010 Sign request sends successfully.
+- Signed PDF and Sign certificate sync successfully.
+- Signed artifacts are copied/posted to employee chatter/files.
+- Sync returns to the declaration form rather than navigating back to the employee form.
+- Date Sign item calibration was refined and accepted.
+
+### 15K accepted state — F-0013 Odoo Sign send/sync
+
+Pass 15K is functionally accepted and committed.
+
+Locked outcomes:
+
+- Added F-0013 `Send to Sign` and `Sync` buttons.
+- F-0013 uses one employee signer.
+- F-0013 creates:
+  - employee signature item;
+  - employee signing date item.
+- F-0013 send/sign/sync passed without geometry change.
+- Signed PDF and certificate, when exposed by Odoo, are copied/posted to employee chatter/files.
+
+### 15L accepted state — F-0021 Odoo Sign send/sync
+
+Pass 15L is functionally accepted and committed.
+
+Locked outcomes:
+
+- Added F-0021 `Send to Sign` and `Sync` buttons.
+- F-0021 uses two participants:
+  - employee;
+  - direct manager/supervisor.
+- F-0021 creates:
+  - supervisor fingerprint/signature item;
+  - employee signature item;
+  - employee signing date item.
+- F-0021 send/sign/sync passed.
+- Signed PDF and certificate sync to employee chatter/files.
+- A small follow-up calibration reduced signature item size and shifted signature items slightly lower/right.
+
+### 15M accepted state — F-0022 Odoo Sign send/sync
+
+Pass 15M is functionally accepted and committed.
+
+Locked outcomes:
+
+- Added F-0022 `Send to Sign` and `Sync` buttons.
+- F-0022 uses one supervisor signer.
+- F-0022 creates:
+  - supervisor signature item;
+  - supervisor signing date item.
+- F-0022 send/sign/sync passed.
+- Signed PDF and certificate sync to employee chatter/files.
+- Initial placement worked functionally; final geometry calibration was folded into 15N.
+
+### 15N accepted state — cleanup, artifact downloads, translations, F-0022 calibration
+
+Pass 15N is functionally accepted and committed.
+
+Locked outcomes:
+
+- F-0022 signature/date Sign item geometry was recalibrated upward/right.
+- Raw `ir.attachment` many2one fields are no longer exposed as clickable attachment metadata links in the declaration form.
+- Artifact fields remain stored/invisible for lifecycle truth:
+  - `x_pdf_attachment_id`;
+  - `x_signed_attachment_id`;
+  - `x_sign_certificate_attachment_id`.
+- User-facing download buttons were added:
+  - `Download Generated PDF`;
+  - `Download Signed PDF`;
+  - `Download Sign Certificate`.
+- Download buttons use `/web/content/<attachment_id>?download=true`.
+- Arabic translation polish was rebaselined from the Odoo-exported `ar_001.po` and then patched using exported anchors.
+- All acceptance tests passed.
+
+### Declaration lifecycle state at Pass 15 closure
+
+The following declaration forms are generated, sent to Sign, signed, synced, and artifact-copied successfully:
+
+```text
+F-0010 Exclusive Work Declaration
+F-0013 Occupational Safety Acknowledgment
+F-0021 Human Waste Handling Employee Undertaking
+F-0022 Human Waste Storage Supervisor Undertaking
+```
+
+The accepted lifecycle pattern is:
+
+```text
+draft -> generated -> signature_requested -> signed
+```
+
+Lifecycle truth remains on:
+
+```text
+x_hr.employee_declaration
+```
+
+Employee mobile-safe artifact access is achieved by posting/copying generated/signed/certificate artifacts to the linked `hr.employee` chatter/files.
+
+### Locked technical lessons
+
+#### Report/QWeb lessons
+
+- Keep embedded fonts/logo/header assets centralized in the shared report asset/header template.
+- The report `paperformat` controls geometry only; it does not carry reusable header/logo/font content.
+- Avoid bottom footers for these declaration templates because QWeb/wkhtml output can collide with body content.
+- Put fixed page labels in the shared header metadata area.
+- Do not rely on body-level `.page/.topage` counters in this Odoo SaaS QWeb path; they rendered unreliably in this pass.
+- Validate report layout from generated PDFs, not only XML parse checks.
+
+#### Sign lessons
+
+- Create Sign fields only after generated PDF layout is stable.
+- Use small Sign/date fields centered inside the intended target area rather than trying to fill the entire printed box.
+- Store Sign request linkage on the source process record.
+- Sync must return to the declaration form.
+- Signed PDF/certificate must be copied or posted to employee chatter/files.
+- Geometry calibration should be isolated to `posX`, `posY`, `width`, and `height` values only when lifecycle behavior already passes.
+
+#### Artifact lessons
+
+- Raw `ir.attachment` many2one fields navigate to the attachment metadata form and should not be the user-facing artifact surface.
+- Keep attachment fields as hidden lifecycle truth.
+- Expose download actions/buttons for user-facing artifacts.
+- Employee chatter/files remains the mobile-safe artifact layer.
+
+#### Translation lessons
+
+- Do not guess PO anchors.
+- Functional slice first, install/upgrade second, export Odoo PO third, then patch `msgstr` against exported anchors.
+- For short selection labels, bilingual source labels are acceptable as a temporary compromise.
+- For future long labels requiring strong translation control, prefer helper records over hard-coded selection labels.
+
+### Deferred after Pass 15
+
+Do not block Pass 16 on these items:
+
+- `13J-C`: automatically call identity sync inside the accepted `بدء التوظيف` action.
+- DRY refactor of repeated declaration Sign send/sync server-action code.
+- Replacement of bilingual selection labels with helper records.
+- Stronger lifecycle guards/security overlays.
+- Old recruitment Sign smart-button anchoring fix.
+- Broader Documents app governance.
+- GRC decision-instance integration.

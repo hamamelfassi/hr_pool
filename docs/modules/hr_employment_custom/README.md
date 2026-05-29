@@ -49,3 +49,24 @@ The first implementation baseline also adds a thin employee identification docum
 - Detailed process model specifications are consolidated in `01_employee_lifecycle_processes.md`.
 - Pass 13 handover is owned by `docs/modules/hr_recruitment_custom/pass_13_recruitment_to_employment_handover.md`.
 - Stage 1 pool-to-applicant handover is owned by `docs/modules/hr_pool/03_pool_to_applicant_handover.md`.
+
+## Pass 15 implementation status
+
+Pass 15 is closed.
+
+Implemented and accepted:
+
+- employee identification tab/model;
+- standalone recruitment identity sync action;
+- employee declaration process model;
+- F-0010, F-0013, F-0021, and F-0022 QWeb/PDF generation;
+- F-0010, F-0013, F-0021, and F-0022 Odoo Sign send/sync;
+- signed PDF and Sign certificate copy to employee chatter/files;
+- artifact download buttons;
+- Arabic translation polish using exported Odoo PO anchors.
+
+Next implementation pass:
+
+```text
+Pass 16 — Custody and assets
+```

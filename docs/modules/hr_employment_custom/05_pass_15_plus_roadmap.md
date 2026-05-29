@@ -213,3 +213,46 @@ Report generation lessons:
 - For fixed governed forms, static page labels are acceptable where Odoo SaaS does not reliably resolve body-level `.page/.topage` counters.
 - Header and footer layout must be tested from generated PDF, not only XML sanity or HTML preview.
 - Translation updates should follow the exported-anchor PO method after the functional slice installs cleanly.
+
+## Pass 15 closure status
+
+Pass 15 is functionally closed.
+
+Closed scope:
+
+```text
+Employee identification foundation
+Recruitment-to-employee identity sync as standalone 13J action
+Employee declaration model and tab
+F-0010/F-0013/F-0021/F-0022 QWeb/PDF generation
+F-0010/F-0013/F-0021/F-0022 Odoo Sign send/sync
+Generated/signed/certificate artifact copy to employee chatter/files
+Artifact download buttons
+Arabic translation polish using exported PO anchors
+```
+
+Carry-forward backlog:
+
+```text
+13J-C automatic identity sync from On-board Now
+DRY refactor for repeated Sign send/sync action code
+Helper-record replacement for long selection labels if required
+Stronger lifecycle/security guards
+Recruitment Sign smart-button anchoring fix
+Documents app governance hardening
+GRC decision-instance integration
+```
+
+Next pass:
+
+```text
+Pass 16 — Custody and assets
+```
+
+Pass 16 should reuse the Pass 15 artifact and Sign lessons:
+
+- process record owns lifecycle truth;
+- native employee record remains the operational employee source;
+- generated/signed/certificate artifacts copy to employee chatter/files;
+- user-facing artifact access should use download actions, not raw `ir.attachment` many2one links;
+- Sign field geometry should be calibrated only after generated PDFs are accepted.

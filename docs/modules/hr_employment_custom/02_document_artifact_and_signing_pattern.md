@@ -280,3 +280,75 @@ A process artifact workflow is acceptable only when:
 - state fields are readonly/action-written;
 - duplicate sends are blocked;
 - mobile-safe access path exists through chatter/files.
+
+## Accepted Pass 15 declaration artifact and Sign pattern
+
+Pass 15 locked the following practical pattern for employee declaration forms.
+
+### Source process record
+
+Each employee declaration is represented by:
+
+```text
+x_hr.employee_declaration
+```
+
+The process record owns:
+
+- lifecycle state;
+- generated PDF;
+- Sign request linkage;
+- signed PDF;
+- Sign certificate;
+- sent/signed timestamps;
+- responsible user and notes.
+
+### User-facing artifact access
+
+Do not expose raw `ir.attachment` many2one links as the main user surface.
+
+Raw attachment many2one fields can remain hidden as lifecycle truth:
+
+```text
+x_pdf_attachment_id
+x_signed_attachment_id
+x_sign_certificate_attachment_id
+```
+
+User-facing access should use download actions:
+
+```text
+/web/content/<attachment_id>?download=true
+```
+
+This prevents users landing on the technical `ir.attachment` metadata form.
+
+### Employee chatter/files copy
+
+Generated PDFs, signed PDFs, and certificates must be posted/copied to the linked `hr.employee` chatter/files. This is the mobile-safe access layer.
+
+### Sign anchoring
+
+Sign requests should remain anchored to the declaration process record through stored fields:
+
+```text
+x_sign_request_res_id
+x_sign_request_state
+x_sign_request_reference
+x_sign_request_url
+```
+
+Sign smart-button visibility is useful but is not lifecycle truth.
+
+### Geometry calibration
+
+Generate and accept the PDF first. Then add Sign items. Then calibrate only:
+
+```text
+posX
+posY
+width
+height
+```
+
+Do not rework lifecycle code when only Sign item placement is wrong.
