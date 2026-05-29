@@ -16,7 +16,7 @@ It creates or links:
 
 ```text
 hr.employee
-hr.contract
+hr.employee Payroll tab contract/payroll readiness fields
 res.partner.bank
 ```
 
@@ -61,7 +61,7 @@ Before creating records, the action must check:
 - existing employee linked to the applicant;
 - existing employee with the same source applicant field;
 - likely duplicate by national ID / identification number where validated;
-- existing contract linked to the employee or source applicant;
+- existing payroll/contract overview values on the linked employee;
 - existing bank account with the same sanitized account number or IBAN and holder where available.
 
 If uncertain, block with a clear toast. Do not silently merge or overwrite.
@@ -103,34 +103,44 @@ Implementation rule:
 - do not manually write derivative avatar or thumbnail fields unless field metadata proves they are writable and required;
 - if no photo is available, do not block onboarding; post a warning chatter message.
 
-## Applicant to contract mapping
+## Applicant to employee Payroll tab mapping
 
-Create or link a native `hr.contract`.
+Odoo SaaS 19.2 does not expose an importable `hr.contract` model in this database.
 
-Minimum fields:
+Therefore Pass 13 does not create `hr.contract`.
+
+Instead, Pass 13 populates the native Payroll tab contract/payroll overview fields directly on `hr.employee`.
+
+Minimum mapping:
 
 | Target | Source |
 |---|---|
-| `employee_id` | created/linked employee |
-| `job_id` | applicant job |
-| `department_id` | applicant/job/contract snapshot |
-| `date_start` | F-0005 start date / applicant availability where appropriate |
-| `date_end` | F-0005 end date where present |
-| `wage` | F-0005 / applicant employment contract cockpit |
-| `wage_type` | payroll policy |
-| `employee_type` | employment policy |
-| `contract_type_id` | configured contract type |
-| `structure_type_id` | pay category / salary structure type |
-| `resource_calendar_id` | working schedule |
-| `registration_number` | employee/contract reference |
-| custom signed artifact field | signed F-0005 attachment |
-| custom source field | applicant and applicant employment contract source |
+| `hr.employee.contract_date_start` / equivalent | F-0005 start date, applicant handover start, applicant availability fallback |
+| `hr.employee.contract_date_end` / equivalent | F-0005 end date or applicant handover end |
+| `hr.employee.wage` | F-0005 monthly wage / applicant handover wage |
+| `hr.employee.wage_type` | `monthly` / Fixed Wage default unless overridden |
+| `hr.employee.employee_type` | `employee` where supported |
+| `hr.employee.contract_type_id` | applicant override, else Employee / Full-Time / Permanent fallback |
+| `hr.employee.structure_type_id` | applicant override, else Fixed Month - Regular fallback |
+| `hr.employee.resource_calendar_id` | applicant override, else Standard 40 hours/week fallback |
+| `hr.employee.work_entry_source` | applicant override, else calendar / Working Schedule fallback |
+| `hr.employee.registration_number` / reference where available | F-0005 contract number where available |
 
-The native contract is the payroll bridge, not merely a PDF mirror.
+Source precedence:
+
+```text
+F-0005 cockpit
+→ applicant payroll handover override fields
+→ safe operational defaults
+```
+
+The native Payroll tab fields are the payroll bridge, while F-0005 remains the signed legal document artifact.
+
+Pass 13 must not create payslips, pay runs, or work entries.
 
 ## Bank account mapping
 
-Pass 13 must create or find a full native bank account record:
+Pass 13 creates or finds a full native bank account record:
 
 ```text
 Applicant bank submission / Applicant Employment Contract
@@ -138,18 +148,30 @@ Applicant bank submission / Applicant Employment Contract
 → hr.employee.bank_account_ids
 ```
 
-Required target behavior:
+Odoo SaaS 19.2 bank target fields:
 
-- populate `res.partner.bank.acc_number`;
-- write collected IBAN to the actual exported custom IBAN field on `res.partner.bank`, or create/use `x_iban` if needed;
-- link bank account to `hr.employee.bank_account_ids`;
-- copy bank proof attachment to employee chatter/files;
-- do not store payroll bank data only as custom text fields;
-- do not automatically mark the account as payment-trusted unless finance policy explicitly requires it.
+| Target | Rule |
+|---|---|
+| `res.partner.bank.account_number` | canonical account number; do not use `acc_number` |
+| `res.partner.bank.holder_name` | employee/applicant name |
+| `res.partner.bank.bank_name` | bank name from F-0005 / accepted bank submission |
+| `res.partner.bank.city` | branch/location fallback |
+| `res.partner.bank.x_bank_branch_snapshot` | explicit Marsellia branch snapshot |
+| `res.partner.bank.x_iban` | collected IBAN |
+| `res.partner.bank.partner_id` | partner matching employee `work_contact_id` domain |
+| `hr.employee.bank_account_ids` | link the bank account to the employee |
 
-Payroll-ready means employee, contract, wage/schedule/pay structure, and native bank account are prepared.
+Rules:
 
-Payment-ready is a separate finance validation state.
+- do not write IBAN into `clearing_number`;
+- do not use `clearing_number` unless Marsellia later collects a true domestic routing/clearing number;
+- do not auto-enable Send Money/payment trust;
+- payment-ready is a finance validation state, not an HR handover state;
+- bank proof attachments should be copied/postable to employee chatter/files where available.
+
+Payroll-ready means employee, Payroll tab fields, and native bank account are prepared.
+
+Payment-ready remains separate.
 
 ## Signed artifact handover
 
@@ -171,20 +193,53 @@ After successful handover:
 |---|---|
 | applicant | marked onboarded / handed over |
 | employee | created or linked |
-| contract | created or linked |
+| Payroll tab | contract/payroll overview fields populated on employee |
 | bank account | native `res.partner.bank` linked if source data exists |
 | artifacts | posted to employee chatter/files |
 | chatter | summary posted on applicant and employee |
-| payroll | ready footprint present; no payslip generation |
+| payroll | ready footprint present; no payslip, pay run, or work entry generation |
+
+## Final closure and stage movement
+
+After employee, Payroll tab, bank, and artifact checks complete, the On-board Now action moves the applicant to:
+
+```text
+Contract Signed / تم توقيع العقد
+```
+
+The action remains idempotent:
+
+- rerun reuses the linked employee;
+- rerun syncs Payroll tab values;
+- rerun reuses the linked bank account;
+- rerun confirms copied artifacts without duplicating them;
+- rerun records final closure notes.
+
+## Known deferred hardening
+
+Existing `hr_recruitment_custom` Sign Requests smart-button anchoring may show sign requests from other applicants.
+
+Decision:
+
+- defer fixing existing recruitment sign-button leakage until after Pass 15+;
+- do not risk breaking the accepted recruitment/preboarding signing flows now;
+- all new `hr_employment_custom` sign flows from Pass 15+ onward must use a strict employee/process-record-specific sign.request anchor pattern from the start.
 
 ## Acceptance checklist
 
 - blocked if readiness is incomplete;
-- blocked if duplicate employee is found;
+- blocked if duplicate employee is found and cannot be safely linked;
 - created employee has correct source applicant traceability;
-- created contract is linked to employee and applicant source;
+- created employee has Payroll tab contract/payroll readiness fields populated;
 - bank account is native `res.partner.bank` and linked to employee;
-- IBAN is written to native/custom bank field where collected;
+- bank account uses `account_number`, `holder_name`, `bank_name`, branch snapshot, and `x_iban`;
+- IBAN is written to `x_iban` where collected;
+- IBAN is not written to `clearing_number`;
+- Send Money/payment trust remains untouched;
 - photo flows to `hr.employee.image_1920` when available;
 - signed artifacts are visible from employee chatter/files in desktop and mobile;
-- no payslip is generated.
+- applicant moves to Contract Signed / تم توقيع العقد after final closure;
+- no `hr.contract` is created;
+- no payslip is generated;
+- no pay run is generated;
+- no work entry is generated.
