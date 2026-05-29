@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="action_hr_applicant_sync_employee_identity_documents" model="ir.actions.server">
+            <field name="name">ترحيل الهوية</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = {
+    'type': 'ir.actions.client',
+    'tag': 'display_notification',
+    'params': {
+        'title': 'ترحيل الهوية',
+        'message': 'سيتم تفعيل ترحيل الهوية في الشريحة 13J-B بعد تثبيت سطح الترحيل.',
+        'type': 'warning',
+        'sticky': False,
+    }
+}
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>

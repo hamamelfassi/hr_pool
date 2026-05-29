@@ -64,6 +64,7 @@
         "data/24_employment_contract_actions.xml",
         "data/28_applicant_preboarding_gate_actions.xml",
         "data/29_applicant_onboard_now_actions.xml",
+        "data/30_applicant_identity_handover_actions.xml",
         "views/01_recruitment_views.xml",
         "views/02_recruitment_document_views.xml",
         "views/03_required_document_checklist_views.xml",
