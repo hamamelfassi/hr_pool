@@ -181,10 +181,10 @@ else:
             'type_id': date_type.id,
             'responsible_id': employee_role.id,
             'page': 1,
-            'posX': 0.690,
-            'posY': 0.735,
-            'width': 0.220,
-            'height': 0.030,
+            'posX': 0.745,
+            'posY': 0.708,
+            'width': 0.135,
+            'height': 0.020,
             'required': True,
             'name': 'Employee Signing Date',
             'alignment': 'left',
@@ -211,10 +211,10 @@ else:
             'type_id': date_type.id,
             'responsible_id': hr_role.id,
             'page': 1,
-            'posX': 0.230,
-            'posY': 0.735,
-            'width': 0.220,
-            'height': 0.030,
+            'posX': 0.285,
+            'posY': 0.708,
+            'width': 0.135,
+            'height': 0.020,
             'required': True,
             'name': 'HR Responsible Signing Date',
             'alignment': 'left',
@@ -525,6 +525,476 @@ for rec in records.sudo():
     )
 
     action = toast('F-0010 signed', 'F-0010 Sign result was synced and the signed PDF was copied to the employee record.', 'success', False, reload_decl(rec))
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+
+        <record id="action_employee_declaration_send_f0013_sign" model="ir.actions.server">
+            <field name="name">Send to Sign</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_declaration"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+sign_template_model = env['sign.template'].sudo()
+sign_document_model = env['sign.document'].sudo()
+sign_item_model = env['sign.item'].sudo()
+sign_role_model = env['sign.item.role'].sudo()
+sign_send_model = env['sign.send.request'].sudo()
+sign_send_signer_model = env['sign.send.request.signer'].sudo()
+sign_request_model = env['sign.request'].sudo()
+partner_model = env['res.partner'].sudo()
+
+signature_type = env.ref('sign.sign_item_type_signature', raise_if_not_found=False)
+date_type = env.ref('sign.sign_item_type_date', raise_if_not_found=False)
+
+action = False
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def reload_decl(rec):
+    view = env.ref('hr_employment_custom.view_employee_declaration_form', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Employee Declaration',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+def get_or_create_role(name, fallbacks):
+    role = sign_role_model.search([('name', '=', name)], order='id asc', limit=1)
+    if role:
+        return role
+    for fallback in fallbacks:
+        role = sign_role_model.search([('name', '=', fallback)], order='id asc', limit=1)
+        if role:
+            return role
+    return sign_role_model.create({'name': name})
+
+
+def employee_partner(employee):
+    if not employee:
+        return False
+    partner = False
+    if 'work_contact_id' in employee._fields and employee.work_contact_id:
+        partner = employee.work_contact_id.sudo()
+    if not partner and 'user_id' in employee._fields and employee.user_id and employee.user_id.partner_id:
+        partner = employee.user_id.partner_id.sudo()
+    email = employee.work_email if 'work_email' in employee._fields else False
+    if not partner and email:
+        partner = partner_model.search([('email', '=', email)], order='id asc', limit=1)
+    if not partner and email:
+        partner = partner_model.create({
+            'name': employee.name or email,
+            'email': email,
+        })
+    return partner
+
+
+if not signature_type:
+    action = toast('Odoo Sign setup missing', 'Signature field type sign.sign_item_type_signature was not found.', 'warning', True)
+elif not date_type:
+    action = toast('Odoo Sign setup missing', 'Date field type sign.sign_item_type_date was not found. F-0013 requires signature and date items.', 'warning', True)
+else:
+    employee_role = get_or_create_role('Employee', ['Applicant', 'Customer', 'Signatory'])
+
+    for rec in records.sudo():
+        if rec.x_declaration_type != 'occupational_safety_acknowledgment':
+            action = toast('Unsupported declaration', 'Send to Sign is enabled here only for F-0013 Occupational Safety Acknowledgment.', 'warning', False, reload_decl(rec))
+            continue
+
+        if rec.x_state == 'signed' or rec.x_signed_attachment_id:
+            action = toast('Already signed', 'This declaration is already signed.', 'warning', False, reload_decl(rec))
+            continue
+
+        if rec.x_sign_request_res_id:
+            existing_request = sign_request_model.browse(rec.x_sign_request_res_id)
+            if existing_request.exists() and (existing_request.state or '') not in ('cancelled', 'canceled'):
+                action = toast('Duplicate Sign request blocked', 'An active Odoo Sign request already exists for this declaration. Use Sync instead.', 'warning', True, reload_decl(rec))
+                continue
+
+        if rec.x_state != 'generated' or not rec.x_pdf_attachment_id:
+            action = toast('Generate PDF first', 'Generate the F-0013 PDF before sending it to Odoo Sign.', 'warning', False, reload_decl(rec))
+            continue
+
+        employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+        if not employee:
+            action = toast('Missing employee', 'This declaration has no linked employee.', 'warning', True, reload_decl(rec))
+            continue
+
+        employee_sign_partner = employee_partner(employee)
+
+        if not employee_sign_partner or not employee_sign_partner.email:
+            action = toast('Missing employee email', 'The employee needs a partner/work contact with email before sending F-0013 to Sign.', 'warning', True, reload_decl(rec))
+            continue
+
+        pdf_attachment = rec.x_pdf_attachment_id.sudo()
+        filename = pdf_attachment.name or ('%s - Occupational Safety Acknowledgment.pdf' % (rec.x_document_reference or 'MCEP-HR-F-0013'))
+        sent_on = datetime.datetime.now()
+        validity_date = datetime.date.today() + datetime.timedelta(days=60)
+
+        sign_template = sign_template_model.create({
+            'name': filename,
+            'user_id': env.user.id,
+            'signature_request_validity': 60,
+        })
+
+        sign_document = sign_document_model.create({
+            'template_id': sign_template.id,
+            'attachment_id': pdf_attachment.id,
+            'name': filename,
+            'sequence': 1,
+        })
+
+        # F-0013 one-page geometry:
+        # one employee signer, signature zone near bottom, date item inside the date row.
+        sign_item_model.create({
+            'document_id': sign_document.id,
+            'type_id': signature_type.id,
+            'responsible_id': employee_role.id,
+            'page': 1,
+            'posX': 0.120,
+            'posY': 0.755,
+            'width': 0.500,
+            'height': 0.070,
+            'required': True,
+            'name': 'Employee Signature',
+            'alignment': 'left',
+            'constant': False,
+        })
+
+        sign_item_model.create({
+            'document_id': sign_document.id,
+            'type_id': date_type.id,
+            'responsible_id': employee_role.id,
+            'page': 1,
+            'posX': 0.705,
+            'posY': 0.815,
+            'width': 0.145,
+            'height': 0.020,
+            'required': True,
+            'name': 'Employee Signing Date',
+            'alignment': 'left',
+            'constant': False,
+        })
+
+        subject = 'Signature Request - %s' % filename
+        body = '<p>Please review and sign the attached F-0013 Occupational Safety Acknowledgment.</p>'
+
+        send_request = sign_send_model.create({
+            'template_id': sign_template.id,
+            'signer_id': employee_sign_partner.id,
+            'subject': subject,
+            'body': body,
+            'validity': validity_date,
+            'certificate_reference': False,
+            'reminder_enabled': False,
+            'model': 'x_hr.employee_declaration',
+            'res_ids': str([rec.id]),
+        })
+
+        signer_line = send_request.signer_ids.filtered(lambda line: line.role_id.id == employee_role.id)[:1]
+        if signer_line:
+            signer_line.sudo().write({
+                'partner_id': employee_sign_partner.id,
+                'mail_sent_order': 1,
+            })
+        else:
+            sign_send_signer_model.create({
+                'sign_send_request_id': send_request.id,
+                'role_id': employee_role.id,
+                'partner_id': employee_sign_partner.id,
+                'mail_sent_order': 1,
+            })
+
+        send_request.send_request()
+
+        generated_request = sign_request_model.search([
+            ('template_id', '=', sign_template.id),
+        ], order='create_date desc, id desc', limit=1)
+
+        if generated_request:
+            rec.write({
+                'x_state': 'signature_requested',
+                'x_sent_on': sent_on,
+                'x_sign_request_res_id': generated_request.id,
+                'x_sign_request_state': generated_request.state or 'sent',
+                'x_sign_request_reference': generated_request.reference or filename,
+                'x_sign_request_url': '/odoo/sign/%s' % generated_request.id,
+                'x_responsible_user_id': env.user.id,
+                'x_notes': ((rec.x_notes or '') + '\nNative Odoo Sign request created for F-0013 on %s. Request ID: %s. Employee: %s.' % (sent_on, generated_request.id, employee_sign_partner.display_name)).strip(),
+            })
+
+            employee.message_post(
+                body='تم إرسال إقرار F-0013 للتوقيع عبر توقيع أودو. رقم طلب التوقيع: %s.' % generated_request.id,
+                subtype_xmlid='mail.mt_note',
+                attachment_ids=[pdf_attachment.id],
+            )
+
+            action = toast('Sent to Sign', 'F-0013 was sent to the employee signer.', 'success', False, reload_decl(rec))
+        else:
+            rec.write({
+                'x_sent_on': sent_on,
+                'x_sign_request_state': 'lookup_failed_after_send_request',
+                'x_sign_request_reference': filename,
+                'x_notes': ((rec.x_notes or '') + '\nNative Odoo Sign send_request() executed for F-0013 on %s, but the generated sign.request could not be located automatically. Dynamic template ID: %s.' % (sent_on, sign_template.id)).strip(),
+            })
+            action = toast('Sign request lookup failed', 'Send request executed, but the generated sign.request was not found automatically. Check the Sign app.', 'warning', True, reload_decl(rec))
+
+        break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+        <record id="action_employee_declaration_sync_f0013_sign" model="ir.actions.server">
+            <field name="name">Sync</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_declaration"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+sign_request_model = env['sign.request'].sudo()
+attachment_model = env['ir.attachment'].sudo()
+action = False
+
+
+def reload_decl(rec):
+    view = env.ref('hr_employment_custom.view_employee_declaration_form', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Employee Declaration',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def looks_like_certificate(attachment):
+    name = (attachment.name or '').lower()
+    return (
+        'certificate' in name
+        or 'completion' in name
+        or 'completed' in name
+        or 'history' in name
+        or 'audit' in name
+        or 'trail' in name
+        or 'شهادة' in name
+        or 'إكمال' in name
+        or 'اكمال' in name
+    )
+
+
+for rec in records.sudo():
+    if rec.x_declaration_type != 'occupational_safety_acknowledgment':
+        action = toast('Unsupported declaration', 'This Sync action is currently enabled only for F-0013.', 'warning', False, reload_decl(rec))
+        continue
+
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+    if not employee:
+        action = toast('Missing employee', 'This declaration has no linked employee.', 'warning', True, reload_decl(rec))
+        continue
+
+    # Sync generated PDF state first.
+    if not rec.x_pdf_attachment_id:
+        generated_pdf = attachment_model.search([
+            ('res_model', '=', rec._name),
+            ('res_id', '=', rec.id),
+            ('mimetype', '=', 'application/pdf'),
+            ('name', 'ilike', 'F-0013'),
+        ], order='create_date desc, id desc', limit=1)
+        if generated_pdf:
+            rec.write({
+                'x_pdf_attachment_id': generated_pdf.id,
+                'x_generated_on': rec.x_generated_on or generated_pdf.create_date or datetime.datetime.now(),
+                'x_state': 'generated',
+            })
+
+    elif rec.x_state == 'draft':
+        rec.write({
+            'x_generated_on': rec.x_generated_on or rec.x_pdf_attachment_id.create_date or datetime.datetime.now(),
+            'x_state': 'generated',
+        })
+
+    if not rec.x_sign_request_res_id:
+        action = toast('PDF state synced', 'No linked Odoo Sign request was found yet. PDF generation state has been refreshed where possible.', 'success', False, reload_decl(rec))
+        continue
+
+    sign_request = sign_request_model.browse(rec.x_sign_request_res_id)
+    if not sign_request.exists():
+        rec.write({'x_sign_request_state': 'missing_sign_request'})
+        action = toast('Missing Sign request', 'The linked Odoo Sign request no longer exists or cannot be accessed.', 'warning', True, reload_decl(rec))
+        continue
+
+    request_state = sign_request.state or 'unknown'
+
+    values = {
+        'x_sign_request_state': request_state,
+        'x_sign_request_reference': sign_request.reference or rec.x_sign_request_reference,
+    }
+
+    if request_state not in ('signed', 'completed'):
+        if rec.x_state != 'signature_requested':
+            values['x_state'] = 'signature_requested'
+        if not rec.x_sent_on:
+            values['x_sent_on'] = sign_request.create_date or datetime.datetime.now()
+        rec.write(values)
+        employee.message_post(
+            body='تمت مزامنة حالة توقيع F-0013. الحالة الحالية: %s.' % request_state,
+            subtype_xmlid='mail.mt_note',
+        )
+        action = toast('Sign state synced', 'F-0013 Sign request is currently: %s.' % request_state, 'warning', False, reload_decl(rec))
+        continue
+
+    completed_attachments = sign_request.completed_document_attachment_ids
+
+    related_attachments = attachment_model.search([
+        ('res_model', '=', 'sign.request'),
+        ('res_id', '=', sign_request.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    employee_attachments = attachment_model.search([
+        ('res_model', '=', 'hr.employee'),
+        ('res_id', '=', employee.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    declaration_attachments = attachment_model.search([
+        ('res_model', '=', rec._name),
+        ('res_id', '=', rec.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    all_attachments = completed_attachments | related_attachments | employee_attachments | declaration_attachments
+
+    signed_native = False
+    certificate_native = False
+
+    for attachment in all_attachments:
+        if rec.x_pdf_attachment_id and attachment.id == rec.x_pdf_attachment_id.id:
+            continue
+        if looks_like_certificate(attachment):
+            if not certificate_native:
+                certificate_native = attachment
+        elif not signed_native:
+            signed_native = attachment
+
+    if not signed_native:
+        rec.write({
+            'x_sign_request_state': 'signed_no_business_document_found',
+            'x_notes': ((rec.x_notes or '') + '\nOdoo Sign request %s is signed, but no signed business PDF was found during F-0013 sync on %s.' % (sign_request.id, datetime.datetime.now())).strip(),
+        })
+        action = toast('Signed PDF not found', 'The Sign request is signed, but the completed signed PDF was not found yet. Try Sync again after Odoo finishes processing.', 'warning', True, reload_decl(rec))
+        continue
+
+    signed_copy = rec.x_signed_attachment_id
+    if signed_copy and looks_like_certificate(signed_copy):
+        signed_copy = False
+    if signed_copy and rec.x_pdf_attachment_id and signed_copy.id == rec.x_pdf_attachment_id.id:
+        signed_copy = False
+
+    if not signed_copy:
+        signed_name = signed_native.name or ('Signed F-0013 - %s.pdf' % (employee.name or rec.x_document_reference or rec.id))
+        if signed_native.res_model == 'hr.employee' and signed_native.res_id == employee.id:
+            signed_copy = signed_native
+        else:
+            signed_copy = signed_native.copy({
+                'name': signed_name,
+                'res_model': 'hr.employee',
+                'res_id': employee.id,
+            })
+
+    certificate_copy = rec.x_sign_certificate_attachment_id
+    if not certificate_copy and certificate_native:
+        certificate_name = certificate_native.name or ('Sign Certificate F-0013 - %s.pdf' % (employee.name or rec.x_document_reference or rec.id))
+        if certificate_native.res_model == 'hr.employee' and certificate_native.res_id == employee.id:
+            certificate_copy = certificate_native
+        else:
+            certificate_copy = certificate_native.copy({
+                'name': certificate_name,
+                'res_model': 'hr.employee',
+                'res_id': employee.id,
+            })
+
+    signed_on = False
+    if sign_request.write_date:
+        signed_on = sign_request.write_date
+
+    signer_items = sign_request.request_item_ids.filtered(lambda item: item.state == 'completed')
+    for signer_item in signer_items:
+        if signer_item.write_date and (not signed_on or signer_item.write_date > signed_on):
+            signed_on = signer_item.write_date
+
+    if not signed_on and sign_request.completion_date:
+        signed_on = datetime.datetime.combine(sign_request.completion_date, datetime.time(12, 0, 0))
+
+    if not signed_on:
+        signed_on = datetime.datetime.now()
+
+    write_vals = {
+        'x_state': 'signed',
+        'x_signed_on': signed_on,
+        'x_signed_attachment_id': signed_copy.id,
+        'x_sign_request_state': request_state,
+        'x_sign_request_reference': sign_request.reference or rec.x_sign_request_reference,
+        'x_sign_request_url': rec.x_sign_request_url or ('/odoo/sign/%s' % sign_request.id),
+        'x_notes': ((rec.x_notes or '') + '\nNative Odoo Sign completion synced for F-0013 on %s. Sign request ID: %s. Signed artifact: %s.' % (datetime.datetime.now(), sign_request.id, signed_copy.name)).strip(),
+    }
+
+    if not rec.x_sent_on:
+        write_vals['x_sent_on'] = sign_request.create_date or signed_on
+
+    if certificate_copy:
+        write_vals['x_sign_certificate_attachment_id'] = certificate_copy.id
+
+    rec.write(write_vals)
+
+    attachment_ids = [signed_copy.id]
+    if certificate_copy:
+        attachment_ids.append(certificate_copy.id)
+
+    employee.message_post(
+        body='تم توقيع إقرار F-0013 عبر توقيع أودو وربط النسخة الموقعة والشهادة، عند توفرها، بسجل الموظف.',
+        subtype_xmlid='mail.mt_note',
+        attachment_ids=attachment_ids,
+    )
+
+    action = toast('F-0013 signed', 'F-0013 Sign result was synced and the signed PDF was copied to the employee record.', 'success', False, reload_decl(rec))
     break
 
 if not action:

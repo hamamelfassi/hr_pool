@@ -53,6 +53,16 @@
                             string="Sync"
                             class="btn btn-secondary"
                             invisible="x_declaration_type != 'exclusive_employment_declaration' or not x_pdf_attachment_id"/>
+                        <button name="%(action_employee_declaration_send_f0013_sign)d"
+                            type="action"
+                            string="Send to Sign"
+                            class="btn btn-secondary"
+                            invisible="x_declaration_type != 'occupational_safety_acknowledgment' or x_state != 'generated' or not x_pdf_attachment_id"/>
+                        <button name="%(action_employee_declaration_sync_f0013_sign)d"
+                            type="action"
+                            string="Sync"
+                            class="btn btn-secondary"
+                            invisible="x_declaration_type != 'occupational_safety_acknowledgment' or not x_pdf_attachment_id"/>
                     </div>
                     <group>
                         <field name="x_employee_id" readonly="1" force_save="1"/>
@@ -199,6 +209,16 @@
                                         string="Sync"
                                         class="btn btn-secondary"
                                         invisible="x_declaration_type != 'exclusive_employment_declaration' or not x_pdf_attachment_id"/>
+                                    <button name="%(action_employee_declaration_send_f0013_sign)d"
+                                        type="action"
+                                        string="Send to Sign"
+                                        class="btn btn-secondary"
+                                        invisible="x_declaration_type != 'occupational_safety_acknowledgment' or x_state != 'generated' or not x_pdf_attachment_id"/>
+                                    <button name="%(action_employee_declaration_sync_f0013_sign)d"
+                                        type="action"
+                                        string="Sync"
+                                        class="btn btn-secondary"
+                                        invisible="x_declaration_type != 'occupational_safety_acknowledgment' or not x_pdf_attachment_id"/>
                                 </div>
                                 <group>
                                     <field name="x_employee_id" readonly="1" force_save="1"/>
