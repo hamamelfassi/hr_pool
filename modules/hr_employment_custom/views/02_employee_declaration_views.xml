@@ -37,6 +37,13 @@
                         readonly="1"/>
                 </header>
                 <sheet>
+                    <div class="mb-2">
+                        <button name="%(action_employee_declaration_generate_pdf)d"
+                            type="action"
+                            string="Generate PDF"
+                            class="btn btn-primary"
+                            invisible="x_declaration_type != 'exclusive_employment_declaration' or x_state == 'signature_requested' or x_state == 'signed'"/>
+                    </div>
                     <group>
                         <field name="x_employee_id" readonly="1" force_save="1"/>
                         <field name="x_declaration_type"/>
@@ -166,6 +173,13 @@
                                     readonly="1"/>
                             </header>
                             <sheet>
+                                <div class="mb-2">
+                                    <button name="%(action_employee_declaration_generate_pdf)d"
+                                        type="action"
+                                        string="Generate PDF"
+                                        class="btn btn-primary"
+                                        invisible="x_declaration_type != 'exclusive_employment_declaration' or x_state == 'signature_requested' or x_state == 'signed'"/>
+                                </div>
                                 <group>
                                     <field name="x_employee_id" readonly="1" force_save="1"/>
                                     <field name="x_declaration_type"/>

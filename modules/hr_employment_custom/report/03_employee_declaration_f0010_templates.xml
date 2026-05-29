@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_mcep_employee_f0010_exclusive_work_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <head>
+                    <meta charset="UTF-8"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                </head>
+
+                <t t-set="form_code" t-value="'MCEP-HR-F-0010'"/>
+                <t t-set="form_title_ar" t-value="'إقرار العمل الحصري وعدم الازدواج'"/>
+                <t t-set="form_title_en" t-value="'Exclusive Work and Non-Duplication Declaration'"/>
+                <t t-set="employee" t-value="o.x_employee_id"/>
+                <t t-set="identity" t-value="o.x_selected_identification_document_id"/>
+                <t t-set="identity_number" t-value="identity.x_document_number if identity else (employee.identification_id or '')"/>
+                <t t-set="identity_label" t-value="identity.x_document_type if identity else 'National ID'"/>
+
+                <t t-call="hr_employment_custom.mcep_employee_report_assets"/>
+<div class="page mcep-emp-page">
+                    <t t-call="hr_employment_custom.mcep_employee_report_header"/>
+
+                    <div class="mcep-emp-title">إقرار العمل الحصري وعدم الازدواج</div>
+                    <div class="mcep-emp-subtitle">Exclusive Work and Non-Duplication Declaration</div>
+
+                    <div class="mcep-emp-section-title">أولًا: بيانات الموظف <span class="mcep-emp-en">Employee Information</span></div>
+                    <table class="mcep-emp-table">
+                        <tbody>
+                            <tr>
+                                <th style="width: 24%;">الاسم الكامل<br/><span class="mcep-emp-en">Full Name</span></th>
+                                <td style="width: 36%;" class="mcep-emp-value"><span t-out="employee.name or ''"/></td>
+                                <th style="width: 18%;">مرجع الإقرار<br/><span class="mcep-emp-en">Declaration Ref.</span></th>
+                                <td style="width: 22%;" class="mcep-emp-value"><span t-out="o.x_document_reference or ''"/></td>
+                            </tr>
+                            <tr>
+                                <th>إثبات الهوية<br/><span class="mcep-emp-en">Identification</span></th>
+                                <td class="mcep-emp-value">
+                                    <span t-out="identity.display_name if identity else identity_label"/>
+                                    <span t-if="identity_number"> — </span>
+                                    <span t-out="identity_number or ''"/>
+                                </td>
+                                <th>المسمى الوظيفي<br/><span class="mcep-emp-en">Job Title</span></th>
+                                <td class="mcep-emp-value"><span t-out="employee.job_title or ''"/></td>
+                            </tr>
+                            <tr>
+                                <th>القسم / الإدارة<br/><span class="mcep-emp-en">Department</span></th>
+                                <td class="mcep-emp-value"><span t-out="employee.department_id.name or ''"/></td>
+                                <th>المسؤول المباشر<br/><span class="mcep-emp-en">Direct Manager</span></th>
+                                <td class="mcep-emp-value"><span t-out="employee.parent_id.name or ''"/></td>
+                            </tr>
+                            <tr>
+                                <th>البريد الإلكتروني<br/><span class="mcep-emp-en">Email</span></th>
+                                <td class="mcep-emp-value"><span t-out="employee.work_email or ''"/></td>
+                                <th>تاريخ الإنشاء<br/><span class="mcep-emp-en">Generated On</span></th>
+                                <td class="mcep-emp-value"><span t-out="o.x_generated_on or ''"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="mcep-emp-section-title">ثانيًا: التوقيعات <span class="mcep-emp-en">Signatures</span></div>
+                    <table class="mcep-emp-sign-table">
+                        <tbody>
+                            <tr>
+                                <td class="mcep-emp-sign-role" style="width: 50%;">
+                                    الموظف<br/><span class="mcep-emp-en">Employee</span>
+                                </td>
+                                <td class="mcep-emp-sign-role" style="width: 50%;">
+                                    مسؤول الموارد البشرية<br/><span class="mcep-emp-en">HR Responsible</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="mcep-emp-sign-name">
+                                    الاسم: <span t-out="employee.name or ''"/><br/>
+                                    <span class="mcep-emp-en">Name</span>
+                                </td>
+                                <td class="mcep-emp-sign-name">
+                                    الاسم: <span t-out="o.x_hr_responsible_id.name or ''"/><br/>
+                                    الصفة: <span t-out="o.x_hr_responsible_job_title or 'مدير الموارد البشرية'"/><br/>
+                                    <span class="mcep-emp-en">Name / Title</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="mcep-emp-sign-zone">
+                                    التوقيع:<br/><span class="mcep-emp-en">Signature</span>
+                                </td>
+                                <td class="mcep-emp-sign-zone">
+                                    التوقيع:<br/><span class="mcep-emp-en">Signature</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    التاريخ: ....................................<br/>
+                                    <span class="mcep-emp-en">Date</span>
+                                </td>
+                                <td>
+                                    التاريخ: ....................................<br/>
+                                    <span class="mcep-emp-en">Date</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                
+                    <div class="mcep-emp-footer">
+                        <span class="mcep-emp-footer-right">MCEP-HR-F-0010</span>
+                        <span class="mcep-emp-footer-left">Page 1 / 2</span>
+                    </div>
+</div>
+
+                <div class="page mcep-emp-page mcep-emp-new-page mcep-emp-page-last">
+                    <t t-call="hr_employment_custom.mcep_employee_report_header"/>
+
+                    <div class="mcep-emp-title">نص الإقرار</div>
+                    <div class="mcep-emp-subtitle">Declaration Text</div>
+
+                    <div class="mcep-emp-section-title">ثالثًا: إقرار العمل الحصري وعدم الازدواج</div>
+                    <div class="mcep-emp-body-text">
+                        <p>أقر أنا الموقع أدناه، وبصفتي موظفًا لدى شركة مرسيليا للنظافة وحماية البيئة، بأنني ألتزم بالعمل الحصري لصالح الشركة خلال مدة علاقة العمل، وبأنني لا أمارس أي عمل آخر أو وظيفة أخرى أو نشاطًا مهنيًا أو تجاريًا يتعارض مع واجباتي الوظيفية أو مصالح الشركة أو أوقات العمل الرسمية، إلا بعد الحصول على موافقة كتابية مسبقة من الإدارة المختصة.</p>
+                        <p>كما أقر بأنني لا أرتبط بعلاقة عمل قائمة مع أي جهة أخرى بما يؤدي إلى ازدواجية وظيفية أو تعارض مصالح، وأتعهد بإبلاغ إدارة الموارد البشرية فورًا عن أي وضع قد ينشأ لاحقًا ويؤدي إلى ازدواجية أو تعارض مصالح مباشر أو غير مباشر.</p>
+                        <p>أتعهد بعدم استخدام وقت العمل أو موارد الشركة أو بياناتها أو معداتها أو علاقاتها التجارية لتحقيق أي منفعة شخصية أو منفعة لأي جهة خارجية، وأقر بأن جميع الأعمال والمعلومات والوثائق التي أطلع عليها بحكم عملي تعد جزءًا من مسؤولياتي الوظيفية وتخضع لسياسات الشركة المعتمدة.</p>
+                        <p>أوافق على أن أي إخلال بهذا الإقرار قد يعرّضني للإجراءات الإدارية أو التأديبية أو القانونية المعمول بها داخل الشركة ووفق التشريعات ذات العلاقة، بما في ذلك المساءلة عن أي ضرر يثبت وقوعه نتيجة الإخلال بهذا الالتزام.</p>
+                        <p>أقر بأنني قرأت هذا الإقرار وفهمت مضمونه، وأن توقيعي عليه يُعد قبولًا صريحًا والتزامًا كاملًا بما ورد فيه.</p>
+                    </div>
+
+                    <div class="mcep-emp-section-title">English Summary</div>
+                    <div class="mcep-emp-body-text mcep-emp-en">
+                        <p>I, the undersigned, acknowledge that I am committed to exclusive work for Marsellia Cleaning and Environmental Protection Company during my employment relationship. I confirm that I do not perform any other work, employment, professional activity, or commercial activity that conflicts with my duties, the company's interests, or official working hours, unless prior written approval is obtained from the competent management.</p>
+                        <p>I further confirm that I am not bound by another employment relationship that creates job duplication or conflict of interest, and I undertake to notify Human Resources immediately of any future circumstance that may create such duplication or conflict.</p>
+                        <p>I acknowledge that breach of this declaration may subject me to administrative, disciplinary, or legal action under company policies and applicable law.</p>
+                    </div>
+
+                    <div class="mcep-emp-footer">
+                        <span class="mcep-emp-footer-right">MCEP-HR-F-0010</span>
+                        <span class="mcep-emp-footer-left">Page 2 / 2</span>
+                    </div>
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

@@ -20,7 +20,12 @@
         "data/01_employee_identification_automation.xml",
         "data/02_employee_identification_actions.xml",
         "data/03_employee_declaration_automation.xml",
+        "data/04_employee_declaration_generate_actions.xml",
         "views/01_employee_identification_views.xml",
-        "views/02_employee_declaration_views.xml"
+        "views/02_employee_declaration_views.xml",
+        "report/01_employee_declaration_paperformat.xml",
+        "report/02_common_employee_report_assets.xml",
+        "report/03_employee_declaration_f0010_templates.xml",
+        "report/04_employee_declaration_report_actions.xml"
     ]
 }

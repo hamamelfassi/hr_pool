@@ -385,4 +385,9 @@ msgid ""
 "attachments from recruitment handover remain tracked separately."
 msgstr ""
 "ارفع صورة أو نسخة ممسوحة ضوئيًا من مستند الهوية. تبقى مرفقات المصدر القادمة "
-"من التوظيف متتبعة بشكل منفصل."
+"من التوظيف متتبعة بشكل منفصل."\n\n#. module: hr_employment_custom
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_generate_pdf
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
+msgid "Generate PDF"
+msgstr "توليد الإقرار"\n
