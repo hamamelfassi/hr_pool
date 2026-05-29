@@ -39,6 +39,8 @@ for rec in records.sudo():
         vals['x_state'] = 'draft'
     if not rec.x_form_code:
         vals['x_form_code'] = form_code
+    if rec.x_declaration_type == 'exclusive_employment_declaration' and not rec.x_hr_responsible_job_title:
+        vals['x_hr_responsible_job_title'] = 'مدير الموارد البشرية'
     if not rec.x_document_reference:
         emp_part = employee.id if employee else 0
         vals['x_document_reference'] = '%s-EMP-%05d-%05d' % (form_code, emp_part, rec.id)
@@ -96,6 +98,8 @@ for rec in records.sudo():
         vals['x_state'] = 'draft'
     if not rec.x_form_code:
         vals['x_form_code'] = form_code
+    if rec.x_declaration_type == 'exclusive_employment_declaration' and not rec.x_hr_responsible_job_title:
+        vals['x_hr_responsible_job_title'] = 'مدير الموارد البشرية'
     if not rec.x_document_reference:
         emp_part = employee.id if employee else 0
         vals['x_document_reference'] = '%s-EMP-%05d-%05d' % (form_code, emp_part, rec.id)

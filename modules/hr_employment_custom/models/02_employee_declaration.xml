@@ -89,6 +89,24 @@
             <field name="help">Selected employee identity document used by declaration PDFs where a personal ID, passport, or driving-license number is required.</field>
         </record>
 
+        <record id="field_x_hr_employee_declaration__x_hr_responsible_id" model="ir.model.fields">
+            <field name="name">x_hr_responsible_id</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">HR Responsible User</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+            <field name="help">Second signer for F-0010 Exclusive Work Declaration. This is typically the HR Manager or equivalent responsible user.</field>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_hr_responsible_job_title" model="ir.model.fields">
+            <field name="name">x_hr_responsible_job_title</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">HR Responsible Job Title</field>
+            <field name="ttype">char</field>
+            <field name="help">Printed title used for the HR responsible signer block in F-0010. Defaults to مدير الموارد البشرية.</field>
+        </record>
+
         <record id="field_x_hr_employee_declaration__x_required_by_role" model="ir.model.fields">
             <field name="name">x_required_by_role</field>
             <field name="model_id" ref="model_x_hr_employee_declaration"/>

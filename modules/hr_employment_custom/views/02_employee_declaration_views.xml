@@ -53,6 +53,15 @@
                         <field name="x_required_before_assignment"/>
                     </group>
 
+                    <group string="F-0010 Signers" invisible="x_declaration_type != 'exclusive_employment_declaration'">
+                        <div class="alert alert-info" role="alert" colspan="2">
+                            F-0010 Exclusive Work Declaration uses two signer roles: the employee and the HR responsible user.
+                        </div>
+                        <field name="x_hr_responsible_id"
+                            options="{'no_create': True, 'no_create_edit': True}"/>
+                        <field name="x_hr_responsible_job_title"/>
+                    </group>
+
                     <group string="GRC Hooks">
                         <field name="x_grc_functional_area_id"
                             options="{'no_create': True, 'no_create_edit': True}"/>
@@ -171,6 +180,15 @@
                                     <field name="x_required_by_role"/>
                                     <field name="x_required_before_assignment"/>
                                 </group>
+                                <group string="F-0010 Signers" invisible="x_declaration_type != 'exclusive_employment_declaration'">
+                                    <div class="alert alert-info" role="alert" colspan="2">
+                                        F-0010 Exclusive Work Declaration uses two signer roles: the employee and the HR responsible user.
+                                    </div>
+                                    <field name="x_hr_responsible_id"
+                                        options="{'no_create': True, 'no_create_edit': True}"/>
+                                    <field name="x_hr_responsible_job_title"/>
+                                </group>
+
                                 <group string="GRC Hooks">
                                     <field name="x_grc_functional_area_id"
                                         options="{'no_create': True, 'no_create_edit': True}"/>
