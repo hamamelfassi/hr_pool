@@ -33,11 +33,12 @@
             <field name="field_description">Document Type</field>
             <field name="ttype">selection</field>
             <field name="required" eval="True"/>
+            <field name="translate" eval="True"/>
             <field name="selection">[
-                ('id_card', 'ID Card'),
-                ('passport', 'Passport'),
-                ('driving_license', 'Driving License'),
-                ('company_id_card', 'Company ID Card')
+                ('id_card', 'ID Card / بطاقة شخصية'),
+                ('passport', 'Passport / جواز سفر'),
+                ('driving_license', 'Driving License / رخصة قيادة'),
+                ('company_id_card', 'Company ID Card / بطاقة الشركة')
             ]</field>
         </record>
 
@@ -76,6 +77,31 @@
             <field name="ttype">date</field>
         </record>
 
+        <record id="field_x_hr_employee_identification_document__x_expiry_status" model="ir.model.fields">
+            <field name="name">x_expiry_status</field>
+            <field name="model_id" ref="model_x_hr_employee_identification_document"/>
+            <field name="field_description">Expiry Status</field>
+            <field name="ttype">selection</field>
+            <field name="translate" eval="True"/>
+            <field name="selection">[
+                ('active', 'Active / ساري'),
+                ('expired', 'Expired / منتهي'),
+                ('undefined', 'Undefined / غير محدد')
+            ]</field>
+            <field name="depends">x_expiry_date</field>
+            <field name="compute"><![CDATA[
+today = datetime.date.today()
+for record in self:
+    expiry = record.x_expiry_date
+    if not expiry:
+        record['x_expiry_status'] = 'undefined'
+    elif expiry < today:
+        record['x_expiry_status'] = 'expired'
+    else:
+        record['x_expiry_status'] = 'active'
+]]></field>
+        </record>
+
         <record id="field_x_hr_employee_identification_document__x_attachment_id" model="ir.model.fields">
             <field name="name">x_attachment_id</field>
             <field name="model_id" ref="model_x_hr_employee_identification_document"/>
@@ -83,6 +109,14 @@
             <field name="ttype">many2one</field>
             <field name="relation">ir.attachment</field>
             <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_identification_document__x_document_image" model="ir.model.fields">
+            <field name="name">x_document_image</field>
+            <field name="model_id" ref="model_x_hr_employee_identification_document"/>
+            <field name="field_description">Document Image</field>
+            <field name="ttype">binary</field>
+            <field name="help">Upload an image scan/photo of the identification document. Source attachments from recruitment handover remain tracked separately.</field>
         </record>
 
         <record id="field_x_hr_employee_identification_document__x_source_attachment_id" model="ir.model.fields">

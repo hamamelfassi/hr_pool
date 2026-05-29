@@ -7,6 +7,7 @@
         "mail",
         "hr",
         "sign",
+        "base_automation",
         "grc_backbone"
     ],
     "application": False,
@@ -15,6 +16,7 @@
     "data": [
         "models/01_employee_identification.xml",
         "security/ir.model.access.csv",
+        "data/01_employee_identification_automation.xml",
         "views/01_employee_identification_views.xml"
     ]
 }

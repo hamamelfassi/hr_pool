@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="automation_employee_identification_on_create" model="base.automation">
+            <field name="name">Employee Identification: Normalize and Log on Create</field>
+            <field name="active" eval="True"/>
+            <field name="trigger">on_create</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_identification_document"/>
+        </record>
+
+        <record id="action_employee_identification_on_create" model="ir.actions.server">
+            <field name="name">Employee Identification: Normalize and Log on Create</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_identification_document"/>
+            <field name="base_automation_id" ref="hr_employment_custom.automation_employee_identification_on_create"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+for rec in records.sudo():
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+    if not employee:
+        continue
+
+    employee_name = employee.name or employee.display_name or ''
+    document_number = rec.x_document_number or ''
+    normalized_name = employee_name
+    if document_number:
+        normalized_name = (employee_name + ' - ' + document_number) if employee_name else document_number
+
+    if normalized_name and rec.x_name != normalized_name:
+        rec.sudo().write({'x_name': normalized_name})
+
+    display_name = rec.x_name or normalized_name or employee_name or 'هوية'
+    body = 'تم تحديث بيانات الهوية: %s' % display_name
+
+    employee.message_post(body=body, subtype_xmlid='mail.mt_note')
+            ]]></field>
+        </record>
+
+        <record id="automation_employee_identification_on_write" model="base.automation">
+            <field name="name">Employee Identification: Normalize and Log on Update</field>
+            <field name="active" eval="True"/>
+            <field name="trigger">on_write</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_identification_document"/>
+            <field name="trigger_field_ids"
+                eval="[(6, 0, [
+                    ref('hr_employment_custom.field_x_hr_employee_identification_document__x_employee_id'),
+                    ref('hr_employment_custom.field_x_hr_employee_identification_document__x_document_type'),
+                    ref('hr_employment_custom.field_x_hr_employee_identification_document__x_document_number'),
+                    ref('hr_employment_custom.field_x_hr_employee_identification_document__x_issued_by'),
+                    ref('hr_employment_custom.field_x_hr_employee_identification_document__x_issue_place'),
+                    ref('hr_employment_custom.field_x_hr_employee_identification_document__x_issue_date'),
+                    ref('hr_employment_custom.field_x_hr_employee_identification_document__x_expiry_date'),
+                    ref('hr_employment_custom.field_x_hr_employee_identification_document__x_document_image')
+                ])]"/>
+        </record>
+
+        <record id="action_employee_identification_on_write" model="ir.actions.server">
+            <field name="name">Employee Identification: Normalize and Log on Update</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_identification_document"/>
+            <field name="base_automation_id" ref="hr_employment_custom.automation_employee_identification_on_write"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+for rec in records.sudo():
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+    if not employee:
+        continue
+
+    employee_name = employee.name or employee.display_name or ''
+    document_number = rec.x_document_number or ''
+    normalized_name = employee_name
+    if document_number:
+        normalized_name = (employee_name + ' - ' + document_number) if employee_name else document_number
+
+    if normalized_name and rec.x_name != normalized_name:
+        rec.sudo().write({'x_name': normalized_name})
+
+    display_name = rec.x_name or normalized_name or employee_name or 'هوية'
+    body = 'تم تحديث بيانات الهوية: %s' % display_name
+
+    employee.message_post(body=body, subtype_xmlid='mail.mt_note')
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>
