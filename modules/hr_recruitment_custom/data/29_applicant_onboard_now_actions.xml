@@ -802,6 +802,344 @@ def sync_employee_bank_account(applicant, employee):
     return bank_ready, bank_account, note
 
 
+def write_artifact_status(applicant, ready, count, notes):
+    vals = {}
+    mapping = {
+        'x_employment_artifacts_ready': bool(ready),
+        'x_employment_artifacts_count': int(count or 0),
+        'x_employment_artifacts_checked_on': datetime.datetime.now(),
+        'x_employment_artifacts_checked_by_user_id': env.user.id,
+        'x_employment_artifacts_notes': notes or False,
+    }
+    for field_name, value in mapping.items():
+        if field_name in applicant._fields:
+            vals[field_name] = value
+    if vals:
+        applicant.write(vals)
+
+
+def attachment_from(record, field_names):
+    if not record:
+        return False
+    fields = record._fields
+    for field_name in field_names:
+        if field_name in fields and record[field_name]:
+            return record[field_name]
+    return False
+
+
+def append_artifact(artifacts, attachment, label, kind):
+    if not attachment:
+        return
+    if not attachment.id:
+        return
+    existing_ids = [a['attachment'].id for a in artifacts]
+    if attachment.id in existing_ids:
+        return
+    artifacts.append({
+        'attachment': attachment.sudo(),
+        'label': label,
+        'kind': kind,
+    })
+
+
+def collect_employment_artifacts(applicant):
+    artifacts = []
+
+    source_contract = get_source_employment_contract(applicant)
+
+    if source_contract:
+        # F-0005 employment contract artifacts. Prefer signed/accredited official copies.
+        append_artifact(
+            artifacts,
+            attachment_from(source_contract, ['x_signed_attachment_id', 'x_signed_pdf_attachment_id']),
+            'F-0005 signed employment contract',
+            'f0005_signed_contract',
+        )
+        append_artifact(
+            artifacts,
+            attachment_from(source_contract, ['x_ministry_accredited_attachment_id', 'x_accredited_attachment_id', 'x_ministry_attachment_id']),
+            'F-0005 ministry accredited employment contract',
+            'f0005_ministry_accredited_contract',
+        )
+        append_artifact(
+            artifacts,
+            attachment_from(source_contract, ['x_signature_certificate_attachment_id', 'x_sign_certificate_attachment_id', 'x_certificate_attachment_id']),
+            'F-0005 signing certificate',
+            'f0005_signature_certificate',
+        )
+
+    # F-0006 TOR artifacts may live directly on hr.applicant.
+    append_artifact(
+        artifacts,
+        attachment_from(applicant, ['x_tor_signed_attachment_id', 'x_tor_signed_pdf_attachment_id', 'x_tor_final_attachment_id']),
+        'F-0006 signed TOR',
+        'f0006_signed_tor',
+    )
+    append_artifact(
+        artifacts,
+        attachment_from(applicant, ['x_tor_signature_certificate_attachment_id', 'x_tor_certificate_attachment_id', 'x_tor_sign_certificate_attachment_id']),
+        'F-0006 signing certificate',
+        'f0006_signature_certificate',
+    )
+
+    # Applicant declarations: F-0004, F-0007, F-0009 where present.
+    try:
+        Declaration = env['x_hr.applicant_declaration'].sudo()
+        dec_fields = Declaration._fields
+        domain = []
+        if 'x_applicant_id' in dec_fields:
+            domain.append(('x_applicant_id', '=', applicant.id))
+        if 'x_state' in dec_fields:
+            domain.append(('x_state', '=', 'signed'))
+        declarations = Declaration.search(domain, order='id asc') if domain else Declaration.browse()
+    except Exception:
+        declarations = False
+
+    for declaration in declarations:
+        code = False
+        for code_field in ['x_declaration_code', 'x_document_code', 'x_template_code']:
+            if code_field in declaration._fields and declaration[code_field]:
+                code = declaration[code_field]
+                break
+
+        name = False
+        for name_field in ['x_name', 'display_name']:
+            if name_field in declaration._fields and declaration[name_field]:
+                name = declaration[name_field]
+                break
+
+        label_prefix = code or name or 'Applicant declaration'
+
+        append_artifact(
+            artifacts,
+            attachment_from(declaration, ['x_signed_attachment_id', 'x_signed_pdf_attachment_id']),
+            '%s signed declaration' % label_prefix,
+            '%s_signed_declaration' % str(label_prefix).lower().replace(' ', '_'),
+        )
+        append_artifact(
+            artifacts,
+            attachment_from(declaration, ['x_signature_certificate_attachment_id', 'x_sign_certificate_attachment_id', 'x_certificate_attachment_id']),
+            '%s signing certificate' % label_prefix,
+            '%s_signature_certificate' % str(label_prefix).lower().replace(' ', '_'),
+        )
+
+    return artifacts
+
+
+def copy_artifact_to_employee(applicant, employee, artifact):
+    source_attachment = artifact.get('attachment')
+    label = artifact.get('label') or 'Employment artifact'
+    kind = artifact.get('kind') or 'employment_artifact'
+
+    if not source_attachment:
+        return False, False
+
+    Attachment = env['ir.attachment'].sudo()
+    attachment_fields = Attachment._fields
+
+    duplicate = False
+    if 'x_source_employment_attachment_id' in attachment_fields:
+        duplicate = Attachment.search([
+            ('res_model', '=', 'hr.employee'),
+            ('res_id', '=', employee.id),
+            ('x_source_employment_attachment_id', '=', source_attachment.id),
+        ], limit=1)
+
+    if not duplicate:
+        duplicate = Attachment.search([
+            ('res_model', '=', 'hr.employee'),
+            ('res_id', '=', employee.id),
+            ('name', '=', source_attachment.name),
+        ], limit=1)
+
+    if duplicate:
+        return duplicate, False
+
+    copy_name = source_attachment.name or label
+    vals = {
+        'name': copy_name,
+        'res_model': 'hr.employee',
+        'res_id': employee.id,
+    }
+
+    if 'x_source_employment_attachment_id' in attachment_fields:
+        vals['x_source_employment_attachment_id'] = source_attachment.id
+    if 'x_source_employment_applicant_id' in attachment_fields:
+        vals['x_source_employment_applicant_id'] = applicant.id
+    if 'x_employment_handover_kind' in attachment_fields:
+        vals['x_employment_handover_kind'] = kind
+
+    copied = source_attachment.copy(vals)
+    return copied, True
+
+
+def sync_employee_artifacts(applicant, employee):
+    artifacts = collect_employment_artifacts(applicant)
+
+    if not artifacts:
+        note = 'لم يتم العثور على مرفقات رسمية/موقعة جاهزة للترحيل إلى سجل الموظف.'
+        write_artifact_status(applicant, False, 0, note)
+        applicant.message_post(body=note)
+        employee.message_post(body=note)
+        return False, [], note
+
+    copied_ids = []
+    existing_ids = []
+    labels = []
+
+    for artifact in artifacts:
+        copied, created = copy_artifact_to_employee(applicant, employee, artifact)
+        if not copied:
+            continue
+        labels.append(artifact.get('label') or copied.name)
+        if created:
+            copied_ids.append(copied.id)
+        else:
+            existing_ids.append(copied.id)
+
+    all_ids = copied_ids + existing_ids
+
+    if not all_ids:
+        note = 'تم العثور على مرفقات للترحيل، لكن لم يتم نسخ أي مرفق إلى سجل الموظف.'
+        write_artifact_status(applicant, False, 0, note)
+        applicant.message_post(body=note)
+        employee.message_post(body=note)
+        return False, [], note
+
+    note = 'تم ترحيل/تأكيد مرفقات ما قبل التوظيف إلى سجل الموظف: %s.' % ', '.join(labels)
+    if existing_ids:
+        note += ' تم تجاهل النسخ المكررة الموجودة مسبقاً.'
+
+    write_artifact_status(applicant, True, len(all_ids), note)
+    applicant.message_post(body=note)
+
+    # Attach only newly copied files to the chatter message to avoid noisy duplicates.
+    if copied_ids:
+        employee.message_post(body=note, attachment_ids=copied_ids)
+    else:
+        employee.message_post(body=note)
+
+    return True, all_ids, note
+
+
+def write_final_handover_status(applicant, closed, stage_moved, notes):
+    vals = {}
+    mapping = {
+        'x_employment_handover_closed': bool(closed),
+        'x_employment_stage_move_done': bool(stage_moved),
+        'x_employment_handover_closure_notes': notes or False,
+    }
+
+    if closed:
+        mapping['x_employment_handover_closed_on'] = datetime.datetime.now()
+        mapping['x_employment_handover_closed_by_user_id'] = env.user.id
+
+    for field_name, value in mapping.items():
+        if field_name in applicant._fields:
+            vals[field_name] = value
+
+    if vals:
+        applicant.write(vals)
+
+
+def final_handover_missing_items(applicant):
+    missing = []
+
+    if 'x_employment_employee_id' in applicant._fields:
+        if not applicant.x_employment_employee_id:
+            missing.append('سجل الموظف المرتبط')
+    else:
+        missing.append('حقل ربط الموظف')
+
+    if 'x_employment_payroll_ready' in applicant._fields and not applicant.x_employment_payroll_ready:
+        missing.append('جاهزية الرواتب/العقد')
+
+    if 'x_employment_bank_ready' in applicant._fields and not applicant.x_employment_bank_ready:
+        missing.append('جاهزية الحساب البنكي')
+
+    if 'x_employment_artifacts_ready' in applicant._fields and not applicant.x_employment_artifacts_ready:
+        missing.append('جاهزية المرفقات الرسمية')
+
+    return missing
+
+
+def find_contract_signed_stage(applicant):
+    try:
+        Stage = env['hr.recruitment.stage'].sudo()
+    except Exception:
+        return False
+
+    stage_fields = Stage._fields
+
+    stage_domains = [
+        [('name', '=', 'Contract Signed')],
+        [('name', 'ilike', 'Contract Signed')],
+        [('name', 'ilike', 'Signed')],
+        [('name', 'ilike', 'توقيع')],
+        [('name', 'ilike', 'موقع')],
+        [('name', 'ilike', 'تم توقيع')],
+    ]
+
+    base_domains = [[]]
+
+    if 'job_ids' in stage_fields and 'job_id' in applicant._fields and applicant.job_id:
+        base_domains.insert(0, ['|', ('job_ids', '=', False), ('job_ids', 'in', [applicant.job_id.id])])
+
+    for base_domain in base_domains:
+        for stage_domain in stage_domains:
+            try:
+                stage = Stage.search(stage_domain + base_domain, order='sequence asc, id asc', limit=1)
+            except Exception:
+                stage = False
+            if stage:
+                return stage
+
+    return False
+
+
+def move_applicant_to_contract_signed(applicant):
+    if 'stage_id' not in applicant._fields:
+        return False, 'لا يمكن تحديث مرحلة المتقدم لأن الحقل stage_id غير متاح.'
+
+    target_stage = find_contract_signed_stage(applicant)
+    if not target_stage:
+        return False, 'لم يتم العثور على مرحلة Contract Signed / تم توقيع العقد. تم ترك مرحلة المتقدم بدون تغيير.'
+
+    if applicant.stage_id and applicant.stage_id.id == target_stage.id:
+        return True, 'المتقدم موجود بالفعل في مرحلة توقيع العقد/Contract Signed.'
+
+    old_stage_name = applicant.stage_id.name if applicant.stage_id else 'بدون مرحلة'
+    applicant.write({'stage_id': target_stage.id})
+    return True, 'تم نقل المتقدم من مرحلة %s إلى مرحلة %s.' % (old_stage_name, target_stage.name)
+
+
+def finalize_employment_handover(applicant, employee):
+    missing = final_handover_missing_items(applicant)
+
+    if missing:
+        note = 'لم يتم إغلاق ترحيل التوظيف نهائياً بسبب النواقص التالية: %s.' % ', '.join(missing)
+        write_final_handover_status(applicant, False, False, note)
+        applicant.message_post(body=note)
+        employee.message_post(body=note)
+        return False, note
+
+    stage_moved, stage_note = move_applicant_to_contract_signed(applicant)
+
+    if stage_moved:
+        note = 'تم إغلاق ترحيل المتقدم إلى الموظف بنجاح. %s' % stage_note
+        write_final_handover_status(applicant, True, True, note)
+        applicant.message_post(body=note)
+        employee.message_post(body=note)
+        return True, note
+
+    note = 'اكتملت بيانات الترحيل الأساسية، لكن لم يتم إغلاق الترحيل نهائياً بسبب مرحلة المتقدم: %s' % stage_note
+    write_final_handover_status(applicant, False, False, note)
+    applicant.message_post(body=note)
+    employee.message_post(body=note)
+    return False, note
+
+
 applicant = records.sudo()[:1]
 
 if not applicant:
@@ -874,8 +1212,11 @@ else:
 
                 payroll_ready, payroll_note = sync_employee_payroll(applicant, employee)
                 bank_ready, bank_account, bank_note = sync_employee_bank_account(applicant, employee)
+                artifacts_ready, artifact_ids, artifact_note = sync_employee_artifacts(applicant, employee)
+                final_ready, final_note = finalize_employment_handover(applicant, employee)
 
-                note = 'تم ربط الموظف. تم العثور على سجل موظف مرتبط بهذا المتقدم، ولم يتم إنشاء موظف جديد. تم تحديث جاهزية الرواتب/العقد على سجل الموظف. سيستكمل Pass 13 اللاحق ترحيل المرفقات.'
+                note = 'تم ربط الموظف. تم العثور على سجل موظف مرتبط بهذا المتقدم، ولم يتم إنشاء موظف جديد. تم تحديث جاهزية الرواتب/العقد على سجل الموظف. تم تنفيذ فحص الإغلاق النهائي ونقل المرحلة عند اكتمال الشروط.'
+                note = '%s %s' % (note, final_note)
                 write_handover(applicant, 'onboarded', True, note)
                 applicant.message_post(body=note)
                 employee.message_post(body='تم تأكيد الربط والتحديث من المتقدم: %s.' % (applicant.partner_name or applicant.display_name))
@@ -895,8 +1236,11 @@ else:
 
                 payroll_ready, payroll_note = sync_employee_payroll(applicant, employee)
                 bank_ready, bank_account, bank_note = sync_employee_bank_account(applicant, employee)
+                artifacts_ready, artifact_ids, artifact_note = sync_employee_artifacts(applicant, employee)
+                final_ready, final_note = finalize_employment_handover(applicant, employee)
 
-                note = 'تم إنشاء سجل الموظف وربطه بالمتقدم. تم تحديث جاهزية الرواتب/العقد على سجل الموظف. لم يتم بعد ترحيل المرفقات في هذا الجزء من Pass 13.'
+                note = 'تم إنشاء سجل الموظف وربطه بالمتقدم. تم تحديث جاهزية الرواتب/العقد على سجل الموظف. تم ترحيل/تأكيد المرفقات الرسمية حيثما توفرت. تم تنفيذ فحص الإغلاق النهائي ونقل المرحلة عند اكتمال الشروط.'
+                note = '%s %s' % (note, final_note)
                 write_handover(applicant, 'onboarded', True, note)
                 applicant.message_post(body=note)
                 employee.message_post(body='تم إنشاء هذا الموظف من المتقدم: %s.' % (applicant.partner_name or applicant.display_name))

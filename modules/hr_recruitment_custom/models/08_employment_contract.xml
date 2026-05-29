@@ -1258,6 +1258,112 @@
         </record>
 
 
+
+        <!-- Pass 13G applicant artifact handover status fields -->
+        <record id="field_hr_applicant_x_employment_artifacts_ready" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_artifacts_ready</field>
+            <field name="field_description">Employment Artifacts Ready</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_artifacts_count" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_artifacts_count</field>
+            <field name="field_description">Employment Artifacts Count</field>
+            <field name="ttype">integer</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_artifacts_checked_on" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_artifacts_checked_on</field>
+            <field name="field_description">Employment Artifacts Checked On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_artifacts_checked_by_user_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_artifacts_checked_by_user_id</field>
+            <field name="field_description">Employment Artifacts Checked By</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_artifacts_notes" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_artifacts_notes</field>
+            <field name="field_description">Employment Artifacts Notes</field>
+            <field name="ttype">text</field>
+        </record>
+
+        <!-- Pass 13G traceability fields on copied employee attachments -->
+        <record id="field_ir_attachment_x_source_employment_attachment_id" model="ir.model.fields">
+            <field name="model_id" search="[('model', '=', 'ir.attachment')]"/>
+            <field name="name">x_source_employment_attachment_id</field>
+            <field name="field_description">Source Employment Attachment</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_ir_attachment_x_source_employment_applicant_id" model="ir.model.fields">
+            <field name="model_id" search="[('model', '=', 'ir.attachment')]"/>
+            <field name="name">x_source_employment_applicant_id</field>
+            <field name="field_description">Source Employment Applicant</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.applicant</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_ir_attachment_x_employment_handover_kind" model="ir.model.fields">
+            <field name="model_id" search="[('model', '=', 'ir.attachment')]"/>
+            <field name="name">x_employment_handover_kind</field>
+            <field name="field_description">Employment Handover Kind</field>
+            <field name="ttype">char</field>
+        </record>
+
+
+
+        <!-- Pass 13H final employment handover closure fields -->
+        <record id="field_hr_applicant_x_employment_handover_closed" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_handover_closed</field>
+            <field name="field_description">Employment Handover Closed</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_handover_closed_on" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_handover_closed_on</field>
+            <field name="field_description">Employment Handover Closed On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_handover_closed_by_user_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_handover_closed_by_user_id</field>
+            <field name="field_description">Employment Handover Closed By</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_stage_move_done" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_stage_move_done</field>
+            <field name="field_description">Employment Stage Move Done</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_hr_applicant_x_employment_handover_closure_notes" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_employment_handover_closure_notes</field>
+            <field name="field_description">Employment Handover Closure Notes</field>
+            <field name="ttype">text</field>
+        </record>
+
+
         <!-- Pass 9C source / provenance fields -->
         <record id="field_employment_contract_x_conversion_request_id" model="ir.model.fields">
             <field name="model_id" ref="model_x_hr_applicant_employment_contract"/>
