@@ -181,3 +181,35 @@ Next slices:
 Scope guard:
 
 Pass 15C+ must not create custody, training, leave, permissions, assignments, appraisal, separation, clearance, payroll, work-entry, or GRC decision-instance logic.
+
+## Current working sequence after F-0010 generation
+
+Accepted sequencing update:
+
+```text
+Finish QWeb/PDF generation for all selected employee declaration forms first.
+Then implement Odoo Sign send/sync flows for the declaration group second.
+```
+
+Current locked generation state:
+
+```text
+F-0010 Exclusive Work Declaration — QWeb/PDF generation accepted
+```
+
+Current deferred items:
+
+```text
+F-0010 footer micro-positioning refinement
+F-0010 Sign send/sync
+F-0010 signed PDF/certificate sync
+F-0010 mobile-safe signed artifact copy
+```
+
+Report generation lessons:
+
+- Shared embedded font/logo assets should live in a common QWeb asset/header template.
+- The `report.paperformat` record controls page geometry only; it does not carry reusable font/logo/header content.
+- For fixed governed forms, static page labels are acceptable where Odoo SaaS does not reliably resolve body-level `.page/.topage` counters.
+- Header and footer layout must be tested from generated PDF, not only XML sanity or HTML preview.
+- Translation updates should follow the exported-anchor PO method after the functional slice installs cleanly.

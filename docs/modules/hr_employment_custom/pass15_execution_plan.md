@@ -687,3 +687,163 @@ Deferred from 13J-B:
 - Add optional `13J-C` cleanup: call the identity sync logic from `بدء التوظيف` after a safe standalone identity sync path has passed on more real applicants.
 - Replace inline document/status selection labels with helper records if longer labels or strict translation control become necessary.
 - Consider a future employee Documents/Files hardening pass for broader document governance, but do not block Pass 15 declarations on it.
+
+## 12. Progress update — Pass 15C through 15F F-0010 generation locked
+
+### 15C accepted state — Employee declaration model and tab
+
+Pass 15C is functionally accepted and committed.
+
+Locked outcomes:
+
+- `x_hr.employee_declaration` is installed as the thin employee declaration process model.
+- `hr.employee.x_employee_declaration_ids` renders in the employee `Declarations / الإقرارات` tab.
+- Declaration records own lifecycle/artifact/sign metadata.
+- Declaration PDFs are designed to read from:
+  - native `hr.employee` fields;
+  - selected `x_hr.employee_identification_document`;
+  - declaration lifecycle fields.
+- Declaration records do not duplicate broad employee snapshot fields.
+- No custody, training, leave, permissions, assignment, appraisal, separation, clearance, payroll, work-entry, or GRC decision-instance logic was added.
+
+Traceback fixed:
+
+- `ir.model.access.csv` initially failed because a new CSV row was glued to the previous boolean field through a literal escaped newline.
+- Fix: normalize CSV line endings, remove literal `\n`, deduplicate rows, and keep each access rule as exactly eight CSV columns.
+
+Translation lesson locked:
+
+- Future translation patches must rebaseline from Odoo-exported `ar_001.po` anchors before filling `msgstr`.
+- Do not rely on manually guessed PO anchors for new custom model/view terms.
+- Correct sequence:
+  1. implement functional slice;
+  2. install/upgrade;
+  3. export updated `ar_001.po` from Odoo;
+  4. replace/rebaseline module PO from exported anchors;
+  5. fill translations against exact exported `model`, `model_terms`, and field-description anchors.
+
+### 15D accepted state — F-0010 signer behavior
+
+Pass 15D is functionally accepted and committed.
+
+Locked outcomes:
+
+- F-0010 Exclusive Work Declaration has two signer roles:
+  - employee;
+  - HR responsible user.
+- Added declaration fields:
+  - `x_hr_responsible_id`;
+  - `x_hr_responsible_job_title`.
+- `x_hr_responsible_job_title` defaults to:
+
+```text
+مدير الموارد البشرية
+```
+
+- F-0010 Signers group is visible only for declaration type:
+
+```text
+exclusive_employment_declaration
+```
+
+- No QWeb/PDF/Sign lifecycle was added in 15D.
+
+### 15E accepted state — shared report assets and F-0010 QWeb skeleton
+
+Pass 15E installed cleanly.
+
+Locked outcomes:
+
+- Added reusable report files:
+  - `report/01_employee_declaration_paperformat.xml`
+  - `report/02_common_employee_report_assets.xml`
+  - `report/03_employee_declaration_f0010_templates.xml`
+  - `report/04_employee_declaration_report_actions.xml`
+- Report asset pattern:
+  - shared embedded font/style template;
+  - shared embedded logo/header template;
+  - report-specific body template.
+- The paperformat is explicit A4.
+- F-0010 is a fixed two-page report:
+  - page 1: header, employee/source values, two signature blocks;
+  - page 2: declaration text.
+- Assets are centralized in the common QWeb asset/header template rather than duplicated inside every form body.
+
+### 15F accepted state — F-0010 Generate PDF action and layout hardening
+
+Pass 15F F-0010 generation is accepted in its current form.
+
+Locked outcomes:
+
+- Added server action/button:
+
+```text
+Generate PDF / توليد الإقرار
+```
+
+- Generate action:
+  - renders the F-0010 QWeb PDF;
+  - writes `x_pdf_attachment_id`;
+  - writes `x_generated_on`;
+  - moves state to `generated`;
+  - posts the generated PDF to the linked employee chatter/files.
+- Generated PDF field is populated.
+- Employee chatter receives the generated PDF attachment.
+- Generated report remains fixed two pages.
+
+Accepted report layout state:
+
+- Header is acceptable:
+  - MCEP logo on top-left;
+  - document metadata on top-right.
+- Report uses explicit A4 sizing.
+- Page 1 contains employee data and signature blocks.
+- Page 2 contains declaration text.
+- Static page labels are used:
+  - `Page 1 / 2`
+  - `Page 2 / 2`
+- Footer position is accepted for now even though it could still be lower.
+
+Footer lesson:
+
+- Attempted body-level dynamic counters using:
+
+```text
+<span class="page"></span> / <span class="topage"></span>
+```
+
+- In this Odoo SaaS QWeb/wkhtml path, the counter rendered incorrectly as `Page /`, so it is not reliable inside this report body.
+- Reverted to static per-page footer labels for fixed two-page governed forms.
+- Further footer micro-positioning is deferred.
+
+### Current implementation strategy
+
+Proceed in this order:
+
+```text
+1. Finish QWeb/PDF generation for the declaration form group.
+2. Then implement Odoo Sign flows for the declaration form group.
+```
+
+Reason:
+
+- Keeping all declaration QWeb/PDF generation in one coding pattern reduces churn.
+- Sign anchoring should be implemented only after all target generated PDFs and signature zones are stable.
+
+### Next implementation slices
+
+Next slices should stay within QWeb/PDF generation:
+
+```text
+15G — Add next declaration QWeb/PDF template and generation behavior
+15H — Add third declaration QWeb/PDF template and generation behavior
+15I — Add fourth declaration QWeb/PDF template and generation behavior, if retained in Pass 15 scope
+15J — QWeb/PDF regression and generated artifact hardening for declaration group
+15K — Odoo Sign send flow for declaration group
+15L — Odoo Sign sync flow, signed PDF/certificate copy, and mobile-safe employee chatter/files
+```
+
+Scope guard:
+
+- Do not begin Sign send/sync until the selected declaration QWeb/PDF templates are accepted.
+- Do not add payroll, work-entry, custody, training, leave, clearance, or GRC decision-instance logic in these QWeb generation slices.
