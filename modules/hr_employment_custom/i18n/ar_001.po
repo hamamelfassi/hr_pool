@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~19.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-29 12:54+0000\n"
-"PO-Revision-Date: 2026-05-29 12:54+0000\n"
+"POT-Creation-Date: 2026-05-29 14:51+0000\n"
+"PO-Revision-Date: 2026-05-29 14:51+0000\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_001\n"
@@ -17,16 +17,48 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: hr_employment_custom
+#: model:ir.actions.act_window,name:hr_employment_custom.action_employee_declaration_create
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
+msgid "Add Declaration"
+msgstr "إضافة إقرار"
+
+#. module: hr_employment_custom
 #: model:ir.actions.act_window,name:hr_employment_custom.action_employee_identification_document_create
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_identification_documents
 msgid "Add Identification"
 msgstr "إضافة هوية"
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
+msgid "Artifacts"
+msgstr "المرفقات الرسمية"
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_identification_document_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_identification_documents
 msgid "Attachments"
 msgstr "المرفقات"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_name
+msgid "Declaration Label"
+msgstr "تسمية الإقرار"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_state
+msgid "Declaration State"
+msgstr "حالة الإقرار"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_declaration_type
+msgid "Declaration Type"
+msgstr "نوع الإقرار"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
+msgid "Declarations"
+msgstr "الإقرارات"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_attachment_id
@@ -52,14 +84,51 @@ msgid "Document Number"
 msgstr "رقم المستند"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_document_reference
+msgid "Document Reference"
+msgstr "مرجع المستند"
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_document_type
 msgid "Document Type"
 msgstr "نوع المستند"
 
 #. module: hr_employment_custom
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_identification_download_source_attachment
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_identification_documents
+msgid "Download Source Attachment"
+msgstr "تنزيل مرفق المصدر"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_employee_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_employee_id
 msgid "Employee"
 msgstr "الموظف"
+
+#. module: hr_employment_custom
+#: model:ir.model,name:hr_employment_custom.model_x_hr_employee_declaration
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+msgid "Employee Declaration"
+msgstr "إقرار الموظف"
+
+#. module: hr_employment_custom
+#: model:base.automation,name:hr_employment_custom.automation_employee_declaration_normalize_on_create
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_normalize_on_create
+msgid "Employee Declaration: Normalize on Create"
+msgstr "إقرار الموظف: ضبط البيانات عند الإنشاء"
+
+#. module: hr_employment_custom
+#: model:base.automation,name:hr_employment_custom.automation_employee_declaration_normalize_on_write
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_normalize_on_write
+msgid "Employee Declaration: Normalize on Update"
+msgstr "إقرار الموظف: ضبط البيانات عند التحديث"
+
+#. module: hr_employment_custom
+#: model:ir.actions.act_window,name:hr_employment_custom.action_employee_declarations
+#: model:ir.model.fields,field_description:hr_employment_custom.field_hr_employee__x_employee_declaration_ids
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_list
+msgid "Employee Declarations"
+msgstr "إقرارات الموظف"
 
 #. module: hr_employment_custom
 #: model:ir.model,name:hr_employment_custom.model_x_hr_employee_identification_document
@@ -86,6 +155,15 @@ msgid "Employee Identification: Normalize and Log on Update"
 msgstr "هوية الموظف: ضبط الاسم والتسجيل عند التحديث"
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
+msgid ""
+"Employee declarations are controlled process records. The PDF and Sign "
+"lifecycle will be added in later Pass 15 slices. Declaration PDFs should "
+"read native employee fields and the selected employee identification "
+"document rather than duplicating employee snapshot fields."
+msgstr "إقرارات الموظف هي سجلات عملية مضبوطة. ستتم إضافة دورة ملف PDF والتوقيع في شرائح لاحقة من Pass 15. يجب أن تقرأ ملفات الإقرار من حقول الموظف الأصلية ومستند الهوية المختار بدلاً من تكرار لقطات بيانات الموظف."
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_expiry_date
 msgid "Expiry Date"
 msgstr "تاريخ الانتهاء"
@@ -94,6 +172,37 @@ msgstr "تاريخ الانتهاء"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_expiry_status
 msgid "Expiry Status"
 msgstr "حالة الصلاحية"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_form_code
+msgid "Form Code"
+msgstr "رمز النموذج"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_grc_function_id
+msgid "GRC Function"
+msgstr "وظيفة الحوكمة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_grc_functional_area_id
+msgid "GRC Functional Area"
+msgstr "المجال الوظيفي للحوكمة"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
+msgid "GRC Hooks"
+msgstr "روابط الحوكمة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_generated_on
+msgid "Generated On"
+msgstr "تاريخ الإنشاء"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_pdf_attachment_id
+msgid "Generated PDF"
+msgstr "ملف PDF المنشأ"
 
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_identification_documents
@@ -132,14 +241,115 @@ msgid "Issued By"
 msgstr "جهة الإصدار"
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
+msgid "Manual Decision"
+msgstr "قرار يدوي"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_manual_decision_attachment_id
+msgid "Manual Decision Attachment"
+msgstr "مرفق القرار اليدوي"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_manual_decision_date
+msgid "Manual Decision Date"
+msgstr "تاريخ القرار اليدوي"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_manual_decision_number
+msgid "Manual Decision Number"
+msgstr "رقم القرار اليدوي"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_notes
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_notes
 msgid "Notes"
 msgstr "ملاحظات"
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
+msgid "Odoo Sign"
+msgstr "توقيع أودو"
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,help:hr_employment_custom.field_x_hr_employee_identification_document__x_name
 msgid "Optional display label, such as Passport - Employee Name."
 msgstr "تسمية عرض اختيارية، مثل: جواز سفر - اسم الموظف."
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
+msgid "Ownership and Notes"
+msgstr "المسؤولية والملاحظات"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_required_before_assignment
+msgid "Required Before Assignment"
+msgstr "مطلوب قبل التكليف"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_required_by_role
+msgid "Required by Role"
+msgstr "مطلوب حسب الدور"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_responsible_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_selected_identification_document_id
+msgid "Selected Identification Document"
+msgstr "مستند الهوية المختار"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,help:hr_employment_custom.field_x_hr_employee_declaration__x_selected_identification_document_id
+msgid ""
+"Selected employee identity document used by declaration PDFs where a "
+"personal ID, passport, or driving-license number is required."
+msgstr "مستند هوية الموظف المختار لاستخدامه في ملفات الإقرار عندما يكون رقم البطاقة الشخصية أو جواز السفر أو رخصة القيادة مطلوبًا."
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sent_on
+msgid "Sent On"
+msgstr "تاريخ الإرسال"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sign_certificate_attachment_id
+msgid "Sign Certificate"
+msgstr "شهادة التوقيع"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sign_request_res_id
+msgid "Sign Request ID"
+msgstr "معرّف طلب التوقيع"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sign_request_reference
+msgid "Sign Request Reference"
+msgstr "مرجع طلب التوقيع"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sign_request_state
+msgid "Sign Request State"
+msgstr "حالة طلب التوقيع"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sign_request_url
+msgid "Sign Request URL"
+msgstr "رابط طلب التوقيع"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_signed_on
+msgid "Signed On"
+msgstr "تاريخ التوقيع"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_signed_attachment_id
+msgid "Signed PDF"
+msgstr "ملف PDF الموقّع"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_source_attachment_id
@@ -163,14 +373,16 @@ msgid "Source Trace"
 msgstr "تتبع المصدر"
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
+msgid "Source Values"
+msgstr "قيم المصدر"
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,help:hr_employment_custom.field_x_hr_employee_identification_document__x_document_image
 msgid ""
 "Upload an image scan/photo of the identification document. Source "
 "attachments from recruitment handover remain tracked separately."
 msgstr ""
 "ارفع صورة أو نسخة ممسوحة ضوئيًا من مستند الهوية. تبقى مرفقات المصدر القادمة "
-"من التوظيف متتبعة بشكل منفصل."\n\n#. module: hr_employment_custom
-#: model:ir.actions.server,name:hr_employment_custom.action_employee_identification_download_source_attachment
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_identification_documents
-msgid "Download Source Attachment"
-msgstr "تنزيل مرفق المصدر"\n
+"من التوظيف متتبعة بشكل منفصل."

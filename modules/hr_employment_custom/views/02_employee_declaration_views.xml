@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_employee_declaration_list" model="ir.ui.view">
+        <field name="name">x.hr.employee.declaration.list</field>
+        <field name="model">x_hr.employee_declaration</field>
+        <field name="arch" type="xml">
+            <list string="Employee Declarations" create="0">
+                <field name="x_declaration_type" widget="badge"/>
+                <field name="x_state"
+                    widget="badge"
+                    decoration-muted="x_state in ('draft', 'superseded')"
+                    decoration-info="x_state == 'generated'"
+                    decoration-warning="x_state in ('signature_requested', 'blocked')"
+                    decoration-success="x_state == 'signed'"
+                    decoration-danger="x_state in ('cancelled', 'rejected')"/>
+                <field name="x_document_reference"/>
+                <field name="x_selected_identification_document_id"/>
+                <field name="x_generated_on"/>
+                <field name="x_sent_on"/>
+                <field name="x_signed_on"/>
+                <field name="x_responsible_user_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_employee_declaration_form" model="ir.ui.view">
+        <field name="name">x.hr.employee.declaration.form</field>
+        <field name="model">x_hr.employee_declaration</field>
+        <field name="arch" type="xml">
+            <form string="Employee Declaration">
+                <header>
+                    <field name="x_state"
+                        widget="statusbar"
+                        options="{'clickable': false}"
+                        statusbar_visible="draft,generated,signature_requested,signed"
+                        readonly="1"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="x_employee_id" readonly="1" force_save="1"/>
+                        <field name="x_declaration_type"/>
+                        <field name="x_name" readonly="1"/>
+                        <field name="x_form_code" readonly="1"/>
+                        <field name="x_document_reference" readonly="1"/>
+                    </group>
+
+                    <group string="Source Values">
+                        <field name="x_selected_identification_document_id"
+                            domain="[('x_employee_id', '=', x_employee_id)]"
+                            options="{'no_create': True, 'no_create_edit': True}"/>
+                        <field name="x_required_by_role"/>
+                        <field name="x_required_before_assignment"/>
+                    </group>
+
+                    <group string="GRC Hooks">
+                        <field name="x_grc_functional_area_id"
+                            options="{'no_create': True, 'no_create_edit': True}"/>
+                        <field name="x_grc_function_id"
+                            options="{'no_create': True, 'no_create_edit': True}"/>
+                    </group>
+
+                    <group string="Artifacts">
+                        <field name="x_pdf_attachment_id" readonly="1"
+                            options="{'no_create': True, 'no_create_edit': True}"/>
+                        <field name="x_signed_attachment_id" readonly="1"
+                            options="{'no_create': True, 'no_create_edit': True}"/>
+                        <field name="x_sign_certificate_attachment_id" readonly="1"
+                            options="{'no_create': True, 'no_create_edit': True}"/>
+                    </group>
+
+                    <group string="Odoo Sign">
+                        <field name="x_sign_request_res_id" readonly="1"/>
+                        <field name="x_sign_request_state" readonly="1"/>
+                        <field name="x_sign_request_reference" readonly="1"/>
+                        <field name="x_sign_request_url" readonly="1"/>
+                        <field name="x_generated_on" readonly="1"/>
+                        <field name="x_sent_on" readonly="1"/>
+                        <field name="x_signed_on" readonly="1"/>
+                    </group>
+
+                    <group string="Manual Decision">
+                        <field name="x_manual_decision_number"/>
+                        <field name="x_manual_decision_date"/>
+                        <field name="x_manual_decision_attachment_id"
+                            options="{'no_create': True, 'no_create_edit': True}"/>
+                    </group>
+
+                    <group string="Ownership and Notes">
+                        <field name="x_responsible_user_id"
+                            options="{'no_create': True, 'no_create_edit': True}"/>
+                        <field name="x_notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_employee_declaration_create" model="ir.actions.act_window">
+        <field name="name">Add Declaration</field>
+        <field name="res_model">x_hr.employee_declaration</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_employee_declaration_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_employee_declarations" model="ir.actions.act_window">
+        <field name="name">Employee Declarations</field>
+        <field name="res_model">x_hr.employee_declaration</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_hr_employee_form_inherit_employee_declarations" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit.employee.declarations</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook" position="inside">
+                <page name="mcep_employee_declarations" string="Declarations">
+                    <div class="alert alert-info" role="alert">
+                        Employee declarations are controlled process records. The PDF and Sign lifecycle will be added in later Pass 15 slices. Declaration PDFs should read native employee fields and the selected employee identification document rather than duplicating employee snapshot fields.
+                    </div>
+
+                    <div class="mb-2">
+                        <button name="%(action_employee_declaration_create)d"
+                            type="action"
+                            string="Add Declaration"
+                            class="btn btn-primary"
+                            context="{'default_x_employee_id': id, 'default_x_state': 'draft', 'default_x_responsible_user_id': uid}"/>
+                    </div>
+
+                    <field name="x_employee_declaration_ids"
+                        nolabel="1"
+                        context="{'default_x_employee_id': id, 'default_x_state': 'draft', 'default_x_responsible_user_id': uid}">
+                        <list create="0">
+                            <field name="x_declaration_type" widget="badge"/>
+                            <field name="x_state"
+                                widget="badge"
+                                decoration-muted="x_state in ('draft', 'superseded')"
+                                decoration-info="x_state == 'generated'"
+                                decoration-warning="x_state in ('signature_requested', 'blocked')"
+                                decoration-success="x_state == 'signed'"
+                                decoration-danger="x_state in ('cancelled', 'rejected')"/>
+                            <field name="x_document_reference"/>
+                            <field name="x_selected_identification_document_id"/>
+                            <field name="x_generated_on"/>
+                            <field name="x_sent_on"/>
+                            <field name="x_signed_on"/>
+                            <field name="x_responsible_user_id"/>
+                        </list>
+                        <form>
+                            <header>
+                                <field name="x_state"
+                                    widget="statusbar"
+                                    options="{'clickable': false}"
+                                    statusbar_visible="draft,generated,signature_requested,signed"
+                                    readonly="1"/>
+                            </header>
+                            <sheet>
+                                <group>
+                                    <field name="x_employee_id" readonly="1" force_save="1"/>
+                                    <field name="x_declaration_type"/>
+                                    <field name="x_name" readonly="1"/>
+                                    <field name="x_form_code" readonly="1"/>
+                                    <field name="x_document_reference" readonly="1"/>
+                                </group>
+                                <group string="Source Values">
+                                    <field name="x_selected_identification_document_id"
+                                        domain="[('x_employee_id', '=', x_employee_id)]"
+                                        options="{'no_create': True, 'no_create_edit': True}"/>
+                                    <field name="x_required_by_role"/>
+                                    <field name="x_required_before_assignment"/>
+                                </group>
+                                <group string="GRC Hooks">
+                                    <field name="x_grc_functional_area_id"
+                                        options="{'no_create': True, 'no_create_edit': True}"/>
+                                    <field name="x_grc_function_id"
+                                        options="{'no_create': True, 'no_create_edit': True}"/>
+                                </group>
+                                <group string="Artifacts">
+                                    <field name="x_pdf_attachment_id" readonly="1"
+                                        options="{'no_create': True, 'no_create_edit': True}"/>
+                                    <field name="x_signed_attachment_id" readonly="1"
+                                        options="{'no_create': True, 'no_create_edit': True}"/>
+                                    <field name="x_sign_certificate_attachment_id" readonly="1"
+                                        options="{'no_create': True, 'no_create_edit': True}"/>
+                                </group>
+                                <group string="Odoo Sign">
+                                    <field name="x_sign_request_res_id" readonly="1"/>
+                                    <field name="x_sign_request_state" readonly="1"/>
+                                    <field name="x_sign_request_reference" readonly="1"/>
+                                    <field name="x_sign_request_url" readonly="1"/>
+                                    <field name="x_generated_on" readonly="1"/>
+                                    <field name="x_sent_on" readonly="1"/>
+                                    <field name="x_signed_on" readonly="1"/>
+                                </group>
+                                <group string="Manual Decision">
+                                    <field name="x_manual_decision_number"/>
+                                    <field name="x_manual_decision_date"/>
+                                    <field name="x_manual_decision_attachment_id"
+                                        options="{'no_create': True, 'no_create_edit': True}"/>
+                                </group>
+                                <group string="Ownership and Notes">
+                                    <field name="x_responsible_user_id"
+                                        options="{'no_create': True, 'no_create_edit': True}"/>
+                                    <field name="x_notes"/>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

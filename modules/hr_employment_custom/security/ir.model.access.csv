@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_employee_identification_document_hr_user,employee identification document hr user,hr_employment_custom.model_x_hr_employee_identification_document,hr.group_hr_user,1,1,1,1
+access_employee_declaration_hr_user,employee declaration hr user,hr_employment_custom.model_x_hr_employee_declaration,hr.group_hr_user,1,1,1,1

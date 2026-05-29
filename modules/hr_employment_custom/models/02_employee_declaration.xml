@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="model_x_hr_employee_declaration" model="ir.model">
+            <field name="name">Employee Declaration</field>
+            <field name="model">x_hr.employee_declaration</field>
+            <field name="state">manual</field>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_name" model="ir.model.fields">
+            <field name="name">x_name</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Declaration Label</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_employee_id" model="ir.model.fields">
+            <field name="name">x_employee_id</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Employee</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.employee</field>
+            <field name="required" eval="True"/>
+            <field name="on_delete">cascade</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_declaration_type" model="ir.model.fields">
+            <field name="name">x_declaration_type</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Declaration Type</field>
+            <field name="ttype">selection</field>
+            <field name="required" eval="True"/>
+            <field name="selection">[
+                ('exclusive_employment_declaration', 'F-0010 Exclusive Work / إقرار العمل الحصري'),
+                ('occupational_safety_acknowledgment', 'F-0013 Occupational Safety / إقرار السلامة المهنية'),
+                ('human_waste_handling_employee_undertaking', 'F-0021 Human Waste Handling / تعهد تداول المخلفات البشرية'),
+                ('human_waste_storage_supervisor_undertaking', 'F-0022 Human Waste Storage Supervisor / تعهد مشرف تخزين المخلفات البشرية')
+            ]</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_form_code" model="ir.model.fields">
+            <field name="name">x_form_code</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Form Code</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_document_reference" model="ir.model.fields">
+            <field name="name">x_document_reference</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Document Reference</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_state" model="ir.model.fields">
+            <field name="name">x_state</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Declaration State</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('draft', 'Draft / مسودة'),
+                ('generated', 'Generated / منشأ'),
+                ('signature_requested', 'Signature Requested / طلب التوقيع'),
+                ('signed', 'Signed / موقّع'),
+                ('cancelled', 'Cancelled / ملغى'),
+                ('superseded', 'Superseded / مستبدل'),
+                ('rejected', 'Rejected / مرفوض'),
+                ('blocked', 'Blocked / محجوب')
+            ]</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_selected_identification_document_id" model="ir.model.fields">
+            <field name="name">x_selected_identification_document_id</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Selected Identification Document</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.employee_identification_document</field>
+            <field name="on_delete">set null</field>
+            <field name="help">Selected employee identity document used by declaration PDFs where a personal ID, passport, or driving-license number is required.</field>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_required_by_role" model="ir.model.fields">
+            <field name="name">x_required_by_role</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Required by Role</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_required_before_assignment" model="ir.model.fields">
+            <field name="name">x_required_before_assignment</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Required Before Assignment</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_grc_functional_area_id" model="ir.model.fields">
+            <field name="name">x_grc_functional_area_id</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">GRC Functional Area</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_grc.functional_area</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_grc_function_id" model="ir.model.fields">
+            <field name="name">x_grc_function_id</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">GRC Function</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_grc.function</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_pdf_attachment_id" model="ir.model.fields">
+            <field name="name">x_pdf_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Generated PDF</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_signed_attachment_id" model="ir.model.fields">
+            <field name="name">x_signed_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Signed PDF</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_sign_certificate_attachment_id" model="ir.model.fields">
+            <field name="name">x_sign_certificate_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Sign Certificate</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_sign_request_res_id" model="ir.model.fields">
+            <field name="name">x_sign_request_res_id</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Sign Request ID</field>
+            <field name="ttype">integer</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_sign_request_state" model="ir.model.fields">
+            <field name="name">x_sign_request_state</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Sign Request State</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_sign_request_reference" model="ir.model.fields">
+            <field name="name">x_sign_request_reference</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Sign Request Reference</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_sign_request_url" model="ir.model.fields">
+            <field name="name">x_sign_request_url</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Sign Request URL</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_generated_on" model="ir.model.fields">
+            <field name="name">x_generated_on</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Generated On</field>
+            <field name="ttype">datetime</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_sent_on" model="ir.model.fields">
+            <field name="name">x_sent_on</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Sent On</field>
+            <field name="ttype">datetime</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_signed_on" model="ir.model.fields">
+            <field name="name">x_signed_on</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Signed On</field>
+            <field name="ttype">datetime</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_manual_decision_number" model="ir.model.fields">
+            <field name="name">x_manual_decision_number</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Manual Decision Number</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_manual_decision_date" model="ir.model.fields">
+            <field name="name">x_manual_decision_date</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Manual Decision Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_manual_decision_attachment_id" model="ir.model.fields">
+            <field name="name">x_manual_decision_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Manual Decision Attachment</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_responsible_user_id" model="ir.model.fields">
+            <field name="name">x_responsible_user_id</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Responsible User</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_declaration__x_notes" model="ir.model.fields">
+            <field name="name">x_notes</field>
+            <field name="model_id" ref="model_x_hr_employee_declaration"/>
+            <field name="field_description">Notes</field>
+            <field name="ttype">text</field>
+        </record>
+
+        <record id="field_hr_employee__x_employee_declaration_ids" model="ir.model.fields">
+            <field name="name">x_employee_declaration_ids</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="field_description">Employee Declarations</field>
+            <field name="ttype">one2many</field>
+            <field name="relation">x_hr.employee_declaration</field>
+            <field name="relation_field">x_employee_id</field>
+        </record>
+
+    </data>
+</odoo>

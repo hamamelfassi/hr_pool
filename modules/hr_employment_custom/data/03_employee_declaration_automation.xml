@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="automation_employee_declaration_normalize_on_create" model="base.automation">
+            <field name="name">Employee Declaration: Normalize on Create</field>
+            <field name="active" eval="True"/>
+            <field name="trigger">on_create</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_declaration"/>
+        </record>
+
+        <record id="action_employee_declaration_normalize_on_create" model="ir.actions.server">
+            <field name="name">Employee Declaration: Normalize on Create</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_declaration"/>
+            <field name="base_automation_id" ref="hr_employment_custom.automation_employee_declaration_normalize_on_create"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+type_to_code = {
+    'exclusive_employment_declaration': 'MCEP-HR-F-0010',
+    'occupational_safety_acknowledgment': 'MCEP-HR-F-0013',
+    'human_waste_handling_employee_undertaking': 'MCEP-HR-F-0021',
+    'human_waste_storage_supervisor_undertaking': 'MCEP-HR-F-0022',
+}
+type_to_label = {
+    'exclusive_employment_declaration': 'F-0010 Exclusive Work / إقرار العمل الحصري',
+    'occupational_safety_acknowledgment': 'F-0013 Occupational Safety / إقرار السلامة المهنية',
+    'human_waste_handling_employee_undertaking': 'F-0021 Human Waste Handling / تعهد تداول المخلفات البشرية',
+    'human_waste_storage_supervisor_undertaking': 'F-0022 Human Waste Storage Supervisor / تعهد مشرف تخزين المخلفات البشرية',
+}
+
+for rec in records.sudo():
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+    employee_name = employee.name or employee.display_name or 'Employee'
+    form_code = type_to_code.get(rec.x_declaration_type or '', rec.x_form_code or 'MCEP-HR-F-DECL')
+    label = type_to_label.get(rec.x_declaration_type or '', rec.x_declaration_type or 'Employee Declaration')
+
+    vals = {}
+    if not rec.x_state:
+        vals['x_state'] = 'draft'
+    if not rec.x_form_code:
+        vals['x_form_code'] = form_code
+    if not rec.x_document_reference:
+        emp_part = employee.id if employee else 0
+        vals['x_document_reference'] = '%s-EMP-%05d-%05d' % (form_code, emp_part, rec.id)
+    reference = vals.get('x_document_reference') or rec.x_document_reference or ''
+    normalized_name = '%s - %s - %s' % (employee_name, label, reference)
+    if rec.x_name != normalized_name:
+        vals['x_name'] = normalized_name
+    if not rec.x_responsible_user_id:
+        vals['x_responsible_user_id'] = env.user.id
+
+    if vals:
+        rec.write(vals)
+            ]]></field>
+        </record>
+
+        <record id="automation_employee_declaration_normalize_on_write" model="base.automation">
+            <field name="name">Employee Declaration: Normalize on Update</field>
+            <field name="active" eval="True"/>
+            <field name="trigger">on_write</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_declaration"/>
+            <field name="trigger_field_ids"
+                eval="[(6, 0, [
+                    ref('hr_employment_custom.field_x_hr_employee_declaration__x_employee_id'),
+                    ref('hr_employment_custom.field_x_hr_employee_declaration__x_declaration_type')
+                ])]"/>
+        </record>
+
+        <record id="action_employee_declaration_normalize_on_write" model="ir.actions.server">
+            <field name="name">Employee Declaration: Normalize on Update</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_declaration"/>
+            <field name="base_automation_id" ref="hr_employment_custom.automation_employee_declaration_normalize_on_write"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+type_to_code = {
+    'exclusive_employment_declaration': 'MCEP-HR-F-0010',
+    'occupational_safety_acknowledgment': 'MCEP-HR-F-0013',
+    'human_waste_handling_employee_undertaking': 'MCEP-HR-F-0021',
+    'human_waste_storage_supervisor_undertaking': 'MCEP-HR-F-0022',
+}
+type_to_label = {
+    'exclusive_employment_declaration': 'F-0010 Exclusive Work / إقرار العمل الحصري',
+    'occupational_safety_acknowledgment': 'F-0013 Occupational Safety / إقرار السلامة المهنية',
+    'human_waste_handling_employee_undertaking': 'F-0021 Human Waste Handling / تعهد تداول المخلفات البشرية',
+    'human_waste_storage_supervisor_undertaking': 'F-0022 Human Waste Storage Supervisor / تعهد مشرف تخزين المخلفات البشرية',
+}
+
+for rec in records.sudo():
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+    employee_name = employee.name or employee.display_name or 'Employee'
+    form_code = type_to_code.get(rec.x_declaration_type or '', rec.x_form_code or 'MCEP-HR-F-DECL')
+    label = type_to_label.get(rec.x_declaration_type or '', rec.x_declaration_type or 'Employee Declaration')
+
+    vals = {}
+    if not rec.x_state:
+        vals['x_state'] = 'draft'
+    if not rec.x_form_code:
+        vals['x_form_code'] = form_code
+    if not rec.x_document_reference:
+        emp_part = employee.id if employee else 0
+        vals['x_document_reference'] = '%s-EMP-%05d-%05d' % (form_code, emp_part, rec.id)
+    reference = vals.get('x_document_reference') or rec.x_document_reference or ''
+    normalized_name = '%s - %s - %s' % (employee_name, label, reference)
+    if rec.x_name != normalized_name:
+        vals['x_name'] = normalized_name
+
+    if vals:
+        rec.write(vals)
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>
