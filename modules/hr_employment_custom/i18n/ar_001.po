@@ -169,4 +169,8 @@ msgid ""
 "attachments from recruitment handover remain tracked separately."
 msgstr ""
 "ارفع صورة أو نسخة ممسوحة ضوئيًا من مستند الهوية. تبقى مرفقات المصدر القادمة "
-"من التوظيف متتبعة بشكل منفصل."
+"من التوظيف متتبعة بشكل منفصل."\n\n#. module: hr_employment_custom
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_identification_download_source_attachment
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_identification_documents
+msgid "Download Source Attachment"
+msgstr "تنزيل مرفق المصدر"\n

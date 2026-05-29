@@ -17,6 +17,7 @@
         "models/01_employee_identification.xml",
         "security/ir.model.access.csv",
         "data/01_employee_identification_automation.xml",
+        "data/02_employee_identification_actions.xml",
         "views/01_employee_identification_views.xml"
     ]
 }

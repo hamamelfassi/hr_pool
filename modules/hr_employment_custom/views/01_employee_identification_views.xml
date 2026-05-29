@@ -111,6 +111,11 @@
                                 decoration-danger="x_expiry_status == 'expired'"
                                 decoration-muted="x_expiry_status == 'undefined'"/>
                             <field name="x_document_image" string="Document Image" widget="image"/>
+                            <button name="%(action_employee_identification_download_source_attachment)d"
+                                type="action"
+                                icon="fa-download"
+                                title="Download Source Attachment"
+                                invisible="not x_source_attachment_id"/>
                         </list>
                         <form>
                             <group>
@@ -127,6 +132,11 @@
                             <group string="Attachments">
                                 <field name="x_document_image" string="Document Image" widget="image"/>
                                 <field name="x_source_attachment_id" readonly="1" options="{'no_create': True, 'no_create_edit': True}"/>
+                                <button name="%(action_employee_identification_download_source_attachment)d"
+                                    type="action"
+                                    string="Download Source Attachment"
+                                    class="btn-secondary"
+                                    invisible="not x_source_attachment_id"/>
                             </group>
                             <group string="Source Trace" invisible="not x_source_model and not x_source_res_id">
                                 <field name="x_source_model" readonly="1"/>

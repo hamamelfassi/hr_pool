@@ -7,16 +7,224 @@
             <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
             <field name="state">code</field>
             <field name="code"><![CDATA[
-action = {
-    'type': 'ir.actions.client',
-    'tag': 'display_notification',
-    'params': {
-        'title': 'ترحيل الهوية',
-        'message': 'سيتم تفعيل ترحيل الهوية في الشريحة 13J-B بعد تثبيت سطح الترحيل.',
-        'type': 'warning',
-        'sticky': False,
+action = False
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {'title': title, 'message': message, 'type': kind, 'sticky': sticky}
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def reload_applicant(applicant):
+    title = applicant.partner_name or applicant.display_name or 'Applicant'
+    return {
+        'type': 'ir.actions.act_window',
+        'name': title,
+        'res_model': 'hr.applicant',
+        'res_id': applicant.id,
+        'view_mode': 'form',
+        'views': [(False, 'form')],
+        'target': 'current',
     }
-}
+
+
+def has_field(record, field_name):
+    return bool(record) and field_name in record._fields
+
+
+def write_applicant_identity_status(applicant, ready, count, notes):
+    vals = {}
+    if has_field(applicant, 'x_employment_identity_ready'):
+        vals['x_employment_identity_ready'] = bool(ready)
+    if has_field(applicant, 'x_employment_identity_count'):
+        vals['x_employment_identity_count'] = int(count or 0)
+    if has_field(applicant, 'x_employment_identity_checked_on'):
+        vals['x_employment_identity_checked_on'] = datetime.datetime.now()
+    if has_field(applicant, 'x_employment_identity_checked_by_user_id'):
+        vals['x_employment_identity_checked_by_user_id'] = env.user.id
+    if has_field(applicant, 'x_employment_identity_notes'):
+        vals['x_employment_identity_notes'] = notes or False
+    if vals:
+        applicant.sudo().write(vals)
+
+
+def accepted_submission(applicant, codes):
+    Submission = env['x_hr.applicant_required_document_submission'].sudo()
+    return Submission.search([
+        ('x_applicant_id', '=', applicant.id),
+        ('x_state', '=', 'accepted'),
+        ('x_document_code', 'in', codes),
+    ], order='x_reviewed_on desc, x_submitted_on desc, id desc', limit=1)
+
+
+def get_submission_value(submission, field_name):
+    if submission and has_field(submission, field_name):
+        return submission[field_name] or False
+    return False
+
+
+def source_attachment(submission):
+    if submission and has_field(submission, 'x_attachment_id') and submission.x_attachment_id:
+        return submission.x_attachment_id.sudo()
+    return False
+
+
+def copy_source_attachment_to_employee(source_att, employee, document_label, document_number, existing_line=False):
+    if not source_att:
+        return False
+
+    if existing_line and existing_line.x_source_attachment_id:
+        existing = existing_line.x_source_attachment_id.sudo()
+        if existing.res_model == 'hr.employee' and existing.res_id == employee.id:
+            return existing.id
+
+    filename = source_att.name or 'identity_document'
+    prefix_parts = []
+    if employee.name:
+        prefix_parts.append(employee.name)
+    if document_label:
+        prefix_parts.append(document_label)
+    if document_number:
+        prefix_parts.append(document_number)
+
+    new_name = ' - '.join(prefix_parts) + ' - ' + filename if prefix_parts else filename
+
+    copied = source_att.copy({
+        'name': new_name,
+        'res_model': 'hr.employee',
+        'res_id': employee.id,
+    })
+    return copied.id
+
+
+def find_existing_identity_line(Identity, employee, document_type, submission, document_number):
+    # Best match: same source submission already synced before.
+    line = Identity.search([
+        ('x_employee_id', '=', employee.id),
+        ('x_document_type', '=', document_type),
+        ('x_source_model', '=', submission._name),
+        ('x_source_res_id', '=', submission.id),
+    ], order='id desc', limit=1)
+    if line:
+        return line
+
+    # Next best: same employee/type/number, usually a prior sync before source trace existed.
+    if document_number:
+        line = Identity.search([
+            ('x_employee_id', '=', employee.id),
+            ('x_document_type', '=', document_type),
+            ('x_document_number', '=', document_number),
+        ], order='id desc', limit=1)
+        if line:
+            return line
+
+    # Safe fill-in: empty placeholder line with same type and no source.
+    line = Identity.search([
+        ('x_employee_id', '=', employee.id),
+        ('x_document_type', '=', document_type),
+        ('x_source_res_id', '=', False),
+        ('x_document_number', '=', False),
+    ], order='id desc', limit=1)
+    if line:
+        return line
+
+    # Do not overwrite manually created same-type records with different document numbers.
+    return False
+
+
+identity_model = env['ir.model'].sudo().search([
+    ('model', '=', 'x_hr.employee_identification_document')
+], limit=1)
+
+if not identity_model:
+    message = 'نموذج هوية الموظف غير مثبت. ثبّت hr_employment_custom أولاً ثم أعد المحاولة.'
+    for applicant in records.sudo():
+        write_applicant_identity_status(applicant, False, 0, message)
+        applicant.message_post(body=message, subtype_xmlid='mail.mt_note')
+    action = toast('ترحيل الهوية', message, 'warning', False)
+else:
+    Identity = env['x_hr.employee_identification_document'].sudo()
+
+    profiles = [
+        ('id_card', ['id_card', 'national_id'], 'ID Card / بطاقة شخصية'),
+        ('passport', ['passport'], 'Passport / جواز سفر'),
+        ('driving_license', ['driving_license'], 'Driving License / رخصة قيادة'),
+    ]
+
+    total_created = 0
+    total_updated = 0
+
+    for applicant in records.sudo():
+        employee = False
+        if has_field(applicant, 'x_employment_employee_id') and applicant.x_employment_employee_id:
+            employee = applicant.x_employment_employee_id.sudo()
+
+        if not employee:
+            message = 'لا يوجد موظف مرتبط بهذا المتقدم. نفّذ بدء التوظيف أولاً ثم أعد ترحيل الهوية.'
+            write_applicant_identity_status(applicant, False, 0, message)
+            applicant.message_post(body=message, subtype_xmlid='mail.mt_note')
+            continue
+
+        created = 0
+        updated = 0
+        synced_labels = []
+
+        for document_type, codes, label in profiles:
+            submission = accepted_submission(applicant, codes)
+            if not submission:
+                continue
+
+            document_number = get_submission_value(submission, 'x_document_number') or False
+            source_att = source_attachment(submission)
+            existing = find_existing_identity_line(Identity, employee, document_type, submission, document_number)
+            copied_attachment_id = copy_source_attachment_to_employee(source_att, employee, label, document_number, existing)
+
+            vals = {
+                'x_employee_id': employee.id,
+                'x_document_type': document_type,
+                'x_document_number': document_number,
+                'x_issued_by': get_submission_value(submission, 'x_issuing_authority') or False,
+                'x_issue_place': get_submission_value(submission, 'x_place_of_issue') or False,
+                'x_issue_date': get_submission_value(submission, 'x_issue_date') or False,
+                'x_expiry_date': get_submission_value(submission, 'x_expiry_date') or False,
+                'x_source_model': submission._name,
+                'x_source_res_id': submission.id,
+            }
+
+            if copied_attachment_id:
+                vals['x_source_attachment_id'] = copied_attachment_id
+
+            if existing:
+                existing.write(vals)
+                updated += 1
+            else:
+                Identity.create(vals)
+                created += 1
+
+            synced_labels.append(label)
+
+        identity_count = Identity.search_count([('x_employee_id', '=', employee.id)])
+        if synced_labels:
+            note = 'تم ترحيل بيانات الهوية إلى سجل الموظف: %s.' % '، '.join(synced_labels)
+            ready = True
+        else:
+            note = 'لم يتم العثور على مستندات هوية مقبولة قابلة للترحيل.'
+            ready = False
+
+        write_applicant_identity_status(applicant, ready, identity_count, note)
+        applicant.message_post(body=note, subtype_xmlid='mail.mt_note')
+
+        total_created += created
+        total_updated += updated
+
+    if total_created or total_updated:
+        message = 'تم ترحيل الهوية بنجاح. تم إنشاء %s وتحديث %s سجل.' % (total_created, total_updated)
+        action = toast('ترحيل الهوية', message, 'success', False, reload_applicant(records[:1]))
+    else:
+        message = 'لم يتم إنشاء أو تحديث أي سجلات هوية. راجع حالة المستندات المقبولة.'
+        action = toast('ترحيل الهوية', message, 'warning', False, reload_applicant(records[:1]))
             ]]></field>
         </record>
 

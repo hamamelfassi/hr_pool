@@ -1047,6 +1047,28 @@
                             invisible="not id"/>
                     </group>
 
+                    <group string="حالة ترحيل الهوية">
+                        <group>
+                            <field name="x_employment_identity_ready"
+                                string="جاهزية ترحيل الهوية"
+                                readonly="1"/>
+                            <field name="x_employment_identity_count"
+                                string="عدد سجلات الهوية المرحّلة"
+                                readonly="1"/>
+                            <field name="x_employment_identity_checked_on"
+                                string="تاريخ فحص/ترحيل الهوية"
+                                readonly="1"/>
+                            <field name="x_employment_identity_checked_by_user_id"
+                                string="فحص/رحّل الهوية بواسطة"
+                                readonly="1"
+                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
+                        </group>
+                        <group string="ملاحظات ترحيل الهوية">
+                            <field name="x_employment_identity_notes" nolabel="1" readonly="1"/>
+                        </group>
+                    </group>
+
+
                     <group string="بوابة ما قبل التوظيف">
                         <group string="حالة البوابة">
                             <field name="x_preboarding_gate_state"

@@ -24,6 +24,7 @@
         "models/06_required_document_submission_request.xml",
         "models/07_applicant_declaration.xml",
         "models/08_employment_contract.xml",
+        "models/09_applicant_identity_handover_fields.xml",
         "security/ir.model.access.csv",
         "data/01_role_definition_automation.xml",
         "data/02_tor_selection_values.xml",
