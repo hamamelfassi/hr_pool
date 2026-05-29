@@ -137,3 +137,47 @@ Owned by `hr_recruitment_custom` because the source action is still `hr.applican
 - separation;
 - clearance overrides;
 - disciplinary/HSE decisions.
+
+## Current implementation status after Pass 15B / 13J-B
+
+Locked:
+
+```text
+15A — documentation/dependency correction
+15B — hr_employment_custom scaffold + employee Identification tab/model
+13J-A — applicant الترحيل tab surface
+13J-B — standalone recruitment-to-employee identity sync
+```
+
+Accepted operating sequence:
+
+```text
+بدء التوظيف
+→ creates/reuses hr.employee and writes payroll/bank/artifact handover fields
+→ ترحيل الهوية
+→ syncs accepted recruitment identity submissions into employee identity lines
+→ Pass 15C+ declarations consume hr.employee + selected employee identity lines
+```
+
+Deferred cleanup:
+
+```text
+13J-C — optionally call identity sync automatically inside بدء التوظيف after more standalone runs are proven safe.
+```
+
+Next slices:
+
+```text
+15C — employee declaration model and thin declaration tab
+15D — declaration creation helper and type behavior
+15E — QWeb report skeleton and paperformat for F-0010/F-0013/F-0021/F-0022
+15F — generate declaration PDF action
+15G — native Sign send action with strict source-record anchoring
+15H — sync signed result and copy signed PDF/certificate to employee chatter/files
+15I — UI/read-only/artifact hardening and targeted translation update
+15J — regression and lock
+```
+
+Scope guard:
+
+Pass 15C+ must not create custody, training, leave, permissions, assignments, appraisal, separation, clearance, payroll, work-entry, or GRC decision-instance logic.

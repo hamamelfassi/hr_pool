@@ -316,3 +316,46 @@ A process UI is acceptable only when:
 - mobile-safe chatter/files access exists;
 - chatter records lifecycle events;
 - activities identify next owners where needed.
+
+## Pass 15B locked UI lesson — Identification tab
+
+The employee `الهوية / Identification` tab uses a single typed list of employee identification documents.
+
+Do not render the same one2many field multiple times with different domains for ID Card, Passport, Driving License, and Company ID Card. That pattern caused mirrored transient rows because Odoo shares the one2many cache across repeated renderings of the same field.
+
+Locked pattern:
+
+```text
+hr.employee
+  x_identification_document_ids
+    x_document_type
+    x_document_number
+    x_issued_by
+    x_issue_place
+    x_issue_date
+    x_expiry_date
+    x_expiry_status
+    x_document_image
+    x_source_attachment_id
+```
+
+UI pattern:
+
+- one controlled list;
+- one `Add Identification / إضافة هوية` action;
+- modal create/edit form;
+- document type badge;
+- expiry status badge;
+- binary image upload/preview for document scan/photo;
+- controlled source attachment download button;
+- no free `ir.attachment` selector as the primary upload surface.
+
+Naming pattern:
+
+```text
+Employee Name - Document Type - Document Number
+```
+
+Translation note:
+
+Short selection labels may use bilingual source labels when Odoo SaaS does not expose reliable selection PO anchors. For longer or operationally complex labels, use helper records instead of inline selection values.
