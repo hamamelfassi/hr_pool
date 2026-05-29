@@ -39,6 +39,11 @@ type_config = {
         'report_xmlid': 'hr_employment_custom.action_report_mcep_employee_f0021_human_waste_handling',
         'filename_label': 'Human Waste Handling Undertaking',
     },
+    'human_waste_storage_supervisor_undertaking': {
+        'form_code': 'MCEP-HR-F-0022',
+        'report_xmlid': 'hr_employment_custom.action_report_mcep_employee_f0022_human_waste_storage_supervisor',
+        'filename_label': 'Human Waste Storage Supervisor Undertaking',
+    },
 }
 
 

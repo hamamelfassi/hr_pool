@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_mcep_employee_f0022_human_waste_storage_supervisor_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <head>
+                    <meta charset="UTF-8"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                </head>
+
+                <t t-set="form_code" t-value="'MCEP-HR-F-0022'"/>
+                <t t-set="form_title_ar" t-value="'تعهد مشرف استلام وتخزين المخلفات البشرية'"/>
+                <t t-set="form_title_en" t-value="'Human Waste Receipt and Storage Supervisor Undertaking'"/>
+                <t t-set="page_label" t-value="'Page 1 / 1'"/>
+                <t t-set="employee" t-value="o.x_employee_id"/>
+                <t t-set="supervisor_job_title" t-value="employee.job_title or 'مشرف استلام وتخزين المخلفات البشرية'"/>
+
+                <t t-call="hr_employment_custom.mcep_employee_report_assets"/>
+
+                <div class="page mcep-emp-page mcep-f0022-page">
+                    <t t-call="hr_employment_custom.mcep_employee_report_header"/>
+
+                    <div class="mcep-emp-title">تعهد مشرف استلام وتخزين المخلفات البشرية</div>
+                    <div class="mcep-emp-subtitle">Human Waste Receipt and Storage Supervisor Undertaking</div>
+
+                    <div class="mcep-emp-section-title">أولًا: المعلومات الشخصية <span class="mcep-emp-en">Personal Information</span></div>
+                    <table class="mcep-emp-table">
+                        <tbody>
+                            <tr>
+                                <th style="width: 24%;">أنا المشرف المسؤول<br/><span class="mcep-emp-en">I, the supervisor</span></th>
+                                <td style="width: 76%;" class="mcep-emp-value"><span t-out="employee.name or ''"/></td>
+                            </tr>
+                            <tr>
+                                <th>الرقم الوظيفي<br/><span class="mcep-emp-en">Job No.</span></th>
+                                <td class="mcep-emp-value"><span t-out="employee.id or ''"/></td>
+                            </tr>
+                            <tr>
+                                <th>المسمى الوظيفي<br/><span class="mcep-emp-en">Job Title</span></th>
+                                <td class="mcep-emp-value">
+                                    <span t-out="supervisor_job_title"/>
+                                    <br/>
+                                    <span class="mcep-emp-en">Human Waste Receipt and Storage Supervisor</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="mcep-emp-section-title">ثانيًا: نص الإقرار <span class="mcep-emp-en">Declaration Text</span></div>
+                    <div class="mcep-emp-body-text">
+                        <p>
+                            أُقرّ وأتعهد بأنني عند استلام المخلفات البشرية (المشيمة وأكياس الدم) داخل موقع الشركة، سألتزم التزامًا كاملًا بإجراءات الصحة والسلامة والبيئة (HSE) المعتمدة، وذلك وفق الآتي:
+                        </p>
+                        <ul>
+                            <li>استلام المخلفات البشرية رسميًا من الموظفين المخولين وتوثيقها في السجلات المعتمدة.</li>
+                            <li>المحافظة على المخلفات داخل مخزن التجميد المخصص والمعتمد ومنع تعرضها لأي تلوث أو عبث أو فقدان.</li>
+                            <li>ضمان عدم فتح الحاويات أو التعامل مع المخلفات إلا ضمن الإجراءات الرسمية المعتمدة.</li>
+                            <li>أقرّ بأنه يُمنع منعًا باتًا التصرف في المخلفات أو نقلها أو التخلص منها بأي وسيلة أخرى.</li>
+                            <li>لا يتم تسليم أو التخلص النهائي من هذه المخلفات إلا من خلال عملية الدفن المعتمدة رسميًا وفق موافقات دار الإفتاء والخدمات العامة والجهات المختصة.</li>
+                            <li>تحمل كامل المسؤولية الإدارية والقانونية عن أي مخالفة أو إهمال يؤدي إلى فقدان المخلفات أو التصرف غير المصرح به.</li>
+                        </ul>
+                    </div>
+
+                    <div class="mcep-emp-section-title">English Summary</div>
+                    <div class="mcep-emp-body-text mcep-emp-en">
+                        <p>
+                            I hereby acknowledge and undertake that, upon receiving human waste, including placenta and blood bags, within the company premises, I will fully comply with all approved HSE procedures.
+                        </p>
+                        <p>
+                            This includes officially receiving human waste only from authorized employees, documenting receipt in company-approved records, preserving the waste inside the designated freezing storage facility, and preventing contamination, tampering, or loss.
+                        </p>
+                        <p>
+                            I also acknowledge that containers must not be opened and that the waste must not be handled except under approved procedures. Disposal, transfer, transport, or dealing with the waste by any unauthorized means is strictly prohibited.
+                        </p>
+                        <p>
+                            Final disposal shall only be carried out through the officially approved burial process and competent authority approvals. I bear full administrative and legal responsibility for any violation or negligence.
+                        </p>
+                    </div>
+
+                    <div class="mcep-emp-section-title">رابعًا: بيانات وتوقيع المشرف <span class="mcep-emp-en">Employee Details and Signature</span></div>
+                    <table class="mcep-emp-sign-table">
+                        <tbody>
+                            <tr>
+                                <td class="mcep-emp-sign-name" style="width: 30%;">
+                                    اسم المشرف<br/><span class="mcep-emp-en">Employee Name</span>
+                                </td>
+                                <td class="mcep-emp-value" style="width: 70%;">
+                                    <span t-out="employee.name or ''"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="mcep-emp-sign-name">
+                                    التوقيع<br/><span class="mcep-emp-en">Signature</span>
+                                </td>
+                                <td class="mcep-emp-sign-zone"></td>
+                            </tr>
+                            <tr>
+                                <td class="mcep-emp-sign-name">
+                                    التاريخ<br/><span class="mcep-emp-en">Date</span>
+                                </td>
+                                <td>
+                                    ....................................
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

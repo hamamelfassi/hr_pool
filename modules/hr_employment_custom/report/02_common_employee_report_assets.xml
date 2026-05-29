@@ -362,6 +362,93 @@
                 vertical-align: bottom;
             }
 
+
+            .mcep-f0022-page {
+                line-height: 1.36;
+                padding-top: 7mm;
+                padding-bottom: 7mm;
+            }
+
+            .mcep-f0022-page .mcep-emp-header {
+                margin-bottom: 4mm;
+            }
+
+            .mcep-f0022-page .mcep-emp-title {
+                font-size: 22px;
+                margin: 1mm 0 1mm 0;
+            }
+
+            .mcep-f0022-page .mcep-emp-subtitle {
+                font-size: 14px;
+                margin: 0 0 3mm 0;
+            }
+
+            .mcep-f0022-page .mcep-emp-section-title {
+                font-size: 16px;
+                margin: 2.8mm 0 1.5mm 0;
+                padding-bottom: 0.8mm;
+            }
+
+            .mcep-f0022-page .mcep-emp-table {
+                margin-bottom: 3mm;
+            }
+
+            .mcep-f0022-page .mcep-emp-table th,
+            .mcep-f0022-page .mcep-emp-table td {
+                padding: 1.8mm 2mm;
+                line-height: 1.28;
+            }
+
+            .mcep-f0022-page .mcep-emp-body-text {
+                font-size: 14px;
+                line-height: 1.47;
+                margin-top: 1.2mm;
+            }
+
+            .mcep-f0022-page .mcep-emp-body-text p {
+                margin: 0 0 1.95mm 0;
+            }
+
+            .mcep-f0022-page .mcep-emp-body-text ul {
+                margin: 0 0 1.8mm 0;
+                padding-right: 7mm;
+            }
+
+            .mcep-f0022-page .mcep-emp-body-text li {
+                margin-bottom: 1.05mm;
+            }
+
+            .mcep-f0022-page .mcep-emp-en {
+                line-height: 1.26;
+            }
+
+            .mcep-f0022-page .mcep-emp-sign-table {
+                margin-top: 2.5mm;
+            }
+
+            .mcep-f0022-page .mcep-emp-sign-table td {
+                padding: 2mm;
+                line-height: 1.3;
+            }
+
+            .mcep-f0022-page .mcep-emp-sign-role,
+            .mcep-f0022-page .mcep-emp-sign-name {
+                text-align: right;
+            }
+
+            .mcep-f0022-page .mcep-emp-sign-zone {
+                height: 20mm;
+            }
+
+
+            .mcep-f0022-page .mcep-emp-body-text.mcep-emp-en {
+                line-height: 1.38;
+            }
+
+            .mcep-f0022-page .mcep-emp-body-text.mcep-emp-en p {
+                margin-bottom: 2mm;
+            }
+
         </style>
     </template>
 

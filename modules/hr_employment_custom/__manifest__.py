@@ -28,6 +28,7 @@
         "report/03_employee_declaration_f0010_templates.xml",
         "report/05_employee_declaration_f0013_templates.xml",
         "report/06_employee_declaration_f0021_templates.xml",
+        "report/07_employee_declaration_f0022_templates.xml",
         "report/04_employee_declaration_report_actions.xml"
     ]
 }
