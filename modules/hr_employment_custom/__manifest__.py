@@ -1,0 +1,20 @@
+{
+    "name": "MCEP HR Employment Custom",
+    "summary": "Marsellia employee lifecycle extensions for native HR employees",
+    "category": "Human Resources",
+    "depends": [
+        "base",
+        "mail",
+        "hr",
+        "sign",
+        "grc_backbone"
+    ],
+    "application": False,
+    "installable": True,
+    "auto_install": False,
+    "data": [
+        "models/01_employee_identification.xml",
+        "security/ir.model.access.csv",
+        "views/01_employee_identification_views.xml"
+    ]
+}

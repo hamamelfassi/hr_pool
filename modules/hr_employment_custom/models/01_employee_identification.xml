@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="model_x_hr_employee_identification_document" model="ir.model">
+            <field name="name">Employee Identification Document</field>
+            <field name="model">x_hr.employee_identification_document</field>
+            <field name="state">manual</field>
+        </record>
+
+        <record id="field_x_hr_employee_identification_document__x_name" model="ir.model.fields">
+            <field name="name">x_name</field>
+            <field name="model_id" ref="model_x_hr_employee_identification_document"/>
+            <field name="field_description">Document Label</field>
+            <field name="ttype">char</field>
+            <field name="help">Optional display label, such as Passport - Employee Name.</field>
+        </record>
+
+        <record id="field_x_hr_employee_identification_document__x_employee_id" model="ir.model.fields">
+            <field name="name">x_employee_id</field>
+            <field name="model_id" ref="model_x_hr_employee_identification_document"/>
+            <field name="field_description">Employee</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.employee</field>
+            <field name="required" eval="True"/>
+            <field name="on_delete">cascade</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_identification_document__x_document_type" model="ir.model.fields">
+            <field name="name">x_document_type</field>
+            <field name="model_id" ref="model_x_hr_employee_identification_document"/>
+            <field name="field_description">Document Type</field>
+            <field name="ttype">selection</field>
+            <field name="required" eval="True"/>
+            <field name="selection">[
+                ('id_card', 'ID Card'),
+                ('passport', 'Passport'),
+                ('driving_license', 'Driving License'),
+                ('company_id_card', 'Company ID Card')
+            ]</field>
+        </record>
+
+        <record id="field_x_hr_employee_identification_document__x_document_number" model="ir.model.fields">
+            <field name="name">x_document_number</field>
+            <field name="model_id" ref="model_x_hr_employee_identification_document"/>
+            <field name="field_description">Document Number</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_x_hr_employee_identification_document__x_issued_by" model="ir.model.fields">
+            <field name="name">x_issued_by</field>
+            <field name="model_id" ref="model_x_hr_employee_identification_document"/>
+            <field name="field_description">Issued By</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_x_hr_employee_identification_document__x_issue_place" model="ir.model.fields">
+            <field name="name">x_issue_place</field>
+            <field name="model_id" ref="model_x_hr_employee_identification_document"/>
+            <field name="field_description">Issue Place</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_x_hr_employee_identification_document__x_issue_date" model="ir.model.fields">
+            <field name="name">x_issue_date</field>
+            <field name="model_id" ref="model_x_hr_employee_identification_document"/>
+            <field name="field_description">Issue Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_x_hr_employee_identification_document__x_expiry_date" model="ir.model.fields">
+            <field name="name">x_expiry_date</field>
+            <field name="model_id" ref="model_x_hr_employee_identification_document"/>
+            <field name="field_description">Expiry Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_x_hr_employee_identification_document__x_attachment_id" model="ir.model.fields">
+            <field name="name">x_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_identification_document"/>
+            <field name="field_description">Document Attachment</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_identification_document__x_source_attachment_id" model="ir.model.fields">
+            <field name="name">x_source_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_identification_document"/>
+            <field name="field_description">Source Attachment</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_identification_document__x_source_model" model="ir.model.fields">
+            <field name="name">x_source_model</field>
+            <field name="model_id" ref="model_x_hr_employee_identification_document"/>
+            <field name="field_description">Source Model</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_x_hr_employee_identification_document__x_source_res_id" model="ir.model.fields">
+            <field name="name">x_source_res_id</field>
+            <field name="model_id" ref="model_x_hr_employee_identification_document"/>
+            <field name="field_description">Source Record ID</field>
+            <field name="ttype">integer</field>
+        </record>
+
+        <record id="field_x_hr_employee_identification_document__x_notes" model="ir.model.fields">
+            <field name="name">x_notes</field>
+            <field name="model_id" ref="model_x_hr_employee_identification_document"/>
+            <field name="field_description">Notes</field>
+            <field name="ttype">text</field>
+        </record>
+
+        <record id="field_hr_employee__x_identification_document_ids" model="ir.model.fields">
+            <field name="name">x_identification_document_ids</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="field_description">Identification Documents</field>
+            <field name="ttype">one2many</field>
+            <field name="relation">x_hr.employee_identification_document</field>
+            <field name="relation_field">x_employee_id</field>
+        </record>
+
+    </data>
+</odoo>

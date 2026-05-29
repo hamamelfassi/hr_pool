@@ -1,0 +1,144 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* hr_employment_custom
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server saas~19.2+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-29 11:39+0000\n"
+"PO-Revision-Date: 2026-05-29 11:39+0000\n"
+"Last-Translator: \n"
+"Language-Team: Arabic\n"
+"Language: ar_001\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_identification_document_form
+msgid "Attachments"
+msgstr "المرفقات"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_identification_documents
+msgid "Company ID Card"
+msgstr "بطاقة الشركة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_attachment_id
+msgid "Document Attachment"
+msgstr "مرفق المستند"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_name
+msgid "Document Label"
+msgstr "تسمية المستند"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_document_number
+msgid "Document Number"
+msgstr "رقم المستند"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_document_type
+msgid "Document Type"
+msgstr "نوع المستند"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_identification_documents
+msgid "Driving License"
+msgstr "رخصة القيادة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_employee_id
+msgid "Employee"
+msgstr "الموظف"
+
+#. module: hr_employment_custom
+#: model:ir.model,name:hr_employment_custom.model_x_hr_employee_identification_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_identification_document_form
+msgid "Employee Identification Document"
+msgstr "مستند هوية الموظف"
+
+#. module: hr_employment_custom
+#: model:ir.actions.act_window,name:hr_employment_custom.action_employee_identification_documents
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_identification_document_list
+msgid "Employee Identification Documents"
+msgstr "مستندات هوية الموظف"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_expiry_date
+msgid "Expiry Date"
+msgstr "تاريخ الانتهاء"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_identification_documents
+msgid "ID Card"
+msgstr "بطاقة شخصية"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_identification_documents
+msgid "Identification"
+msgstr "الهوية"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_hr_employee__x_identification_document_ids
+msgid "Identification Documents"
+msgstr "مستندات الهوية"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_identification_documents
+msgid "Identification records are used as a unified source for later forms such as declarations, custody, and assignments. Do not add duplicate records for the same document type unless there is a renewal or a different document."
+msgstr "تُستخدم بيانات الهوية كمصدر موحّد للنماذج اللاحقة مثل الإقرارات والعهد والتكليفات. لا تضف سجلات مكررة لنفس نوع الهوية إلا عند وجود تجديد أو مستند مختلف."
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_issue_date
+msgid "Issue Date"
+msgstr "تاريخ الإصدار"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_issue_place
+msgid "Issue Place"
+msgstr "مكان الإصدار"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_issued_by
+msgid "Issued By"
+msgstr "جهة الإصدار"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_notes
+msgid "Notes"
+msgstr "ملاحظات"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,help:hr_employment_custom.field_x_hr_employee_identification_document__x_name
+msgid "Optional display label, such as Passport - Employee Name."
+msgstr "تسمية عرض اختيارية، مثل: جواز سفر - اسم الموظف."
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_identification_documents
+msgid "Passport"
+msgstr "جواز سفر"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_source_attachment_id
+msgid "Source Attachment"
+msgstr "مرفق المصدر"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_source_model
+msgid "Source Model"
+msgstr "نموذج المصدر"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_source_res_id
+msgid "Source Record ID"
+msgstr "معرّف سجل المصدر"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_identification_document_form
+msgid "Source Trace"
+msgstr "تتبع المصدر"
