@@ -26,6 +26,7 @@
         "report/01_employee_declaration_paperformat.xml",
         "report/02_common_employee_report_assets.xml",
         "report/03_employee_declaration_f0010_templates.xml",
+        "report/05_employee_declaration_f0013_templates.xml",
         "report/04_employee_declaration_report_actions.xml"
     ]
 }

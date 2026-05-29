@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_mcep_employee_f0013_occupational_safety_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <head>
+                    <meta charset="UTF-8"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                </head>
+
+                <t t-set="form_code" t-value="'MCEP-HR-F-0013'"/>
+                <t t-set="form_title_ar" t-value="'إقرار السلامة والصحة المهنية'"/>
+                <t t-set="form_title_en" t-value="'Occupational Health and Safety Acknowledgment'"/>
+                <t t-set="employee" t-value="o.x_employee_id"/>
+                <t t-set="identity" t-value="o.x_selected_identification_document_id"/>
+                <t t-set="identity_number" t-value="identity.x_document_number if identity else (employee.identification_id or '')"/>
+                <t t-set="identity_label" t-value="identity.display_name if identity else 'National ID'"/>
+
+                <t t-call="hr_employment_custom.mcep_employee_report_assets"/>
+
+                <div class="page mcep-emp-page mcep-f0013-page">
+                                        <t t-set="page_label" t-value="'Page 1 / 1'"/>
+                    <t t-call="hr_employment_custom.mcep_employee_report_header"/>
+
+                    <div class="mcep-emp-title">إقرار السلامة والصحة المهنية</div>
+                    <div class="mcep-emp-subtitle">Occupational Health and Safety Acknowledgment</div>
+
+                    <div class="mcep-emp-section-title">أولًا: بيانات الموظف <span class="mcep-emp-en">Employee Information</span></div>
+                    <table class="mcep-emp-table">
+                        <tbody>
+                            <tr>
+                                <th style="width: 22%;">الاسم الكامل<br/><span class="mcep-emp-en">Full Name</span></th>
+                                <td style="width: 34%;" class="mcep-emp-value"><span t-out="employee.name or ''"/></td>
+                                <th style="width: 20%;">الرقم الوطني / الهوية<br/><span class="mcep-emp-en">ID No.</span></th>
+                                <td style="width: 24%;" class="mcep-emp-value"><span t-out="identity_number or ''"/></td>
+                            </tr>
+                            <tr>
+                                <th>إثبات شخصي<br/><span class="mcep-emp-en">Personal ID</span></th>
+                                <td class="mcep-emp-value"><span t-out="identity_label or ''"/></td>
+                                <th>المسمى الوظيفي<br/><span class="mcep-emp-en">Job Title</span></th>
+                                <td class="mcep-emp-value"><span t-out="employee.job_title or ''"/></td>
+                            </tr>
+                            <tr>
+                                <th>القسم<br/><span class="mcep-emp-en">Department</span></th>
+                                <td class="mcep-emp-value"><span t-out="employee.department_id.name or ''"/></td>
+                                <th>تاريخ المباشرة<br/><span class="mcep-emp-en">Starting Date</span></th>
+                                <td class="mcep-emp-value"><span t-out="employee.create_date and employee.create_date.strftime('%Y-%m-%d') or ''"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="mcep-emp-section-title">ثانيًا: نص الإقرار <span class="mcep-emp-en">Declaration Text</span></div>
+                    <div class="mcep-emp-body-text">
+                        <p>أقرّ أنا الموقّع أدناه بما يلي:</p>
+                        <p>أنني قد استلمت نسخة من دليل إجراءات السلامة المعتمدة في شركة مرسيليا للنظافة وحماية البيئة، واطّلعت على جميع سياسات وتعليمات السلامة المهنية المعتمدة في الشركة، وقد تم شرحها لي بصورة واضحة ومفهومة.</p>
+                        <p>أتعهد بالالتزام الكامل بجميع قواعد وإجراءات السلامة أثناء أدائي لمهامي الوظيفية، بما في ذلك ارتداء معدات الوقاية الشخصية (PPE) والالتزام بتعليمات المشرفين.</p>
+                        <p>أتعهد بإبلاغ الإدارة فورًا عن أي حادث أو إصابة أو خطر محتمل في موقع العمل، والتعاون مع فرق السلامة في اتخاذ الإجراءات الوقائية اللازمة.</p>
+                        <p>أقر بأن عدم الالتزام بتعليمات السلامة يُعتبر مخالفة جسيمة قد تؤدي إلى المساءلة الإدارية أو القانونية، وفقًا للسياسات الداخلية ولأحكام قانون علاقات العمل رقم (12) لسنة 2010.</p>
+                        <p>أقر بأنني مسؤول عن الحفاظ على سلامتي وسلامة زملائي أثناء العمل، وأوافق على الالتزام بسياسات الشركة في هذا الشأن في جميع الأوقات.</p>
+                    </div>
+
+                    <div class="mcep-emp-section-title">English Summary</div>
+                    <div class="mcep-emp-body-text mcep-emp-en">
+                        <p>I, the undersigned, hereby acknowledge that I have reviewed and understood the Occupational Health and Safety policies and procedures adopted by Marsellia for Cleaning and Environmental Protection.</p>
+                        <p>I undertake to fully comply with all safety rules and instructions while performing my duties, including wearing Personal Protective Equipment (PPE), following supervisors’ directions, and immediately reporting any incident, injury, or potential workplace hazard.</p>
+                        <p>I acknowledge that failure to comply with safety regulations may result in administrative or legal action in accordance with internal policies and applicable labour law.</p>
+                    </div>
+
+                    <div class="mcep-emp-section-title">ثالثًا: التوقيع <span class="mcep-emp-en">Signature</span></div>
+                    <table class="mcep-emp-sign-table">
+                        <tbody>
+                            <tr>
+                                <td class="mcep-emp-sign-role" style="width: 100%;">
+                                    الموظف<br/><span class="mcep-emp-en">Employee</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="mcep-emp-sign-name">
+                                    الاسم: <span t-out="employee.name or ''"/><br/>
+                                    <span class="mcep-emp-en">Name</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="mcep-emp-sign-zone">
+                                    التوقيع:<br/><span class="mcep-emp-en">Signature</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    التاريخ: ....................................<br/>
+                                    <span class="mcep-emp-en">Date</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

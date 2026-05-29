@@ -23,11 +23,26 @@ def toast(title, message, kind='warning', sticky=False):
     }
 
 
+type_config = {
+    'exclusive_employment_declaration': {
+        'form_code': 'MCEP-HR-F-0010',
+        'report_xmlid': 'hr_employment_custom.action_report_mcep_employee_f0010_exclusive_work',
+        'filename_label': 'Exclusive Work Declaration',
+    },
+    'occupational_safety_acknowledgment': {
+        'form_code': 'MCEP-HR-F-0013',
+        'report_xmlid': 'hr_employment_custom.action_report_mcep_employee_f0013_occupational_safety',
+        'filename_label': 'Occupational Safety Acknowledgment',
+    },
+}
+
+
 for rec in records.sudo():
-    if rec.x_declaration_type != 'exclusive_employment_declaration':
+    config = type_config.get(rec.x_declaration_type or '')
+    if not config:
         action = toast(
             'Generate PDF',
-            'Only F-0010 Exclusive Work Declaration PDF generation is enabled in this slice.',
+            'PDF generation is enabled only for the declaration templates already implemented in Pass 15.',
             'warning',
             False
         )
@@ -53,7 +68,7 @@ for rec in records.sudo():
         continue
 
     generated_on = datetime.datetime.now()
-    form_code = rec.x_form_code or 'MCEP-HR-F-0010'
+    form_code = rec.x_form_code or config['form_code']
 
     vals = {}
     if not rec.x_state:
@@ -71,13 +86,13 @@ for rec in records.sudo():
 
     report_service = env['ir.actions.report'].sudo()
     pdf_content, _content_type = report_service._render_qweb_pdf(
-        'hr_employment_custom.action_report_mcep_employee_f0010_exclusive_work',
+        config['report_xmlid'],
         [rec.id]
     )
 
     filename = '%s - %s.pdf' % (
-        rec.x_document_reference or 'MCEP-HR-F-0010',
-        'Exclusive Work Declaration'
+        rec.x_document_reference or config['form_code'],
+        config['filename_label']
     )
 
     attachment = env['ir.attachment'].sudo().create({
@@ -89,8 +104,6 @@ for rec in records.sudo():
         'res_id': rec.id,
     })
 
-    previous_pdf = rec.x_pdf_attachment_id
-
     rec.write({
         'x_pdf_attachment_id': attachment.id,
         'x_generated_on': generated_on,
@@ -99,12 +112,11 @@ for rec in records.sudo():
 
     body = 'تم توليد الإقرار: %s' % (rec.x_name or rec.x_document_reference or filename)
 
-    if employee:
-        employee.message_post(
-            body=body,
-            subtype_xmlid='mail.mt_note',
-            attachment_ids=[attachment.id],
-        )
+    employee.message_post(
+        body=body,
+        subtype_xmlid='mail.mt_note',
+        attachment_ids=[attachment.id],
+    )
 
     action = {
         'type': 'ir.actions.act_url',

@@ -12,5 +12,16 @@
             <field name="attachment_use" eval="False"/>
         </record>
 
+
+        <record id="action_report_mcep_employee_f0013_occupational_safety" model="ir.actions.report">
+            <field name="name">F-0013 Occupational Safety Acknowledgment</field>
+            <field name="model">x_hr.employee_declaration</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document</field>
+            <field name="report_file">hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document</field>
+            <field name="paperformat_id" ref="hr_employment_custom.paperformat_mcep_employee_declaration_a4"/>
+            <field name="attachment_use" eval="False"/>
+        </record>
+
     </data>
 </odoo>

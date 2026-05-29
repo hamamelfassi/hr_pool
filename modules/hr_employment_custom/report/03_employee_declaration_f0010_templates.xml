@@ -19,6 +19,7 @@
 
                 <t t-call="hr_employment_custom.mcep_employee_report_assets"/>
 <div class="page mcep-emp-page">
+                                        <t t-set="page_label" t-value="'Page 1 / 2'"/>
                     <t t-call="hr_employment_custom.mcep_employee_report_header"/>
 
                     <div class="mcep-emp-title">إقرار العمل الحصري وعدم الازدواج</div>
@@ -100,14 +101,10 @@
                             </tr>
                         </tbody>
                     </table>
-                
-                    <div class="mcep-emp-footer">
-                        <span class="mcep-emp-footer-right">MCEP-HR-F-0010</span>
-                        <span class="mcep-emp-footer-left">Page 1 / 2</span>
-                    </div>
 </div>
 
                 <div class="page mcep-emp-page mcep-emp-new-page mcep-emp-page-last">
+                                        <t t-set="page_label" t-value="'Page 2 / 2'"/>
                     <t t-call="hr_employment_custom.mcep_employee_report_header"/>
 
                     <div class="mcep-emp-title">نص الإقرار</div>
@@ -127,11 +124,6 @@
                         <p>I, the undersigned, acknowledge that I am committed to exclusive work for Marsellia Cleaning and Environmental Protection Company during my employment relationship. I confirm that I do not perform any other work, employment, professional activity, or commercial activity that conflicts with my duties, the company's interests, or official working hours, unless prior written approval is obtained from the competent management.</p>
                         <p>I further confirm that I am not bound by another employment relationship that creates job duplication or conflict of interest, and I undertake to notify Human Resources immediately of any future circumstance that may create such duplication or conflict.</p>
                         <p>I acknowledge that breach of this declaration may subject me to administrative, disciplinary, or legal action under company policies and applicable law.</p>
-                    </div>
-
-                    <div class="mcep-emp-footer">
-                        <span class="mcep-emp-footer-right">MCEP-HR-F-0010</span>
-                        <span class="mcep-emp-footer-left">Page 2 / 2</span>
                     </div>
 
                 </div>
