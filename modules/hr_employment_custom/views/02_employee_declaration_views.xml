@@ -43,6 +43,16 @@
                             string="Generate PDF"
                             class="btn btn-primary"
                             invisible="x_declaration_type not in ['exclusive_employment_declaration', 'occupational_safety_acknowledgment', 'human_waste_handling_employee_undertaking', 'human_waste_storage_supervisor_undertaking'] or x_state == 'signature_requested' or x_state == 'signed'"/>
+                        <button name="%(action_employee_declaration_send_f0010_sign)d"
+                            type="action"
+                            string="Send to Sign"
+                            class="btn btn-secondary"
+                            invisible="x_declaration_type != 'exclusive_employment_declaration' or x_state != 'generated' or not x_pdf_attachment_id"/>
+                        <button name="%(action_employee_declaration_sync_f0010_sign)d"
+                            type="action"
+                            string="Sync"
+                            class="btn btn-secondary"
+                            invisible="x_declaration_type != 'exclusive_employment_declaration' or not x_pdf_attachment_id"/>
                     </div>
                     <group>
                         <field name="x_employee_id" readonly="1" force_save="1"/>
@@ -179,6 +189,16 @@
                                         string="Generate PDF"
                                         class="btn btn-primary"
                                         invisible="x_declaration_type not in ['exclusive_employment_declaration', 'occupational_safety_acknowledgment', 'human_waste_handling_employee_undertaking', 'human_waste_storage_supervisor_undertaking'] or x_state == 'signature_requested' or x_state == 'signed'"/>
+                                    <button name="%(action_employee_declaration_send_f0010_sign)d"
+                                        type="action"
+                                        string="Send to Sign"
+                                        class="btn btn-secondary"
+                                        invisible="x_declaration_type != 'exclusive_employment_declaration' or x_state != 'generated' or not x_pdf_attachment_id"/>
+                                    <button name="%(action_employee_declaration_sync_f0010_sign)d"
+                                        type="action"
+                                        string="Sync"
+                                        class="btn btn-secondary"
+                                        invisible="x_declaration_type != 'exclusive_employment_declaration' or not x_pdf_attachment_id"/>
                                 </div>
                                 <group>
                                     <field name="x_employee_id" readonly="1" force_save="1"/>

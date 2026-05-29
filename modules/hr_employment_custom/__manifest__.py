@@ -21,6 +21,7 @@
         "data/02_employee_identification_actions.xml",
         "data/03_employee_declaration_automation.xml",
         "data/04_employee_declaration_generate_actions.xml",
+        "data/05_employee_declaration_sign_actions.xml",
         "views/01_employee_identification_views.xml",
         "views/02_employee_declaration_views.xml",
         "report/01_employee_declaration_paperformat.xml",
