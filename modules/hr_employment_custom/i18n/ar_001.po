@@ -6,15 +6,78 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~19.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-29 14:51+0000\n"
-"PO-Revision-Date: 2026-05-29 14:51+0000\n"
+"POT-Creation-Date: 2026-05-29 21:12+0000\n"
+"PO-Revision-Date: 2026-05-29 21:12+0000\n"
 "Last-Translator: \n"
-"Language-Team: Arabic\n"
-"Language: ar_001\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid ""
+"<br/>\n"
+"                                    <span class=\"mcep-emp-en\">Human Waste Receipt and Storage Supervisor</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid ""
+"<br/>\n"
+"                                    <span class=\"mcep-emp-en\">Job</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid ""
+"<br/>\n"
+"                                    <span class=\"mcep-emp-en\">Name / Title</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid ""
+"<br/>\n"
+"                                    <span class=\"mcep-emp-en\">Name</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid ""
+"<br/>\n"
+"                                    <span class=\"mcep-emp-en\">Supervisor</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid ""
+"<br/>\n"
+"                                    الصفة:"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.mcep_employee_report_header
+msgid "<strong>الحالة:</strong>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.mcep_employee_report_header
+msgid "<strong>المرجع:</strong>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.mcep_employee_report_header
+msgid "<strong>النموذج:</strong>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.mcep_employee_report_header
+msgid "<strong>الوثيقة:</strong>"
+msgstr ""
 
 #. module: hr_employment_custom
 #: model:ir.actions.act_window,name:hr_employment_custom.action_employee_declaration_create
@@ -49,6 +112,11 @@ msgstr "تسمية الإقرار"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_state
 msgid "Declaration State"
 msgstr "حالة الإقرار"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid "Declaration Text"
+msgstr ""
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_declaration_type
@@ -161,7 +229,23 @@ msgid ""
 "lifecycle will be added in later Pass 15 slices. Declaration PDFs should "
 "read native employee fields and the selected employee identification "
 "document rather than duplicating employee snapshot fields."
-msgstr "إقرارات الموظف هي سجلات عملية مضبوطة. ستتم إضافة دورة ملف PDF والتوقيع في شرائح لاحقة من Pass 15. يجب أن تقرأ ملفات الإقرار من حقول الموظف الأصلية ومستند الهوية المختار بدلاً من تكرار لقطات بيانات الموظف."
+msgstr ""
+"إقرارات الموظف هي سجلات عملية مضبوطة. ستتم إضافة دورة ملف PDF والتوقيع في "
+"شرائح لاحقة من Pass 15. يجب أن تقرأ ملفات الإقرار من حقول الموظف الأصلية "
+"ومستند الهوية المختار بدلاً من تكرار لقطات بيانات الموظف."
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid "English Summary"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid "Exclusive Work and Non-Duplication Declaration"
+msgstr "إقرار العمل الحصري وعدم الازدواجية"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_expiry_date
@@ -172,6 +256,48 @@ msgstr "تاريخ الانتهاء"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_expiry_status
 msgid "Expiry Status"
 msgstr "حالة الصلاحية"
+
+#. module: hr_employment_custom
+#: model:ir.actions.report,name:hr_employment_custom.action_report_mcep_employee_f0010_exclusive_work
+msgid "F-0010 Exclusive Work Declaration"
+msgstr "F-0010 إقرار العمل الحصري"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
+msgid ""
+"F-0010 Exclusive Work Declaration uses two signer roles: the employee and "
+"the HR responsible user."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
+msgid "F-0010 Signers"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model:ir.actions.report,name:hr_employment_custom.action_report_mcep_employee_f0013_occupational_safety
+msgid "F-0013 Occupational Safety Acknowledgment"
+msgstr "F-0013 إقرار السلامة المهنية"
+
+#. module: hr_employment_custom
+#: model:ir.actions.report,name:hr_employment_custom.action_report_mcep_employee_f0021_human_waste_handling
+msgid "F-0021 Human Waste Handling Undertaking"
+msgstr "F-0021 تعهد تداول المخلفات البشرية"
+
+#. module: hr_employment_custom
+#: model:ir.actions.report,name:hr_employment_custom.action_report_mcep_employee_f0022_human_waste_storage_supervisor
+msgid "F-0022 Human Waste Storage Supervisor Undertaking"
+msgstr "F-0022 تعهد مشرف تخزين المخلفات البشرية"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid ""
+"Final disposal shall only be carried out through the officially approved "
+"burial process and competent authority approvals. I bear full administrative"
+" and legal responsibility for any violation or negligence."
+msgstr ""
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_form_code
@@ -195,6 +321,13 @@ msgid "GRC Hooks"
 msgstr "روابط الحوكمة"
 
 #. module: hr_employment_custom
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_generate_pdf
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
+msgid "Generate PDF"
+msgstr "توليد الإقرار"
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_generated_on
 msgid "Generated On"
 msgstr "تاريخ الإنشاء"
@@ -203,6 +336,104 @@ msgstr "تاريخ الإنشاء"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_pdf_attachment_id
 msgid "Generated PDF"
 msgstr "ملف PDF المنشأ"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_hr_responsible_job_title
+msgid "HR Responsible Job Title"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_hr_responsible_id
+msgid "HR Responsible User"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid "Human Waste Handling and Transport Undertaking"
+msgstr "تعهد استلام ونقل المخلفات البشرية"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid "Human Waste Receipt and Storage Supervisor Undertaking"
+msgstr "تعهد مشرف استلام وتخزين المخلفات البشرية"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid ""
+"I acknowledge and undertake that, upon receiving human waste from medical "
+"and healthcare activities, including placenta and blood bags, I will comply "
+"with all approved Health, Safety, and Environment procedures."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid ""
+"I acknowledge that breach of this declaration may subject me to "
+"administrative, disciplinary, or legal action under company policies and "
+"applicable law."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+msgid ""
+"I acknowledge that failure to comply with safety regulations may result in "
+"administrative or legal action in accordance with internal policies and "
+"applicable labour law."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid ""
+"I also acknowledge that containers must not be opened and that the waste "
+"must not be handled except under approved procedures. Disposal, transfer, "
+"transport, or dealing with the waste by any unauthorized means is strictly "
+"prohibited."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid ""
+"I further confirm that I am not bound by another employment relationship "
+"that creates job duplication or conflict of interest, and I undertake to "
+"notify Human Resources immediately of any future circumstance that may "
+"create such duplication or conflict."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid ""
+"I hereby acknowledge and undertake that, upon receiving human waste, "
+"including placenta and blood bags, within the company premises, I will fully"
+" comply with all approved HSE procedures."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+msgid ""
+"I undertake to fully comply with all safety rules and instructions while "
+"performing my duties, including wearing Personal Protective Equipment (PPE),"
+" following supervisors’ directions, and immediately reporting any incident, "
+"injury, or potential workplace hazard."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid ""
+"I, the undersigned, acknowledge that I am committed to exclusive work for "
+"Marsellia Cleaning and Environmental Protection Company during my employment"
+" relationship. I confirm that I do not perform any other work, employment, "
+"professional activity, or commercial activity that conflicts with my duties,"
+" the company's interests, or official working hours, unless prior written "
+"approval is obtained from the competent management."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+msgid ""
+"I, the undersigned, hereby acknowledge that I have reviewed and understood "
+"the Occupational Health and Safety policies and procedures adopted by "
+"Marsellia for Cleaning and Environmental Protection."
+msgstr ""
 
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_identification_documents
@@ -262,10 +493,29 @@ msgid "Manual Decision Number"
 msgstr "رقم القرار اليدوي"
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.mcep_employee_report_header
+msgid "Marsellia"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid ""
+"My role is limited to receiving, transporting, and officially handing over "
+"the waste to authorized personnel within the company premises. I am not "
+"permitted to retain, open, transfer, or handle the waste outside the "
+"approved process."
+msgstr ""
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_notes
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_notes
 msgid "Notes"
 msgstr "ملاحظات"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+msgid "Occupational Health and Safety Acknowledgment"
+msgstr "إقرار السلامة والصحة المهنية"
 
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
@@ -285,6 +535,13 @@ msgid "Ownership and Notes"
 msgstr "المسؤولية والملاحظات"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,help:hr_employment_custom.field_x_hr_employee_declaration__x_hr_responsible_job_title
+msgid ""
+"Printed title used for the HR responsible signer block in F-0010. Defaults "
+"to مدير الموارد البشرية."
+msgstr ""
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_required_before_assignment
 msgid "Required Before Assignment"
 msgstr "مطلوب قبل التكليف"
@@ -300,6 +557,13 @@ msgid "Responsible User"
 msgstr "المستخدم المسؤول"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,help:hr_employment_custom.field_x_hr_employee_declaration__x_hr_responsible_id
+msgid ""
+"Second signer for F-0010 Exclusive Work Declaration. This is typically the "
+"HR Manager or equivalent responsible user."
+msgstr ""
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_selected_identification_document_id
 msgid "Selected Identification Document"
 msgstr "مستند الهوية المختار"
@@ -309,7 +573,19 @@ msgstr "مستند الهوية المختار"
 msgid ""
 "Selected employee identity document used by declaration PDFs where a "
 "personal ID, passport, or driving-license number is required."
-msgstr "مستند هوية الموظف المختار لاستخدامه في ملفات الإقرار عندما يكون رقم البطاقة الشخصية أو جواز السفر أو رخصة القيادة مطلوبًا."
+msgstr ""
+"مستند هوية الموظف المختار لاستخدامه في ملفات الإقرار عندما يكون رقم البطاقة "
+"الشخصية أو جواز السفر أو رخصة القيادة مطلوبًا."
+
+#. module: hr_employment_custom
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_send_f0010_sign
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_send_f0013_sign
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_send_f0021_sign
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_send_f0022_sign
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
+msgid "Send to Sign"
+msgstr "إرسال للتوقيع"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sent_on
@@ -379,15 +655,487 @@ msgid "Source Values"
 msgstr "قيم المصدر"
 
 #. module: hr_employment_custom
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_sync_f0010_sign
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_sync_f0013_sign
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_sync_f0021_sign
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_sync_f0022_sign
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
+msgid "Sync"
+msgstr "مزامنة"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid ""
+"This includes handling the waste as hazardous biological material, using "
+"appropriate PPE, ensuring safe packaging with no leakage or damage, "
+"maintaining refrigerated or frozen conditions, documenting receipt in "
+"official records, and transporting it directly to the approved freezing "
+"storage facility without delay."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid ""
+"This includes officially receiving human waste only from authorized "
+"employees, documenting receipt in company-approved records, preserving the "
+"waste inside the designated freezing storage facility, and preventing "
+"contamination, tampering, or loss."
+msgstr ""
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,help:hr_employment_custom.field_x_hr_employee_identification_document__x_document_image
 msgid ""
 "Upload an image scan/photo of the identification document. Source "
 "attachments from recruitment handover remain tracked separately."
 msgstr ""
 "ارفع صورة أو نسخة ممسوحة ضوئيًا من مستند الهوية. تبقى مرفقات المصدر القادمة "
-"من التوظيف متتبعة بشكل منفصل."\n\n#. module: hr_employment_custom
-#: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_generate_pdf
+"من التوظيف متتبعة بشكل منفصل."
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+msgid ""
+"أتعهد بإبلاغ الإدارة فورًا عن أي حادث أو إصابة أو خطر محتمل في موقع العمل، "
+"والتعاون مع فرق السلامة في اتخاذ الإجراءات الوقائية اللازمة."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+msgid ""
+"أتعهد بالالتزام الكامل بجميع قواعد وإجراءات السلامة أثناء أدائي لمهامي "
+"الوظيفية، بما في ذلك ارتداء معدات الوقاية الشخصية (PPE) والالتزام بتعليمات "
+"المشرفين."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid ""
+"أتعهد بعدم استخدام وقت العمل أو موارد الشركة أو بياناتها أو معداتها أو "
+"علاقاتها التجارية لتحقيق أي منفعة شخصية أو منفعة لأي جهة خارجية، وأقر بأن "
+"جميع الأعمال والمعلومات والوثائق التي أطلع عليها بحكم عملي تعد جزءًا من "
+"مسؤولياتي الوظيفية وتخضع لسياسات الشركة المعتمدة."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid ""
+"أقر أنا الموقع أدناه، وبصفتي موظفًا لدى شركة مرسيليا للنظافة وحماية البيئة، "
+"بأنني ألتزم بالعمل الحصري لصالح الشركة خلال مدة علاقة العمل، وبأنني لا أمارس"
+" أي عمل آخر أو وظيفة أخرى أو نشاطًا مهنيًا أو تجاريًا يتعارض مع واجباتي "
+"الوظيفية أو مصالح الشركة أو أوقات العمل الرسمية، إلا بعد الحصول على موافقة "
+"كتابية مسبقة من الإدارة المختصة."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+msgid ""
+"أقر بأن عدم الالتزام بتعليمات السلامة يُعتبر مخالفة جسيمة قد تؤدي إلى "
+"المساءلة الإدارية أو القانونية، وفقًا للسياسات الداخلية ولأحكام قانون علاقات"
+" العمل رقم (12) لسنة 2010."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid ""
+"أقر بأنني قرأت هذا الإقرار وفهمت مضمونه، وأن توقيعي عليه يُعد قبولًا صريحًا "
+"والتزامًا كاملًا بما ورد فيه."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+msgid ""
+"أقر بأنني مسؤول عن الحفاظ على سلامتي وسلامة زملائي أثناء العمل، وأوافق على "
+"الالتزام بسياسات الشركة في هذا الشأن في جميع الأوقات."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+msgid "أقرّ أنا الموقّع أدناه بما يلي:"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid ""
+"أقرّ بأنه يُمنع منعًا باتًا التصرف في المخلفات أو نقلها أو التخلص منها بأي "
+"وسيلة أخرى."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid ""
+"أنا المشرف المسؤول<br/><span class=\"mcep-emp-en\">I, the supervisor</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+msgid ""
+"أنني قد استلمت نسخة من دليل إجراءات السلامة المعتمدة في شركة مرسيليا للنظافة"
+" وحماية البيئة، واطّلعت على جميع سياسات وتعليمات السلامة المهنية المعتمدة في"
+" الشركة، وقد تم شرحها لي بصورة واضحة ومفهومة."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid ""
+"أوافق على أن أي إخلال بهذا الإقرار قد يعرّضني للإجراءات الإدارية أو "
+"التأديبية أو القانونية المعمول بها داخل الشركة ووفق التشريعات ذات العلاقة، "
+"بما في ذلك المساءلة عن أي ضرر يثبت وقوعه نتيجة الإخلال بهذا الالتزام."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid ""
+"أولًا: المعلومات الشخصية <span class=\"mcep-emp-en\">Personal "
+"Information</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+msgid ""
+"أولًا: بيانات الموظف <span class=\"mcep-emp-en\">Employee Information</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid ""
+"أُقرّ وأتعهد بأنني عند استلام المخلفات البشرية (المشيمة وأكياس الدم) داخل "
+"موقع الشركة، سألتزم التزامًا كاملًا بإجراءات الصحة والسلامة والبيئة (HSE) "
+"المعتمدة، وذلك وفق الآتي:"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid ""
+"أُقرّ وأتعهد بأنني عند قيامي باستلام المخلفات البشرية الناتجة عن الأنشطة "
+"الطبية والصحية، بما في ذلك المشيمة وأكياس الدم، سألتزم التزامًا كاملًا بجميع"
+" إجراءات الصحة والسلامة والبيئة (HSE) المعتمدة داخل الشركة، وذلك وفق الآتي:"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid "إثبات الهوية<br/><span class=\"mcep-emp-en\">Identification</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+msgid "إثبات شخصي<br/><span class=\"mcep-emp-en\">Personal ID</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+msgid "إقرار السلامة والصحة المهنية"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid "إقرار العمل الحصري وعدم الازدواج"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid ""
+"استلام المخلفات البشرية رسميًا من الموظفين المخولين وتوثيقها في السجلات "
+"المعتمدة."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid "اسم المشرف<br/><span class=\"mcep-emp-en\">Employee Name</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid "اسم الموظف<br/><span class=\"mcep-emp-en\">Full Name</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+msgid "الاسم الكامل<br/><span class=\"mcep-emp-en\">Full Name</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid "الاسم:"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid ""
+"الالتزام باستخدام معدات الوقاية الشخصية المناسبة (PPE) أثناء الاستلام "
+"والنقل."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid "البريد الإلكتروني<br/><span class=\"mcep-emp-en\">Email</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid ""
+"التأكد من سلامة التغليف وعدم وجود أي تسرب أو تلف في الأكياس أو الحاويات."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid ""
+"التاريخ: ....................................<br/>\n"
+"                                    <span class=\"mcep-emp-en\">Date</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid "التاريخ<br/><span class=\"mcep-emp-en\">Date</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid ""
+"التعامل مع المخلفات البشرية باعتبارها مخلفات بيولوجية خطرة تتطلب عناية خاصة."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid "التوقيع:<br/><span class=\"mcep-emp-en\">Signature</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid "التوقيع<br/><span class=\"mcep-emp-en\">Signature</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid ""
+"الحفاظ على المخلفات في حالتها المعتمدة مبردة أو مجمدة ومنع تعرضها لأي تلوث "
+"أو عبث."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+msgid "الرقم الوطني / الهوية<br/><span class=\"mcep-emp-en\">ID No.</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid "الرقم الوظيفي<br/><span class=\"mcep-emp-en\">Job No.</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid "القسم / الإدارة<br/><span class=\"mcep-emp-en\">Department</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+msgid "القسم<br/><span class=\"mcep-emp-en\">Department</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid ""
+"المحافظة على المخلفات داخل مخزن التجميد المخصص والمعتمد ومنع تعرضها لأي تلوث"
+" أو عبث أو فقدان."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid "المسؤول المباشر<br/><span class=\"mcep-emp-en\">Direct Manager</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid "المسمى الوظيفي<br/><span class=\"mcep-emp-en\">Job Title</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid "المشرف:"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+msgid "الموظف<br/><span class=\"mcep-emp-en\">Employee</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid "الوظيفة:"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid "بصمة المشرف<br/><span class=\"mcep-emp-en\">Supervisor Fingerprint</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid ""
+"بيانات وتوقيع الموظف<br/><span class=\"mcep-emp-en\">Employee Details and "
+"Signature</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid "تاريخ الإنشاء<br/><span class=\"mcep-emp-en\">Generated On</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+msgid "تاريخ المباشرة<br/><span class=\"mcep-emp-en\">Starting Date</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid ""
+"تحمل كامل المسؤولية الإدارية والقانونية عن أي مخالفة أو إهمال يؤدي إلى فقدان"
+" المخلفات أو التصرف غير المصرح به."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid "تعهد استلام ونقل المخلفات البشرية"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid "تعهد مشرف استلام وتخزين المخلفات البشرية"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid "توثيق عملية الاستلام في السجلات الرسمية المعتمدة بالشركة."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid "ثالثًا: إقرار العمل الحصري وعدم الازدواج"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+msgid "ثالثًا: التوقيع <span class=\"mcep-emp-en\">Signature</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid ""
+"ثالثًا: التوقيع والبصمة <span class=\"mcep-emp-en\">Signature and "
+"Fingerprint</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid "ثانيًا: التوقيعات <span class=\"mcep-emp-en\">Signatures</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid "ثانيًا: نص الإقرار <span class=\"mcep-emp-en\">Declaration Text</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid ""
+"رابعًا: بيانات وتوقيع المشرف <span class=\"mcep-emp-en\">Employee Details "
+"and Signature</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid ""
+"ضمان عدم فتح الحاويات أو التعامل مع المخلفات إلا ضمن الإجراءات الرسمية "
+"المعتمدة."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid ""
+"كما أتعهد بأن دوري يقتصر فقط على استلام المخلفات البشرية من المصحات أو "
+"المراكز الصحية ونقلها وتسليمها رسميًا للجهة المخولة داخل موقع الشركة."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid ""
+"كما أقر بأنني لا أرتبط بعلاقة عمل قائمة مع أي جهة أخرى بما يؤدي إلى ازدواجية"
+" وظيفية أو تعارض مصالح، وأتعهد بإبلاغ إدارة الموارد البشرية فورًا عن أي وضع "
+"قد ينشأ لاحقًا ويؤدي إلى ازدواجية أو تعارض مصالح مباشر أو غير مباشر."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
+msgid ""
+"لا يتم تسليم أو التخلص النهائي من هذه المخلفات إلا من خلال عملية الدفن "
+"المعتمدة رسميًا وفق موافقات دار الإفتاء والخدمات العامة والجهات المختصة."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid "مرجع الإقرار<br/><span class=\"mcep-emp-en\">Declaration Ref.</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid ""
+"مسؤول الموارد البشرية<br/><span class=\"mcep-emp-en\">HR Responsible</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
+msgid "نص الإقرار"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid ""
+"نقل المخلفات مباشرة وبشكل آمن إلى مخزن التجميد المعتمد بموقع الشركة دون أي "
+"تأخير."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid ""
+"وأتحمل كامل المسؤولية القانونية والإدارية عن أي مخالفة أو إهمال أو تصرف فردي"
+" يؤدي إلى مخاطر صحية أو بيئية أو مخالفة للأنظمة والتشريعات المعمول بها."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
+msgid ""
+"وأقرّ بأنه لا يحق لي تحت أي ظرف القيام بأي تصرف آخر بالمخلفات، بما في ذلك "
+"الاحتفاظ بها، فتحها، نقلها إلى أي جهة غير مخولة، أو تسليمها أو التعامل معها "
+"خارج مسار الاستلام والتسليم الرسمي المعتمد."
+msgstr ""
+
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
-msgid "Generate PDF"
-msgstr "توليد الإقرار"\n
+msgid "Download Generated PDF"
+msgstr "تنزيل ملف PDF المنشأ"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+msgid "Download Signed PDF"
+msgstr "تنزيل ملف PDF الموقّع"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+msgid "Download Sign Certificate"
+msgstr "تنزيل شهادة التوقيع"

@@ -117,12 +117,27 @@
                     </group>
 
                     <group string="Artifacts">
-                        <field name="x_pdf_attachment_id" readonly="1"
-                            options="{'no_create': True, 'no_create_edit': True}"/>
-                        <field name="x_signed_attachment_id" readonly="1"
-                            options="{'no_create': True, 'no_create_edit': True}"/>
-                        <field name="x_sign_certificate_attachment_id" readonly="1"
-                            options="{'no_create': True, 'no_create_edit': True}"/>
+                        <field name="x_pdf_attachment_id" invisible="1" readonly="1"/>
+                        <field name="x_signed_attachment_id" invisible="1" readonly="1"/>
+                        <field name="x_sign_certificate_attachment_id" invisible="1" readonly="1"/>
+                        <button name="%(action_employee_declaration_download_generated_pdf)d"
+                            type="action"
+                            string="Download Generated PDF"
+                            icon="fa-download"
+                            class="btn btn-link"
+                            invisible="not x_pdf_attachment_id"/>
+                        <button name="%(action_employee_declaration_download_signed_pdf)d"
+                            type="action"
+                            string="Download Signed PDF"
+                            icon="fa-download"
+                            class="btn btn-link"
+                            invisible="not x_signed_attachment_id"/>
+                        <button name="%(action_employee_declaration_download_sign_certificate)d"
+                            type="action"
+                            string="Download Sign Certificate"
+                            icon="fa-download"
+                            class="btn btn-link"
+                            invisible="not x_sign_certificate_attachment_id"/>
                     </group>
 
                     <group string="Odoo Sign">
