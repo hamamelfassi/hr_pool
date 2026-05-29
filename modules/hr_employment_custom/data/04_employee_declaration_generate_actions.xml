@@ -34,6 +34,11 @@ type_config = {
         'report_xmlid': 'hr_employment_custom.action_report_mcep_employee_f0013_occupational_safety',
         'filename_label': 'Occupational Safety Acknowledgment',
     },
+    'human_waste_handling_employee_undertaking': {
+        'form_code': 'MCEP-HR-F-0021',
+        'report_xmlid': 'hr_employment_custom.action_report_mcep_employee_f0021_human_waste_handling',
+        'filename_label': 'Human Waste Handling Undertaking',
+    },
 }
 
 

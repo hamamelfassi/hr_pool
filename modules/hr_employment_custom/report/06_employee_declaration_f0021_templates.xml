@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_mcep_employee_f0021_human_waste_handling_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <head>
+                    <meta charset="UTF-8"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                </head>
+
+                <t t-set="form_code" t-value="'MCEP-HR-F-0021'"/>
+                <t t-set="form_title_ar" t-value="'تعهد استلام ونقل المخلفات البشرية'"/>
+                <t t-set="form_title_en" t-value="'Human Waste Handling and Transport Undertaking'"/>
+                <t t-set="page_label" t-value="'Page 1 / 1'"/>
+                <t t-set="employee" t-value="o.x_employee_id"/>
+                <t t-set="supervisor" t-value="employee.parent_id"/>
+
+                <t t-call="hr_employment_custom.mcep_employee_report_assets"/>
+
+                <div class="page mcep-emp-page mcep-f0021-page">
+                    <t t-call="hr_employment_custom.mcep_employee_report_header"/>
+
+                    <div class="mcep-emp-title">تعهد استلام ونقل المخلفات البشرية</div>
+                    <div class="mcep-emp-subtitle">Human Waste Handling and Transport Undertaking</div>
+
+                    <div class="mcep-emp-section-title">أولًا: المعلومات الشخصية <span class="mcep-emp-en">Personal Information</span></div>
+                    <table class="mcep-emp-table">
+                        <tbody>
+                            <tr>
+                                <th style="width: 24%;">اسم الموظف<br/><span class="mcep-emp-en">Full Name</span></th>
+                                <td style="width: 76%;" class="mcep-emp-value"><span t-out="employee.name or ''"/></td>
+                            </tr>
+                            <tr>
+                                <th>المسمى الوظيفي<br/><span class="mcep-emp-en">Job Title</span></th>
+                                <td class="mcep-emp-value"><span t-out="employee.job_title or ''"/></td>
+                            </tr>
+                            <tr>
+                                <th>القسم / الإدارة<br/><span class="mcep-emp-en">Department</span></th>
+                                <td class="mcep-emp-value"><span t-out="employee.department_id.name or ''"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="mcep-emp-section-title">ثانيًا: نص الإقرار <span class="mcep-emp-en">Declaration Text</span></div>
+                    <div class="mcep-emp-body-text">
+                        <p>
+                            أُقرّ وأتعهد بأنني عند قيامي باستلام المخلفات البشرية الناتجة عن الأنشطة الطبية والصحية، بما في ذلك المشيمة وأكياس الدم، سألتزم التزامًا كاملًا بجميع إجراءات الصحة والسلامة والبيئة (HSE) المعتمدة داخل الشركة، وذلك وفق الآتي:
+                        </p>
+                        <ul>
+                            <li>التعامل مع المخلفات البشرية باعتبارها مخلفات بيولوجية خطرة تتطلب عناية خاصة.</li>
+                            <li>الالتزام باستخدام معدات الوقاية الشخصية المناسبة (PPE) أثناء الاستلام والنقل.</li>
+                            <li>التأكد من سلامة التغليف وعدم وجود أي تسرب أو تلف في الأكياس أو الحاويات.</li>
+                            <li>الحفاظ على المخلفات في حالتها المعتمدة مبردة أو مجمدة ومنع تعرضها لأي تلوث أو عبث.</li>
+                            <li>توثيق عملية الاستلام في السجلات الرسمية المعتمدة بالشركة.</li>
+                            <li>نقل المخلفات مباشرة وبشكل آمن إلى مخزن التجميد المعتمد بموقع الشركة دون أي تأخير.</li>
+                        </ul>
+                        <p>
+                            كما أتعهد بأن دوري يقتصر فقط على استلام المخلفات البشرية من المصحات أو المراكز الصحية ونقلها وتسليمها رسميًا للجهة المخولة داخل موقع الشركة.
+                        </p>
+                        <p>
+                            وأقرّ بأنه لا يحق لي تحت أي ظرف القيام بأي تصرف آخر بالمخلفات، بما في ذلك الاحتفاظ بها، فتحها، نقلها إلى أي جهة غير مخولة، أو تسليمها أو التعامل معها خارج مسار الاستلام والتسليم الرسمي المعتمد.
+                        </p>
+                        <p>
+                            وأتحمل كامل المسؤولية القانونية والإدارية عن أي مخالفة أو إهمال أو تصرف فردي يؤدي إلى مخاطر صحية أو بيئية أو مخالفة للأنظمة والتشريعات المعمول بها.
+                        </p>
+                    </div>
+
+                    <div class="mcep-emp-section-title">English Summary</div>
+                    <div class="mcep-emp-body-text mcep-emp-en">
+                        <p>
+                            I acknowledge and undertake that, upon receiving human waste from medical and healthcare activities, including placenta and blood bags, I will comply with all approved Health, Safety, and Environment procedures.
+                        </p>
+                        <p>
+                            This includes handling the waste as hazardous biological material, using appropriate PPE, ensuring safe packaging with no leakage or damage, maintaining refrigerated or frozen conditions, documenting receipt in official records, and transporting it directly to the approved freezing storage facility without delay.
+                        </p>
+                        <p>
+                            My role is limited to receiving, transporting, and officially handing over the waste to authorized personnel within the company premises. I am not permitted to retain, open, transfer, or handle the waste outside the approved process.
+                        </p>
+                    </div>
+
+                    <div class="mcep-emp-section-title">ثالثًا: التوقيع والبصمة <span class="mcep-emp-en">Signature and Fingerprint</span></div>
+                    <table class="mcep-emp-sign-table">
+                        <tbody>
+                            <tr>
+                                <td class="mcep-emp-sign-role" style="width: 35%;">
+                                    بصمة المشرف<br/><span class="mcep-emp-en">Supervisor Fingerprint</span>
+                                </td>
+                                <td class="mcep-emp-sign-role" style="width: 65%;">
+                                    بيانات وتوقيع الموظف<br/><span class="mcep-emp-en">Employee Details and Signature</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="mcep-fingerprint-zone" rowspan="4">
+                                    المشرف: <span t-out="supervisor.name or ''"/><br/>
+                                    <span class="mcep-emp-en">Supervisor</span>
+                                </td>
+                                <td class="mcep-emp-sign-name">
+                                    الاسم: <span t-out="employee.name or ''"/><br/>
+                                    <span class="mcep-emp-en">Name</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="mcep-emp-sign-name">
+                                    الوظيفة: <span t-out="employee.job_title or ''"/><br/>
+                                    <span class="mcep-emp-en">Job</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="mcep-emp-sign-zone">
+                                    التوقيع:<br/><span class="mcep-emp-en">Signature</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    التاريخ: ....................................<br/>
+                                    <span class="mcep-emp-en">Date</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

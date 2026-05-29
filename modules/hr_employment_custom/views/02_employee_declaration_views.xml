@@ -42,7 +42,7 @@
                             type="action"
                             string="Generate PDF"
                             class="btn btn-primary"
-                            invisible="x_declaration_type not in ['exclusive_employment_declaration', 'occupational_safety_acknowledgment'] or x_state == 'signature_requested' or x_state == 'signed'"/>
+                            invisible="x_declaration_type not in ['exclusive_employment_declaration', 'occupational_safety_acknowledgment', 'human_waste_handling_employee_undertaking'] or x_state == 'signature_requested' or x_state == 'signed'"/>
                     </div>
                     <group>
                         <field name="x_employee_id" readonly="1" force_save="1"/>
@@ -178,7 +178,7 @@
                                         type="action"
                                         string="Generate PDF"
                                         class="btn btn-primary"
-                                        invisible="x_declaration_type not in ['exclusive_employment_declaration', 'occupational_safety_acknowledgment'] or x_state == 'signature_requested' or x_state == 'signed'"/>
+                                        invisible="x_declaration_type not in ['exclusive_employment_declaration', 'occupational_safety_acknowledgment', 'human_waste_handling_employee_undertaking'] or x_state == 'signature_requested' or x_state == 'signed'"/>
                                 </div>
                                 <group>
                                     <field name="x_employee_id" readonly="1" force_save="1"/>
