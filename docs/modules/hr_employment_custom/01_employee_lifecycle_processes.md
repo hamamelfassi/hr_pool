@@ -48,7 +48,7 @@ Use custom models only where Marsellia has a process object Odoo does not native
 | Employee declarations | `x_hr.employee_declaration` |
 | Custody/assets | `x_hr.employee_custody_type`, `x_hr.employee_custody_item` |
 | Training/certifications | `x_hr.employee_training_commitment` |
-| Administrative permissions | `x_hr.employee_permission_type`, `x_hr.employee_permission_request` |
+| Administrative permissions | `x_hr.employee_permission_type`, `x_hr.employee_permission` |
 | Work assignments | `x_hr.employee_work_assignment` |
 | Appraisal scoring lines | `x_hr.appraisal_evaluation_line` |
 | Separation request | `x_hr.employee_separation_request` |
@@ -534,7 +534,7 @@ x_hr.employee_permission_type
 x_hr.employee_permission
 ```
 
-The older planning name `x_hr.employee_permission_request` is superseded for Pass 18 by the shorter operational model name `x_hr.employee_permission`.
+The older planning name `x_hr.employee_permission_request` was superseded for Pass 18 by the shorter operational model name `x_hr.employee_permission`.
 
 ### Purpose
 
@@ -1026,7 +1026,7 @@ Implemented:
   - incomplete.
 
 Accepted residual deferral:
-- Arabic translation for training selection-state values remains incomplete in the live UI and will be fixed later using exact exported `ir.model.fields.selection` anchors.
+- Arabic translation for training selection-state values was closed in Pass 18F-2 using exact exported `ir.model.fields.selection` anchors.
 - Dynamic record-value Arabic PDF hardening remains deferred. Future official Arabic-first PDF generation should force Arabic render context and block generation with a specific toast when required Arabic record translations are missing.
 - F-0008 thumbprint remains outside system workflow. No thumbprint fields, uploads, Sign items, or lifecycle states were introduced.
 
@@ -1062,3 +1062,54 @@ draft → generated → signature_requested → signed
 ```
 
 Manager and HR approval blocks are represented as form fields/manual metadata in the first implementation. Do not implement attendance, leave, payroll, work-entry, approval-request, disciplinary, deduction, or GRC decision-instance effects in Pass 18.
+
+<!-- PASS18G_LIFECYCLE_CLOSURE_START -->
+## Pass 18 closure note — Administrative permissions F-0014/F-0015
+
+Pass 18 is closed and accepted.
+
+Implemented process family:
+
+```text
+x_hr.employee_permission_type
+x_hr.employee_permission
+```
+
+Implemented forms:
+
+```text
+MCEP-HR-F-0014 — Exit Permission
+MCEP-HR-F-0015 — Lateness Permission
+```
+
+The two forms share one operational model and one dynamic QWeb template. The permission type controls form code, title, and report routing.
+
+Implemented source-record lifecycle:
+
+```text
+draft → generated → signature_requested → signed
+```
+
+Implemented Sign lifecycle:
+
+```text
+1. Employee
+2. Direct Manager
+3. HR Responsible
+```
+
+The permission process record remains the source of truth for generated PDF, Sign request metadata, signed PDF, Sign certificate, lifecycle dates, manual decision metadata, and notes.
+
+Pass 18 deliberately did not implement:
+
+```text
+attendance effects
+leave effects
+payroll/work-entry effects
+disciplinary/deduction effects
+approval.request integration
+GRC decision-instance integration
+```
+
+These remain later integration hooks only.
+<!-- PASS18G_LIFECYCLE_CLOSURE_END -->

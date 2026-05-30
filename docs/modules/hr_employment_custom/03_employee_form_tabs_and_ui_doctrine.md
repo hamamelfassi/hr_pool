@@ -32,7 +32,7 @@ Add these custom tabs to `hr.employee`:
 ```text
 الهوية
 الإقرارات
-العهد والممتلكات
+العهود
 التدريب والشهادات
 التكليفات
 الإجازات
@@ -48,7 +48,7 @@ Add these custom tabs to `hr.employee`:
 |---|---|
 | `الهوية` | Typed employee identification documents: ID card, passport, driving license, and company ID card |
 | `الإقرارات` | Employee declarations and HSE undertakings |
-| `العهد والممتلكات` | Custody items, ID cards, PPE, tools, vehicles, radios, laptops |
+| `العهود` | Custody items, ID cards, PPE, tools, vehicles, radios, laptops |
 | `التدريب والشهادات` | Training commitments, certification evidence, resume/skill integration |
 | `التكليفات` | Work assignments, future overtime/project/planning hooks |
 | `الإجازات` | Native `hr.leave` overlay and official Marsellia leave form |
@@ -414,3 +414,47 @@ Accepted residual deferral:
 - Arabic translation for training selection-state values remains incomplete in the live UI and will be fixed later using exact exported `ir.model.fields.selection` anchors.
 - Dynamic record-value Arabic PDF hardening remains deferred. Future official Arabic-first PDF generation should force Arabic render context and block generation with a specific toast when required Arabic record translations are missing.
 - F-0008 thumbprint remains outside system workflow. No thumbprint fields, uploads, Sign items, or lifecycle states were introduced.
+
+<!-- PASS18G_UI_DOCTRINE_START -->
+## Pass 18 closure note — Permissions tab UI
+
+Pass 18 accepted the employee `Permissions` tab for F-0014/F-0015 administrative permissions.
+
+Accepted pattern:
+
+```text
+employee Permissions tab
+info alert
+New Permission button
+embedded list
+state badges
+controlled modal create/edit form
+standalone full form
+statusbar
+header artifact icons where visually safe
+full-width in-sheet Workflow and Artifacts strip
+download actions for generated/signed/certificate artifacts
+```
+
+The modal form must not depend only on header buttons/icons because Odoo's one2many modal rendering can hide or compress header controls. Use an in-sheet workflow/artifact strip for modal parity.
+
+Accepted visible workflow/artifact controls:
+
+```text
+Generate PDF
+Send to Sign
+Sync
+Generated PDF
+Signed PDF
+Certificate
+```
+
+Accepted Arabic UI notes:
+
+```text
+Permissions tab → الأذونات
+Custody tab → العهود
+```
+
+Selection values for Permissions and Training were translated in Pass 18F-2 using exact exported `ir.model.fields.selection` anchors.
+<!-- PASS18G_UI_DOCTRINE_END -->

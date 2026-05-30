@@ -392,6 +392,28 @@ Implemented:
   - incomplete.
 
 Accepted residual deferral:
-- Arabic translation for training selection-state values remains incomplete in the live UI and will be fixed later using exact exported `ir.model.fields.selection` anchors.
+- Arabic translation for training selection-state values was closed in Pass 18F-2 using exact exported `ir.model.fields.selection` anchors.
 - Dynamic record-value Arabic PDF hardening remains deferred. Future official Arabic-first PDF generation should force Arabic render context and block generation with a specific toast when required Arabic record translations are missing.
 - F-0008 thumbprint remains outside system workflow. No thumbprint fields, uploads, Sign items, or lifecycle states were introduced.
+
+<!-- PASS18G_MOBILE_DOCTRINE_START -->
+## Pass 18 mobile/chatter note — Permission artifacts
+
+Pass 18 follows the accepted mobile-safe artifact rule for administrative permissions:
+
+```text
+generated permission PDF posts to employee chatter/files
+signed permission PDF posts to employee chatter/files after Sign sync
+Sign certificate posts to employee chatter/files when Odoo exposes it
+download buttons remain convenience controls only
+employee chatter/files is the required mobile-safe access path
+```
+
+The source lifecycle remains on:
+
+```text
+x_hr.employee_permission
+```
+
+Employee chatter/files is the operational access layer for mobile users.
+<!-- PASS18G_MOBILE_DOCTRINE_END -->

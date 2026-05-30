@@ -56,7 +56,7 @@ Status: closed and accepted.
 
 ## Pass 17 — Training and certifications
 
-Status: next implementation pass.
+Status: closed and accepted.
 
 
 - `x_hr.employee_training_commitment`;
@@ -67,6 +67,8 @@ Status: next implementation pass.
 - future payroll/finance recovery hooks.
 
 ## Pass 18 — Administrative permissions F-0014/F-0015
+
+Status: closed and accepted.
 
 - `x_hr.employee_permission_type`;
 - `x_hr.employee_permission`;
@@ -299,7 +301,7 @@ Implemented:
   - incomplete.
 
 Accepted residual deferral:
-- Arabic translation for training selection-state values remains incomplete in the live UI and will be fixed later using exact exported `ir.model.fields.selection` anchors.
+- Arabic translation for training selection-state values was closed in Pass 18F-2 using exact exported `ir.model.fields.selection` anchors.
 - Dynamic record-value Arabic PDF hardening remains deferred. Future official Arabic-first PDF generation should force Arabic render context and block generation with a specific toast when required Arabic record translations are missing.
 - F-0008 thumbprint remains outside system workflow. No thumbprint fields, uploads, Sign items, or lifecycle states were introduced.
 
@@ -322,3 +324,48 @@ x_hr.employee_permission
 ```
 
 The first implementation remains bounded to document lifecycle, QWeb/PDF generation, native Sign, chatter/files, and manual approval metadata only. Attendance, leave, payroll, work-entry, approval-request, and GRC decision-instance integrations are deferred.
+
+<!-- PASS18G_ROADMAP_CLOSURE_START -->
+## Pass 18 closure status
+
+Pass 18 is closed and accepted.
+
+Closed scope:
+
+```text
+x_hr.employee_permission_type
+x_hr.employee_permission
+Exit Permission type
+Lateness Permission type
+employee Permissions tab
+modal and standalone permission forms
+dynamic F-0014/F-0015 QWeb generation
+generated PDF attachment/chatter/files lifecycle
+three-role native Odoo Sign send/sync
+signed PDF and certificate sync/copy to employee chatter/files
+modal-safe workflow/artifact controls
+Arabic UI labels
+exact exported selection-state translations for Permissions and Training
+Custody tab translation to العهود
+```
+
+Accepted deferrals:
+
+```text
+attendance/work-entry effects
+leave-balance effects
+payroll/deduction effects
+approval.request integration
+disciplinary consequences
+GRC decision-instance integration
+dynamic Arabic record-value hardening for official PDFs
+```
+
+Rebaseline:
+
+```text
+Pass 19 — Leave requests
+```
+
+Pass 19 remains the next expected pass, but implementation should pause until the leave-specific scope, form guidance, and surgical constraints are confirmed by the user.
+<!-- PASS18G_ROADMAP_CLOSURE_END -->

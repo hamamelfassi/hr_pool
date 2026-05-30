@@ -162,14 +162,16 @@ The first PDF slice should be clean, A4, printable, and reuse common employee re
 
 Native Odoo Sign is implemented only after the generated PDF is accepted.
 
-Initial Sign recommendation:
+Accepted Sign implementation:
 
 ```text
-one employee signer
-manager/HR blocks printed as manual approval metadata
+three-role native Odoo Sign flow
+1. Employee
+2. Direct Manager
+3. HR Responsible
 ```
 
-Multi-signer manager/HR Sign routing is deferred unless explicitly scoped after PDF acceptance.
+The three roles are routed through dynamic Odoo Sign template/document/items generated from the accepted F-0014/F-0015 PDF geometry. Manager and HR approval blocks are no longer merely printed placeholders in the implemented Pass 18 baseline; they are active Sign roles for the official document.
 
 ## Slice plan
 
@@ -214,7 +216,6 @@ Update docs to mark Pass 18 accepted and record deferrals.
 
 ```text
 full manager/HR approval workflow
-multi-signer manager/HR Odoo Sign routing
 approval.request integration
 attendance/work-entry effects
 leave/payroll deduction effects
@@ -222,3 +223,119 @@ Arabic dynamic record-value hardening for official PDFs
 GRC decision-instance integration
 mobile Documents app folder/tag governance
 ```
+
+<!-- PASS18G_CLOSURE_START -->
+## Pass 18G closure — accepted implementation baseline
+
+Pass 18 is closed and accepted.
+
+Implemented:
+
+```text
+18A — documentation/scope lock
+18B — permission helper and operational models, access rows, employee Permissions tab, modal/full form surfaces
+18C — two seeded permission types and record normalization/defaulting
+18D — one dynamic F-0014/F-0015 QWeb report, generated PDF lifecycle, employee chatter/files posting, visual layout acceptance
+18E — native three-role Odoo Sign send/sync lifecycle
+18F — UI/modal polish, Arabic UI labels, exact exported selection-state translations for Permissions and Training, Custody tab translation
+18G — documentation closure and Pass 19 rebaseline
+```
+
+Accepted operational models:
+
+```text
+x_hr.employee_permission_type
+x_hr.employee_permission
+```
+
+Seeded permission types:
+
+```text
+exit_permission     → MCEP-HR-F-0014 — Exit Permission
+lateness_permission → MCEP-HR-F-0015 — Lateness Permission
+```
+
+Accepted lifecycle:
+
+```text
+draft → generated → signature_requested → signed
+```
+
+Accepted document reference pattern:
+
+```text
+MCEP-HR-F-0014-00004-00002
+MCEP-HR-F-0015-00004-00001
+```
+
+The earlier computed `-EMP-` segment was removed from permission document references.
+
+Accepted QWeb/PDF pattern:
+
+```text
+one dynamic QWeb template
+type-routed title and form code
+common structure for F-0014 and F-0015
+no custom bottom footer
+header carries form code, document reference, state, and page number
+A4 one-page printable layout
+```
+
+Accepted Sign pattern:
+
+```text
+three sequential Sign roles:
+1. Employee
+2. Direct Manager
+3. HR Responsible
+```
+
+Accepted signer coordinate baseline for the locked PDF geometry:
+
+| Role | Signature posX | posY | width | height | Date posX | Date posY |
+|---|---:|---:|---:|---:|---:|---:|
+| Employee | `0.525` | `0.724` | `0.235` | `0.032` | `0.575` | `0.765` |
+| Direct Manager | `0.080` | `0.724` | `0.235` | `0.032` | `0.125` | `0.765` |
+| HR Responsible | `0.245` | `0.858` | `0.340` | `0.032` | `0.285` | `0.906` |
+
+Accepted UI behavior:
+
+```text
+employee Permissions tab
+New Permission button
+embedded list
+controlled modal create/edit form
+standalone full form
+statusbar
+header artifact icons where clean
+full-width in-sheet Workflow and Artifacts strip for modal parity
+download actions for generated/signed/certificate artifacts
+```
+
+Accepted translation behavior:
+
+```text
+source XML labels remain English
+Arabic UI delivered through exported PO anchors
+permission selection states translated through exact exported ir.model.fields.selection IDs
+training selection states translated through exact exported ir.model.fields.selection IDs
+Custody tab label translated as العهود
+```
+
+Accepted side-effect boundary:
+
+```text
+No attendance writes
+No leave writes
+No payroll/work-entry writes
+No approval.request integration
+No disciplinary/deduction automation
+No GRC decision-instance integration
+```
+
+## Pass 19 rebaseline
+
+Pass 19 is expected to cover Leave Requests unless explicitly rescheduled.
+
+Do not start Pass 19 implementation from the old generic roadmap alone. The next thread/slice should begin with user-supplied leave-specific instructions, form guidance, and surgical boundaries before any model/view/report patching.
+<!-- PASS18G_CLOSURE_END -->

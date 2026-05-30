@@ -21,7 +21,7 @@ Examples:
 | Employee declaration | `x_hr.employee_declaration` |
 | Custody receipt | `x_hr.employee_custody_item` |
 | Training undertaking | `x_hr.employee_training_commitment` |
-| Permission request | `x_hr.employee_permission_request` |
+| Permission request | `x_hr.employee_permission` |
 | Work assignment | `x_hr.employee_work_assignment` |
 | Appraisal form | `hr.appraisal` plus extension fields/lines |
 | Separation request | `x_hr.employee_separation_request` |
@@ -459,3 +459,82 @@ Accepted residual deferral:
 - Arabic translation for training selection-state values remains incomplete in the live UI and will be fixed later using exact exported `ir.model.fields.selection` anchors.
 - Dynamic record-value Arabic PDF hardening remains deferred. Future official Arabic-first PDF generation should force Arabic render context and block generation with a specific toast when required Arabic record translations are missing.
 - F-0008 thumbprint remains outside system workflow. No thumbprint fields, uploads, Sign items, or lifecycle states were introduced.
+
+<!-- PASS18G_ARTIFACT_PATTERN_START -->
+## Accepted Pass 18 permission artifact and Sign pattern
+
+Pass 18 locked the administrative permission artifact/signature pattern for:
+
+```text
+MCEP-HR-F-0014 — Exit Permission
+MCEP-HR-F-0015 — Lateness Permission
+```
+
+Source process record:
+
+```text
+x_hr.employee_permission
+```
+
+Helper/type model:
+
+```text
+x_hr.employee_permission_type
+```
+
+Accepted report approach:
+
+```text
+one dynamic QWeb template
+type-routed form code and title
+same structure for F-0014 and F-0015
+generated PDF stored on x_pdf_attachment_id
+generated PDF posted to employee chatter/files
+```
+
+Accepted document reference format:
+
+```text
+MCEP-HR-F-0014-00004-00002
+MCEP-HR-F-0015-00004-00001
+```
+
+Accepted Sign sequence:
+
+```text
+1. Employee
+2. Direct Manager
+3. HR Responsible
+```
+
+Accepted coordinate baseline:
+
+| Role | Signature posX | posY | width | height | Date posX | Date posY |
+|---|---:|---:|---:|---:|---:|---:|
+| Employee | `0.525` | `0.724` | `0.235` | `0.032` | `0.575` | `0.765` |
+| Direct Manager | `0.080` | `0.724` | `0.235` | `0.032` | `0.125` | `0.765` |
+| HR Responsible | `0.245` | `0.858` | `0.340` | `0.032` | `0.285` | `0.906` |
+
+Accepted Sync behavior:
+
+```text
+read linked sign.request
+refresh Sign state
+if signed, find signed business PDF
+separate signed PDF from certificate/audit artifacts
+copy signed PDF to employee
+copy certificate to employee where exposed
+write x_signed_attachment_id
+write x_sign_certificate_attachment_id where found
+write x_signed_on
+set x_state = signed
+post employee chatter/files message
+```
+
+Protected boundary:
+
+```text
+Sync closes the permission as signed only from the active document/signature lifecycle.
+It must not create attendance, leave, payroll, work-entry, disciplinary, deduction, approval.request, or GRC decision-instance effects.
+```
+<!-- PASS18G_ARTIFACT_PATTERN_END -->

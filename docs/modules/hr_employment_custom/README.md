@@ -66,20 +66,28 @@ Implemented and accepted:
 - artifact download buttons;
 - Arabic translation polish using exported Odoo PO anchors.
 
-Current implementation pass:
+Current implementation baseline:
 
 ```text
-Pass 18 — Administrative permissions F-0014/F-0015
+Pass 18 — Administrative permissions F-0014/F-0015 — closed and accepted
 ```
 
 Pass 18 uses `x_hr.employee_permission_type` and `x_hr.employee_permission` to implement Exit Permission and Lateness Permission before the deferred leave overlay pass.
+
+Next expected pass:
+
+```text
+Pass 19 — Leave requests
+```
+
+Pass 19 is not started in this documentation closure. It requires a fresh surgical scope confirmation before implementation.
 
 ## Current execution plans
 
 - `pass15_execution_plan.md` — employee identification and declarations foundation.
 - `pass16_execution_plan.md` — custody and assets foundation; closed and accepted.
 - `pass17_execution_plan.md` — training and certifications; closed and accepted.
-- `pass18_execution_plan.md` — administrative permissions F-0014/F-0015; current implementation pass.
+- `pass18_execution_plan.md` — administrative permissions F-0014/F-0015; closed and accepted.
 
 Pass 17 note:
 
@@ -114,6 +122,43 @@ Implemented:
   - incomplete.
 
 Accepted residual deferral:
-- Arabic translation for training selection-state values remains incomplete in the live UI and will be fixed later using exact exported `ir.model.fields.selection` anchors.
+- Arabic translation for training selection-state values was closed in Pass 18F-2 using exact exported `ir.model.fields.selection` anchors.
 - Dynamic record-value Arabic PDF hardening remains deferred. Future official Arabic-first PDF generation should force Arabic render context and block generation with a specific toast when required Arabic record translations are missing.
 - F-0008 thumbprint remains outside system workflow. No thumbprint fields, uploads, Sign items, or lifecycle states were introduced.
+
+<!-- PASS18G_README_CLOSURE_START -->
+## Pass 18 closure note — Administrative permissions F-0014/F-0015
+
+Pass 18 is closed and accepted.
+
+Implemented:
+- `x_hr.employee_permission_type` helper model.
+- `x_hr.employee_permission` operational process model.
+- Exactly two seeded permission types:
+  - Exit Permission / `MCEP-HR-F-0014`.
+  - Lateness Permission / `MCEP-HR-F-0015`.
+- Employee `Permissions` tab.
+- Controlled modal and standalone full form.
+- Dynamic type-routed QWeb report for F-0014/F-0015.
+- Generated PDF storage and employee chatter/files posting.
+- Native Odoo Sign lifecycle with three sequential roles:
+  1. Employee.
+  2. Direct Manager.
+  3. HR Responsible.
+- Signed PDF and Sign certificate sync/copy to employee chatter/files.
+- Duplicate-send guard and explicit Sync button.
+- Modal-safe full-width Workflow and Artifacts strip.
+- Arabic UI labels and exact exported selection-state translations for Permissions and Training.
+- Custody tab translation fixed to `العهود`.
+
+Deliberately deferred:
+- attendance effects;
+- leave balance effects;
+- payroll/work-entry effects;
+- disciplinary/deduction automation;
+- `approval.request` integration;
+- GRC decision-instance integration;
+- dynamic Arabic record-value hardening for official PDFs.
+
+Next expected implementation pass is Pass 19 Leave Requests, but it should not start until the leave-specific scope is confirmed.
+<!-- PASS18G_README_CLOSURE_END -->
