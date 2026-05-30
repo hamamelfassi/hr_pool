@@ -262,3 +262,10 @@ Pass 16 should reuse the Pass 15 artifact and Sign lessons:
 - generated/signed/certificate artifacts copy to employee chatter/files;
 - user-facing artifact access should use download actions, not raw `ir.attachment` many2one links;
 - Sign field geometry should be calibrated only after generated PDFs are accepted.
+
+Pass 17 refinement:
+
+- source form is F-0008;
+- architecture uses `x_hr.training`, `x_hr.training_course`, and `x_hr.employee_training_commitment`;
+- resume, skills, and certificate deepening are deferred;
+- three state layers are used: form lifecycle, commitment lifecycle, and participation lifecycle.

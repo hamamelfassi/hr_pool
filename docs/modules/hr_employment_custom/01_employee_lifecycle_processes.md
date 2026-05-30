@@ -928,3 +928,60 @@ The first implementation should stay operationally useful but bounded:
 - keep payroll/finance recovery hooks as manual metadata only.
 
 Do not add hard dependencies on payroll, accounting, approvals, LMS, planning, project, or unverified skill/certification models in the first Pass 17 build.
+
+## Pass 17 refined architecture — F-0008 training commitment
+
+Pass 17 is based on F-0008, not F-0012.
+
+The training architecture is split into three layers:
+
+```text
+x_hr.training
+→ x_hr.training_course
+→ x_hr.employee_training_commitment
+```
+
+The employee training commitment is both:
+
+- the employee-specific F-0008 undertaking record; and
+- the employee participation instance for a specific course.
+
+Pass 17 uses three independent state layers:
+
+```text
+x_state
+```
+
+Immediate form lifecycle:
+
+```text
+draft → generated → signature_requested → signed
+```
+
+```text
+x_commitment_state
+```
+
+Higher obligation lifecycle:
+
+```text
+applied → committed → breached / fulfilled / cancelled
+```
+
+```text
+x_participation_state
+```
+
+Training participation lifecycle:
+
+```text
+allocated → in_training → training_complete / training_incomplete
+```
+
+Pass 17 intentionally defers:
+
+- certificate model deepening;
+- native resume integration;
+- native skills integration;
+- payroll/accounting recovery;
+- termination-triggered breach automation.

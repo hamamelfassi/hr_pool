@@ -76,3 +76,9 @@ Pass 16 — Custody and assets
 - `pass15_execution_plan.md` — employee identification and declarations foundation.
 - `pass16_execution_plan.md` — custody and assets foundation; closed and accepted.
 - `pass17_execution_plan.md` — training and certifications; next implementation pass.
+
+Pass 17 note:
+
+- Pass 17 is the F-0008 training commitment implementation.
+- It introduces training type, training course, and employee training commitment records.
+- Resume, skills, certification deepening, payroll recovery, and termination breach automation are deferred.
