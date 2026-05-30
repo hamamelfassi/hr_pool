@@ -6,14 +6,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~19.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-29 21:12+0000\n"
-"PO-Revision-Date: 2026-05-29 21:12+0000\n"
+"POT-Creation-Date: 2026-05-30 13:20+0000\n"
+"PO-Revision-Date: 2026-05-30 13:20+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid ") أشهر فقط من تاريخ الإصدار."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid ") كرسوم لإصدار بدل فاقد."
+msgstr ""
 
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
@@ -60,6 +70,32 @@ msgid ""
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "<strong>Card Validity:</strong> The validity period of the card is"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid ""
+"<strong>Expiry:</strong> The employee must visit the Public Relations and "
+"Media Office to renew the card before its expiration."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid ""
+"<strong>Loss of Card:</strong> In case of loss or damage of the card, the "
+"employee shall pay"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid ""
+"<strong>Responsibility:</strong> The card is a personal custody item and "
+"shall be used for official purposes only."
+msgstr "<strong>المسؤولية:</strong> البطاقة عهدة شخصية وتستخدم للأغراض الرسمية فقط."
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.mcep_employee_report_header
 msgid "<strong>الحالة:</strong>"
 msgstr ""
@@ -78,6 +114,17 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.mcep_employee_report_header
 msgid "<strong>الوثيقة:</strong>"
 msgstr ""
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_active
+msgid "Active"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model:ir.actions.act_window,name:hr_employment_custom.action_employee_custody_item_create
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
+msgid "Add Custody Item"
+msgstr "إضافة عهدة"
 
 #. module: hr_employment_custom
 #: model:ir.actions.act_window,name:hr_employment_custom.action_employee_declaration_create
@@ -102,6 +149,106 @@ msgstr "المرفقات الرسمية"
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_identification_documents
 msgid "Attachments"
 msgstr "المرفقات"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_type_form
+msgid "Behavior"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_category
+msgid "Category"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
+msgid "Clearance Hook"
+msgstr "رابط إخلاء الطرف"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_clearance_notes
+msgid "Clearance Notes"
+msgstr "ملاحظات إخلاء الطرف"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_clearance_required
+msgid "Clearance Required"
+msgstr "يتطلب إخلاء طرف"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_clearance_status
+msgid "Clearance Status"
+msgstr "حالة إخلاء الطرف"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_code
+msgid "Code"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model:x_hr.employee_custody_type,x_name:hr_employment_custom.employee_custody_type_company_id_card
+msgid "Company ID Card"
+msgstr "بطاقة الشركة"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "Company ID Card Receipt"
+msgstr "استلام بطاقة الشركة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_company_id_document_id
+msgid "Company ID Document"
+msgstr "مستند بطاقة الشركة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_condition_on_issue
+msgid "Condition on Issue"
+msgstr "الحالة عند التسليم"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_condition_on_return
+msgid "Condition on Return"
+msgstr "الحالة عند الإرجاع"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
+msgid "Custody Details"
+msgstr "تفاصيل العهدة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_hr_employee__x_custody_item_ids
+msgid "Custody Items"
+msgstr "العهد"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_name
+msgid "Custody Label"
+msgstr "تسمية العهدة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_state
+msgid "Custody State"
+msgstr "حالة العهدة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_custody_type_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_name
+msgid "Custody Type"
+msgstr "نوع العهدة"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
+msgid "Custody and Assets"
+msgstr "العهد والممتلكات"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
+msgid ""
+"Custody records track company property issued to the employee. Company ID "
+"card custody uses the employee Identification tab as the card source."
+msgstr "تسجل العهد ممتلكات الشركة المسلمة للموظف. تستخدم عهدة بطاقة الشركة تبويب الهوية لدى الموظف كمصدر لبيانات البطاقة."
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_name
@@ -129,6 +276,17 @@ msgid "Declarations"
 msgstr "الإقرارات"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_default_validity_months
+msgid "Default Validity Months"
+msgstr "مدة الصلاحية الافتراضية بالأشهر"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
+msgid "Description and Condition"
+msgstr "الوصف والحالة"
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_attachment_id
 msgid "Document Attachment"
 msgstr "مرفق المستند"
@@ -152,6 +310,7 @@ msgid "Document Number"
 msgstr "رقم المستند"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_document_reference
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_document_reference
 msgid "Document Reference"
 msgstr "مرجع المستند"
@@ -162,16 +321,90 @@ msgid "Document Type"
 msgstr "نوع المستند"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,help:hr_employment_custom.field_x_hr_employee_custody_type__x_future_native_link_model
+msgid ""
+"Documentation/configuration hint only. Do not use as a hard many2one "
+"dependency in Pass 16."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_custody_download_generated_pdf
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_download_generated_pdf
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
+msgid "Download Generated PDF"
+msgstr "تنزيل ملف PDF المنشأ"
+
+#. module: hr_employment_custom
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_custody_download_sign_certificate
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_download_sign_certificate
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
+msgid "Download Sign Certificate"
+msgstr "تنزيل شهادة التوقيع"
+
+#. module: hr_employment_custom
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_custody_download_signed_pdf
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_download_signed_pdf
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
+msgid "Download Signed PDF"
+msgstr "تنزيل ملف PDF الموقّع"
+
+#. module: hr_employment_custom
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_identification_download_source_attachment
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_identification_documents
 msgid "Download Source Attachment"
 msgstr "تنزيل مرفق المصدر"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_employee_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_employee_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_employee_id
 msgid "Employee"
 msgstr "الموظف"
+
+#. module: hr_employment_custom
+#: model:ir.model,name:hr_employment_custom.model_x_hr_employee_custody_item
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
+msgid "Employee Custody Item"
+msgstr "عهدة موظف"
+
+#. module: hr_employment_custom
+#: model:ir.actions.act_window,name:hr_employment_custom.action_employee_custody_items
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_list
+msgid "Employee Custody Items"
+msgstr "عهد الموظفين"
+
+#. module: hr_employment_custom
+#: model:ir.model,name:hr_employment_custom.model_x_hr_employee_custody_type
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_type_form
+msgid "Employee Custody Type"
+msgstr "نوع عهدة موظف"
+
+#. module: hr_employment_custom
+#: model:ir.actions.act_window,name:hr_employment_custom.action_employee_custody_types
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_type_list
+msgid "Employee Custody Types"
+msgstr "أنواع عهد الموظفين"
+
+#. module: hr_employment_custom
+#: model:base.automation,name:hr_employment_custom.automation_employee_custody_normalize_on_create
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_custody_normalize_on_create
+msgid "Employee Custody: Normalize and Log on Create"
+msgstr "تطبيع عهدة الموظف وتسجيلها عند الإنشاء"
+
+#. module: hr_employment_custom
+#: model:base.automation,name:hr_employment_custom.automation_employee_custody_normalize_on_write
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_custody_normalize_on_write
+msgid "Employee Custody: Normalize and Log on Update"
+msgstr "تطبيع عهدة الموظف وتسجيلها عند التحديث"
 
 #. module: hr_employment_custom
 #: model:ir.model,name:hr_employment_custom.model_x_hr_employee_declaration
@@ -248,6 +481,11 @@ msgid "Exclusive Work and Non-Duplication Declaration"
 msgstr "إقرار العمل الحصري وعدم الازدواجية"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_expected_return_on
+msgid "Expected Return On"
+msgstr "تاريخ الإرجاع المتوقع"
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_expiry_date
 msgid "Expiry Date"
 msgstr "تاريخ الانتهاء"
@@ -274,6 +512,16 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
 msgid "F-0010 Signers"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model:ir.actions.report,name:hr_employment_custom.action_report_mcep_employee_custody_f0011_company_id_receipt
+msgid "F-0011 Company ID Card Receipt"
+msgstr "F-0011 استلام بطاقة الشركة"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_type_form
+msgid "F-0011 Defaults"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -305,6 +553,16 @@ msgid "Form Code"
 msgstr "رمز النموذج"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_future_native_link_model
+msgid "Future Native Link Model"
+msgstr "نموذج الربط الأصلي المستقبلي"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_type_form
+msgid "Future Native Linkage"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_grc_function_id
 msgid "GRC Function"
 msgstr "وظيفة الحوكمة"
@@ -321,18 +579,23 @@ msgid "GRC Hooks"
 msgstr "روابط الحوكمة"
 
 #. module: hr_employment_custom
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_custody_generate_f0011_pdf
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_generate_pdf
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
 msgid "Generate PDF"
-msgstr "توليد الإقرار"
+msgstr "توليد ملف PDF"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_generated_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_generated_on
 msgid "Generated On"
 msgstr "تاريخ الإنشاء"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_pdf_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_pdf_attachment_id
 msgid "Generated PDF"
 msgstr "ملف PDF المنشأ"
@@ -417,6 +680,13 @@ msgid ""
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid ""
+"I, the above-mentioned employee, hereby acknowledge that I have received my "
+"identification card and have been informed of the following:"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
 msgid ""
 "I, the undersigned, acknowledge that I am committed to exclusive work for "
@@ -472,25 +742,77 @@ msgid "Issued By"
 msgstr "جهة الإصدار"
 
 #. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
-msgid "Manual Decision"
-msgstr "قرار يدوي"
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_issued_on
+msgid "Issued On"
+msgstr "تاريخ التسليم"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_item_description
+msgid "Item Description"
+msgstr "وصف العهدة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_item_identifier
+msgid "Item Identifier"
+msgstr "معرّف العهدة"
+
+#. module: hr_employment_custom
+#: model:x_hr.employee_custody_type,x_replacement_fee_currency_label:hr_employment_custom.employee_custody_type_company_id_card
+msgid "LYD"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
+msgid "Lifecycle Artifacts"
+msgstr "المرفقات الرسمية"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
+msgid "Manual Decision"
+msgstr "القرار اليدوي"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_manual_decision_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_manual_decision_attachment_id
 msgid "Manual Decision Attachment"
 msgstr "مرفق القرار اليدوي"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_manual_decision_date
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_manual_decision_date
 msgid "Manual Decision Date"
 msgstr "تاريخ القرار اليدوي"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_manual_decision_number
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_manual_decision_number
 msgid "Manual Decision Number"
 msgstr "رقم القرار اليدوي"
+
+#. module: hr_employment_custom
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_custody_mark_damaged
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
+msgid "Mark Damaged"
+msgstr "تسجيل كتالفة"
+
+#. module: hr_employment_custom
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_custody_mark_lost
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
+msgid "Mark Lost"
+msgstr "تسجيل كمفقودة"
+
+#. module: hr_employment_custom
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_custody_mark_returned
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
+msgid "Mark Returned"
+msgstr "تسجيل كمرجعة"
 
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.mcep_employee_report_header
@@ -507,6 +829,8 @@ msgid ""
 msgstr ""
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_notes
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_notes
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_notes
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_notes
 msgid "Notes"
@@ -529,7 +853,9 @@ msgid "Optional display label, such as Passport - Employee Name."
 msgstr "تسمية عرض اختيارية، مثل: جواز سفر - اسم الموظف."
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
 msgid "Ownership and Notes"
 msgstr "المسؤولية والملاحظات"
@@ -542,6 +868,31 @@ msgid ""
 msgstr ""
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_quantity
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_reference_code
+msgid "Reference Code"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_replacement_fee_amount
+msgid "Replacement Fee Amount"
+msgstr "قيمة رسوم الاستبدال"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_replacement_fee_currency_label
+msgid "Replacement Fee Currency Label"
+msgstr "تسمية عملة رسوم الاستبدال"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_replacement_value
+msgid "Replacement Value"
+msgstr "قيمة الاستبدال"
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_required_before_assignment
 msgid "Required Before Assignment"
 msgstr "مطلوب قبل التكليف"
@@ -552,9 +903,30 @@ msgid "Required by Role"
 msgstr "مطلوب حسب الدور"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_requires_identifier
+msgid "Requires Identifier"
+msgstr "يتطلب معرّفاً"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_requires_return
+msgid "Requires Return"
+msgstr "يتطلب الإرجاع"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_requires_signature
+msgid "Requires Signature"
+msgstr "يتطلب التوقيع"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_responsible_user_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_responsible_user_id
 msgid "Responsible User"
 msgstr "المستخدم المسؤول"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_returned_on
+msgid "Returned On"
+msgstr "تاريخ الإرجاع"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,help:hr_employment_custom.field_x_hr_employee_declaration__x_hr_responsible_id
@@ -569,6 +941,13 @@ msgid "Selected Identification Document"
 msgstr "مستند الهوية المختار"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,help:hr_employment_custom.field_x_hr_employee_custody_item__x_company_id_document_id
+msgid ""
+"Selected company ID card record from the employee Identification tab. Used "
+"as the source for F-0011 company ID custody receipt values."
+msgstr "سجل بطاقة الشركة المحدد من تبويب الهوية لدى الموظف. يستخدم كمصدر لقيم نموذج استلام بطاقة الشركة F-0011."
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,help:hr_employment_custom.field_x_hr_employee_declaration__x_selected_identification_document_id
 msgid ""
 "Selected employee identity document used by declaration PDFs where a "
@@ -578,51 +957,67 @@ msgstr ""
 "الشخصية أو جواز السفر أو رخصة القيادة مطلوبًا."
 
 #. module: hr_employment_custom
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_custody_send_f0011_sign
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_send_f0010_sign
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_send_f0013_sign
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_send_f0021_sign
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_send_f0022_sign
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
 msgid "Send to Sign"
 msgstr "إرسال للتوقيع"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_sent_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sent_on
 msgid "Sent On"
 msgstr "تاريخ الإرسال"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_serial_number
+msgid "Serial Number"
+msgstr "الرقم التسلسلي"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_sign_certificate_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sign_certificate_attachment_id
 msgid "Sign Certificate"
 msgstr "شهادة التوقيع"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_sign_request_res_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sign_request_res_id
 msgid "Sign Request ID"
 msgstr "معرّف طلب التوقيع"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_sign_request_reference
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sign_request_reference
 msgid "Sign Request Reference"
 msgstr "مرجع طلب التوقيع"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_sign_request_state
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sign_request_state
 msgid "Sign Request State"
 msgstr "حالة طلب التوقيع"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_sign_request_url
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sign_request_url
 msgid "Sign Request URL"
 msgstr "رابط طلب التوقيع"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_signed_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_signed_on
 msgid "Signed On"
 msgstr "تاريخ التوقيع"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_signed_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_signed_attachment_id
 msgid "Signed PDF"
 msgstr "ملف PDF الموقّع"
@@ -655,11 +1050,14 @@ msgid "Source Values"
 msgstr "قيم المصدر"
 
 #. module: hr_employment_custom
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_custody_sync_f0011_sign
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_sync_f0010_sign
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_sync_f0013_sign
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_sync_f0021_sign
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_sync_f0022_sign
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
 msgid "Sync"
 msgstr "مزامنة"
@@ -693,6 +1091,33 @@ msgstr ""
 "من التوظيف متتبعة بشكل منفصل."
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,help:hr_employment_custom.field_x_hr_employee_custody_type__x_uses_company_id_document
+msgid ""
+"Use the employee company ID card record from the Identification tab as the "
+"source for this custody type."
+msgstr "استخدم سجل بطاقة الشركة من تبويب الهوية لدى الموظف كمصدر لهذا النوع من العهدة."
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_uses_company_id_document
+msgid "Uses Company ID Document"
+msgstr "يستخدم مستند بطاقة الشركة"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "as a replacement fee."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "months"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "months only from the date of issue."
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
 msgid ""
 "أتعهد بإبلاغ الإدارة فورًا عن أي حادث أو إصابة أو خطر محتمل في موقع العمل، "
@@ -714,6 +1139,18 @@ msgid ""
 "علاقاتها التجارية لتحقيق أي منفعة شخصية أو منفعة لأي جهة خارجية، وأقر بأن "
 "جميع الأعمال والمعلومات والوثائق التي أطلع عليها بحكم عملي تعد جزءًا من "
 "مسؤولياتي الوظيفية وتخضع لسياسات الشركة المعتمدة."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "أشهر /"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid ""
+"أقر أنا الموظف المذكور أعلاه بأنني قد استلمت البطاقة التعريفية الخاصة بي، "
+"وأحيط علمًا بالآتي:"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -798,6 +1235,13 @@ msgid ""
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid ""
+"أولًا: بيانات الموظف <span class=\"mcep-f0011-en\">Employee "
+"Information</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
 msgid ""
 "أُقرّ وأتعهد بأنني عند استلام المخلفات البشرية (المشيمة وأكياس الدم) داخل "
@@ -834,6 +1278,11 @@ msgid "إقرار العمل الحصري وعدم الازدواج"
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "استلام البطاقة التعريفية"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
 msgid ""
 "استلام المخلفات البشرية رسميًا من الموظفين المخولين وتوثيقها في السجلات "
@@ -851,9 +1300,19 @@ msgid "اسم الموظف<br/><span class=\"mcep-emp-en\">Full Name</span>"
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "اسم الموظف<br/><span class=\"mcep-f0011-en\">Employee Name</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
 msgid "الاسم الكامل<br/><span class=\"mcep-emp-en\">Full Name</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "الاسم الكامل<br/><span class=\"mcep-f0011-en\">Full Name</span>"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -896,6 +1355,11 @@ msgid "التاريخ<br/><span class=\"mcep-emp-en\">Date</span>"
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "التاريخ<br/><span class=\"mcep-f0011-en\">Date</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
 msgid ""
 "التعامل مع المخلفات البشرية باعتبارها مخلفات بيولوجية خطرة تتطلب عناية خاصة."
@@ -911,6 +1375,11 @@ msgstr ""
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
 msgid "التوقيع<br/><span class=\"mcep-emp-en\">Signature</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "التوقيع<br/><span class=\"mcep-f0011-en\">Signature</span>"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -931,9 +1400,19 @@ msgid "الرقم الوظيفي<br/><span class=\"mcep-emp-en\">Job No.</span>"
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "الرقم الوظيفي<br/><span class=\"mcep-f0011-en\">Employee ID</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
 msgid "القسم / الإدارة<br/><span class=\"mcep-emp-en\">Department</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "القسم / الإدارة<br/><span class=\"mcep-f0011-en\">Department</span>"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -954,11 +1433,21 @@ msgid "المسؤول المباشر<br/><span class=\"mcep-emp-en\">Direct Mana
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "المسؤولية: البطاقة عهدة شخصية تستخدم للأغراض الرسمية فقط."
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
 msgid "المسمى الوظيفي<br/><span class=\"mcep-emp-en\">Job Title</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "المسمى الوظيفي<br/><span class=\"mcep-f0011-en\">Job Title</span>"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -978,8 +1467,22 @@ msgid "الوظيفة:"
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid ""
+"انتهاء الصلاحية: يجب مراجعة مكتب الدعاية والإعلام لتجديد البطاقة قبل انتهاء "
+"مدتها."
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
 msgid "بصمة المشرف<br/><span class=\"mcep-emp-en\">Supervisor Fingerprint</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid ""
+"بيانات البطاقة التعريفية <span class=\"mcep-f0011-en\">Company ID Card "
+"Details</span>"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -990,8 +1493,18 @@ msgid ""
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "تاريخ الإصدار<br/><span class=\"mcep-f0011-en\">Issue Date</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
 msgid "تاريخ الإنشاء<br/><span class=\"mcep-emp-en\">Generated On</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "تاريخ الانتهاء<br/><span class=\"mcep-f0011-en\">Expiry Date</span>"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -1039,6 +1552,19 @@ msgid ""
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid ""
+"ثالثًا: توقيع الموظف <span class=\"mcep-f0011-en\">Employee Signature</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid ""
+"ثانيًا: إقرار الموظف <span class=\"mcep-f0011-en\">Employee "
+"Declaration</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
 msgid "ثانيًا: التوقيعات <span class=\"mcep-emp-en\">Signatures</span>"
 msgstr ""
@@ -1051,6 +1577,11 @@ msgid "ثانيًا: نص الإقرار <span class=\"mcep-emp-en\">Declaration
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "جهة الإصدار<br/><span class=\"mcep-f0011-en\">Issued By</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
 msgid ""
 "رابعًا: بيانات وتوقيع المشرف <span class=\"mcep-emp-en\">Employee Details "
@@ -1058,10 +1589,31 @@ msgid ""
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "رقم البطاقة<br/><span class=\"mcep-f0011-en\">Card No.</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "صلاحية البطاقة: مدة صلاحية البطاقة هي ("
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "صلاحية البطاقة<br/><span class=\"mcep-f0011-en\">Validity</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
 msgid ""
 "ضمان عدم فتح الحاويات أو التعامل مع المخلفات إلا ضمن الإجراءات الرسمية "
 "المعتمدة."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid ""
+"فقدان البطاقة: في حال ضياع أو إتلاف البطاقة، يلتزم الموظف بدفع مبلغ وقدره ("
 msgstr ""
 
 #. module: hr_employment_custom
@@ -1092,9 +1644,19 @@ msgid "مرجع الإقرار<br/><span class=\"mcep-emp-en\">Declaration Ref.<
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "مرجع العهدة<br/><span class=\"mcep-f0011-en\">Custody Ref.</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
 msgid ""
 "مسؤول الموارد البشرية<br/><span class=\"mcep-emp-en\">HR Responsible</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
+msgid "مكان الإصدار<br/><span class=\"mcep-f0011-en\">Issue Place</span>"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -1123,19 +1685,3 @@ msgid ""
 "الاحتفاظ بها، فتحها، نقلها إلى أي جهة غير مخولة، أو تسليمها أو التعامل معها "
 "خارج مسار الاستلام والتسليم الرسمي المعتمد."
 msgstr ""
-
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
-msgid "Download Generated PDF"
-msgstr "تنزيل ملف PDF المنشأ"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
-msgid "Download Signed PDF"
-msgstr "تنزيل ملف PDF الموقّع"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
-msgid "Download Sign Certificate"
-msgstr "تنزيل شهادة التوقيع"

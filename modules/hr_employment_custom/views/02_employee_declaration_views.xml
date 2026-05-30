@@ -35,7 +35,29 @@
                         options="{'clickable': false}"
                         statusbar_visible="draft,generated,signature_requested,signed"
                         readonly="1"/>
-                </header>
+                
+                    <button type="action"
+                        name="%(action_employee_declaration_download_generated_pdf)d"
+                        string=""
+                        title="Download Generated PDF"
+                        icon="fa-download"
+                        class="btn-link"
+                        invisible="not x_pdf_attachment_id"/>
+                    <button type="action"
+                        name="%(action_employee_declaration_download_signed_pdf)d"
+                        string=""
+                        title="Download Signed PDF"
+                        icon="fa-file-pdf-o"
+                        class="btn-link"
+                        invisible="not x_signed_attachment_id"/>
+                    <button type="action"
+                        name="%(action_employee_declaration_download_sign_certificate)d"
+                        string=""
+                        title="Download Sign Certificate"
+                        icon="fa-certificate"
+                        class="btn-link"
+                        invisible="not x_sign_certificate_attachment_id"/>
+</header>
                 <sheet>
                     <div class="mb-2">
                         <button name="%(action_employee_declaration_generate_pdf)d"
@@ -120,24 +142,6 @@
                         <field name="x_pdf_attachment_id" invisible="1" readonly="1"/>
                         <field name="x_signed_attachment_id" invisible="1" readonly="1"/>
                         <field name="x_sign_certificate_attachment_id" invisible="1" readonly="1"/>
-                        <button name="%(action_employee_declaration_download_generated_pdf)d"
-                            type="action"
-                            string="Download Generated PDF"
-                            icon="fa-download"
-                            class="btn btn-link"
-                            invisible="not x_pdf_attachment_id"/>
-                        <button name="%(action_employee_declaration_download_signed_pdf)d"
-                            type="action"
-                            string="Download Signed PDF"
-                            icon="fa-download"
-                            class="btn btn-link"
-                            invisible="not x_signed_attachment_id"/>
-                        <button name="%(action_employee_declaration_download_sign_certificate)d"
-                            type="action"
-                            string="Download Sign Certificate"
-                            icon="fa-download"
-                            class="btn btn-link"
-                            invisible="not x_sign_certificate_attachment_id"/>
                     </group>
 
                     <group string="Odoo Sign">
@@ -226,7 +230,29 @@
                                     options="{'clickable': false}"
                                     statusbar_visible="draft,generated,signature_requested,signed"
                                     readonly="1"/>
-                            </header>
+                            
+                    <button type="action"
+                        name="%(action_employee_declaration_download_generated_pdf)d"
+                        string=""
+                        title="Download Generated PDF"
+                        icon="fa-download"
+                        class="btn-link"
+                        invisible="not x_pdf_attachment_id"/>
+                    <button type="action"
+                        name="%(action_employee_declaration_download_signed_pdf)d"
+                        string=""
+                        title="Download Signed PDF"
+                        icon="fa-file-pdf-o"
+                        class="btn-link"
+                        invisible="not x_signed_attachment_id"/>
+                    <button type="action"
+                        name="%(action_employee_declaration_download_sign_certificate)d"
+                        string=""
+                        title="Download Sign Certificate"
+                        icon="fa-certificate"
+                        class="btn-link"
+                        invisible="not x_sign_certificate_attachment_id"/>
+</header>
                             <sheet>
                                 <div class="mb-2">
                                     <button name="%(action_employee_declaration_generate_pdf)d"
