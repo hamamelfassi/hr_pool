@@ -1,6 +1,6 @@
 # Pass 17 — Training and Certifications Implementation Plan
 
-Status: refined scope, not implemented  
+Status: closed — implementation accepted; residual selection-value translation polish deferred
 Primary module: `hr_employment_custom`  
 Environment: Odoo.com SaaS 19.2  
 Build command: `./scripts/build_module_zip.sh hr_employment_custom`  
@@ -19,7 +19,7 @@ In scope:
 - Add a top-level training requirement/type model: `x_hr.training`.
 - Add a training course/session model: `x_hr.training_course`.
 - Add an employee-specific training commitment/participation model: `x_hr.employee_training_commitment`.
-- Add employee `Training and Certifications` tab.
+- Add employee `Training` tab.
 - Generate the employee-specific F-0008 training commitment undertaking as one full A4 page.
 - Send F-0008 through native Odoo Sign.
 - Sync signed PDF and Sign certificate back to the employee training commitment.
@@ -113,9 +113,9 @@ QWeb constraints:
 Sign expectation:
 
 - first-pass signer: employee only;
-- signature item: employee signature area;
-- date item: use Odoo Sign date item if it fits the form date box cleanly;
-- thumbprint is a visual/manual placeholder for now.
+- signature item: employee signature area only;
+- no Odoo Sign date item is used in Pass 17 because the F-0008 date is already printed/generated on the form;
+- no thumbprint item, thumbprint workflow, thumbprint field, or manual thumbprint upload workflow is implemented; the thumbprint box remains a visual/manual placeholder outside the system.
 
 ## 3. Preconditions
 
@@ -556,7 +556,7 @@ Status:
 Goal:
 
 - Add `x_hr.employee_training_commitment`.
-- Add employee `Training and Certifications` tab.
+- Add employee `Training` tab.
 - Add three-layer state fields.
 - Add normalization/actions for name/reference/document reference.
 - Keep this slice without PDF and without Sign.
@@ -807,57 +807,187 @@ Status:
 
 ## 9. Implementation log
 
-Append implementation notes here as slices are accepted.
-
 ### 17A implementation log
 
 Status:
 
-    not started
+    accepted and committed
+
+Outcome:
+
+- Refined Pass 17 around the actual F-0008 Training Commitment Undertaking form.
+- Confirmed the three-model training family:
+  - `x_hr.training`;
+  - `x_hr.training_course`;
+  - `x_hr.employee_training_commitment`.
+- Confirmed the three-layer state doctrine:
+  - form lifecycle;
+  - commitment lifecycle;
+  - participation lifecycle.
+- Explicitly omitted resume, skills, native certification deepening, payroll/accounting recovery, and termination recovery automation.
 
 ### 17B implementation log
 
 Status:
 
-    not started
+    accepted and committed
+
+Outcome:
+
+- Added `x_hr.training` as the training type/framework model.
+- Added `x_hr.training_course` as the course/session model.
+- Added basic HR configuration views/actions/menus.
+- Re-anchored the Training configuration group so it sits at the same Employees Configuration level as Employee, Resume, and Recruitment instead of being buried under Employee.
+- Created and validated sample training type and course records.
+
+Lessons:
+
+- In Odoo SaaS XML imports, one2many fields must be loaded after the inverse many2one field already exists.
+- Menu anchors must be verified from exported `ir.ui.menu` records. `hr.menu_hr_configuration` was invalid in this SaaS database; the accepted anchor was the exported HR configuration menu path.
 
 ### 17C implementation log
 
 Status:
 
-    not started
+    accepted and committed
+
+Outcome:
+
+- Added `x_hr.employee_training_commitment`.
+- Added employee `Training` tab.
+- Added course-to-commitment and employee-to-commitment one2many links.
+- Added normalized label/reference/document-reference automation.
+- Removed `COURSE` from F-0008 document reference format.
+- Added recovery metadata copied from the course:
+  - recovery amount;
+  - amount in words;
+  - recovery-required flag.
+- Added manual/action controls for:
+  - breach;
+  - fulfilment;
+  - cancellation;
+  - participation state.
+
+Final naming/UI decisions:
+
+- Employee tab label is `Training`, not `Training and Certifications`.
+- Employee tab button is `New Training`, not `Add Training Commitment`.
+- `x_hr.training_course` has `x_name` related to `x_course_name` so many2one dropdowns show the course name instead of the technical record string.
 
 ### 17D implementation log
 
 Status:
 
-    not started
+    accepted and committed
+
+Outcome:
+
+- Added F-0008 QWeb/PDF generation.
+- Generated PDF fits on one A4 page.
+- Generated PDF uses employee, course, and commitment values.
+- Generated PDF is linked to `x_pdf_attachment_id`.
+- Generated PDF is posted to employee chatter/files.
+- Added generated PDF download icon.
+- Refined F-0008 section spacing/readability while preserving one-page output.
+
+Lessons:
+
+- Training form action buttons must not be injected into the parent `hr.employee` inherited view body when their visibility conditions reference fields on `x_hr.employee_training_commitment`.
+- Operational buttons belong inside the commitment form body; artifact download icons belong in the header next to the statusbar.
 
 ### 17E implementation log
 
 Status:
 
-    not started
+    accepted and committed
+
+Outcome:
+
+- Added native Odoo Sign send/sync for F-0008.
+- Implemented one signer only:
+  - employee.
+- Implemented one Sign item only:
+  - employee signature in the signature row.
+- Did not implement Sign date item.
+- Did not implement any thumbprint Sign item or thumbprint workflow.
+- Signed PDF and Sign certificate, when available, are linked to the commitment and copied/posted to employee chatter/files.
+- Sync moves:
+  - `x_state` to Signed;
+  - `x_commitment_state` to Committed.
+
+Lessons:
+
+- The thumbprint block remains outside the system by design. No fields, workflows, uploads, or lifecycle states should be added for thumbprinted PDFs unless a future governed pass explicitly scopes it.
 
 ### 17F implementation log
 
 Status:
 
-    not started
+    accepted and committed
+
+Outcome:
+
+- Split training commitment buttons into three rows:
+  - form lifecycle row: Generate PDF, Send to Sign, Sync;
+  - commitment row: Mark Breached, Mark Fulfilled, Mark Cancelled;
+  - participation row: Set In Training, Set Complete, Set Incomplete.
+- Header remains reserved for:
+  - statusbar;
+  - generated PDF icon;
+  - signed PDF icon;
+  - Sign certificate icon.
+- Rebased/patched Arabic PO entries for training UI labels and many view/action terms.
+- Logged dynamic Arabic record-value PDF hardening as deferred backlog.
+
+Known residual issue:
+
+- Selection values for the training commitment state fields still show English in Arabic UI:
+  - `x_state`: Draft, Generated, Signature Requested, Signed;
+  - `x_commitment_state`: Applied, Committed, Breached, Fulfilled, Cancelled;
+  - `x_participation_state`: Allocated, In Training, Training Complete, Training Incomplete.
+- This is deferred because Odoo SaaS selection translations require exact exported `ir.model.fields.selection` anchors for the live database. Generic PO entries are not sufficient in this case.
 
 ### 17G implementation log
 
 Status:
 
-    not started
+    accepted with deferred residual selection translation issue
+
+Outcome:
+
+- Arabic UI translations were improved for training tabs, action buttons, field labels, menus, and helper labels where exact anchors were available.
+- Remaining state/selection translation issue was documented for future fixing rather than blocking the next pass.
+- Future fix should use an exported `ir.model.fields.selection` spreadsheet/PO from the live database and patch exact exported selection IDs.
 
 ### 17H implementation log
 
 Status:
 
-    not started
+    closed by documentation patch
+
+Outcome:
+
+- Pass 17 implementation state documented.
+- Accepted deferrals recorded.
+- Pass 17 closed for forward progress into the next employee lifecycle passes.
 
 ## 10. Final Pass 17 acceptance gate
+
+Pass 17 closure result:
+
+Pass 17 is closed and accepted for forward progress.
+
+Accepted with one documented residual:
+- training selection-state translations still require exact live-database `ir.model.fields.selection` anchors and remain deferred.
+
+This residual does not block the functional training commitment lifecycle because:
+- training type/course creation works;
+- employee training commitment creation works;
+- F-0008 PDF generation works;
+- F-0008 Odoo Sign send/sync works;
+- generated/signed/certificate artifacts are linked and posted correctly;
+- commitment and participation controls work manually.
+
 
 Pass 17 can close only when:
 
@@ -866,7 +996,7 @@ Pass 17 can close only when:
 - `x_hr.training` exists and is usable.
 - `x_hr.training_course` exists and is usable.
 - `x_hr.employee_training_commitment` exists and is usable.
-- Employee Training and Certifications tab is installed and usable.
+- Employee Training tab is installed and usable.
 - Training commitment create/edit works.
 - Training commitment links employee + training course.
 - Three state layers are present:
@@ -890,6 +1020,25 @@ Pass 17 can close only when:
 - No generated PDFs, signed PDFs, screenshots, exported zips, exported root PO files, or temporary extracted folders are committed.
 
 ## 11. Deferred backlog from Pass 17
+
+Additional deferred items locked at Pass 17 closure:
+
+- Exact Arabic translation of training selection values:
+  - `x_hr.employee_training_commitment.x_state`;
+  - `x_hr.employee_training_commitment.x_commitment_state`;
+  - `x_hr.employee_training_commitment.x_participation_state`.
+- Future fix must use exact exported live-database selection anchors from Odoo, preferably from `ir.model.fields.selection`, rather than guessed PO references.
+- Dynamic Arabic rendering of record-derived PDF values:
+  - training type;
+  - course name;
+  - provider;
+  - location;
+  - currency label;
+  - amount in words.
+- Future hardening should force Arabic report render context and block generation with a specific toast when a required Arabic translation is missing.
+- No thumbprint workflow is to be added for F-0008 unless a future governed pass explicitly scopes it.
+- No resume, skills, certificate, payroll, accounting, termination, or final-settlement automation is introduced by Pass 17.
+
 
 Deferred for later employment lifecycle passes:
 
@@ -959,3 +1108,14 @@ pass17g: polish training translations
 ```text
 docs: close pass17 training commitment lifecycle
 ```
+
+## Pass 17F backlog note — dynamic record-value Arabic translation hardening
+
+F-0008 currently uses a bilingual QWeb layout for static form labels and undertaking text. This is acceptable for the current demonstrator slice, but it does not fully solve Arabic rendering for dynamic values read from records, such as Training Type, Course Name, Provider, Location, Currency Label, and Amount in Words.
+
+Future hardening requirement:
+- Render official Arabic-first PDFs with explicit Arabic context, not by relying on the UI language of the user pressing the button.
+- For every required dynamic record value shown on the PDF, validate that an Arabic translated value exists when the source value is not already Arabic.
+- If a required Arabic translation is missing, block PDF generation with a clear toast naming the exact model, field, and record that needs translation.
+- Allow the translation to be fixed through the exported PO workflow or, for emergency correction only, through Studio/translation UI.
+- Do not implement this as part of 17F; schedule it as a later translation-governance hardening slice.

@@ -428,3 +428,34 @@ Known tradeoff:
 
 - `__export__` selection IDs are database-local, not portable seeds.
 - They are acceptable for controlled SaaS production translation repair when the source rows already exist and Odoo does not export stable module selection anchors.
+
+## Pass 17 closure note — F-0008 training commitment lifecycle
+
+Pass 17 implemented the training commitment foundation around F-0008.
+
+Implemented:
+- `x_hr.training` training type/framework model.
+- `x_hr.training_course` training course/session model.
+- `x_hr.employee_training_commitment` employee participation and undertaking model.
+- Employee `Training` tab.
+- F-0008 one-page A4 QWeb/PDF generation.
+- Generated PDF storage, download icon, employee chatter/files posting.
+- Native Odoo Sign send/sync for one employee signer and one signature item.
+- Signed PDF and Sign certificate linkage/posting.
+- Three-layer training state doctrine:
+  - form lifecycle;
+  - commitment lifecycle;
+  - participation lifecycle.
+- Manual commitment controls:
+  - breached;
+  - fulfilled;
+  - cancelled.
+- Manual participation controls:
+  - in training;
+  - complete;
+  - incomplete.
+
+Accepted residual deferral:
+- Arabic translation for training selection-state values remains incomplete in the live UI and will be fixed later using exact exported `ir.model.fields.selection` anchors.
+- Dynamic record-value Arabic PDF hardening remains deferred. Future official Arabic-first PDF generation should force Arabic render context and block generation with a specific toast when required Arabic record translations are missing.
+- F-0008 thumbprint remains outside system workflow. No thumbprint fields, uploads, Sign items, or lifecycle states were introduced.
