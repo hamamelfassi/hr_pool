@@ -33,7 +33,9 @@ for rec in records.sudo():
         vals['x_reference_code'] = form_code
     if not rec.x_responsible_user_id:
         vals['x_responsible_user_id'] = env.user.id
-    if not rec.x_hr_user_id:
+    if employee and 'hr_responsible_id' in employee._fields and employee.hr_responsible_id and not rec.x_hr_user_id:
+        vals['x_hr_user_id'] = employee.hr_responsible_id.id
+    elif not rec.x_hr_user_id:
         vals['x_hr_user_id'] = env.user.id
 
     if employee and employee.parent_id and employee.parent_id.user_id and not rec.x_direct_manager_user_id:
@@ -99,6 +101,8 @@ for rec in records.sudo():
         vals['x_responsible_user_id'] = env.user.id
     if employee and employee.parent_id and employee.parent_id.user_id and not rec.x_direct_manager_user_id:
         vals['x_direct_manager_user_id'] = employee.parent_id.user_id.id
+    if employee and 'hr_responsible_id' in employee._fields and employee.hr_responsible_id and not rec.x_hr_user_id:
+        vals['x_hr_user_id'] = employee.hr_responsible_id.id
 
     if not rec.x_document_reference:
         emp_part = employee.id if employee else 0

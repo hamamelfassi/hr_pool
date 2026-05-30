@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_mcep_employee_permission_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <head>
+                    <meta charset="UTF-8"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                </head>
+
+                <t t-set="employee" t-value="o.x_employee_id"/>
+                <t t-set="permission_type" t-value="o.x_permission_type_id"/>
+                <t t-set="form_code" t-value="permission_type.x_form_code or o.x_reference_code or 'MCEP-HR-F-0014'"/>
+                <t t-set="form_title_en" t-value="permission_type.x_form_title or permission_type.x_name or 'Employee Permission'"/>
+                <t t-set="form_title_ar" t-value="'إذن تأخير' if permission_type.x_code == 'lateness_permission' else 'إذن خروج'"/>
+                <t t-set="employee_number" t-value="(employee.registration_number if 'registration_number' in employee._fields else '') or (employee.barcode if 'barcode' in employee._fields else '') or employee.id or ''"/>
+                <t t-set="job_title" t-value="(employee.job_title if 'job_title' in employee._fields else '') or (employee.job_id.name if 'job_id' in employee._fields and employee.job_id else '') or ''"/>
+                <t t-set="department_name" t-value="employee.department_id.name if employee.department_id else ''"/>
+                <t t-set="manager_name" t-value="o.x_direct_manager_user_id.name or (employee.parent_id.name if employee.parent_id else '')"/>
+                <t t-set="hr_name" t-value="o.x_hr_user_id.name or ''"/>
+
+                <t t-call="hr_employment_custom.mcep_employee_report_assets"/>
+
+                <div class="page mcep-emp-page mcep-permission-page">
+                    <t t-set="page_label" t-value="'Page 1 / 1'"/>
+                    <t t-call="hr_employment_custom.mcep_employee_report_header"/>
+
+                    <style>
+                        .mcep-permission-page {
+                            font-size: 13.6px;
+                            line-height: 1.16;
+                            padding-top: 4mm;
+                            padding-bottom: 1mm;
+                        }
+
+                        .mcep-permission-page .mcep-emp-header {
+                            margin-bottom: 2.5mm;
+                        }
+
+                        .mcep-permission-title {
+                            text-align: center;
+                            font-size: 25px;
+                            font-weight: 700;
+                            margin: 1mm 0 0.5mm 0;
+                        }
+
+                        .mcep-permission-subtitle {
+                            text-align: center;
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 15.5px;
+                            font-weight: 700;
+                            margin: 0 0 3mm 0;
+                        }
+
+                        .mcep-permission-section {
+                            font-size: 15.5px;
+                            font-weight: 700;
+                            margin: 2.5mm 0 1.2mm 0;
+                            padding: 1.1mm 1.6mm;
+                            background: #eef2f7;
+                            border: 1px solid #9aa4b2;
+                            text-align: right;
+                            direction: rtl;
+                        }
+
+                        .mcep-permission-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            table-layout: fixed;
+                            margin-bottom: 2.4mm;
+                            font-size: 13.4px;
+                        }
+
+                        .mcep-permission-table th,
+                        .mcep-permission-table td {
+                            border: 1px solid #6b7280;
+                            padding: 1.15mm 1.35mm;
+                            vertical-align: middle;
+                            line-height: 1.14;
+                        }
+
+                        .mcep-permission-table th {
+                            background: #f8fafc;
+                            font-weight: 700;
+                            text-align: center;
+                        }
+
+                        .mcep-permission-value {
+                            min-height: 5mm;
+                            text-align: center;
+                            font-weight: 600;
+                        }
+
+                        .mcep-permission-en {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 11px;
+                            color: #374151;
+                        }
+
+                        .mcep-permission-reason-box {
+                            min-height: 21mm;
+                            border: 1px solid #6b7280;
+                            padding: 1.8mm;
+                            margin-bottom: 2.4mm;
+                            white-space: pre-wrap;
+                            text-align: right;
+                            direction: rtl;
+                            line-height: 1.15;
+                            font-size: 13.6px;
+                        }
+
+                        .mcep-permission-sign-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            table-layout: fixed;
+                            font-size: 12.8px;
+                            margin-top: 1.2mm;
+                        }
+
+                        .mcep-permission-sign-table th,
+                        .mcep-permission-sign-table td {
+                            border: 1px solid #6b7280;
+                            padding: 1.15mm 1.35mm;
+                            vertical-align: middle;
+                            line-height: 1.12;
+                        }
+
+                        .mcep-permission-sign-title {
+                            background: #f8fafc;
+                            text-align: center;
+                            font-weight: 700;
+                        }
+
+                        .mcep-permission-sign-line {
+                            height: 8.7mm;
+                        }
+
+                        .mcep-permission-date-line {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            text-align: center;
+                        }
+                    </style>
+
+                    <div class="mcep-permission-title">
+                        <span t-out="form_title_ar"/>
+                    </div>
+                    <div class="mcep-permission-subtitle">
+                        <span t-out="form_title_en"/>
+                    </div>
+
+                    <div class="mcep-permission-section">
+                        أولًا: المعلومات الشخصية
+                        <span class="mcep-permission-en">Personal Information</span>
+                    </div>
+
+                    <table class="mcep-permission-table">
+                        <tr>
+                            <th style="width: 25%;">الاسم الكامل<br/><span class="mcep-permission-en">Full Name</span></th>
+                            <td style="width: 75%;" colspan="3">
+                                <div class="mcep-permission-value">
+                                    <span t-out="employee.name or ''"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>الرقم الوظيفي<br/><span class="mcep-permission-en">Employee ID</span></th>
+                            <td>
+                                <div class="mcep-permission-value">
+                                    <span t-out="employee_number"/>
+                                </div>
+                            </td>
+                            <th>المسمى الوظيفي<br/><span class="mcep-permission-en">Job Title</span></th>
+                            <td>
+                                <div class="mcep-permission-value">
+                                    <span t-out="job_title"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>القسم / الإدارة<br/><span class="mcep-permission-en">Department</span></th>
+                            <td colspan="3">
+                                <div class="mcep-permission-value">
+                                    <span t-out="department_name"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="mcep-permission-section">
+                        ثانيًا: تفاصيل الإذن
+                        <span class="mcep-permission-en">Permission Details</span>
+                    </div>
+
+                    <table class="mcep-permission-table">
+                        <tr>
+                            <th style="width: 25%;">التاريخ<br/><span class="mcep-permission-en">Date</span></th>
+                            <td style="width: 75%;" colspan="3">
+                                <div class="mcep-permission-value">
+                                    <span t-out="o.x_permission_date or ''"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>الفترة الزمنية<br/><span class="mcep-permission-en">Time Period</span></th>
+                            <td>
+                                من:
+                                <span class="mcep-permission-en">From:</span>
+                                <strong><span t-out="o.x_time_from or ''"/></strong>
+                            </td>
+                            <td>
+                                إلى:
+                                <span class="mcep-permission-en">To:</span>
+                                <strong><span t-out="o.x_time_to or ''"/></strong>
+                            </td>
+                            <td>
+                                <span t-out="form_code"/>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="mcep-permission-section">
+                        ثالثًا: سبب الطلب
+                        <span class="mcep-permission-en">Reason for Request</span>
+                    </div>
+
+                    <div class="mcep-permission-reason-box">
+                        <span t-out="o.x_reason or ''"/>
+                    </div>
+
+                    <div class="mcep-permission-section">
+                        رابعًا: توقيعات
+                        <span class="mcep-permission-en">Signatures</span>
+                    </div>
+
+                    <table class="mcep-permission-sign-table">
+                        <tr>
+                            <th class="mcep-permission-sign-title" colspan="3">
+                                توقيع الموظف
+                                <span class="mcep-permission-en">Employee Signature</span>
+                            </th>
+                            <th class="mcep-permission-sign-title" colspan="3">
+                                اعتماد المدير المباشر
+                                <span class="mcep-permission-en">Direct Manager Approval</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td style="width: 12%;">الإسم<br/><span class="mcep-permission-en">Name</span></td>
+                            <td class="mcep-permission-sign-line" colspan="2">
+                                <span t-out="employee.name or ''"/>
+                            </td>
+                            <td style="width: 12%;">الإسم<br/><span class="mcep-permission-en">Name</span></td>
+                            <td class="mcep-permission-sign-line" colspan="2">
+                                <span t-out="manager_name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>التوقيع<br/><span class="mcep-permission-en">Signature</span></td>
+                            <td class="mcep-permission-sign-line" colspan="2"></td>
+                            <td>التوقيع<br/><span class="mcep-permission-en">Signature</span></td>
+                            <td class="mcep-permission-sign-line" colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td>التاريخ<br/><span class="mcep-permission-en">Date</span></td>
+                            <td class="mcep-permission-date-line" colspan="2">____ / ____ / ________</td>
+                            <td>التاريخ<br/><span class="mcep-permission-en">Date</span></td>
+                            <td class="mcep-permission-date-line" colspan="2">____ / ____ / ________</td>
+                        </tr>
+                    </table>
+
+                    <table class="mcep-permission-sign-table">
+                        <tr>
+                            <th class="mcep-permission-sign-title" colspan="3">
+                                الموارد البشرية
+                                <span class="mcep-permission-en">HR Approval</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">الإسم<br/><span class="mcep-permission-en">Name</span></td>
+                            <td class="mcep-permission-sign-line" colspan="2">
+                                <span t-out="hr_name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>التوقيع<br/><span class="mcep-permission-en">Signature</span></td>
+                            <td class="mcep-permission-sign-line" colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td>التاريخ<br/><span class="mcep-permission-en">Date</span></td>
+                            <td class="mcep-permission-date-line" colspan="2">____ / ____ / ________</td>
+                        </tr>
+                    </table>
+                </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

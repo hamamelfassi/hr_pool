@@ -90,8 +90,38 @@
                         options="{'clickable': false}"
                         statusbar_visible="draft,generated,signature_requested,signed"
                         readonly="1"/>
+                    <button type="action"
+                        name="%(action_employee_permission_download_generated_pdf)d"
+                        string=""
+                        title="Download Generated PDF"
+                        icon="fa-download"
+                        class="btn-link"
+                        invisible="not x_pdf_attachment_id"/>
+                    <button type="action"
+                        name="%(action_employee_permission_download_signed_pdf)d"
+                        string=""
+                        title="Download Signed PDF"
+                        icon="fa-file-pdf-o"
+                        class="btn-link"
+                        invisible="not x_signed_attachment_id"/>
+                    <button type="action"
+                        name="%(action_employee_permission_download_sign_certificate)d"
+                        string=""
+                        title="Download Sign Certificate"
+                        icon="fa-certificate"
+                        class="btn-link"
+                        invisible="not x_sign_certificate_attachment_id"/>
                 </header>
                 <sheet>
+                    <!-- MCEP permission action rows start -->
+                    <div class="mb-2">
+                        <button name="%(action_employee_permission_generate_pdf)d"
+                            type="action"
+                            string="Generate PDF"
+                            class="btn btn-primary"
+                            invisible="x_state in ('signature_requested', 'signed')"/>
+                    </div>
+                    <!-- MCEP permission action rows end -->
                     <div class="alert alert-info" role="alert">
                         Employee permissions cover F-0014 Exit Permission and F-0015 Lateness Permission. PDF generation and Odoo Sign lifecycle will be added in later Pass 18 slices.
                     </div>
@@ -201,6 +231,15 @@
                                     readonly="1"/>
                             </header>
                             <sheet>
+                                <!-- MCEP permission action rows start -->
+                                <div class="mb-2">
+                                    <button name="%(action_employee_permission_generate_pdf)d"
+                                        type="action"
+                                        string="Generate PDF"
+                                        class="btn btn-primary"
+                                        invisible="x_state in ('signature_requested', 'signed')"/>
+                                </div>
+                                <!-- MCEP permission action rows end -->
                                 <div class="alert alert-info" role="alert">
                                     Employee permissions cover F-0014 Exit Permission and F-0015 Lateness Permission. PDF generation and Odoo Sign lifecycle will be added in later Pass 18 slices.
                                 </div>
