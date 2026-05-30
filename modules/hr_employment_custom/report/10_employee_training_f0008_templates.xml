@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_mcep_employee_training_f0008_commitment_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <head>
+                    <meta charset="UTF-8"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                </head>
+
+                <t t-set="form_code" t-value="'MCEP-HR-F-0008'"/>
+                <t t-set="form_title_ar" t-value="'تعهد دورة تدريبية'"/>
+                <t t-set="form_title_en" t-value="'Training Commitment Undertaking'"/>
+                <t t-set="employee" t-value="o.x_employee_id"/>
+                <t t-set="course" t-value="o.x_training_course_id"/>
+                <t t-set="training_type" t-value="o.x_training_type_id or course.x_course_training_type_id"/>
+                <t t-set="provider" t-value="course.x_training_provider_id"/>
+                <t t-set="recovery_amount" t-value="o.x_recovery_amount or course.x_seat_cost_amount or 0.0"/>
+                <t t-set="cost_words" t-value="o.x_recovery_amount_words or course.x_seat_cost_amount_words or ''"/>
+                <t t-set="currency_label" t-value="course.x_currency_label or ''"/>
+                <t t-set="commitment_months" t-value="o.x_service_commitment_months or 24"/>
+                <t t-set="commitment_years" t-value="int(commitment_months / 12) if commitment_months else 2"/>
+
+                <t t-call="hr_employment_custom.mcep_employee_report_assets"/>
+
+                <div class="page mcep-emp-page">
+                    <t t-set="page_label" t-value="'Page 1 / 1'"/>
+                    <t t-call="hr_employment_custom.mcep_employee_report_header"/>
+
+                    <style>
+                        .mcep-f0008-title {
+                            text-align: center;
+                            font-size: 22px;
+                            font-weight: 700;
+                            margin: 10px 0 5px 0;
+                        }
+                        .mcep-f0008-subtitle {
+                            text-align: center;
+                            font-size: 14px;
+                            font-weight: 700;
+                            margin: 0 0 8px 0;
+                        }
+                        .mcep-f0008-section-title {
+                            font-size: 13px;
+                            font-weight: 700;
+                            margin: 7px 0 4px 0;
+                            padding: 3px 6px;
+                            background: #eef2f7;
+                            border: 1px solid #9aa4b2;
+                            direction: rtl;
+                            text-align: right;
+                        }
+                        .mcep-f0008-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            font-size: 12.2px;
+                            margin-bottom: 5px;
+                        }
+                        .mcep-f0008-table th,
+                        .mcep-f0008-table td {
+                            border: 1px solid #8f99a8;
+                            padding: 4px 5px;
+                            vertical-align: middle;
+                        }
+                        .mcep-f0008-table th {
+                            background: #f5f7fa;
+                            font-weight: 700;
+                            text-align: center;
+                        }
+                        .mcep-f0008-value {
+                            font-size: 12.3px;
+                            font-weight: 600;
+                            text-align: center;
+                        }
+                        .mcep-f0008-en {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 10.5px;
+                            color: #374151;
+                        }
+                        .mcep-f0008-undertaking {
+                            border: 1px solid #8f99a8;
+                            padding: 7px 8px;
+                            font-size: 12.7px;
+                            line-height: 1.52;
+                            direction: rtl;
+                            text-align: right;
+                        }
+                        .mcep-f0008-undertaking p {
+                            margin: 0 0 4px 0;
+                        }
+                        .mcep-f0008-undertaking ol {
+                            margin: 3px 18px 0 0;
+                            padding: 0;
+                        }
+                        .mcep-f0008-undertaking li {
+                            margin: 0 0 4px 0;
+                            padding: 0;
+                        }
+                        .mcep-f0008-enline {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 11px;
+                            color: #374151;
+                        }
+                        .mcep-f0008-sign-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            font-size: 12px;
+                            margin-top: 5px;
+                        }
+                        .mcep-f0008-sign-table th,
+                        .mcep-f0008-sign-table td {
+                            border: 1px solid #8f99a8;
+                            padding: 4px 5px;
+                            vertical-align: middle;
+                        }
+                        .mcep-f0008-sign-box {
+                            height: 36px;
+                        }
+                        .mcep-f0008-thumb-box {
+                            height: 84px;
+                            text-align: center;
+                            vertical-align: middle;
+                            font-weight: 700;
+                            color: #4b5563;
+                        }
+                    </style>
+
+                    <div class="mcep-f0008-title">تعهد دورة تدريبية</div>
+                    <div class="mcep-f0008-subtitle">Training Commitment Undertaking</div>
+
+                    <div class="mcep-f0008-section-title">أولًا: بيانات الموظف <span class="mcep-f0008-en">Employee Information</span></div>
+
+                    <table class="mcep-f0008-table">
+                        <tbody>
+                            <tr>
+                                <th style="width: 18%;">الاسم الكامل<br/><span class="mcep-f0008-en">Full Name</span></th>
+                                <td style="width: 32%;" class="mcep-f0008-value"><span t-out="employee.name or ''"/></td>
+                                <th style="width: 18%;">الرقم الوظيفي<br/><span class="mcep-f0008-en">Employee ID</span></th>
+                                <td style="width: 32%;" class="mcep-f0008-value"><span t-out="'%05d' % employee.id if employee else ''"/></td>
+                            </tr>
+                            <tr>
+                                <th>المسمى الوظيفي<br/><span class="mcep-f0008-en">Job Title</span></th>
+                                <td class="mcep-f0008-value"><span t-out="employee.job_title or ''"/></td>
+                                <th>القسم / الإدارة<br/><span class="mcep-f0008-en">Department</span></th>
+                                <td class="mcep-f0008-value"><span t-out="employee.department_id.name or ''"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="mcep-f0008-section-title">ثانيًا: بيانات الدورة التدريبية <span class="mcep-f0008-en">Training Course Details</span></div>
+
+                    <table class="mcep-f0008-table">
+                        <tbody>
+                            <tr>
+                                <th style="width: 18%;">اسم الدورة<br/><span class="mcep-f0008-en">Course Title</span></th>
+                                <td style="width: 32%;" class="mcep-f0008-value"><span t-out="course.x_course_name or course.x_name or ''"/></td>
+                                <th style="width: 18%;">الجهة المنظمة<br/><span class="mcep-f0008-en">Training Provider</span></th>
+                                <td style="width: 32%;" class="mcep-f0008-value"><span t-out="provider.name or ''"/></td>
+                            </tr>
+                            <tr>
+                                <th>نوع التدريب<br/><span class="mcep-f0008-en">Training Type</span></th>
+                                <td class="mcep-f0008-value"><span t-out="training_type.x_name or ''"/></td>
+                                <th>مكان التدريب<br/><span class="mcep-f0008-en">Location</span></th>
+                                <td class="mcep-f0008-value"><span t-out="course.x_training_location or ''"/></td>
+                            </tr>
+                            <tr>
+                                <th>بداية التدريب<br/><span class="mcep-f0008-en">Start Date</span></th>
+                                <td class="mcep-f0008-value"><span t-out="course.x_training_start_date or ''"/></td>
+                                <th>نهاية التدريب<br/><span class="mcep-f0008-en">End Date</span></th>
+                                <td class="mcep-f0008-value"><span t-out="course.x_training_end_date or ''"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="mcep-f0008-table">
+                        <tbody>
+                            <tr>
+                                <th style="width: 22%;">تكلفة الدورة<br/><span class="mcep-f0008-en">Training Cost</span></th>
+                                <td style="width: 28%;" class="mcep-f0008-value">
+                                    <span t-out="'%.2f' % recovery_amount"/>&#160;<span t-out="currency_label"/>
+                                </td>
+                                <th style="width: 22%;">فترة الالتزام<br/><span class="mcep-f0008-en">Service Commitment</span></th>
+                                <td style="width: 28%;" class="mcep-f0008-value">
+                                    <span t-out="commitment_months"/> شهر / <span class="mcep-f0008-en"><span t-out="commitment_years"/> years</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>التكلفة بالحروف<br/><span class="mcep-f0008-en">Cost in Words</span></th>
+                                <td colspan="3" class="mcep-f0008-value">
+                                    فقط <span t-out="cost_words"/> <span t-out="currency_label"/> only
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="mcep-f0008-section-title">ثالثًا: نص التعهد <span class="mcep-f0008-en">Undertaking Statement</span></div>
+
+                    <div class="mcep-f0008-undertaking">
+                        <p>
+                            أقر أنا الموقع أدناه، بصفتي موظفًا لدى شركة مرسيليا للنظافة وحماية البيئة، بأني قد اطلعت ووافقت على الشروط والأحكام التالية المتعلقة بالدورة التدريبية المذكورة أعلاه:
+                        </p>
+                        <p class="mcep-f0008-enline">
+                            I, the undersigned, as an employee of Marsellia Cleaning and Environmental Protection Company, confirm that I have read and agreed to the following terms and conditions related to the above-mentioned training course.
+                        </p>
+                        <ol>
+                            <li>
+                                الحضور والالتزام: ألتزم بالحضور الكامل لجميع ساعات الدورة التدريبية وفي المواعيد المحددة، والقيام بكافة المتطلبات اللازمة لاجتيازها بنجاح.
+                                <span class="mcep-f0008-enline"> Attendance and Commitment: I commit to full attendance and to fulfilling all requirements to successfully complete the course.</span>
+                            </li>
+                            <li>
+                                استلام الشهادة: ألتزم بتسليم نسخة أصلية أو طبق الأصل من شهادة اجتياز الدورة لإدارة الموارد البشرية فور صدورها لتوثيقها في ملفي الوظيفي.
+                                <span class="mcep-f0008-enline"> Certificate Submission: I commit to submitting the original or true copy of the completion certificate to HR upon issuance.</span>
+                            </li>
+                            <li>
+                                فترة الاستمرارية: أتعهد بالاستمرار في العمل لدى الشركة لمدة لا تقل عن سنتين ميلاديتين تبدأ من تاريخ الحصول على الشهادة، تقديرًا لاستثمار الشركة في تطوير مهاراتي.
+                                <span class="mcep-f0008-enline"> Service Commitment: I undertake to remain employed for at least two calendar years from obtaining the certificate.</span>
+                            </li>
+                            <li>
+                                استرداد التكلفة: في حال رغبتي في الاستقالة أو ترك العمل قبل إتمام مدة السنتين، ألتزم برد إجمالي تكاليف الدورة التدريبية للشركة، وتعتبر هذه المبالغ دينًا مستحقًا في ذمتي.
+                                <span class="mcep-f0008-enline"> Cost Reimbursement: If I resign or leave before completing the period, I will reimburse the full training cost.</span>
+                            </li>
+                            <li>
+                                الإجراءات القانونية: للشركة الحق في استقطاع هذه التكلفة من مستحقاتي النهائية، وإذا لم تغط المستحقات هذه القيمة، يحق للشركة المطالبة بالمبلغ أمام الجهات المختصة.
+                                <span class="mcep-f0008-enline"> Legal Action: The company may deduct the cost from final entitlements or pursue recovery through competent authorities.</span>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="mcep-f0008-section-title">رابعًا: توقيع الموظف <span class="mcep-f0008-en">Employee Signature</span></div>
+
+                    <table class="mcep-f0008-sign-table">
+                        <tbody>
+                            <tr>
+                                <th style="width: 16%;">اسم الموظف<br/><span class="mcep-f0008-en">Employee Name</span></th>
+                                <td style="width: 34%;" class="mcep-f0008-value"><span t-out="employee.name or ''"/></td>
+                                <th style="width: 16%;" rowspan="3">البصمة<br/><span class="mcep-f0008-en">Thumbprint</span></th>
+                                <td style="width: 34%;" rowspan="3" class="mcep-f0008-thumb-box"></td>
+                            </tr>
+                            <tr>
+                                <th>التوقيع<br/><span class="mcep-f0008-en">Signature</span></th>
+                                <td class="mcep-f0008-sign-box"></td>
+                            </tr>
+                            <tr>
+                                <th>التاريخ<br/><span class="mcep-f0008-en">Date</span></th>
+                                <td class="mcep-f0008-value"><span t-out="o.x_commitment_start_date or course.x_training_end_date or ''"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

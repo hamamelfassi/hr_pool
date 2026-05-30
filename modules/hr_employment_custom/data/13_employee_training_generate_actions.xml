@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="action_employee_training_generate_f0008_pdf" model="ir.actions.server">
+            <field name="name">Generate PDF</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_training_commitment"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def reload_commitment(rec):
+    view = env.ref('hr_employment_custom.view_employee_training_commitment_form', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Employee Training Commitment',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+def add_months(start_date, months):
+    if not start_date or not months:
+        return False
+    year = start_date.year + ((start_date.month - 1 + int(months)) // 12)
+    month = ((start_date.month - 1 + int(months)) % 12) + 1
+    month_days = [31, 29 if (year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)) else 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    day = min(start_date.day, month_days[month - 1])
+    return datetime.date(year, month, day)
+
+
+for rec in records.sudo():
+    if rec.x_state in ('signature_requested', 'signed'):
+        action = toast('Generate PDF', 'This training commitment has already entered the signature lifecycle. PDF regeneration is blocked.', 'warning', True, reload_commitment(rec))
+        continue
+
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+    course = rec.x_training_course_id.sudo() if rec.x_training_course_id else False
+
+    if not employee:
+        action = toast('Generate PDF', 'Cannot generate F-0008 without a linked employee.', 'danger', True, reload_commitment(rec))
+        continue
+    if not course:
+        action = toast('Generate PDF', 'Select a training course before generating F-0008.', 'warning', True, reload_commitment(rec))
+        continue
+    if not course.x_course_name:
+        action = toast('Generate PDF', 'The selected training course is missing its course name.', 'warning', True, reload_commitment(rec))
+        continue
+    if not course.x_training_provider_id:
+        action = toast('Generate PDF', 'The selected training course is missing its training provider.', 'warning', True, reload_commitment(rec))
+        continue
+
+    generated_on = datetime.datetime.now()
+    start_date = rec.x_commitment_start_date or course.x_training_end_date or datetime.date.today()
+    months = rec.x_service_commitment_months or 24
+    end_date = add_months(start_date, months)
+
+    form_code = 'MCEP-HR-F-0008'
+    emp_part = employee.id if employee else 0
+    course_part = course.id if course else 0
+    document_reference = rec.x_document_reference
+    if not document_reference or 'COURSE' in document_reference:
+        document_reference = 'HR-F-0008-EMP-%05d-%05d-%05d' % (emp_part, course_part, rec.id)
+
+    vals = {
+        'x_state': 'draft' if not rec.x_state else rec.x_state,
+        'x_reference_code': 'HR-F-0008',
+        'x_document_reference': document_reference,
+        'x_service_commitment_months': months,
+        'x_commitment_start_date': start_date,
+        'x_recovery_amount': course.x_seat_cost_amount or 0.0,
+        'x_recovery_amount_words': course.x_seat_cost_amount_words or '',
+        'x_recovery_required_if_breached': bool(course.x_recovery_required_if_breached),
+    }
+
+    if end_date:
+        vals['x_commitment_end_date'] = end_date
+    if course.x_course_training_type_id:
+        vals['x_training_type_id'] = course.x_course_training_type_id.id
+    if not rec.x_commitment_state:
+        vals['x_commitment_state'] = 'applied'
+    if not rec.x_participation_state:
+        vals['x_participation_state'] = 'allocated'
+    if not rec.x_responsible_user_id:
+        vals['x_responsible_user_id'] = env.user.id
+
+    rec.write(vals)
+    rec = rec.sudo().browse(rec.id)
+
+    report_xmlid = 'hr_employment_custom.action_report_mcep_employee_training_f0008_commitment'
+    pdf_content, _content_type = env['ir.actions.report'].sudo()._render_qweb_pdf(report_xmlid, [rec.id])
+
+    filename = '%s - Training Commitment Undertaking.pdf' % (rec.x_document_reference or form_code)
+
+    attachment = env['ir.attachment'].sudo().create({
+        'name': filename,
+        'type': 'binary',
+        'raw': pdf_content,
+        'mimetype': 'application/pdf',
+        'res_model': rec._name,
+        'res_id': rec.id,
+    })
+
+    rec.write({
+        'x_pdf_attachment_id': attachment.id,
+        'x_generated_on': generated_on,
+        'x_state': 'generated',
+    })
+
+    employee.message_post(
+        body='تم توليد تعهد الدورة التدريبية F-0008 وربطه بسجل الموظف.',
+        subtype_xmlid='mail.mt_note',
+        attachment_ids=[attachment.id],
+    )
+
+    action = toast('Generate PDF', 'F-0008 Training Commitment Undertaking was generated and posted to the employee record.', 'success', False, reload_commitment(rec))
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+        <record id="action_employee_training_download_generated_pdf" model="ir.actions.server">
+            <field name="name">Download Generated PDF</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_training_commitment"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+for rec in records.sudo():
+    attachment = rec.x_pdf_attachment_id
+    if attachment:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Download Generated PDF',
+                'message': 'No generated PDF is linked to this training commitment yet.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+
+        <record id="action_employee_training_download_signed_pdf" model="ir.actions.server">
+            <field name="name">Download Signed PDF</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_training_commitment"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+for rec in records.sudo():
+    attachment = rec.x_signed_attachment_id
+    if attachment:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Download Signed PDF',
+                'message': 'No signed PDF is linked to this training commitment yet.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+
+        <record id="action_employee_training_download_sign_certificate" model="ir.actions.server">
+            <field name="name">Download Sign Certificate</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_training_commitment"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+for rec in records.sudo():
+    attachment = rec.x_sign_certificate_attachment_id
+    if attachment:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Download Sign Certificate',
+                'message': 'No Sign certificate is linked to this training commitment yet.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>
