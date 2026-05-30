@@ -135,6 +135,46 @@
                     <div class="alert alert-info" role="alert">
                         Employee permissions cover F-0014 Exit Permission and F-0015 Lateness Permission. PDF generation and three-role Odoo Sign lifecycle are handled on this permission record.
                     </div>
+                    <!-- MCEP permission modal-safe controls start -->
+                    <group string="Workflow and Artifacts">
+                        <div class="o_row" style="gap: 8px; flex-wrap: wrap;">
+                            <button name="%(action_employee_permission_generate_pdf)d"
+                                type="action"
+                                string="Generate PDF"
+                                class="btn btn-primary"
+                                invisible="x_state in ('signature_requested', 'signed')"/>
+                            <button name="%(action_employee_permission_send_sign)d"
+                                type="action"
+                                string="Send to Sign"
+                                class="btn btn-secondary"
+                                invisible="x_state != 'generated' or x_sign_request_res_id"/>
+                            <button name="%(action_employee_permission_sync_sign)d"
+                                type="action"
+                                string="Sync"
+                                class="btn btn-secondary"
+                                invisible="not x_sign_request_res_id"/>
+                            <button type="action"
+                                name="%(action_employee_permission_download_generated_pdf)d"
+                                string="Generated PDF"
+                                icon="fa-download"
+                                class="btn btn-secondary"
+                                invisible="not x_pdf_attachment_id"/>
+                            <button type="action"
+                                name="%(action_employee_permission_download_signed_pdf)d"
+                                string="Signed PDF"
+                                icon="fa-file-pdf-o"
+                                class="btn btn-secondary"
+                                invisible="not x_signed_attachment_id"/>
+                            <button type="action"
+                                name="%(action_employee_permission_download_sign_certificate)d"
+                                string="Certificate"
+                                icon="fa-certificate"
+                                class="btn btn-secondary"
+                                invisible="not x_sign_certificate_attachment_id"/>
+                        </div>
+                    </group>
+                    <!-- MCEP permission modal-safe controls end -->
+
                     <group>
                         <field name="x_employee_id" options="{'no_create': True, 'no_create_edit': True}"/>
                         <field name="x_permission_type_id"/>
@@ -253,6 +293,46 @@
                                 <div class="alert alert-info" role="alert">
                                     Employee permissions cover F-0014 Exit Permission and F-0015 Lateness Permission. PDF generation and three-role Odoo Sign lifecycle are handled on this permission record.
                                 </div>
+                                <!-- MCEP permission modal-safe controls start -->
+                                <group string="Workflow and Artifacts">
+                                    <div class="o_row" style="gap: 8px; flex-wrap: wrap;">
+                                        <button name="%(action_employee_permission_generate_pdf)d"
+                                            type="action"
+                                            string="Generate PDF"
+                                            class="btn btn-primary"
+                                            invisible="x_state in ('signature_requested', 'signed')"/>
+                                        <button name="%(action_employee_permission_send_sign)d"
+                                            type="action"
+                                            string="Send to Sign"
+                                            class="btn btn-secondary"
+                                            invisible="x_state != 'generated' or x_sign_request_res_id"/>
+                                        <button name="%(action_employee_permission_sync_sign)d"
+                                            type="action"
+                                            string="Sync"
+                                            class="btn btn-secondary"
+                                            invisible="not x_sign_request_res_id"/>
+                                        <button type="action"
+                                            name="%(action_employee_permission_download_generated_pdf)d"
+                                            string="Generated PDF"
+                                            icon="fa-download"
+                                            class="btn btn-secondary"
+                                            invisible="not x_pdf_attachment_id"/>
+                                        <button type="action"
+                                            name="%(action_employee_permission_download_signed_pdf)d"
+                                            string="Signed PDF"
+                                            icon="fa-file-pdf-o"
+                                            class="btn btn-secondary"
+                                            invisible="not x_signed_attachment_id"/>
+                                        <button type="action"
+                                            name="%(action_employee_permission_download_sign_certificate)d"
+                                            string="Certificate"
+                                            icon="fa-certificate"
+                                            class="btn btn-secondary"
+                                            invisible="not x_sign_certificate_attachment_id"/>
+                                    </div>
+                                </group>
+                                <!-- MCEP permission modal-safe controls end -->
+
                                 <group>
                                     <field name="x_employee_id" readonly="1" force_save="1"/>
                                     <field name="x_permission_type_id"/>

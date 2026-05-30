@@ -49,14 +49,13 @@ def reload_permission(rec):
     return action
 
 
-def get_or_create_role(name, fallbacks):
+def get_or_create_role(name, fallbacks=None):
+    # Use exact role names for permission signing.
+    # Do not fall back to shared roles such as Signatory/Manager, because shared
+    # roles can scramble signer routing/order across different permission types.
     role = sign_role_model.search([('name', '=', name)], order='id asc', limit=1)
     if role:
         return role
-    for fallback in fallbacks:
-        role = sign_role_model.search([('name', '=', fallback)], order='id asc', limit=1)
-        if role:
-            return role
     return sign_role_model.create({'name': name})
 
 
@@ -94,6 +93,17 @@ def user_partner(user):
             'email': email,
         })
     return partner
+
+
+
+def signer_order_vals(order):
+    vals = {'mail_sent_order': order}
+    # Some Odoo Sign SaaS builds also expose sequence-like ordering fields.
+    # Write them only when present to avoid schema assumptions.
+    for optional_field in ('sequence', 'sign_order'):
+        if optional_field in sign_send_signer_model._fields:
+            vals[optional_field] = order
+    return vals
 
 
 if not signature_type:
@@ -195,7 +205,7 @@ else:
         subject = 'Signature Request - %s' % filename
         body = '<p>Please review and sign the attached employee permission form.</p>'
 
-        send_request = sign_send_model.create({
+        send_vals = {
             'template_id': sign_template.id,
             'signer_id': employee_sign_partner.id,
             'subject': subject,
@@ -205,7 +215,11 @@ else:
             'reminder_enabled': False,
             'model': 'x_hr.employee_permission',
             'res_ids': str([rec.id]),
-        })
+        }
+        if 'set_sign_order' in sign_send_model._fields:
+            send_vals['set_sign_order'] = True
+
+        send_request = sign_send_model.create(send_vals)
 
         signer_map = [
             (employee_role, employee_sign_partner, 1),
@@ -215,18 +229,21 @@ else:
 
         for role, partner, order in signer_map:
             signer_line = send_request.signer_ids.filtered(lambda line: line.role_id.id == role.id)[:1]
+            ordered_vals = signer_order_vals(order)
+            ordered_vals['partner_id'] = partner.id
             if signer_line:
-                signer_line.sudo().write({
-                    'partner_id': partner.id,
-                    'mail_sent_order': order,
-                })
+                signer_line.sudo().write(ordered_vals)
             else:
-                sign_send_signer_model.create({
+                create_vals = signer_order_vals(order)
+                create_vals.update({
                     'sign_send_request_id': send_request.id,
                     'role_id': role.id,
                     'partner_id': partner.id,
-                    'mail_sent_order': order,
                 })
+                sign_send_signer_model.create(create_vals)
+
+        if 'set_sign_order' in send_request._fields:
+            send_request.sudo().write({'set_sign_order': True})
 
         send_request.send_request()
 
