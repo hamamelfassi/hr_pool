@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ========================================================= -->
+        <!-- Model shells first                                        -->
+        <!-- ========================================================= -->
+
+        <record id="model_x_hr_training" model="ir.model">
+            <field name="name">Training Type</field>
+            <field name="model">x_hr.training</field>
+            <field name="state">manual</field>
+        </record>
+
+        <record id="model_x_hr_training_course" model="ir.model">
+            <field name="name">Training Course</field>
+            <field name="model">x_hr.training_course</field>
+            <field name="state">manual</field>
+        </record>
+
+        <!-- ========================================================= -->
+        <!-- Training Type / Requirement fields                        -->
+        <!-- ========================================================= -->
+
+        <record id="field_x_hr_training__x_active" model="ir.model.fields">
+            <field name="name">x_active</field>
+            <field name="model_id" ref="model_x_hr_training"/>
+            <field name="field_description">Active</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_x_hr_training__x_name" model="ir.model.fields">
+            <field name="name">x_name</field>
+            <field name="model_id" ref="model_x_hr_training"/>
+            <field name="field_description">Training Type</field>
+            <field name="ttype">char</field>
+            <field name="required" eval="True"/>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_training__x_functional_area_id" model="ir.model.fields">
+            <field name="name">x_functional_area_id</field>
+            <field name="model_id" ref="model_x_hr_training"/>
+            <field name="field_description">GRC Functional Area</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_grc.functional_area</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_training__x_notes" model="ir.model.fields">
+            <field name="name">x_notes</field>
+            <field name="model_id" ref="model_x_hr_training"/>
+            <field name="field_description">Notes</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <!-- ========================================================= -->
+        <!-- Training Course / Session fields                          -->
+        <!-- ========================================================= -->
+
+        <record id="field_x_hr_training_course__x_active" model="ir.model.fields">
+            <field name="name">x_active</field>
+            <field name="model_id" ref="model_x_hr_training_course"/>
+            <field name="field_description">Active</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_x_hr_training_course__x_course_name" model="ir.model.fields">
+            <field name="name">x_course_name</field>
+            <field name="model_id" ref="model_x_hr_training_course"/>
+            <field name="field_description">Course Name</field>
+            <field name="ttype">char</field>
+            <field name="required" eval="True"/>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_training_course__x_course_training_type_id" model="ir.model.fields">
+            <field name="name">x_course_training_type_id</field>
+            <field name="model_id" ref="model_x_hr_training_course"/>
+            <field name="field_description">Training Type</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.training</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_training__x_training_course_ids" model="ir.model.fields">
+            <field name="name">x_training_course_ids</field>
+            <field name="model_id" ref="model_x_hr_training"/>
+            <field name="field_description">Training Courses</field>
+            <field name="ttype">one2many</field>
+            <field name="relation">x_hr.training_course</field>
+            <field name="relation_field">x_course_training_type_id</field>
+        </record>
+
+        <record id="field_x_hr_training_course__x_function_ids" model="ir.model.fields">
+            <field name="name">x_function_ids</field>
+            <field name="model_id" ref="model_x_hr_training_course"/>
+            <field name="field_description">GRC Functions</field>
+            <field name="ttype">many2many</field>
+            <field name="relation">x_grc.function</field>
+        </record>
+
+        <record id="field_x_hr_training_course__x_training_provider_id" model="ir.model.fields">
+            <field name="name">x_training_provider_id</field>
+            <field name="model_id" ref="model_x_hr_training_course"/>
+            <field name="field_description">Training Provider</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.partner</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_training_course__x_training_location" model="ir.model.fields">
+            <field name="name">x_training_location</field>
+            <field name="model_id" ref="model_x_hr_training_course"/>
+            <field name="field_description">Training Location</field>
+            <field name="ttype">char</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_training_course__x_training_start_date" model="ir.model.fields">
+            <field name="name">x_training_start_date</field>
+            <field name="model_id" ref="model_x_hr_training_course"/>
+            <field name="field_description">Training Start Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_x_hr_training_course__x_training_end_date" model="ir.model.fields">
+            <field name="name">x_training_end_date</field>
+            <field name="model_id" ref="model_x_hr_training_course"/>
+            <field name="field_description">Training End Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_x_hr_training_course__x_participant_ids" model="ir.model.fields">
+            <field name="name">x_participant_ids</field>
+            <field name="model_id" ref="model_x_hr_training_course"/>
+            <field name="field_description">Participants</field>
+            <field name="ttype">many2many</field>
+            <field name="relation">hr.employee</field>
+        </record>
+
+        <record id="field_x_hr_training_course__x_participant_seats" model="ir.model.fields">
+            <field name="name">x_participant_seats</field>
+            <field name="model_id" ref="model_x_hr_training_course"/>
+            <field name="field_description">Participant Seats</field>
+            <field name="ttype">integer</field>
+        </record>
+
+        <record id="field_x_hr_training_course__x_seat_cost_amount" model="ir.model.fields">
+            <field name="name">x_seat_cost_amount</field>
+            <field name="model_id" ref="model_x_hr_training_course"/>
+            <field name="field_description">Seat Cost Amount</field>
+            <field name="ttype">float</field>
+        </record>
+
+        <record id="field_x_hr_training_course__x_seat_cost_amount_words" model="ir.model.fields">
+            <field name="name">x_seat_cost_amount_words</field>
+            <field name="model_id" ref="model_x_hr_training_course"/>
+            <field name="field_description">Seat Cost Amount in Words</field>
+            <field name="ttype">char</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_training_course__x_total_cost" model="ir.model.fields">
+            <field name="name">x_total_cost</field>
+            <field name="model_id" ref="model_x_hr_training_course"/>
+            <field name="field_description">Total Cost</field>
+            <field name="ttype">float</field>
+        </record>
+
+        <record id="field_x_hr_training_course__x_currency_label" model="ir.model.fields">
+            <field name="name">x_currency_label</field>
+            <field name="model_id" ref="model_x_hr_training_course"/>
+            <field name="field_description">Currency Label</field>
+            <field name="ttype">char</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_training_course__x_recovery_required_if_breached" model="ir.model.fields">
+            <field name="name">x_recovery_required_if_breached</field>
+            <field name="model_id" ref="model_x_hr_training_course"/>
+            <field name="field_description">Recovery Required if Breached</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_x_hr_training_course__x_notes" model="ir.model.fields">
+            <field name="name">x_notes</field>
+            <field name="model_id" ref="model_x_hr_training_course"/>
+            <field name="field_description">Notes</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+    </data>
+</odoo>
