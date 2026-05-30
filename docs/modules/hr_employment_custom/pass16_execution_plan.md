@@ -114,6 +114,9 @@ Recommended fields:
 - `x_requires_signature`
 - `x_requires_identifier`
 - `x_uses_company_id_document`
+- `x_default_validity_months`
+- `x_replacement_fee_amount`
+- `x_replacement_fee_currency_label`
 - `x_future_native_link_model`
 - `x_notes`
 
@@ -213,6 +216,50 @@ State doctrine:
 
 Do not implement final offboarding closure in Pass 16. Only make open custody visible and queryable for Pass 23 clearance.
 
+### 4.3 F-0011 company ID card custody receipt mapping
+
+The first Pass 16 custody form is:
+
+    MCEP-HR-F-0011 — Company ID Card Receipt / استلام البطاقة التعريفية
+
+The form should remain thin and should read source values from existing records wherever possible.
+
+Employee information mapping:
+
+| F-0011 field | Source |
+| --- | --- |
+| Full Name / الاسم الكامل | `hr.employee.name` |
+| Employee ID / الرقم الوظيفي | `hr.employee.id` for the first implementation unless a verified employee-number field is later confirmed |
+| Job Title / المسمى الوظيفي | `hr.employee.job_title` |
+| Department / القسم / الإدارة | `hr.employee.department_id.name` |
+| Date / التاريخ | `x_hr.employee_custody_item.x_issued_on` |
+
+Company ID card source mapping:
+
+| F-0011 value | Source |
+| --- | --- |
+| company card document number | `x_company_id_document_id.x_document_number` |
+| issuing authority | `x_company_id_document_id.x_issued_by` |
+| issue place | `x_company_id_document_id.x_issue_place` |
+| issue date | `x_company_id_document_id.x_issue_date` |
+| expiry date | `x_company_id_document_id.x_expiry_date` |
+| document image/attachment | `x_company_id_document_id.x_document_image` or linked attachment field where available |
+
+Custody type defaults for the company ID card type:
+
+| Value | Default |
+| --- | --- |
+| validity months | `6` |
+| replacement fee amount | `25` |
+| replacement fee currency label | `LYD` / `دينار ليبي` |
+
+Implementation notes:
+
+- Do not duplicate company ID card document fields on the custody item except where a small UI display/helper is necessary.
+- Do not create a new employee-number field in Pass 16A/16B. Use `hr.employee.id` for the first F-0011 implementation unless a verified native/custom employee number field is confirmed later.
+- Do not add accounting/currency dependencies for the replacement fee in Pass 16. A plain amount plus label is sufficient for the form text.
+- If `x_company_id_document_id` is missing, PDF generation should block with a clear user message rather than fabricating ID card values.
+
 ## 5. Files likely touched
 
 Expected new/changed module files:
@@ -250,6 +297,8 @@ Generated files that must not be committed:
 ## 6. Slice plan
 
 ### 16A — Custody preflight and documentation lock
+
+Status: accepted
 
 Goal:
 
@@ -331,7 +380,10 @@ Expected changes:
   - name: `Company ID Card / بطاقة الشركة`;
   - requires return: true;
   - requires signature: true;
-  - uses company ID document: true.
+  - uses company ID document: true;
+  - default validity months: `6`;
+  - replacement fee amount: `25`;
+  - replacement fee currency label: `LYD / دينار ليبي`.
 - Add `x_company_id_document_id` to custody item.
 - Domain should restrict selectable ID document records to the same employee and preferably company ID card document type.
 - If the company ID card identification document is absent, show a clear warning or leave the field empty. Do not fabricate card values.
@@ -388,9 +440,13 @@ QWeb source values:
   - document image/attachment where useful.
 - Custody item:
   - document reference;
-  - issue date;
-  - replacement value if available;
+  - issue date / receipt date;
+  - selected company ID document;
   - notes.
+- Custody type:
+  - validity months;
+  - replacement fee amount;
+  - replacement fee currency label.
 
 Sanity checks:
 
@@ -601,7 +657,39 @@ Append implementation notes here as slices are accepted.
 
 Status:
 
-    not started
+    accepted
+
+Preflight findings:
+
+- The latest `hr_employment_custom` baseline contains only the accepted Pass 15 model families:
+  - `x_hr.employee_identification_document`;
+  - `x_hr.employee_declaration`.
+- The current manifest dependency posture remains safe for Pass 16:
+  - `base`;
+  - `mail`;
+  - `hr`;
+  - `sign`;
+  - `base_automation`;
+  - `grc_backbone`.
+- No dependency on Fleet, Inventory, Accounting, Assets, Maintenance, Documents, Payroll, or Contracts is needed for 16B/16C.
+- The existing identification model already supports the `company_id_card` document type.
+- The existing employee identification one2many field is available as `hr.employee.x_identification_document_ids`.
+- The existing declaration artifact pattern is available for reuse:
+  - hidden lifecycle attachment fields;
+  - user-facing download actions;
+  - generated/signed/certificate copies to employee chatter/files.
+- F-0011 requires the first custody type to carry type-level defaults for:
+  - six-month company ID validity;
+  - replacement fee amount `25`;
+  - replacement fee label `LYD / دينار ليبي`.
+- F-0011 should read company ID document values from `x_company_id_document_id`, linked to `x_hr.employee_identification_document`, rather than duplicating card fields on the custody item.
+- Future custody types such as computers, PPE, vehicles, phones, tools, access cards, and radios remain future-linkable but must not introduce hard many2one references to unverified native rosters in Pass 16.
+
+16A conclusion:
+
+- Proceed to 16B with no dependency change.
+- Implement custody models and employee tab first.
+- Keep reports, Sign, return/lost/damaged transitions, and translation polish for later slices.
 
 ### 16B implementation log
 
@@ -656,6 +744,7 @@ Status:
 Pass 16 can close only when:
 
 - Company ID card custody type exists.
+- Company ID card custody type stores validity months `6` and replacement fee `25 LYD / دينار ليبي` for F-0011 text.
 - Employee custody tab is installed and usable.
 - Custody item can link to the employee company ID document from `x_hr.employee_identification_document`.
 - ID card custody receipt PDF generates using the selected company ID details.
