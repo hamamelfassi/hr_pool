@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ========================================================= -->
+        <!-- Employee Permission Type                                  -->
+        <!-- ========================================================= -->
+
+        <record id="model_x_hr_employee_permission_type" model="ir.model">
+            <field name="name">Employee Permission Type</field>
+            <field name="model">x_hr.employee_permission_type</field>
+            <field name="state">manual</field>
+        </record>
+
+        <record id="field_x_hr_employee_permission_type__x_name" model="ir.model.fields">
+            <field name="name">x_name</field>
+            <field name="model_id" ref="model_x_hr_employee_permission_type"/>
+            <field name="field_description">Permission Type</field>
+            <field name="ttype">char</field>
+            <field name="required" eval="True"/>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission_type__x_code" model="ir.model.fields">
+            <field name="name">x_code</field>
+            <field name="model_id" ref="model_x_hr_employee_permission_type"/>
+            <field name="field_description">Code</field>
+            <field name="ttype">char</field>
+            <field name="required" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission_type__x_form_code" model="ir.model.fields">
+            <field name="name">x_form_code</field>
+            <field name="model_id" ref="model_x_hr_employee_permission_type"/>
+            <field name="field_description">Form Code</field>
+            <field name="ttype">char</field>
+            <field name="required" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission_type__x_form_title" model="ir.model.fields">
+            <field name="name">x_form_title</field>
+            <field name="model_id" ref="model_x_hr_employee_permission_type"/>
+            <field name="field_description">Form Title</field>
+            <field name="ttype">char</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission_type__x_description" model="ir.model.fields">
+            <field name="name">x_description</field>
+            <field name="model_id" ref="model_x_hr_employee_permission_type"/>
+            <field name="field_description">Description</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission_type__x_active" model="ir.model.fields">
+            <field name="name">x_active</field>
+            <field name="model_id" ref="model_x_hr_employee_permission_type"/>
+            <field name="field_description">Active</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_x_hr_employee_permission_type__x_requires_from_to_time" model="ir.model.fields">
+            <field name="name">x_requires_from_to_time</field>
+            <field name="model_id" ref="model_x_hr_employee_permission_type"/>
+            <field name="field_description">Requires From/To Time</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_x_hr_employee_permission_type__x_requires_direct_manager_approval" model="ir.model.fields">
+            <field name="name">x_requires_direct_manager_approval</field>
+            <field name="model_id" ref="model_x_hr_employee_permission_type"/>
+            <field name="field_description">Requires Direct Manager Approval</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_x_hr_employee_permission_type__x_requires_hr_approval" model="ir.model.fields">
+            <field name="name">x_requires_hr_approval</field>
+            <field name="model_id" ref="model_x_hr_employee_permission_type"/>
+            <field name="field_description">Requires HR Approval</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_x_hr_employee_permission_type__x_notes" model="ir.model.fields">
+            <field name="name">x_notes</field>
+            <field name="model_id" ref="model_x_hr_employee_permission_type"/>
+            <field name="field_description">Notes</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <!-- ========================================================= -->
+        <!-- Employee Permission                                      -->
+        <!-- ========================================================= -->
+
+        <record id="model_x_hr_employee_permission" model="ir.model">
+            <field name="name">Employee Permission</field>
+            <field name="model">x_hr.employee_permission</field>
+            <field name="state">manual</field>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_name" model="ir.model.fields">
+            <field name="name">x_name</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Permission Label</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_employee_id" model="ir.model.fields">
+            <field name="name">x_employee_id</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Employee</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.employee</field>
+            <field name="required" eval="True"/>
+            <field name="on_delete">cascade</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_permission_type_id" model="ir.model.fields">
+            <field name="name">x_permission_type_id</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Permission Type</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.employee_permission_type</field>
+            <field name="required" eval="True"/>
+            <field name="on_delete">restrict</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_reference_code" model="ir.model.fields">
+            <field name="name">x_reference_code</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Reference Code</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_document_reference" model="ir.model.fields">
+            <field name="name">x_document_reference</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Document Reference</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_state" model="ir.model.fields">
+            <field name="name">x_state</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">State</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('draft', 'Draft'),
+                ('generated', 'Generated'),
+                ('signature_requested', 'Signature Requested'),
+                ('signed', 'Signed'),
+                ('cancelled', 'Cancelled'),
+                ('superseded', 'Superseded')
+            ]</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_permission_date" model="ir.model.fields">
+            <field name="name">x_permission_date</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Permission Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_time_from" model="ir.model.fields">
+            <field name="name">x_time_from</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Time From</field>
+            <field name="ttype">char</field>
+            <field name="help">Use HH:MM format until native attendance/time integration is explicitly scoped.</field>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_time_to" model="ir.model.fields">
+            <field name="name">x_time_to</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Time To</field>
+            <field name="ttype">char</field>
+            <field name="help">Use HH:MM format until native attendance/time integration is explicitly scoped.</field>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_reason" model="ir.model.fields">
+            <field name="name">x_reason</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Reason</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_employee_notes" model="ir.model.fields">
+            <field name="name">x_employee_notes</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Employee Notes</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_direct_manager_user_id" model="ir.model.fields">
+            <field name="name">x_direct_manager_user_id</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Direct Manager User</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_hr_user_id" model="ir.model.fields">
+            <field name="name">x_hr_user_id</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">HR User</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_pdf_attachment_id" model="ir.model.fields">
+            <field name="name">x_pdf_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Generated PDF</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_signed_attachment_id" model="ir.model.fields">
+            <field name="name">x_signed_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Signed PDF</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_sign_certificate_attachment_id" model="ir.model.fields">
+            <field name="name">x_sign_certificate_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Sign Certificate</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_sign_request_res_id" model="ir.model.fields">
+            <field name="name">x_sign_request_res_id</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Sign Request ID</field>
+            <field name="ttype">integer</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_sign_request_state" model="ir.model.fields">
+            <field name="name">x_sign_request_state</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Sign Request State</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_sign_request_reference" model="ir.model.fields">
+            <field name="name">x_sign_request_reference</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Sign Request Reference</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_sign_request_url" model="ir.model.fields">
+            <field name="name">x_sign_request_url</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Sign Request URL</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_generated_on" model="ir.model.fields">
+            <field name="name">x_generated_on</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Generated On</field>
+            <field name="ttype">datetime</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_sent_on" model="ir.model.fields">
+            <field name="name">x_sent_on</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Sent On</field>
+            <field name="ttype">datetime</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_signed_on" model="ir.model.fields">
+            <field name="name">x_signed_on</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Signed On</field>
+            <field name="ttype">datetime</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_manual_decision_number" model="ir.model.fields">
+            <field name="name">x_manual_decision_number</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Manual Decision Number</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_manual_decision_date" model="ir.model.fields">
+            <field name="name">x_manual_decision_date</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Manual Decision Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_manual_decision_attachment_id" model="ir.model.fields">
+            <field name="name">x_manual_decision_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Manual Decision Attachment</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_responsible_user_id" model="ir.model.fields">
+            <field name="name">x_responsible_user_id</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Responsible User</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_permission__x_notes" model="ir.model.fields">
+            <field name="name">x_notes</field>
+            <field name="model_id" ref="model_x_hr_employee_permission"/>
+            <field name="field_description">Notes</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <!-- ========================================================= -->
+        <!-- Employee inverse field                                    -->
+        <!-- ========================================================= -->
+
+        <record id="field_hr_employee__x_permission_ids" model="ir.model.fields">
+            <field name="name">x_permission_ids</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="field_description">Permissions</field>
+            <field name="ttype">one2many</field>
+            <field name="relation">x_hr.employee_permission</field>
+            <field name="relation_field">x_employee_id</field>
+        </record>
+
+    </data>
+</odoo>

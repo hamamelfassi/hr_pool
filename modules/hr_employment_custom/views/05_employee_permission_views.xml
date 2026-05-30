@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Permission Types -->
+
+    <record id="view_employee_permission_type_list" model="ir.ui.view">
+        <field name="name">x.hr.employee.permission.type.list</field>
+        <field name="model">x_hr.employee_permission_type</field>
+        <field name="arch" type="xml">
+            <list string="Permission Types">
+                <field name="x_name"/>
+                <field name="x_code"/>
+                <field name="x_form_code"/>
+                <field name="x_form_title"/>
+                <field name="x_requires_from_to_time"/>
+                <field name="x_requires_direct_manager_approval"/>
+                <field name="x_requires_hr_approval"/>
+                <field name="x_active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_employee_permission_type_form" model="ir.ui.view">
+        <field name="name">x.hr.employee.permission.type.form</field>
+        <field name="model">x_hr.employee_permission_type</field>
+        <field name="arch" type="xml">
+            <form string="Permission Type">
+                <sheet>
+                    <group>
+                        <field name="x_name"/>
+                        <field name="x_code"/>
+                        <field name="x_form_code"/>
+                        <field name="x_form_title"/>
+                        <field name="x_active"/>
+                    </group>
+                    <group string="Behavior Flags">
+                        <field name="x_requires_from_to_time"/>
+                        <field name="x_requires_direct_manager_approval"/>
+                        <field name="x_requires_hr_approval"/>
+                    </group>
+                    <group string="Description">
+                        <field name="x_description"/>
+                        <field name="x_notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_employee_permission_types" model="ir.actions.act_window">
+        <field name="name">Employee Permission Types</field>
+        <field name="res_model">x_hr.employee_permission_type</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'default_x_active': True, 'default_x_requires_from_to_time': True, 'default_x_requires_direct_manager_approval': True, 'default_x_requires_hr_approval': True}</field>
+    </record>
+
+    <!-- Employee Permissions -->
+
+    <record id="view_employee_permission_list" model="ir.ui.view">
+        <field name="name">x.hr.employee.permission.list</field>
+        <field name="model">x_hr.employee_permission</field>
+        <field name="arch" type="xml">
+            <list string="Employee Permissions">
+                <field name="x_employee_id"/>
+                <field name="x_permission_type_id"/>
+                <field name="x_state"
+                    widget="badge"
+                    decoration-muted="x_state in ('draft', 'superseded')"
+                    decoration-info="x_state == 'generated'"
+                    decoration-warning="x_state == 'signature_requested'"
+                    decoration-success="x_state == 'signed'"
+                    decoration-danger="x_state == 'cancelled'"/>
+                <field name="x_permission_date"/>
+                <field name="x_time_from"/>
+                <field name="x_time_to"/>
+                <field name="x_document_reference"/>
+                <field name="x_responsible_user_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_employee_permission_form" model="ir.ui.view">
+        <field name="name">x.hr.employee.permission.form</field>
+        <field name="model">x_hr.employee_permission</field>
+        <field name="arch" type="xml">
+            <form string="Employee Permission">
+                <header>
+                    <field name="x_state"
+                        widget="statusbar"
+                        options="{'clickable': false}"
+                        statusbar_visible="draft,generated,signature_requested,signed"
+                        readonly="1"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-info" role="alert">
+                        Employee permissions cover F-0014 Exit Permission and F-0015 Lateness Permission. PDF generation and Odoo Sign lifecycle will be added in later Pass 18 slices.
+                    </div>
+                    <group>
+                        <field name="x_employee_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                        <field name="x_permission_type_id"/>
+                        <field name="x_name" readonly="1"/>
+                        <field name="x_reference_code" readonly="1"/>
+                        <field name="x_document_reference" readonly="1"/>
+                    </group>
+                    <group string="Permission Details">
+                        <field name="x_permission_date"/>
+                        <field name="x_time_from"/>
+                        <field name="x_time_to"/>
+                        <field name="x_reason"/>
+                        <field name="x_employee_notes"/>
+                    </group>
+                    <group string="Approval Metadata">
+                        <field name="x_direct_manager_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                        <field name="x_hr_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                    </group>
+                    <group string="Lifecycle Artifacts" invisible="1">
+                        <field name="x_pdf_attachment_id" readonly="1"/>
+                        <field name="x_signed_attachment_id" readonly="1"/>
+                        <field name="x_sign_certificate_attachment_id" readonly="1"/>
+                        <field name="x_sign_request_res_id" readonly="1"/>
+                        <field name="x_sign_request_state" readonly="1"/>
+                        <field name="x_sign_request_reference" readonly="1"/>
+                        <field name="x_sign_request_url" readonly="1"/>
+                        <field name="x_generated_on" readonly="1"/>
+                        <field name="x_sent_on" readonly="1"/>
+                        <field name="x_signed_on" readonly="1"/>
+                    </group>
+                    <group string="Manual Decision">
+                        <field name="x_manual_decision_number"/>
+                        <field name="x_manual_decision_date"/>
+                        <field name="x_manual_decision_attachment_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                    </group>
+                    <group string="Ownership and Notes">
+                        <field name="x_responsible_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                        <field name="x_notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_employee_permissions" model="ir.actions.act_window">
+        <field name="name">Employee Permissions</field>
+        <field name="res_model">x_hr.employee_permission</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'default_x_state': 'draft', 'default_x_responsible_user_id': uid}</field>
+    </record>
+
+    <record id="action_employee_permission_create" model="ir.actions.act_window">
+        <field name="name">New Permission</field>
+        <field name="res_model">x_hr.employee_permission</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_employee_permission_form"/>
+        <field name="target">new</field>
+        <field name="context">{'default_x_state': 'draft', 'default_x_responsible_user_id': uid}</field>
+    </record>
+
+    <record id="view_hr_employee_form_inherit_employee_permissions" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit.employee.permissions</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook" position="inside">
+                <page name="mcep_employee_permissions" string="Permissions">
+                    <div class="alert alert-info" role="alert">
+                        Permissions record temporary exit and lateness authorizations for the employee. This first slice adds the controlled process surface only; PDF and Odoo Sign actions come next.
+                    </div>
+                    <div class="mb-2">
+                        <button name="%(action_employee_permission_create)d"
+                            type="action"
+                            string="New Permission"
+                            class="btn btn-primary"
+                            context="{'default_x_employee_id': id, 'default_x_state': 'draft', 'default_x_responsible_user_id': uid}"/>
+                    </div>
+                    <field name="x_permission_ids"
+                        nolabel="1"
+                        context="{'default_x_employee_id': id, 'default_x_state': 'draft', 'default_x_responsible_user_id': uid}">
+                        <list create="0">
+                            <field name="x_permission_type_id"/>
+                            <field name="x_state"
+                                widget="badge"
+                                decoration-muted="x_state in ('draft', 'superseded')"
+                                decoration-info="x_state == 'generated'"
+                                decoration-warning="x_state == 'signature_requested'"
+                                decoration-success="x_state == 'signed'"
+                                decoration-danger="x_state == 'cancelled'"/>
+                            <field name="x_permission_date"/>
+                            <field name="x_time_from"/>
+                            <field name="x_time_to"/>
+                            <field name="x_document_reference"/>
+                            <field name="x_direct_manager_user_id" optional="show"/>
+                            <field name="x_hr_user_id" optional="hide"/>
+                            <field name="x_responsible_user_id" optional="show"/>
+                        </list>
+                        <form>
+                            <header>
+                                <field name="x_state"
+                                    widget="statusbar"
+                                    options="{'clickable': false}"
+                                    statusbar_visible="draft,generated,signature_requested,signed"
+                                    readonly="1"/>
+                            </header>
+                            <sheet>
+                                <div class="alert alert-info" role="alert">
+                                    Employee permissions cover F-0014 Exit Permission and F-0015 Lateness Permission. PDF generation and Odoo Sign lifecycle will be added in later Pass 18 slices.
+                                </div>
+                                <group>
+                                    <field name="x_employee_id" readonly="1" force_save="1"/>
+                                    <field name="x_permission_type_id"/>
+                                    <field name="x_name" readonly="1"/>
+                                    <field name="x_reference_code" readonly="1"/>
+                                    <field name="x_document_reference" readonly="1"/>
+                                </group>
+                                <group string="Permission Details">
+                                    <field name="x_permission_date"/>
+                                    <field name="x_time_from"/>
+                                    <field name="x_time_to"/>
+                                    <field name="x_reason"/>
+                                    <field name="x_employee_notes"/>
+                                </group>
+                                <group string="Approval Metadata">
+                                    <field name="x_direct_manager_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                                    <field name="x_hr_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                                </group>
+                                <group string="Lifecycle Artifacts" invisible="1">
+                                    <field name="x_pdf_attachment_id" readonly="1"/>
+                                    <field name="x_signed_attachment_id" readonly="1"/>
+                                    <field name="x_sign_certificate_attachment_id" readonly="1"/>
+                                    <field name="x_sign_request_res_id" readonly="1"/>
+                                    <field name="x_sign_request_state" readonly="1"/>
+                                    <field name="x_sign_request_reference" readonly="1"/>
+                                    <field name="x_sign_request_url" readonly="1"/>
+                                    <field name="x_generated_on" readonly="1"/>
+                                    <field name="x_sent_on" readonly="1"/>
+                                    <field name="x_signed_on" readonly="1"/>
+                                </group>
+                                <group string="Manual Decision">
+                                    <field name="x_manual_decision_number"/>
+                                    <field name="x_manual_decision_date"/>
+                                    <field name="x_manual_decision_attachment_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                                </group>
+                                <group string="Ownership and Notes">
+                                    <field name="x_responsible_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                                    <field name="x_notes"/>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
