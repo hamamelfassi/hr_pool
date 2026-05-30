@@ -31,6 +31,7 @@
         "data/10_employee_custody_sign_actions.xml",
         "data/11_employee_custody_lifecycle_actions.xml",
         "data/12_employee_training_automation.xml",
+        "data/13_employee_training_generate_actions.xml",
         "views/01_employee_identification_views.xml",
         "views/02_employee_declaration_views.xml",
         "views/03_employee_custody_views.xml",
@@ -43,6 +44,8 @@
         "report/07_employee_declaration_f0022_templates.xml",
         "report/08_employee_custody_f0011_templates.xml",
         "report/04_employee_declaration_report_actions.xml",
-        "report/09_employee_custody_report_actions.xml"
+        "report/09_employee_custody_report_actions.xml",
+        "report/10_employee_training_f0008_templates.xml",
+        "report/11_employee_training_report_actions.xml"
     ]
 }
