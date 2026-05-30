@@ -66,14 +66,14 @@
             <field name="field_description">Declaration State</field>
             <field name="ttype">selection</field>
             <field name="selection">[
-                ('draft', 'Draft / مسودة'),
-                ('generated', 'Generated / منشأ'),
-                ('signature_requested', 'Signature Requested / طلب التوقيع'),
-                ('signed', 'Signed / موقّع'),
-                ('cancelled', 'Cancelled / ملغى'),
-                ('superseded', 'Superseded / مستبدل'),
-                ('rejected', 'Rejected / مرفوض'),
-                ('blocked', 'Blocked / محجوب')
+                ('draft', 'Draft'),
+                ('generated', 'Generated'),
+                ('signature_requested', 'Signature Requested'),
+                ('signed', 'Signed'),
+                ('cancelled', 'Cancelled'),
+                ('superseded', 'Superseded'),
+                ('rejected', 'Rejected'),
+                ('blocked', 'Blocked')
             ]</field>
             <field name="readonly" eval="True"/>
             <field name="index" eval="True"/>

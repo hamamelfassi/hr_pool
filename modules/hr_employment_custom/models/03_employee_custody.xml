@@ -178,15 +178,15 @@
             <field name="field_description">Custody State</field>
             <field name="ttype">selection</field>
             <field name="selection">[
-                ('draft', 'Draft / مسودة'),
-                ('generated', 'Generated / منشأ'),
-                ('signature_requested', 'Signature Requested / طلب التوقيع'),
-                ('signed', 'Signed / موقّع'),
-                ('returned', 'Returned / مرجعة'),
-                ('lost', 'Lost / مفقودة'),
-                ('damaged', 'Damaged / تالفة'),
-                ('cancelled', 'Cancelled / ملغاة'),
-                ('superseded', 'Superseded / مستبدلة')
+                ('draft', 'Draft'),
+                ('generated', 'Generated'),
+                ('signature_requested', 'Signature Requested'),
+                ('signed', 'Signed'),
+                ('returned', 'Returned'),
+                ('lost', 'Lost'),
+                ('damaged', 'Damaged'),
+                ('cancelled', 'Cancelled'),
+                ('superseded', 'Superseded')
             ]</field>
             <field name="readonly" eval="True"/>
             <field name="index" eval="True"/>
@@ -422,10 +422,10 @@
             <field name="field_description">Clearance Status</field>
             <field name="ttype">selection</field>
             <field name="selection">[
-                ('not_required', 'Not Required / غير مطلوب'),
-                ('pending', 'Pending / قيد الانتظار'),
-                ('blocked', 'Blocked / محجوب'),
-                ('cleared', 'Cleared / مخلى')
+                ('not_required', 'Not Required'),
+                ('pending', 'Pending'),
+                ('blocked', 'Blocked'),
+                ('cleared', 'Cleared')
             ]</field>
             <field name="readonly" eval="True"/>
         </record>

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~19.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-30 13:20+0000\n"
-"PO-Revision-Date: 2026-05-30 13:20+0000\n"
+"POT-Creation-Date: 2026-05-30 13:48+0000\n"
+"PO-Revision-Date: 2026-05-30 13:48+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -93,7 +93,8 @@ msgstr ""
 msgid ""
 "<strong>Responsibility:</strong> The card is a personal custody item and "
 "shall be used for official purposes only."
-msgstr "<strong>المسؤولية:</strong> البطاقة عهدة شخصية وتستخدم للأغراض الرسمية فقط."
+msgstr ""
+"<strong>المسؤولية:</strong> البطاقة عهدة شخصية وتستخدم للأغراض الرسمية فقط."
 
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.mcep_employee_report_header
@@ -248,7 +249,9 @@ msgstr "العهد والممتلكات"
 msgid ""
 "Custody records track company property issued to the employee. Company ID "
 "card custody uses the employee Identification tab as the card source."
-msgstr "تسجل العهد ممتلكات الشركة المسلمة للموظف. تستخدم عهدة بطاقة الشركة تبويب الهوية لدى الموظف كمصدر لبيانات البطاقة."
+msgstr ""
+"تسجل العهد ممتلكات الشركة المسلمة للموظف. تستخدم عهدة بطاقة الشركة تبويب "
+"الهوية لدى الموظف كمصدر لبيانات البطاقة."
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_name
@@ -945,7 +948,9 @@ msgstr "مستند الهوية المختار"
 msgid ""
 "Selected company ID card record from the employee Identification tab. Used "
 "as the source for F-0011 company ID custody receipt values."
-msgstr "سجل بطاقة الشركة المحدد من تبويب الهوية لدى الموظف. يستخدم كمصدر لقيم نموذج استلام بطاقة الشركة F-0011."
+msgstr ""
+"سجل بطاقة الشركة المحدد من تبويب الهوية لدى الموظف. يستخدم كمصدر لقيم نموذج "
+"استلام بطاقة الشركة F-0011."
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,help:hr_employment_custom.field_x_hr_employee_declaration__x_selected_identification_document_id
@@ -1095,7 +1100,9 @@ msgstr ""
 msgid ""
 "Use the employee company ID card record from the Identification tab as the "
 "source for this custody type."
-msgstr "استخدم سجل بطاقة الشركة من تبويب الهوية لدى الموظف كمصدر لهذا النوع من العهدة."
+msgstr ""
+"استخدم سجل بطاقة الشركة من تبويب الهوية لدى الموظف كمصدر لهذا النوع من "
+"العهدة."
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_uses_company_id_document
@@ -1685,3 +1692,64 @@ msgid ""
 "الاحتفاظ بها، فتحها، نقلها إلى أي جهة غير مخولة، أو تسليمها أو التعامل معها "
 "خارج مسار الاستلام والتسليم الرسمي المعتمد."
 msgstr ""
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7159_028a1e9d
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7176_fb29f857
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7156_f25de50f
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7172_215e57da
+msgid "Generated"
+msgstr "منشأ"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7153_bf194423
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7170_6f31c9a7
+msgid "Signature Requested"
+msgstr "طلب التوقيع"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7160_a7a5306f
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7178_f4e4beeb
+msgid "Signed"
+msgstr "موقّع"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7158_471125eb
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7175_6c244784
+msgid "Cancelled"
+msgstr "ملغاة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7155_53bba1ca
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7171_e6469e09
+msgid "Superseded"
+msgstr "مستبدلة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7157_8410cd7b
+msgid "Rejected"
+msgstr "مرفوضة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7154_516a061c
+msgid "Blocked"
+msgstr "محجوبة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7173_955f1b43
+msgid "Returned"
+msgstr "مرجعة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7174_0ec61614
+msgid "Lost"
+msgstr "مفقودة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7177_4e43e220
+msgid "Damaged"
+msgstr "تالفة"
