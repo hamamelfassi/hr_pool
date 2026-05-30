@@ -196,6 +196,7 @@
                         invisible="not x_sign_certificate_attachment_id"/>
                 </header>
                 <sheet>
+                    <!-- MCEP training action rows start -->
                     <div class="mb-2">
                         <button name="%(action_employee_training_generate_f0008_pdf)d"
                             type="action"
@@ -212,6 +213,8 @@
                             string="Sync"
                             class="btn btn-secondary"
                             invisible="not x_pdf_attachment_id and not x_sign_request_res_id"/>
+                    </div>
+                    <div class="mb-2">
                         <button name="%(action_employee_training_mark_breached)d"
                             type="action"
                             string="Mark Breached"
@@ -227,7 +230,8 @@
                             string="Mark Cancelled"
                             class="btn btn-secondary"
                             invisible="x_commitment_state == 'cancelled'"/>
-                        <span class="mx-1"/>
+                    </div>
+                    <div class="mb-2">
                         <button name="%(action_employee_training_set_in_training)d"
                             type="action"
                             string="Set In Training"
@@ -243,6 +247,11 @@
                             string="Set Incomplete"
                             class="btn btn-secondary"
                             invisible="x_participation_state not in ('allocated', 'in_training')"/>
+                    </div>
+                    <!-- MCEP training action rows end -->
+
+                    <div class="mb-2">
+                        <span class="mx-1"/>
                     </div>
 
                     
@@ -388,6 +397,7 @@
                         invisible="not x_sign_certificate_attachment_id"/>
                 </header>
                             <sheet>
+                    <!-- MCEP training action rows start -->
                     <div class="mb-2">
                         <button name="%(action_employee_training_generate_f0008_pdf)d"
                             type="action"
@@ -404,6 +414,8 @@
                             string="Sync"
                             class="btn btn-secondary"
                             invisible="not x_pdf_attachment_id and not x_sign_request_res_id"/>
+                    </div>
+                    <div class="mb-2">
                         <button name="%(action_employee_training_mark_breached)d"
                             type="action"
                             string="Mark Breached"
@@ -419,7 +431,8 @@
                             string="Mark Cancelled"
                             class="btn btn-secondary"
                             invisible="x_commitment_state == 'cancelled'"/>
-                        <span class="mx-1"/>
+                    </div>
+                    <div class="mb-2">
                         <button name="%(action_employee_training_set_in_training)d"
                             type="action"
                             string="Set In Training"
@@ -435,6 +448,11 @@
                             string="Set Incomplete"
                             class="btn btn-secondary"
                             invisible="x_participation_state not in ('allocated', 'in_training')"/>
+                    </div>
+                    <!-- MCEP training action rows end -->
+
+                    <div class="mb-2">
+                        <span class="mx-1"/>
                     </div>
 
                                 
