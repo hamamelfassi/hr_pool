@@ -6,24 +6,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~19.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-30 13:48+0000\n"
-"PO-Revision-Date: 2026-05-30 13:48+0000\n"
+"POT-Creation-Date: 2026-05-30 21:42+0000\n"
+"PO-Revision-Date: 2026-05-30 21:42+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"Language: ar_001\n"
 
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
-msgid "أشهر فقط من تاريخ الإصدار."
+msgid ") أشهر فقط من تاريخ الإصدار."
 msgstr ""
 
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
-msgid "كرسوم لإصدار بدل فاقد."
+msgid ") كرسوم لإصدار بدل فاقد."
 msgstr ""
 
 #. module: hr_employment_custom
@@ -119,8 +118,11 @@ msgstr ""
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_active
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission_type__x_active
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training__x_active
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_active
 msgid "Active"
-msgstr ""
+msgstr "نشط"
 
 #. module: hr_employment_custom
 #: model:ir.actions.act_window,name:hr_employment_custom.action_employee_custody_item_create
@@ -141,9 +143,16 @@ msgid "Add Identification"
 msgstr "إضافة هوية"
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
+msgid "Approval Metadata"
+msgstr "بيانات الاعتماد"
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
 msgid "Artifacts"
 msgstr "المرفقات الرسمية"
 
@@ -159,9 +168,26 @@ msgid "Behavior"
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_type_form
+msgid "Behavior Flags"
+msgstr "خصائص السلوك"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_is_breached
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7189_da9215b2
+msgid "Breached"
+msgstr "مخِلّ"
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_category
 msgid "Category"
 msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
+msgid "Certificate"
+msgstr "الشهادة"
 
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
@@ -186,8 +212,30 @@ msgstr "حالة إخلاء الطرف"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_code
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission_type__x_code
 msgid "Code"
-msgstr ""
+msgstr "الرمز"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_commitment_end_date
+msgid "Commitment End Date"
+msgstr "تاريخ نهاية التعهد"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_commitment_start_date
+msgid "Commitment Start Date"
+msgstr "تاريخ بداية التعهد"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_commitment_state
+msgid "Commitment State"
+msgstr "حالة التعهد"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
+msgid "Commitment and Recovery"
+msgstr "التعهد والاسترداد"
 
 #. module: hr_employment_custom
 #: model:x_hr.employee_custody_type,x_name:hr_employment_custom.employee_custody_type_company_id_card
@@ -215,6 +263,36 @@ msgid "Condition on Return"
 msgstr "الحالة عند الإرجاع"
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_course_form
+msgid "Cost and Recovery"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_name
+msgid "Course Label"
+msgstr "تسمية الدورة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_course_name
+msgid "Course Name"
+msgstr "اسم الدورة"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_form
+msgid "Courses"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_currency_label
+msgid "Currency Label"
+msgstr "تسمية العملة"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
+msgid "Custody"
+msgstr "العهود"
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
 msgid "Custody Details"
@@ -240,11 +318,6 @@ msgstr "حالة العهدة"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_name
 msgid "Custody Type"
 msgstr "نوع العهدة"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
-msgid "Custody and Assets"
-msgstr "العهد والممتلكات"
 
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
@@ -286,10 +359,21 @@ msgid "Default Validity Months"
 msgstr "مدة الصلاحية الافتراضية بالأشهر"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission_type__x_description
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_type_form
+msgid "Description"
+msgstr "الوصف"
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
 msgid "Description and Condition"
 msgstr "الوصف والحالة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_direct_manager_user_id
+msgid "Direct Manager User"
+msgstr "مستخدم المدير المباشر"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_attachment_id
@@ -317,6 +401,8 @@ msgstr "رقم المستند"
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_document_reference
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_document_reference
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_document_reference
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_document_reference
 msgid "Document Reference"
 msgstr "مرجع المستند"
 
@@ -335,12 +421,14 @@ msgstr ""
 #. module: hr_employment_custom
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_custody_download_generated_pdf
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_download_generated_pdf
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_permission_download_generated_pdf
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_download_generated_pdf
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
-#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_download_generated_pdf
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
 msgid "Download Generated PDF"
 msgstr "تنزيل ملف PDF المنشأ"
@@ -348,12 +436,14 @@ msgstr "تنزيل ملف PDF المنشأ"
 #. module: hr_employment_custom
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_custody_download_sign_certificate
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_download_sign_certificate
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_permission_download_sign_certificate
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_download_sign_certificate
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
-#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_download_sign_certificate
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
 msgid "Download Sign Certificate"
 msgstr "تنزيل شهادة التوقيع"
@@ -361,12 +451,14 @@ msgstr "تنزيل شهادة التوقيع"
 #. module: hr_employment_custom
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_custody_download_signed_pdf
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_download_signed_pdf
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_permission_download_signed_pdf
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_download_signed_pdf
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
-#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_download_signed_pdf
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
 msgid "Download Signed PDF"
 msgstr "تنزيل ملف PDF الموقع"
@@ -381,8 +473,15 @@ msgstr "تنزيل مرفق المصدر"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_employee_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_employee_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_employee_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_employee_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_employee_id
 msgid "Employee"
 msgstr "الموظف"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_course_form
+msgid "Employee Commitments"
+msgstr ""
 
 #. module: hr_employment_custom
 #: model:ir.model,name:hr_employment_custom.model_x_hr_employee_custody_item
@@ -470,6 +569,77 @@ msgid "Employee Identification: Normalize and Log on Update"
 msgstr "هوية الموظف: ضبط الاسم والتسجيل عند التحديث"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_employee_notes
+msgid "Employee Notes"
+msgstr "ملاحظات الموظف"
+
+#. module: hr_employment_custom
+#: model:ir.model,name:hr_employment_custom.model_x_hr_employee_permission
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
+msgid "Employee Permission"
+msgstr "إذن موظف"
+
+#. module: hr_employment_custom
+#: model:ir.actions.report,name:hr_employment_custom.action_report_mcep_employee_permission
+msgid "Employee Permission Form"
+msgstr "نموذج إذن موظف"
+
+#. module: hr_employment_custom
+#: model:ir.model,name:hr_employment_custom.model_x_hr_employee_permission_type
+msgid "Employee Permission Type"
+msgstr "نوع إذن الموظف"
+
+#. module: hr_employment_custom
+#: model:ir.actions.act_window,name:hr_employment_custom.action_employee_permission_types
+msgid "Employee Permission Types"
+msgstr "أنواع أذونات الموظفين"
+
+#. module: hr_employment_custom
+#: model:base.automation,name:hr_employment_custom.automation_employee_permission_normalize_on_create
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_permission_normalize_on_create
+msgid "Employee Permission: Normalize on Create"
+msgstr "إذن الموظف: تهيئة عند الإنشاء"
+
+#. module: hr_employment_custom
+#: model:base.automation,name:hr_employment_custom.automation_employee_permission_normalize_on_write
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_permission_normalize_on_write
+msgid "Employee Permission: Normalize on Update"
+msgstr "إذن الموظف: تهيئة عند التحديث"
+
+#. module: hr_employment_custom
+#: model:ir.actions.act_window,name:hr_employment_custom.action_employee_permissions
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_list
+msgid "Employee Permissions"
+msgstr "أذونات الموظفين"
+
+#. module: hr_employment_custom
+#: model:ir.model,name:hr_employment_custom.model_x_hr_employee_training_commitment
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
+msgid "Employee Training Commitment"
+msgstr "تعهد تدريب الموظف"
+
+#. module: hr_employment_custom
+#: model:base.automation,name:hr_employment_custom.automation_employee_training_commitment_normalize_on_create
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_commitment_normalize_on_create
+msgid "Employee Training Commitment: Normalize on Create"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model:base.automation,name:hr_employment_custom.automation_employee_training_commitment_normalize_on_write
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_commitment_normalize_on_write
+msgid "Employee Training Commitment: Normalize on Update"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model:ir.actions.act_window,name:hr_employment_custom.action_employee_training_commitments
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_participant_commitment_ids
+#: model:ir.ui.menu,name:hr_employment_custom.menu_hr_employee_training_commitments
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_list
+msgid "Employee Training Commitments"
+msgstr "تعهدات تدريب الموظفين"
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
 msgid ""
 "Employee declarations are controlled process records. The PDF and Sign "
@@ -480,6 +650,25 @@ msgstr ""
 "إقرارات الموظف هي سجلات عملية مضبوطة. ستتم إضافة دورة ملف PDF والتوقيع في "
 "شرائح لاحقة من Pass 15. يجب أن تقرأ ملفات الإقرار من حقول الموظف الأصلية "
 "ومستند الهوية المختار بدلاً من تكرار لقطات بيانات الموظف."
+
+#. module: hr_employment_custom
+#: model:x_hr.employee_permission_type,x_description:hr_employment_custom.employee_permission_type_lateness_permission
+msgid "Employee lateness permission form."
+msgstr "نموذج إذن تأخير للموظف."
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
+msgid ""
+"Employee permissions cover F-0014 Exit Permission and F-0015 Lateness "
+"Permission. PDF generation and three-role Odoo Sign lifecycle are handled on"
+" this permission record."
+msgstr "تغطي أذونات الموظفين نموذج F-0014 إذن الخروج ونموذج F-0015 إذن التأخير. تتم إدارة توليد ملف PDF ودورة توقيع أودو بثلاثة أدوار من خلال سجل الإذن هذا."
+
+#. module: hr_employment_custom
+#: model:x_hr.employee_permission_type,x_description:hr_employment_custom.employee_permission_type_exit_permission
+msgid "Employee temporary exit permission form."
+msgstr "نموذج إذن خروج مؤقت للموظف."
 
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
@@ -495,6 +684,12 @@ msgid "Exclusive Work and Non-Duplication Declaration"
 msgstr "إقرار العمل الحصري وعدم الازدواجية"
 
 #. module: hr_employment_custom
+#: model:x_hr.employee_permission_type,x_form_title:hr_employment_custom.employee_permission_type_exit_permission
+#: model:x_hr.employee_permission_type,x_name:hr_employment_custom.employee_permission_type_exit_permission
+msgid "Exit Permission"
+msgstr "إذن خروج"
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_expected_return_on
 msgid "Expected Return On"
 msgstr "تاريخ الإرجاع المتوقع"
@@ -508,6 +703,11 @@ msgstr "تاريخ الانتهاء"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_expiry_status
 msgid "Expiry Status"
 msgstr "حالة الصلاحية"
+
+#. module: hr_employment_custom
+#: model:ir.actions.report,name:hr_employment_custom.action_report_mcep_employee_training_f0008_commitment
+msgid "F-0008 Training Commitment Undertaking"
+msgstr ""
 
 #. module: hr_employment_custom
 #: model:ir.actions.report,name:hr_employment_custom.action_report_mcep_employee_f0010_exclusive_work
@@ -563,8 +763,19 @@ msgstr ""
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_form_code
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission_type__x_form_code
 msgid "Form Code"
 msgstr "رمز النموذج"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_state
+msgid "Form Lifecycle State"
+msgstr "حالة دورة النموذج"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission_type__x_form_title
+msgid "Form Title"
+msgstr "عنوان النموذج"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_future_native_link_model
@@ -583,8 +794,14 @@ msgstr "وظيفة الحوكمة"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_grc_functional_area_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training__x_functional_area_id
 msgid "GRC Functional Area"
 msgstr "المجال الوظيفي للحوكمة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_function_ids
+msgid "GRC Functions"
+msgstr ""
 
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
@@ -595,12 +812,15 @@ msgstr "روابط الحوكمة"
 #. module: hr_employment_custom
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_custody_generate_f0011_pdf
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_generate_pdf
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_permission_generate_pdf
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_generate_f0008_pdf
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
-#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_generate_f0008_pdf
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
 msgid "Generate PDF"
 msgstr "توليد ملف PDF"
@@ -608,16 +828,18 @@ msgstr "توليد ملف PDF"
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_generated_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_generated_on
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_generated_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_generated_on
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 msgid "Generated On"
 msgstr "تاريخ الإنشاء"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_pdf_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_pdf_attachment_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_pdf_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_pdf_attachment_id
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
 msgid "Generated PDF"
 msgstr "ملف PDF المنشأ"
 
@@ -630,6 +852,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_hr_responsible_id
 msgid "HR Responsible User"
 msgstr ""
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_hr_user_id
+msgid "HR User"
+msgstr "مستخدم الموارد البشرية"
 
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
@@ -719,6 +946,14 @@ msgid ""
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid ""
+"I, the undersigned, as an employee of Marsellia Cleaning and Environmental "
+"Protection Company, confirm that I have read and agreed to the following "
+"terms and conditions related to the above-mentioned training course."
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
 msgid ""
 "I, the undersigned, hereby acknowledge that I have reviewed and understood "
@@ -783,43 +1018,68 @@ msgid "LYD"
 msgstr ""
 
 #. module: hr_employment_custom
+#: model:x_hr.employee_permission_type,x_form_title:hr_employment_custom.employee_permission_type_lateness_permission
+#: model:x_hr.employee_permission_type,x_name:hr_employment_custom.employee_permission_type_lateness_permission
+msgid "Lateness Permission"
+msgstr "إذن تأخير"
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
 msgid "Lifecycle Artifacts"
 msgstr "المرفقات الرسمية"
 
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
 msgid "Manual Decision"
 msgstr "القرار اليدوي"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_manual_decision_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_manual_decision_attachment_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_manual_decision_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_manual_decision_attachment_id
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 msgid "Manual Decision Attachment"
 msgstr "مرفق القرار اليدوي"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_manual_decision_date
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_manual_decision_date
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_manual_decision_date
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_manual_decision_date
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 msgid "Manual Decision Date"
 msgstr "تاريخ القرار اليدوي"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_manual_decision_number
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_manual_decision_number
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_manual_decision_number
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_manual_decision_number
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 msgid "Manual Decision Number"
 msgstr "رقم القرار اليدوي"
+
+#. module: hr_employment_custom
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_mark_breached
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
+msgid "Mark Breached"
+msgstr "تسجيل إخلال"
+
+#. module: hr_employment_custom
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_mark_cancelled
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
+msgid "Mark Cancelled"
+msgstr "تسجيل إلغاء"
 
 #. module: hr_employment_custom
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_custody_mark_damaged
@@ -827,6 +1087,13 @@ msgstr "رقم القرار اليدوي"
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
 msgid "Mark Damaged"
 msgstr "تسجيل كتالفة"
+
+#. module: hr_employment_custom
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_mark_fulfilled
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
+msgid "Mark Fulfilled"
+msgstr "تسجيل استيفاء"
 
 #. module: hr_employment_custom
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_custody_mark_lost
@@ -857,12 +1124,29 @@ msgid ""
 msgstr ""
 
 #. module: hr_employment_custom
+#: model:ir.actions.act_window,name:hr_employment_custom.action_employee_permission_create
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
+msgid "New Permission"
+msgstr "إذن جديد"
+
+#. module: hr_employment_custom
+#: model:ir.actions.act_window,name:hr_employment_custom.action_employee_training_commitment_create
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
+msgid "New Training"
+msgstr "تدريب جديد"
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_notes
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_notes
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_notes
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_notes
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_notes
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission_type__x_notes
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_notes
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training__x_notes
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_notes
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_course_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_form
 msgid "Notes"
 msgstr "ملاحظات"
 
@@ -873,8 +1157,9 @@ msgstr "إقرار السلامة والصحة المهنية"
 
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
 msgid "Odoo Sign"
 msgstr "توقيع أودو"
 
@@ -886,11 +1171,72 @@ msgstr "تسمية عرض اختيارية، مثل: جواز سفر - اسم ا
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
 msgid "Ownership and Notes"
 msgstr "المسؤولية والملاحظات"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_participant_seats
+msgid "Participant Seats"
+msgstr "عدد المقاعد"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_participant_ids
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_course_form
+msgid "Participants"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_participation_state
+msgid "Participation State"
+msgstr "حالة المشاركة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_permission_date
+msgid "Permission Date"
+msgstr "تاريخ الإذن"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
+msgid "Permission Details"
+msgstr "تفاصيل الإذن"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_name
+msgid "Permission Label"
+msgstr "تسمية الإذن"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_permission_type_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission_type__x_name
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_type_form
+msgid "Permission Type"
+msgstr "نوع الإذن"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_type_list
+msgid "Permission Types"
+msgstr "أنواع الأذونات"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_hr_employee__x_permission_ids
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
+msgid "Permissions"
+msgstr "الأذونات"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
+msgid ""
+"Permissions record temporary exit and lateness authorizations for the "
+"employee. This first slice adds the controlled process surface only; PDF and"
+" Odoo Sign actions come next."
+msgstr ""
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,help:hr_employment_custom.field_x_hr_employee_declaration__x_hr_responsible_job_title
@@ -900,14 +1246,47 @@ msgid ""
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_course_form
+msgid "Provider and Schedule"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_quantity
 msgid "Quantity"
 msgstr "الكمية"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_reason
+msgid "Reason"
+msgstr "سبب الطلب"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_recovery_amount
+msgid "Recovery Amount"
+msgstr "مبلغ الاسترداد"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_recovery_amount_words
+msgid "Recovery Amount in Words"
+msgstr "مبلغ الاسترداد بالحروف"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_recovery_notes
+msgid "Recovery Notes"
+msgstr "ملاحظات الاسترداد"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_recovery_required_if_breached
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_recovery_required_if_breached
+msgid "Recovery Required if Breached"
+msgstr "الاسترداد مطلوب عند الإخلال"
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_reference_code
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_reference_code
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_reference_code
 msgid "Reference Code"
-msgstr ""
+msgstr "رمز المرجع"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_replacement_fee_amount
@@ -935,6 +1314,21 @@ msgid "Required by Role"
 msgstr "مطلوب حسب الدور"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission_type__x_requires_direct_manager_approval
+msgid "Requires Direct Manager Approval"
+msgstr "يتطلب اعتماد المدير المباشر"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission_type__x_requires_from_to_time
+msgid "Requires From/To Time"
+msgstr "يتطلب وقت من/إلى"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission_type__x_requires_hr_approval
+msgid "Requires HR Approval"
+msgstr "يتطلب اعتماد الموارد البشرية"
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_requires_identifier
 msgid "Requires Identifier"
 msgstr "يتطلب معرّفاً"
@@ -952,8 +1346,8 @@ msgstr "يتطلب التوقيع"
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_responsible_user_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_responsible_user_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_responsible_user_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_responsible_user_id
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 msgid "Responsible User"
 msgstr "المستخدم المسؤول"
 
@@ -963,11 +1357,35 @@ msgid "Returned On"
 msgstr "تاريخ الإرجاع"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_seat_cost_amount
+msgid "Seat Cost Amount"
+msgstr "تكلفة المقعد"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_seat_cost_amount_words
+msgid "Seat Cost Amount in Words"
+msgstr "تكلفة المقعد بالحروف"
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,help:hr_employment_custom.field_x_hr_employee_declaration__x_hr_responsible_id
 msgid ""
 "Second signer for F-0010 Exclusive Work Declaration. This is typically the "
 "HR Manager or equivalent responsible user."
 msgstr ""
+
+#. module: hr_employment_custom
+#: model:x_hr.employee_permission_type,x_notes:hr_employment_custom.employee_permission_type_exit_permission
+msgid ""
+"Seeded Pass 18C type for MCEP-HR-F-0014. Arabic translations should be "
+"applied later through the exported Odoo PO workflow."
+msgstr "نوع مضاف في Pass 18C للنموذج MCEP-HR-F-0014. تطبق الترجمة العربية عبر مسار الترجمة المصدرة من أودو."
+
+#. module: hr_employment_custom
+#: model:x_hr.employee_permission_type,x_notes:hr_employment_custom.employee_permission_type_lateness_permission
+msgid ""
+"Seeded Pass 18C type for MCEP-HR-F-0015. Arabic translations should be "
+"applied later through the exported Odoo PO workflow."
+msgstr "نوع مضاف في Pass 18C للنموذج MCEP-HR-F-0015. تطبق الترجمة العربية عبر مسار الترجمة المصدرة من أودو."
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_selected_identification_document_id
@@ -998,12 +1416,15 @@ msgstr ""
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_send_f0013_sign
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_send_f0021_sign
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_send_f0022_sign
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_permission_send_sign
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_send_f0008_sign
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
-#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_send_f0008_sign
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
 msgid "Send to Sign"
 msgstr "إرسال للتوقيع"
@@ -1011,8 +1432,8 @@ msgstr "إرسال للتوقيع"
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_sent_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sent_on
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_sent_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_sent_on
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 msgid "Sent On"
 msgstr "تاريخ الإرسال"
 
@@ -1022,58 +1443,94 @@ msgid "Serial Number"
 msgstr "الرقم التسلسلي"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_service_commitment_months
+msgid "Service Commitment Months"
+msgstr "مدة التعهد بالأشهر"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
+msgid "Set Complete"
+msgstr "تسجيل اكتمال التدريب"
+
+#. module: hr_employment_custom
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_set_in_training
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
+msgid "Set In Training"
+msgstr "بدء التدريب"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
+msgid "Set Incomplete"
+msgstr "تسجيل عدم اكتمال التدريب"
+
+#. module: hr_employment_custom
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_set_complete
+msgid "Set Training Complete"
+msgstr "تسجيل اكتمال التدريب"
+
+#. module: hr_employment_custom
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_set_incomplete
+msgid "Set Training Incomplete"
+msgstr "تسجيل عدم اكتمال التدريب"
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_sign_certificate_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sign_certificate_attachment_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_sign_certificate_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_sign_certificate_attachment_id
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 msgid "Sign Certificate"
 msgstr "شهادة التوقيع"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_sign_request_res_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sign_request_res_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_sign_request_res_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_sign_request_res_id
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 msgid "Sign Request ID"
 msgstr "معرف طلب التوقيع"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_sign_request_reference
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sign_request_reference
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_sign_request_reference
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_sign_request_reference
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 msgid "Sign Request Reference"
 msgstr "مرجع طلب التوقيع"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_sign_request_state
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sign_request_state
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_sign_request_state
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_sign_request_state
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 msgid "Sign Request State"
 msgstr "حالة طلب التوقيع"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_sign_request_url
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sign_request_url
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_sign_request_url
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_sign_request_url
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 msgid "Sign Request URL"
 msgstr "رابط طلب التوقيع"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_signed_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_signed_on
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_signed_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_signed_on
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 msgid "Signed On"
 msgstr "تاريخ التوقيع"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_signed_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_signed_attachment_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_signed_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_signed_attachment_id
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
 msgid "Signed PDF"
 msgstr "ملف PDF الموقع"
 
@@ -1105,17 +1562,31 @@ msgid "Source Values"
 msgstr "قيم المصدر"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_state
+msgid "State"
+msgstr "الحالة"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
+msgid "States"
+msgstr "الحالات"
+
+#. module: hr_employment_custom
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_custody_sync_f0011_sign
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_sync_f0010_sign
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_sync_f0013_sign
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_sync_f0021_sign
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_declaration_sync_f0022_sign
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_permission_sync_sign
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_sync_f0008_sign
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_declaration_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
-#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_sync_f0008_sign
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
 msgid "Sync"
 msgstr "مزامنة"
@@ -1140,6 +1611,112 @@ msgid ""
 msgstr ""
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_time_from
+msgid "Time From"
+msgstr "الوقت من"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_time_to
+msgid "Time To"
+msgstr "الوقت إلى"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_total_cost
+msgid "Total Cost"
+msgstr "إجمالي التكلفة"
+
+#. module: hr_employment_custom
+#: model:ir.ui.menu,name:hr_employment_custom.menu_hr_training_configuration_root
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
+msgid "Training"
+msgstr "التدريب"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_name
+msgid "Training Commitment Label"
+msgstr "تسمية تعهد التدريب"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "Training Commitment Undertaking"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_hr_employee__x_training_commitment_ids
+msgid "Training Commitments"
+msgstr "تعهدات التدريب"
+
+#. module: hr_employment_custom
+#: model:ir.model,name:hr_employment_custom.model_x_hr_training_course
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_training_course_id
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_course_form
+msgid "Training Course"
+msgstr "الدورة التدريبية"
+
+#. module: hr_employment_custom
+#: model:ir.actions.act_window,name:hr_employment_custom.action_hr_training_courses
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training__x_training_course_ids
+#: model:ir.ui.menu,name:hr_employment_custom.menu_hr_training_courses
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_course_list
+msgid "Training Courses"
+msgstr "الدورات التدريبية"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_training_end_date
+msgid "Training End Date"
+msgstr "تاريخ نهاية التدريب"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_training_location
+msgid "Training Location"
+msgstr "مكان التدريب"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_training_provider_id
+msgid "Training Provider"
+msgstr "جهة التدريب"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_training_start_date
+msgid "Training Start Date"
+msgstr "تاريخ بداية التدريب"
+
+#. module: hr_employment_custom
+#: model:ir.model,name:hr_employment_custom.model_x_hr_training
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_training_type_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training__x_name
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_course_training_type_id
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_form
+msgid "Training Type"
+msgstr "نوع التدريب"
+
+#. module: hr_employment_custom
+#: model:ir.actions.act_window,name:hr_employment_custom.action_hr_training_types
+#: model:ir.ui.menu,name:hr_employment_custom.menu_hr_training_types
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_list
+msgid "Training Types"
+msgstr "أنواع التدريب"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
+msgid ""
+"Training commitments are employee-specific F-0008 process records. PDF and "
+"Sign lifecycle will be added in later Pass 17 slices."
+msgstr ""
+"تعهدات التدريب هي سجلات عملية خاصة بالموظف لنموذج F-0008. تتم إدارة دورة ملف"
+" PDF والتوقيع ضمن شرائح Pass 17."
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
+msgid ""
+"Training commitments record employee participation in approved training "
+"courses and prepare the F-0008 undertaking lifecycle."
+msgstr ""
+"تسجل تعهدات التدريب مشاركة الموظف في الدورات التدريبية المعتمدة وتجهز دورة "
+"تعهد F-0008."
+
+#. module: hr_employment_custom
 #: model:ir.model.fields,help:hr_employment_custom.field_x_hr_employee_identification_document__x_document_image
 msgid ""
 "Upload an image scan/photo of the identification document. Source "
@@ -1147,6 +1724,14 @@ msgid ""
 msgstr ""
 "ارفع صورة أو نسخة ممسوحة ضوئيًا من مستند الهوية. تبقى مرفقات المصدر القادمة "
 "من التوظيف متتبعة بشكل منفصل."
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,help:hr_employment_custom.field_x_hr_employee_permission__x_time_from
+#: model:ir.model.fields,help:hr_employment_custom.field_x_hr_employee_permission__x_time_to
+msgid ""
+"Use HH:MM format until native attendance/time integration is explicitly "
+"scoped."
+msgstr ""
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,help:hr_employment_custom.field_x_hr_employee_custody_type__x_uses_company_id_document
@@ -1163,6 +1748,12 @@ msgid "Uses Company ID Document"
 msgstr "يستخدم مستند بطاقة الشركة"
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
+msgid "Workflow and Artifacts"
+msgstr "سير العمل والمرفقات"
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
 msgid "as a replacement fee."
 msgstr ""
@@ -1175,6 +1766,16 @@ msgstr ""
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
 msgid "months only from the date of issue."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "only"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "years"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -1211,6 +1812,14 @@ msgstr ""
 msgid ""
 "أقر أنا الموظف المذكور أعلاه بأنني قد استلمت البطاقة التعريفية الخاصة بي، "
 "وأحيط علمًا بالآتي:"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid ""
+"أقر أنا الموقع أدناه، بصفتي موظفًا لدى شركة مرسيليا للنظافة وحماية البيئة، "
+"بأني قد اطلعت ووافقت على الشروط والأحكام التالية المتعلقة بالدورة التدريبية "
+"المذكورة أعلاه:"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -1280,6 +1889,13 @@ msgid ""
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_permission_document
+msgid ""
+"أولًا: المعلومات الشخصية\n"
+"                        <span class=\"mcep-permission-en\">Personal Information</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
 msgid ""
@@ -1292,6 +1908,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
 msgid ""
 "أولًا: بيانات الموظف <span class=\"mcep-emp-en\">Employee Information</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid ""
+"أولًا: بيانات الموظف <span class=\"mcep-f0008-en\">Employee "
+"Information</span>"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -1338,8 +1961,29 @@ msgid "إقرار العمل الحصري وعدم الازدواج"
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_permission_document
+msgid ""
+"إلى:\n"
+"                                <span class=\"mcep-permission-en\">To:</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid ""
+"استرداد التكلفة: في حال رغبتي في الاستقالة أو ترك العمل قبل إتمام مدة السنتين، ألتزم برد إجمالي تكاليف الدورة التدريبية للشركة، وتعتبر هذه المبالغ دينًا مستحقًا في ذمتي.\n"
+"                                <span class=\"mcep-f0008-enline\"> Cost Reimbursement: If I resign or leave before completing the period, I will reimburse the full training cost.</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
 msgid "استلام البطاقة التعريفية"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid ""
+"استلام الشهادة: ألتزم بتسليم نسخة أصلية أو طبق الأصل من شهادة اجتياز الدورة لإدارة الموارد البشرية فور صدورها لتوثيقها في ملفي الوظيفي.\n"
+"                                <span class=\"mcep-f0008-enline\"> Certificate Submission: I commit to submitting the original or true copy of the completion certificate to HR upon issuance.</span>"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -1347,6 +1991,11 @@ msgstr ""
 msgid ""
 "استلام المخلفات البشرية رسميًا من الموظفين المخولين وتوثيقها في السجلات "
 "المعتمدة."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "اسم الدورة<br/><span class=\"mcep-f0008-en\">Course Title</span>"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -1360,9 +2009,33 @@ msgid "اسم الموظف<br/><span class=\"mcep-emp-en\">Full Name</span>"
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "اسم الموظف<br/><span class=\"mcep-f0008-en\">Employee Name</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
 msgid "اسم الموظف<br/><span class=\"mcep-f0011-en\">Employee Name</span>"
 msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_permission_document
+msgid ""
+"اعتماد المدير المباشر\n"
+"                                <span class=\"mcep-permission-en\">Direct Manager Approval</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid ""
+"الإجراءات القانونية: للشركة الحق في استقطاع هذه التكلفة من مستحقاتي النهائية، وإذا لم تغط المستحقات هذه القيمة، يحق للشركة المطالبة بالمبلغ أمام الجهات المختصة.\n"
+"                                <span class=\"mcep-f0008-enline\"> Legal Action: The company may deduct the cost from final entitlements or pursue recovery through competent authorities.</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_permission_document
+msgid "الإسم<br/><span class=\"mcep-permission-en\">Name</span>"
+msgstr "الإسم<br/><span class=\"mcep-permission-en\">Name</span>"
 
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
@@ -1371,9 +2044,19 @@ msgid "الاسم الكامل<br/><span class=\"mcep-emp-en\">Full Name</span>"
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "الاسم الكامل<br/><span class=\"mcep-f0008-en\">Full Name</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
 msgid "الاسم الكامل<br/><span class=\"mcep-f0011-en\">Full Name</span>"
 msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_permission_document
+msgid "الاسم الكامل<br/><span class=\"mcep-permission-en\">Full Name</span>"
+msgstr "الاسم الكامل<br/><span class=\"mcep-permission-en\">Full Name</span>"
 
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
@@ -1392,6 +2075,11 @@ msgstr ""
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
 msgid "البريد الإلكتروني<br/><span class=\"mcep-emp-en\">Email</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "البصمة<br/><span class=\"mcep-f0008-en\">Thumbprint</span>"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -1415,14 +2103,29 @@ msgid "التاريخ<br/><span class=\"mcep-emp-en\">Date</span>"
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "التاريخ<br/><span class=\"mcep-f0008-en\">Date</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
 msgid "التاريخ<br/><span class=\"mcep-f0011-en\">Date</span>"
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_permission_document
+msgid "التاريخ<br/><span class=\"mcep-permission-en\">Date</span>"
+msgstr "التاريخ<br/><span class=\"mcep-permission-en\">Date</span>"
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
 msgid ""
 "التعامل مع المخلفات البشرية باعتبارها مخلفات بيولوجية خطرة تتطلب عناية خاصة."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "التكلفة بالحروف<br/><span class=\"mcep-f0008-en\">Cost in Words</span>"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -1438,8 +2141,30 @@ msgid "التوقيع<br/><span class=\"mcep-emp-en\">Signature</span>"
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "التوقيع<br/><span class=\"mcep-f0008-en\">Signature</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
 msgid "التوقيع<br/><span class=\"mcep-f0011-en\">Signature</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_permission_document
+msgid "التوقيع<br/><span class=\"mcep-permission-en\">Signature</span>"
+msgstr "التوقيع<br/><span class=\"mcep-permission-en\">Signature</span>"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "الجهة المنظمة<br/><span class=\"mcep-f0008-en\">Training Provider</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid ""
+"الحضور والالتزام: ألتزم بالحضور الكامل لجميع ساعات الدورة التدريبية وفي المواعيد المحددة، والقيام بكافة المتطلبات اللازمة لاجتيازها بنجاح.\n"
+"                                <span class=\"mcep-f0008-enline\"> Attendance and Commitment: I commit to full attendance and to fulfilling all requirements to successfully complete the course.</span>"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -1460,9 +2185,24 @@ msgid "الرقم الوظيفي<br/><span class=\"mcep-emp-en\">Job No.</span>"
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "الرقم الوظيفي<br/><span class=\"mcep-f0008-en\">Employee ID</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
 msgid "الرقم الوظيفي<br/><span class=\"mcep-f0011-en\">Employee ID</span>"
 msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_permission_document
+msgid "الرقم الوظيفي<br/><span class=\"mcep-permission-en\">Employee ID</span>"
+msgstr "الرقم الوظيفي<br/><span class=\"mcep-permission-en\">Employee ID</span>"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_permission_document
+msgid "الفترة الزمنية<br/><span class=\"mcep-permission-en\">Time Period</span>"
+msgstr "الفترة الزمنية<br/><span class=\"mcep-permission-en\">Time Period</span>"
 
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
@@ -1471,9 +2211,19 @@ msgid "القسم / الإدارة<br/><span class=\"mcep-emp-en\">Department</s
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "القسم / الإدارة<br/><span class=\"mcep-f0008-en\">Department</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
 msgid "القسم / الإدارة<br/><span class=\"mcep-f0011-en\">Department</span>"
 msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_permission_document
+msgid "القسم / الإدارة<br/><span class=\"mcep-permission-en\">Department</span>"
+msgstr "القسم / الإدارة<br/><span class=\"mcep-permission-en\">Department</span>"
 
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0013_occupational_safety_document
@@ -1506,13 +2256,30 @@ msgid "المسمى الوظيفي<br/><span class=\"mcep-emp-en\">Job Title</sp
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "المسمى الوظيفي<br/><span class=\"mcep-f0008-en\">Job Title</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
 msgid "المسمى الوظيفي<br/><span class=\"mcep-f0011-en\">Job Title</span>"
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_permission_document
+msgid "المسمى الوظيفي<br/><span class=\"mcep-permission-en\">Job Title</span>"
+msgstr "المسمى الوظيفي<br/><span class=\"mcep-permission-en\">Job Title</span>"
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
 msgid "المشرف:"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_permission_document
+msgid ""
+"الموارد البشرية\n"
+"                                <span class=\"mcep-permission-en\">HR Approval</span>"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -1531,6 +2298,11 @@ msgstr ""
 msgid ""
 "انتهاء الصلاحية: يجب مراجعة مكتب الدعاية والإعلام لتجديد البطاقة قبل انتهاء "
 "مدتها."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "بداية التدريب<br/><span class=\"mcep-f0008-en\">Start Date</span>"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -1585,13 +2357,30 @@ msgid "تعهد استلام ونقل المخلفات البشرية"
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "تعهد دورة تدريبية"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0022_human_waste_storage_supervisor_document
 msgid "تعهد مشرف استلام وتخزين المخلفات البشرية"
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "تكلفة الدورة<br/><span class=\"mcep-f0008-en\">Training Cost</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0021_human_waste_handling_document
 msgid "توثيق عملية الاستلام في السجلات الرسمية المعتمدة بالشركة."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_permission_document
+msgid ""
+"توقيع الموظف\n"
+"                                <span class=\"mcep-permission-en\">Employee Signature</span>"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -1618,6 +2407,19 @@ msgid ""
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_permission_document
+msgid ""
+"ثالثًا: سبب الطلب\n"
+"                        <span class=\"mcep-permission-en\">Reason for Request</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid ""
+"ثالثًا: نص التعهد <span class=\"mcep-f0008-en\">Undertaking Statement</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
 msgid ""
 "ثانيًا: إقرار الموظف <span class=\"mcep-f0011-en\">Employee "
@@ -1627,6 +2429,20 @@ msgstr ""
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
 msgid "ثانيًا: التوقيعات <span class=\"mcep-emp-en\">Signatures</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid ""
+"ثانيًا: بيانات الدورة التدريبية <span class=\"mcep-f0008-en\">Training "
+"Course Details</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_permission_document
+msgid ""
+"ثانيًا: تفاصيل الإذن\n"
+"                        <span class=\"mcep-permission-en\">Permission Details</span>"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -1649,8 +2465,26 @@ msgid ""
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid ""
+"رابعًا: توقيع الموظف <span class=\"mcep-f0008-en\">Employee Signature</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_permission_document
+msgid ""
+"رابعًا: توقيعات\n"
+"                        <span class=\"mcep-permission-en\">Signatures</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
 msgid "رقم البطاقة<br/><span class=\"mcep-f0011-en\">Card No.</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "شهر /"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -1671,9 +2505,26 @@ msgid ""
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid ""
+"فترة الاستمرارية: أتعهد بالاستمرار في العمل لدى الشركة لمدة لا تقل عن سنتين ميلاديتين تبدأ من تاريخ الحصول على الشهادة، تقديرًا لاستثمار الشركة في تطوير مهاراتي.\n"
+"                                <span class=\"mcep-f0008-enline\"> Service Commitment: I undertake to remain employed for at least two calendar years from obtaining the certificate.</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "فترة الالتزام<br/><span class=\"mcep-f0008-en\">Service Commitment</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_custody_f0011_company_id_receipt_document
 msgid ""
 "فقدان البطاقة: في حال ضياع أو إتلاف البطاقة، يلتزم الموظف بدفع مبلغ وقدره ("
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "فقط"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -1720,6 +2571,18 @@ msgid "مكان الإصدار<br/><span class=\"mcep-f0011-en\">Issue Place</sp
 msgstr ""
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "مكان التدريب<br/><span class=\"mcep-f0008-en\">Location</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_permission_document
+msgid ""
+"من:\n"
+"                                <span class=\"mcep-permission-en\">From:</span>"
+msgstr ""
+
+#. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_f0010_exclusive_work_document
 msgid "نص الإقرار"
 msgstr ""
@@ -1729,6 +2592,16 @@ msgstr ""
 msgid ""
 "نقل المخلفات مباشرة وبشكل آمن إلى مخزن التجميد المعتمد بموقع الشركة دون أي "
 "تأخير."
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "نهاية التدريب<br/><span class=\"mcep-f0008-en\">End Date</span>"
+msgstr ""
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.report_mcep_employee_training_f0008_commitment_document
+msgid "نوع التدريب<br/><span class=\"mcep-f0008-en\">Training Type</span>"
 msgstr ""
 
 #. module: hr_employment_custom
@@ -1747,352 +2620,77 @@ msgid ""
 msgstr ""
 
 #. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.ui.menu,name:hr_employment_custom.menu_hr_training_configuration_root
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Training"
-msgstr "التدريب"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.actions.act_window,name:hr_employment_custom.action_employee_training_commitment_create
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "New Training"
-msgstr "تدريب جديد"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.model,name:hr_employment_custom.model_x_hr_training
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_training_type_id
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_course_training_type_id
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_form
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Training Type"
-msgstr "نوع التدريب"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.actions.act_window,name:hr_employment_custom.action_hr_training_types
-#: model:ir.ui.menu,name:hr_employment_custom.menu_hr_training_types
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_list
-msgid "Training Types"
-msgstr "أنواع التدريب"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.model,name:hr_employment_custom.model_x_hr_training_course
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_training_course_id
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_course_form
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Training Course"
-msgstr "الدورة التدريبية"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.actions.act_window,name:hr_employment_custom.action_hr_training_courses
-#: model:ir.ui.menu,name:hr_employment_custom.menu_hr_training_courses
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_course_list
-msgid "Training Courses"
-msgstr "الدورات التدريبية"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.model,name:hr_employment_custom.model_x_hr_employee_training_commitment
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Employee Training Commitment"
-msgstr "تعهد تدريب الموظف"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.actions.act_window,name:hr_employment_custom.action_employee_training_commitments
-#: model:ir.ui.menu,name:hr_employment_custom.menu_hr_employee_training_commitments
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_participant_commitment_ids
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_list
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_course_form
-msgid "Employee Training Commitments"
-msgstr "تعهدات تدريب الموظفين"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_name
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Training Commitment Label"
-msgstr "تسمية تعهد التدريب"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_mark_breached
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Mark Breached"
-msgstr "تسجيل إخلال"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_mark_fulfilled
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Mark Fulfilled"
-msgstr "تسجيل استيفاء"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_mark_cancelled
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Mark Cancelled"
-msgstr "تسجيل إلغاء"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_set_in_training
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Set In Training"
-msgstr "بدء التدريب"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_set_complete
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Set Complete"
-msgstr "تسجيل اكتمال التدريب"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.actions.server,name:hr_employment_custom.action_employee_training_set_incomplete
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Set Incomplete"
-msgstr "تسجيل عدم اكتمال التدريب"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_state
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Form Lifecycle State"
-msgstr "حالة دورة النموذج"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_commitment_state
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Commitment State"
-msgstr "حالة التعهد"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_participation_state
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Participation State"
-msgstr "حالة المشاركة"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_course_name
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_course_form
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_course_list
-msgid "Course Name"
-msgstr "اسم الدورة"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_training_provider_id
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_course_form
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_course_list
-msgid "Training Provider"
-msgstr "جهة التدريب"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_training_location
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_course_form
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_course_list
-msgid "Training Location"
-msgstr "مكان التدريب"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_training_start_date
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_course_form
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_course_list
-msgid "Training Start Date"
-msgstr "تاريخ بداية التدريب"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_training_end_date
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_course_form
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_course_list
-msgid "Training End Date"
-msgstr "تاريخ نهاية التدريب"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_service_commitment_months
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Service Commitment Months"
-msgstr "مدة التعهد بالأشهر"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_commitment_start_date
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Commitment Start Date"
-msgstr "تاريخ بداية التعهد"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_commitment_end_date
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Commitment End Date"
-msgstr "تاريخ نهاية التعهد"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_recovery_amount
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Recovery Amount"
-msgstr "مبلغ الاسترداد"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_recovery_amount_words
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Recovery Amount in Words"
-msgstr "مبلغ الاسترداد بالحروف"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_recovery_required_if_breached
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_recovery_required_if_breached
-msgid "Recovery Required if Breached"
-msgstr "الاسترداد مطلوب عند الإخلال"
-
-#. module: hr_employment_custom
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_name
-msgid "Course Label"
-msgstr "تسمية الدورة"
-
-#. module: hr_employment_custom
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_participant_seats
-msgid "Participant Seats"
-msgstr "عدد المقاعد"
-
-#. module: hr_employment_custom
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_seat_cost_amount
-msgid "Seat Cost Amount"
-msgstr "تكلفة المقعد"
-
-#. module: hr_employment_custom
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_seat_cost_amount_words
-msgid "Seat Cost Amount in Words"
-msgstr "تكلفة المقعد بالحروف"
-
-#. module: hr_employment_custom
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_total_cost
-msgid "Total Cost"
-msgstr "إجمالي التكلفة"
-
-#. module: hr_employment_custom
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_currency_label
-msgid "Currency Label"
-msgstr "تسمية العملة"
-
-#. module: hr_employment_custom
-#: model:ir.model.fields,field_description:hr_employment_custom.field_hr_employee__x_training_commitment_ids
-msgid "Training Commitments"
-msgstr "تعهدات التدريب"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "States"
-msgstr "الحالات"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Commitment and Recovery"
-msgstr "التعهد والاسترداد"
-
-#. module: hr_employment_custom
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_is_breached
-#: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_training_commitment__x_commitment_state__breached
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Breached"
-msgstr "تم الإخلال"
-
-#. module: hr_employment_custom
-#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_recovery_notes
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Recovery Notes"
-msgstr "ملاحظات الاسترداد"
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Training commitments record employee participation in approved training courses and prepare the F-0008 undertaking lifecycle."
-msgstr "تسجل تعهدات التدريب مشاركة الموظف في الدورات التدريبية المعتمدة وتجهز دورة تعهد F-0008."
-
-#. module: hr_employment_custom
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_training_commitment_form
-#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
-msgid "Training commitments are employee-specific F-0008 process records. PDF and Sign lifecycle will be added in later Pass 17 slices."
-msgstr "تعهدات التدريب هي سجلات عملية خاصة بالموظف لنموذج F-0008. تتم إدارة دورة ملف PDF والتوقيع ضمن شرائح Pass 17."
-
-#. module: hr_employment_custom
-#: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_training_commitment__x_state__draft
+#: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_permission__x_state__draft
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7197_ee2fc578
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7184_5774b8cb
 msgid "Draft"
 msgstr "مسودة"
 
 #. module: hr_employment_custom
-#: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_training_commitment__x_state__generated
+#: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_permission__x_state__generated
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7201_93bb9b2e
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7185_8342d78f
 msgid "Generated"
 msgstr "منشأ"
 
 #. module: hr_employment_custom
-#: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_training_commitment__x_state__signature_requested
+#: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_permission__x_state__signature_requested
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7198_a46ce52a
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7187_afa46f6b
 msgid "Signature Requested"
 msgstr "طلب التوقيع"
 
 #. module: hr_employment_custom
-#: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_training_commitment__x_state__signed
+#: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_permission__x_state__signed
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7199_0213418f
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7186_0030efac
 msgid "Signed"
 msgstr "موقع"
 
 #. module: hr_employment_custom
-#: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_training_commitment__x_commitment_state__applied
-msgid "Applied"
-msgstr "مطبق"
-
-#. module: hr_employment_custom
-#: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_training_commitment__x_commitment_state__committed
-msgid "Committed"
-msgstr "ملتزم"
-
-#. module: hr_employment_custom
-#: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_training_commitment__x_commitment_state__fulfilled
-msgid "Fulfilled"
-msgstr "مستوفى"
-
-#. module: hr_employment_custom
-#: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_training_commitment__x_commitment_state__cancelled
+#: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_permission__x_state__cancelled
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7202_49a69e21
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7192_f580f754
 msgid "Cancelled"
 msgstr "ملغى"
 
 #. module: hr_employment_custom
-#: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_training_commitment__x_participation_state__allocated
+#: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_permission__x_state__superseded
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7200_70375510
+msgid "Superseded"
+msgstr "مستبدل"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7190_853a2cf6
+msgid "Applied"
+msgstr "مقدم"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7188_a4d055fb
+msgid "Committed"
+msgstr "ملتزم"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7191_3b523537
+msgid "Fulfilled"
+msgstr "مستوفى"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7193_5ab482fe
 msgid "Allocated"
 msgstr "مخصص"
 
 #. module: hr_employment_custom
-#: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_training_commitment__x_participation_state__in_training
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7196_c54400e2
 msgid "In Training"
 msgstr "قيد التدريب"
 
 #. module: hr_employment_custom
-#: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_training_commitment__x_participation_state__training_complete
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7194_49630f16
 msgid "Training Complete"
-msgstr "التدريب مكتمل"
+msgstr "مكتمل التدريب"
 
 #. module: hr_employment_custom
-#: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_training_commitment__x_participation_state__training_incomplete
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7195_ecc30105
 msgid "Training Incomplete"
-msgstr "التدريب غير مكتمل"
+msgstr "غير مكتمل التدريب"
