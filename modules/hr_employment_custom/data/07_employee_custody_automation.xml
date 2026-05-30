@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="automation_employee_custody_normalize_on_create" model="base.automation">
+            <field name="name">Employee Custody: Normalize and Log on Create</field>
+            <field name="active" eval="True"/>
+            <field name="trigger">on_create</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_custody_item"/>
+        </record>
+
+        <record id="action_employee_custody_normalize_on_create" model="ir.actions.server">
+            <field name="name">Employee Custody: Normalize and Log on Create</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_custody_item"/>
+            <field name="base_automation_id" ref="hr_employment_custom.automation_employee_custody_normalize_on_create"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+for rec in records.sudo():
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+    custody_type = rec.x_custody_type_id.sudo() if rec.x_custody_type_id else False
+
+    employee_name = employee.name or employee.display_name or 'Employee'
+    type_name = custody_type.x_name if custody_type else 'Custody'
+    type_code = custody_type.x_code if custody_type and custody_type.x_code else 'CUST'
+
+    vals = {}
+    if not rec.x_state:
+        vals['x_state'] = 'draft'
+    if not rec.x_quantity:
+        vals['x_quantity'] = 1
+    if not rec.x_responsible_user_id:
+        vals['x_responsible_user_id'] = env.user.id
+    if not rec.x_clearance_status:
+        vals['x_clearance_status'] = 'pending'
+    if rec.x_clearance_required is False:
+        vals['x_clearance_required'] = True
+
+    if not rec.x_reference_code:
+        emp_part = employee.id if employee else 0
+        vals['x_reference_code'] = 'MCEP-HR-%s-EMP-%05d-%05d' % (type_code, emp_part, rec.id)
+
+    reference = vals.get('x_reference_code') or rec.x_reference_code or ''
+    if not rec.x_document_reference:
+        vals['x_document_reference'] = reference
+
+    item_hint = rec.x_item_identifier or rec.x_serial_number or rec.x_document_reference or reference
+    normalized_name = '%s - %s - %s' % (employee_name, type_name, item_hint)
+    if rec.x_name != normalized_name:
+        vals['x_name'] = normalized_name
+
+    if vals:
+        rec.write(vals)
+
+    if employee:
+        employee.message_post(
+            body='تم تحديث العهدة: %s' % (vals.get('x_name') or rec.x_name or normalized_name),
+            subtype_xmlid='mail.mt_note',
+        )
+            ]]></field>
+        </record>
+
+        <record id="automation_employee_custody_normalize_on_write" model="base.automation">
+            <field name="name">Employee Custody: Normalize and Log on Update</field>
+            <field name="active" eval="True"/>
+            <field name="trigger">on_write</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_custody_item"/>
+            <field name="trigger_field_ids"
+                eval="[(6, 0, [
+                    ref('hr_employment_custom.field_x_hr_employee_custody_item__x_employee_id'),
+                    ref('hr_employment_custom.field_x_hr_employee_custody_item__x_custody_type_id'),
+                    ref('hr_employment_custom.field_x_hr_employee_custody_item__x_issued_on'),
+                    ref('hr_employment_custom.field_x_hr_employee_custody_item__x_expected_return_on'),
+                    ref('hr_employment_custom.field_x_hr_employee_custody_item__x_returned_on'),
+                    ref('hr_employment_custom.field_x_hr_employee_custody_item__x_item_identifier'),
+                    ref('hr_employment_custom.field_x_hr_employee_custody_item__x_serial_number'),
+                    ref('hr_employment_custom.field_x_hr_employee_custody_item__x_state')
+                ])]"/>
+        </record>
+
+        <record id="action_employee_custody_normalize_on_write" model="ir.actions.server">
+            <field name="name">Employee Custody: Normalize and Log on Update</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_custody_item"/>
+            <field name="base_automation_id" ref="hr_employment_custom.automation_employee_custody_normalize_on_write"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+for rec in records.sudo():
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+    custody_type = rec.x_custody_type_id.sudo() if rec.x_custody_type_id else False
+
+    employee_name = employee.name or employee.display_name or 'Employee'
+    type_name = custody_type.x_name if custody_type else 'Custody'
+    type_code = custody_type.x_code if custody_type and custody_type.x_code else 'CUST'
+
+    vals = {}
+    if not rec.x_state:
+        vals['x_state'] = 'draft'
+    if not rec.x_quantity:
+        vals['x_quantity'] = 1
+    if not rec.x_responsible_user_id:
+        vals['x_responsible_user_id'] = env.user.id
+    if not rec.x_clearance_status:
+        vals['x_clearance_status'] = 'pending'
+    if rec.x_clearance_required is False:
+        vals['x_clearance_required'] = True
+
+    if not rec.x_reference_code:
+        emp_part = employee.id if employee else 0
+        vals['x_reference_code'] = 'MCEP-HR-%s-EMP-%05d-%05d' % (type_code, emp_part, rec.id)
+
+    reference = vals.get('x_reference_code') or rec.x_reference_code or ''
+    if not rec.x_document_reference:
+        vals['x_document_reference'] = reference
+
+    item_hint = rec.x_item_identifier or rec.x_serial_number or rec.x_document_reference or reference
+    normalized_name = '%s - %s - %s' % (employee_name, type_name, item_hint)
+    if rec.x_name != normalized_name:
+        vals['x_name'] = normalized_name
+
+    if vals:
+        rec.write(vals)
+
+    if employee:
+        employee.message_post(
+            body='تم تحديث العهدة: %s' % (vals.get('x_name') or rec.x_name or normalized_name),
+            subtype_xmlid='mail.mt_note',
+        )
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>
