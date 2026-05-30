@@ -25,6 +25,7 @@
         "data/05_employee_declaration_sign_actions.xml",
         "data/06_employee_declaration_artifact_actions.xml",
         "data/07_employee_custody_automation.xml",
+        "data/08_employee_custody_type_data.xml",
         "views/01_employee_identification_views.xml",
         "views/02_employee_declaration_views.xml",
         "views/03_employee_custody_views.xml",

@@ -59,6 +59,7 @@
             <list string="Employee Custody Items" create="0">
                 <field name="x_employee_id"/>
                 <field name="x_custody_type_id"/>
+                <field name="x_company_id_document_id" optional="hide"/>
                 <field name="x_state"
                     widget="badge"
                     decoration-muted="x_state in ('draft', 'superseded')"
@@ -93,6 +94,9 @@
                     <group>
                         <field name="x_employee_id" options="{'no_create': True, 'no_create_edit': True}"/>
                         <field name="x_custody_type_id" options="{'no_create_edit': True}"/>
+                        <field name="x_company_id_document_id"
+                            domain="[('x_employee_id', '=', x_employee_id), ('x_document_type', '=', 'company_id_card')]"
+                            options="{'no_create': True, 'no_create_edit': True}"/>
                         <field name="x_name" readonly="1"/>
                         <field name="x_reference_code" readonly="1"/>
                         <field name="x_document_reference" readonly="1"/>
@@ -171,7 +175,7 @@
             <xpath expr="//sheet/notebook" position="inside">
                 <page name="mcep_employee_custody_assets" string="Custody and Assets">
                     <div class="alert alert-info" role="alert">
-                        Custody records track company property issued to the employee. Company ID card custody will use the employee Identification tab as the card source in the next slice.
+                        Custody records track company property issued to the employee. Company ID card custody uses the employee Identification tab as the card source.
                     </div>
 
                     <div class="mb-2">
@@ -187,6 +191,7 @@
                         context="{'default_x_employee_id': id}">
                         <list create="0">
                             <field name="x_custody_type_id"/>
+                            <field name="x_company_id_document_id" optional="hide"/>
                             <field name="x_state"
                                 widget="badge"
                                 decoration-muted="x_state in ('draft', 'superseded')"
@@ -214,6 +219,9 @@
                                 <group>
                                     <field name="x_employee_id" readonly="1" force_save="1"/>
                                     <field name="x_custody_type_id" options="{'no_create_edit': True}"/>
+                                    <field name="x_company_id_document_id"
+                                        domain="[('x_employee_id', '=', x_employee_id), ('x_document_type', '=', 'company_id_card')]"
+                                        options="{'no_create': True, 'no_create_edit': True}"/>
                                     <field name="x_name" readonly="1"/>
                                     <field name="x_reference_code" readonly="1"/>
                                     <field name="x_document_reference" readonly="1"/>

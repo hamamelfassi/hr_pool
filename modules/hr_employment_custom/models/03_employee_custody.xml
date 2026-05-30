@@ -162,6 +162,16 @@
             <field name="index" eval="True"/>
         </record>
 
+        <record id="field_x_hr_employee_custody_item__x_company_id_document_id" model="ir.model.fields">
+            <field name="name">x_company_id_document_id</field>
+            <field name="model_id" ref="model_x_hr_employee_custody_item"/>
+            <field name="field_description">Company ID Document</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.employee_identification_document</field>
+            <field name="on_delete">set null</field>
+            <field name="help">Selected company ID card record from the employee Identification tab. Used as the source for F-0011 company ID custody receipt values.</field>
+        </record>
+
         <record id="field_x_hr_employee_custody_item__x_state" model="ir.model.fields">
             <field name="name">x_state</field>
             <field name="model_id" ref="model_x_hr_employee_custody_item"/>
@@ -288,7 +298,7 @@
             <field name="ttype">text</field>
         </record>
 
-        <!-- F-0011 source mapping field is intentionally deferred to 16C. -->
+        <!-- F-0011 company ID source mapping field was added in 16C. -->
 
         <record id="field_x_hr_employee_custody_item__x_pdf_attachment_id" model="ir.model.fields">
             <field name="name">x_pdf_attachment_id</field>

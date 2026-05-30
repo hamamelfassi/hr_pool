@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="employee_custody_type_company_id_card" model="x_hr.employee_custody_type">
+            <field name="x_active" eval="True"/>
+            <field name="x_name">Company ID Card</field>
+            <field name="x_code">F0011</field>
+            <field name="x_category">company_id_card</field>
+            <field name="x_requires_return" eval="True"/>
+            <field name="x_requires_signature" eval="True"/>
+            <field name="x_requires_identifier" eval="True"/>
+            <field name="x_uses_company_id_document" eval="True"/>
+            <field name="x_default_validity_months">6</field>
+            <field name="x_replacement_fee_amount">25.0</field>
+            <field name="x_replacement_fee_currency_label">LYD</field>
+            <field name="x_future_native_link_model"/>
+            <field name="x_notes">Initial Pass 16 custody type for MCEP-HR-F-0011 company ID card receipt. Arabic record translations should be applied later through the exported Odoo PO workflow.</field>
+        </record>
+
+    </data>
+</odoo>

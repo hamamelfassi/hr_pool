@@ -18,6 +18,7 @@
 for rec in records.sudo():
     employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
     custody_type = rec.x_custody_type_id.sudo() if rec.x_custody_type_id else False
+    company_doc = rec.x_company_id_document_id.sudo() if rec.x_company_id_document_id else False
 
     employee_name = employee.name or employee.display_name or 'Employee'
     type_name = custody_type.x_name if custody_type else 'Custody'
@@ -35,6 +36,9 @@ for rec in records.sudo():
     if rec.x_clearance_required is False:
         vals['x_clearance_required'] = True
 
+    if company_doc and custody_type and custody_type.x_uses_company_id_document and not rec.x_item_identifier:
+        vals['x_item_identifier'] = company_doc.x_document_number or company_doc.x_name or company_doc.display_name
+
     if not rec.x_reference_code:
         emp_part = employee.id if employee else 0
         vals['x_reference_code'] = 'MCEP-HR-%s-EMP-%05d-%05d' % (type_code, emp_part, rec.id)
@@ -43,7 +47,7 @@ for rec in records.sudo():
     if not rec.x_document_reference:
         vals['x_document_reference'] = reference
 
-    item_hint = rec.x_item_identifier or rec.x_serial_number or rec.x_document_reference or reference
+    item_hint = vals.get('x_item_identifier') or rec.x_item_identifier or rec.x_serial_number or rec.x_document_reference or reference
     normalized_name = '%s - %s - %s' % (employee_name, type_name, item_hint)
     if rec.x_name != normalized_name:
         vals['x_name'] = normalized_name
@@ -68,6 +72,7 @@ for rec in records.sudo():
                 eval="[(6, 0, [
                     ref('hr_employment_custom.field_x_hr_employee_custody_item__x_employee_id'),
                     ref('hr_employment_custom.field_x_hr_employee_custody_item__x_custody_type_id'),
+                    ref('hr_employment_custom.field_x_hr_employee_custody_item__x_company_id_document_id'),
                     ref('hr_employment_custom.field_x_hr_employee_custody_item__x_issued_on'),
                     ref('hr_employment_custom.field_x_hr_employee_custody_item__x_expected_return_on'),
                     ref('hr_employment_custom.field_x_hr_employee_custody_item__x_returned_on'),
@@ -86,6 +91,7 @@ for rec in records.sudo():
 for rec in records.sudo():
     employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
     custody_type = rec.x_custody_type_id.sudo() if rec.x_custody_type_id else False
+    company_doc = rec.x_company_id_document_id.sudo() if rec.x_company_id_document_id else False
 
     employee_name = employee.name or employee.display_name or 'Employee'
     type_name = custody_type.x_name if custody_type else 'Custody'
@@ -103,6 +109,9 @@ for rec in records.sudo():
     if rec.x_clearance_required is False:
         vals['x_clearance_required'] = True
 
+    if company_doc and custody_type and custody_type.x_uses_company_id_document and not rec.x_item_identifier:
+        vals['x_item_identifier'] = company_doc.x_document_number or company_doc.x_name or company_doc.display_name
+
     if not rec.x_reference_code:
         emp_part = employee.id if employee else 0
         vals['x_reference_code'] = 'MCEP-HR-%s-EMP-%05d-%05d' % (type_code, emp_part, rec.id)
@@ -111,7 +120,7 @@ for rec in records.sudo():
     if not rec.x_document_reference:
         vals['x_document_reference'] = reference
 
-    item_hint = rec.x_item_identifier or rec.x_serial_number or rec.x_document_reference or reference
+    item_hint = vals.get('x_item_identifier') or rec.x_item_identifier or rec.x_serial_number or rec.x_document_reference or reference
     normalized_name = '%s - %s - %s' % (employee_name, type_name, item_hint)
     if rec.x_name != normalized_name:
         vals['x_name'] = normalized_name
