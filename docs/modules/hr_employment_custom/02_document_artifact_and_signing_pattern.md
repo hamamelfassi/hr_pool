@@ -352,3 +352,34 @@ height
 ```
 
 Do not rework lifecycle code when only Sign item placement is wrong.
+
+## Deferred Sign sync hardening note from Pass 16
+
+Pass 16 exposed an important lifecycle guard issue:
+
+- if a custody item is marked `lost` or `damaged`, its clearance status can become `blocked`;
+- if the linked Odoo Sign request is already signed, pressing `Sync` can restore the custody state to `signed`;
+- this can unintentionally reopen the path to `Mark Returned`.
+
+Future Sign sync actions should distinguish between:
+
+1. artifact/metadata synchronization; and
+2. lifecycle state transitions.
+
+The safe rule is:
+
+```text
+Sync may refresh artifacts and Sign metadata, but it must not silently reopen terminal or exception states.
+```
+
+Protected states should include at minimum:
+
+```text
+returned
+lost
+damaged
+cancelled
+superseded
+```
+
+Any reopening of those states should be explicit, governed, and chatter/audit visible.

@@ -695,43 +695,118 @@ Preflight findings:
 
 Status:
 
-    not started
+    accepted
+
+Accepted outcomes:
+
+- Added `x_hr.employee_custody_type`.
+- Added `x_hr.employee_custody_item`.
+- Added `hr.employee.x_custody_item_ids`.
+- Added employee `Custody and Assets` tab.
+- Added basic create/edit modal/form behavior.
+- Added access rows.
+- Added normalization/chatter automation.
+- No PDF, Sign, return/lost/damaged, clearance, Fleet, Assets, Inventory, or translation polish was implemented in this slice.
 
 ### 16C implementation log
 
 Status:
 
-    not started
+    accepted
+
+Accepted outcomes:
+
+- Seeded the first custody type: `Company ID Card`.
+- Added `x_company_id_document_id` on `x_hr.employee_custody_item`.
+- Restricted selectable source identity documents to the same employee and `company_id_card`.
+- Normalization can populate the item identifier from the selected company ID document number.
+- Kept source labels English-only and deferred Arabic polish to exported PO workflow.
+- No report, Sign, return/lost/damaged, or native roster linkage was implemented in this slice.
 
 ### 16D implementation log
 
 Status:
 
-    not started
+    accepted
+
+Accepted outcomes:
+
+- Added F-0011 company ID card custody receipt QWeb/PDF generation.
+- Generated PDF reads employee and selected company ID document values from source records.
+- Generated PDF is stored on the custody item.
+- Generated PDF is posted/copied to employee chatter/files.
+- User-facing generated PDF download uses `/web/content/<attachment_id>?download=true`.
+- Generation blocks when a company ID document is missing or invalid.
+- No Sign flow was implemented in this slice.
 
 ### 16E implementation log
 
 Status:
 
-    not started
+    accepted
+
+Accepted outcomes:
+
+- Added F-0011 Odoo Sign send/sync.
+- F-0011 uses one signer: employee.
+- F-0011 uses one Sign item only: employee signature.
+- No date Sign item is used because the date is generated directly into the PDF.
+- Signed PDF and certificate, when exposed by Odoo, are copied/posted to employee chatter/files.
+- Sync returns to the custody item form.
+- Signature placement was functionally accepted but final fine calibration remains deferred if later test PDFs show a mismatch.
 
 ### 16F implementation log
 
 Status:
 
-    not started
+    accepted
+
+Accepted outcomes:
+
+- Added explicit custody lifecycle actions:
+  - Mark Returned;
+  - Mark Lost;
+  - Mark Damaged.
+- Returned custody sets clearance status to `cleared`.
+- Lost and damaged custody set clearance status to `blocked`.
+- Employee chatter receives Arabic lifecycle notes.
+- Artifact icon buttons were cleaned up for custody and declaration forms.
+- Long artifact download labels were replaced with compact header icons.
+- No full clearance workflow, payroll/deduction, final settlement, archive/departure, Fleet, Assets, Inventory, or Documents app governance was implemented.
+
+Deferred hardening discovered after acceptance:
+
+- Pressing `Sync` on a blocked/lost/damaged custody item can set the state back to `signed` because the linked Odoo Sign request is already signed.
+- This can reopen the path for `Mark Returned`.
+- The issue is deferred intentionally.
+- Future hardening should make Sign sync preserve terminal/exception states such as `returned`, `lost`, `damaged`, `cancelled`, and `superseded`.
+- Sync should refresh artifacts and Sign metadata without downgrading or reopening exception lifecycle states.
 
 ### 16G implementation log
 
 Status:
 
-    not started
+    accepted
+
+Accepted outcomes:
+
+- Future native roster linkage remains documentation/configuration-only.
+- No hard many2one link was added to Fleet, Inventory, Accounting, Asset, Maintenance, or Documents models.
+- Computers, PPE, vehicles, phones, tools, access cards, radios, and other future custody types remain future-linkable after a later technical preflight.
+- The accepted Pass 16 custody type field `x_future_native_link_model` remains a hint/configuration field only, not an enforced dependency.
 
 ### 16H implementation log
 
 Status:
 
-    not started
+    patch applied; pending Odoo UI acceptance
+
+Patch scope:
+
+- Rebased `modules/hr_employment_custom/i18n/ar_001.po` from the exported Odoo Arabic PO file.
+- Filled targeted custody translations against exported PO anchors.
+- Kept XML/source labels English-only where practical.
+- Did not rewrite bilingual selection labels in this slice; helper-record cleanup remains a future polish item if needed.
 
 ### 16I implementation log
 
@@ -795,3 +870,45 @@ Recommended commit messages:
 16I:
 
     docs: close pass16 custody assets lifecycle
+
+## 10. Deferred hardening backlog from Pass 16
+
+The following items are known and intentionally deferred beyond the current custody foundation.
+
+### 10.1 Sign sync must not reopen exception lifecycle states
+
+Observed behavior:
+
+- A custody item can be marked `lost` or `damaged`, making its clearance status `blocked`.
+- If the linked Odoo Sign request is already signed, pressing `Sync` can set the custody state back to `signed`.
+- This then makes `Mark Returned` available again.
+
+Required future hardening:
+
+- Sign sync should refresh:
+  - Sign request state;
+  - signed PDF;
+  - Sign certificate;
+  - artifact copies;
+  - timestamps;
+  - metadata.
+- Sign sync should not overwrite terminal/exception custody states:
+  - `returned`;
+  - `lost`;
+  - `damaged`;
+  - `cancelled`;
+  - `superseded`.
+- State reopening must be explicit, governed, and traceable, not a side effect of sync.
+
+Decision:
+
+- Do not patch this inside 16F/16H.
+- Carry it to a later lifecycle hardening pass or Pass 24/26 governance hardening.
+
+### 10.2 Signature geometry final calibration
+
+F-0011 signature placement was functionally accepted enough to proceed, but final calibration may still be adjusted if later signed PDFs show misalignment.
+
+### 10.3 Translation/source-label cleanup
+
+Short bilingual selection values remain a known compromise inherited from earlier slices. Future cleanup can move longer labels and state/type displays into helper records or cleaner translation-backed values where required.
