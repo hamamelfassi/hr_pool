@@ -18,6 +18,12 @@
             <field name="state">manual</field>
         </record>
 
+        <record id="model_x_hr_employee_training_commitment" model="ir.model">
+            <field name="name">Employee Training Commitment</field>
+            <field name="model">x_hr.employee_training_commitment</field>
+            <field name="state">manual</field>
+        </record>
+
         <!-- ========================================================= -->
         <!-- Training Type / Requirement fields                        -->
         <!-- ========================================================= -->
@@ -72,6 +78,17 @@
             <field name="field_description">Course Name</field>
             <field name="ttype">char</field>
             <field name="required" eval="True"/>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_training_course__x_name" model="ir.model.fields">
+            <field name="name">x_name</field>
+            <field name="model_id" ref="model_x_hr_training_course"/>
+            <field name="field_description">Course Label</field>
+            <field name="ttype">char</field>
+            <field name="related">x_course_name</field>
+            <field name="readonly" eval="True"/>
+            <field name="store" eval="True"/>
             <field name="translate" eval="True"/>
         </record>
 
@@ -190,6 +207,303 @@
             <field name="field_description">Notes</field>
             <field name="ttype">text</field>
             <field name="translate" eval="True"/>
+        </record>
+
+        <!-- Employee Training Commitment / Participation -->
+
+        <record id="field_x_hr_employee_training_commitment__x_name" model="ir.model.fields">
+            <field name="name">x_name</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Training Commitment Label</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_employee_id" model="ir.model.fields">
+            <field name="name">x_employee_id</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Employee</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.employee</field>
+            <field name="required" eval="True"/>
+            <field name="on_delete">cascade</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_training_course_id" model="ir.model.fields">
+            <field name="name">x_training_course_id</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Training Course</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.training_course</field>
+            <field name="required" eval="True"/>
+            <field name="on_delete">restrict</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_training_type_id" model="ir.model.fields">
+            <field name="name">x_training_type_id</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Training Type</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.training</field>
+            <field name="on_delete">set null</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_state" model="ir.model.fields">
+            <field name="name">x_state</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Form Lifecycle State</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[('draft', 'Draft'), ('generated', 'Generated'), ('signature_requested', 'Signature Requested'), ('signed', 'Signed')]</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_commitment_state" model="ir.model.fields">
+            <field name="name">x_commitment_state</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Commitment State</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[('applied', 'Applied'), ('committed', 'Committed'), ('breached', 'Breached'), ('fulfilled', 'Fulfilled'), ('cancelled', 'Cancelled')]</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_is_breached" model="ir.model.fields">
+            <field name="name">x_is_breached</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Breached</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_participation_state" model="ir.model.fields">
+            <field name="name">x_participation_state</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Participation State</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[('allocated', 'Allocated'), ('in_training', 'In Training'), ('training_complete', 'Training Complete'), ('training_incomplete', 'Training Incomplete')]</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_reference_code" model="ir.model.fields">
+            <field name="name">x_reference_code</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Reference Code</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_document_reference" model="ir.model.fields">
+            <field name="name">x_document_reference</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Document Reference</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_service_commitment_months" model="ir.model.fields">
+            <field name="name">x_service_commitment_months</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Service Commitment Months</field>
+            <field name="ttype">integer</field>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_commitment_start_date" model="ir.model.fields">
+            <field name="name">x_commitment_start_date</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Commitment Start Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_commitment_end_date" model="ir.model.fields">
+            <field name="name">x_commitment_end_date</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Commitment End Date</field>
+            <field name="ttype">date</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_recovery_amount" model="ir.model.fields">
+            <field name="name">x_recovery_amount</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Recovery Amount</field>
+            <field name="ttype">float</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_recovery_amount_words" model="ir.model.fields">
+            <field name="name">x_recovery_amount_words</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Recovery Amount in Words</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_recovery_required_if_breached" model="ir.model.fields">
+            <field name="name">x_recovery_required_if_breached</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Recovery Required if Breached</field>
+            <field name="ttype">boolean</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_recovery_notes" model="ir.model.fields">
+            <field name="name">x_recovery_notes</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Recovery Notes</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_pdf_attachment_id" model="ir.model.fields">
+            <field name="name">x_pdf_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Generated PDF</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_signed_attachment_id" model="ir.model.fields">
+            <field name="name">x_signed_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Signed PDF</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_sign_certificate_attachment_id" model="ir.model.fields">
+            <field name="name">x_sign_certificate_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Sign Certificate</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_manual_decision_attachment_id" model="ir.model.fields">
+            <field name="name">x_manual_decision_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Manual Decision Attachment</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_sign_request_res_id" model="ir.model.fields">
+            <field name="name">x_sign_request_res_id</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Sign Request ID</field>
+            <field name="ttype">integer</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_sign_request_state" model="ir.model.fields">
+            <field name="name">x_sign_request_state</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Sign Request State</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_sign_request_reference" model="ir.model.fields">
+            <field name="name">x_sign_request_reference</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Sign Request Reference</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_sign_request_url" model="ir.model.fields">
+            <field name="name">x_sign_request_url</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Sign Request URL</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_generated_on" model="ir.model.fields">
+            <field name="name">x_generated_on</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Generated On</field>
+            <field name="ttype">datetime</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_sent_on" model="ir.model.fields">
+            <field name="name">x_sent_on</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Sent On</field>
+            <field name="ttype">datetime</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_signed_on" model="ir.model.fields">
+            <field name="name">x_signed_on</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Signed On</field>
+            <field name="ttype">datetime</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_manual_decision_number" model="ir.model.fields">
+            <field name="name">x_manual_decision_number</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Manual Decision Number</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_manual_decision_date" model="ir.model.fields">
+            <field name="name">x_manual_decision_date</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Manual Decision Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_responsible_user_id" model="ir.model.fields">
+            <field name="name">x_responsible_user_id</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Responsible User</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_training_commitment__x_notes" model="ir.model.fields">
+            <field name="name">x_notes</field>
+            <field name="model_id" ref="model_x_hr_employee_training_commitment"/>
+            <field name="field_description">Notes</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_training_course__x_participant_commitment_ids" model="ir.model.fields">
+            <field name="name">x_participant_commitment_ids</field>
+            <field name="model_id" ref="model_x_hr_training_course"/>
+            <field name="field_description">Employee Training Commitments</field>
+            <field name="ttype">one2many</field>
+            <field name="relation">x_hr.employee_training_commitment</field>
+            <field name="relation_field">x_training_course_id</field>
+        </record>
+
+        <record id="field_hr_employee__x_training_commitment_ids" model="ir.model.fields">
+            <field name="name">x_training_commitment_ids</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="field_description">Training Commitments</field>
+            <field name="ttype">one2many</field>
+            <field name="relation">x_hr.employee_training_commitment</field>
+            <field name="relation_field">x_employee_id</field>
         </record>
 
     </data>

@@ -5,3 +5,4 @@ access_employee_custody_type_hr_user,employee custody type hr user,hr_employment
 access_employee_custody_item_hr_user,employee custody item hr user,hr_employment_custom.model_x_hr_employee_custody_item,hr.group_hr_user,1,1,1,1
 access_hr_training_hr_user,training type hr user,hr_employment_custom.model_x_hr_training,hr.group_hr_user,1,1,1,1
 access_hr_training_course_hr_user,training course hr user,hr_employment_custom.model_x_hr_training_course,hr.group_hr_user,1,1,1,1
+access_hr_employee_training_commitment_hr_user,employee training commitment hr user,hr_employment_custom.model_x_hr_employee_training_commitment,hr.group_hr_user,1,1,1,1
