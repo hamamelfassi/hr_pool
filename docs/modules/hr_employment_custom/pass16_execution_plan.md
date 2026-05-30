@@ -1,6 +1,6 @@
 # Pass 16 — Custody and Assets Implementation Plan
 
-Status: scoped, not implemented  
+Status: closed and accepted  
 Primary module: `hr_employment_custom`  
 Environment: Odoo.com SaaS 19.2  
 Build command: `./scripts/build_module_zip.sh hr_employment_custom`
@@ -812,7 +812,14 @@ Patch scope:
 
 Status:
 
-    not started
+    accepted
+
+Accepted outcomes:
+
+- Pass 16 was closed in documentation.
+- Accepted custody, F-0011 PDF/Sign, artifact, lifecycle, and translation outcomes were recorded.
+- Deferred hardening backlog was preserved for later lifecycle/governance passes.
+- Pass 17 was identified as the next implementation pass.
 
 ## 8. Final Pass 16 acceptance gate
 
@@ -912,3 +919,49 @@ F-0011 signature placement was functionally accepted enough to proceed, but fina
 ### 10.3 Translation/source-label cleanup
 
 Short bilingual selection values remain a known compromise inherited from earlier slices. Future cleanup can move longer labels and state/type displays into helper records or cleaner translation-backed values where required.
+
+## 11. Pass 16 closure
+
+Status:
+
+    closed and accepted
+
+Closed scope:
+
+- Added employee custody foundation under native `hr.employee`.
+- Added `x_hr.employee_custody_type`.
+- Added `x_hr.employee_custody_item`.
+- Added employee `Custody and Assets` tab.
+- Seeded and accepted company ID card custody.
+- Linked company ID custody to the employee company ID record from `x_hr.employee_identification_document`.
+- Generated F-0011 company ID card custody receipt PDF from source records.
+- Stored generated PDF on the custody item.
+- Copied/posted generated PDF to employee chatter/files.
+- Added one-signer native Odoo Sign flow for F-0011.
+- Synced signed PDF and certificate, where exposed by Odoo, back to custody item and employee chatter/files.
+- Replaced long artifact download buttons with compact icon buttons for custody and declaration records.
+- Added returned/lost/damaged lifecycle actions as a foundation for later clearance.
+- Kept full clearance, payroll, accounting, settlement, Fleet, Inventory, Assets, and Documents governance out of Pass 16.
+- Completed Arabic translation cleanup for custody/declaration state selection values using exported Odoo selection IDs.
+
+Accepted deferred backlog:
+
+- F-0011 signature geometry can still receive a later micro-calibration if a later signed PDF shows drift.
+- Sign sync currently can reopen blocked/exception custody states if the underlying Odoo Sign request is signed. Later hardening must preserve terminal/exception states while still refreshing artifacts.
+- Future custody categories remain future-linkable only. No hard Fleet/Inventory/Asset references were introduced.
+- The `__export__` selection ID translation technique is database-specific to the current SaaS database and should be treated as a controlled operational patch, not a portable seed doctrine.
+
+Translation lesson locked:
+
+- Field/view/action labels should remain clean English source labels in XML.
+- Arabic UI should be delivered through `i18n/ar_001.po` using exported Odoo anchors.
+- Do not use bilingual source labels except as a temporary emergency compromise.
+- For selection fields, do not invent PO anchors.
+- Do not create duplicate `ir.model.fields.selection` rows for existing field/value pairs. Odoo already owns those rows and enforces uniqueness on field/value.
+- If exported module PO lacks selection anchors, export `ir.model.fields.selection` records from Odoo and bind PO entries to the exported `__export__.ir_model_fields_selection_...` references.
+- Do not manually edit selection source names in Studio as the primary solution. If manual translation/import is required, use Odoo's translation import path rather than changing the source name.
+
+Pass 17 handoff:
+
+- Proceed to Pass 17 — Training and Certifications.
+- Pass 17 should use the accepted document artifact pattern, native Sign source-record anchoring, employee chatter/files copy, and exported-anchor translation workflow.

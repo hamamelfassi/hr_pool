@@ -353,3 +353,14 @@ Download Sign Certificate
 These buttons should resolve to `/web/content/<attachment_id>?download=true`.
 
 This pattern should be reused in later custody, training, assignment, separation, and clearance forms.
+
+## Pass 17 mobile/chatter note — Training artifacts
+
+Training commitment artifacts should follow the accepted employment artifact behavior:
+
+- generated undertaking PDF posts to employee chatter/files;
+- signed undertaking PDF posts to employee chatter/files;
+- Sign certificate posts to employee chatter/files when Odoo exposes it;
+- certificate submitted by the employee/HR should be stored on the training commitment and posted/copied to employee chatter/files;
+- user-facing download must use `/web/content/<attachment_id>?download=true`;
+- raw `ir.attachment` metadata forms should not be the normal operational click path.

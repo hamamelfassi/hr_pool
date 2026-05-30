@@ -895,3 +895,36 @@ Pass 21 — Performance evaluation
 Pass 22 — Separation request
 Pass 23 — Clearance/offboarding
 ```
+
+## Pass 17 implementation boundary addendum — Training and Certifications
+
+Pass 17 implements the training/certification foundation around:
+
+```text
+x_hr.employee_training_commitment
+```
+
+Pass 17 should prove the same lifecycle pattern already accepted for declarations and custody:
+
+```text
+draft
+→ generated
+→ signature_requested
+→ signed
+→ certificate_pending
+→ certificate_received
+→ closed
+```
+
+The first implementation should stay operationally useful but bounded:
+
+- create the employee training commitment model and employee tab;
+- generate the training undertaking PDF;
+- send/sync the undertaking through native Odoo Sign;
+- track certificate submission and certificate received date;
+- copy generated/signed/certificate artifacts to employee chatter/files;
+- create or update `hr.resume.line` only after model availability is verified in the current SaaS database;
+- keep `hr.skill` / certification mapping optional and preflighted;
+- keep payroll/finance recovery hooks as manual metadata only.
+
+Do not add hard dependencies on payroll, accounting, approvals, LMS, planning, project, or unverified skill/certification models in the first Pass 17 build.

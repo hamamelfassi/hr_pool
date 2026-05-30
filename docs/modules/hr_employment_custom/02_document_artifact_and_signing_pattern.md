@@ -383,3 +383,48 @@ superseded
 ```
 
 Any reopening of those states should be explicit, governed, and chatter/audit visible.
+
+## Translation doctrine for artifact process models
+
+Operational rule:
+
+```text
+XML source labels stay English.
+Arabic labels live in `i18n/ar_001.po`.
+```
+
+Do not make source labels bilingual unless an urgent operational workaround is explicitly accepted.
+
+### Field, view, and action labels
+
+Use the normal exported-anchor workflow:
+
+1. install/upgrade the module;
+2. export Arabic translations from Odoo;
+3. rebase `modules/hr_employment_custom/i18n/ar_001.po` from the exported file;
+4. patch `msgstr` values against the exported anchors;
+5. rebuild and upgrade.
+
+### Selection field values
+
+Selection values require stricter handling.
+
+Do not:
+
+- invent PO references;
+- create duplicate `ir.model.fields.selection` rows;
+- manually change the selection source `name` to Arabic through Studio as the primary fix.
+
+Correct sequence:
+
+1. keep the selection source labels in English;
+2. install/upgrade the module;
+3. export Arabic translations;
+4. if selection anchors are present, patch the PO against those anchors;
+5. if selection anchors are missing, export records from `ir.model.fields.selection`;
+6. use the exported `__export__.ir_model_fields_selection_...` IDs as PO references for the current SaaS database.
+
+Known tradeoff:
+
+- `__export__` selection IDs are database-local, not portable seeds.
+- They are acceptable for controlled SaaS production translation repair when the source rows already exist and Odoo does not export stable module selection anchors.

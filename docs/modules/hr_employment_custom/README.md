@@ -70,3 +70,9 @@ Next implementation pass:
 ```text
 Pass 16 — Custody and assets
 ```
+
+## Current execution plans
+
+- `pass15_execution_plan.md` — employee identification and declarations foundation.
+- `pass16_execution_plan.md` — custody and assets foundation; closed and accepted.
+- `pass17_execution_plan.md` — training and certifications; next implementation pass.

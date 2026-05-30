@@ -44,6 +44,9 @@ Owned by `hr_recruitment_custom` because the source action is still `hr.applican
 
 ## Pass 16 — Custody and assets
 
+Status: closed and accepted.
+
+
 - `x_hr.employee_custody_type`;
 - `x_hr.employee_custody_item`;
 - ID card receipt first;
@@ -52,6 +55,9 @@ Owned by `hr_recruitment_custom` because the source action is still `hr.applican
 - offboarding clearance hook.
 
 ## Pass 17 — Training and certifications
+
+Status: next implementation pass.
+
 
 - `x_hr.employee_training_commitment`;
 - QWeb/sign training undertaking;

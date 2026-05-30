@@ -359,3 +359,27 @@ Employee Name - Document Type - Document Number
 Translation note:
 
 Short selection labels may use bilingual source labels when Odoo SaaS does not expose reliable selection PO anchors. For longer or operationally complex labels, use helper records instead of inline selection values.
+
+## Pass 17 tab addition — Training and Certifications
+
+Pass 17 adds the employee `Training and Certifications` tab.
+
+Recommended Arabic label:
+
+```text
+التدريب والشهادات
+```
+
+The tab should follow the same process-record pattern used by declarations and custody:
+
+- one2many list on `hr.employee`;
+- controlled create/edit modal for `x_hr.employee_training_commitment`;
+- compact artifact icon buttons in the record header;
+- workflow buttons kept readable and separate from artifact downloads;
+- chatter/files copy on generated, signed, and certificate artifacts.
+
+Translation reminder:
+
+- tab/action/source labels should be English in XML;
+- Arabic UI should be delivered through exported PO anchors;
+- selection states must not use bilingual source labels.
