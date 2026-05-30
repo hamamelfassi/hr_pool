@@ -28,6 +28,7 @@
         "data/08_employee_custody_type_data.xml",
         "data/09_employee_custody_generate_actions.xml",
         "data/10_employee_custody_sign_actions.xml",
+        "data/11_employee_custody_lifecycle_actions.xml",
         "views/01_employee_identification_views.xml",
         "views/02_employee_declaration_views.xml",
         "views/03_employee_custody_views.xml",

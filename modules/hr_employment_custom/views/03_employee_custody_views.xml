@@ -125,6 +125,22 @@
                             icon="fa-download"
                             class="btn btn-secondary"
                             invisible="not x_sign_certificate_attachment_id"/>
+                        <span class="mx-1"/>
+                        <button name="%(action_employee_custody_mark_returned)d"
+                            type="action"
+                            string="Mark Returned"
+                            class="btn btn-secondary"
+                            invisible="x_state in ('draft', 'returned', 'lost', 'damaged', 'cancelled', 'superseded')"/>
+                        <button name="%(action_employee_custody_mark_lost)d"
+                            type="action"
+                            string="Mark Lost"
+                            class="btn btn-secondary"
+                            invisible="x_state in ('returned', 'lost', 'cancelled', 'superseded')"/>
+                        <button name="%(action_employee_custody_mark_damaged)d"
+                            type="action"
+                            string="Mark Damaged"
+                            class="btn btn-secondary"
+                            invisible="x_state in ('returned', 'damaged', 'cancelled', 'superseded')"/>
                     </div>
                     <group>
                         <field name="x_employee_id" options="{'no_create': True, 'no_create_edit': True}"/>
@@ -285,6 +301,22 @@
                                         icon="fa-download"
                                         class="btn btn-secondary"
                                         invisible="not x_sign_certificate_attachment_id"/>
+                                    <span class="mx-1"/>
+                                    <button name="%(action_employee_custody_mark_returned)d"
+                                        type="action"
+                                        string="Mark Returned"
+                                        class="btn btn-secondary"
+                                        invisible="x_state in ('draft', 'returned', 'lost', 'damaged', 'cancelled', 'superseded')"/>
+                                    <button name="%(action_employee_custody_mark_lost)d"
+                                        type="action"
+                                        string="Mark Lost"
+                                        class="btn btn-secondary"
+                                        invisible="x_state in ('returned', 'lost', 'cancelled', 'superseded')"/>
+                                    <button name="%(action_employee_custody_mark_damaged)d"
+                                        type="action"
+                                        string="Mark Damaged"
+                                        class="btn btn-secondary"
+                                        invisible="x_state in ('returned', 'damaged', 'cancelled', 'superseded')"/>
                                 </div>
                                 <group>
                                     <field name="x_employee_id" readonly="1" force_save="1"/>

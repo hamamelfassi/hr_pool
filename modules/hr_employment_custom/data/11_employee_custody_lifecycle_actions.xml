@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="action_employee_custody_mark_returned" model="ir.actions.server">
+            <field name="name">Mark Returned</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_custody_item"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+
+def reload_item(rec):
+    view = env.ref('hr_employment_custom.view_employee_custody_item_form', raise_if_not_found=False)
+    result = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Employee Custody Item',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        result['views'] = [(view.id, 'form')]
+    return result
+
+
+def toast(title, message, kind='success', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+for rec in records.sudo():
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+
+    if rec.x_state in ('returned', 'cancelled', 'superseded'):
+        action = toast('No change', 'This custody item is already closed or not returnable from its current state.', 'warning', False, reload_item(rec))
+        continue
+
+    returned_on = rec.x_returned_on or datetime.date.today()
+    return_condition = rec.x_condition_on_return or 'Returned'
+    note_line = 'Custody item marked returned on %s by %s.' % (returned_on, env.user.display_name)
+
+    rec.write({
+        'x_state': 'returned',
+        'x_returned_on': returned_on,
+        'x_condition_on_return': return_condition,
+        'x_clearance_required': True,
+        'x_clearance_status': 'cleared',
+        'x_responsible_user_id': env.user.id,
+        'x_clearance_notes': ((rec.x_clearance_notes or '') + '\n' + note_line).strip(),
+        'x_notes': ((rec.x_notes or '') + '\n' + note_line).strip(),
+    })
+
+    if employee:
+        employee.message_post(
+            body='تم إرجاع العهدة: %s' % (rec.x_name or rec.x_document_reference or rec.id),
+            subtype_xmlid='mail.mt_note',
+        )
+
+    action = toast('Custody returned', 'Custody item was marked returned and clearance status was set to cleared.', 'success', False, reload_item(rec))
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+        <record id="action_employee_custody_mark_lost" model="ir.actions.server">
+            <field name="name">Mark Lost</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_custody_item"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+
+def reload_item(rec):
+    view = env.ref('hr_employment_custom.view_employee_custody_item_form', raise_if_not_found=False)
+    result = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Employee Custody Item',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        result['views'] = [(view.id, 'form')]
+    return result
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+for rec in records.sudo():
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+
+    if rec.x_state in ('returned', 'lost', 'cancelled', 'superseded'):
+        action = toast('No change', 'This custody item is already returned, lost, cancelled, or superseded.', 'warning', False, reload_item(rec))
+        continue
+
+    event_on = datetime.date.today()
+    note_line = 'Custody item marked lost on %s by %s. Manual decision/recovery details should be recorded if required.' % (event_on, env.user.display_name)
+
+    rec.write({
+        'x_state': 'lost',
+        'x_clearance_required': True,
+        'x_clearance_status': 'blocked',
+        'x_responsible_user_id': env.user.id,
+        'x_clearance_notes': ((rec.x_clearance_notes or '') + '\n' + note_line).strip(),
+        'x_notes': ((rec.x_notes or '') + '\n' + note_line).strip(),
+    })
+
+    if employee:
+        employee.message_post(
+            body='تم تسجيل العهدة كمفقودة: %s' % (rec.x_name or rec.x_document_reference or rec.id),
+            subtype_xmlid='mail.mt_note',
+        )
+
+    action = toast('Custody lost', 'Custody item was marked lost and clearance status was set to blocked.', 'warning', False, reload_item(rec))
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+        <record id="action_employee_custody_mark_damaged" model="ir.actions.server">
+            <field name="name">Mark Damaged</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_custody_item"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+
+def reload_item(rec):
+    view = env.ref('hr_employment_custom.view_employee_custody_item_form', raise_if_not_found=False)
+    result = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Employee Custody Item',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        result['views'] = [(view.id, 'form')]
+    return result
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+for rec in records.sudo():
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+
+    if rec.x_state in ('returned', 'damaged', 'cancelled', 'superseded'):
+        action = toast('No change', 'This custody item is already returned, damaged, cancelled, or superseded.', 'warning', False, reload_item(rec))
+        continue
+
+    event_on = datetime.date.today()
+    damage_condition = rec.x_condition_on_return or 'Damaged'
+    note_line = 'Custody item marked damaged on %s by %s. Repair/recovery/manual decision details should be recorded if required.' % (event_on, env.user.display_name)
+
+    rec.write({
+        'x_state': 'damaged',
+        'x_condition_on_return': damage_condition,
+        'x_clearance_required': True,
+        'x_clearance_status': 'blocked',
+        'x_responsible_user_id': env.user.id,
+        'x_clearance_notes': ((rec.x_clearance_notes or '') + '\n' + note_line).strip(),
+        'x_notes': ((rec.x_notes or '') + '\n' + note_line).strip(),
+    })
+
+    if employee:
+        employee.message_post(
+            body='تم تسجيل العهدة كتـالفة: %s' % (rec.x_name or rec.x_document_reference or rec.id),
+            subtype_xmlid='mail.mt_note',
+        )
+
+    action = toast('Custody damaged', 'Custody item was marked damaged and clearance status was set to blocked.', 'warning', False, reload_item(rec))
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>
