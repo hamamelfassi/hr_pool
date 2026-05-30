@@ -228,7 +228,7 @@
         <field name="inherit_id" ref="hr.view_employee_form"/>
         <field name="arch" type="xml">
             <xpath expr="//sheet/notebook" position="inside">
-                <page name="mcep_employee_custody_assets" string="Custody and Assets">
+                <page name="mcep_employee_custody_assets" string="Custody">
                     <div class="alert alert-info" role="alert">
                         Custody records track company property issued to the employee. Company ID card custody uses the employee Identification tab as the card source.
                     </div>
