@@ -202,6 +202,16 @@
                             string="Generate PDF"
                             class="btn btn-primary"
                             invisible="x_state in ('signature_requested', 'signed')"/>
+                        <button name="%(action_employee_training_send_f0008_sign)d"
+                            type="action"
+                            string="Send to Sign"
+                            class="btn btn-primary"
+                            invisible="x_state != 'generated' or not x_pdf_attachment_id or x_sign_request_res_id"/>
+                        <button name="%(action_employee_training_sync_f0008_sign)d"
+                            type="action"
+                            string="Sync"
+                            class="btn btn-secondary"
+                            invisible="not x_pdf_attachment_id and not x_sign_request_res_id"/>
                         <button name="%(action_employee_training_mark_breached)d"
                             type="action"
                             string="Mark Breached"
@@ -384,6 +394,16 @@
                             string="Generate PDF"
                             class="btn btn-primary"
                             invisible="x_state in ('signature_requested', 'signed')"/>
+                        <button name="%(action_employee_training_send_f0008_sign)d"
+                            type="action"
+                            string="Send to Sign"
+                            class="btn btn-primary"
+                            invisible="x_state != 'generated' or not x_pdf_attachment_id or x_sign_request_res_id"/>
+                        <button name="%(action_employee_training_sync_f0008_sign)d"
+                            type="action"
+                            string="Sync"
+                            class="btn btn-secondary"
+                            invisible="not x_pdf_attachment_id and not x_sign_request_res_id"/>
                         <button name="%(action_employee_training_mark_breached)d"
                             type="action"
                             string="Mark Breached"
