@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_mcep_employee_custody_f0011_company_id_receipt_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <head>
+                    <meta charset="UTF-8"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                </head>
+
+                <t t-set="form_code" t-value="'MCEP-HR-F-0011'"/>
+                <t t-set="form_title_ar" t-value="'استلام البطاقة التعريفية'"/>
+                <t t-set="form_title_en" t-value="'Company ID Card Receipt'"/>
+                <t t-set="employee" t-value="o.x_employee_id"/>
+                <t t-set="company_doc" t-value="o.x_company_id_document_id"/>
+                <t t-set="custody_type" t-value="o.x_custody_type_id"/>
+                <t t-set="validity_months" t-value="custody_type.x_default_validity_months or 6"/>
+                <t t-set="replacement_fee" t-value="custody_type.x_replacement_fee_amount or 25"/>
+                <t t-set="replacement_currency" t-value="custody_type.x_replacement_fee_currency_label or 'LYD'"/>
+                <t t-set="issued_on" t-value="o.x_issued_on or company_doc.x_issue_date"/>
+
+                <t t-call="hr_employment_custom.mcep_employee_report_assets"/>
+
+                <div class="page mcep-emp-page">
+                    <t t-set="page_label" t-value="'Page 1 / 1'"/>
+                    <t t-call="hr_employment_custom.mcep_employee_report_header"/>
+
+                    <style>
+                        .mcep-f0011-title { text-align: center; font-size: 23px; font-weight: 700; margin: 8px 0 4px 0; }
+                        .mcep-f0011-subtitle { text-align: center; font-size: 16px; font-weight: 700; margin: 0 0 9px 0; }
+                        .mcep-f0011-section-title { font-size: 15px; font-weight: 700; margin: 8px 0 4px 0; padding: 4px 6px; background: #eef2f7; border: 1px solid #9aa4b2; direction: rtl; }
+                        .mcep-f0011-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 7px; }
+                        .mcep-f0011-table th, .mcep-f0011-table td { border: 1px solid #8f99a8; padding: 5px 6px; vertical-align: middle; }
+                        .mcep-f0011-table th { background: #f5f7fa; font-weight: 700; text-align: center; }
+                        .mcep-f0011-value { font-size: 13px; font-weight: 600; text-align: center; }
+                        .mcep-f0011-text { border: 1px solid #8f99a8; padding: 8px 10px; font-size: 14px; line-height: 1.52; direction: rtl; text-align: right; }
+                        .mcep-f0011-text-en { direction: ltr; text-align: left; font-size: 12.5px; line-height: 1.42; margin-top: 7px; }
+                        .mcep-f0011-sign-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 7px; }
+                        .mcep-f0011-sign-table th, .mcep-f0011-sign-table td { border: 1px solid #8f99a8; padding: 7px 6px; vertical-align: middle; }
+                        .mcep-f0011-sign-box { height: 44px; }
+                        .mcep-f0011-en { direction: ltr; unicode-bidi: isolate; font-size: 11px; color: #374151; }
+                    </style>
+
+                    <div class="mcep-f0011-title">استلام البطاقة التعريفية</div>
+                    <div class="mcep-f0011-subtitle">Company ID Card Receipt</div>
+
+                    <div class="mcep-f0011-section-title">أولًا: بيانات الموظف <span class="mcep-f0011-en">Employee Information</span></div>
+
+                    <table class="mcep-f0011-table">
+                        <tbody>
+                            <tr>
+                                <th style="width: 24%;">الاسم الكامل<br/><span class="mcep-f0011-en">Full Name</span></th>
+                                <td style="width: 34%;" class="mcep-f0011-value"><span t-out="employee.name or ''"/></td>
+                                <th style="width: 18%;">الرقم الوظيفي<br/><span class="mcep-f0011-en">Employee ID</span></th>
+                                <td style="width: 24%;" class="mcep-f0011-value"><span t-out="employee.id or ''"/></td>
+                            </tr>
+                            <tr>
+                                <th>المسمى الوظيفي<br/><span class="mcep-f0011-en">Job Title</span></th>
+                                <td class="mcep-f0011-value"><span t-out="employee.job_title or ''"/></td>
+                                <th>القسم / الإدارة<br/><span class="mcep-f0011-en">Department</span></th>
+                                <td class="mcep-f0011-value"><span t-out="employee.department_id.name or ''"/></td>
+                            </tr>
+                            <tr>
+                                <th>التاريخ<br/><span class="mcep-f0011-en">Date</span></th>
+                                <td class="mcep-f0011-value"><span t-out="issued_on or ''"/></td>
+                                <th>مرجع العهدة<br/><span class="mcep-f0011-en">Custody Ref.</span></th>
+                                <td class="mcep-f0011-value"><span t-out="o.x_document_reference or ''"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="mcep-f0011-section-title">بيانات البطاقة التعريفية <span class="mcep-f0011-en">Company ID Card Details</span></div>
+
+                    <table class="mcep-f0011-table">
+                        <tbody>
+                            <tr>
+                                <th style="width: 20%;">رقم البطاقة<br/><span class="mcep-f0011-en">Card No.</span></th>
+                                <td style="width: 30%;" class="mcep-f0011-value"><span t-out="company_doc.x_document_number or ''"/></td>
+                                <th style="width: 20%;">جهة الإصدار<br/><span class="mcep-f0011-en">Issued By</span></th>
+                                <td style="width: 30%;" class="mcep-f0011-value"><span t-out="company_doc.x_issued_by or ''"/></td>
+                            </tr>
+                            <tr>
+                                <th>مكان الإصدار<br/><span class="mcep-f0011-en">Issue Place</span></th>
+                                <td class="mcep-f0011-value"><span t-out="company_doc.x_issue_place or ''"/></td>
+                                <th>تاريخ الإصدار<br/><span class="mcep-f0011-en">Issue Date</span></th>
+                                <td class="mcep-f0011-value"><span t-out="company_doc.x_issue_date or ''"/></td>
+                            </tr>
+                            <tr>
+                                <th>تاريخ الانتهاء<br/><span class="mcep-f0011-en">Expiry Date</span></th>
+                                <td class="mcep-f0011-value"><span t-out="company_doc.x_expiry_date or ''"/></td>
+                                <th>صلاحية البطاقة<br/><span class="mcep-f0011-en">Validity</span></th>
+                                <td class="mcep-f0011-value"><span t-out="validity_months"/> أشهر / <span class="mcep-f0011-en"><span t-out="validity_months"/> months</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="mcep-f0011-section-title">ثانيًا: إقرار الموظف <span class="mcep-f0011-en">Employee Declaration</span></div>
+
+                    <div class="mcep-f0011-text">
+                        <div>أقر أنا الموظف المذكور أعلاه بأنني قد استلمت البطاقة التعريفية الخاصة بي، وأحيط علمًا بالآتي:</div>
+                        <ol style="margin: 5px 18px 0 0; padding: 0;">
+                            <li>صلاحية البطاقة: مدة صلاحية البطاقة هي (<span t-out="validity_months"/>) أشهر فقط من تاريخ الإصدار.</li>
+                            <li>المسؤولية: البطاقة عهدة شخصية تستخدم للأغراض الرسمية فقط.</li>
+                            <li>فقدان البطاقة: في حال ضياع أو إتلاف البطاقة، يلتزم الموظف بدفع مبلغ وقدره (<span t-out="'%g' % replacement_fee"/>&#160;<span t-out="replacement_currency"/>) كرسوم لإصدار بدل فاقد.</li>
+                            <li>انتهاء الصلاحية: يجب مراجعة مكتب الدعاية والإعلام لتجديد البطاقة قبل انتهاء مدتها.</li>
+                        </ol>
+                        <div class="mcep-f0011-text-en">
+                            I, the above-mentioned employee, hereby acknowledge that I have received my identification card and have been informed of the following:
+                            <ol style="margin: 4px 0 0 18px; padding: 0;">
+                                <li><strong>Card Validity:</strong> The validity period of the card is <span t-out="validity_months"/> months only from the date of issue.</li>
+                                <li><strong>Responsibility:</strong> The card is a personal custody item and shall be used for official purposes only.</li>
+                                <li><strong>Loss of Card:</strong> In case of loss or damage of the card, the employee shall pay <span t-out="'%g' % replacement_fee"/> <span t-out="replacement_currency"/> as a replacement fee.</li>
+                                <li><strong>Expiry:</strong> The employee must visit the Public Relations and Media Office to renew the card before its expiration.</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="mcep-f0011-section-title">ثالثًا: توقيع الموظف <span class="mcep-f0011-en">Employee Signature</span></div>
+                    <table class="mcep-f0011-sign-table">
+                        <tbody>
+                            <tr>
+                                <th style="width: 24%;">اسم الموظف<br/><span class="mcep-f0011-en">Employee Name</span></th>
+                                <td style="width: 76%;" class="mcep-f0011-value"><span t-out="employee.name or ''"/></td>
+                            </tr>
+                            <tr>
+                                <th>التوقيع<br/><span class="mcep-f0011-en">Signature</span></th>
+                                <td class="mcep-f0011-sign-box"></td>
+                            </tr>
+                            <tr>
+                                <th>التاريخ<br/><span class="mcep-f0011-en">Date</span></th>
+                                <td class="mcep-f0011-value"><span t-out="issued_on or ''"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

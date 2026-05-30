@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="action_employee_custody_generate_f0011_pdf" model="ir.actions.server">
+            <field name="name">Generate PDF</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_custody_item"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def reload_item(rec):
+    view = env.ref('hr_employment_custom.view_employee_custody_item_form', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Employee Custody Item',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+for rec in records.sudo():
+    if rec.x_state in ('signature_requested', 'signed', 'returned'):
+        action = toast('Generate PDF', 'This custody item has already entered a later lifecycle state. PDF regeneration is blocked.', 'warning', True, reload_item(rec))
+        continue
+
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+    custody_type = rec.x_custody_type_id.sudo() if rec.x_custody_type_id else False
+    company_doc = rec.x_company_id_document_id.sudo() if rec.x_company_id_document_id else False
+
+    if not employee:
+        action = toast('Generate PDF', 'Cannot generate the custody receipt without a linked employee.', 'danger', True, reload_item(rec))
+        continue
+    if not custody_type:
+        action = toast('Generate PDF', 'Select a custody type before generating the receipt.', 'warning', True, reload_item(rec))
+        continue
+    if not custody_type.x_uses_company_id_document and custody_type.x_category != 'company_id_card':
+        action = toast('Generate PDF', 'F-0011 generation is enabled only for the Company ID Card custody type in this slice.', 'warning', False, reload_item(rec))
+        continue
+    if not company_doc:
+        action = toast('Generate PDF', 'Select the employee Company ID Document before generating F-0011.', 'warning', True, reload_item(rec))
+        continue
+    if company_doc.x_employee_id and company_doc.x_employee_id.id != employee.id:
+        action = toast('Generate PDF', 'The selected Company ID Document belongs to a different employee.', 'danger', True, reload_item(rec))
+        continue
+    if company_doc.x_document_type != 'company_id_card':
+        action = toast('Generate PDF', 'The selected identification document is not a Company ID Card.', 'warning', True, reload_item(rec))
+        continue
+
+    generated_on = datetime.datetime.now()
+    issued_on = rec.x_issued_on or datetime.date.today()
+    form_code = 'MCEP-HR-F0011'
+
+    vals = {
+        'x_issued_on': issued_on,
+        'x_state': 'draft' if not rec.x_state else rec.x_state,
+    }
+    if not rec.x_reference_code:
+        vals['x_reference_code'] = '%s-EMP-%05d-%05d' % (form_code, employee.id, rec.id)
+    if not rec.x_document_reference:
+        vals['x_document_reference'] = vals.get('x_reference_code') or rec.x_reference_code
+    if not rec.x_item_identifier:
+        vals['x_item_identifier'] = company_doc.x_document_number or company_doc.x_name or company_doc.display_name
+    if not rec.x_responsible_user_id:
+        vals['x_responsible_user_id'] = env.user.id
+    if not rec.x_quantity:
+        vals['x_quantity'] = 1
+    if rec.x_clearance_required is False:
+        vals['x_clearance_required'] = True
+    if not rec.x_clearance_status:
+        vals['x_clearance_status'] = 'pending'
+
+    if vals:
+        rec.write(vals)
+        rec = rec.sudo().browse(rec.id)
+
+    report_xmlid = 'hr_employment_custom.action_report_mcep_employee_custody_f0011_company_id_receipt'
+    pdf_content, _content_type = env['ir.actions.report'].sudo()._render_qweb_pdf(report_xmlid, [rec.id])
+
+    filename = '%s - Company ID Card Receipt.pdf' % (rec.x_document_reference or form_code)
+
+    attachment = env['ir.attachment'].sudo().create({
+        'name': filename,
+        'type': 'binary',
+        'raw': pdf_content,
+        'mimetype': 'application/pdf',
+        'res_model': rec._name,
+        'res_id': rec.id,
+    })
+
+    rec.write({
+        'x_pdf_attachment_id': attachment.id,
+        'x_generated_on': generated_on,
+        'x_state': 'generated',
+    })
+
+    employee.message_post(
+        body='تم توليد نموذج استلام البطاقة التعريفية F-0011 وربطه بسجل الموظف.',
+        subtype_xmlid='mail.mt_note',
+        attachment_ids=[attachment.id],
+    )
+
+    action = toast('Generate PDF', 'F-0011 Company ID Card Receipt was generated and posted to the employee record.', 'success', False, reload_item(rec))
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+        <record id="action_employee_custody_download_generated_pdf" model="ir.actions.server">
+            <field name="name">Download Generated PDF</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_custody_item"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+for rec in records.sudo():
+    attachment = rec.x_pdf_attachment_id
+    if attachment:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Download Generated PDF',
+                'message': 'No generated PDF is linked to this custody item yet.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>
