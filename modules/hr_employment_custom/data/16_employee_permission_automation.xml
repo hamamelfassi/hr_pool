@@ -43,7 +43,7 @@ for rec in records.sudo():
 
     if not rec.x_document_reference:
         emp_part = employee.id if employee else 0
-        vals['x_document_reference'] = '%s-EMP-%05d-%05d' % (form_code, emp_part, rec.id)
+        vals['x_document_reference'] = '%s-%05d-%05d' % (form_code, emp_part, rec.id)
 
     document_reference = vals.get('x_document_reference') or rec.x_document_reference or ''
     normalized_name = '%s - %s - %s' % (employee_name, type_name, document_reference or rec.id)
@@ -106,7 +106,7 @@ for rec in records.sudo():
 
     if not rec.x_document_reference:
         emp_part = employee.id if employee else 0
-        vals['x_document_reference'] = '%s-EMP-%05d-%05d' % (form_code, emp_part, rec.id)
+        vals['x_document_reference'] = '%s-%05d-%05d' % (form_code, emp_part, rec.id)
 
     document_reference = vals.get('x_document_reference') or rec.x_document_reference or ''
     normalized_name = '%s - %s - %s' % (employee_name, type_name, document_reference or rec.id)

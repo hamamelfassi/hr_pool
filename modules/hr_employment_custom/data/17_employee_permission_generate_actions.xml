@@ -77,7 +77,9 @@ for rec in records.sudo():
 
     document_reference = rec.x_document_reference
     if not document_reference:
-        document_reference = '%s-EMP-%05d-%05d' % (form_code, emp_part, rec.id)
+        document_reference = '%s-%05d-%05d' % (form_code, emp_part, rec.id)
+    elif '-EMP-' in document_reference:
+        document_reference = document_reference.replace('-EMP-', '-', 1)
 
     vals = {
         'x_state': rec.x_state or 'draft',

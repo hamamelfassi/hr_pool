@@ -28,37 +28,37 @@
 
                     <style>
                         .mcep-permission-page {
-                            font-size: 13.6px;
-                            line-height: 1.16;
-                            padding-top: 4mm;
-                            padding-bottom: 1mm;
+                            font-size: 15.8px;
+                            line-height: 1.30;
+                            padding-top: 5mm;
+                            padding-bottom: 3mm;
                         }
 
                         .mcep-permission-page .mcep-emp-header {
-                            margin-bottom: 2.5mm;
+                            margin-bottom: 3.5mm;
                         }
 
                         .mcep-permission-title {
                             text-align: center;
-                            font-size: 25px;
+                            font-size: 29px;
                             font-weight: 700;
-                            margin: 1mm 0 0.5mm 0;
+                            margin: 1.5mm 0 1mm 0;
                         }
 
                         .mcep-permission-subtitle {
                             text-align: center;
                             direction: ltr;
                             unicode-bidi: isolate;
-                            font-size: 15.5px;
+                            font-size: 18px;
                             font-weight: 700;
-                            margin: 0 0 3mm 0;
+                            margin: 0 0 4.2mm 0;
                         }
 
                         .mcep-permission-section {
-                            font-size: 15.5px;
+                            font-size: 18px;
                             font-weight: 700;
-                            margin: 2.5mm 0 1.2mm 0;
-                            padding: 1.1mm 1.6mm;
+                            margin: 3.6mm 0 1.8mm 0;
+                            padding: 1.7mm 2mm;
                             background: #eef2f7;
                             border: 1px solid #9aa4b2;
                             text-align: right;
@@ -69,16 +69,16 @@
                             width: 100%;
                             border-collapse: collapse;
                             table-layout: fixed;
-                            margin-bottom: 2.4mm;
-                            font-size: 13.4px;
+                            margin-bottom: 3.2mm;
+                            font-size: 15.6px;
                         }
 
                         .mcep-permission-table th,
                         .mcep-permission-table td {
                             border: 1px solid #6b7280;
-                            padding: 1.15mm 1.35mm;
+                            padding: 1.7mm 1.9mm;
                             vertical-align: middle;
-                            line-height: 1.14;
+                            line-height: 1.28;
                         }
 
                         .mcep-permission-table th {
@@ -88,7 +88,7 @@
                         }
 
                         .mcep-permission-value {
-                            min-height: 5mm;
+                            min-height: 7mm;
                             text-align: center;
                             font-weight: 600;
                         }
@@ -96,36 +96,36 @@
                         .mcep-permission-en {
                             direction: ltr;
                             unicode-bidi: isolate;
-                            font-size: 11px;
+                            font-size: 12.6px;
                             color: #374151;
                         }
 
                         .mcep-permission-reason-box {
-                            min-height: 21mm;
+                            min-height: 33mm;
                             border: 1px solid #6b7280;
-                            padding: 1.8mm;
-                            margin-bottom: 2.4mm;
+                            padding: 2.5mm;
+                            margin-bottom: 3.2mm;
                             white-space: pre-wrap;
                             text-align: right;
                             direction: rtl;
-                            line-height: 1.15;
-                            font-size: 13.6px;
+                            line-height: 1.32;
+                            font-size: 15.8px;
                         }
 
                         .mcep-permission-sign-table {
                             width: 100%;
                             border-collapse: collapse;
                             table-layout: fixed;
-                            font-size: 12.8px;
-                            margin-top: 1.2mm;
+                            font-size: 15px;
+                            margin-top: 2mm;
                         }
 
                         .mcep-permission-sign-table th,
                         .mcep-permission-sign-table td {
                             border: 1px solid #6b7280;
-                            padding: 1.15mm 1.35mm;
+                            padding: 1.7mm 1.9mm;
                             vertical-align: middle;
-                            line-height: 1.12;
+                            line-height: 1.26;
                         }
 
                         .mcep-permission-sign-title {
@@ -135,7 +135,7 @@
                         }
 
                         .mcep-permission-sign-line {
-                            height: 8.7mm;
+                            height: 12.5mm;
                         }
 
                         .mcep-permission-date-line {
@@ -293,7 +293,7 @@
                             <td class="mcep-permission-date-line" colspan="2">____ / ____ / ________</td>
                         </tr>
                     </table>
-                </div>
+
                 </div>
             </t>
         </t>
