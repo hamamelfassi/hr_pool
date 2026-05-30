@@ -38,6 +38,7 @@ The first implementation baseline also adds a thin employee identification docum
 - `03_employee_form_tabs_and_ui_doctrine.md`
 - `04_mobile_artifacts_chatter_and_activities.md`
 - `05_pass_15_plus_roadmap.md`
+- `pass18_execution_plan.md`
 
 ## Related handover documents
 
@@ -65,17 +66,20 @@ Implemented and accepted:
 - artifact download buttons;
 - Arabic translation polish using exported Odoo PO anchors.
 
-Next implementation pass:
+Current implementation pass:
 
 ```text
-Pass 16 — Custody and assets
+Pass 18 — Administrative permissions F-0014/F-0015
 ```
+
+Pass 18 uses `x_hr.employee_permission_type` and `x_hr.employee_permission` to implement Exit Permission and Lateness Permission before the deferred leave overlay pass.
 
 ## Current execution plans
 
 - `pass15_execution_plan.md` — employee identification and declarations foundation.
 - `pass16_execution_plan.md` — custody and assets foundation; closed and accepted.
-- `pass17_execution_plan.md` — training and certifications; next implementation pass.
+- `pass17_execution_plan.md` — training and certifications; closed and accepted.
+- `pass18_execution_plan.md` — administrative permissions F-0014/F-0015; current implementation pass.
 
 Pass 17 note:
 

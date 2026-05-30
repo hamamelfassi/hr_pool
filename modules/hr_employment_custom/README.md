@@ -2,15 +2,29 @@
 
 Marsellia employee lifecycle extension module.
 
-Pass 15B creates only the employee Identification tab/model:
-
-- no standalone app menu;
-- no declaration lifecycle yet;
-- no QWeb reports yet;
-- no Sign send/sync actions yet;
-- no recruitment handover patch yet.
-
 The module extends native `hr.employee` and keeps native Odoo HR as the operational source of truth.
+
+Implemented and accepted so far:
+
+- employee identification tab/model;
+- employee declaration process model and F-0010/F-0013/F-0021/F-0022 PDF/Sign lifecycle;
+- custody type/item model and F-0011 PDF/Sign lifecycle;
+- training type/course/employee training commitment model and F-0008 PDF/Sign lifecycle.
+
+Current implementation pass:
+
+```text
+Pass 18 — Administrative permissions F-0014/F-0015
+```
+
+Pass 18 uses one helper/type model and one operational model:
+
+```text
+x_hr.employee_permission_type
+x_hr.employee_permission
+```
+
+Attendance, leave, payroll, work-entry, approval-request, and GRC decision-instance effects remain deferred.
 
 ## Pass 17F backlog note — dynamic record-value Arabic translation hardening
 

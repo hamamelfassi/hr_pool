@@ -66,21 +66,23 @@ Status: next implementation pass.
 - skill/certification mapping;
 - future payroll/finance recovery hooks.
 
-## Pass 18 — Leave requests
+## Pass 18 — Administrative permissions F-0014/F-0015
+
+- `x_hr.employee_permission_type`;
+- `x_hr.employee_permission`;
+- exactly two seeded permission types: Exit Permission and Lateness Permission;
+- type-routed F-0014/F-0015 QWeb/PDF generation;
+- same employee tab, artifact, chatter/files, and native Sign lifecycle pattern accepted in Passes 15–17;
+- no attendance, leave, payroll, work-entry, disciplinary, or deduction side effects in the first implementation.
+
+## Pass 19 — Leave requests
 
 - extend native `hr.leave`;
 - Marsellia leave fields;
 - official leave QWeb form;
 - optional Sign layer;
-- activities for HR/manager/GM review.
-
-## Pass 19 — Administrative permissions
-
-- `x_hr.employee_permission_type`;
-- `x_hr.employee_permission_request`;
-- configurable type behavior;
-- optional `approval.request` linkage;
-- future attendance/work-entry effects.
+- activities for HR/manager/GM review;
+- remains deferred until explicitly started after the permissions pass.
 
 ## Pass 20 — Work assignments
 
@@ -300,3 +302,23 @@ Accepted residual deferral:
 - Arabic translation for training selection-state values remains incomplete in the live UI and will be fixed later using exact exported `ir.model.fields.selection` anchors.
 - Dynamic record-value Arabic PDF hardening remains deferred. Future official Arabic-first PDF generation should force Arabic render context and block generation with a specific toast when required Arabic record translations are missing.
 - F-0008 thumbprint remains outside system workflow. No thumbprint fields, uploads, Sign items, or lifecycle states were introduced.
+
+## Pass 18A scope lock — Administrative permissions before leave
+
+Pass 18 is now locked as the administrative permissions implementation for F-0014 Exit Permission and F-0015 Lateness Permission.
+
+This corrects the earlier roadmap ordering that placed leave before administrative permissions. The immediate implementation order is:
+
+```text
+Pass 18 — Administrative permissions F-0014/F-0015
+Pass 19 — Leave requests, unless later rescheduled
+```
+
+Pass 18 must use one helper/type model and one operational model:
+
+```text
+x_hr.employee_permission_type
+x_hr.employee_permission
+```
+
+The first implementation remains bounded to document lifecycle, QWeb/PDF generation, native Sign, chatter/files, and manual approval metadata only. Attendance, leave, payroll, work-entry, approval-request, and GRC decision-instance integrations are deferred.

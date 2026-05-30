@@ -531,8 +531,10 @@ GM approval where required
 
 ```text
 x_hr.employee_permission_type
-x_hr.employee_permission_request
+x_hr.employee_permission
 ```
+
+The older planning name `x_hr.employee_permission_request` is superseded for Pass 18 by the shorter operational model name `x_hr.employee_permission`.
 
 ### Purpose
 
@@ -557,30 +559,41 @@ x_creates_approval_request
 x_notes
 ```
 
-### Permission request fields
+### Permission record fields
+
+Pass 18 starts with the fields required by F-0014 and F-0015, plus the standard artifact/sign/manual-decision family:
 
 ```text
 x_employee_id
 x_permission_type_id
-x_request_date
-x_from_datetime
-x_to_datetime
-x_duration_hours
-x_location
+x_permission_date
+x_time_from
+x_time_to
 x_reason
-x_attachment_id
+x_employee_notes
 x_state
-x_approval_request_id
-x_manager_user_id
+x_reference_code
+x_document_reference
+x_direct_manager_user_id
 x_hr_user_id
-x_general_manager_user_id
+x_responsible_user_id
 x_pdf_attachment_id
 x_signed_attachment_id
 x_sign_certificate_attachment_id
+x_sign_request_res_id
+x_sign_request_state
+x_sign_request_reference
+x_sign_request_url
+x_generated_on
+x_sent_on
+x_signed_on
 x_manual_decision_number
 x_manual_decision_date
 x_manual_decision_attachment_id
+x_notes
 ```
+
+Do not add `x_approval_request_id`, attendance-effect fields, payroll-effect fields, or leave-deduction fields in the first Pass 18 implementation unless explicitly rescoped.
 
 ### Approvals app doctrine
 
@@ -888,8 +901,8 @@ Pass 13J — Recruitment handover update to populate employee identification lin
 Pass 15C+ — Employee declarations using thin declaration records and employee/identity source values
 Pass 16 — Custody and assets
 Pass 17 — Training and certifications
-Pass 18 — Leave requests
-Pass 19 — Administrative permissions
+Pass 18 — Administrative permissions F-0014/F-0015
+Pass 19 — Leave requests
 Pass 20 — Work assignments
 Pass 21 — Performance evaluation
 Pass 22 — Separation request
@@ -1016,3 +1029,36 @@ Accepted residual deferral:
 - Arabic translation for training selection-state values remains incomplete in the live UI and will be fixed later using exact exported `ir.model.fields.selection` anchors.
 - Dynamic record-value Arabic PDF hardening remains deferred. Future official Arabic-first PDF generation should force Arabic render context and block generation with a specific toast when required Arabic record translations are missing.
 - F-0008 thumbprint remains outside system workflow. No thumbprint fields, uploads, Sign items, or lifecycle states were introduced.
+
+## Pass 18 implementation boundary addendum — Administrative Permissions F-0014/F-0015
+
+Pass 18 implements the employee administrative permission forms:
+
+```text
+MCEP-HR-F-0014 — Exit Permission
+MCEP-HR-F-0015 — Lateness Permission
+```
+
+The two uploaded forms share the same structural fields: personal employee data, permission date, from/to time period, reason, employee signature, direct manager approval, and HR approval.
+
+Pass 18 therefore uses one typed operational process rather than two separate process models:
+
+```text
+x_hr.employee_permission_type
+x_hr.employee_permission
+```
+
+Seed only two permission types in the first pass:
+
+```text
+exit_permission     → MCEP-HR-F-0014
+lateness_permission → MCEP-HR-F-0015
+```
+
+The initial lifecycle is the standard document/signature lifecycle:
+
+```text
+draft → generated → signature_requested → signed
+```
+
+Manager and HR approval blocks are represented as form fields/manual metadata in the first implementation. Do not implement attendance, leave, payroll, work-entry, approval-request, disciplinary, deduction, or GRC decision-instance effects in Pass 18.
