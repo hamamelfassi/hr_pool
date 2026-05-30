@@ -34,6 +34,8 @@
         "data/12_employee_training_automation.xml",
         "data/13_employee_training_generate_actions.xml",
         "data/14_employee_training_sign_actions.xml",
+        "data/15_employee_permission_type_data.xml",
+        "data/16_employee_permission_automation.xml",
         "views/01_employee_identification_views.xml",
         "views/02_employee_declaration_views.xml",
         "views/03_employee_custody_views.xml",

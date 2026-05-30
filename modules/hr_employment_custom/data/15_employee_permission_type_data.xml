@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="employee_permission_type_exit_permission" model="x_hr.employee_permission_type">
+            <field name="x_active" eval="True"/>
+            <field name="x_name">Exit Permission</field>
+            <field name="x_code">exit_permission</field>
+            <field name="x_form_code">MCEP-HR-F-0014</field>
+            <field name="x_form_title">Exit Permission</field>
+            <field name="x_description">Employee temporary exit permission form.</field>
+            <field name="x_requires_from_to_time" eval="True"/>
+            <field name="x_requires_direct_manager_approval" eval="True"/>
+            <field name="x_requires_hr_approval" eval="True"/>
+            <field name="x_notes">Seeded Pass 18C type for MCEP-HR-F-0014. Arabic translations should be applied later through the exported Odoo PO workflow.</field>
+        </record>
+
+        <record id="employee_permission_type_lateness_permission" model="x_hr.employee_permission_type">
+            <field name="x_active" eval="True"/>
+            <field name="x_name">Lateness Permission</field>
+            <field name="x_code">lateness_permission</field>
+            <field name="x_form_code">MCEP-HR-F-0015</field>
+            <field name="x_form_title">Lateness Permission</field>
+            <field name="x_description">Employee lateness permission form.</field>
+            <field name="x_requires_from_to_time" eval="True"/>
+            <field name="x_requires_direct_manager_approval" eval="True"/>
+            <field name="x_requires_hr_approval" eval="True"/>
+            <field name="x_notes">Seeded Pass 18C type for MCEP-HR-F-0015. Arabic translations should be applied later through the exported Odoo PO workflow.</field>
+        </record>
+
+    </data>
+</odoo>
