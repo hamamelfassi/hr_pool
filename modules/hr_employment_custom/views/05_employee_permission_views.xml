@@ -120,10 +120,20 @@
                             string="Generate PDF"
                             class="btn btn-primary"
                             invisible="x_state in ('signature_requested', 'signed')"/>
+                        <button name="%(action_employee_permission_send_sign)d"
+                            type="action"
+                            string="Send to Sign"
+                            class="btn btn-secondary"
+                            invisible="x_state != 'generated' or x_sign_request_res_id"/>
+                        <button name="%(action_employee_permission_sync_sign)d"
+                            type="action"
+                            string="Sync"
+                            class="btn btn-secondary"
+                            invisible="not x_sign_request_res_id"/>
                     </div>
                     <!-- MCEP permission action rows end -->
                     <div class="alert alert-info" role="alert">
-                        Employee permissions cover F-0014 Exit Permission and F-0015 Lateness Permission. PDF generation and Odoo Sign lifecycle will be added in later Pass 18 slices.
+                        Employee permissions cover F-0014 Exit Permission and F-0015 Lateness Permission. PDF generation and three-role Odoo Sign lifecycle are handled on this permission record.
                     </div>
                     <group>
                         <field name="x_employee_id" options="{'no_create': True, 'no_create_edit': True}"/>
@@ -241,7 +251,7 @@
                                 </div>
                                 <!-- MCEP permission action rows end -->
                                 <div class="alert alert-info" role="alert">
-                                    Employee permissions cover F-0014 Exit Permission and F-0015 Lateness Permission. PDF generation and Odoo Sign lifecycle will be added in later Pass 18 slices.
+                                    Employee permissions cover F-0014 Exit Permission and F-0015 Lateness Permission. PDF generation and three-role Odoo Sign lifecycle are handled on this permission record.
                                 </div>
                                 <group>
                                     <field name="x_employee_id" readonly="1" force_save="1"/>

@@ -29,6 +29,7 @@
  'data/15_employee_permission_type_data.xml',
  'data/16_employee_permission_automation.xml',
  'data/17_employee_permission_generate_actions.xml',
+ 'data/18_employee_permission_sign_actions.xml',
  'views/01_employee_identification_views.xml',
  'views/02_employee_declaration_views.xml',
  'views/03_employee_custody_views.xml',
