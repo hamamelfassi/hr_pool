@@ -103,6 +103,28 @@
                             icon="fa-download"
                             class="btn btn-secondary"
                             invisible="not x_pdf_attachment_id"/>
+                        <button name="%(action_employee_custody_send_f0011_sign)d"
+                            type="action"
+                            string="Send to Sign"
+                            class="btn btn-secondary"
+                            invisible="x_state != 'generated' or not x_pdf_attachment_id or x_sign_request_res_id"/>
+                        <button name="%(action_employee_custody_sync_f0011_sign)d"
+                            type="action"
+                            string="Sync"
+                            class="btn btn-secondary"
+                            invisible="not x_pdf_attachment_id or not x_sign_request_res_id"/>
+                        <button name="%(action_employee_custody_download_signed_pdf)d"
+                            type="action"
+                            string="Download Signed PDF"
+                            icon="fa-download"
+                            class="btn btn-secondary"
+                            invisible="not x_signed_attachment_id"/>
+                        <button name="%(action_employee_custody_download_sign_certificate)d"
+                            type="action"
+                            string="Download Sign Certificate"
+                            icon="fa-download"
+                            class="btn btn-secondary"
+                            invisible="not x_sign_certificate_attachment_id"/>
                     </div>
                     <group>
                         <field name="x_employee_id" options="{'no_create': True, 'no_create_edit': True}"/>
@@ -241,6 +263,28 @@
                                         icon="fa-download"
                                         class="btn btn-secondary"
                                         invisible="not x_pdf_attachment_id"/>
+                                    <button name="%(action_employee_custody_send_f0011_sign)d"
+                                        type="action"
+                                        string="Send to Sign"
+                                        class="btn btn-secondary"
+                                        invisible="x_state != 'generated' or not x_pdf_attachment_id or x_sign_request_res_id"/>
+                                    <button name="%(action_employee_custody_sync_f0011_sign)d"
+                                        type="action"
+                                        string="Sync"
+                                        class="btn btn-secondary"
+                                        invisible="not x_pdf_attachment_id or not x_sign_request_res_id"/>
+                                    <button name="%(action_employee_custody_download_signed_pdf)d"
+                                        type="action"
+                                        string="Download Signed PDF"
+                                        icon="fa-download"
+                                        class="btn btn-secondary"
+                                        invisible="not x_signed_attachment_id"/>
+                                    <button name="%(action_employee_custody_download_sign_certificate)d"
+                                        type="action"
+                                        string="Download Sign Certificate"
+                                        icon="fa-download"
+                                        class="btn btn-secondary"
+                                        invisible="not x_sign_certificate_attachment_id"/>
                                 </div>
                                 <group>
                                     <field name="x_employee_id" readonly="1" force_save="1"/>
