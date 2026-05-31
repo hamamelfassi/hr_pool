@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="action_employee_clearance_request_send_sign" model="ir.actions.server">
+            <field name="name">Send to Sign</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_clearance_request"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+sign_template_model = env['sign.template'].sudo()
+sign_document_model = env['sign.document'].sudo()
+sign_item_model = env['sign.item'].sudo()
+sign_item_type_model = env['sign.item.type'].sudo()
+sign_role_model = env['sign.item.role'].sudo()
+sign_send_model = env['sign.send.request'].sudo()
+sign_send_signer_model = env['sign.send.request.signer'].sudo()
+sign_request_model = env['sign.request'].sudo()
+partner_model = env['res.partner'].sudo()
+
+action = False
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def reload_clearance(rec):
+    view = env.ref('hr_employment_custom.view_employee_clearance_request_form', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Employee Clearance Request',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+def get_or_create_role(name):
+    role = sign_role_model.search([('name', '=', name)], order='id asc', limit=1)
+    if role:
+        return role
+    return sign_role_model.create({'name': name})
+
+
+def find_sign_type(xmlid, fallback_name, fallback_item_type=False):
+    item_type = env.ref(xmlid, raise_if_not_found=False)
+    if item_type:
+        return item_type
+
+    domain = [('name', '=', fallback_name)]
+    if fallback_item_type and 'item_type' in sign_item_type_model._fields:
+        domain = ['|', ('item_type', '=', fallback_item_type), ('name', '=', fallback_name)]
+
+    return sign_item_type_model.search(domain, order='id asc', limit=1)
+
+
+def user_partner(user):
+    if not user:
+        return False
+
+    partner = user.partner_id.sudo() if user.partner_id else False
+    if partner:
+        return partner
+
+    email = user.email or user.login or False
+
+    if email:
+        partner = partner_model.search([('email', '=', email)], order='id asc', limit=1)
+
+    if not partner and email:
+        partner = partner_model.create({
+            'name': user.name or email,
+            'email': email,
+        })
+
+    return partner
+
+
+def employee_partner(employee):
+    if not employee:
+        return False
+
+    partner = False
+
+    if 'work_contact_id' in employee._fields and employee.work_contact_id:
+        partner = employee.work_contact_id.sudo()
+
+    if not partner and 'user_id' in employee._fields and employee.user_id and employee.user_id.partner_id:
+        partner = employee.user_id.partner_id.sudo()
+
+    email = employee.work_email if 'work_email' in employee._fields else False
+
+    if not partner and email:
+        partner = partner_model.search([('email', '=', email)], order='id asc', limit=1)
+
+    if not partner and email:
+        partner = partner_model.create({
+            'name': employee.name or email,
+            'email': email,
+        })
+
+    return partner
+
+
+def signer_order_vals(order):
+    vals = {'mail_sent_order': order}
+    for optional_field in ('sequence', 'sign_order'):
+        if optional_field in sign_send_signer_model._fields:
+            vals[optional_field] = order
+    return vals
+
+
+signature_type = find_sign_type('sign.sign_item_type_signature', 'Signature', 'signature')
+date_type = find_sign_type('sign.sign_item_type_date', 'Date', 'date')
+checkbox_type = find_sign_type('sign.sign_item_type_checkbox', 'Checkbox', 'checkbox')
+
+if not signature_type:
+    action = toast('Odoo Sign setup missing', 'Signature field type was not found.', 'warning', True)
+elif not date_type:
+    action = toast('Odoo Sign setup missing', 'Date field type was not found.', 'warning', True)
+elif not checkbox_type:
+    action = toast('Odoo Sign setup missing', 'Checkbox field type was not found. Please confirm the checkbox Sign item type external ID in this Odoo database.', 'warning', True)
+else:
+    assigned_role = get_or_create_role('Assigned Department Clearance')
+    it_role = get_or_create_role('IT Clearance')
+    stores_role = get_or_create_role('Stores Clearance')
+    transport_role = get_or_create_role('Transport Clearance')
+    finance_role = get_or_create_role('Finance Clearance')
+    hr_clearance_role = get_or_create_role('HR Clearance')
+    hr_final_role = get_or_create_role('HR Responsible')
+    gm_role = get_or_create_role('General Manager')
+
+    for rec in records.sudo():
+        employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+
+        if rec.x_state == 'signed' or rec.x_signed_attachment_id:
+            action = toast('Already signed', 'This clearance request is already signed.', 'warning', False, reload_clearance(rec))
+            continue
+
+        if rec.x_sign_request_res_id:
+            existing_request = sign_request_model.browse(rec.x_sign_request_res_id)
+            if existing_request.exists() and (existing_request.state or '') not in ('cancelled', 'canceled'):
+                action = toast('Duplicate Sign request blocked', 'An active Odoo Sign request already exists for this clearance request. Use Sync instead.', 'warning', True, reload_clearance(rec))
+                continue
+
+        if rec.x_state != 'generated' or not rec.x_pdf_attachment_id:
+            action = toast('Generate PDF first', 'Generate the clearance request PDF before sending it to Odoo Sign.', 'warning', False, reload_clearance(rec))
+            continue
+
+        if not employee:
+            action = toast('Missing employee', 'This clearance request has no linked employee.', 'warning', True, reload_clearance(rec))
+            continue
+
+        if len(rec.x_clearance_line_ids) != 11:
+            action = toast('Missing clearance rows', 'This clearance request must contain exactly 11 seeded clearance rows before Sign.', 'warning', True, reload_clearance(rec))
+            continue
+
+        required_employee_signers = [
+            ('Assigned Department Responsible Employee', rec.x_assigned_department_responsible_employee_id, assigned_role, 1),
+            ('IT Responsible Employee', rec.x_it_responsible_employee_id, it_role, 2),
+            ('Stores Responsible Employee', rec.x_stores_responsible_employee_id, stores_role, 3),
+            ('Transport Responsible Employee', rec.x_transport_responsible_employee_id, transport_role, 4),
+            ('Finance Responsible Employee', rec.x_finance_responsible_employee_id, finance_role, 5),
+            ('HR Clearance Responsible Employee', rec.x_hr_clearance_responsible_employee_id, hr_clearance_role, 6),
+        ]
+
+        signer_map = []
+        signer_partners = {}
+
+        missing_employee_signers = []
+        missing_employee_emails = []
+
+        for label, responsible_employee, role, order in required_employee_signers:
+            if not responsible_employee:
+                missing_employee_signers.append(label)
+                continue
+
+            partner = employee_partner(responsible_employee.sudo())
+            if not partner or not partner.email:
+                missing_employee_emails.append(label)
+                continue
+
+            signer_map.append((role, partner, order))
+            signer_partners[label] = partner
+
+        if missing_employee_signers:
+            action = toast('Missing clearance responsible employees', 'Set these responsible employees before sending to Sign: %s.' % ', '.join(missing_employee_signers), 'warning', True, reload_clearance(rec))
+            continue
+
+        if missing_employee_emails:
+            action = toast('Missing responsible employee emails', 'These responsible employees need a work contact, user partner, or work email before Sign: %s.' % ', '.join(missing_employee_emails), 'warning', True, reload_clearance(rec))
+            continue
+
+        hr_user = rec.x_hr_user_id.sudo() if rec.x_hr_user_id else False
+        if not hr_user and 'hr_responsible_id' in employee._fields and employee.hr_responsible_id:
+            hr_user = employee.hr_responsible_id.sudo()
+
+        if not hr_user:
+            action = toast('Missing HR responsible user', 'Set HR Responsible User before sending this clearance request to Sign.', 'warning', True, reload_clearance(rec))
+            continue
+
+        hr_partner = user_partner(hr_user)
+        if not hr_partner or not hr_partner.email:
+            action = toast('Missing HR responsible email', 'The HR Responsible User needs a partner/email before sending this clearance request to Sign.', 'warning', True, reload_clearance(rec))
+            continue
+
+        gm_user = rec.x_general_manager_user_id.sudo() if rec.x_general_manager_user_id else False
+        if not gm_user:
+            action = toast('Missing general manager user', 'Set General Manager User before sending this clearance request to Sign.', 'warning', True, reload_clearance(rec))
+            continue
+
+        gm_partner = user_partner(gm_user)
+        if not gm_partner or not gm_partner.email:
+            action = toast('Missing general manager email', 'The General Manager User needs a partner/email before sending this clearance request to Sign.', 'warning', True, reload_clearance(rec))
+            continue
+
+        signer_map.append((hr_final_role, hr_partner, 7))
+        signer_map.append((gm_role, gm_partner, 8))
+
+        rec.write({
+            'x_hr_user_id': hr_user.id,
+            'x_general_manager_user_id': gm_user.id,
+        })
+
+        pdf_attachment = rec.x_pdf_attachment_id.sudo()
+        form_code = rec.x_reference_code or 'MCEP-HR-F-0020'
+        form_title = 'Clearance Request'
+        filename = pdf_attachment.name or ('%s - %s.pdf' % (rec.x_document_reference or form_code, form_title))
+        sent_on = datetime.datetime.now()
+        validity_date = datetime.date.today() + datetime.timedelta(days=60)
+
+        sign_template = sign_template_model.create({
+            'name': filename,
+            'user_id': env.user.id,
+            'signature_request_validity': 60,
+        })
+
+        sign_document = sign_document_model.create({
+            'template_id': sign_template.id,
+            'attachment_id': pdf_attachment.id,
+            'name': filename,
+            'sequence': 1,
+        })
+
+        # F-0020 locked page-1 geometry after Pass 23D-2 PDF acceptance.
+        # Coordinates are normalized fractions of the PDF page.
+
+        checkbox_items = [
+            (assigned_role, 'Assigned Department - Work Tools Verified', 0.478, 0.356),
+            (assigned_role, 'Assigned Department - Assigned Duties Verified', 0.478, 0.382),
+
+            (it_role, 'IT - Equipment Returned Verified', 0.478, 0.445),
+            (it_role, 'IT - Accounts Deactivated Verified', 0.478, 0.471),
+
+            (stores_role, 'Stores - Field Equipment Returned Verified', 0.478, 0.534),
+
+            (transport_role, 'Transport - Vehicle or Custody Returned Verified', 0.478, 0.597),
+
+            (finance_role, 'Finance - Final Settlement Verified', 0.478, 0.660),
+            (finance_role, 'Finance - Loans and Advances Cleared Verified', 0.478, 0.686),
+
+            (hr_clearance_role, 'HR Clearance - ID Card Returned Verified', 0.478, 0.749),
+            (hr_clearance_role, 'HR Clearance - Employee Record Closure Verified', 0.478, 0.775),
+            (hr_clearance_role, 'HR Clearance - Personal Documents Handover Verified', 0.478, 0.801),
+        ]
+
+        section_signature_items = [
+            (assigned_role, 'Assigned Department Signature', 'Assigned Department Signing Date', 0.418, 0.407, 0.178, 0.411),
+            (it_role, 'IT Signature', 'IT Signing Date', 0.418, 0.496, 0.178, 0.500),
+            (stores_role, 'Stores Signature', 'Stores Signing Date', 0.418, 0.559, 0.178, 0.563),
+            (transport_role, 'Transport Signature', 'Transport Signing Date', 0.418, 0.622, 0.178, 0.626),
+            (finance_role, 'Finance Signature', 'Finance Signing Date', 0.418, 0.711, 0.178, 0.715),
+            (hr_clearance_role, 'HR Clearance Signature', 'HR Clearance Signing Date', 0.418, 0.826, 0.178, 0.830),
+        ]
+
+        final_signature_items = [
+            (hr_final_role, 'HR Responsible Signature', 'HR Responsible Signing Date', 0.640, 0.904, 0.660, 0.927),
+            (gm_role, 'General Manager Signature', 'General Manager Signing Date', 0.195, 0.904, 0.215, 0.927),
+        ]
+
+        for role, item_name, pos_x, pos_y in checkbox_items:
+            sign_item_model.create({
+                'document_id': sign_document.id,
+                'type_id': checkbox_type.id,
+                'responsible_id': role.id,
+                'page': 1,
+                'posX': pos_x,
+                'posY': pos_y,
+                'width': 0.025,
+                'height': 0.018,
+                'required': True,
+                'name': item_name,
+                'alignment': 'left',
+                'constant': False,
+            })
+
+        for role, sign_name, date_name, sign_x, sign_y, date_x, date_y in section_signature_items:
+            sign_item_model.create({
+                'document_id': sign_document.id,
+                'type_id': signature_type.id,
+                'responsible_id': role.id,
+                'page': 1,
+                'posX': sign_x,
+                'posY': sign_y,
+                'width': 0.165,
+                'height': 0.026,
+                'required': True,
+                'name': sign_name,
+                'alignment': 'left',
+                'constant': False,
+            })
+            sign_item_model.create({
+                'document_id': sign_document.id,
+                'type_id': date_type.id,
+                'responsible_id': role.id,
+                'page': 1,
+                'posX': date_x,
+                'posY': date_y,
+                'width': 0.165,
+                'height': 0.020,
+                'required': True,
+                'name': date_name,
+                'alignment': 'left',
+                'constant': False,
+            })
+
+        for role, sign_name, date_name, sign_x, sign_y, date_x, date_y in final_signature_items:
+            sign_item_model.create({
+                'document_id': sign_document.id,
+                'type_id': signature_type.id,
+                'responsible_id': role.id,
+                'page': 1,
+                'posX': sign_x,
+                'posY': sign_y,
+                'width': 0.245,
+                'height': 0.030,
+                'required': True,
+                'name': sign_name,
+                'alignment': 'left',
+                'constant': False,
+            })
+            sign_item_model.create({
+                'document_id': sign_document.id,
+                'type_id': date_type.id,
+                'responsible_id': role.id,
+                'page': 1,
+                'posX': date_x,
+                'posY': date_y,
+                'width': 0.170,
+                'height': 0.020,
+                'required': True,
+                'name': date_name,
+                'alignment': 'left',
+                'constant': False,
+            })
+
+        subject = 'Signature Request - %s' % filename
+        body = '<p>Please review, complete the assigned clearance checkbox items, and sign the attached employee clearance form.</p>'
+
+        send_vals = {
+            'template_id': sign_template.id,
+            'signer_id': signer_map[0][1].id,
+            'subject': subject,
+            'body': body,
+            'validity': validity_date,
+            'certificate_reference': False,
+            'reminder_enabled': False,
+            'model': 'x_hr.employee_clearance_request',
+            'res_ids': str([rec.id]),
+        }
+        if 'set_sign_order' in sign_send_model._fields:
+            send_vals['set_sign_order'] = True
+
+        send_request = sign_send_model.create(send_vals)
+
+        for role, partner, order in signer_map:
+            signer_line = send_request.signer_ids.filtered(lambda line: line.role_id.id == role.id)[:1]
+            ordered_vals = signer_order_vals(order)
+            ordered_vals['partner_id'] = partner.id
+            if signer_line:
+                signer_line.sudo().write(ordered_vals)
+            else:
+                create_vals = signer_order_vals(order)
+                create_vals.update({
+                    'sign_send_request_id': send_request.id,
+                    'role_id': role.id,
+                    'partner_id': partner.id,
+                })
+                sign_send_signer_model.create(create_vals)
+
+        if 'set_sign_order' in send_request._fields:
+            send_request.sudo().write({'set_sign_order': True})
+
+        send_request.send_request()
+
+        generated_request = sign_request_model.search([
+            ('template_id', '=', sign_template.id),
+        ], order='create_date desc, id desc', limit=1)
+
+        if generated_request:
+            rec.write({
+                'x_state': 'signature_requested',
+                'x_sent_on': sent_on,
+                'x_sign_request_res_id': generated_request.id,
+                'x_sign_request_state': generated_request.state or 'sent',
+                'x_sign_request_reference': generated_request.reference or filename,
+                'x_sign_request_url': '/odoo/sign/%s' % generated_request.id,
+                'x_responsible_user_id': env.user.id,
+                'x_notes': ((rec.x_notes or '') + '\nNative Odoo Sign request created for %s on %s. Request ID: %s. Eight-role clearance sequence with eleven checkbox items was initialized.' % (form_code, sent_on, generated_request.id)).strip(),
+            })
+
+            employee.message_post(
+                body='تم إرسال نموذج إخلاء الطرف %s للتوقيع عبر توقيع أودو. رقم طلب التوقيع: %s.' % (form_code, generated_request.id),
+                subtype_xmlid='mail.mt_note',
+                attachment_ids=[pdf_attachment.id],
+            )
+
+            action = toast('Sent to Sign', '%s was sent to the six clearance responsible employees, HR responsible user, and general manager.' % form_title, 'success', False, reload_clearance(rec))
+        else:
+            action = toast('Sign request not found', 'Odoo Sign send was executed, but the resulting sign.request could not be located. Use Sync after checking Sign Requests.', 'warning', True, reload_clearance(rec))
+
+        break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+        <record id="action_employee_clearance_request_sync_sign" model="ir.actions.server">
+            <field name="name">Sync</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_clearance_request"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+sign_request_model = env['sign.request'].sudo()
+attachment_model = env['ir.attachment'].sudo()
+action = False
+
+
+def reload_clearance(rec):
+    view = env.ref('hr_employment_custom.view_employee_clearance_request_form', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Employee Clearance Request',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def looks_like_certificate(attachment):
+    name = (attachment.name or '').lower()
+    return (
+        'certificate' in name
+        or 'completion' in name
+        or 'completed' in name
+        or 'history' in name
+        or 'audit' in name
+        or 'trail' in name
+        or 'شهادة' in name
+        or 'إكمال' in name
+        or 'اكمال' in name
+    )
+
+
+for rec in records.sudo():
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+    form_code = rec.x_reference_code or 'MCEP-HR-F-0020'
+
+    if not employee:
+        action = toast('Missing employee', 'This clearance request has no linked employee.', 'warning', True, reload_clearance(rec))
+        continue
+
+    if not rec.x_sign_request_res_id:
+        action = toast('No Sign request', 'No linked Odoo Sign request was found for this clearance request.', 'warning', False, reload_clearance(rec))
+        continue
+
+    sign_request = sign_request_model.browse(rec.x_sign_request_res_id)
+    if not sign_request.exists():
+        rec.write({'x_sign_request_state': 'missing_sign_request'})
+        action = toast('Missing Sign request', 'The linked Odoo Sign request no longer exists or cannot be accessed.', 'warning', True, reload_clearance(rec))
+        continue
+
+    request_state = sign_request.state or 'unknown'
+
+    values = {
+        'x_sign_request_state': request_state,
+        'x_sign_request_reference': sign_request.reference or rec.x_sign_request_reference,
+    }
+
+    if request_state not in ('signed', 'completed'):
+        if rec.x_state != 'signature_requested':
+            values['x_state'] = 'signature_requested'
+        if not rec.x_sent_on:
+            values['x_sent_on'] = sign_request.create_date or datetime.datetime.now()
+        rec.write(values)
+        employee.message_post(
+            body='تمت مزامنة حالة توقيع نموذج إخلاء الطرف %s. الحالة الحالية: %s.' % (form_code, request_state),
+            subtype_xmlid='mail.mt_note',
+        )
+        action = toast('Sign state synced', 'Clearance request Sign state is currently: %s.' % request_state, 'warning', False, reload_clearance(rec))
+        continue
+
+    completed_attachments = sign_request.completed_document_attachment_ids
+
+    related_attachments = attachment_model.search([
+        ('res_model', '=', 'sign.request'),
+        ('res_id', '=', sign_request.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    employee_attachments = attachment_model.search([
+        ('res_model', '=', 'hr.employee'),
+        ('res_id', '=', employee.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    request_attachments = attachment_model.search([
+        ('res_model', '=', rec._name),
+        ('res_id', '=', rec.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    all_attachments = completed_attachments | related_attachments | employee_attachments | request_attachments
+
+    signed_native = False
+    certificate_native = False
+
+    for attachment in all_attachments:
+        if rec.x_pdf_attachment_id and attachment.id == rec.x_pdf_attachment_id.id:
+            continue
+        if looks_like_certificate(attachment):
+            if not certificate_native:
+                certificate_native = attachment
+        elif not signed_native:
+            signed_native = attachment
+
+    if not signed_native:
+        rec.write({
+            'x_sign_request_state': 'signed_no_business_document_found',
+            'x_notes': ((rec.x_notes or '') + '\nOdoo Sign request %s is signed, but no signed business PDF was found during clearance request sync on %s.' % (sign_request.id, datetime.datetime.now())).strip(),
+        })
+        action = toast('Signed PDF not found', 'The Sign request is signed, but the completed signed PDF was not found yet. Try Sync again after Odoo finishes processing.', 'warning', True, reload_clearance(rec))
+        continue
+
+    signed_copy = rec.x_signed_attachment_id
+    if signed_copy and looks_like_certificate(signed_copy):
+        signed_copy = False
+    if signed_copy and rec.x_pdf_attachment_id and signed_copy.id == rec.x_pdf_attachment_id.id:
+        signed_copy = False
+
+    if not signed_copy:
+        signed_name = signed_native.name or ('Signed %s - %s.pdf' % (form_code, employee.name or rec.x_document_reference or rec.id))
+        if signed_native.res_model == 'hr.employee' and signed_native.res_id == employee.id:
+            signed_copy = signed_native
+        else:
+            signed_copy = signed_native.copy({
+                'name': signed_name,
+                'res_model': 'hr.employee',
+                'res_id': employee.id,
+            })
+
+    certificate_copy = rec.x_sign_certificate_attachment_id
+    if not certificate_copy and certificate_native:
+        certificate_name = certificate_native.name or ('Sign Certificate %s - %s.pdf' % (form_code, employee.name or rec.x_document_reference or rec.id))
+        if certificate_native.res_model == 'hr.employee' and certificate_native.res_id == employee.id:
+            certificate_copy = certificate_native
+        else:
+            certificate_copy = certificate_native.copy({
+                'name': certificate_name,
+                'res_model': 'hr.employee',
+                'res_id': employee.id,
+            })
+
+    signed_on = False
+    if sign_request.write_date:
+        signed_on = sign_request.write_date
+
+    signer_items = sign_request.request_item_ids.filtered(lambda item: item.state == 'completed')
+    for signer_item in signer_items:
+        if signer_item.write_date and (not signed_on or signer_item.write_date > signed_on):
+            signed_on = signer_item.write_date
+
+    if not signed_on and sign_request.completion_date:
+        signed_on = datetime.datetime.combine(sign_request.completion_date, datetime.time(12, 0, 0))
+
+    if not signed_on:
+        signed_on = datetime.datetime.now()
+
+    write_vals = {
+        'x_state': 'signed',
+        'x_signed_on': signed_on,
+        'x_signed_attachment_id': signed_copy.id,
+        'x_sign_request_state': request_state,
+        'x_sign_request_reference': sign_request.reference or rec.x_sign_request_reference,
+        'x_sign_request_url': rec.x_sign_request_url or ('/odoo/sign/%s' % sign_request.id),
+        'x_notes': ((rec.x_notes or '') + '\nNative Odoo Sign completion synced for %s on %s. Sign request ID: %s. Signed artifact: %s.' % (form_code, datetime.datetime.now(), sign_request.id, signed_copy.name)).strip(),
+    }
+
+    if not rec.x_sent_on:
+        write_vals['x_sent_on'] = sign_request.create_date or signed_on
+
+    if certificate_copy:
+        write_vals['x_sign_certificate_attachment_id'] = certificate_copy.id
+
+    rec.write(write_vals)
+
+    attachment_ids = [signed_copy.id]
+    if certificate_copy:
+        attachment_ids.append(certificate_copy.id)
+
+    employee.message_post(
+        body='تم توقيع نموذج إخلاء الطرف %s عبر توقيع أودو وربط النسخة الموقعة والشهادة، عند توفرها، بسجل الموظف.' % form_code,
+        subtype_xmlid='mail.mt_note',
+        attachment_ids=attachment_ids,
+    )
+
+    action = toast('Clearance request signed', 'Clearance request Sign result was synced and the signed PDF was copied to the employee record.', 'success', False, reload_clearance(rec))
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>
