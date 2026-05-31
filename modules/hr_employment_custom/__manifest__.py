@@ -42,6 +42,7 @@
  'data/25_employee_work_assignment_sign_actions.xml',
  'data/26_employee_performance_evaluation_automation.xml',
  'data/27_employee_performance_evaluation_create_actions.xml',
+ 'data/28_employee_performance_evaluation_generate_actions.xml',
  'views/01_employee_identification_views.xml',
  'views/02_employee_declaration_views.xml',
  'views/03_employee_custody_views.xml',
@@ -66,5 +67,7 @@
  'report/14_employee_leave_templates.xml',
  'report/15_employee_leave_report_actions.xml',
  'report/16_employee_work_assignment_templates.xml',
- 'report/17_employee_work_assignment_report_actions.xml'],
+ 'report/17_employee_work_assignment_report_actions.xml',
+ 'report/18_employee_performance_evaluation_templates.xml',
+ 'report/19_employee_performance_evaluation_report_actions.xml'],
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="action_report_mcep_employee_performance_evaluation" model="ir.actions.report">
+            <field name="name">Employee Performance Evaluation Form</field>
+            <field name="model">x_hr.employee_performance_evaluation</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">hr_employment_custom.report_mcep_employee_performance_evaluation_document</field>
+            <field name="report_file">hr_employment_custom.report_mcep_employee_performance_evaluation_document</field>
+            <field name="paperformat_id" ref="hr_employment_custom.paperformat_mcep_employee_declaration_a4"/>
+            <field name="attachment_use" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

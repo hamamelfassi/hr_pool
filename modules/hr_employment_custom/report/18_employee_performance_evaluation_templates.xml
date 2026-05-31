@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_mcep_employee_performance_evaluation_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <head>
+                    <meta charset="UTF-8"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                </head>
+
+                <t t-set="employee" t-value="o.x_employee_id"/>
+                <t t-set="form_code" t-value="o.x_reference_code or 'MCEP-HR-F-0018'"/>
+                <t t-set="form_title_en" t-value="'Performance Evaluation'"/>
+                <t t-set="form_title_ar" t-value="'تقييم أداء الموظف'"/>
+                <t t-set="employee_number" t-value="(employee.registration_number if 'registration_number' in employee._fields else '') or (employee.barcode if 'barcode' in employee._fields else '') or employee.id or ''"/>
+                <t t-set="job_title" t-value="(employee.job_title if 'job_title' in employee._fields else '') or (employee.job_id.name if 'job_id' in employee._fields and employee.job_id else '') or ''"/>
+                <t t-set="department_name" t-value="employee.department_id.name if employee.department_id else ''"/>
+                <t t-set="manager_name" t-value="employee.parent_id.name if employee.parent_id else (o.x_direct_manager_user_id.name or '')"/>
+                <t t-set="hr_name" t-value="o.x_hr_user_id.name or ''"/>
+                <t t-set="gm_name" t-value="o.x_general_manager_user_id.name or ''"/>
+                <t t-set="grade_ar" t-value="{'not_scored': 'غير مقيم', 'acceptable': 'مقبول', 'good': 'جيد', 'very_good': 'جيد جدًا', 'excellent': 'ممتاز'}.get(o.x_grade, o.x_grade or '')"/>
+                <t t-set="grade_en" t-value="{'not_scored': 'Not Scored', 'acceptable': 'Acceptable', 'good': 'Good', 'very_good': 'Very Good', 'excellent': 'Excellent'}.get(o.x_grade, o.x_grade or '')"/>
+                <t t-set="stars" t-value="{'0': '☆☆☆☆☆', '1': '★☆☆☆☆', '2': '★★☆☆☆', '3': '★★★☆☆', '4': '★★★★☆', '5': '★★★★★'}.get(o.x_star_rating, '☆☆☆☆☆')"/>
+
+                <t t-call="hr_employment_custom.mcep_employee_report_assets"/>
+
+                <div class="page mcep-emp-page mcep-performance-page">
+                    <t t-set="page_label" t-value="'Page 1 / 1'"/>
+                    <t t-call="hr_employment_custom.mcep_employee_report_header"/>
+
+                    <style>
+                        .mcep-performance-page {
+                            font-size: 14.2px;
+                            line-height: 1.22;
+                            padding-top: 4.5mm;
+                            padding-bottom: 2.5mm;
+                        }
+
+                        .mcep-performance-page .mcep-emp-header {
+                            margin-bottom: 3mm;
+                        }
+
+                        .mcep-performance-title {
+                            text-align: center;
+                            font-size: 28px;
+                            font-weight: 700;
+                            margin: 1.2mm 0 0.8mm 0;
+                        }
+
+                        .mcep-performance-subtitle {
+                            text-align: center;
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 18px;
+                            font-weight: 700;
+                            margin: 0 0 3.4mm 0;
+                        }
+
+                        .mcep-performance-section {
+                            font-size: 16px;
+                            font-weight: 700;
+                            margin: 2.5mm 0 1.2mm 0;
+                            padding: 1.4mm 2mm;
+                            background: #eef2f7;
+                            border: 1px solid #9aa4b2;
+                            text-align: right;
+                            direction: rtl;
+                        }
+
+                        .mcep-performance-section .en {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 11.2px;
+                            color: #374151;
+                        }
+
+                        .mcep-performance-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            table-layout: fixed;
+                            margin-bottom: 2.3mm;
+                            font-size: 13.1px;
+                        }
+
+                        .mcep-performance-table th,
+                        .mcep-performance-table td {
+                            border: 1px solid #6b7280;
+                            padding: 1.3mm 1.6mm;
+                            vertical-align: middle;
+                            line-height: 1.18;
+                        }
+
+                        .mcep-performance-table th {
+                            background: #f8fafc;
+                            font-weight: 700;
+                            text-align: center;
+                        }
+
+                        .mcep-performance-value {
+                            min-height: 5.8mm;
+                            text-align: center;
+                            font-weight: 600;
+                        }
+
+                        .mcep-performance-en {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 10.6px;
+                            color: #374151;
+                        }
+
+                        .mcep-performance-items {
+                            width: 100%;
+                            border-collapse: collapse;
+                            table-layout: fixed;
+                            margin-bottom: 2mm;
+                            font-size: 11.8px;
+                        }
+
+                        .mcep-performance-items th,
+                        .mcep-performance-items td {
+                            border: 1px solid #6b7280;
+                            padding: 0.95mm 1mm;
+                            vertical-align: middle;
+                            line-height: 1.12;
+                        }
+
+                        .mcep-performance-items th {
+                            background: #f8fafc;
+                            font-weight: 700;
+                            text-align: center;
+                        }
+
+                        .mcep-performance-item-label {
+                            text-align: right;
+                            direction: rtl;
+                            font-weight: 600;
+                        }
+
+                        .mcep-performance-item-en {
+                            display: block;
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 9.7px;
+                            color: #374151;
+                            margin-top: 0.2mm;
+                        }
+
+                        .mcep-performance-score-cell {
+                            text-align: center;
+                            font-size: 15.5px;
+                            font-weight: 700;
+                        }
+
+                        .mcep-performance-result-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            table-layout: fixed;
+                            margin-bottom: 2mm;
+                            font-size: 12.5px;
+                        }
+
+                        .mcep-performance-result-table th,
+                        .mcep-performance-result-table td {
+                            border: 1px solid #6b7280;
+                            padding: 1mm 1.2mm;
+                            vertical-align: middle;
+                            text-align: center;
+                            line-height: 1.08;
+                        }
+
+                        .mcep-performance-grade-cell {
+                            font-weight: 700;
+                            font-size: 13.6px;
+                        }
+
+                        .mcep-performance-stars {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 19px;
+                            letter-spacing: 0.45mm;
+                        }
+
+                        .mcep-performance-rec-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            table-layout: fixed;
+                            font-size: 12.1px;
+                            margin-bottom: 2.3mm;
+                        }
+
+                        .mcep-performance-rec-table th,
+                        .mcep-performance-rec-table td {
+                            border: 1px solid #6b7280;
+                            padding: 1.3mm 1.6mm;
+                            vertical-align: top;
+                            line-height: 1.20;
+                        }
+
+                        .mcep-performance-rec-title {
+                            background: #f8fafc;
+                            text-align: center;
+                            font-weight: 700;
+                        }
+
+                        .mcep-performance-rec-box {
+                            min-height: 18mm;
+                            white-space: pre-wrap;
+                            direction: rtl;
+                            text-align: right;
+                        }
+
+                        .mcep-performance-sign-line {
+                            height: 10.8mm;
+                        }
+
+                        .mcep-performance-date-line {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            text-align: center;
+                        }
+                    </style>
+
+                    <div class="mcep-performance-title">
+                        <span t-out="form_title_ar"/>
+                    </div>
+                    <div class="mcep-performance-subtitle">
+                        <span t-out="form_title_en"/>
+                    </div>
+
+                    <div class="mcep-performance-section">
+                        أولًا: المعلومات الشخصية
+                        <span class="en">Personal Information</span>
+                    </div>
+
+                    <table class="mcep-performance-table">
+                        <tr>
+                            <th style="width: 20%;">الاسم الكامل<br/><span class="mcep-performance-en">Full Name</span></th>
+                            <td style="width: 30%;"><div class="mcep-performance-value"><span t-out="employee.name or ''"/></div></td>
+                            <th style="width: 20%;">الرقم الوظيفي<br/><span class="mcep-performance-en">Employee ID</span></th>
+                            <td style="width: 30%;"><div class="mcep-performance-value"><span t-out="employee_number"/></div></td>
+                        </tr>
+                        <tr>
+                            <th>المسمى الوظيفي<br/><span class="mcep-performance-en">Job Title</span></th>
+                            <td><div class="mcep-performance-value"><span t-out="job_title"/></div></td>
+                            <th>القسم / الإدارة<br/><span class="mcep-performance-en">Department</span></th>
+                            <td><div class="mcep-performance-value"><span t-out="department_name"/></div></td>
+                        </tr>
+                        <tr>
+                            <th>المدير المباشر<br/><span class="mcep-performance-en">Direct Manager</span></th>
+                            <td><div class="mcep-performance-value"><span t-out="manager_name"/></div></td>
+                            <th>عن الفترة<br/><span class="mcep-performance-en">For the Period</span></th>
+                            <td>
+                                <div class="mcep-performance-value">
+                                    من <span t-out="o.x_period_date_from or ''"/> إلى <span t-out="o.x_period_date_to or ''"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="mcep-performance-section">
+                        ثانيًا: التقييم
+                        <span class="en">Evaluation</span>
+                    </div>
+
+                    <table class="mcep-performance-items">
+                        <thead>
+                            <tr>
+                                <th style="width: 7%;">ترقيم<br/><span class="mcep-performance-en">No.</span></th>
+                                <th style="width: 48%;">العناصر (بنود)<br/><span class="mcep-performance-en">Evaluation Items</span></th>
+                                <th style="width: 9%;">5</th>
+                                <th style="width: 9%;">4</th>
+                                <th style="width: 9%;">3</th>
+                                <th style="width: 9%;">2</th>
+                                <th style="width: 9%;">1</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="o.x_line_ids.sorted(key=lambda l: l.x_sequence or 0)" t-as="line">
+                                <td style="text-align:center;"><strong><span t-out="line.x_sequence or ''"/></strong></td>
+                                <td class="mcep-performance-item-label">
+                                    <span t-out="line.x_item_label_ar or ''"/>
+                                    <span class="mcep-performance-item-en" t-out="line.x_item_label_en or ''"/>
+                                </td>
+                                <td class="mcep-performance-score-cell"><span t-out="'☑' if line.x_score == 5 else '☐'"/></td>
+                                <td class="mcep-performance-score-cell"><span t-out="'☑' if line.x_score == 4 else '☐'"/></td>
+                                <td class="mcep-performance-score-cell"><span t-out="'☑' if line.x_score == 3 else '☐'"/></td>
+                                <td class="mcep-performance-score-cell"><span t-out="'☑' if line.x_score == 2 else '☐'"/></td>
+                                <td class="mcep-performance-score-cell"><span t-out="'☑' if line.x_score == 1 else '☐'"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="mcep-performance-result-table">
+                        <tr>
+                            <th style="width: 22%;">النتيجة النهائية<br/><span class="mcep-performance-en">Final Result</span></th>
+                            <td style="width: 16%;"><strong><span t-out="o.x_total_score or 0"/> / 60</strong></td>
+                            <th style="width: 18%;">النسبة<br/><span class="mcep-performance-en">Percentage</span></th>
+                            <td style="width: 14%;"><strong><span t-out="'%.2f' % (o.x_score_percentage or 0.0)"/>%</strong></td>
+                            <th style="width: 14%;">التقدير<br/><span class="mcep-performance-en">Grade</span></th>
+                            <td style="width: 16%;" class="mcep-performance-grade-cell">
+                                <span t-out="grade_ar"/> / <span t-out="grade_en"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>التقييم النجمي<br/><span class="mcep-performance-en">Star Rating</span></th>
+                            <td colspan="5" class="mcep-performance-stars">
+                                <span t-out="stars"/>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table class="mcep-performance-result-table">
+                        <tr>
+                            <th>التقدير<br/><span class="mcep-performance-en">Grade</span></th>
+                            <td>ممتاز <span class="mcep-performance-en">Excellent</span> <strong><span t-out="'☑' if o.x_grade == 'excellent' else '☐'"/></strong></td>
+                            <td>جيد جدًا <span class="mcep-performance-en">Very Good</span> <strong><span t-out="'☑' if o.x_grade == 'very_good' else '☐'"/></strong></td>
+                            <td>جيد <span class="mcep-performance-en">Good</span> <strong><span t-out="'☑' if o.x_grade == 'good' else '☐'"/></strong></td>
+                            <td>مقبول <span class="mcep-performance-en">Acceptable</span> <strong><span t-out="'☑' if o.x_grade == 'acceptable' else '☐'"/></strong></td>
+                        </tr>
+                    </table>
+
+                    <div class="mcep-performance-section">
+                        ثالثًا: التوصيات والاعتماد
+                        <span class="en">Recommendations and Approval</span>
+                    </div>
+
+                    <table class="mcep-performance-rec-table">
+                        <tr>
+                            <th class="mcep-performance-rec-title" style="width: 50%;">
+                                توصيات المدير المباشر
+                                <span class="mcep-performance-en">Direct Manager's Recommendations</span>
+                            </th>
+                            <th class="mcep-performance-rec-title" style="width: 50%;">
+                                توصيات مدير الموارد البشرية
+                                <span class="mcep-performance-en">HR Manager's Recommendations</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td><div class="mcep-performance-rec-box"><span t-out="o.x_direct_manager_recommendation or ''"/></div></td>
+                            <td><div class="mcep-performance-rec-box"><span t-out="o.x_hr_manager_recommendation or ''"/></div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                توقيع المدير المباشر
+                                <span class="mcep-performance-en">Direct Manager's Signature</span>
+                            </td>
+                            <td>
+                                توقيع مدير الموارد البشرية
+                                <span class="mcep-performance-en">HR Manager's Signature</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="mcep-performance-sign-line">
+                                <span t-out="manager_name"/>
+                            </td>
+                            <td class="mcep-performance-sign-line">
+                                <span t-out="hr_name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="mcep-performance-date-line">____ / ____ / ________</td>
+                            <td class="mcep-performance-date-line">____ / ____ / ________</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                اعتماد المدير العام
+                                <span class="mcep-performance-en">General Manager Approval</span>
+                                <span t-if="gm_name"> — <span t-out="gm_name"/></span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

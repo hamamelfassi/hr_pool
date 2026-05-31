@@ -60,11 +60,92 @@
                         options="{'clickable': false}"
                         statusbar_visible="draft,generated,signature_requested,signed"
                         readonly="1"/>
+                    <button type="action"
+                        name="%(action_employee_performance_evaluation_download_generated_pdf)d"
+                        string=""
+                        title="Download Generated PDF"
+                        icon="fa-download"
+                        class="btn-link"
+                        invisible="not x_pdf_attachment_id"/>
+                    <button type="action"
+                        name="%(action_employee_performance_evaluation_download_signed_pdf)d"
+                        string=""
+                        title="Download Signed PDF"
+                        icon="fa-file-pdf-o"
+                        class="btn-link"
+                        invisible="not x_signed_attachment_id"/>
+                    <button type="action"
+                        name="%(action_employee_performance_evaluation_download_sign_certificate)d"
+                        string=""
+                        title="Download Sign Certificate"
+                        icon="fa-certificate"
+                        class="btn-link"
+                        invisible="not x_sign_certificate_attachment_id"/>
                 </header>
                 <sheet>
                     <div class="alert alert-info" role="alert">
                         Performance evaluations cover F-0018. This slice adds the controlled evaluation surface only; line seeding, scoring, validation, PDF generation, and Odoo Sign actions come next.
                     </div>
+
+                    <!-- MCEP performance evaluation unified controls start -->
+
+                    <div class="mcep-performance-evaluation-controls" style="width: 100%; margin: 12px 0 18px 0;">
+
+                        <div class="o_horizontal_separator">Workflow and Artifacts</div>
+
+                        <div style="display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 8px;">
+
+                            <button name="%(action_employee_performance_evaluation_generate_pdf)d"
+
+                                type="action"
+
+                                string="Generate PDF"
+
+                                class="btn btn-primary"
+
+                                invisible="x_state in ('signature_requested', 'signed')"/>
+
+                            <button type="action"
+
+                                name="%(action_employee_performance_evaluation_download_generated_pdf)d"
+
+                                string="Generated PDF"
+
+                                icon="fa-download"
+
+                                class="btn btn-secondary"
+
+                                invisible="not x_pdf_attachment_id"/>
+
+                            <button type="action"
+
+                                name="%(action_employee_performance_evaluation_download_signed_pdf)d"
+
+                                string="Signed PDF"
+
+                                icon="fa-file-pdf-o"
+
+                                class="btn btn-secondary"
+
+                                invisible="not x_signed_attachment_id"/>
+
+                            <button type="action"
+
+                                name="%(action_employee_performance_evaluation_download_sign_certificate)d"
+
+                                string="Certificate"
+
+                                icon="fa-certificate"
+
+                                class="btn btn-secondary"
+
+                                invisible="not x_sign_certificate_attachment_id"/>
+
+                        </div>
+
+                    </div>
+
+                    <!-- MCEP performance evaluation unified controls end -->
                     <group>
                         <field name="x_employee_id" options="{'no_create': True, 'no_create_edit': True}"/>
                         <field name="x_name" readonly="1"/>
@@ -80,7 +161,7 @@
                         <field name="x_max_score" readonly="1"/>
                         <field name="x_score_percentage" readonly="1"/>
                         <field name="x_grade" readonly="1"/>
-                        <field name="x_star_rating" readonly="1"/>
+                        <field name="x_star_rating" widget="priority" readonly="1"/>
                     </group>
                     <group string="Evaluation Items" col="1" colspan="2">
                         <field name="x_line_ids" nolabel="1" readonly="x_state != 'draft'">
@@ -213,6 +294,66 @@
                                 <div class="alert alert-info" role="alert">
                                     Performance evaluations cover F-0018. This slice adds the controlled evaluation surface only; line seeding, scoring, validation, PDF generation, and Odoo Sign actions come next.
                                 </div>
+
+                                <!-- MCEP performance evaluation unified controls start -->
+
+                                <div class="mcep-performance-evaluation-controls" style="width: 100%; margin: 12px 0 18px 0;">
+
+                                    <div class="o_horizontal_separator">Workflow and Artifacts</div>
+
+                                    <div style="display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 8px;">
+
+                                        <button name="%(action_employee_performance_evaluation_generate_pdf)d"
+
+                                            type="action"
+
+                                            string="Generate PDF"
+
+                                            class="btn btn-primary"
+
+                                            invisible="x_state in ('signature_requested', 'signed')"/>
+
+                                        <button type="action"
+
+                                            name="%(action_employee_performance_evaluation_download_generated_pdf)d"
+
+                                            string="Generated PDF"
+
+                                            icon="fa-download"
+
+                                            class="btn btn-secondary"
+
+                                            invisible="not x_pdf_attachment_id"/>
+
+                                        <button type="action"
+
+                                            name="%(action_employee_performance_evaluation_download_signed_pdf)d"
+
+                                            string="Signed PDF"
+
+                                            icon="fa-file-pdf-o"
+
+                                            class="btn btn-secondary"
+
+                                            invisible="not x_signed_attachment_id"/>
+
+                                        <button type="action"
+
+                                            name="%(action_employee_performance_evaluation_download_sign_certificate)d"
+
+                                            string="Certificate"
+
+                                            icon="fa-certificate"
+
+                                            class="btn btn-secondary"
+
+                                            invisible="not x_sign_certificate_attachment_id"/>
+
+                                    </div>
+
+                                </div>
+
+                                <!-- MCEP performance evaluation unified controls end -->
                                 <group>
                                     <field name="x_employee_id" readonly="1" force_save="1"/>
                                     <field name="x_name" readonly="1"/>
@@ -228,7 +369,7 @@
                                     <field name="x_max_score" readonly="1"/>
                                     <field name="x_score_percentage" readonly="1"/>
                                     <field name="x_grade" readonly="1"/>
-                                    <field name="x_star_rating" readonly="1"/>
+                                    <field name="x_star_rating" widget="priority" readonly="1"/>
                                 </group>
                                 <group string="Evaluation Items" col="1" colspan="2">
                         <field name="x_line_ids" nolabel="1" readonly="x_state != 'draft'">
