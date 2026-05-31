@@ -554,3 +554,36 @@ Native `hr.leave` is not the first-pass artifact lifecycle source. It is a later
 The generated/signed/certificate fields live on `x_hr.employee_leave_request`, and final signed artifacts must be posted to employee chatter/files.
 
 Bridge fields such as `x_native_leave_id` may exist on the custom source record, but the source record remains the documentary approval authority for the official Marsellia form.
+
+<!-- PASS19_LEAVE_ARTIFACT_SIGN_START -->
+## Pass 19 F-0016 artifact and Sign pattern
+
+F-0016 Leave Request follows the accepted custom process artifact doctrine:
+
+1. Generate QWeb PDF from the source request record.
+2. Store the generated PDF on `x_pdf_attachment_id`.
+3. Post the generated PDF to employee chatter/files.
+4. Create a dynamic Odoo Sign template/document/items from the generated PDF.
+5. Send the Sign request to four sequential roles.
+6. Sync the completed signed PDF and certificate back to the employee record.
+
+Signer sequence:
+
+    1. Employee
+    2. Direct Manager
+    3. HR Responsible
+    4. General Manager
+
+Locked F-0016 Sign coordinates:
+
+| Role | Signature posX | Signature posY | Width | Height | Date posX | Date posY |
+|---|---:|---:|---:|---:|---:|---:|
+| Employee | `0.515` | `0.790` | `0.220` | `0.028` | `0.555` | `0.817` |
+| Direct Manager | `0.080` | `0.790` | `0.220` | `0.028` | `0.115` | `0.817` |
+| HR Responsible | `0.515` | `0.888` | `0.220` | `0.028` | `0.555` | `0.914` |
+| General Manager | `0.080` | `0.888` | `0.220` | `0.028` | `0.115` | `0.914` |
+
+Duplicate active Sign requests are blocked. Sync remains the explicit recovery/control action for in-flight and completed requests.
+
+No native `hr.leave` bridge action is included in the Sign slice.
+<!-- PASS19_LEAVE_ARTIFACT_SIGN_END -->

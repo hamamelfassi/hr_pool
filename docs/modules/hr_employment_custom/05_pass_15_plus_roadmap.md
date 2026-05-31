@@ -397,3 +397,31 @@ Pass 19 — Leave requests
 
 Pass 19 remains the next expected pass, but implementation should pause until the leave-specific scope, form guidance, and surgical constraints are confirmed by the user.
 <!-- PASS18G_ROADMAP_CLOSURE_END -->
+
+<!-- PASS19_ROADMAP_CLOSURE_START -->
+## Pass 19 closure and next-cycle rebaseline
+
+Pass 19 — Leave Requests / F-0016 — is closed.
+
+Accepted pass result:
+
+- custom Marsellia leave policy helper;
+- custom Marsellia leave request process record;
+- native `hr.work.entry.type` mapping target for safe future bridge;
+- F-0016 generated PDF;
+- four-role Odoo Sign lifecycle;
+- Arabic UI and QWeb translation lock;
+- native `hr.leave` bridge deliberately deferred.
+
+Deferred leave bridge cycle:
+
+- create native `hr.leave` from signed Marsellia request;
+- decide whether Emergency Leave needs a dedicated native Time Off type;
+- test native Time Off states and validation safely;
+- connect allocations/accruals only after policy/legal computation is scoped;
+- compute Friday/Saturday weekend exclusions only after calendar policy is locked;
+- compute public holidays only after public holiday source-of-truth is locked;
+- integrate payroll/work-entry effects only in a later payroll/work-entry pass.
+
+Next pass is not launched by this closure. Start the next implementation thread/slice only after new user scope instructions are provided.
+<!-- PASS19_ROADMAP_CLOSURE_END -->

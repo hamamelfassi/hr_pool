@@ -483,3 +483,30 @@ Required pattern:
 - workflow/artifact controls inside the form sheet if header controls become crowded;
 - manual balance verification fields grouped clearly;
 - future native `hr.leave` bridge fields hidden or in a technical group until the bridge slice is explicitly implemented.
+
+<!-- PASS19_LEAVE_UI_DOCTRINE_START -->
+## Pass 19 leave UI doctrine
+
+The accepted Leave tab follows the same pattern used by Permissions, Training, Custody, and Declarations:
+
+- employee tab on `hr.employee`;
+- explanatory info alert;
+- add/new button;
+- embedded list;
+- controlled modal form;
+- standalone list/form actions;
+- statusbar at top;
+- artifact download icons in the header where clean;
+- full-width `Workflow and Artifacts` strip inside the sheet for modal parity;
+- operational buttons below the statusbar, not hidden in machine views;
+- generated/signed/certificate attachment metadata retained on the source record;
+- employee chatter/files used as the durable artifact access layer.
+
+The Leave configuration menu is intentionally placed under:
+
+    Employees / Configuration / Leave
+
+as a root-level configuration section, not buried under the Employee subsection.
+
+Arabic UI delivery remains PO-based. Source XML stays English.
+<!-- PASS19_LEAVE_UI_DOCTRINE_END -->

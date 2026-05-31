@@ -520,3 +520,139 @@ Carried forward:
 - Use exact exported PO anchors for state translations.
 - Use employee chatter/files as the mobile-safe artifact layer.
 - Calibrate Sign geometry only after PDF acceptance.
+
+<!-- PASS19G_CLOSURE_START -->
+## Pass 19G closure — accepted leave request baseline
+
+Pass 19 is closed and accepted.
+
+Accepted implementation summary:
+
+- Pass 19A — documentation posture lock: Leave is implemented as a custom Marsellia official request process, not as a direct `hr.leave` overlay.
+- Pass 19B — model and tab scaffold:
+  - `x_hr.employee_leave_type_policy`
+  - `x_hr.employee_leave_request`
+  - employee `Leave` tab
+  - controlled modal and standalone forms
+  - future native bridge fields
+- Pass 19C — leave policy seeds, normalization/defaulting, and configuration menus:
+  - Annual Leave
+  - Emergency Leave
+  - Sick Leave
+  - Unpaid Leave
+  - Compensatory Leave
+  - `hr.work.entry.type` is used only as a native Time Off mapping target.
+  - Emergency Leave is deliberately unmapped to native Time Off until a clean native policy is scoped.
+  - Leave configuration menus were moved to the root Employees / Configuration level.
+- Pass 19D — F-0016 QWeb/PDF generation:
+  - one accepted A4 one-page PDF layout
+  - generated artifact stored on request
+  - generated artifact posted to employee chatter/files
+  - no native `hr.leave` creation
+- Pass 19E — four-role Odoo Sign lifecycle:
+  - Employee
+  - Direct Manager
+  - HR Responsible
+  - General Manager
+  - signed PDF/certificate sync to employee chatter/files
+- Pass 19F — Arabic UI/QWeb translation lock:
+  - leave selection values translated from exact exported `ir.model.fields.selection` IDs
+  - leave tab/menu/action/field labels patched through exact PO anchors
+  - form section headers patched through exact view anchors
+  - QWeb state and leave category labels render in Arabic
+- Pass 19G — documentation closure.
+
+Accepted operational models:
+
+    x_hr.employee_leave_type_policy
+    x_hr.employee_leave_request
+
+Accepted native integration posture:
+
+    x_hr.employee_leave_type_policy.x_work_entry_type_id -> hr.work.entry.type
+    x_hr.employee_leave_request.x_native_leave_id        -> future hr.leave bridge target only
+
+`hr.work.entry.type` is not the Marsellia process model. It is a mapping target for future native Time Off creation.
+
+`hr.leave` is not created in Pass 19. It remains a later bridge target after the official Marsellia signed-document flow is stable.
+
+Accepted document form:
+
+    MCEP-HR-F-0016 — Leave Request
+
+Accepted document reference pattern:
+
+    MCEP-HR-F-0016-00004-00001
+
+Accepted document lifecycle:
+
+    draft -> generated -> signature_requested -> signed
+
+Accepted native leave bridge lifecycle field:
+
+    not_created -> ready -> created -> blocked -> error
+
+In Pass 19, this field remains at `not_created` unless manually changed in future bridge work. No bridge action is implemented yet.
+
+Accepted Sign sequence:
+
+    1. Employee
+    2. Direct Manager
+    3. HR Responsible
+    4. General Manager
+
+Accepted F-0016 Sign geometry after PDF calibration:
+
+| Role | Signature posX | Signature posY | Width | Height | Date posX | Date posY |
+|---|---:|---:|---:|---:|---:|---:|
+| Employee | `0.515` | `0.790` | `0.220` | `0.028` | `0.555` | `0.817` |
+| Direct Manager | `0.080` | `0.790` | `0.220` | `0.028` | `0.115` | `0.817` |
+| HR Responsible | `0.515` | `0.888` | `0.220` | `0.028` | `0.555` | `0.914` |
+| General Manager | `0.080` | `0.888` | `0.220` | `0.028` | `0.115` | `0.914` |
+
+Accepted policy seed posture:
+
+| Marsellia policy | Native mapping posture |
+|---|---|
+| Annual Leave | mapped to Odoo Paid Time Off |
+| Emergency Leave | deliberately unmapped in Pass 19 |
+| Sick Leave | mapped to Odoo Sick Time Off |
+| Unpaid Leave | mapped to Odoo Unpaid |
+| Compensatory Leave | mapped to Odoo Compensatory Time Off |
+
+Accepted side-effect boundary:
+
+- No native `hr.leave` records are created.
+- No allocations are created.
+- No accrual plans are created.
+- No payroll records are created.
+- No work entries are created.
+- No attendance records are created.
+- No `approval.request` records are created.
+- No GRC decision instances are created.
+
+Accepted UI/UX baseline:
+
+- Employee `Leave` tab.
+- `New Leave Request` button.
+- Embedded list.
+- Controlled modal create/edit form.
+- Standalone list/form actions under Employees / Configuration / Leave.
+- Statusbar at top.
+- Header artifact icons where clean.
+- Full-width in-sheet `Workflow and Artifacts` strip for modal parity.
+- Generated/Signed/Certificate download controls through `/web/content`.
+- Manual HR balance verification fields are visible and explicit.
+- Native Time Off bridge fields are visible as deferred bridge metadata, not active integration behavior.
+
+Accepted translation baseline:
+
+- Source XML labels remain English.
+- Arabic UI is delivered through `i18n/ar_001.po` anchors.
+- Leave selection values use exact exported `ir.model.fields.selection` IDs.
+- Leave tab label is `الإجازات`.
+- Root configuration Leave section label is `الإجازات`.
+- Section headers translate in the leave form.
+- QWeb renders Arabic state and leave category labels.
+- Employee/user names render from master data as stored; Arabic legal-name enrichment is deferred unless separately scoped.
+<!-- PASS19G_CLOSURE_END -->

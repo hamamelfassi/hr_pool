@@ -1273,3 +1273,37 @@ GRC decision-instance integration
 
 These remain later integration hooks only.
 <!-- PASS18G_LIFECYCLE_CLOSURE_END -->
+
+<!-- PASS19_LEAVE_LIFECYCLE_START -->
+## Pass 19 accepted leave lifecycle
+
+Pass 19 implements Marsellia official leave requests as a custom documentary process before native Odoo Time Off integration.
+
+Primary process records:
+
+    x_hr.employee_leave_type_policy
+    x_hr.employee_leave_request
+
+The leave request record owns:
+
+- official request details;
+- manual HR balance verification;
+- address/contact/acting employee data;
+- approval metadata;
+- generated PDF artifact;
+- Odoo Sign request metadata;
+- signed PDF and certificate artifacts;
+- future native `hr.leave` bridge fields.
+
+Document lifecycle:
+
+    draft -> generated -> signature_requested -> signed
+
+Native bridge lifecycle is intentionally separate:
+
+    not_created -> ready -> created -> blocked -> error
+
+The document lifecycle must not be polluted with native Time Off bridge state. The signed Marsellia document is the approved documentary evidence. Native `hr.leave` creation is deferred to a later bridge pass.
+
+Manual HR balance values are accepted in Pass 19. Automated balance, accrual, weekend, public-holiday, payroll, and native allocation computation are deferred.
+<!-- PASS19_LEAVE_LIFECYCLE_END -->

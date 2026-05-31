@@ -130,3 +130,27 @@ hr.leave = future native Time Off bridge target after signed approval
 ```
 
 The first production pass focuses on official form generation, manual HR balance verification, Odoo Sign, and employee chatter/files artifacts. Automatic balance computation, allocations/accruals, native leave validation, and payroll/work-entry effects are deferred.
+
+<!-- PASS19_README_BASELINE_START -->
+## Current baseline after Pass 19
+
+Closed and accepted passes now include:
+
+- Pass 15 — employee declarations and Sign lifecycles;
+- Pass 16 — custody/card custody lifecycle;
+- Pass 17 — training commitment lifecycle;
+- Pass 18 — administrative permissions F-0014/F-0015;
+- Pass 19 — leave request F-0016.
+
+Pass 19 implemented leave requests through custom Marsellia process records:
+
+    x_hr.employee_leave_type_policy
+    x_hr.employee_leave_request
+
+The native Odoo Time Off models remain future bridge targets:
+
+    hr.work.entry.type -> mapping target
+    hr.leave           -> future record creation target
+
+No native Time Off bridge is active in the accepted Pass 19 baseline.
+<!-- PASS19_README_BASELINE_END -->

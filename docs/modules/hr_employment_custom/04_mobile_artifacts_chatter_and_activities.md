@@ -429,3 +429,17 @@ Leave request artifacts must follow the same mobile-safe pattern as Passes 15-18
 - lifecycle truth remains on `x_hr.employee_leave_request`.
 
 Native `hr.leave` records created in a later bridge slice should link back to the custom leave request and should not become the only place where the official signed form is accessible.
+
+<!-- PASS19_LEAVE_MOBILE_ARTIFACTS_START -->
+## Pass 19 leave mobile/artifact/chatter behavior
+
+Leave request artifacts follow the mobile-safe employee record pattern:
+
+- generated PDF is posted to employee chatter/files;
+- signed PDF is copied to employee chatter/files after Sign completion sync;
+- Sign certificate is copied to employee chatter/files when exposed by Odoo Sign;
+- download controls use `/web/content/<attachment_id>?download=true`;
+- the employee record remains the durable place for HR users to find signed leave evidence.
+
+This pass does not create native `hr.leave` records, so native Time Off dashboards/reports are not treated as the artifact source of truth yet.
+<!-- PASS19_LEAVE_MOBILE_ARTIFACTS_END -->
