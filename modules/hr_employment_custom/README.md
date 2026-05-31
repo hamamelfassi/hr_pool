@@ -284,3 +284,20 @@ Signer order:
 
 Pass 22 remains a documentary governance workflow only. It does not trigger native offboarding, contract closure, payroll/final settlement, custody clearance, approval workflow, or GRC decision records.
 <!-- PASS22_MODULE_README_END -->
+
+<!-- PASS23_MODULE_README_PLAN_START -->
+## Planned Pass 23 — Employee Clearance Request
+
+Pass 23 will add the F-0020 Employee Clearance Request workflow.
+
+Planned core objects:
+
+- `x_hr.employee_clearance_request`
+- `x_hr.employee_clearance_line`
+
+Planned employee tab:
+
+    Clearance / إخلاء الطرف
+
+The pass is planned as a governed document/sign workflow only. Native custody, separation, offboarding, contract, payroll, final settlement, approval, and GRC integrations remain deferred.
+<!-- PASS23_MODULE_README_PLAN_END -->

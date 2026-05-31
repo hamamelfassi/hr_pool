@@ -839,3 +839,43 @@ Signer order:
 
 Employee and Direct Manager signer resolution is employee/contact based. HR and General Manager signer resolution remains user/partner based.
 <!-- PASS22_ACCEPTED_ARTIFACT_SIGN_END -->
+
+<!-- PASS23_PLANNED_ARTIFACT_SIGN_START -->
+## Pass 23 planned F-0020 artifact and Sign pattern
+
+F-0020 Employee Clearance Request is planned as the first employee form workflow to use Odoo Sign checkbox items for section clearance rows.
+
+Source model family:
+
+    x_hr.employee_clearance_request
+    x_hr.employee_clearance_line
+
+Native Odoo Sign checkbox type:
+
+    sign.sign_item_type_checkbox
+
+The signed PDF remains the authoritative evidence for checkbox completion in Pass 23. Automatic writeback of signed checkbox values to line records is deferred.
+
+Planned signer sequence:
+
+1. Assigned Department Responsible Employee
+2. IT Responsible Employee
+3. Stores / Inventory Responsible Employee
+4. Transport / Movement Responsible Employee
+5. Finance Responsible Employee
+6. HR Clearance Responsible Employee
+7. HR Responsible User
+8. General Manager User
+
+The first six signers are employee/contact based. HR and General Manager remain user/partner based.
+
+Each clearance section signer receives:
+
+- checkbox items for the rows in that section;
+- signature item;
+- date item.
+
+Final HR/GM approvers receive signature/date items.
+
+Sign geometry must be locked only after final accepted QWeb/PDF rendering.
+<!-- PASS23_PLANNED_ARTIFACT_SIGN_END -->

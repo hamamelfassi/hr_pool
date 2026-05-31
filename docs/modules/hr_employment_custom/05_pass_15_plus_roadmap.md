@@ -625,3 +625,31 @@ Recommended future bridge pass:
 
 That future pass should consider native offboarding, contract closure, employee archive, payroll/final settlement, leave balance, custody clearance, and GRC decision generation only after the documentary workflow remains stable in production.
 <!-- PASS22_ROADMAP_CLOSURE_END -->
+
+<!-- PASS23_ROADMAP_PLAN_START -->
+## Pass 23 planned — F-0020 Employee Clearance Request
+
+Status: Planned for implementation after Pass 22 closure.
+
+Planned scope:
+
+- one clearance request parent model;
+- one clearance line child model;
+- F-0020 Clearance tab on employee;
+- seeded clearance rows;
+- six employee-based clearance responsible persons;
+- reason for termination selection from the physical form;
+- generated F-0020 QWeb/PDF;
+- eight-role ordered Odoo Sign lifecycle;
+- native Sign checkbox items for row verification;
+- Arabic UI/selection translations.
+
+Deferred bridge scope:
+
+- custody-model coupling;
+- separation-request coupling;
+- native offboarding;
+- contract/payroll/final settlement;
+- leave/custody clearance automation;
+- approval/GRC/access-revocation side effects.
+<!-- PASS23_ROADMAP_PLAN_END -->

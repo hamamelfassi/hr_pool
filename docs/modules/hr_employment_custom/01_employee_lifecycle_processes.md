@@ -1568,3 +1568,40 @@ The direct manager signer is employee-based and derives from `hr.employee.parent
 
 Pass 22 does not create or update native offboarding, employee archive, contract, payroll, final settlement, leave balance, custody clearance, approval, project, planning, fleet, or GRC records.
 <!-- PASS22_ACCEPTED_SEPARATION_REQUEST_END -->
+
+<!-- PASS23_PLANNED_CLEARANCE_REQUEST_START -->
+## Pass 23 planned implementation — F-0020 Employee Clearance Request
+
+Pass 23 implements Marsellia F-0020 as an employee clearance form before full separation.
+
+Document identity:
+
+    MCEP-HR-F-0020
+    إخلاء طرف
+    Employee Clearance Request / Clearance Form
+
+Planned model family:
+
+    x_hr.employee_clearance_request
+    x_hr.employee_clearance_line
+
+The request uses six clearance section responsible employees linked to `hr.employee`, not `res.users`:
+
+- assigned department responsible;
+- IT responsible;
+- stores/inventory responsible;
+- transport/movement responsible;
+- finance responsible;
+- HR clearance responsible.
+
+After the six section employees complete their ordered Sign steps, the HR responsible user and General Manager user complete final approval.
+
+Planned visible lifecycle:
+
+    draft
+    generated
+    signature_requested
+    signed
+
+Pass 23 intentionally defers custody-model integration, separation-request integration, native offboarding, contract closing, payroll/final settlement, leave settlement, approval-request, GRC decision, access revocation, and automatic Sign checkbox writeback.
+<!-- PASS23_PLANNED_CLEARANCE_REQUEST_END -->

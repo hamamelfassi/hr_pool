@@ -327,3 +327,23 @@ Accepted signer sequence:
 
 Deferred integrations remain out of scope: native offboarding, contract closure, payroll/final settlement, custody clearance, approval workflows, project/planning/fleet effects, and GRC decision instances.
 <!-- PASS22_README_BASELINE_END -->
+
+<!-- PASS23_README_PLAN_START -->
+## Planned Pass 23 baseline
+
+Pass 23 is planned as the F-0020 Employee Clearance Request workflow.
+
+Planned document identity:
+
+    MCEP-HR-F-0020
+    Clearance / إخلاء الطرف
+
+Planned model family:
+
+    x_hr.employee_clearance_request
+    x_hr.employee_clearance_line
+
+The pass will implement a governed form/sign workflow with six employee-based clearance section signers, then final HR and General Manager approval signers.
+
+No custody, separation, offboarding, contract, payroll, approval, or GRC bridge behavior is planned in the first Pass 23 implementation.
+<!-- PASS23_README_PLAN_END -->

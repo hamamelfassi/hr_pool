@@ -716,3 +716,32 @@ Accepted visible sections:
 
 The Separation tab must remain a governed documentary request/sign surface only. It must not introduce native offboarding, contract closing, payroll, final settlement, custody clearance, approval, project, planning, fleet, or GRC widgets unless a later pass explicitly scopes that integration.
 <!-- PASS22_ACCEPTED_UI_END -->
+
+<!-- PASS23_PLANNED_UI_START -->
+## Pass 23 planned Clearance tab UI doctrine
+
+Planned employee tab:
+
+    Clearance / إخلاء الطرف
+
+The tab should follow the accepted governed employee-process pattern:
+
+- info alert;
+- New Clearance Request button;
+- embedded list;
+- controlled modal form;
+- standalone list/form action;
+- statusbar;
+- workflow/artifact controls;
+- header artifact download icons;
+- request details section;
+- responsible employees section;
+- full-width clearance line table;
+- lifecycle artifacts hidden section;
+- manual decision section;
+- notes section.
+
+The six section responsible fields must link to `hr.employee`. They must show employee names, not machine codes and not user IDs.
+
+The one2many clearance line table should be full-width from the first implementation to avoid the narrow-column modal issue discovered in prior passes.
+<!-- PASS23_PLANNED_UI_END -->
