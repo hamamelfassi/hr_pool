@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="action_employee_clearance_request_generate_pdf" model="ir.actions.server">
+            <field name="name">Generate PDF</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_clearance_request"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def reload_clearance(rec):
+    view = env.ref('hr_employment_custom.view_employee_clearance_request_form', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Employee Clearance Request',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+def get_joining_date(employee):
+    if not employee:
+        return False
+
+    if 'first_contract_date' in employee._fields and employee.first_contract_date:
+        return employee.first_contract_date
+
+    contract = False
+    if 'contract_id' in employee._fields and employee.contract_id:
+        contract = employee.contract_id.sudo()
+
+    if contract and 'date_start' in contract._fields and contract.date_start:
+        return contract.date_start
+
+    return False
+
+
+for rec in records.sudo():
+    if rec.x_state in ('signature_requested', 'signed'):
+        action = toast(
+            'Generate PDF',
+            'This clearance request has already entered the signature lifecycle. PDF regeneration is blocked.',
+            'warning',
+            True,
+            reload_clearance(rec),
+        )
+        continue
+
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+
+    if not employee:
+        action = toast('Generate PDF', 'Cannot generate the clearance request form without a linked employee.', 'danger', True, reload_clearance(rec))
+        continue
+
+    if not rec.x_reason_for_termination:
+        action = toast('Generate PDF', 'Select the reason for termination before generating the clearance form.', 'warning', True, reload_clearance(rec))
+        continue
+
+    if rec.x_reason_for_termination == 'other' and not rec.x_other_reason_description:
+        action = toast('Generate PDF', 'Enter the Other reason description before generating the clearance form.', 'warning', True, reload_clearance(rec))
+        continue
+
+    if not rec.x_last_working_day:
+        action = toast('Generate PDF', 'Set the last working day before generating the clearance form.', 'warning', True, reload_clearance(rec))
+        continue
+
+    lines = rec.x_clearance_line_ids.sorted(key=lambda line: line.x_sequence or 0)
+    if len(lines) != 11:
+        action = toast('Generate PDF', 'The clearance request must contain exactly 11 seeded clearance lines before PDF generation.', 'warning', True, reload_clearance(rec))
+        continue
+
+    expected_sections = {
+        'assigned_department': 2,
+        'it': 2,
+        'stores': 1,
+        'transport': 1,
+        'finance': 2,
+        'hr_clearance': 3,
+    }
+
+    for section_code, expected_count in expected_sections.items():
+        actual_count = len(lines.filtered(lambda line: line.x_section_code == section_code))
+        if actual_count != expected_count:
+            action = toast('Generate PDF', 'Clearance section %s must contain %s row(s); found %s.' % (section_code, expected_count, actual_count), 'warning', True, reload_clearance(rec))
+            break
+
+    if action:
+        continue
+
+    missing = []
+    if not rec.x_assigned_department_responsible_employee_id:
+        missing.append('Assigned Department Responsible Employee')
+    if not rec.x_it_responsible_employee_id:
+        missing.append('IT Responsible Employee')
+    if not rec.x_stores_responsible_employee_id:
+        missing.append('Stores Responsible Employee')
+    if not rec.x_transport_responsible_employee_id:
+        missing.append('Transport Responsible Employee')
+    if not rec.x_finance_responsible_employee_id:
+        missing.append('Finance Responsible Employee')
+    if not rec.x_hr_clearance_responsible_employee_id:
+        missing.append('HR Clearance Responsible Employee')
+    if not rec.x_hr_user_id:
+        missing.append('HR Responsible User')
+    if not rec.x_general_manager_user_id:
+        missing.append('General Manager User')
+
+    if missing:
+        action = toast('Generate PDF', 'Set these responsible persons before generating the clearance form: %s.' % ', '.join(missing), 'warning', True, reload_clearance(rec))
+        continue
+
+    generated_on = datetime.datetime.now()
+    form_code = rec.x_reference_code or 'MCEP-HR-F-0020'
+    form_title = 'Clearance Request'
+    emp_part = employee.id if employee else 0
+
+    document_reference = rec.x_document_reference
+    if not document_reference:
+        document_reference = '%s-%05d-%05d' % (form_code, emp_part, rec.id)
+    elif '-EMP-' in document_reference:
+        document_reference = document_reference.replace('-EMP-', '-', 1)
+
+    vals = {
+        'x_state': rec.x_state or 'draft',
+        'x_reference_code': form_code,
+        'x_document_reference': document_reference,
+        'x_responsible_user_id': rec.x_responsible_user_id.id or env.user.id,
+    }
+
+    joining_date = get_joining_date(employee)
+    if joining_date and not rec.x_date_of_joining:
+        vals['x_date_of_joining'] = joining_date
+
+    if employee.parent_id and not rec.x_assigned_department_responsible_employee_id:
+        vals['x_assigned_department_responsible_employee_id'] = employee.parent_id.id
+
+    if 'hr_responsible_id' in employee._fields and employee.hr_responsible_id and not rec.x_hr_user_id:
+        vals['x_hr_user_id'] = employee.hr_responsible_id.id
+
+    if rec.x_reason_for_termination != 'other' and rec.x_other_reason_description:
+        vals['x_other_reason_description'] = False
+
+    normalized_name = '%s - %s - %s' % (
+        employee.name or employee.display_name or 'Employee',
+        form_title,
+        document_reference,
+    )
+    vals['x_name'] = normalized_name
+
+    rec.write(vals)
+    rec = rec.sudo().browse(rec.id)
+
+    report_xmlid = 'hr_employment_custom.action_report_mcep_employee_clearance_request'
+    pdf_content, _content_type = env['ir.actions.report'].sudo()._render_qweb_pdf(report_xmlid, [rec.id])
+
+    filename = '%s - %s.pdf' % (rec.x_document_reference or form_code, form_title)
+
+    attachment = env['ir.attachment'].sudo().create({
+        'name': filename,
+        'type': 'binary',
+        'raw': pdf_content,
+        'mimetype': 'application/pdf',
+        'res_model': rec._name,
+        'res_id': rec.id,
+    })
+
+    rec.write({
+        'x_pdf_attachment_id': attachment.id,
+        'x_generated_on': generated_on,
+        'x_state': 'generated',
+    })
+
+    employee.message_post(
+        body='تم توليد نموذج إخلاء الطرف %s وربطه بسجل الموظف.' % form_code,
+        subtype_xmlid='mail.mt_note',
+        attachment_ids=[attachment.id],
+    )
+
+    action = toast('Generate PDF', '%s was generated and posted to the employee record.' % form_title, 'success', False, reload_clearance(rec))
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+        <record id="action_employee_clearance_request_download_generated_pdf" model="ir.actions.server">
+            <field name="name">Download Generated PDF</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_clearance_request"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+for rec in records.sudo():
+    attachment = rec.x_pdf_attachment_id
+    if attachment:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Download Generated PDF',
+                'message': 'No generated PDF is linked to this clearance request yet.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+        <record id="action_employee_clearance_request_download_signed_pdf" model="ir.actions.server">
+            <field name="name">Download Signed PDF</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_clearance_request"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+for rec in records.sudo():
+    attachment = rec.x_signed_attachment_id
+    if attachment:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Download Signed PDF',
+                'message': 'No signed PDF is linked to this clearance request yet.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+        <record id="action_employee_clearance_request_download_sign_certificate" model="ir.actions.server">
+            <field name="name">Download Sign Certificate</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_clearance_request"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+for rec in records.sudo():
+    attachment = rec.x_sign_certificate_attachment_id
+    if attachment:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Download Sign Certificate',
+                'message': 'No Sign certificate is linked to this clearance request yet.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_mcep_employee_clearance_request_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <head>
+                    <meta charset="UTF-8"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                </head>
+
+                <t t-set="employee" t-value="o.x_employee_id"/>
+                <t t-set="form_code" t-value="o.x_reference_code or 'MCEP-HR-F-0020'"/>
+                <t t-set="form_title_en" t-value="'Employee Clearance Request'"/>
+                <t t-set="form_title_ar" t-value="'نموذج إخلاء طرف موظف'"/>
+                <t t-set="employee_number" t-value="(employee.registration_number if 'registration_number' in employee._fields else '') or (employee.barcode if 'barcode' in employee._fields else '') or employee.id or ''"/>
+                <t t-set="job_title" t-value="(employee.job_title if 'job_title' in employee._fields else '') or (employee.job_id.name if 'job_id' in employee._fields and employee.job_id else '') or ''"/>
+                <t t-set="department_name" t-value="employee.department_id.name if employee.department_id else ''"/>
+                <t t-set="reason_ar" t-value="{'resignation': 'استقالة', 'company_termination': 'إنهاء من الشركة', 'contract_end': 'انتهاء العقد', 'other': 'أسباب أخرى'}.get(o.x_reason_for_termination, '')"/>
+                <t t-set="reason_en" t-value="{'resignation': 'Resignation', 'company_termination': 'Termination by Company', 'contract_end': 'Contract End', 'other': 'Other Reasons'}.get(o.x_reason_for_termination, '')"/>
+
+                <t t-set="assigned_lines" t-value="o.x_clearance_line_ids.filtered(lambda l: l.x_section_code == 'assigned_department').sorted(key=lambda l: l.x_sequence or 0)"/>
+                <t t-set="it_lines" t-value="o.x_clearance_line_ids.filtered(lambda l: l.x_section_code == 'it').sorted(key=lambda l: l.x_sequence or 0)"/>
+                <t t-set="stores_lines" t-value="o.x_clearance_line_ids.filtered(lambda l: l.x_section_code == 'stores').sorted(key=lambda l: l.x_sequence or 0)"/>
+                <t t-set="transport_lines" t-value="o.x_clearance_line_ids.filtered(lambda l: l.x_section_code == 'transport').sorted(key=lambda l: l.x_sequence or 0)"/>
+                <t t-set="finance_lines" t-value="o.x_clearance_line_ids.filtered(lambda l: l.x_section_code == 'finance').sorted(key=lambda l: l.x_sequence or 0)"/>
+                <t t-set="hr_clearance_lines" t-value="o.x_clearance_line_ids.filtered(lambda l: l.x_section_code == 'hr_clearance').sorted(key=lambda l: l.x_sequence or 0)"/>
+
+                <t t-call="hr_employment_custom.mcep_employee_report_assets"/>
+
+                <div class="page mcep-emp-page mcep-clearance-page">
+                    <t t-set="page_label" t-value="'Page 1 / 1'"/>
+                    <t t-call="hr_employment_custom.mcep_employee_report_header"/>
+
+                    <style>
+                        .mcep-clearance-page {
+                            font-size: 10.6px;
+                            line-height: 1.08;
+                            padding-top: 2.8mm;
+                            padding-bottom: 1.5mm;
+                        }
+
+                        .mcep-clearance-page .mcep-emp-header {
+                            margin-bottom: 1.4mm;
+                        }
+
+                        .mcep-clearance-title {
+                            text-align: center;
+                            font-size: 22px;
+                            font-weight: 700;
+                            margin: 0.5mm 0 0.2mm 0;
+                        }
+
+                        .mcep-clearance-subtitle {
+                            text-align: center;
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 14px;
+                            font-weight: 700;
+                            margin: 0 0 1.6mm 0;
+                        }
+
+                        .mcep-clearance-section {
+                            font-size: 12px;
+                            font-weight: 700;
+                            margin: 1.4mm 0 0.6mm 0;
+                            padding: 0.8mm 1.2mm;
+                            background: #eef2f7;
+                            border: 1px solid #9aa4b2;
+                            text-align: right;
+                            direction: rtl;
+                        }
+
+                        .mcep-clearance-section .en {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 8.8px;
+                            color: #374151;
+                        }
+
+                        .mcep-clearance-info-table,
+                        .mcep-clearance-check-table,
+                        .mcep-clearance-final-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            table-layout: fixed;
+                            margin-bottom: 1mm;
+                        }
+
+                        .mcep-clearance-info-table th,
+                        .mcep-clearance-info-table td,
+                        .mcep-clearance-check-table th,
+                        .mcep-clearance-check-table td,
+                        .mcep-clearance-final-table th,
+                        .mcep-clearance-final-table td {
+                            border: 1px solid #6b7280;
+                            padding: 0.65mm 0.75mm;
+                            vertical-align: middle;
+                            line-height: 1.06;
+                        }
+
+                        .mcep-clearance-info-table th,
+                        .mcep-clearance-check-table th,
+                        .mcep-clearance-final-table th {
+                            background: #f8fafc;
+                            font-weight: 700;
+                            text-align: center;
+                        }
+
+                        .mcep-clearance-value {
+                            min-height: 4mm;
+                            text-align: center;
+                            font-weight: 600;
+                        }
+
+                        .mcep-clearance-en {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 8.2px;
+                            color: #374151;
+                        }
+
+                        .mcep-clearance-check-table {
+                            font-size: 9.6px;
+                        }
+
+                        .mcep-clearance-section-title {
+                            background: #eef2f7;
+                            text-align: right;
+                            direction: rtl;
+                            font-weight: 700;
+                            font-size: 10.8px;
+                        }
+
+                        .mcep-clearance-section-title .en {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 8.2px;
+                            color: #374151;
+                        }
+
+                        .mcep-clearance-item {
+                            text-align: right;
+                            direction: rtl;
+                            font-weight: 600;
+                        }
+
+                        .mcep-clearance-item-en {
+                            display: block;
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 7.8px;
+                            color: #374151;
+                            margin-top: 0.1mm;
+                        }
+
+                        .mcep-clearance-checkbox-cell {
+                            text-align: center;
+                            direction: rtl;
+                            font-size: 10px;
+                            white-space: nowrap;
+                        }
+
+                        .mcep-clearance-checkbox {
+                            font-size: 13px;
+                            font-weight: 700;
+                        }
+
+                        .mcep-clearance-notes {
+                            min-height: 4mm;
+                            white-space: pre-wrap;
+                            font-size: 8.8px;
+                        }
+
+                        .mcep-clearance-responsible-row td {
+                            background: #fcfcfd;
+                        }
+
+                        .mcep-clearance-sign-box {
+                            height: 7mm;
+                            text-align: center;
+                            font-weight: 600;
+                        }
+
+                        .mcep-clearance-date-box {
+                            height: 5mm;
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            text-align: center;
+                        }
+
+                        .mcep-clearance-final-table {
+                            font-size: 10px;
+                            margin-top: 1.2mm;
+                        }
+
+                        .mcep-clearance-final-sign {
+                            height: 8mm;
+                            text-align: center;
+                        }
+
+                        .mcep-clearance-final-date {
+                            height: 5mm;
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            text-align: center;
+                        }
+                    </style>
+
+                    <div class="mcep-clearance-title">
+                        <span t-out="form_title_ar"/>
+                    </div>
+                    <div class="mcep-clearance-subtitle">
+                        <span t-out="form_title_en"/>
+                    </div>
+
+                    <div class="mcep-clearance-section">
+                        أولًا: بيانات الموظف
+                        <span class="en">Employee Information</span>
+                    </div>
+
+                    <table class="mcep-clearance-info-table">
+                        <tr>
+                            <th style="width: 18%;">الاسم الكامل<br/><span class="mcep-clearance-en">Full Name</span></th>
+                            <td style="width: 32%;"><div class="mcep-clearance-value"><span t-out="employee.name or ''"/></div></td>
+                            <th style="width: 18%;">الرقم الوظيفي<br/><span class="mcep-clearance-en">Employee ID</span></th>
+                            <td style="width: 32%;"><div class="mcep-clearance-value"><span t-out="employee_number"/></div></td>
+                        </tr>
+                        <tr>
+                            <th>المسمى الوظيفي<br/><span class="mcep-clearance-en">Job Title</span></th>
+                            <td><div class="mcep-clearance-value"><span t-out="job_title"/></div></td>
+                            <th>القسم / الإدارة<br/><span class="mcep-clearance-en">Department</span></th>
+                            <td><div class="mcep-clearance-value"><span t-out="department_name"/></div></td>
+                        </tr>
+                        <tr>
+                            <th>تاريخ التعيين<br/><span class="mcep-clearance-en">Date of Joining</span></th>
+                            <td><div class="mcep-clearance-value"><span t-out="o.x_date_of_joining or ''"/></div></td>
+                            <th>آخر يوم عمل<br/><span class="mcep-clearance-en">Last Working Day</span></th>
+                            <td><div class="mcep-clearance-value"><span t-out="o.x_last_working_day or ''"/></div></td>
+                        </tr>
+                        <tr>
+                            <th>سبب إنهاء الخدمة<br/><span class="mcep-clearance-en">Reason for Termination</span></th>
+                            <td colspan="3">
+                                <span class="mcep-clearance-checkbox" t-out="'☑' if o.x_reason_for_termination == 'resignation' else '☐'"/> استقالة / Resignation
+                                &#160;&#160;
+                                <span class="mcep-clearance-checkbox" t-out="'☑' if o.x_reason_for_termination == 'company_termination' else '☐'"/> إنهاء من الشركة / Termination
+                                &#160;&#160;
+                                <span class="mcep-clearance-checkbox" t-out="'☑' if o.x_reason_for_termination == 'contract_end' else '☐'"/> انتهاء العقد / Contract End
+                                &#160;&#160;
+                                <span class="mcep-clearance-checkbox" t-out="'☑' if o.x_reason_for_termination == 'other' else '☐'"/> أسباب أخرى / Other
+                                <t t-if="o.x_reason_for_termination == 'other' and o.x_other_reason_description">
+                                    <br/>
+                                    <strong>السبب:</strong>
+                                    <span t-out="o.x_other_reason_description"/>
+                                </t>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="mcep-clearance-section">
+                        ثانيًا: إخلاء الطرف حسب الأقسام
+                        <span class="en">Department Clearance</span>
+                    </div>
+
+                    <table class="mcep-clearance-check-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 7%;">#</th>
+                                <th style="width: 36%;">البند / <span class="mcep-clearance-en">Item</span></th>
+                                <th style="width: 17%;">تمت المراجعة<br/><span class="mcep-clearance-en">Verified</span></th>
+                                <th style="width: 40%;">الملاحظات / التوقيع<br/><span class="mcep-clearance-en">Notes / Signature</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="4" class="mcep-clearance-section-title">
+                                    إخلاء طرف الإدارة المنتسب لها الموظف
+                                    <span class="en">Assigned Department Clearance</span>
+                                    —
+                                    المسؤول:
+                                    <span t-out="o.x_assigned_department_responsible_employee_id.name or ''"/>
+                                </td>
+                            </tr>
+                            <tr t-foreach="assigned_lines" t-as="line">
+                                <td style="text-align:center;"><strong><span t-out="line.x_sequence or ''"/></strong></td>
+                                <td class="mcep-clearance-item">
+                                    <span t-out="line.x_item_label_ar or ''"/>
+                                    <span class="mcep-clearance-item-en" t-out="line.x_item_label_en or ''"/>
+                                </td>
+                                <td class="mcep-clearance-checkbox-cell">
+                                    <span class="mcep-clearance-checkbox">☐</span> نعم / Yes
+                                    <br/>
+                                    <span class="mcep-clearance-checkbox">☐</span> لا / No
+                                </td>
+                                <td class="mcep-clearance-notes"><span t-out="line.x_notes or ''"/></td>
+                            </tr>
+                            <tr class="mcep-clearance-responsible-row">
+                                <td colspan="2">توقيع المدير المباشر / <span class="mcep-clearance-en">Direct Manager Signature</span></td>
+                                <td class="mcep-clearance-sign-box"><span t-out="o.x_assigned_department_responsible_employee_id.name or ''"/></td>
+                                <td class="mcep-clearance-date-box">____ / ____ / ________</td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4" class="mcep-clearance-section-title">
+                                    إخلاء طرف قسم تقنية المعلومات
+                                    <span class="en">IT Department Clearance</span>
+                                    —
+                                    المسؤول:
+                                    <span t-out="o.x_it_responsible_employee_id.name or ''"/>
+                                </td>
+                            </tr>
+                            <tr t-foreach="it_lines" t-as="line">
+                                <td style="text-align:center;"><strong><span t-out="line.x_sequence or ''"/></strong></td>
+                                <td class="mcep-clearance-item">
+                                    <span t-out="line.x_item_label_ar or ''"/>
+                                    <span class="mcep-clearance-item-en" t-out="line.x_item_label_en or ''"/>
+                                </td>
+                                <td class="mcep-clearance-checkbox-cell">
+                                    <span class="mcep-clearance-checkbox">☐</span> نعم / Yes
+                                    <br/>
+                                    <span class="mcep-clearance-checkbox">☐</span> لا / No
+                                </td>
+                                <td class="mcep-clearance-notes"><span t-out="line.x_notes or ''"/></td>
+                            </tr>
+                            <tr class="mcep-clearance-responsible-row">
+                                <td colspan="2">توقيع مسؤول تقنية المعلومات / <span class="mcep-clearance-en">IT Signature</span></td>
+                                <td class="mcep-clearance-sign-box"><span t-out="o.x_it_responsible_employee_id.name or ''"/></td>
+                                <td class="mcep-clearance-date-box">____ / ____ / ________</td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4" class="mcep-clearance-section-title">
+                                    إخلاء طرف المخازن
+                                    <span class="en">Stores Clearance</span>
+                                    —
+                                    المسؤول:
+                                    <span t-out="o.x_stores_responsible_employee_id.name or ''"/>
+                                </td>
+                            </tr>
+                            <tr t-foreach="stores_lines" t-as="line">
+                                <td style="text-align:center;"><strong><span t-out="line.x_sequence or ''"/></strong></td>
+                                <td class="mcep-clearance-item">
+                                    <span t-out="line.x_item_label_ar or ''"/>
+                                    <span class="mcep-clearance-item-en" t-out="line.x_item_label_en or ''"/>
+                                </td>
+                                <td class="mcep-clearance-checkbox-cell">
+                                    <span class="mcep-clearance-checkbox">☐</span> نعم / Yes
+                                    <br/>
+                                    <span class="mcep-clearance-checkbox">☐</span> لا / No
+                                </td>
+                                <td class="mcep-clearance-notes"><span t-out="line.x_notes or ''"/></td>
+                            </tr>
+                            <tr class="mcep-clearance-responsible-row">
+                                <td colspan="2">توقيع قسم المخازن / <span class="mcep-clearance-en">Stores Signature</span></td>
+                                <td class="mcep-clearance-sign-box"><span t-out="o.x_stores_responsible_employee_id.name or ''"/></td>
+                                <td class="mcep-clearance-date-box">____ / ____ / ________</td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4" class="mcep-clearance-section-title">
+                                    إخلاء طرف قسم الحركة
+                                    <span class="en">Transport Clearance</span>
+                                    —
+                                    المسؤول:
+                                    <span t-out="o.x_transport_responsible_employee_id.name or ''"/>
+                                </td>
+                            </tr>
+                            <tr t-foreach="transport_lines" t-as="line">
+                                <td style="text-align:center;"><strong><span t-out="line.x_sequence or ''"/></strong></td>
+                                <td class="mcep-clearance-item">
+                                    <span t-out="line.x_item_label_ar or ''"/>
+                                    <span class="mcep-clearance-item-en" t-out="line.x_item_label_en or ''"/>
+                                </td>
+                                <td class="mcep-clearance-checkbox-cell">
+                                    <span class="mcep-clearance-checkbox">☐</span> نعم / Yes
+                                    <br/>
+                                    <span class="mcep-clearance-checkbox">☐</span> لا / No
+                                </td>
+                                <td class="mcep-clearance-notes"><span t-out="line.x_notes or ''"/></td>
+                            </tr>
+                            <tr class="mcep-clearance-responsible-row">
+                                <td colspan="2">توقيع قسم الحركة / <span class="mcep-clearance-en">Transport Signature</span></td>
+                                <td class="mcep-clearance-sign-box"><span t-out="o.x_transport_responsible_employee_id.name or ''"/></td>
+                                <td class="mcep-clearance-date-box">____ / ____ / ________</td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4" class="mcep-clearance-section-title">
+                                    إخلاء قسم المالية
+                                    <span class="en">Finance Department Clearance</span>
+                                    —
+                                    المسؤول:
+                                    <span t-out="o.x_finance_responsible_employee_id.name or ''"/>
+                                </td>
+                            </tr>
+                            <tr t-foreach="finance_lines" t-as="line">
+                                <td style="text-align:center;"><strong><span t-out="line.x_sequence or ''"/></strong></td>
+                                <td class="mcep-clearance-item">
+                                    <span t-out="line.x_item_label_ar or ''"/>
+                                    <span class="mcep-clearance-item-en" t-out="line.x_item_label_en or ''"/>
+                                </td>
+                                <td class="mcep-clearance-checkbox-cell">
+                                    <span class="mcep-clearance-checkbox">☐</span> نعم / Yes
+                                    <br/>
+                                    <span class="mcep-clearance-checkbox">☐</span> لا / No
+                                </td>
+                                <td class="mcep-clearance-notes"><span t-out="line.x_notes or ''"/></td>
+                            </tr>
+                            <tr class="mcep-clearance-responsible-row">
+                                <td colspan="2">توقيع مدير المالية / <span class="mcep-clearance-en">Finance Manager Signature</span></td>
+                                <td class="mcep-clearance-sign-box"><span t-out="o.x_finance_responsible_employee_id.name or ''"/></td>
+                                <td class="mcep-clearance-date-box">____ / ____ / ________</td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4" class="mcep-clearance-section-title">
+                                    إخلاء قسم الموارد البشرية
+                                    <span class="en">HR Department Clearance</span>
+                                    —
+                                    المسؤول:
+                                    <span t-out="o.x_hr_clearance_responsible_employee_id.name or ''"/>
+                                </td>
+                            </tr>
+                            <tr t-foreach="hr_clearance_lines" t-as="line">
+                                <td style="text-align:center;"><strong><span t-out="line.x_sequence or ''"/></strong></td>
+                                <td class="mcep-clearance-item">
+                                    <span t-out="line.x_item_label_ar or ''"/>
+                                    <span class="mcep-clearance-item-en" t-out="line.x_item_label_en or ''"/>
+                                </td>
+                                <td class="mcep-clearance-checkbox-cell">
+                                    <span class="mcep-clearance-checkbox">☐</span> نعم / Yes
+                                    <br/>
+                                    <span class="mcep-clearance-checkbox">☐</span> لا / No
+                                </td>
+                                <td class="mcep-clearance-notes"><span t-out="line.x_notes or ''"/></td>
+                            </tr>
+                            <tr class="mcep-clearance-responsible-row">
+                                <td colspan="2">توقيع مسؤول الموارد البشرية / <span class="mcep-clearance-en">HR Clearance Signature</span></td>
+                                <td class="mcep-clearance-sign-box"><span t-out="o.x_hr_clearance_responsible_employee_id.name or ''"/></td>
+                                <td class="mcep-clearance-date-box">____ / ____ / ________</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="mcep-clearance-section">
+                        ثالثًا: الإعتماد النهائي للإجراءات
+                        <span class="en">Final Approval of Procedures</span>
+                    </div>
+
+                    <table class="mcep-clearance-final-table">
+                        <tr>
+                            <th style="width: 50%;">مدير الموارد البشرية / <span class="mcep-clearance-en">HR Manager</span></th>
+                            <th style="width: 50%;">المدير العام / <span class="mcep-clearance-en">General Manager</span></th>
+                        </tr>
+                        <tr>
+                            <td>الاسم / Name: <strong><span t-out="o.x_hr_user_id.name or ''"/></strong></td>
+                            <td>الاسم / Name: <strong><span t-out="o.x_general_manager_user_id.name or ''"/></strong></td>
+                        </tr>
+                        <tr>
+                            <td class="mcep-clearance-final-sign">التوقيع / Signature:</td>
+                            <td class="mcep-clearance-final-sign">التوقيع / Signature:</td>
+                        </tr>
+                        <tr>
+                            <td class="mcep-clearance-final-date">التاريخ / Date: ____ / ____ / ________</td>
+                            <td class="mcep-clearance-final-date">التاريخ / Date: ____ / ____ / ________</td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>
