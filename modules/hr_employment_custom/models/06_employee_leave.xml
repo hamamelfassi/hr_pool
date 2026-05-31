@@ -1,0 +1,595 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ========================================================= -->
+        <!-- Marsellia Leave Type Policy                              -->
+        <!-- ========================================================= -->
+
+        <record id="model_x_hr_employee_leave_type_policy" model="ir.model">
+            <field name="name">Employee Leave Type Policy</field>
+            <field name="model">x_hr.employee_leave_type_policy</field>
+            <field name="state">manual</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_type_policy__x_name" model="ir.model.fields">
+            <field name="name">x_name</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_type_policy"/>
+            <field name="field_description">Leave Policy</field>
+            <field name="ttype">char</field>
+            <field name="required" eval="True"/>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_type_policy__x_code" model="ir.model.fields">
+            <field name="name">x_code</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_type_policy"/>
+            <field name="field_description">Code</field>
+            <field name="ttype">char</field>
+            <field name="required" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_type_policy__x_form_code" model="ir.model.fields">
+            <field name="name">x_form_code</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_type_policy"/>
+            <field name="field_description">Form Code</field>
+            <field name="ttype">char</field>
+            <field name="required" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_type_policy__x_form_title" model="ir.model.fields">
+            <field name="name">x_form_title</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_type_policy"/>
+            <field name="field_description">Form Title</field>
+            <field name="ttype">char</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_type_policy__x_work_entry_type_id" model="ir.model.fields">
+            <field name="name">x_work_entry_type_id</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_type_policy"/>
+            <field name="field_description">Native Time Off Type</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.work.entry.type</field>
+            <field name="on_delete">set null</field>
+            <field name="help">Optional native Odoo work entry/time off type used later when creating hr.leave records.</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_type_policy__x_leave_category" model="ir.model.fields">
+            <field name="name">x_leave_category</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_type_policy"/>
+            <field name="field_description">Leave Category</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('annual_leave', 'Annual Leave'),
+                ('emergency_leave', 'Emergency Leave'),
+                ('sick_leave', 'Sick Leave'),
+                ('unpaid_leave', 'Unpaid Leave'),
+                ('compensatory_leave', 'Compensatory Leave'),
+                ('other', 'Other')
+            ]</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_type_policy__x_requires_balance_check" model="ir.model.fields">
+            <field name="name">x_requires_balance_check</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_type_policy"/>
+            <field name="field_description">Requires Balance Check</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_type_policy__x_requires_acting_employee" model="ir.model.fields">
+            <field name="name">x_requires_acting_employee</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_type_policy"/>
+            <field name="field_description">Requires Acting Employee</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_type_policy__x_requires_address_during_leave" model="ir.model.fields">
+            <field name="name">x_requires_address_during_leave</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_type_policy"/>
+            <field name="field_description">Requires Address During Leave</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_type_policy__x_requires_contact_during_leave" model="ir.model.fields">
+            <field name="name">x_requires_contact_during_leave</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_type_policy"/>
+            <field name="field_description">Requires Contact During Leave</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_type_policy__x_requires_direct_manager_approval" model="ir.model.fields">
+            <field name="name">x_requires_direct_manager_approval</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_type_policy"/>
+            <field name="field_description">Requires Direct Manager Approval</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_type_policy__x_requires_hr_approval" model="ir.model.fields">
+            <field name="name">x_requires_hr_approval</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_type_policy"/>
+            <field name="field_description">Requires HR Approval</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_type_policy__x_requires_general_manager_approval" model="ir.model.fields">
+            <field name="name">x_requires_general_manager_approval</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_type_policy"/>
+            <field name="field_description">Requires General Manager Approval</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_type_policy__x_default_entitlement_days" model="ir.model.fields">
+            <field name="name">x_default_entitlement_days</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_type_policy"/>
+            <field name="field_description">Default Entitlement Days</field>
+            <field name="ttype">float</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_type_policy__x_default_emergency_limit_days" model="ir.model.fields">
+            <field name="name">x_default_emergency_limit_days</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_type_policy"/>
+            <field name="field_description">Default Emergency Limit Days</field>
+            <field name="ttype">float</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_type_policy__x_active" model="ir.model.fields">
+            <field name="name">x_active</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_type_policy"/>
+            <field name="field_description">Active</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_type_policy__x_notes" model="ir.model.fields">
+            <field name="name">x_notes</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_type_policy"/>
+            <field name="field_description">Notes</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <!-- ========================================================= -->
+        <!-- Marsellia Employee Leave Request                         -->
+        <!-- ========================================================= -->
+
+        <record id="model_x_hr_employee_leave_request" model="ir.model">
+            <field name="name">Employee Leave Request</field>
+            <field name="model">x_hr.employee_leave_request</field>
+            <field name="state">manual</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_name" model="ir.model.fields">
+            <field name="name">x_name</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Leave Request Label</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_employee_id" model="ir.model.fields">
+            <field name="name">x_employee_id</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Employee</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.employee</field>
+            <field name="required" eval="True"/>
+            <field name="on_delete">cascade</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_leave_type_policy_id" model="ir.model.fields">
+            <field name="name">x_leave_type_policy_id</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Leave Type Policy</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.employee_leave_type_policy</field>
+            <field name="required" eval="True"/>
+            <field name="on_delete">restrict</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_work_entry_type_id" model="ir.model.fields">
+            <field name="name">x_work_entry_type_id</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Native Time Off Type</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.work.entry.type</field>
+            <field name="on_delete">set null</field>
+            <field name="help">Native Odoo work entry/time off type to use later when creating hr.leave from the signed Marsellia request.</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_reference_code" model="ir.model.fields">
+            <field name="name">x_reference_code</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Reference Code</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_document_reference" model="ir.model.fields">
+            <field name="name">x_document_reference</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Document Reference</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_state" model="ir.model.fields">
+            <field name="name">x_state</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">State</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('draft', 'Draft'),
+                ('generated', 'Generated'),
+                ('signature_requested', 'Signature Requested'),
+                ('signed', 'Signed'),
+                ('cancelled', 'Cancelled'),
+                ('superseded', 'Superseded'),
+                ('blocked', 'Blocked')
+            ]</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_request_date" model="ir.model.fields">
+            <field name="name">x_request_date</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Request Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_leave_date_from" model="ir.model.fields">
+            <field name="name">x_leave_date_from</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Leave From</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_leave_date_to" model="ir.model.fields">
+            <field name="name">x_leave_date_to</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Leave To</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_requested_days" model="ir.model.fields">
+            <field name="name">x_requested_days</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Requested Days</field>
+            <field name="ttype">float</field>
+            <field name="help">Manually verified working leave days for the first production pass.</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_requested_calendar_days" model="ir.model.fields">
+            <field name="name">x_requested_calendar_days</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Requested Calendar Days</field>
+            <field name="ttype">float</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_excluded_weekend_days" model="ir.model.fields">
+            <field name="name">x_excluded_weekend_days</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Excluded Weekend Days</field>
+            <field name="ttype">float</field>
+            <field name="help">Manual count for Friday/Saturday weekend exclusions until automated calendar computation is scoped.</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_excluded_public_holiday_days" model="ir.model.fields">
+            <field name="name">x_excluded_public_holiday_days</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Excluded Public Holiday Days</field>
+            <field name="ttype">float</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_current_balance_days" model="ir.model.fields">
+            <field name="name">x_current_balance_days</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Current Balance Days</field>
+            <field name="ttype">float</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_used_balance_days" model="ir.model.fields">
+            <field name="name">x_used_balance_days</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Used Balance Days</field>
+            <field name="ttype">float</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_remaining_balance_days" model="ir.model.fields">
+            <field name="name">x_remaining_balance_days</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Remaining Balance Days</field>
+            <field name="ttype">float</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_hr_balance_allowed" model="ir.model.fields">
+            <field name="name">x_hr_balance_allowed</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">HR Balance Allowed</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_balance_verified_by_user_id" model="ir.model.fields">
+            <field name="name">x_balance_verified_by_user_id</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Balance Verified By</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_balance_verified_on" model="ir.model.fields">
+            <field name="name">x_balance_verified_on</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Balance Verified On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_balance_notes" model="ir.model.fields">
+            <field name="name">x_balance_notes</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Balance Notes</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_address_during_leave" model="ir.model.fields">
+            <field name="name">x_address_during_leave</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Address During Leave</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_contact_during_leave" model="ir.model.fields">
+            <field name="name">x_contact_during_leave</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Contact During Leave</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_acting_employee_id" model="ir.model.fields">
+            <field name="name">x_acting_employee_id</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Acting Employee</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.employee</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_reason" model="ir.model.fields">
+            <field name="name">x_reason</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Reason</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_employee_notes" model="ir.model.fields">
+            <field name="name">x_employee_notes</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Employee Notes</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_direct_manager_user_id" model="ir.model.fields">
+            <field name="name">x_direct_manager_user_id</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Direct Manager User</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_hr_user_id" model="ir.model.fields">
+            <field name="name">x_hr_user_id</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">HR User</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_general_manager_user_id" model="ir.model.fields">
+            <field name="name">x_general_manager_user_id</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">General Manager User</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_responsible_user_id" model="ir.model.fields">
+            <field name="name">x_responsible_user_id</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Responsible User</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_pdf_attachment_id" model="ir.model.fields">
+            <field name="name">x_pdf_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Generated PDF</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_signed_attachment_id" model="ir.model.fields">
+            <field name="name">x_signed_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Signed PDF</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_sign_certificate_attachment_id" model="ir.model.fields">
+            <field name="name">x_sign_certificate_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Sign Certificate</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_sign_request_res_id" model="ir.model.fields">
+            <field name="name">x_sign_request_res_id</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Sign Request ID</field>
+            <field name="ttype">integer</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_sign_request_state" model="ir.model.fields">
+            <field name="name">x_sign_request_state</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Sign Request State</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_sign_request_reference" model="ir.model.fields">
+            <field name="name">x_sign_request_reference</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Sign Request Reference</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_sign_request_url" model="ir.model.fields">
+            <field name="name">x_sign_request_url</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Sign Request URL</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_generated_on" model="ir.model.fields">
+            <field name="name">x_generated_on</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Generated On</field>
+            <field name="ttype">datetime</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_sent_on" model="ir.model.fields">
+            <field name="name">x_sent_on</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Sent On</field>
+            <field name="ttype">datetime</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_signed_on" model="ir.model.fields">
+            <field name="name">x_signed_on</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Signed On</field>
+            <field name="ttype">datetime</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_native_leave_id" model="ir.model.fields">
+            <field name="name">x_native_leave_id</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Native Time Off Record</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.leave</field>
+            <field name="on_delete">set null</field>
+            <field name="readonly" eval="True"/>
+            <field name="help">Future bridge target created from the signed Marsellia leave request.</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_native_leave_sync_state" model="ir.model.fields">
+            <field name="name">x_native_leave_sync_state</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Native Leave Sync State</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('not_created', 'Not Created'),
+                ('ready', 'Ready'),
+                ('created', 'Created'),
+                ('blocked', 'Blocked'),
+                ('error', 'Error')
+            ]</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_native_leave_created_on" model="ir.model.fields">
+            <field name="name">x_native_leave_created_on</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Native Leave Created On</field>
+            <field name="ttype">datetime</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_native_leave_notes" model="ir.model.fields">
+            <field name="name">x_native_leave_notes</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Native Leave Notes</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_manual_decision_number" model="ir.model.fields">
+            <field name="name">x_manual_decision_number</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Manual Decision Number</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_manual_decision_date" model="ir.model.fields">
+            <field name="name">x_manual_decision_date</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Manual Decision Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_manual_decision_attachment_id" model="ir.model.fields">
+            <field name="name">x_manual_decision_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Manual Decision Attachment</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_leave_request__x_notes" model="ir.model.fields">
+            <field name="name">x_notes</field>
+            <field name="model_id" ref="model_x_hr_employee_leave_request"/>
+            <field name="field_description">Notes</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <!-- ========================================================= -->
+        <!-- Employee inverse field                                    -->
+        <!-- ========================================================= -->
+
+        <record id="field_hr_employee__x_leave_request_ids" model="ir.model.fields">
+            <field name="name">x_leave_request_ids</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="field_description">Leave Requests</field>
+            <field name="ttype">one2many</field>
+            <field name="relation">x_hr.employee_leave_request</field>
+            <field name="relation_field">x_employee_id</field>
+        </record>
+
+    </data>
+</odoo>

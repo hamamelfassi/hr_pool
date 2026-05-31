@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Leave Type Policies -->
+
+    <record id="view_employee_leave_type_policy_list" model="ir.ui.view">
+        <field name="name">x.hr.employee.leave.type.policy.list</field>
+        <field name="model">x_hr.employee_leave_type_policy</field>
+        <field name="arch" type="xml">
+            <list string="Leave Type Policies">
+                <field name="x_name"/>
+                <field name="x_code"/>
+                <field name="x_form_code"/>
+                <field name="x_leave_category"/>
+                <field name="x_work_entry_type_id"/>
+                <field name="x_requires_balance_check"/>
+                <field name="x_requires_acting_employee"/>
+                <field name="x_active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_employee_leave_type_policy_form" model="ir.ui.view">
+        <field name="name">x.hr.employee.leave.type.policy.form</field>
+        <field name="model">x_hr.employee_leave_type_policy</field>
+        <field name="arch" type="xml">
+            <form string="Leave Type Policy">
+                <sheet>
+                    <div class="alert alert-info" role="alert">
+                        Leave policies are Marsellia form-policy records. The native Odoo Time Off type is only a bridge target for future hr.leave creation.
+                    </div>
+                    <group>
+                        <field name="x_name"/>
+                        <field name="x_code"/>
+                        <field name="x_form_code"/>
+                        <field name="x_form_title"/>
+                        <field name="x_leave_category"/>
+                        <field name="x_work_entry_type_id"/>
+                        <field name="x_active"/>
+                    </group>
+                    <group string="Policy Requirements">
+                        <field name="x_requires_balance_check"/>
+                        <field name="x_requires_acting_employee"/>
+                        <field name="x_requires_address_during_leave"/>
+                        <field name="x_requires_contact_during_leave"/>
+                        <field name="x_requires_direct_manager_approval"/>
+                        <field name="x_requires_hr_approval"/>
+                        <field name="x_requires_general_manager_approval"/>
+                    </group>
+                    <group string="Default Policy Values">
+                        <field name="x_default_entitlement_days"/>
+                        <field name="x_default_emergency_limit_days"/>
+                    </group>
+                    <group string="Notes">
+                        <field name="x_notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_employee_leave_type_policies" model="ir.actions.act_window">
+        <field name="name">Employee Leave Type Policies</field>
+        <field name="res_model">x_hr.employee_leave_type_policy</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'default_x_active': True, 'default_x_form_code': 'MCEP-HR-F-0016', 'default_x_requires_balance_check': True, 'default_x_requires_address_during_leave': True, 'default_x_requires_contact_during_leave': True, 'default_x_requires_direct_manager_approval': True, 'default_x_requires_hr_approval': True}</field>
+    </record>
+
+    <!-- Employee Leave Requests -->
+
+    <record id="view_employee_leave_request_list" model="ir.ui.view">
+        <field name="name">x.hr.employee.leave.request.list</field>
+        <field name="model">x_hr.employee_leave_request</field>
+        <field name="arch" type="xml">
+            <list string="Employee Leave Requests">
+                <field name="x_employee_id"/>
+                <field name="x_leave_type_policy_id"/>
+                <field name="x_state"
+                    widget="badge"
+                    decoration-muted="x_state in ('draft', 'superseded')"
+                    decoration-info="x_state == 'generated'"
+                    decoration-warning="x_state in ('signature_requested', 'blocked')"
+                    decoration-success="x_state == 'signed'"
+                    decoration-danger="x_state == 'cancelled'"/>
+                <field name="x_request_date"/>
+                <field name="x_leave_date_from"/>
+                <field name="x_leave_date_to"/>
+                <field name="x_requested_days"/>
+                <field name="x_hr_balance_allowed"/>
+                <field name="x_native_leave_sync_state"
+                    widget="badge"
+                    decoration-muted="x_native_leave_sync_state == 'not_created'"
+                    decoration-info="x_native_leave_sync_state == 'ready'"
+                    decoration-success="x_native_leave_sync_state == 'created'"
+                    decoration-warning="x_native_leave_sync_state == 'blocked'"
+                    decoration-danger="x_native_leave_sync_state == 'error'"/>
+                <field name="x_responsible_user_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_employee_leave_request_form" model="ir.ui.view">
+        <field name="name">x.hr.employee.leave.request.form</field>
+        <field name="model">x_hr.employee_leave_request</field>
+        <field name="arch" type="xml">
+            <form string="Employee Leave Request">
+                <header>
+                    <field name="x_state"
+                        widget="statusbar"
+                        options="{'clickable': false}"
+                        statusbar_visible="draft,generated,signature_requested,signed"
+                        readonly="1"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-info" role="alert">
+                        This is the Marsellia official leave request surface. HR balance values are manually verified in this pass. Native Odoo Time Off creation is reserved for a later bridge action.
+                    </div>
+                    <group>
+                        <field name="x_employee_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                        <field name="x_leave_type_policy_id"/>
+                        <field name="x_work_entry_type_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                        <field name="x_name" readonly="1"/>
+                        <field name="x_reference_code" readonly="1"/>
+                        <field name="x_document_reference" readonly="1"/>
+                    </group>
+                    <group string="Leave Dates">
+                        <field name="x_request_date"/>
+                        <field name="x_leave_date_from"/>
+                        <field name="x_leave_date_to"/>
+                        <field name="x_requested_calendar_days"/>
+                        <field name="x_excluded_weekend_days"/>
+                        <field name="x_excluded_public_holiday_days"/>
+                        <field name="x_requested_days"/>
+                    </group>
+                    <group string="Manual HR Balance Verification">
+                        <field name="x_current_balance_days"/>
+                        <field name="x_used_balance_days"/>
+                        <field name="x_remaining_balance_days"/>
+                        <field name="x_hr_balance_allowed"/>
+                        <field name="x_balance_verified_by_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                        <field name="x_balance_verified_on"/>
+                        <field name="x_balance_notes"/>
+                    </group>
+                    <group string="Leave Contact and Handover">
+                        <field name="x_address_during_leave"/>
+                        <field name="x_contact_during_leave"/>
+                        <field name="x_acting_employee_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                        <field name="x_reason"/>
+                        <field name="x_employee_notes"/>
+                    </group>
+                    <group string="Approval Metadata">
+                        <field name="x_direct_manager_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                        <field name="x_hr_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                        <field name="x_general_manager_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                        <field name="x_responsible_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                    </group>
+                    <group string="Lifecycle Artifacts" invisible="1">
+                        <field name="x_pdf_attachment_id" readonly="1"/>
+                        <field name="x_signed_attachment_id" readonly="1"/>
+                        <field name="x_sign_certificate_attachment_id" readonly="1"/>
+                        <field name="x_sign_request_res_id" readonly="1"/>
+                        <field name="x_sign_request_state" readonly="1"/>
+                        <field name="x_sign_request_reference" readonly="1"/>
+                        <field name="x_sign_request_url" readonly="1"/>
+                        <field name="x_generated_on" readonly="1"/>
+                        <field name="x_sent_on" readonly="1"/>
+                        <field name="x_signed_on" readonly="1"/>
+                    </group>
+                    <group string="Native Time Off Bridge">
+                        <field name="x_native_leave_id" readonly="1" options="{'no_create': True, 'no_create_edit': True}"/>
+                        <field name="x_native_leave_sync_state" readonly="1"/>
+                        <field name="x_native_leave_created_on" readonly="1"/>
+                        <field name="x_native_leave_notes" readonly="1"/>
+                    </group>
+                    <group string="Manual Decision">
+                        <field name="x_manual_decision_number"/>
+                        <field name="x_manual_decision_date"/>
+                        <field name="x_manual_decision_attachment_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                    </group>
+                    <group string="Notes">
+                        <field name="x_notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_employee_leave_requests" model="ir.actions.act_window">
+        <field name="name">Employee Leave Requests</field>
+        <field name="res_model">x_hr.employee_leave_request</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'default_x_state': 'draft', 'default_x_native_leave_sync_state': 'not_created', 'default_x_responsible_user_id': uid}</field>
+    </record>
+
+    <record id="action_employee_leave_request_create" model="ir.actions.act_window">
+        <field name="name">New Leave Request</field>
+        <field name="res_model">x_hr.employee_leave_request</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_employee_leave_request_form"/>
+        <field name="target">new</field>
+        <field name="context">{'default_x_state': 'draft', 'default_x_native_leave_sync_state': 'not_created', 'default_x_responsible_user_id': uid}</field>
+    </record>
+
+    <record id="view_hr_employee_form_inherit_employee_leave_requests" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit.employee.leave.requests</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook" position="inside">
+                <page name="mcep_employee_leave_requests" string="Leave">
+                    <div class="alert alert-info" role="alert">
+                        Leave requests here are Marsellia official leave-form records. Native Odoo Time Off integration is intentionally deferred until the signed-document workflow is proven.
+                    </div>
+                    <div class="mb-2">
+                        <button name="%(action_employee_leave_request_create)d"
+                            type="action"
+                            string="New Leave Request"
+                            class="btn btn-primary"
+                            context="{'default_x_employee_id': id, 'default_x_state': 'draft', 'default_x_native_leave_sync_state': 'not_created', 'default_x_responsible_user_id': uid}"/>
+                    </div>
+                    <field name="x_leave_request_ids"
+                        nolabel="1"
+                        context="{'default_x_employee_id': id, 'default_x_state': 'draft', 'default_x_native_leave_sync_state': 'not_created', 'default_x_responsible_user_id': uid}">
+                        <list create="0">
+                            <field name="x_leave_type_policy_id"/>
+                            <field name="x_state"
+                                widget="badge"
+                                decoration-muted="x_state in ('draft', 'superseded')"
+                                decoration-info="x_state == 'generated'"
+                                decoration-warning="x_state in ('signature_requested', 'blocked')"
+                                decoration-success="x_state == 'signed'"
+                                decoration-danger="x_state == 'cancelled'"/>
+                            <field name="x_leave_date_from"/>
+                            <field name="x_leave_date_to"/>
+                            <field name="x_requested_days"/>
+                            <field name="x_hr_balance_allowed"/>
+                            <field name="x_native_leave_sync_state"
+                                widget="badge"
+                                decoration-muted="x_native_leave_sync_state == 'not_created'"
+                                decoration-info="x_native_leave_sync_state == 'ready'"
+                                decoration-success="x_native_leave_sync_state == 'created'"
+                                decoration-warning="x_native_leave_sync_state == 'blocked'"
+                                decoration-danger="x_native_leave_sync_state == 'error'"/>
+                            <field name="x_responsible_user_id" optional="show"/>
+                        </list>
+                        <form>
+                            <header>
+                                <field name="x_state"
+                                    widget="statusbar"
+                                    options="{'clickable': false}"
+                                    statusbar_visible="draft,generated,signature_requested,signed"
+                                    readonly="1"/>
+                            </header>
+                            <sheet>
+                                <div class="alert alert-info" role="alert">
+                                    This is the Marsellia official leave request surface. HR balance values are manually verified in this pass. Native Odoo Time Off creation is reserved for a later bridge action.
+                                </div>
+                                <group>
+                                    <field name="x_employee_id" readonly="1" force_save="1"/>
+                                    <field name="x_leave_type_policy_id"/>
+                                    <field name="x_work_entry_type_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                                    <field name="x_name" readonly="1"/>
+                                    <field name="x_reference_code" readonly="1"/>
+                                    <field name="x_document_reference" readonly="1"/>
+                                </group>
+                                <group string="Leave Dates">
+                                    <field name="x_request_date"/>
+                                    <field name="x_leave_date_from"/>
+                                    <field name="x_leave_date_to"/>
+                                    <field name="x_requested_calendar_days"/>
+                                    <field name="x_excluded_weekend_days"/>
+                                    <field name="x_excluded_public_holiday_days"/>
+                                    <field name="x_requested_days"/>
+                                </group>
+                                <group string="Manual HR Balance Verification">
+                                    <field name="x_current_balance_days"/>
+                                    <field name="x_used_balance_days"/>
+                                    <field name="x_remaining_balance_days"/>
+                                    <field name="x_hr_balance_allowed"/>
+                                    <field name="x_balance_verified_by_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                                    <field name="x_balance_verified_on"/>
+                                    <field name="x_balance_notes"/>
+                                </group>
+                                <group string="Leave Contact and Handover">
+                                    <field name="x_address_during_leave"/>
+                                    <field name="x_contact_during_leave"/>
+                                    <field name="x_acting_employee_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                                    <field name="x_reason"/>
+                                    <field name="x_employee_notes"/>
+                                </group>
+                                <group string="Approval Metadata">
+                                    <field name="x_direct_manager_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                                    <field name="x_hr_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                                    <field name="x_general_manager_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                                    <field name="x_responsible_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                                </group>
+                                <group string="Lifecycle Artifacts" invisible="1">
+                                    <field name="x_pdf_attachment_id" readonly="1"/>
+                                    <field name="x_signed_attachment_id" readonly="1"/>
+                                    <field name="x_sign_certificate_attachment_id" readonly="1"/>
+                                    <field name="x_sign_request_res_id" readonly="1"/>
+                                    <field name="x_sign_request_state" readonly="1"/>
+                                    <field name="x_sign_request_reference" readonly="1"/>
+                                    <field name="x_sign_request_url" readonly="1"/>
+                                    <field name="x_generated_on" readonly="1"/>
+                                    <field name="x_sent_on" readonly="1"/>
+                                    <field name="x_signed_on" readonly="1"/>
+                                </group>
+                                <group string="Native Time Off Bridge">
+                                    <field name="x_native_leave_id" readonly="1" options="{'no_create': True, 'no_create_edit': True}"/>
+                                    <field name="x_native_leave_sync_state" readonly="1"/>
+                                    <field name="x_native_leave_created_on" readonly="1"/>
+                                    <field name="x_native_leave_notes" readonly="1"/>
+                                </group>
+                                <group string="Manual Decision">
+                                    <field name="x_manual_decision_number"/>
+                                    <field name="x_manual_decision_date"/>
+                                    <field name="x_manual_decision_attachment_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                                </group>
+                                <group string="Notes">
+                                    <field name="x_notes"/>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

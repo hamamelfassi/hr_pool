@@ -8,3 +8,5 @@ access_hr_training_course_hr_user,training course hr user,hr_employment_custom.m
 access_hr_employee_training_commitment_hr_user,employee training commitment hr user,hr_employment_custom.model_x_hr_employee_training_commitment,hr.group_hr_user,1,1,1,1
 access_employee_permission_type_hr_user,employee permission type hr user,hr_employment_custom.model_x_hr_employee_permission_type,hr.group_hr_user,1,1,1,1
 access_employee_permission_hr_user,employee permission hr user,hr_employment_custom.model_x_hr_employee_permission,hr.group_hr_user,1,1,1,1
+access_employee_leave_type_policy_hr_user,employee leave type policy hr user,hr_employment_custom.model_x_hr_employee_leave_type_policy,hr.group_hr_user,1,1,1,1
+access_employee_leave_request_hr_user,employee leave request hr user,hr_employment_custom.model_x_hr_employee_leave_request,hr.group_hr_user,1,1,1,1
