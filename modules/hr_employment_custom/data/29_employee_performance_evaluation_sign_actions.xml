@@ -73,6 +73,32 @@ def user_partner(user):
     return partner
 
 
+
+def employee_partner(employee):
+    if not employee:
+        return False
+
+    partner = False
+
+    if 'work_contact_id' in employee._fields and employee.work_contact_id:
+        partner = employee.work_contact_id.sudo()
+
+    if not partner and 'user_id' in employee._fields and employee.user_id and employee.user_id.partner_id:
+        partner = employee.user_id.partner_id.sudo()
+
+    email = employee.work_email if 'work_email' in employee._fields else False
+
+    if not partner and email:
+        partner = partner_model.search([('email', '=', email)], order='id asc', limit=1)
+
+    if not partner and email:
+        partner = partner_model.create({
+            'name': employee.name or email,
+            'email': email,
+        })
+
+    return partner
+
 def signer_order_vals(order):
     vals = {'mail_sent_order': order}
     for optional_field in ('sequence', 'sign_order'):
@@ -110,12 +136,12 @@ else:
         if not employee:
             action = toast('Missing employee', 'This performance evaluation has no linked employee.', 'warning', True, reload_evaluation(rec))
             continue
+        manager_employee = rec.x_direct_manager_employee_id.sudo() if rec.x_direct_manager_employee_id else False
+        if not manager_employee and employee.parent_id:
+            manager_employee = employee.parent_id.sudo()
 
-        manager_user = False
-        if employee.parent_id and employee.parent_id.user_id:
-            manager_user = employee.parent_id.user_id.sudo()
-        if not manager_user:
-            action = toast('Missing direct manager user', 'The employee must have a manager linked through employee.parent_id, and that manager must have a user account before sending this evaluation to Sign.', 'warning', True, reload_evaluation(rec))
+        if not manager_employee:
+            action = toast('Missing direct manager employee', 'The employee must have a direct manager employee linked through employee.parent_id or the evaluation Direct Manager Employee field before sending this evaluation to Sign.', 'warning', True, reload_evaluation(rec))
             continue
 
         hr_user = False
@@ -132,12 +158,12 @@ else:
             action = toast('Missing general manager user', 'Set General Manager User before sending this evaluation to Sign.', 'warning', True, reload_evaluation(rec))
             continue
 
-        manager_partner = user_partner(manager_user)
+        manager_partner = employee_partner(manager_employee)
         hr_partner = user_partner(hr_user)
         gm_partner = user_partner(gm_user)
 
         if not manager_partner or not manager_partner.email:
-            action = toast('Missing direct manager email', 'The direct manager user needs a partner/email before sending this evaluation to Sign.', 'warning', True, reload_evaluation(rec))
+            action = toast('Missing direct manager email', 'The direct manager employee needs a work contact, user partner, or work email before sending this evaluation to Sign.', 'warning', True, reload_evaluation(rec))
             continue
 
         if not hr_partner or not hr_partner.email:
@@ -149,7 +175,8 @@ else:
             continue
 
         rec.write({
-            'x_direct_manager_user_id': manager_user.id,
+            'x_direct_manager_employee_id': manager_employee.id,
+            'x_direct_manager_user_id': manager_employee.user_id.id if 'user_id' in manager_employee._fields and manager_employee.user_id else False,
             'x_hr_user_id': hr_user.id,
             'x_general_manager_user_id': gm_user.id,
         })
