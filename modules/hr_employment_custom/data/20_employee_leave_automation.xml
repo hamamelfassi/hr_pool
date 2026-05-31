@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="automation_employee_leave_request_normalize_on_create" model="base.automation">
+            <field name="name">Employee Leave Request: Normalize on Create</field>
+            <field name="active" eval="True"/>
+            <field name="trigger">on_create</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_leave_request"/>
+        </record>
+
+        <record id="action_employee_leave_request_normalize_on_create" model="ir.actions.server">
+            <field name="name">Employee Leave Request: Normalize on Create</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_leave_request"/>
+            <field name="base_automation_id" ref="hr_employment_custom.automation_employee_leave_request_normalize_on_create"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+for rec in records.sudo():
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+    policy = rec.x_leave_type_policy_id.sudo() if rec.x_leave_type_policy_id else False
+
+    employee_name = employee.name or employee.display_name or 'Employee'
+    policy_title = policy.x_form_title or policy.x_name or 'Leave Request'
+    form_code = policy.x_form_code or 'MCEP-HR-F-0016'
+
+    vals = {}
+
+    if not rec.x_state:
+        vals['x_state'] = 'draft'
+    if not rec.x_native_leave_sync_state:
+        vals['x_native_leave_sync_state'] = 'not_created'
+    if not rec.x_request_date:
+        vals['x_request_date'] = datetime.date.today()
+    if not rec.x_reference_code:
+        vals['x_reference_code'] = form_code
+    if policy and policy.x_work_entry_type_id and not rec.x_work_entry_type_id:
+        vals['x_work_entry_type_id'] = policy.x_work_entry_type_id.id
+    if not rec.x_responsible_user_id:
+        vals['x_responsible_user_id'] = env.user.id
+    if employee and employee.parent_id and employee.parent_id.user_id and not rec.x_direct_manager_user_id:
+        vals['x_direct_manager_user_id'] = employee.parent_id.user_id.id
+    if employee and 'hr_responsible_id' in employee._fields and employee.hr_responsible_id and not rec.x_hr_user_id:
+        vals['x_hr_user_id'] = employee.hr_responsible_id.id
+    elif not rec.x_hr_user_id:
+        vals['x_hr_user_id'] = env.user.id
+
+    if not rec.x_balance_verified_by_user_id and rec.x_hr_balance_allowed:
+        vals['x_balance_verified_by_user_id'] = env.user.id
+        vals['x_balance_verified_on'] = datetime.datetime.now()
+
+    if not rec.x_document_reference:
+        emp_part = employee.id if employee else 0
+        vals['x_document_reference'] = '%s-%05d-%05d' % (form_code, emp_part, rec.id)
+
+    document_reference = vals.get('x_document_reference') or rec.x_document_reference or ''
+    normalized_name = '%s - %s - %s' % (employee_name, policy_title, document_reference or rec.id)
+    if rec.x_name != normalized_name:
+        vals['x_name'] = normalized_name
+
+    if vals:
+        rec.write(vals)
+
+    if employee:
+        employee.message_post(
+            body='تم إنشاء طلب إجازة: %s' % (vals.get('x_name') or rec.x_name or normalized_name),
+            subtype_xmlid='mail.mt_note',
+        )
+            ]]></field>
+        </record>
+
+        <record id="automation_employee_leave_request_normalize_on_write" model="base.automation">
+            <field name="name">Employee Leave Request: Normalize on Update</field>
+            <field name="active" eval="True"/>
+            <field name="trigger">on_write</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_leave_request"/>
+            <field name="trigger_field_ids"
+                eval="[(6, 0, [
+                    ref('hr_employment_custom.field_x_hr_employee_leave_request__x_employee_id'),
+                    ref('hr_employment_custom.field_x_hr_employee_leave_request__x_leave_type_policy_id'),
+                    ref('hr_employment_custom.field_x_hr_employee_leave_request__x_state'),
+                    ref('hr_employment_custom.field_x_hr_employee_leave_request__x_hr_balance_allowed'),
+                    ref('hr_employment_custom.field_x_hr_employee_leave_request__x_leave_date_from'),
+                    ref('hr_employment_custom.field_x_hr_employee_leave_request__x_leave_date_to'),
+                    ref('hr_employment_custom.field_x_hr_employee_leave_request__x_requested_days')
+                ])]"/>
+        </record>
+
+        <record id="action_employee_leave_request_normalize_on_write" model="ir.actions.server">
+            <field name="name">Employee Leave Request: Normalize on Update</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_leave_request"/>
+            <field name="base_automation_id" ref="hr_employment_custom.automation_employee_leave_request_normalize_on_write"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+for rec in records.sudo():
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+    policy = rec.x_leave_type_policy_id.sudo() if rec.x_leave_type_policy_id else False
+
+    employee_name = employee.name or employee.display_name or 'Employee'
+    policy_title = policy.x_form_title or policy.x_name or 'Leave Request'
+    form_code = policy.x_form_code or rec.x_reference_code or 'MCEP-HR-F-0016'
+
+    vals = {}
+
+    if not rec.x_state:
+        vals['x_state'] = 'draft'
+    if not rec.x_native_leave_sync_state:
+        vals['x_native_leave_sync_state'] = 'not_created'
+    if not rec.x_reference_code:
+        vals['x_reference_code'] = form_code
+    if policy and policy.x_work_entry_type_id and rec.x_work_entry_type_id != policy.x_work_entry_type_id:
+        vals['x_work_entry_type_id'] = policy.x_work_entry_type_id.id
+    if not rec.x_responsible_user_id:
+        vals['x_responsible_user_id'] = env.user.id
+    if employee and employee.parent_id and employee.parent_id.user_id and not rec.x_direct_manager_user_id:
+        vals['x_direct_manager_user_id'] = employee.parent_id.user_id.id
+    if employee and 'hr_responsible_id' in employee._fields and employee.hr_responsible_id and not rec.x_hr_user_id:
+        vals['x_hr_user_id'] = employee.hr_responsible_id.id
+
+    if rec.x_hr_balance_allowed and not rec.x_balance_verified_by_user_id:
+        vals['x_balance_verified_by_user_id'] = env.user.id
+        vals['x_balance_verified_on'] = datetime.datetime.now()
+
+    if not rec.x_document_reference:
+        emp_part = employee.id if employee else 0
+        vals['x_document_reference'] = '%s-%05d-%05d' % (form_code, emp_part, rec.id)
+
+    document_reference = vals.get('x_document_reference') or rec.x_document_reference or ''
+    normalized_name = '%s - %s - %s' % (employee_name, policy_title, document_reference or rec.id)
+    if rec.x_name != normalized_name:
+        vals['x_name'] = normalized_name
+
+    if vals:
+        rec.write(vals)
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>

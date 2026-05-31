@@ -328,4 +328,23 @@
         </field>
     </record>
 
+    <!-- Employee Configuration Menus: Leave -->
+
+    <menuitem id="menu_employee_leave_configuration_section"
+        name="Leave"
+        parent="hr.menu_config_employee"
+        sequence="60"/>
+
+    <menuitem id="menu_employee_leave_type_policies"
+        name="Leave Type Policies"
+        parent="menu_employee_leave_configuration_section"
+        action="action_employee_leave_type_policies"
+        sequence="10"/>
+
+    <menuitem id="menu_employee_leave_requests"
+        name="Employee Leave Requests"
+        parent="menu_employee_leave_configuration_section"
+        action="action_employee_leave_requests"
+        sequence="20"/>
+
 </odoo>

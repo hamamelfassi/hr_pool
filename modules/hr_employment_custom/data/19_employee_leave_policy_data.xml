@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="employee_leave_policy_annual_leave" model="x_hr.employee_leave_type_policy">
+            <field name="x_active" eval="True"/>
+            <field name="x_name">Annual Leave</field>
+            <field name="x_code">annual_leave</field>
+            <field name="x_form_code">MCEP-HR-F-0016</field>
+            <field name="x_form_title">Leave Request</field>
+            <field name="x_leave_category">annual_leave</field>
+            <field name="x_work_entry_type_id" ref="hr_work_entry.generic_work_entry_type_legal_leave"/>
+            <field name="x_requires_balance_check" eval="True"/>
+            <field name="x_requires_acting_employee" eval="True"/>
+            <field name="x_requires_address_during_leave" eval="True"/>
+            <field name="x_requires_contact_during_leave" eval="True"/>
+            <field name="x_requires_direct_manager_approval" eval="True"/>
+            <field name="x_requires_hr_approval" eval="True"/>
+            <field name="x_requires_general_manager_approval" eval="True"/>
+            <field name="x_default_entitlement_days" eval="30.0"/>
+            <field name="x_default_emergency_limit_days" eval="0.0"/>
+            <field name="x_notes">Marsellia annual leave policy. Native bridge target is Odoo Paid Time Off. Balance values remain manually verified in Pass 19.</field>
+        </record>
+
+        <record id="employee_leave_policy_emergency_leave" model="x_hr.employee_leave_type_policy">
+            <field name="x_active" eval="True"/>
+            <field name="x_name">Emergency Leave</field>
+            <field name="x_code">emergency_leave</field>
+            <field name="x_form_code">MCEP-HR-F-0016</field>
+            <field name="x_form_title">Leave Request</field>
+            <field name="x_leave_category">emergency_leave</field>
+            <field name="x_requires_balance_check" eval="True"/>
+            <field name="x_requires_acting_employee" eval="False"/>
+            <field name="x_requires_address_during_leave" eval="True"/>
+            <field name="x_requires_contact_during_leave" eval="True"/>
+            <field name="x_requires_direct_manager_approval" eval="True"/>
+            <field name="x_requires_hr_approval" eval="True"/>
+            <field name="x_requires_general_manager_approval" eval="True"/>
+            <field name="x_default_entitlement_days" eval="0.0"/>
+            <field name="x_default_emergency_limit_days" eval="12.0"/>
+            <field name="x_notes">Marsellia emergency leave policy. Deliberately unmapped to native Odoo Time Off in Pass 19 because the current native work-entry type dump has no clean 12-day emergency leave equivalent.</field>
+        </record>
+
+        <record id="employee_leave_policy_sick_leave" model="x_hr.employee_leave_type_policy">
+            <field name="x_active" eval="True"/>
+            <field name="x_name">Sick Leave</field>
+            <field name="x_code">sick_leave</field>
+            <field name="x_form_code">MCEP-HR-F-0016</field>
+            <field name="x_form_title">Leave Request</field>
+            <field name="x_leave_category">sick_leave</field>
+            <field name="x_work_entry_type_id" ref="hr_work_entry.generic_work_entry_type_sick_leave"/>
+            <field name="x_requires_balance_check" eval="False"/>
+            <field name="x_requires_acting_employee" eval="False"/>
+            <field name="x_requires_address_during_leave" eval="True"/>
+            <field name="x_requires_contact_during_leave" eval="True"/>
+            <field name="x_requires_direct_manager_approval" eval="True"/>
+            <field name="x_requires_hr_approval" eval="True"/>
+            <field name="x_requires_general_manager_approval" eval="False"/>
+            <field name="x_default_entitlement_days" eval="0.0"/>
+            <field name="x_default_emergency_limit_days" eval="0.0"/>
+            <field name="x_notes">Marsellia sick leave policy. Native bridge target is Odoo Sick Time Off. Medical evidence rules are deferred.</field>
+        </record>
+
+        <record id="employee_leave_policy_unpaid_leave" model="x_hr.employee_leave_type_policy">
+            <field name="x_active" eval="True"/>
+            <field name="x_name">Unpaid Leave</field>
+            <field name="x_code">unpaid_leave</field>
+            <field name="x_form_code">MCEP-HR-F-0016</field>
+            <field name="x_form_title">Leave Request</field>
+            <field name="x_leave_category">unpaid_leave</field>
+            <field name="x_work_entry_type_id" ref="hr_work_entry.generic_work_entry_type_unpaid_leave"/>
+            <field name="x_requires_balance_check" eval="False"/>
+            <field name="x_requires_acting_employee" eval="True"/>
+            <field name="x_requires_address_during_leave" eval="True"/>
+            <field name="x_requires_contact_during_leave" eval="True"/>
+            <field name="x_requires_direct_manager_approval" eval="True"/>
+            <field name="x_requires_hr_approval" eval="True"/>
+            <field name="x_requires_general_manager_approval" eval="True"/>
+            <field name="x_default_entitlement_days" eval="0.0"/>
+            <field name="x_default_emergency_limit_days" eval="0.0"/>
+            <field name="x_notes">Marsellia unpaid leave policy. Native bridge target is Odoo Unpaid.</field>
+        </record>
+
+        <record id="employee_leave_policy_compensatory_leave" model="x_hr.employee_leave_type_policy">
+            <field name="x_active" eval="True"/>
+            <field name="x_name">Compensatory Leave</field>
+            <field name="x_code">compensatory_leave</field>
+            <field name="x_form_code">MCEP-HR-F-0016</field>
+            <field name="x_form_title">Leave Request</field>
+            <field name="x_leave_category">compensatory_leave</field>
+            <field name="x_work_entry_type_id" ref="hr_work_entry.generic_work_entry_type_compensatory"/>
+            <field name="x_requires_balance_check" eval="True"/>
+            <field name="x_requires_acting_employee" eval="True"/>
+            <field name="x_requires_address_during_leave" eval="True"/>
+            <field name="x_requires_contact_during_leave" eval="True"/>
+            <field name="x_requires_direct_manager_approval" eval="True"/>
+            <field name="x_requires_hr_approval" eval="True"/>
+            <field name="x_requires_general_manager_approval" eval="False"/>
+            <field name="x_default_entitlement_days" eval="0.0"/>
+            <field name="x_default_emergency_limit_days" eval="0.0"/>
+            <field name="x_notes">Marsellia compensatory leave policy. Native bridge target is Odoo Compensatory Time Off. Accrual and overtime integration are deferred.</field>
+        </record>
+
+    </data>
+</odoo>
