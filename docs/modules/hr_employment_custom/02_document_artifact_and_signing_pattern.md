@@ -538,3 +538,19 @@ Sync closes the permission as signed only from the active document/signature lif
 It must not create attendance, leave, payroll, work-entry, disciplinary, deduction, approval.request, or GRC decision-instance effects.
 ```
 <!-- PASS18G_ARTIFACT_PATTERN_END -->
+
+## Pass 19 leave artifact posture
+
+Pass 19 leave requests follow the same source-record artifact pattern as declarations, custody, training, and permissions.
+
+The lifecycle source record is:
+
+```text
+x_hr.employee_leave_request
+```
+
+Native `hr.leave` is not the first-pass artifact lifecycle source. It is a later operational bridge target after the custom leave request is signed.
+
+The generated/signed/certificate fields live on `x_hr.employee_leave_request`, and final signed artifacts must be posted to employee chatter/files.
+
+Bridge fields such as `x_native_leave_id` may exist on the custom source record, but the source record remains the documentary approval authority for the official Marsellia form.

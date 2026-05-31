@@ -34,7 +34,7 @@ Use custom models only where Marsellia has a process object Odoo does not native
 |---|---|
 | Employee master | `hr.employee` |
 | Contract/payroll overview | Native `hr.employee` Payroll tab fields populated by Pass 13 until `hr.contract` is proven safe in the current SaaS database |
-| Leave | `hr.leave` |
+| Leave native bridge | `hr.leave` after signed custom Marsellia leave request; not the primary Pass 19 form/process record |
 | Attendance | `hr.attendance` |
 | Payroll | Future payroll models/work entries only after Pass 25 preflight; no payroll entries in early lifecycle passes |
 | Appraisal | `hr.appraisal` |
@@ -477,53 +477,213 @@ No payroll deduction/accounting entry is created in the first training pass.
 
 ## 4. Leave requests
 
-### Anchor
+### Revised Pass 19 anchor
+
+Pass 19 uses a custom Marsellia leave process family:
 
 ```text
-hr.leave
+x_hr.employee_leave_type_policy
+x_hr.employee_leave_request
 ```
+
+This supersedes the earlier thin-overlay assumption where Pass 19 would primarily extend native `hr.leave`.
+
+Native `hr.leave` remains the future operational Time Off bridge target after the Marsellia leave request is signed and approved.
 
 ### Purpose
 
-Native Odoo remains the leave source of truth. Marsellia fields and QWeb/signing overlays are added only where needed.
+Capture the official Marsellia leave request form, manual HR balance verification, generated PDF, Sign lifecycle, and employee chatter/files artifacts without forcing early integration into Odoo allocations, accruals, public holidays, work entries, or payroll.
 
-### Extension fields
+### Leave policy helper
+
+Model:
 
 ```text
-x_address_during_leave
-x_contact_during_leave
-x_acting_employee_id
-x_hr_balance_allowed
-x_manual_decision_number
-x_manual_decision_date
-x_manual_decision_attachment_id
-x_pdf_attachment_id
-x_signed_attachment_id
-x_sign_certificate_attachment_id
-x_generated_on
-x_sent_on
-x_signed_on
+x_hr.employee_leave_type_policy
+```
+
+Recommended fields:
+
+```text
+x_name
+x_code
+x_form_code
+x_form_title
+x_work_entry_type_id
+x_leave_category
+x_requires_balance_check
+x_requires_acting_employee
+x_requires_address_during_leave
+x_requires_contact_during_leave
+x_requires_hr_approval
+x_requires_direct_manager_approval
+x_requires_general_manager_approval
+x_default_entitlement_days
+x_default_emergency_limit_days
+x_active
 x_notes
 ```
 
-### Workflow
-
-Use native `hr.leave` states and approvals as primary.
-
-Marsellia official form generation/signing is secondary evidence.
-
-### Activity hooks
-
-Possible activities:
+The native bridge target is:
 
 ```text
-HR balance verification
-acting employee confirmation
-direct manager approval
-GM approval where required
+x_work_entry_type_id -> hr.work.entry.type
 ```
 
----
+Use existing native work-entry/time-off types as mapping targets where safe. Do not mutate or create payroll-facing work-entry types during the first Pass 19 model scaffold unless explicitly scoped.
+
+### Initial policy records
+
+Seed only minimal policies needed for the first form workflow:
+
+```text
+annual_leave
+emergency_leave
+sick_leave, only if required by the official form scope
+unpaid_leave, only if required by the official form scope
+```
+
+Initial native mapping posture:
+
+```text
+annual_leave -> Paid Time Off where available
+sick_leave -> Sick Time Off where available
+unpaid_leave -> Unpaid where available
+emergency_leave -> unmapped or explicitly mapped later after native policy review
+```
+
+### Operational request model
+
+Model:
+
+```text
+x_hr.employee_leave_request
+```
+
+Recommended fields:
+
+```text
+x_name
+x_employee_id
+x_leave_type_policy_id
+x_work_entry_type_id
+x_reference_code
+x_document_reference
+x_state
+x_request_date
+x_leave_date_from
+x_leave_date_to
+x_requested_days
+x_requested_calendar_days
+x_excluded_weekend_days
+x_excluded_public_holiday_days
+x_current_balance_days
+x_used_balance_days
+x_remaining_balance_days
+x_hr_balance_allowed
+x_balance_verified_by_user_id
+x_balance_verified_on
+x_balance_notes
+x_address_during_leave
+x_contact_during_leave
+x_acting_employee_id
+x_reason
+x_employee_notes
+x_direct_manager_user_id
+x_hr_user_id
+x_general_manager_user_id
+x_responsible_user_id
+x_pdf_attachment_id
+x_signed_attachment_id
+x_sign_certificate_attachment_id
+x_sign_request_res_id
+x_sign_request_state
+x_sign_request_reference
+x_sign_request_url
+x_generated_on
+x_sent_on
+x_signed_on
+x_native_leave_id
+x_native_leave_sync_state
+x_native_leave_created_on
+x_native_leave_notes
+x_manual_decision_number
+x_manual_decision_date
+x_manual_decision_attachment_id
+x_notes
+```
+
+### Lifecycle
+
+Use the standard document lifecycle first:
+
+```text
+draft
+-> generated
+-> signature_requested
+-> signed
+```
+
+Keep native bridge status separate:
+
+```text
+x_native_leave_sync_state = not_created / ready / created / error
+```
+
+This avoids polluting document/signature lifecycle with future integration state.
+
+### Manual balance posture
+
+The first production pass accepts manual HR balance verification.
+
+Do not implement automatic entitlement, accrual, weekend, holiday, payroll, or allocation calculations in the first pass.
+
+The form should capture:
+
+```text
+current balance
+used balance
+requested days
+remaining balance
+HR balance allowed
+balance verified by
+balance verified on
+balance notes/source
+```
+
+### Native `hr.leave` bridge
+
+The future bridge action should be explicit and guarded:
+
+```text
+Create Native Time Off
+```
+
+Initial bridge preconditions:
+
+```text
+x_state == signed
+x_native_leave_id is empty
+x_work_entry_type_id exists
+x_employee_id exists
+x_leave_date_from and x_leave_date_to exist
+x_hr_balance_allowed is true, unless the policy does not require balance
+```
+
+The bridge must not auto-validate native leave in its first implementation.
+
+### Out of first Pass 19 scope
+
+```text
+automatic balance calculation
+Friday/Saturday exclusion engine
+public-holiday exclusion engine
+automatic accrual allocation
+automatic native leave validation
+payroll/work-entry/accounting effects
+approval.request integration
+GRC decision-instance integration
+```
 
 ## 5. Administrative permissions
 

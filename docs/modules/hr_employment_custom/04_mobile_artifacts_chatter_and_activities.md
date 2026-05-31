@@ -417,3 +417,15 @@ x_hr.employee_permission
 
 Employee chatter/files is the operational access layer for mobile users.
 <!-- PASS18G_MOBILE_DOCTRINE_END -->
+
+## Pass 19 mobile/chatter note — Leave request artifacts
+
+Leave request artifacts must follow the same mobile-safe pattern as Passes 15-18:
+
+- generated leave request PDF posts to employee chatter/files;
+- signed leave request PDF posts to employee chatter/files;
+- Sign certificate posts to employee chatter/files when Odoo exposes it;
+- desktop download buttons remain convenience controls only;
+- lifecycle truth remains on `x_hr.employee_leave_request`.
+
+Native `hr.leave` records created in a later bridge slice should link back to the custom leave request and should not become the only place where the official signed form is accessible.

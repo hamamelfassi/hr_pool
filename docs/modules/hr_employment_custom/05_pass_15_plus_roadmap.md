@@ -79,12 +79,40 @@ Status: closed and accepted.
 
 ## Pass 19 — Leave requests
 
-- extend native `hr.leave`;
-- Marsellia leave fields;
-- official leave QWeb form;
-- optional Sign layer;
-- activities for HR/manager/GM review;
-- remains deferred until explicitly started after the permissions pass.
+Status: next implementation pass after Pass 18 closure.
+
+Revised architecture:
+
+- use `x_hr.employee_leave_type_policy` as the Marsellia leave policy/helper model;
+- use `x_hr.employee_leave_request` as the official Marsellia leave request process record;
+- link policy records to native `hr.work.entry.type` records where safe;
+- treat native `hr.leave` as a future bridge target after a Marsellia request is signed;
+- keep manual HR balance verification in the first production pass.
+
+Pass 19 must not directly use `hr.leave` as the primary first-pass form/process record.
+
+Initial implementation scope:
+
+- employee `Leave` tab;
+- leave policy helper records;
+- leave request process records;
+- manual balance fields;
+- official F-0016 QWeb/PDF generation, unless the uploaded form confirms another code;
+- native Odoo Sign send/sync after PDF acceptance;
+- generated/signed/certificate artifact handling;
+- employee chatter/files copy;
+- future native `hr.leave` bridge fields.
+
+Deferred:
+
+- automatic balance calculation;
+- Friday/Saturday weekend exclusion engine;
+- public-holiday exclusion engine;
+- native `hr.leave` creation/validation;
+- allocations/accruals;
+- payroll/work-entry/accounting effects;
+- approval.request integration;
+- GRC decision-instance integration.
 
 ## Pass 20 — Work assignments
 

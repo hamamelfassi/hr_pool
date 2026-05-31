@@ -14,7 +14,7 @@ Implemented and accepted so far:
 Current implementation pass:
 
 ```text
-Pass 18 — Administrative permissions F-0014/F-0015
+Pass 19 — Leave requests / F-0016 official leave workflow
 ```
 
 Pass 18 uses one helper/type model and one operational model:
@@ -110,3 +110,23 @@ Deliberately deferred:
 
 Next expected implementation pass is Pass 19 Leave Requests, but it should not start until the leave-specific scope is confirmed.
 <!-- PASS18G_README_CLOSURE_END -->
+
+## Pass 19 planning status — Leave requests
+
+Pass 19 is now planned as a custom Marsellia leave request workflow.
+
+Locked posture:
+
+```text
+x_hr.employee_leave_type_policy
+x_hr.employee_leave_request
+```
+
+Native integration posture:
+
+```text
+hr.work.entry.type = native leave policy mapping target
+hr.leave = future native Time Off bridge target after signed approval
+```
+
+The first production pass focuses on official form generation, manual HR balance verification, Odoo Sign, and employee chatter/files artifacts. Automatic balance computation, allocations/accruals, native leave validation, and payroll/work-entry effects are deferred.

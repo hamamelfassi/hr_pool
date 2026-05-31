@@ -458,3 +458,28 @@ Custody tab → العهود
 
 Selection values for Permissions and Training were translated in Pass 18F-2 using exact exported `ir.model.fields.selection` anchors.
 <!-- PASS18G_UI_DOCTRINE_END -->
+
+## Pass 19 tab addition — Leave Requests
+
+Pass 19 adds or formalizes the employee `Leave` tab for Marsellia leave request records.
+
+The tab should use a custom one2many process surface:
+
+```text
+hr.employee
+  x_leave_request_ids -> x_hr.employee_leave_request
+```
+
+The tab should not expose native `hr.leave` as the primary first-pass workflow surface.
+
+Required pattern:
+
+- info alert explaining that native Time Off integration is a later bridge;
+- `New Leave Request` button;
+- embedded list of leave requests;
+- modal create/edit form;
+- standalone list/form action;
+- statusbar at top of request form;
+- workflow/artifact controls inside the form sheet if header controls become crowded;
+- manual balance verification fields grouped clearly;
+- future native `hr.leave` bridge fields hidden or in a technical group until the bridge slice is explicitly implemented.
