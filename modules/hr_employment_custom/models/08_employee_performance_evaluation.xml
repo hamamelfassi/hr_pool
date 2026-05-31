@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ========================================================= -->
+        <!-- Marsellia Employee Performance Evaluation                -->
+        <!-- F-0018 parent model                                      -->
+        <!-- ========================================================= -->
+
+        <record id="model_x_hr_employee_performance_evaluation" model="ir.model">
+            <field name="name">Employee Performance Evaluation</field>
+            <field name="model">x_hr.employee_performance_evaluation</field>
+            <field name="state">manual</field>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_name" model="ir.model.fields">
+            <field name="name">x_name</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Evaluation Label</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_employee_id" model="ir.model.fields">
+            <field name="name">x_employee_id</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Employee</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.employee</field>
+            <field name="required" eval="True"/>
+            <field name="on_delete">cascade</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_reference_code" model="ir.model.fields">
+            <field name="name">x_reference_code</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Reference Code</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_document_reference" model="ir.model.fields">
+            <field name="name">x_document_reference</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Document Reference</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_state" model="ir.model.fields">
+            <field name="name">x_state</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">State</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('draft', 'Draft'),
+                ('generated', 'Generated'),
+                ('signature_requested', 'Signature Requested'),
+                ('signed', 'Signed'),
+                ('cancelled', 'Cancelled'),
+                ('superseded', 'Superseded')
+            ]</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_period_date_from" model="ir.model.fields">
+            <field name="name">x_period_date_from</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Evaluation Period From</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_period_date_to" model="ir.model.fields">
+            <field name="name">x_period_date_to</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Evaluation Period To</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_total_score" model="ir.model.fields">
+            <field name="name">x_total_score</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Total Score</field>
+            <field name="ttype">integer</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_max_score" model="ir.model.fields">
+            <field name="name">x_max_score</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Maximum Score</field>
+            <field name="ttype">integer</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_score_percentage" model="ir.model.fields">
+            <field name="name">x_score_percentage</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Score Percentage</field>
+            <field name="ttype">float</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_grade" model="ir.model.fields">
+            <field name="name">x_grade</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Grade</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('not_scored', 'Not Scored'),
+                ('acceptable', 'Acceptable'),
+                ('good', 'Good'),
+                ('very_good', 'Very Good'),
+                ('excellent', 'Excellent')
+            ]</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_star_rating" model="ir.model.fields">
+            <field name="name">x_star_rating</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Star Rating</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('0', 'No Rating'),
+                ('1', '1 Star'),
+                ('2', '2 Stars'),
+                ('3', '3 Stars'),
+                ('4', '4 Stars'),
+                ('5', '5 Stars')
+            ]</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_direct_manager_recommendation" model="ir.model.fields">
+            <field name="name">x_direct_manager_recommendation</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Direct Manager Recommendation</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_hr_manager_recommendation" model="ir.model.fields">
+            <field name="name">x_hr_manager_recommendation</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">HR Manager Recommendation</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_direct_manager_user_id" model="ir.model.fields">
+            <field name="name">x_direct_manager_user_id</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Direct Manager User</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_hr_user_id" model="ir.model.fields">
+            <field name="name">x_hr_user_id</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">HR User</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_general_manager_user_id" model="ir.model.fields">
+            <field name="name">x_general_manager_user_id</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">General Manager User</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_responsible_user_id" model="ir.model.fields">
+            <field name="name">x_responsible_user_id</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Responsible User</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_pdf_attachment_id" model="ir.model.fields">
+            <field name="name">x_pdf_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Generated PDF</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_signed_attachment_id" model="ir.model.fields">
+            <field name="name">x_signed_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Signed PDF</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_sign_certificate_attachment_id" model="ir.model.fields">
+            <field name="name">x_sign_certificate_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Sign Certificate</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_sign_request_res_id" model="ir.model.fields">
+            <field name="name">x_sign_request_res_id</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Sign Request ID</field>
+            <field name="ttype">integer</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_sign_request_state" model="ir.model.fields">
+            <field name="name">x_sign_request_state</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Sign Request State</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_sign_request_reference" model="ir.model.fields">
+            <field name="name">x_sign_request_reference</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Sign Request Reference</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_sign_request_url" model="ir.model.fields">
+            <field name="name">x_sign_request_url</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Sign Request URL</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_generated_on" model="ir.model.fields">
+            <field name="name">x_generated_on</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Generated On</field>
+            <field name="ttype">datetime</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_sent_on" model="ir.model.fields">
+            <field name="name">x_sent_on</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Sent On</field>
+            <field name="ttype">datetime</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_signed_on" model="ir.model.fields">
+            <field name="name">x_signed_on</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Signed On</field>
+            <field name="ttype">datetime</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_manual_decision_number" model="ir.model.fields">
+            <field name="name">x_manual_decision_number</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Manual Decision Number</field>
+            <field name="ttype">char</field>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_manual_decision_date" model="ir.model.fields">
+            <field name="name">x_manual_decision_date</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Manual Decision Date</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_manual_decision_attachment_id" model="ir.model.fields">
+            <field name="name">x_manual_decision_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Manual Decision Attachment</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation__x_notes" model="ir.model.fields">
+            <field name="name">x_notes</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Notes</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <!-- ========================================================= -->
+        <!-- Marsellia Employee Performance Evaluation Line           -->
+        <!-- F-0018 line model                                        -->
+        <!-- ========================================================= -->
+
+        <record id="model_x_hr_employee_performance_evaluation_line" model="ir.model">
+            <field name="name">Employee Performance Evaluation Line</field>
+            <field name="model">x_hr.employee_performance_evaluation_line</field>
+            <field name="state">manual</field>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation_line__x_name" model="ir.model.fields">
+            <field name="name">x_name</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation_line"/>
+            <field name="field_description">Evaluation Item Label</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation_line__x_evaluation_id" model="ir.model.fields">
+            <field name="name">x_evaluation_id</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation_line"/>
+            <field name="field_description">Performance Evaluation</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.employee_performance_evaluation</field>
+            <field name="required" eval="True"/>
+            <field name="on_delete">cascade</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation_line__x_sequence" model="ir.model.fields">
+            <field name="name">x_sequence</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation_line"/>
+            <field name="field_description">Sequence</field>
+            <field name="ttype">integer</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation_line__x_item_code" model="ir.model.fields">
+            <field name="name">x_item_code</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation_line"/>
+            <field name="field_description">Item Code</field>
+            <field name="ttype">char</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation_line__x_item_label_ar" model="ir.model.fields">
+            <field name="name">x_item_label_ar</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation_line"/>
+            <field name="field_description">Evaluation Item Arabic</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation_line__x_item_label_en" model="ir.model.fields">
+            <field name="name">x_item_label_en</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation_line"/>
+            <field name="field_description">Evaluation Item English</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation_line__x_score" model="ir.model.fields">
+            <field name="name">x_score</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation_line"/>
+            <field name="field_description">Score</field>
+            <field name="ttype">integer</field>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation_line__x_max_score" model="ir.model.fields">
+            <field name="name">x_max_score</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation_line"/>
+            <field name="field_description">Maximum Score</field>
+            <field name="ttype">integer</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_performance_evaluation_line__x_notes" model="ir.model.fields">
+            <field name="name">x_notes</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation_line"/>
+            <field name="field_description">Notes</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <!-- Parent One2many after inverse Many2one exists -->
+
+        <record id="field_x_hr_employee_performance_evaluation__x_line_ids" model="ir.model.fields">
+            <field name="name">x_line_ids</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Evaluation Lines</field>
+            <field name="ttype">one2many</field>
+            <field name="relation">x_hr.employee_performance_evaluation_line</field>
+            <field name="relation_field">x_evaluation_id</field>
+        </record>
+
+        <!-- Employee inverse field -->
+
+        <record id="field_hr_employee__x_performance_evaluation_ids" model="ir.model.fields">
+            <field name="name">x_performance_evaluation_ids</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="field_description">Performance Evaluations</field>
+            <field name="ttype">one2many</field>
+            <field name="relation">x_hr.employee_performance_evaluation</field>
+            <field name="relation_field">x_employee_id</field>
+        </record>
+
+    </data>
+</odoo>
