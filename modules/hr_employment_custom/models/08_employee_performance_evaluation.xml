@@ -164,6 +164,16 @@
             <field name="on_delete">set null</field>
         </record>
 
+        <record id="field_x_hr_employee_performance_evaluation__x_direct_manager_employee_id" model="ir.model.fields">
+            <field name="name">x_direct_manager_employee_id</field>
+            <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>
+            <field name="field_description">Direct Manager Employee</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.employee</field>
+            <field name="on_delete">set null</field>
+            <field name="index" eval="True"/>
+        </record>
+
         <record id="field_x_hr_employee_performance_evaluation__x_hr_user_id" model="ir.model.fields">
             <field name="name">x_hr_user_id</field>
             <field name="model_id" ref="model_x_hr_employee_performance_evaluation"/>

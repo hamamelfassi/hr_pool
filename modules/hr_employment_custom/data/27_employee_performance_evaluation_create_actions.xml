@@ -39,6 +39,8 @@ else:
         'x_grade': 'not_scored',
         'x_star_rating': '0',
         'x_responsible_user_id': env.user.id,
+        'x_direct_manager_employee_id': employee.parent_id.id if employee.parent_id else False,
+        'x_direct_manager_user_id': employee.parent_id.user_id.id if employee.parent_id and employee.parent_id.user_id else False,
     })
 
     # The 21C create automation seeds the 12 lines synchronously.

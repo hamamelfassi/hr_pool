@@ -42,7 +42,7 @@
                     decoration-success="x_grade == 'excellent'"
                     decoration-warning="x_grade == 'acceptable'"/>
                 <field name="x_document_reference"/>
-                <field name="x_direct_manager_user_id" optional="show"/>
+                <field name="x_direct_manager_employee_id" optional="show"/>
                 <field name="x_hr_user_id" optional="show"/>
                 <field name="x_responsible_user_id" optional="show"/>
             </list>
@@ -202,7 +202,8 @@
                         <field name="x_hr_manager_recommendation"/>
                     </group>
                     <group string="Approval Metadata">
-                        <field name="x_direct_manager_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                        <field name="x_direct_manager_employee_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                        <field name="x_direct_manager_user_id" invisible="1" options="{'no_create': True, 'no_create_edit': True}"/>
                         <field name="x_hr_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
                         <field name="x_general_manager_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
                         <field name="x_responsible_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
@@ -288,7 +289,7 @@
                                 decoration-success="x_grade == 'excellent'"
                                 decoration-warning="x_grade == 'acceptable'"/>
                             <field name="x_document_reference"/>
-                            <field name="x_direct_manager_user_id" optional="show"/>
+                            <field name="x_direct_manager_employee_id" optional="show"/>
                             <field name="x_hr_user_id" optional="show"/>
                             <field name="x_responsible_user_id" optional="show"/>
                         </list>
@@ -420,7 +421,8 @@
                                     <field name="x_hr_manager_recommendation"/>
                                 </group>
                                 <group string="Approval Metadata">
-                                    <field name="x_direct_manager_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                                    <field name="x_direct_manager_employee_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                        <field name="x_direct_manager_user_id" invisible="1" options="{'no_create': True, 'no_create_edit': True}"/>
                                     <field name="x_hr_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
                                     <field name="x_general_manager_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
                                     <field name="x_responsible_user_id" options="{'no_create': True, 'no_create_edit': True}"/>
