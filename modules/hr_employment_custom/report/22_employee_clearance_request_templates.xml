@@ -34,8 +34,8 @@
 
                     <style>
                         .mcep-clearance-page {
-                            font-size: 10.6px;
-                            line-height: 1.08;
+                            font-size: 11px;
+                            line-height: 1.12;
                             padding-top: 2.8mm;
                             padding-bottom: 1.5mm;
                         }
@@ -61,10 +61,10 @@
                         }
 
                         .mcep-clearance-section {
-                            font-size: 12px;
+                            font-size: 13.2px;
                             font-weight: 700;
                             margin: 1.4mm 0 0.6mm 0;
-                            padding: 0.8mm 1.2mm;
+                            padding: 0.9mm 1.25mm;
                             background: #eef2f7;
                             border: 1px solid #9aa4b2;
                             text-align: right;
@@ -74,7 +74,7 @@
                         .mcep-clearance-section .en {
                             direction: ltr;
                             unicode-bidi: isolate;
-                            font-size: 8.8px;
+                            font-size: 9.7px;
                             color: #374151;
                         }
 
@@ -94,9 +94,9 @@
                         .mcep-clearance-final-table th,
                         .mcep-clearance-final-table td {
                             border: 1px solid #6b7280;
-                            padding: 0.65mm 0.75mm;
+                            padding: 0.8mm 0.85mm;
                             vertical-align: middle;
-                            line-height: 1.06;
+                            line-height: 1.14;
                         }
 
                         .mcep-clearance-info-table th,
@@ -108,7 +108,7 @@
                         }
 
                         .mcep-clearance-value {
-                            min-height: 4mm;
+                            min-height: 4.5mm;
                             text-align: center;
                             font-weight: 600;
                         }
@@ -116,12 +116,12 @@
                         .mcep-clearance-en {
                             direction: ltr;
                             unicode-bidi: isolate;
-                            font-size: 8.2px;
+                            font-size: 9px;
                             color: #374151;
                         }
 
                         .mcep-clearance-check-table {
-                            font-size: 9.6px;
+                            font-size: 10.7px;
                         }
 
                         .mcep-clearance-section-title {
@@ -129,13 +129,13 @@
                             text-align: right;
                             direction: rtl;
                             font-weight: 700;
-                            font-size: 10.8px;
+                            font-size: 12px;
                         }
 
                         .mcep-clearance-section-title .en {
                             direction: ltr;
                             unicode-bidi: isolate;
-                            font-size: 8.2px;
+                            font-size: 9px;
                             color: #374151;
                         }
 
@@ -149,7 +149,7 @@
                             display: block;
                             direction: ltr;
                             unicode-bidi: isolate;
-                            font-size: 7.8px;
+                            font-size: 8.7px;
                             color: #374151;
                             margin-top: 0.1mm;
                         }
@@ -157,19 +157,19 @@
                         .mcep-clearance-checkbox-cell {
                             text-align: center;
                             direction: rtl;
-                            font-size: 10px;
+                            font-size: 11.2px;
                             white-space: nowrap;
                         }
 
                         .mcep-clearance-checkbox {
-                            font-size: 13px;
+                            font-size: 14.5px;
                             font-weight: 700;
                         }
 
                         .mcep-clearance-notes {
-                            min-height: 4mm;
+                            min-height: 4.5mm;
                             white-space: pre-wrap;
-                            font-size: 8.8px;
+                            font-size: 9.7px;
                         }
 
                         .mcep-clearance-responsible-row td {
@@ -177,30 +177,30 @@
                         }
 
                         .mcep-clearance-sign-box {
-                            height: 7mm;
+                            height: 7.7mm;
                             text-align: center;
                             font-weight: 600;
                         }
 
                         .mcep-clearance-date-box {
-                            height: 5mm;
+                            height: 5.4mm;
                             direction: ltr;
                             unicode-bidi: isolate;
                             text-align: center;
                         }
 
                         .mcep-clearance-final-table {
-                            font-size: 10px;
+                            font-size: 11.2px;
                             margin-top: 1.2mm;
                         }
 
                         .mcep-clearance-final-sign {
-                            height: 8mm;
+                            height: 8.8mm;
                             text-align: center;
                         }
 
                         .mcep-clearance-final-date {
-                            height: 5mm;
+                            height: 5.4mm;
                             direction: ltr;
                             unicode-bidi: isolate;
                             text-align: center;
@@ -267,7 +267,7 @@
                             <tr>
                                 <th style="width: 7%;">#</th>
                                 <th style="width: 36%;">البند / <span class="mcep-clearance-en">Item</span></th>
-                                <th style="width: 17%;">تمت المراجعة<br/><span class="mcep-clearance-en">Verified</span></th>
+                                <th style="width: 17%;">تم التحقق<br/><span class="mcep-clearance-en">Verified</span></th>
                                 <th style="width: 40%;">الملاحظات / التوقيع<br/><span class="mcep-clearance-en">Notes / Signature</span></th>
                             </tr>
                         </thead>
@@ -288,9 +288,9 @@
                                     <span class="mcep-clearance-item-en" t-out="line.x_item_label_en or ''"/>
                                 </td>
                                 <td class="mcep-clearance-checkbox-cell">
-                                    <span class="mcep-clearance-checkbox">☐</span> نعم / Yes
+                                    <span class="mcep-clearance-checkbox">☐</span>
                                     <br/>
-                                    <span class="mcep-clearance-checkbox">☐</span> لا / No
+                                    <span class="mcep-clearance-en">تمت المراجعة / Verified</span>
                                 </td>
                                 <td class="mcep-clearance-notes"><span t-out="line.x_notes or ''"/></td>
                             </tr>
@@ -316,9 +316,9 @@
                                     <span class="mcep-clearance-item-en" t-out="line.x_item_label_en or ''"/>
                                 </td>
                                 <td class="mcep-clearance-checkbox-cell">
-                                    <span class="mcep-clearance-checkbox">☐</span> نعم / Yes
+                                    <span class="mcep-clearance-checkbox">☐</span>
                                     <br/>
-                                    <span class="mcep-clearance-checkbox">☐</span> لا / No
+                                    <span class="mcep-clearance-en">تمت المراجعة / Verified</span>
                                 </td>
                                 <td class="mcep-clearance-notes"><span t-out="line.x_notes or ''"/></td>
                             </tr>
@@ -344,9 +344,9 @@
                                     <span class="mcep-clearance-item-en" t-out="line.x_item_label_en or ''"/>
                                 </td>
                                 <td class="mcep-clearance-checkbox-cell">
-                                    <span class="mcep-clearance-checkbox">☐</span> نعم / Yes
+                                    <span class="mcep-clearance-checkbox">☐</span>
                                     <br/>
-                                    <span class="mcep-clearance-checkbox">☐</span> لا / No
+                                    <span class="mcep-clearance-en">تمت المراجعة / Verified</span>
                                 </td>
                                 <td class="mcep-clearance-notes"><span t-out="line.x_notes or ''"/></td>
                             </tr>
@@ -372,9 +372,9 @@
                                     <span class="mcep-clearance-item-en" t-out="line.x_item_label_en or ''"/>
                                 </td>
                                 <td class="mcep-clearance-checkbox-cell">
-                                    <span class="mcep-clearance-checkbox">☐</span> نعم / Yes
+                                    <span class="mcep-clearance-checkbox">☐</span>
                                     <br/>
-                                    <span class="mcep-clearance-checkbox">☐</span> لا / No
+                                    <span class="mcep-clearance-en">تمت المراجعة / Verified</span>
                                 </td>
                                 <td class="mcep-clearance-notes"><span t-out="line.x_notes or ''"/></td>
                             </tr>
@@ -400,9 +400,9 @@
                                     <span class="mcep-clearance-item-en" t-out="line.x_item_label_en or ''"/>
                                 </td>
                                 <td class="mcep-clearance-checkbox-cell">
-                                    <span class="mcep-clearance-checkbox">☐</span> نعم / Yes
+                                    <span class="mcep-clearance-checkbox">☐</span>
                                     <br/>
-                                    <span class="mcep-clearance-checkbox">☐</span> لا / No
+                                    <span class="mcep-clearance-en">تمت المراجعة / Verified</span>
                                 </td>
                                 <td class="mcep-clearance-notes"><span t-out="line.x_notes or ''"/></td>
                             </tr>
@@ -428,9 +428,9 @@
                                     <span class="mcep-clearance-item-en" t-out="line.x_item_label_en or ''"/>
                                 </td>
                                 <td class="mcep-clearance-checkbox-cell">
-                                    <span class="mcep-clearance-checkbox">☐</span> نعم / Yes
+                                    <span class="mcep-clearance-checkbox">☐</span>
                                     <br/>
-                                    <span class="mcep-clearance-checkbox">☐</span> لا / No
+                                    <span class="mcep-clearance-en">تمت المراجعة / Verified</span>
                                 </td>
                                 <td class="mcep-clearance-notes"><span t-out="line.x_notes or ''"/></td>
                             </tr>
