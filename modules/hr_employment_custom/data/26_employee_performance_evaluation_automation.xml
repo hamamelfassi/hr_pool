@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="automation_employee_performance_evaluation_normalize_on_create" model="base.automation">
+            <field name="name">Employee Performance Evaluation: Normalize on Create</field>
+            <field name="active" eval="True"/>
+            <field name="trigger">on_create</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_performance_evaluation"/>
+        </record>
+
+        <record id="action_employee_performance_evaluation_normalize_on_create" model="ir.actions.server">
+            <field name="name">Employee Performance Evaluation: Normalize on Create</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_performance_evaluation"/>
+            <field name="base_automation_id" ref="hr_employment_custom.automation_employee_performance_evaluation_normalize_on_create"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+def get_grade_and_rating(total, scored_count):
+    if scored_count < 12:
+        return 'not_scored', '0'
+    if total >= 51:
+        return 'excellent', '5'
+    if total >= 41:
+        return 'very_good', '4'
+    if total >= 31:
+        return 'good', '3'
+    return 'acceptable', '2'
+
+
+def recalc_values(rec):
+    total = 0
+    scored_count = 0
+    for line in rec.x_line_ids:
+        score = line.x_score or 0
+        if score < 0 or score > 5:
+            raise UserError('Evaluation score must be between 1 and 5. Leave the score as 0 only while the item is not scored yet.')
+        if score:
+            total += score
+            scored_count += 1
+    grade, rating = get_grade_and_rating(total, scored_count)
+    percentage = 0.0
+    if rec.x_max_score or 60:
+        percentage = round((float(total) / float(rec.x_max_score or 60)) * 100.0, 2)
+    return {
+        'x_total_score': total,
+        'x_max_score': 60,
+        'x_score_percentage': percentage,
+        'x_grade': grade,
+        'x_star_rating': rating,
+    }
+
+
+default_items = [
+    (1, 'performance_01', 'الالتزام بمواعيد العمل', 'Compliance with Working Hours'),
+    (2, 'performance_02', 'جودة العمل', 'Quality of Work'),
+    (3, 'performance_03', 'الالتزام بأنظمة وسياسات الشركة واللوائح الداخلية', 'Compliance with Company Policies, Systems, and Internal Regulations'),
+    (4, 'performance_04', 'القدرة على فهم قواعد وأساليب العمل', 'Ability to Understand Work Rules and Methods'),
+    (5, 'performance_05', 'العمل ضمن فريق', 'Teamwork'),
+    (6, 'performance_06', 'إتمام العمل بالمستوى المطلوب', 'Completion of Work Procedures and Methods'),
+    (7, 'performance_07', 'إتمام العمل في المواعيد المقررة', 'Completion of Work Within the Specified Timeframes'),
+    (8, 'performance_08', 'الاهتمام بتطوير وتحسين مستوى العمل', 'Commitment to Developing and Improving Work Performance'),
+    (9, 'performance_09', 'المحافظة على ممتلكات الشركة', 'Care for and Protection of Company Property'),
+    (10, 'performance_10', 'احترام الغير', 'Respect for Others'),
+    (11, 'performance_11', 'المظهر الشخصي', 'Personal Appearance'),
+    (12, 'performance_12', 'المسؤوليات العامة داخل العمل', 'General Responsibilities Within the Workplace'),
+]
+
+
+for rec in records.sudo():
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+
+    form_code = 'MCEP-HR-F-0018'
+    form_title = 'Performance Evaluation'
+    employee_name = employee.name or employee.display_name or 'Employee'
+
+    vals = {}
+
+    if not rec.x_state:
+        vals['x_state'] = 'draft'
+
+    if not rec.x_reference_code:
+        vals['x_reference_code'] = form_code
+
+    if not rec.x_responsible_user_id:
+        vals['x_responsible_user_id'] = env.user.id
+
+    if employee and employee.parent_id and employee.parent_id.user_id and not rec.x_direct_manager_user_id:
+        vals['x_direct_manager_user_id'] = employee.parent_id.user_id.id
+
+    if employee and 'hr_responsible_id' in employee._fields and employee.hr_responsible_id and not rec.x_hr_user_id:
+        vals['x_hr_user_id'] = employee.hr_responsible_id.id
+
+    if not rec.x_document_reference:
+        emp_part = employee.id if employee else 0
+        vals['x_document_reference'] = '%s-%05d-%05d' % (form_code, emp_part, rec.id)
+
+    document_reference = vals.get('x_document_reference') or rec.x_document_reference or ''
+    normalized_name = '%s - %s - %s' % (employee_name, form_title, document_reference or rec.id)
+
+    if rec.x_name != normalized_name:
+        vals['x_name'] = normalized_name
+
+    if vals:
+        rec.write(vals)
+
+    rec = rec.sudo().browse(rec.id)
+
+    if not rec.x_line_ids:
+        line_model = env['x_hr.employee_performance_evaluation_line'].sudo()
+        line_vals = []
+        for sequence, code, label_ar, label_en in default_items:
+            line_vals.append({
+                'x_evaluation_id': rec.id,
+                'x_sequence': sequence,
+                'x_item_code': code,
+                'x_item_label_ar': label_ar,
+                'x_item_label_en': label_en,
+                'x_name': '%02d - %s' % (sequence, label_en),
+                'x_score': 0,
+                'x_max_score': 5,
+            })
+        line_model.create(line_vals)
+        rec = rec.sudo().browse(rec.id)
+
+    score_vals = recalc_values(rec)
+    rec.write(score_vals)
+
+    if employee:
+        employee.message_post(
+            body='تم إنشاء تقييم أداء: %s' % (rec.x_name or normalized_name),
+            subtype_xmlid='mail.mt_note',
+        )
+            ]]></field>
+        </record>
+
+        <record id="automation_employee_performance_evaluation_normalize_on_write" model="base.automation">
+            <field name="name">Employee Performance Evaluation: Normalize on Update</field>
+            <field name="active" eval="True"/>
+            <field name="trigger">on_write</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_performance_evaluation"/>
+            <field name="trigger_field_ids"
+                eval="[(6, 0, [
+                    ref('hr_employment_custom.field_x_hr_employee_performance_evaluation__x_employee_id'),
+                    ref('hr_employment_custom.field_x_hr_employee_performance_evaluation__x_state'),
+                    ref('hr_employment_custom.field_x_hr_employee_performance_evaluation__x_period_date_from'),
+                    ref('hr_employment_custom.field_x_hr_employee_performance_evaluation__x_period_date_to')
+                ])]"/>
+        </record>
+
+        <record id="action_employee_performance_evaluation_normalize_on_write" model="ir.actions.server">
+            <field name="name">Employee Performance Evaluation: Normalize on Update</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_performance_evaluation"/>
+            <field name="base_automation_id" ref="hr_employment_custom.automation_employee_performance_evaluation_normalize_on_write"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+def get_grade_and_rating(total, scored_count):
+    if scored_count < 12:
+        return 'not_scored', '0'
+    if total >= 51:
+        return 'excellent', '5'
+    if total >= 41:
+        return 'very_good', '4'
+    if total >= 31:
+        return 'good', '3'
+    return 'acceptable', '2'
+
+
+def recalc_values(rec):
+    total = 0
+    scored_count = 0
+    for line in rec.x_line_ids:
+        score = line.x_score or 0
+        if score < 0 or score > 5:
+            raise UserError('Evaluation score must be between 1 and 5. Leave the score as 0 only while the item is not scored yet.')
+        if score:
+            total += score
+            scored_count += 1
+    grade, rating = get_grade_and_rating(total, scored_count)
+    percentage = 0.0
+    if rec.x_max_score or 60:
+        percentage = round((float(total) / float(rec.x_max_score or 60)) * 100.0, 2)
+    return {
+        'x_total_score': total,
+        'x_max_score': 60,
+        'x_score_percentage': percentage,
+        'x_grade': grade,
+        'x_star_rating': rating,
+    }
+
+
+default_items = [
+    (1, 'performance_01', 'الالتزام بمواعيد العمل', 'Compliance with Working Hours'),
+    (2, 'performance_02', 'جودة العمل', 'Quality of Work'),
+    (3, 'performance_03', 'الالتزام بأنظمة وسياسات الشركة واللوائح الداخلية', 'Compliance with Company Policies, Systems, and Internal Regulations'),
+    (4, 'performance_04', 'القدرة على فهم قواعد وأساليب العمل', 'Ability to Understand Work Rules and Methods'),
+    (5, 'performance_05', 'العمل ضمن فريق', 'Teamwork'),
+    (6, 'performance_06', 'إتمام العمل بالمستوى المطلوب', 'Completion of Work Procedures and Methods'),
+    (7, 'performance_07', 'إتمام العمل في المواعيد المقررة', 'Completion of Work Within the Specified Timeframes'),
+    (8, 'performance_08', 'الاهتمام بتطوير وتحسين مستوى العمل', 'Commitment to Developing and Improving Work Performance'),
+    (9, 'performance_09', 'المحافظة على ممتلكات الشركة', 'Care for and Protection of Company Property'),
+    (10, 'performance_10', 'احترام الغير', 'Respect for Others'),
+    (11, 'performance_11', 'المظهر الشخصي', 'Personal Appearance'),
+    (12, 'performance_12', 'المسؤوليات العامة داخل العمل', 'General Responsibilities Within the Workplace'),
+]
+
+
+for rec in records.sudo():
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+
+    if rec.x_period_date_from and rec.x_period_date_to and rec.x_period_date_to < rec.x_period_date_from:
+        raise UserError('Evaluation Period To cannot be earlier than Evaluation Period From.')
+
+    form_code = rec.x_reference_code or 'MCEP-HR-F-0018'
+    form_title = 'Performance Evaluation'
+    employee_name = employee.name or employee.display_name or 'Employee'
+
+    vals = {}
+
+    if not rec.x_state:
+        vals['x_state'] = 'draft'
+
+    if not rec.x_reference_code:
+        vals['x_reference_code'] = form_code
+
+    if not rec.x_responsible_user_id:
+        vals['x_responsible_user_id'] = env.user.id
+
+    if employee and employee.parent_id and employee.parent_id.user_id and not rec.x_direct_manager_user_id:
+        vals['x_direct_manager_user_id'] = employee.parent_id.user_id.id
+
+    if employee and 'hr_responsible_id' in employee._fields and employee.hr_responsible_id and not rec.x_hr_user_id:
+        vals['x_hr_user_id'] = employee.hr_responsible_id.id
+
+    if not rec.x_document_reference:
+        emp_part = employee.id if employee else 0
+        vals['x_document_reference'] = '%s-%05d-%05d' % (form_code, emp_part, rec.id)
+    elif '-EMP-' in rec.x_document_reference:
+        vals['x_document_reference'] = rec.x_document_reference.replace('-EMP-', '-', 1)
+
+    document_reference = vals.get('x_document_reference') or rec.x_document_reference or ''
+    normalized_name = '%s - %s - %s' % (employee_name, form_title, document_reference or rec.id)
+
+    if rec.x_name != normalized_name:
+        vals['x_name'] = normalized_name
+
+    if not rec.x_line_ids:
+        line_model = env['x_hr.employee_performance_evaluation_line'].sudo()
+        line_vals = []
+        for sequence, code, label_ar, label_en in default_items:
+            line_vals.append({
+                'x_evaluation_id': rec.id,
+                'x_sequence': sequence,
+                'x_item_code': code,
+                'x_item_label_ar': label_ar,
+                'x_item_label_en': label_en,
+                'x_name': '%02d - %s' % (sequence, label_en),
+                'x_score': 0,
+                'x_max_score': 5,
+            })
+        line_model.create(line_vals)
+        rec = rec.sudo().browse(rec.id)
+
+    vals.update(recalc_values(rec))
+
+    if vals:
+        rec.write(vals)
+            ]]></field>
+        </record>
+
+        <record id="automation_employee_performance_evaluation_line_normalize_on_create" model="base.automation">
+            <field name="name">Employee Performance Evaluation Line: Normalize on Create</field>
+            <field name="active" eval="True"/>
+            <field name="trigger">on_create</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_performance_evaluation_line"/>
+        </record>
+
+        <record id="action_employee_performance_evaluation_line_normalize_on_create" model="ir.actions.server">
+            <field name="name">Employee Performance Evaluation Line: Normalize on Create</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_performance_evaluation_line"/>
+            <field name="base_automation_id" ref="hr_employment_custom.automation_employee_performance_evaluation_line_normalize_on_create"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+def get_grade_and_rating(total, scored_count):
+    if scored_count < 12:
+        return 'not_scored', '0'
+    if total >= 51:
+        return 'excellent', '5'
+    if total >= 41:
+        return 'very_good', '4'
+    if total >= 31:
+        return 'good', '3'
+    return 'acceptable', '2'
+
+
+def recalc_parent(evaluation):
+    total = 0
+    scored_count = 0
+    for line in evaluation.x_line_ids:
+        score = line.x_score or 0
+        if score < 0 or score > 5:
+            raise UserError('Evaluation score must be between 1 and 5. Leave the score as 0 only while the item is not scored yet.')
+        if score:
+            total += score
+            scored_count += 1
+    grade, rating = get_grade_and_rating(total, scored_count)
+    percentage = round((float(total) / 60.0) * 100.0, 2)
+    evaluation.write({
+        'x_total_score': total,
+        'x_max_score': 60,
+        'x_score_percentage': percentage,
+        'x_grade': grade,
+        'x_star_rating': rating,
+    })
+
+
+for rec in records.sudo():
+    score = rec.x_score or 0
+    if score < 0 or score > 5:
+        raise UserError('Evaluation score must be between 1 and 5. Leave the score as 0 only while the item is not scored yet.')
+
+    vals = {}
+
+    if not rec.x_max_score:
+        vals['x_max_score'] = 5
+
+    if not rec.x_name:
+        sequence = rec.x_sequence or 0
+        label = rec.x_item_label_en or rec.x_item_label_ar or rec.x_item_code or 'Evaluation Item'
+        vals['x_name'] = '%02d - %s' % (sequence, label)
+
+    if vals:
+        rec.write(vals)
+
+    if rec.x_evaluation_id:
+        recalc_parent(rec.x_evaluation_id.sudo())
+            ]]></field>
+        </record>
+
+        <record id="automation_employee_performance_evaluation_line_normalize_on_write" model="base.automation">
+            <field name="name">Employee Performance Evaluation Line: Normalize on Update</field>
+            <field name="active" eval="True"/>
+            <field name="trigger">on_write</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_performance_evaluation_line"/>
+            <field name="trigger_field_ids"
+                eval="[(6, 0, [
+                    ref('hr_employment_custom.field_x_hr_employee_performance_evaluation_line__x_score'),
+                    ref('hr_employment_custom.field_x_hr_employee_performance_evaluation_line__x_sequence'),
+                    ref('hr_employment_custom.field_x_hr_employee_performance_evaluation_line__x_item_code'),
+                    ref('hr_employment_custom.field_x_hr_employee_performance_evaluation_line__x_item_label_ar'),
+                    ref('hr_employment_custom.field_x_hr_employee_performance_evaluation_line__x_item_label_en')
+                ])]"/>
+        </record>
+
+        <record id="action_employee_performance_evaluation_line_normalize_on_write" model="ir.actions.server">
+            <field name="name">Employee Performance Evaluation Line: Normalize on Update</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_performance_evaluation_line"/>
+            <field name="base_automation_id" ref="hr_employment_custom.automation_employee_performance_evaluation_line_normalize_on_write"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+def get_grade_and_rating(total, scored_count):
+    if scored_count < 12:
+        return 'not_scored', '0'
+    if total >= 51:
+        return 'excellent', '5'
+    if total >= 41:
+        return 'very_good', '4'
+    if total >= 31:
+        return 'good', '3'
+    return 'acceptable', '2'
+
+
+def recalc_parent(evaluation):
+    total = 0
+    scored_count = 0
+    for line in evaluation.x_line_ids:
+        score = line.x_score or 0
+        if score < 0 or score > 5:
+            raise UserError('Evaluation score must be between 1 and 5. Leave the score as 0 only while the item is not scored yet.')
+        if score:
+            total += score
+            scored_count += 1
+    grade, rating = get_grade_and_rating(total, scored_count)
+    percentage = round((float(total) / 60.0) * 100.0, 2)
+    evaluation.write({
+        'x_total_score': total,
+        'x_max_score': 60,
+        'x_score_percentage': percentage,
+        'x_grade': grade,
+        'x_star_rating': rating,
+    })
+
+
+for rec in records.sudo():
+    score = rec.x_score or 0
+    if score < 0 or score > 5:
+        raise UserError('Evaluation score must be between 1 and 5. Leave the score as 0 only while the item is not scored yet.')
+
+    vals = {}
+
+    if not rec.x_max_score:
+        vals['x_max_score'] = 5
+
+    sequence = rec.x_sequence or 0
+    label = rec.x_item_label_en or rec.x_item_label_ar or rec.x_item_code or 'Evaluation Item'
+    normalized_name = '%02d - %s' % (sequence, label)
+    if rec.x_name != normalized_name:
+        vals['x_name'] = normalized_name
+
+    if vals:
+        rec.write(vals)
+
+    if rec.x_evaluation_id:
+        recalc_parent(rec.x_evaluation_id.sudo())
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>

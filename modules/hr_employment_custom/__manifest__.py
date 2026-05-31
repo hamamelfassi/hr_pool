@@ -40,6 +40,7 @@
  'data/23_employee_work_assignment_automation.xml',
  'data/24_employee_work_assignment_generate_actions.xml',
  'data/25_employee_work_assignment_sign_actions.xml',
+ 'data/26_employee_performance_evaluation_automation.xml',
  'views/01_employee_identification_views.xml',
  'views/02_employee_declaration_views.xml',
  'views/03_employee_custody_views.xml',
