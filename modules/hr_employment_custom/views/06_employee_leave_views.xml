@@ -328,12 +328,13 @@
         </field>
     </record>
 
+
     <!-- Employee Configuration Menus: Leave -->
 
     <menuitem id="menu_employee_leave_configuration_section"
         name="Leave"
-        parent="hr.menu_config_employee"
-        sequence="60"/>
+        parent="hr.menu_human_resources_configuration"
+        sequence="12"/>
 
     <menuitem id="menu_employee_leave_type_policies"
         name="Leave Type Policies"
