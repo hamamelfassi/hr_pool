@@ -82,15 +82,16 @@
                         <field name="x_grade" readonly="1"/>
                         <field name="x_star_rating" readonly="1"/>
                     </group>
-                    <group string="Evaluation Items">
-                                                <field name="x_line_ids" nolabel="1" readonly="x_state != 'draft'">
-                            <list editable="bottom" create="false" delete="false">
-                                <field name="x_sequence" string="#" readonly="1"/>
-                                <field name="x_item_label_ar" string="Evaluation Item" readonly="1"/>
+                    <group string="Evaluation Items" col="1" colspan="2">
+                        <field name="x_line_ids" nolabel="1" readonly="x_state != 'draft'">
+                            <list editable="bottom" create="false" delete="false" default_order="x_sequence asc">
+                                <field name="x_sequence" string="#" readonly="1" width="48px"/>
+                                <field name="x_item_label_ar" string="Evaluation Item" readonly="1" width="72%"/>
                                 <field name="x_score"
                                     string="Score"
+                                    width="90px"
                                     options="{'type': 'number', 'min': 1, 'max': 5}"/>
-                                <field name="x_notes" optional="hide"/>
+                                <field name="x_notes" optional="hide" width="160px"/>
                             </list>
                             <form string="Performance Evaluation Item">
                                 <group>
@@ -229,29 +230,30 @@
                                     <field name="x_grade" readonly="1"/>
                                     <field name="x_star_rating" readonly="1"/>
                                 </group>
-                                <group string="Evaluation Items">
-                                                                        <field name="x_line_ids" nolabel="1" readonly="x_state != 'draft'">
-                                        <list editable="bottom" create="false" delete="false">
-                                            <field name="x_sequence" string="#" readonly="1"/>
-                                            <field name="x_item_label_ar" string="Evaluation Item" readonly="1"/>
-                                            <field name="x_score"
-                                                string="Score"
-                                                options="{'type': 'number', 'min': 1, 'max': 5}"/>
-                                            <field name="x_notes" optional="hide"/>
-                                        </list>
-                                        <form string="Performance Evaluation Item">
-                                            <group>
-                                                <field name="x_sequence" readonly="1"/>
-                                                <field name="x_item_code" readonly="1"/>
-                                                <field name="x_item_label_ar" readonly="1"/>
-                                                <field name="x_item_label_en" readonly="1"/>
-                                                <field name="x_score"
-                                                    options="{'type': 'number', 'min': 1, 'max': 5}"/>
-                                                <field name="x_notes"/>
-                                            </group>
-                                        </form>
-                                    </field>
+                                <group string="Evaluation Items" col="1" colspan="2">
+                        <field name="x_line_ids" nolabel="1" readonly="x_state != 'draft'">
+                            <list editable="bottom" create="false" delete="false" default_order="x_sequence asc">
+                                <field name="x_sequence" string="#" readonly="1" width="48px"/>
+                                <field name="x_item_label_ar" string="Evaluation Item" readonly="1" width="72%"/>
+                                <field name="x_score"
+                                    string="Score"
+                                    width="90px"
+                                    options="{'type': 'number', 'min': 1, 'max': 5}"/>
+                                <field name="x_notes" optional="hide" width="160px"/>
+                            </list>
+                            <form string="Performance Evaluation Item">
+                                <group>
+                                    <field name="x_sequence" readonly="1"/>
+                                    <field name="x_item_code" readonly="1"/>
+                                    <field name="x_item_label_ar" readonly="1"/>
+                                    <field name="x_item_label_en" readonly="1"/>
+                                    <field name="x_score"
+                                        options="{'type': 'number', 'min': 1, 'max': 5}"/>
+                                    <field name="x_notes"/>
                                 </group>
+                            </form>
+                        </field>
+                    </group>
                                 <group string="Recommendations">
                                     <field name="x_direct_manager_recommendation"/>
                                     <field name="x_hr_manager_recommendation"/>
