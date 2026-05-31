@@ -104,6 +104,16 @@
                                 class="btn btn-primary"
 
                                 invisible="x_state in ('signature_requested', 'signed')"/>
+                            <button name="%(action_employee_performance_evaluation_send_sign)d"
+                                type="action"
+                                string="Send to Sign"
+                                class="btn btn-secondary"
+                                invisible="x_state != 'generated' or x_sign_request_res_id"/>
+                            <button name="%(action_employee_performance_evaluation_sync_sign)d"
+                                type="action"
+                                string="Sync"
+                                class="btn btn-secondary"
+                                invisible="not x_sign_request_res_id"/>
 
                             <button type="action"
 
@@ -312,6 +322,16 @@
                                             class="btn btn-primary"
 
                                             invisible="x_state in ('signature_requested', 'signed')"/>
+                                        <button name="%(action_employee_performance_evaluation_send_sign)d"
+                                            type="action"
+                                            string="Send to Sign"
+                                            class="btn btn-secondary"
+                                            invisible="x_state != 'generated' or x_sign_request_res_id"/>
+                                        <button name="%(action_employee_performance_evaluation_sync_sign)d"
+                                            type="action"
+                                            string="Sync"
+                                            class="btn btn-secondary"
+                                            invisible="not x_sign_request_res_id"/>
 
                                         <button type="action"
 
