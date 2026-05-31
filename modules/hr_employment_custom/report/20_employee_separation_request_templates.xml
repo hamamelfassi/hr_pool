@@ -34,37 +34,37 @@
 
                     <style>
                         .mcep-separation-page {
-                            font-size: 14.2px;
-                            line-height: 1.22;
-                            padding-top: 4.5mm;
-                            padding-bottom: 2.5mm;
+                            font-size: 15.7px;
+                            line-height: 1.32;
+                            padding-top: 4.8mm;
+                            padding-bottom: 2.7mm;
                         }
 
                         .mcep-separation-page .mcep-emp-header {
-                            margin-bottom: 3mm;
+                            margin-bottom: 3.2mm;
                         }
 
                         .mcep-separation-title {
                             text-align: center;
-                            font-size: 28px;
+                            font-size: 31px;
                             font-weight: 700;
-                            margin: 1.2mm 0 0.8mm 0;
+                            margin: 1.3mm 0 1mm 0;
                         }
 
                         .mcep-separation-subtitle {
                             text-align: center;
                             direction: ltr;
                             unicode-bidi: isolate;
-                            font-size: 18px;
+                            font-size: 20px;
                             font-weight: 700;
-                            margin: 0 0 3.6mm 0;
+                            margin: 0 0 3.9mm 0;
                         }
 
                         .mcep-separation-section {
-                            font-size: 16px;
+                            font-size: 17.6px;
                             font-weight: 700;
-                            margin: 2.6mm 0 1.2mm 0;
-                            padding: 1.4mm 2mm;
+                            margin: 2.8mm 0 1.3mm 0;
+                            padding: 1.55mm 2.15mm;
                             background: #eef2f7;
                             border: 1px solid #9aa4b2;
                             text-align: right;
@@ -74,7 +74,7 @@
                         .mcep-separation-section .en {
                             direction: ltr;
                             unicode-bidi: isolate;
-                            font-size: 11.2px;
+                            font-size: 12.3px;
                             color: #374151;
                         }
 
@@ -82,16 +82,16 @@
                             width: 100%;
                             border-collapse: collapse;
                             table-layout: fixed;
-                            margin-bottom: 2.4mm;
-                            font-size: 13.1px;
+                            margin-bottom: 2.65mm;
+                            font-size: 14.4px;
                         }
 
                         .mcep-separation-table th,
                         .mcep-separation-table td {
                             border: 1px solid #6b7280;
-                            padding: 1.25mm 1.6mm;
+                            padding: 1.4mm 1.75mm;
                             vertical-align: middle;
-                            line-height: 1.18;
+                            line-height: 1.27;
                         }
 
                         .mcep-separation-table th {
@@ -101,7 +101,7 @@
                         }
 
                         .mcep-separation-value {
-                            min-height: 5.8mm;
+                            min-height: 6.4mm;
                             text-align: center;
                             font-weight: 600;
                         }
@@ -109,7 +109,7 @@
                         .mcep-separation-en {
                             direction: ltr;
                             unicode-bidi: isolate;
-                            font-size: 10.6px;
+                            font-size: 11.7px;
                             color: #374151;
                         }
 
@@ -117,16 +117,16 @@
                             width: 100%;
                             border-collapse: collapse;
                             table-layout: fixed;
-                            margin-bottom: 2.4mm;
-                            font-size: 13px;
+                            margin-bottom: 2.65mm;
+                            font-size: 14.3px;
                         }
 
                         .mcep-separation-type-table th,
                         .mcep-separation-type-table td {
                             border: 1px solid #6b7280;
-                            padding: 1.35mm 1.6mm;
+                            padding: 1.5mm 1.75mm;
                             vertical-align: middle;
-                            line-height: 1.20;
+                            line-height: 1.30;
                         }
 
                         .mcep-separation-type-intro {
@@ -136,7 +136,7 @@
                         }
 
                         .mcep-separation-checkbox {
-                            font-size: 17px;
+                            font-size: 18.7px;
                             font-weight: 700;
                             padding: 0 1mm;
                         }
@@ -149,31 +149,31 @@
                         }
 
                         .mcep-separation-reason-box {
-                            min-height: 27mm;
+                            min-height: 29.5mm;
                             border: 1px solid #6b7280;
-                            padding: 2.8mm;
-                            margin-bottom: 2.8mm;
+                            padding: 3.05mm;
+                            margin-bottom: 3.05mm;
                             white-space: pre-wrap;
                             text-align: right;
                             direction: rtl;
-                            line-height: 1.28;
-                            font-size: 13.6px;
+                            line-height: 1.38;
+                            font-size: 15px;
                         }
 
                         .mcep-separation-sign-table {
                             width: 100%;
                             border-collapse: collapse;
                             table-layout: fixed;
-                            font-size: 12.6px;
-                            margin-top: 2mm;
+                            font-size: 13.9px;
+                            margin-top: 2.2mm;
                         }
 
                         .mcep-separation-sign-table th,
                         .mcep-separation-sign-table td {
                             border: 1px solid #6b7280;
-                            padding: 1.45mm 1.7mm;
+                            padding: 1.6mm 1.85mm;
                             vertical-align: middle;
-                            line-height: 1.16;
+                            line-height: 1.25;
                         }
 
                         .mcep-separation-sign-title {
@@ -183,7 +183,7 @@
                         }
 
                         .mcep-separation-sign-line {
-                            height: 10.8mm;
+                            height: 11.8mm;
                         }
 
                         .mcep-separation-date-line {
