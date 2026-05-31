@@ -79,7 +79,7 @@
                 </header>
                 <sheet>
                     <div class="alert alert-info" role="alert">
-                        Clearance requests cover F-0020. Clearance rows are seeded on creation and PDF generation is handled on this record; checkbox Sign fields and Odoo Sign actions come next.
+                        Clearance requests cover F-0020. Clearance rows, PDF generation, checkbox Sign items, and the eight-role Odoo Sign lifecycle are handled on this clearance request record.
                     </div>
 
                     <!-- MCEP clearance request unified controls start -->
@@ -241,7 +241,7 @@
             <xpath expr="//sheet/notebook" position="inside">
                 <page name="mcep_employee_clearance_requests" string="Clearance">
                     <div class="alert alert-info" role="alert">
-                        Clearance requests here are Marsellia official F-0020 records. This pass focuses on governed clearance capture, PDF generation, checkbox Sign items, and eight-role Sign workflow without custody, separation, offboarding, contract closing, payroll, final settlement, approval, or GRC integration.
+                        Clearance requests here are Marsellia official F-0020 records. Governed clearance capture, PDF generation, checkbox Sign items, and eight-role Sign workflow are handled here without custody, separation, offboarding, contract closing, payroll, final settlement, approval, or GRC integration.
                     </div>
                     <div class="mb-2">
                         <button name="%(action_employee_clearance_request_create_from_employee)d"
@@ -283,7 +283,7 @@
                             </header>
                             <sheet>
                                 <div class="alert alert-info" role="alert">
-                                    Clearance requests cover F-0020. Clearance rows are seeded on creation and PDF generation is handled on this record; checkbox Sign fields and Odoo Sign actions come next.
+                                    Clearance requests cover F-0020. Clearance rows, PDF generation, checkbox Sign items, and the eight-role Odoo Sign lifecycle are handled on this clearance request record.
                                 </div>
 
                                 <!-- MCEP clearance request unified controls start -->
