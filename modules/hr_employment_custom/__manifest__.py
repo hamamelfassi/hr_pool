@@ -49,6 +49,7 @@
  'data/30_employee_separation_request_automation.xml',
  'data/31_employee_separation_request_generate_actions.xml',
  'data/32_employee_separation_request_sign_actions.xml',
+ 'data/33_employee_clearance_request_automation.xml',
  'views/01_employee_identification_views.xml',
  'views/02_employee_declaration_views.xml',
  'views/03_employee_custody_views.xml',

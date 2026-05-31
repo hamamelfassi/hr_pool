@@ -80,7 +80,7 @@
                 ('contract_end', 'Contract End'),
                 ('other', 'Other Reasons')
             ]</field>
-            <field name="required" eval="True"/>
+            <field name="required" eval="False"/>
             <field name="index" eval="True"/>
         </record>
 

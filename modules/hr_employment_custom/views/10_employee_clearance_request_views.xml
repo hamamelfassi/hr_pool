@@ -5,7 +5,7 @@
         <field name="name">x.hr.employee.clearance.line.list</field>
         <field name="model">x_hr.employee_clearance_line</field>
         <field name="arch" type="xml">
-            <list string="Employee Clearance Lines" create="false" delete="false" default_order="x_section_code asc, x_sequence asc">
+            <list string="Employee Clearance Lines" create="false" delete="false" default_order="x_sequence asc">
                 <field name="x_section_code"/>
                 <field name="x_sequence"/>
                 <field name="x_item_code"/>
@@ -58,7 +58,7 @@
                 </header>
                 <sheet>
                     <div class="alert alert-info" role="alert">
-                        Clearance requests cover F-0020. This slice adds the controlled clearance surface only; line seeding, PDF generation, checkbox Sign fields, and Odoo Sign actions come next.
+                        Clearance requests cover F-0020. Clearance rows are seeded on creation; PDF generation, checkbox Sign fields, and Odoo Sign actions come next.
                     </div>
                     <group>
                         <field name="x_employee_id" options="{'no_create': True, 'no_create_edit': True}"/>
@@ -87,7 +87,7 @@
                     </group>
                     <group string="Clearance Items" col="1" colspan="2">
                         <field name="x_clearance_line_ids" nolabel="1" readonly="1">
-                            <list create="false" delete="false" default_order="x_section_code asc, x_sequence asc">
+                            <list create="false" delete="false" default_order="x_sequence asc">
                                 <field name="x_section_code"/>
                                 <field name="x_sequence" string="#"/>
                                 <field name="x_item_label_ar" string="Clearance Item Arabic"/>
@@ -153,7 +153,7 @@
                         Clearance requests here are Marsellia official F-0020 records. This pass focuses on governed clearance capture, PDF generation, checkbox Sign items, and eight-role Sign workflow without custody, separation, offboarding, contract closing, payroll, final settlement, approval, or GRC integration.
                     </div>
                     <div class="mb-2">
-                        <button name="%(action_employee_clearance_request_create)d"
+                        <button name="%(action_employee_clearance_request_create_from_employee)d"
                             type="action"
                             string="New Clearance Request"
                             class="btn btn-primary"
@@ -192,7 +192,7 @@
                             </header>
                             <sheet>
                                 <div class="alert alert-info" role="alert">
-                                    Clearance requests cover F-0020. This slice adds the controlled clearance surface only; line seeding, PDF generation, checkbox Sign fields, and Odoo Sign actions come next.
+                                    Clearance requests cover F-0020. Clearance rows are seeded on creation; PDF generation, checkbox Sign fields, and Odoo Sign actions come next.
                                 </div>
                                 <group>
                                     <field name="x_employee_id" readonly="1" force_save="1"/>
@@ -221,7 +221,7 @@
                                 </group>
                                 <group string="Clearance Items" col="1" colspan="2">
                                     <field name="x_clearance_line_ids" nolabel="1" readonly="1">
-                                        <list create="false" delete="false" default_order="x_section_code asc, x_sequence asc">
+                                        <list create="false" delete="false" default_order="x_sequence asc">
                                             <field name="x_section_code"/>
                                             <field name="x_sequence" string="#"/>
                                             <field name="x_item_label_ar" string="Clearance Item Arabic"/>

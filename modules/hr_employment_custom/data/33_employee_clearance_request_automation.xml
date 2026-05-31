@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="automation_employee_clearance_request_normalize_on_create" model="base.automation">
+            <field name="name">Employee Clearance Request: Normalize on Create</field>
+            <field name="active" eval="True"/>
+            <field name="trigger">on_create</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_clearance_request"/>
+        </record>
+
+        <record id="action_employee_clearance_request_normalize_on_create" model="ir.actions.server">
+            <field name="name">Employee Clearance Request: Normalize on Create</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_clearance_request"/>
+            <field name="base_automation_id" ref="hr_employment_custom.automation_employee_clearance_request_normalize_on_create"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+def get_joining_date(employee):
+    if not employee:
+        return False
+
+    if 'first_contract_date' in employee._fields and employee.first_contract_date:
+        return employee.first_contract_date
+
+    contract = False
+    if 'contract_id' in employee._fields and employee.contract_id:
+        contract = employee.contract_id.sudo()
+
+    if contract and 'date_start' in contract._fields and contract.date_start:
+        return contract.date_start
+
+    return False
+
+
+def seed_lines(rec):
+    if rec.x_clearance_line_ids:
+        return
+
+    default_lines = [
+        ('assigned_department', 10, 'assigned_department_work_tools', 'تسليم أدوات العمل', 'Handover of Work Tools'),
+        ('assigned_department', 20, 'assigned_department_assigned_duties', 'تسليم الأعمال المكلف بها', 'Handover of Assigned Duties'),
+
+        ('it', 30, 'it_equipment_returned', 'تسليم الأجهزة والحواسب والطابعات', 'Laptop / Devices / Printers Returned'),
+        ('it', 40, 'it_accounts_deactivated', 'تعطيل حسابات الشركة (إيميل / أنظمة)', 'Company Accounts Deactivation'),
+
+        ('stores', 50, 'stores_field_equipment_returned', 'استرجاع المعدات والأدوات', 'Field Equipment Returned'),
+
+        ('transport', 60, 'transport_vehicle_returned', 'تسليم السيارات أو عهد الحركة', 'Vehicle / Transport Custody Returned'),
+
+        ('finance', 70, 'finance_final_settlement', 'تسوية المستحقات المالية', 'Final Financial Settlement'),
+        ('finance', 80, 'finance_loans_advances_cleared', 'تصفية السلف أو القروض', 'Loans and Advances Cleared'),
+
+        ('hr_clearance', 90, 'hr_id_card_returned', 'تسليم البطاقة التعريفية', 'ID Card Returned'),
+        ('hr_clearance', 100, 'hr_employee_record_closure', 'إقفال بيانات الموظف', 'Employee Record Closure'),
+        ('hr_clearance', 110, 'hr_personal_documents_handover', 'تسليم المستندات الشخصية', 'Handover of Personal Documents'),
+    ]
+
+    line_model = env['x_hr.employee_clearance_line'].sudo()
+    vals = []
+    for section_code, sequence, item_code, label_ar, label_en in default_lines:
+        vals.append({
+            'x_clearance_id': rec.id,
+            'x_section_code': section_code,
+            'x_sequence': sequence,
+            'x_item_code': item_code,
+            'x_item_label_ar': label_ar,
+            'x_item_label_en': label_en,
+            'x_name': '%03d - %s' % (sequence, label_en),
+        })
+
+    line_model.create(vals)
+
+
+for rec in records.sudo():
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+
+    form_code = 'MCEP-HR-F-0020'
+    form_title = 'Clearance Request'
+    employee_name = employee.name or employee.display_name or 'Employee'
+
+    vals = {}
+
+    if not rec.x_state:
+        vals['x_state'] = 'draft'
+
+    if not rec.x_reference_code:
+        vals['x_reference_code'] = form_code
+
+    if not rec.x_responsible_user_id:
+        vals['x_responsible_user_id'] = env.user.id
+
+    if employee:
+        joining_date = get_joining_date(employee)
+        if joining_date and not rec.x_date_of_joining:
+            vals['x_date_of_joining'] = joining_date
+
+    if employee and employee.parent_id and not rec.x_assigned_department_responsible_employee_id:
+        vals['x_assigned_department_responsible_employee_id'] = employee.parent_id.id
+
+    if employee and 'hr_responsible_id' in employee._fields and employee.hr_responsible_id and not rec.x_hr_user_id:
+        vals['x_hr_user_id'] = employee.hr_responsible_id.id
+
+    if rec.x_reason_for_termination != 'other' and rec.x_other_reason_description:
+        vals['x_other_reason_description'] = False
+
+    if not rec.x_document_reference:
+        emp_part = employee.id if employee else 0
+        vals['x_document_reference'] = '%s-%05d-%05d' % (form_code, emp_part, rec.id)
+
+    document_reference = vals.get('x_document_reference') or rec.x_document_reference or ''
+    normalized_name = '%s - %s - %s' % (employee_name, form_title, document_reference or rec.id)
+
+    if rec.x_name != normalized_name:
+        vals['x_name'] = normalized_name
+
+    if vals:
+        rec.write(vals)
+
+    rec = rec.sudo().browse(rec.id)
+    seed_lines(rec)
+
+    if employee:
+        employee.message_post(
+            body='تم إنشاء طلب إخلاء طرف: %s' % (rec.x_name or normalized_name),
+            subtype_xmlid='mail.mt_note',
+        )
+            ]]></field>
+        </record>
+
+        <record id="automation_employee_clearance_request_normalize_on_write" model="base.automation">
+            <field name="name">Employee Clearance Request: Normalize on Update</field>
+            <field name="active" eval="True"/>
+            <field name="trigger">on_write</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_clearance_request"/>
+            <field name="trigger_field_ids"
+                eval="[(6, 0, [
+                    ref('hr_employment_custom.field_x_hr_employee_clearance_request__x_employee_id'),
+                    ref('hr_employment_custom.field_x_hr_employee_clearance_request__x_state'),
+                    ref('hr_employment_custom.field_x_hr_employee_clearance_request__x_reason_for_termination'),
+                    ref('hr_employment_custom.field_x_hr_employee_clearance_request__x_other_reason_description'),
+                    ref('hr_employment_custom.field_x_hr_employee_clearance_request__x_last_working_day'),
+                    ref('hr_employment_custom.field_x_hr_employee_clearance_request__x_date_of_joining')
+                ])]"/>
+        </record>
+
+        <record id="action_employee_clearance_request_normalize_on_write" model="ir.actions.server">
+            <field name="name">Employee Clearance Request: Normalize on Update</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_clearance_request"/>
+            <field name="base_automation_id" ref="hr_employment_custom.automation_employee_clearance_request_normalize_on_write"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+def get_joining_date(employee):
+    if not employee:
+        return False
+
+    if 'first_contract_date' in employee._fields and employee.first_contract_date:
+        return employee.first_contract_date
+
+    contract = False
+    if 'contract_id' in employee._fields and employee.contract_id:
+        contract = employee.contract_id.sudo()
+
+    if contract and 'date_start' in contract._fields and contract.date_start:
+        return contract.date_start
+
+    return False
+
+
+def seed_lines(rec):
+    if rec.x_clearance_line_ids:
+        return
+
+    default_lines = [
+        ('assigned_department', 10, 'assigned_department_work_tools', 'تسليم أدوات العمل', 'Handover of Work Tools'),
+        ('assigned_department', 20, 'assigned_department_assigned_duties', 'تسليم الأعمال المكلف بها', 'Handover of Assigned Duties'),
+
+        ('it', 30, 'it_equipment_returned', 'تسليم الأجهزة والحواسب والطابعات', 'Laptop / Devices / Printers Returned'),
+        ('it', 40, 'it_accounts_deactivated', 'تعطيل حسابات الشركة (إيميل / أنظمة)', 'Company Accounts Deactivation'),
+
+        ('stores', 50, 'stores_field_equipment_returned', 'استرجاع المعدات والأدوات', 'Field Equipment Returned'),
+
+        ('transport', 60, 'transport_vehicle_returned', 'تسليم السيارات أو عهد الحركة', 'Vehicle / Transport Custody Returned'),
+
+        ('finance', 70, 'finance_final_settlement', 'تسوية المستحقات المالية', 'Final Financial Settlement'),
+        ('finance', 80, 'finance_loans_advances_cleared', 'تصفية السلف أو القروض', 'Loans and Advances Cleared'),
+
+        ('hr_clearance', 90, 'hr_id_card_returned', 'تسليم البطاقة التعريفية', 'ID Card Returned'),
+        ('hr_clearance', 100, 'hr_employee_record_closure', 'إقفال بيانات الموظف', 'Employee Record Closure'),
+        ('hr_clearance', 110, 'hr_personal_documents_handover', 'تسليم المستندات الشخصية', 'Handover of Personal Documents'),
+    ]
+
+    line_model = env['x_hr.employee_clearance_line'].sudo()
+    vals = []
+    for section_code, sequence, item_code, label_ar, label_en in default_lines:
+        vals.append({
+            'x_clearance_id': rec.id,
+            'x_section_code': section_code,
+            'x_sequence': sequence,
+            'x_item_code': item_code,
+            'x_item_label_ar': label_ar,
+            'x_item_label_en': label_en,
+            'x_name': '%03d - %s' % (sequence, label_en),
+        })
+
+    line_model.create(vals)
+
+
+for rec in records.sudo():
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+
+    form_code = rec.x_reference_code or 'MCEP-HR-F-0020'
+    form_title = 'Clearance Request'
+    employee_name = employee.name or employee.display_name or 'Employee'
+
+    vals = {}
+
+    if not rec.x_state:
+        vals['x_state'] = 'draft'
+
+    if not rec.x_reference_code:
+        vals['x_reference_code'] = form_code
+
+    if not rec.x_responsible_user_id:
+        vals['x_responsible_user_id'] = env.user.id
+
+    if employee:
+        joining_date = get_joining_date(employee)
+        if joining_date and not rec.x_date_of_joining:
+            vals['x_date_of_joining'] = joining_date
+
+    if employee and employee.parent_id and not rec.x_assigned_department_responsible_employee_id:
+        vals['x_assigned_department_responsible_employee_id'] = employee.parent_id.id
+
+    if employee and 'hr_responsible_id' in employee._fields and employee.hr_responsible_id and not rec.x_hr_user_id:
+        vals['x_hr_user_id'] = employee.hr_responsible_id.id
+
+    if rec.x_reason_for_termination != 'other' and rec.x_other_reason_description:
+        vals['x_other_reason_description'] = False
+
+    if not rec.x_document_reference:
+        emp_part = employee.id if employee else 0
+        vals['x_document_reference'] = '%s-%05d-%05d' % (form_code, emp_part, rec.id)
+    elif '-EMP-' in rec.x_document_reference:
+        vals['x_document_reference'] = rec.x_document_reference.replace('-EMP-', '-', 1)
+
+    document_reference = vals.get('x_document_reference') or rec.x_document_reference or ''
+    normalized_name = '%s - %s - %s' % (employee_name, form_title, document_reference or rec.id)
+
+    if rec.x_name != normalized_name:
+        vals['x_name'] = normalized_name
+
+    if vals:
+        rec.write(vals)
+
+    rec = rec.sudo().browse(rec.id)
+    seed_lines(rec)
+            ]]></field>
+        </record>
+
+        <record id="action_employee_clearance_request_create_from_employee" model="ir.actions.server">
+            <field name="name">New Clearance Request</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+clearance_model = env['x_hr.employee_clearance_request'].sudo()
+
+
+def toast(title, message, kind='warning', sticky=False):
+    return {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': title,
+            'message': message,
+            'type': kind,
+            'sticky': sticky,
+        }
+    }
+
+
+employee = records[:1].sudo() if records else False
+if not employee:
+    active_id = env.context.get('active_id') or env.context.get('default_x_employee_id')
+    employee = env['hr.employee'].sudo().browse(active_id) if active_id else False
+
+if not employee or not employee.exists():
+    action = toast('New Clearance Request', 'Open this action from an employee record so the clearance request can be linked and seeded correctly.', 'warning', True)
+else:
+    clearance = clearance_model.create({
+        'x_employee_id': employee.id,
+        'x_state': 'draft',
+        'x_responsible_user_id': env.user.id,
+        'x_assigned_department_responsible_employee_id': employee.parent_id.id if employee.parent_id else False,
+        'x_hr_user_id': employee.hr_responsible_id.id if 'hr_responsible_id' in employee._fields and employee.hr_responsible_id else False,
+    })
+
+    clearance = clearance_model.browse(clearance.id)
+
+    view = env.ref('hr_employment_custom.view_employee_clearance_request_form', raise_if_not_found=False)
+
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': clearance.x_name or 'New Clearance Request',
+        'res_model': 'x_hr.employee_clearance_request',
+        'res_id': clearance.id,
+        'view_mode': 'form',
+        'target': 'new',
+        'context': {
+            'default_x_employee_id': employee.id,
+        },
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>
