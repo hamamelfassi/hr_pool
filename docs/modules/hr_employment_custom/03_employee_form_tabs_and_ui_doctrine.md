@@ -597,3 +597,48 @@ The line table must be usable in the modal form. It should not require users to 
 
 The field and section labels must remain English in source XML. Arabic must be delivered through the exported-anchor PO workflow.
 <!-- PASS21_PERFORMANCE_EVALUATION_UI_END -->
+
+<!-- PASS21_ACCEPTED_UI_START -->
+## Pass 21 accepted Evaluations tab UI doctrine
+
+The accepted F-0018 employee tab is:
+
+    Evaluations / التقييمات
+
+The tab follows the accepted custom-process UI pattern and adds the first fixed line-scoring matrix in `hr_employment_custom`.
+
+Accepted UI pattern:
+
+- info alert;
+- New Evaluation button;
+- employee-scoped server action that creates the record before opening the modal;
+- embedded list;
+- controlled modal form;
+- standalone list/form action;
+- visible statusbar;
+- workflow/artifact control strip;
+- header artifact download icons;
+- row/list status and grade badges;
+- fixed 12-row evaluation table;
+- full-width line table to avoid Odoo one2many column collapse;
+- score column visible without manual resizing;
+- no Add a line row for the seeded fixed matrix;
+- total score, percentage, grade, and star rating visible;
+- star rating displayed with the priority/star widget in the UI;
+- modal/full-form parity;
+- Arabic UI labels through exported-anchor PO workflow.
+
+Accepted visible sections:
+
+- Workflow and Artifacts;
+- Evaluation Period;
+- Evaluation Result;
+- Evaluation Items;
+- Recommendations;
+- Approval Metadata;
+- Lifecycle Artifacts;
+- Manual Decision;
+- Notes.
+
+The Evaluations tab must remain a governed documentary scoring/sign surface only. It must not introduce Appraisals, Payroll, Contract, Disciplinary, Planning, Project, Timesheet, Attendance, Work Entry, Fleet, Approval, or GRC widgets unless a later pass explicitly scopes that integration.
+<!-- PASS21_ACCEPTED_UI_END -->

@@ -1439,3 +1439,55 @@ Deferred technical debt:
 
 - Audit earlier Pass 18–20 forms for any direct-manager fallback behavior that may have silently used the current user instead of `hr.employee.parent_id.user_id`.
 <!-- PASS21_PERFORMANCE_EVALUATION_END -->
+
+<!-- PASS21_ACCEPTED_PERFORMANCE_EVALUATION_START -->
+## Pass 21 accepted implementation — F-0018 Employee Performance Evaluation
+
+Pass 21 implements Marsellia performance evaluations as a governed parent + line custom process record family:
+
+    x_hr.employee_performance_evaluation
+    x_hr.employee_performance_evaluation_line
+
+Document identity:
+
+    MCEP-HR-F-0018
+    تقييم أداء الموظف
+    Performance Evaluation
+
+The accepted process captures:
+
+- employee;
+- evaluation period;
+- 12 fixed evaluation item lines;
+- score 1–5 per line;
+- total score out of 60;
+- score percentage;
+- grade;
+- star rating;
+- direct manager recommendation;
+- HR manager recommendation;
+- direct manager employee snapshot from `hr.employee.parent_id`;
+- HR user from `hr.employee.hr_responsible_id` where available;
+- manually selected general manager user;
+- generated PDF;
+- three-role native Odoo Sign lifecycle;
+- employee chatter/files artifact posting;
+- Arabic UI and selection translations.
+
+Visible lifecycle:
+
+    draft
+    generated
+    signature_requested
+    signed
+
+Accepted signer order:
+
+1. Direct Manager
+2. HR Manager
+3. General Manager
+
+Pass 21 does not create or update Appraisals, Payroll, Salary Adjustment, Contract, Disciplinary, Planning, Project, Timesheet, Attendance, Work Entry, Fleet, Approval, or GRC records.
+
+The direct-manager signer doctrine is employee-based: use `hr.employee.parent_id`, not a mandatory `res.users` account.
+<!-- PASS21_ACCEPTED_PERFORMANCE_EVALUATION_END -->

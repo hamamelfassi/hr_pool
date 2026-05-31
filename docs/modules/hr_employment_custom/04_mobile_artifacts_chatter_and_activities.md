@@ -493,3 +493,21 @@ Generated and signed artifacts must be copied/linked to employee chatter/files i
 
 No generated PDFs, signed PDFs, certificates, screenshots, or temporary exports should be committed to Git.
 <!-- PASS21_PERFORMANCE_EVALUATION_CHATTER_END -->
+
+<!-- PASS21_ACCEPTED_CHATTER_START -->
+## Pass 21 accepted chatter/files posture
+
+F-0018 Employee Performance Evaluation posts lifecycle evidence to employee chatter/files.
+
+Accepted chatter events:
+
+- evaluation record creation note;
+- generated PDF note with generated F-0018 PDF attached;
+- Sign request sent note with generated PDF attached;
+- Sign sync/status note;
+- signed completion note with signed PDF and certificate, where available.
+
+No activity chain, `approval.request`, Appraisal, Payroll, Salary Adjustment, Contract, Disciplinary, Planning, Project, Timesheet, Attendance, Work Entry, Fleet, or GRC decision record is created in Pass 21.
+
+The source evaluation record remains the documentary lifecycle authority. Employee chatter/files is the operational evidence stream for HR users and mobile access.
+<!-- PASS21_ACCEPTED_CHATTER_END -->

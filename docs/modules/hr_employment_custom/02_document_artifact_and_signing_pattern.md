@@ -693,3 +693,67 @@ Distinct Pass 21 behavior:
 
 The older F-0002 interview evaluation files are valid reference material for scoring/checklist behavior only. Pass 21 must use the current shared QWeb assets/header/paperformat and current Sign send/sync lifecycle patterns.
 <!-- PASS21_PERFORMANCE_EVALUATION_ARTIFACT_END -->
+
+<!-- PASS21_ACCEPTED_ARTIFACT_SIGN_START -->
+## Pass 21 accepted F-0018 artifact and Sign pattern
+
+F-0018 Employee Performance Evaluation is an accepted custom parent/line document/sign workflow.
+
+Source records:
+
+    x_hr.employee_performance_evaluation
+    x_hr.employee_performance_evaluation_line
+
+Report files:
+
+    report/18_employee_performance_evaluation_templates.xml
+    report/19_employee_performance_evaluation_report_actions.xml
+
+Server-action files:
+
+    data/26_employee_performance_evaluation_automation.xml
+    data/27_employee_performance_evaluation_create_actions.xml
+    data/28_employee_performance_evaluation_generate_actions.xml
+    data/29_employee_performance_evaluation_sign_actions.xml
+
+Artifact behavior:
+
+- generated PDF is stored in `x_pdf_attachment_id`;
+- signed PDF is stored in `x_signed_attachment_id`;
+- Sign certificate, where exposed by Odoo, is stored in `x_sign_certificate_attachment_id`;
+- all business artifacts are downloadable through `/web/content/<attachment_id>?download=true`;
+- generated and signed artifacts are posted to employee chatter/files.
+
+QWeb behavior:
+
+- the 12 scoring lines render as a 5/4/3/2/1 checkbox matrix;
+- final result renders as total score out of 60;
+- percentage, visual stars, and grade checkbox row are rendered in the PDF;
+- direct manager and HR manager recommendation boxes render from source record fields;
+- general manager approval remains a compact approval row.
+
+Sign behavior:
+
+- native Odoo Sign template and items are generated dynamically from the accepted PDF;
+- duplicate active Sign requests are blocked;
+- Sync remains the authoritative action for updating the source record after Odoo Sign progresses;
+- completed Sign artifacts are copied to the employee record/files.
+
+Locked F-0018 Sign geometry:
+
+| Role | Signature posX | Signature posY | Width | Height | Date posX | Date posY |
+|---|---:|---:|---:|---:|---:|---:|
+| Direct Manager | 0.570 | 0.842 | 0.250 | 0.030 | 0.650 | 0.883 |
+| HR Manager | 0.130 | 0.842 | 0.250 | 0.030 | 0.210 | 0.883 |
+| General Manager | 0.570 | 0.905 | 0.300 | 0.024 | — | — |
+
+Signer order:
+
+    Direct Manager → HR Manager → General Manager
+
+Direct Manager signer resolution is employee-based:
+
+    x_direct_manager_employee_id → partner/contact/email
+
+It must not require `parent_id.user_id` to exist.
+<!-- PASS21_ACCEPTED_ARTIFACT_SIGN_END -->

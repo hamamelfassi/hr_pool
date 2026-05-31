@@ -147,14 +147,49 @@ Deferred beyond Pass 20:
 - `approval.request` workflow;
 - GRC decision instances.
 
+
 ## Pass 21 — Performance evaluation
 
-- extend native `hr.appraisal`;
-- `x_hr.appraisal_evaluation_line`;
-- 12 criteria scoring;
-- total/grade;
-- QWeb/sign;
-- `hr.skill` linkage strategy.
+Status: closed and accepted.
+
+Implemented as F-0018 Employee Performance Evaluation:
+
+- parent model `x_hr.employee_performance_evaluation`;
+- line model `x_hr.employee_performance_evaluation_line`;
+- employee Evaluations / التقييمات tab;
+- employee-scoped create-and-open action so seeded lines appear immediately;
+- 12 fixed evaluation line items;
+- score validation for 1–5 scoring;
+- score 0 allowed only as temporary not-scored placeholder before PDF generation;
+- computed total score out of 60;
+- computed percentage;
+- computed grade;
+- computed star rating;
+- full-width scoring matrix UI;
+- star widget in the UI;
+- generated F-0018 QWeb/PDF with checkbox matrix and grade/star rendering;
+- generated/signed/certificate artifact fields;
+- employee chatter/files artifact posting;
+- three-role Odoo Sign lifecycle:
+  - Direct Manager;
+  - HR Manager;
+  - General Manager;
+- direct-manager signer resolved from `hr.employee.parent_id` as employee, not mandatory user;
+- Arabic UI, field, section, button, state, grade, and star translations through exact exported PO anchors.
+
+Deferred beyond Pass 21:
+
+- Odoo Appraisals bridge;
+- Payroll / salary adjustment / bonus / deduction effects;
+- promotion/demotion decision automation;
+- contract renewal/termination effects;
+- disciplinary action integration;
+- Planning, Project, Timesheet, Attendance, Work Entry, Fleet integrations;
+- `approval.request` workflow;
+- GRC decision instances;
+- configurable evaluation-template/helper model;
+- employee self-review and 360-review;
+- analytics across evaluation cycles.
 
 ## Pass 22 — Separation request
 
@@ -525,3 +560,7 @@ Deferred beyond Pass 21:
 - employee self-review / 360 review;
 - analytics and historical performance dashboards.
 <!-- PASS21_PERFORMANCE_EVALUATION_ROADMAP_END -->
+
+<!-- PASS21_CLOSURE_ROADMAP_START -->
+Pass 21 is closed as F-0018 Employee Performance Evaluation. It proved the governed scoring-line pattern: parent + fixed line model, create-and-open seeded modal, score validation, computed total/percentage/grade/stars, QWeb checkbox matrix, three-role Odoo Sign, employee chatter/files, and exact-anchor Arabic UI translation, with all native appraisal/payroll/GRC integrations deferred.
+<!-- PASS21_CLOSURE_ROADMAP_END -->

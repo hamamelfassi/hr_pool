@@ -522,3 +522,276 @@ The pass cannot close until all gates pass:
 Commit command used:
 
     git commit -m "pass21a: lock performance evaluation execution plan"       -m "Documents the F-0018 performance evaluation architecture using a custom parent and line model, validated 1–5 scoring, computed total/grade/star output, checkbox-matrix QWeb, two-role Sign, Arabic translation workflow, and deferred Appraisals/Payroll/GRC/native integration posture."
+
+<!-- PASS21G_CLOSURE_START -->
+## Pass 21G — Closure and Accepted Baseline
+
+### Accepted implementation
+
+Pass 21 is functionally closed as the Marsellia F-0018 Employee Performance Evaluation workflow.
+
+Accepted document identity:
+
+    MCEP-HR-F-0018
+    Arabic title: تقييم أداء الموظف
+    English title: Performance Evaluation
+
+Implemented model family:
+
+    x_hr.employee_performance_evaluation
+    x_hr.employee_performance_evaluation_line
+
+This is the first accepted employee-process model family in `hr_employment_custom` using a parent record plus fixed child scoring lines.
+
+### Accepted model posture
+
+The parent record owns the evaluation lifecycle and artifacts.
+
+The line model owns the 12 fixed scoring criteria. Each line has:
+
+- sequence;
+- item code;
+- Arabic item label;
+- English item label;
+- score;
+- maximum score;
+- optional notes.
+
+The evaluation parent captures:
+
+- employee;
+- evaluation period from/to;
+- total score;
+- maximum score = 60;
+- percentage;
+- grade;
+- star rating;
+- direct manager recommendation;
+- HR manager recommendation;
+- direct manager employee snapshot;
+- hidden legacy direct manager user snapshot, retained only for compatibility;
+- HR user;
+- general manager user;
+- artifact/sign/manual decision metadata.
+
+### Accepted seeding and scoring behavior
+
+Pressing `New Evaluation` from the employee tab creates the record first through an employee-scoped server action. This is required because an unsaved `act_window` modal cannot show automation-seeded child lines.
+
+The create flow now:
+
+1. creates the evaluation parent record;
+2. lets the create automation seed the 12 fixed lines synchronously;
+3. opens the already-created record in the modal;
+4. shows the 12 scoring rows immediately.
+
+Scoring rules:
+
+- each item score is 1–5 when scored;
+- score 0 is allowed only as a temporary not-scored placeholder before PDF generation;
+- scores below 0 or above 5 are blocked by server-action validation;
+- PDF generation blocks until all 12 lines are scored 1–5;
+- total score = sum of all 12 scores;
+- maximum score = 60;
+- score percentage = total / 60 × 100;
+- grade and star rating are computed from the total score.
+
+Accepted grade/rating formula:
+
+| Score range | Grade | Star rating |
+|---|---|---|
+| 51–60 | Excellent | 5 Stars |
+| 41–50 | Very Good | 4 Stars |
+| 31–40 | Good | 3 Stars |
+| 12–30 | Acceptable | 2 Stars |
+| incomplete | Not Scored | No Rating |
+
+### Accepted direct-manager doctrine
+
+Pass 21 corrected an important signer doctrine issue.
+
+The direct manager for performance evaluations is an employee snapshot, not a required Odoo user:
+
+    x_direct_manager_employee_id → hr.employee
+
+Derivation source:
+
+    evaluation employee → hr.employee.parent_id
+
+The legacy field below is hidden and kept only as a compatibility snapshot where available:
+
+    x_direct_manager_user_id → res.users
+
+The Sign flow must not require `employee.parent_id.user_id`. Instead, the direct manager signer is resolved from the direct-manager employee using:
+
+1. employee work contact;
+2. linked user partner, if present;
+3. employee work email;
+4. partner creation from work email where needed.
+
+If the direct manager employee has no resolvable partner/email, Sign send blocks cleanly with a user-facing warning.
+
+This doctrine should be audited later against earlier forms that silently relied on `parent_id.user_id`.
+
+### Accepted lifecycle
+
+The visible lifecycle is:
+
+    Draft → Generated → Signature Requested → Signed
+
+Hidden/deferred values remain available for exceptional/manual governance posture:
+
+    Cancelled
+    Superseded
+
+No native appraisal approval workflow was introduced.
+
+### Accepted PDF/QWeb behavior
+
+F-0018 uses dedicated QWeb/report files:
+
+    report/18_employee_performance_evaluation_templates.xml
+    report/19_employee_performance_evaluation_report_actions.xml
+
+Generated action file:
+
+    data/28_employee_performance_evaluation_generate_actions.xml
+
+The generated PDF uses the accepted common employee report assets/header/paperformat and includes:
+
+- personal information;
+- evaluation period;
+- 12-row scoring matrix;
+- 5/4/3/2/1 checkbox rendering;
+- final score out of 60;
+- percentage;
+- star rating rendered as visual stars;
+- grade checkbox row;
+- direct manager recommendation;
+- HR manager recommendation;
+- direct manager signature/date row;
+- HR manager signature/date row;
+- compact general manager approval row.
+
+The PDF was polished in 21D-2 to increase font size and line spacing while keeping the form on one page.
+
+Generated PDFs are stored on the source record, downloadable through `/web/content/<attachment_id>?download=true`, and posted to employee chatter/files.
+
+### Accepted Odoo Sign behavior
+
+Pass 21 uses native Odoo Sign with dynamic Sign template/item generation from the generated F-0018 PDF.
+
+Signer sequence:
+
+1. Direct Manager
+2. HR Manager
+3. General Manager
+
+Locked F-0018 page-1 Sign geometry:
+
+| Role | Signature posX | Signature posY | Width | Height | Date posX | Date posY |
+|---|---:|---:|---:|---:|---:|---:|
+| Direct Manager | 0.570 | 0.842 | 0.250 | 0.030 | 0.650 | 0.883 |
+| HR Manager | 0.130 | 0.842 | 0.250 | 0.030 | 0.210 | 0.883 |
+| General Manager | 0.570 | 0.905 | 0.300 | 0.024 | — | — |
+
+General Manager has signature only because the locked PDF has a compact approval row without a dedicated date row.
+
+The Sign lifecycle includes:
+
+- Send to Sign;
+- direct-manager employee partner resolution;
+- HR manager signer from `hr.employee.hr_responsible_id` / HR User;
+- manually selected General Manager User;
+- duplicate active request blocking;
+- Sync button;
+- signed PDF copy to employee chatter/files;
+- certificate copy where Odoo exposes it;
+- source record state transition to Signed after successful sync.
+
+### Accepted UI/UX behavior
+
+The employee tab is:
+
+    Evaluations / التقييمات
+
+Accepted UI pattern:
+
+- info alert;
+- New Evaluation button;
+- employee-scoped create-and-open action;
+- embedded list;
+- controlled modal form;
+- standalone list/form action;
+- statusbar;
+- workflow/artifact controls;
+- header download icons;
+- fixed 12-line scoring table;
+- full-width evaluation-items table;
+- no Add a line row in the fixed scoring matrix;
+- score column visible without table-width collapse;
+- star rating shown as star/priority widget in the UI;
+- Arabic UI labels and selection values through exported-anchor PO workflow.
+
+### Translation closure
+
+Pass 21F locked Arabic UI translations for:
+
+- employee tab label `التقييمات`;
+- New Evaluation button;
+- model/action/report names;
+- parent model field labels;
+- line model field/column labels;
+- section labels;
+- workflow/artifact buttons;
+- alert text;
+- state selection values;
+- grade selection values;
+- star rating selection values.
+
+Selection translations used exact exported `ir.model.fields.selection` anchors.
+
+### Deferred actions
+
+The following remain explicitly deferred beyond Pass 21:
+
+- Odoo Appraisals bridge;
+- Payroll / salary adjustment / bonus / deduction effects;
+- promotion/demotion decision automation;
+- contract renewal/termination effects;
+- disciplinary action integration;
+- Planning, Project, Timesheet, Attendance, Work Entry, Fleet integrations;
+- `approval.request` workflow;
+- GRC decision instances;
+- configurable evaluation-template/helper model;
+- employee self-review;
+- 360-review;
+- analytics/dashboarding across evaluation cycles;
+- amendment/cancellation governance beyond the current document lifecycle/manual metadata.
+
+### Lessons learned
+
+- Create-and-open server actions are required when a modal must show child rows seeded by create automation.
+- One2many tables inside normal form groups can collapse into a narrow value column; fixed scoring tables should use full-width `col="1" colspan="2"` containers and explicit column widths.
+- Odoo integer fields default to 0; use 0 as not-scored placeholder but block PDF generation until all rows are scored 1–5.
+- QWeb checkbox rendering from the older interview evaluation pattern remains useful, but modern shared report assets and current Sign patterns should be used instead of older inline CSS/sign implementations.
+- UI star rating should use the priority/star widget; QWeb star rendering can remain custom visual text.
+- Direct-manager signer doctrine must be employee-based, not user-based. `hr.employee.parent_id` is the canonical source; `parent_id.user_id` is optional only.
+- PO translations must use exact `model_terms`, `ir.model.fields`, action, report, and `ir.model.fields.selection` anchors; generic `msgid` translations are insufficient in Odoo SaaS.
+
+### Final acceptance
+
+Pass 21 is closed after 21F acceptance:
+
+- module upgraded cleanly;
+- F-0018 evaluation records seed 12 rows immediately from the employee tab;
+- score validation works cleanly;
+- total, percentage, grade, and star rating compute correctly;
+- PDF generated successfully and remained one page after readability polish;
+- three-role Sign request sent successfully;
+- direct manager signer resolved from manager employee, not required user;
+- HR manager and general manager signers worked;
+- buttons, downloads, icons, chatter/files artifacts, signed PDF, and certificate behavior worked;
+- Arabic UI/field/section/selection translations applied cleanly;
+- no deferred native integration side effects occurred.
+<!-- PASS21G_CLOSURE_END -->

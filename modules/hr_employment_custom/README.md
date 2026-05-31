@@ -211,3 +211,29 @@ The pass covers 12 fixed evaluation items, validated 1–5 scoring, computed tot
 
 Native Appraisals, Payroll, Salary Adjustment, Promotion/Demotion, Disciplinary, GRC decision, and analytics bridges are deferred.
 <!-- PASS21_PERFORMANCE_EVALUATION_README_END -->
+
+<!-- PASS21_README_CLOSURE_START -->
+## Pass 21 closure — Employee Performance Evaluation
+
+Pass 21 adds F-0018 Employee Performance Evaluation as a custom governed parent/line process:
+
+    x_hr.employee_performance_evaluation
+    x_hr.employee_performance_evaluation_line
+
+It provides:
+
+- employee Evaluations / التقييمات tab;
+- 12 fixed scoring lines;
+- 1–5 score validation;
+- total score out of 60;
+- percentage, grade, and star rating computation;
+- full-width scoring matrix UI;
+- generated F-0018 PDF with checkbox score matrix;
+- three-role Odoo Sign lifecycle;
+- direct manager signer resolved from manager employee, not mandatory user;
+- signed PDF and certificate sync;
+- employee chatter/files artifacts;
+- Arabic UI and selection translations.
+
+It deliberately does not create or update Appraisals, Payroll, Salary Adjustment, Contract, Disciplinary, Planning, Project, Timesheet, Attendance, Work Entry, Fleet, Approval, or GRC records. Those integrations remain deferred.
+<!-- PASS21_README_CLOSURE_END -->
