@@ -459,3 +459,21 @@ Chatter posts should be concise and Arabic-friendly, following the accepted Perm
 
 No activities, approval.request records, Planning tasks, Project tasks, Timesheets, Attendance records, Work Entries, Payroll records, or GRC decision records are created in Pass 20.
 <!-- PASS20_WORK_ASSIGNMENT_CHATTER_END -->
+
+<!-- PASS20_ACCEPTED_CHATTER_START -->
+## Pass 20 accepted chatter/files posture
+
+F-0017 Work Assignment Authorization posts lifecycle evidence to employee chatter/files.
+
+Accepted chatter events:
+
+- assignment record creation note;
+- generated PDF note with generated F-0017 PDF attached;
+- Sign request sent note with generated PDF attached;
+- Sign sync/status note;
+- signed completion note with signed PDF and certificate, where available.
+
+No activity chain, `approval.request`, Planning task, Project task, Timesheet line, Attendance record, Work Entry, Payroll record, Fleet record, or GRC decision record is created in Pass 20.
+
+The source process record remains the documentary lifecycle authority. Employee chatter/files is the operational evidence stream for HR users and mobile access.
+<!-- PASS20_ACCEPTED_CHATTER_END -->

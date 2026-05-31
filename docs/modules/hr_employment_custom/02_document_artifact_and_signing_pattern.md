@@ -616,3 +616,51 @@ Pass 20 must keep artifact download behavior through:
 
 No direct navigation to `ir.attachment` machine views should be used.
 <!-- PASS20_WORK_ASSIGNMENT_ARTIFACT_SIGN_END -->
+
+<!-- PASS20_ACCEPTED_ARTIFACT_SIGN_START -->
+## Pass 20 accepted F-0017 artifact and Sign pattern
+
+F-0017 Work Assignment Authorization is now an accepted custom-process document/sign workflow.
+
+Source record:
+
+    x_hr.employee_work_assignment
+
+Report files:
+
+    report/16_employee_work_assignment_templates.xml
+    report/17_employee_work_assignment_report_actions.xml
+
+Server-action files:
+
+    data/24_employee_work_assignment_generate_actions.xml
+    data/25_employee_work_assignment_sign_actions.xml
+
+Artifact behavior:
+
+- generated PDF is stored in `x_pdf_attachment_id`;
+- signed PDF is stored in `x_signed_attachment_id`;
+- Sign certificate, where exposed by Odoo, is stored in `x_sign_certificate_attachment_id`;
+- all business artifacts are downloadable through `/web/content/<attachment_id>?download=true`;
+- generated and signed artifacts are posted to employee chatter/files.
+
+Sign behavior:
+
+- native Odoo Sign template and items are generated dynamically from the accepted PDF;
+- duplicate active Sign requests are blocked;
+- Sync remains the authoritative action for updating the source record after Odoo Sign progresses;
+- completed Sign artifacts are copied to the employee record/files.
+
+Locked F-0017 Sign geometry:
+
+| Role | Signature posX | Signature posY | Width | Height | Date posX | Date posY |
+|---|---:|---:|---:|---:|---:|---:|
+| Employee | 0.515 | 0.697 | 0.220 | 0.030 | 0.555 | 0.733 |
+| Direct Manager | 0.080 | 0.697 | 0.220 | 0.030 | 0.115 | 0.733 |
+| HR Responsible | 0.515 | 0.819 | 0.220 | 0.030 | 0.555 | 0.854 |
+| General Manager | 0.080 | 0.819 | 0.220 | 0.030 | 0.115 | 0.854 |
+
+Signer order:
+
+    Employee → Direct Manager → HR Responsible → General Manager
+<!-- PASS20_ACCEPTED_ARTIFACT_SIGN_END -->

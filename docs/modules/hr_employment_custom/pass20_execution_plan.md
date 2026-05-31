@@ -564,3 +564,181 @@ The pass cannot close until all gates pass:
 Commit command used:
 
     git commit -m "pass20: implement employee work assignments"       -m "Implements F-0017 Marsellia employee work assignment as a custom governed form/sign workflow with manual assignment data, generated PDF, four-role Odoo Sign lifecycle, employee chatter/files artifacts, and Arabic UI/QWeb translations without native Planning, Project, Timesheet, Attendance, Work Entry, Payroll, Fleet, approval.request, or GRC decision side effects."
+
+<!-- PASS20G_CLOSURE_START -->
+## Pass 20G — Closure and Accepted Baseline
+
+### Accepted implementation
+
+Pass 20 is functionally closed as the Marsellia F-0017 Work Assignment Authorization workflow.
+
+Implemented model:
+
+    x_hr.employee_work_assignment
+
+Accepted document identity:
+
+    MCEP-HR-F-0017
+    Arabic title: تكليف بعمل إضافي
+    English title: Work Assignment Authorization
+
+Pass 20 deliberately uses one custom operational model only. No helper/type model was introduced.
+
+### Accepted manual form data
+
+The record captures only the data needed for the official form:
+
+- employee;
+- assignment location;
+- assignment from date;
+- assignment to date;
+- description and purpose;
+- employee notes / internal notes;
+- approval metadata users.
+
+The following values are derived/defaulted by automation:
+
+- state = Draft;
+- reference code = `MCEP-HR-F-0017`;
+- document reference without `-EMP-`;
+- assignment label / `x_name`;
+- responsible user;
+- direct manager user from `hr.employee.parent_id.user_id` where available;
+- HR user from `hr.employee.hr_responsible_id` where available.
+
+### Accepted lifecycle
+
+The visible lifecycle is:
+
+    Draft → Generated → Signature Requested → Signed
+
+Additional hidden/deferred states remain available only for exceptional/manual governance posture:
+
+    Cancelled
+    Superseded
+
+No separate approval workflow state machine was introduced.
+
+### Accepted PDF/QWeb behavior
+
+F-0017 uses a dedicated QWeb template:
+
+    report/16_employee_work_assignment_templates.xml
+    report/17_employee_work_assignment_report_actions.xml
+
+The generated PDF uses the accepted common employee report assets/header/paperformat and includes:
+
+- personal information;
+- assignment location;
+- assignment period from/to;
+- description / purpose;
+- employee signature block;
+- direct manager approval block;
+- HR approval block;
+- general manager approval block.
+
+Generated PDFs are stored on the source record, downloadable through `/web/content/<attachment_id>?download=true`, and posted to employee chatter/files.
+
+### Accepted Odoo Sign behavior
+
+Pass 20 uses native Odoo Sign with dynamic Sign template/item generation from the generated PDF.
+
+Signer sequence:
+
+1. Employee
+2. Direct Manager
+3. HR Responsible
+4. General Manager
+
+Locked F-0017 page-1 Sign geometry:
+
+| Role | Signature posX | Signature posY | Width | Height | Date posX | Date posY |
+|---|---:|---:|---:|---:|---:|---:|
+| Employee | 0.515 | 0.697 | 0.220 | 0.030 | 0.555 | 0.733 |
+| Direct Manager | 0.080 | 0.697 | 0.220 | 0.030 | 0.115 | 0.733 |
+| HR Responsible | 0.515 | 0.819 | 0.220 | 0.030 | 0.555 | 0.854 |
+| General Manager | 0.080 | 0.819 | 0.220 | 0.030 | 0.115 | 0.854 |
+
+The Sign lifecycle includes:
+
+- Send to Sign;
+- duplicate active request blocking;
+- Sync button;
+- signed PDF copy to employee chatter/files;
+- certificate copy where Odoo exposes it;
+- source record state transition to Signed after successful sync.
+
+### Accepted UI/UX behavior
+
+The employee tab is:
+
+    Assignments / التكليفات
+
+Accepted UI pattern:
+
+- info alert;
+- New Assignment button;
+- embedded list;
+- controlled modal form;
+- standalone list/form action;
+- statusbar;
+- workflow/artifact controls;
+- header download icons;
+- modal/full-form parity;
+- Arabic UI labels and state values through exported-anchor PO workflow.
+
+### Translation closure
+
+Pass 20F locked Arabic UI translations for:
+
+- employee tab label;
+- New Assignment button;
+- model/action/report names;
+- field labels;
+- section labels;
+- workflow/artifact buttons;
+- alert text;
+- state selection values.
+
+Selection translations used exact exported `ir.model.fields.selection` anchors.
+
+The accepted Arabic UI showed translated tab, labels, state badges, section headings, and workflow controls.
+
+### Deferred actions
+
+The following are explicitly deferred to later passes and must not be considered partially implemented by Pass 20:
+
+- Planning integration;
+- Project/task integration;
+- Timesheet integration;
+- Attendance integration;
+- Work Entry integration;
+- Payroll/overtime/per-diem/allowance effects;
+- Fleet/site logistics;
+- `approval.request` workflow;
+- GRC decision instances;
+- assignment type helper model;
+- amendment/cancellation governance beyond current manual/document lifecycle.
+
+### Lessons learned
+
+- F-0017 validated the leanest pass pattern: one manual process model, simple QWeb, four-role Sign, and exact-anchor Arabic UI translations.
+- Reusing the Pass 19 four-role Sign pattern reduced risk and allowed the model to close cleanly.
+- Sign geometry should be locked only after an accepted rendered PDF is confirmed.
+- View button insertions should use tolerant insertion logic because accepted XML formatting may differ between slices.
+- PO translations must use exact `model_terms`, `ir.model.fields`, action, menu, report, and `ir.model.fields.selection` anchors; generic `msgid` translations are insufficient in Odoo SaaS.
+- The `-EMP-` reference suffix should remain avoided for generated document references.
+
+### Final acceptance
+
+Pass 20 is closed after 20F acceptance:
+
+- module upgraded cleanly;
+- F-0017 PDF generated successfully;
+- title corrected to Work Assignment Authorization / تكليف بعمل إضافي;
+- Sign request sent successfully;
+- state moved through Generated, Signature Requested, and Signed;
+- signed PDF/certificate artifacts copied to employee chatter/files;
+- Arabic UI translations applied cleanly;
+- no deferred native integration side effects occurred.
+<!-- PASS20G_CLOSURE_END -->

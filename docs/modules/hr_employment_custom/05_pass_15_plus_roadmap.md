@@ -114,13 +114,38 @@ Deferred:
 - approval.request integration;
 - GRC decision-instance integration.
 
+
 ## Pass 20 — Work assignments
 
-- `x_hr.employee_work_assignment`;
-- assignment location/period/purpose;
-- QWeb/sign;
-- approval activity chain;
-- future overtime/payroll/planning/project hooks.
+Status: closed and accepted.
+
+Implemented as F-0017 Work Assignment Authorization:
+
+- custom process model `x_hr.employee_work_assignment`;
+- employee Assignments / التكليفات tab;
+- manual assignment location, from/to dates, and description/purpose;
+- generated reference and document reference without `-EMP-`;
+- generated F-0017 QWeb/PDF;
+- generated/signed/certificate artifact fields;
+- employee chatter/files artifact posting;
+- four-role Odoo Sign lifecycle:
+  - Employee;
+  - Direct Manager;
+  - HR Responsible;
+  - General Manager;
+- Arabic UI, field, section, button, and state translations through exact exported PO anchors.
+
+Deferred beyond Pass 20:
+
+- typed assignment helper model;
+- Planning integration;
+- Project/task integration;
+- Timesheet integration;
+- Attendance/Work Entry integration;
+- Payroll/overtime/allowance effects;
+- Fleet/site logistics;
+- `approval.request` workflow;
+- GRC decision instances.
 
 ## Pass 21 — Performance evaluation
 
@@ -465,3 +490,7 @@ Pass 20 slices:
 - 20F — Arabic UI/QWeb polish;
 - 20G — documentation closure.
 <!-- PASS20_WORK_ASSIGNMENT_ROADMAP_END -->
+
+<!-- PASS20_CLOSURE_ROADMAP_START -->
+Pass 20 is closed as F-0017 Work Assignment Authorization. It proved the lean governed-form pattern: one custom operational model, manual form fields, QWeb/PDF, four-role Odoo Sign, employee chatter/files, and exact-anchor Arabic UI translation, with all native operational integrations deferred.
+<!-- PASS20_CLOSURE_ROADMAP_END -->

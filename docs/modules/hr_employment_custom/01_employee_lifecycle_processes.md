@@ -1340,3 +1340,48 @@ Pass 20 does not create or update Planning, Project, Timesheet, Attendance, Work
 
 F-0017 is handled as the approved documentary evidence workflow only. Downstream operational integrations are deferred to later pass cycles.
 <!-- PASS20_WORK_ASSIGNMENT_LIFECYCLE_END -->
+
+<!-- PASS20_ACCEPTED_WORK_ASSIGNMENT_START -->
+## Pass 20 accepted implementation — F-0017 Work Assignment Authorization
+
+Pass 20 implements Marsellia work assignments as a governed custom process record:
+
+    x_hr.employee_work_assignment
+
+The accepted scope is intentionally narrow:
+
+- manual assignment location;
+- manual assignment from/to dates;
+- manual description and purpose;
+- standard document reference and lifecycle metadata;
+- derived direct manager / HR responsible users where available;
+- manually selected general manager user;
+- generated PDF;
+- four-role native Odoo Sign lifecycle;
+- employee chatter/files artifact posting;
+- Arabic UI and state translations.
+
+Pass 20 does not create or update Planning, Project, Timesheet, Attendance, Work Entry, Payroll, Fleet, Approval, or GRC records.
+
+The visible lifecycle is:
+
+    draft
+    generated
+    signature_requested
+    signed
+
+Document identity:
+
+    MCEP-HR-F-0017
+    تكليف بعمل إضافي
+    Work Assignment Authorization
+
+The accepted signer order is:
+
+1. Employee
+2. Direct Manager
+3. HR Responsible
+4. General Manager
+
+This pattern is the reference for future simple governed employment documents that require manual process data but no immediate native operational integration.
+<!-- PASS20_ACCEPTED_WORK_ASSIGNMENT_END -->

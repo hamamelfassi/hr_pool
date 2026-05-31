@@ -536,3 +536,36 @@ Required UI structure:
 
 The Assignments tab must follow the Permissions and Leave implementation patterns. It must not introduce Planning/Project/Timesheet/Attendance/Payroll widgets or hidden integration fields in Pass 20.
 <!-- PASS20_WORK_ASSIGNMENT_UI_END -->
+
+<!-- PASS20_ACCEPTED_UI_START -->
+## Pass 20 accepted Assignments tab UI doctrine
+
+The accepted F-0017 employee tab is:
+
+    Assignments / التكليفات
+
+The tab follows the same custom-process UI pattern used by Permissions and Leave:
+
+- info alert;
+- New Assignment button;
+- embedded list;
+- controlled modal form;
+- standalone list/form action;
+- visible statusbar;
+- workflow/artifact control strip;
+- header artifact download icons;
+- row/list status badges;
+- modal/full-form parity;
+- Arabic UI labels through exported-anchor PO workflow.
+
+Accepted visible sections:
+
+- Workflow and Artifacts;
+- Assignment Details;
+- Approval Metadata;
+- Lifecycle Artifacts;
+- Manual Decision;
+- Notes.
+
+The Assignments tab must remain a document/process surface only. It must not introduce Planning, Project, Timesheet, Attendance, Work Entry, Payroll, Fleet, Approval, or GRC widgets in the current pass family unless a later pass explicitly scopes that integration.
+<!-- PASS20_ACCEPTED_UI_END -->

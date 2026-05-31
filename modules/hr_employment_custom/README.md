@@ -176,3 +176,23 @@ All standard document metadata, artifact fields, and Sign metadata follow the ac
 
 Pass 20 deliberately excludes native Planning, Project, Timesheet, Attendance, Work Entry, Payroll, Fleet, approval.request, and GRC decision integrations.
 <!-- PASS20_WORK_ASSIGNMENT_README_END -->
+
+<!-- PASS20_README_CLOSURE_START -->
+## Pass 20 closure — Work Assignment Authorization
+
+Pass 20 adds F-0017 Work Assignment Authorization as a custom governed process:
+
+    x_hr.employee_work_assignment
+
+It provides:
+
+- employee Assignments / التكليفات tab;
+- manual assignment location/date/purpose capture;
+- generated F-0017 PDF;
+- four-role Odoo Sign lifecycle;
+- signed PDF and certificate sync;
+- employee chatter/files artifacts;
+- Arabic UI and state translations.
+
+It deliberately does not create or update Planning, Project, Timesheet, Attendance, Work Entry, Payroll, Fleet, Approval, or GRC records. Those integrations remain deferred.
+<!-- PASS20_README_CLOSURE_END -->
