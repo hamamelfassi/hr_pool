@@ -148,6 +148,8 @@ msgstr "إضافة هوية"
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_leave_request_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_leave_requests
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_work_assignment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_work_assignments
 msgid "Approval Metadata"
 msgstr "بيانات الاعتماد"
 
@@ -189,6 +191,8 @@ msgstr ""
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_work_assignment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_work_assignments
 msgid "Certificate"
 msgstr "الشهادة"
 
@@ -377,6 +381,7 @@ msgstr "الوصف والحالة"
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_direct_manager_user_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_direct_manager_user_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_direct_manager_user_id
 msgid "Direct Manager User"
 msgstr "مستخدم المدير المباشر"
 
@@ -409,6 +414,7 @@ msgstr "رقم المستند"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_document_reference
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_document_reference
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_document_reference
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_document_reference
 msgid "Document Reference"
 msgstr "مرجع المستند"
 
@@ -437,6 +443,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_leave_download_generated_pdf
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_work_assignment_download_generated_pdf
 msgid "Download Generated PDF"
 msgstr "تنزيل ملف PDF المنشأ"
 
@@ -453,6 +460,7 @@ msgstr "تنزيل ملف PDF المنشأ"
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_leave_download_sign_certificate
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_work_assignment_download_sign_certificate
 msgid "Download Sign Certificate"
 msgstr "تنزيل شهادة التوقيع"
 
@@ -469,6 +477,7 @@ msgstr "تنزيل شهادة التوقيع"
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_leave_download_signed_pdf
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_work_assignment_download_signed_pdf
 msgid "Download Signed PDF"
 msgstr "تنزيل ملف PDF الموقع"
 
@@ -485,6 +494,7 @@ msgstr "تنزيل مرفق المصدر"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_employee_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_employee_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_employee_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_employee_id
 msgid "Employee"
 msgstr "الموظف"
 
@@ -581,6 +591,7 @@ msgstr "هوية الموظف: ضبط الاسم والتسجيل عند الت�
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_employee_notes
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_employee_notes
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_employee_notes
 msgid "Employee Notes"
 msgstr "ملاحظات الموظف"
 
@@ -835,6 +846,9 @@ msgstr "روابط الحوكمة"
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_work_assignment_generate_pdf
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_work_assignment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_work_assignments
 msgid "Generate PDF"
 msgstr "توليد ملف PDF"
 
@@ -844,6 +858,7 @@ msgstr "توليد ملف PDF"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_generated_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_generated_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_generated_on
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_generated_on
 msgid "Generated On"
 msgstr "تاريخ التوليد"
 
@@ -855,6 +870,9 @@ msgstr "تاريخ التوليد"
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_pdf_attachment_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_pdf_attachment_id
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_work_assignment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_work_assignments
 msgid "Generated PDF"
 msgstr "ملف PDF المنشأ"
 
@@ -871,6 +889,7 @@ msgstr ""
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_hr_user_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_hr_user_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_hr_user_id
 msgid "HR User"
 msgstr "مستخدم الموارد البشرية"
 
@@ -1046,6 +1065,8 @@ msgstr "إذن تأخير"
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_leave_request_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_leave_requests
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_work_assignment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_work_assignments
 msgid "Lifecycle Artifacts"
 msgstr "مرفقات دورة الحياة"
 
@@ -1060,6 +1081,8 @@ msgstr "مرفقات دورة الحياة"
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_leave_request_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_leave_requests
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_work_assignment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_work_assignments
 msgid "Manual Decision"
 msgstr "القرار اليدوي"
 
@@ -1069,6 +1092,7 @@ msgstr "القرار اليدوي"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_manual_decision_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_manual_decision_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_manual_decision_attachment_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_manual_decision_attachment_id
 msgid "Manual Decision Attachment"
 msgstr "مرفق القرار اليدوي"
 
@@ -1078,6 +1102,7 @@ msgstr "مرفق القرار اليدوي"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_manual_decision_date
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_manual_decision_date
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_manual_decision_date
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_manual_decision_date
 msgid "Manual Decision Date"
 msgstr "تاريخ القرار اليدوي"
 
@@ -1087,6 +1112,7 @@ msgstr "تاريخ القرار اليدوي"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_manual_decision_number
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_manual_decision_number
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_manual_decision_number
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_manual_decision_number
 msgid "Manual Decision Number"
 msgstr "رقم القرار اليدوي"
 
@@ -1172,6 +1198,9 @@ msgstr "تدريب جديد"
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_leave_request_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_leave_requests
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_notes
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_work_assignment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_work_assignments
 msgid "Notes"
 msgstr "ملاحظات"
 
@@ -1312,6 +1341,7 @@ msgstr "الاسترداد مطلوب عند الإخلال"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_reference_code
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_reference_code
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_reference_code
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_reference_code
 msgid "Reference Code"
 msgstr "كود المرجع"
 
@@ -1378,6 +1408,7 @@ msgstr "يتطلب التوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_responsible_user_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_responsible_user_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_responsible_user_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_responsible_user_id
 msgid "Responsible User"
 msgstr "المستخدم المسؤول"
 
@@ -1456,6 +1487,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_work_assignment_send_sign
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_work_assignment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_work_assignments
 msgid "Send to Sign"
 msgstr "إرسال للتوقيع"
 
@@ -1465,6 +1499,7 @@ msgstr "إرسال للتوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_sent_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_sent_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_sent_on
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_sent_on
 msgid "Sent On"
 msgstr "تاريخ الإرسال"
 
@@ -1513,6 +1548,7 @@ msgstr "تسجيل عدم اكتمال التدريب"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_sign_certificate_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_sign_certificate_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_sign_certificate_attachment_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_sign_certificate_attachment_id
 msgid "Sign Certificate"
 msgstr "شهادة التوقيع"
 
@@ -1522,6 +1558,7 @@ msgstr "شهادة التوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_sign_request_res_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_sign_request_res_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_sign_request_res_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_sign_request_res_id
 msgid "Sign Request ID"
 msgstr "معرف طلب التوقيع"
 
@@ -1531,6 +1568,7 @@ msgstr "معرف طلب التوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_sign_request_reference
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_sign_request_reference
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_sign_request_reference
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_sign_request_reference
 msgid "Sign Request Reference"
 msgstr "مرجع طلب التوقيع"
 
@@ -1540,6 +1578,7 @@ msgstr "مرجع طلب التوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_sign_request_state
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_sign_request_state
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_sign_request_state
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_sign_request_state
 msgid "Sign Request State"
 msgstr "حالة طلب التوقيع"
 
@@ -1549,6 +1588,7 @@ msgstr "حالة طلب التوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_sign_request_url
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_sign_request_url
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_sign_request_url
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_sign_request_url
 msgid "Sign Request URL"
 msgstr "رابط طلب التوقيع"
 
@@ -1558,6 +1598,7 @@ msgstr "رابط طلب التوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_signed_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_signed_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_signed_on
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_signed_on
 msgid "Signed On"
 msgstr "تاريخ التوقيع"
 
@@ -1569,6 +1610,9 @@ msgstr "تاريخ التوقيع"
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_signed_attachment_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_signed_attachment_id
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_work_assignment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_work_assignments
 msgid "Signed PDF"
 msgstr "ملف PDF الموقع"
 
@@ -1602,6 +1646,7 @@ msgstr "قيم المصدر"
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_state
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_state
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_state
 msgid "State"
 msgstr "الحالة"
 
@@ -1627,6 +1672,9 @@ msgstr "الحالات"
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_work_assignment_sync_sign
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_work_assignment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_work_assignments
 msgid "Sync"
 msgstr "مزامنة"
 
@@ -1791,6 +1839,8 @@ msgstr "يستخدم مستند بطاقة الشركة"
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_leave_request_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_leave_requests
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_work_assignment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_work_assignments
 msgid "Workflow and Artifacts"
 msgstr "سير العمل والمرفقات"
 
@@ -2665,6 +2715,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7197_ee2fc578
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7184_5774b8cb
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7209_8acd422d
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7221_ab5cd19a
 msgid "Draft"
 msgstr "مسودة"
 
@@ -2673,6 +2724,7 @@ msgstr "مسودة"
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7201_93bb9b2e
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7185_8342d78f
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7214_a2ca82ab
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7225_9eca3f11
 msgid "Generated"
 msgstr "منشأ"
 
@@ -2681,6 +2733,7 @@ msgstr "منشأ"
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7198_a46ce52a
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7187_afa46f6b
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7210_b466fc2f
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7222_14d34abf
 msgid "Signature Requested"
 msgstr "طلب التوقيع"
 
@@ -2689,6 +2742,7 @@ msgstr "طلب التوقيع"
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7199_0213418f
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7186_0030efac
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7212_c7060ded
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7223_9359ca84
 msgid "Signed"
 msgstr "موقع"
 
@@ -2697,6 +2751,7 @@ msgstr "موقع"
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7202_49a69e21
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7192_f580f754
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7215_7ab45dfb
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7226_e0decb90
 msgid "Cancelled"
 msgstr "ملغى"
 
@@ -2704,6 +2759,7 @@ msgstr "ملغى"
 #: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_permission__x_state__superseded
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7200_70375510
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7213_c27c50a8
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7224_3e828273
 msgid "Superseded"
 msgstr "مستبدل"
 
@@ -2993,6 +3049,7 @@ msgstr "الموظف المكلف بالعمل"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_general_manager_user_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_general_manager_user_id
 msgid "General Manager User"
 msgstr "مستخدم المدير العام"
 
@@ -3071,3 +3128,82 @@ msgstr "طلبات الإجازة هنا هي سجلات نماذج الإجاز
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_leave_requests
 msgid "Native Time Off Bridge"
 msgstr "جسر الإجازات الأصلي في أودو"
+
+#. module: hr_employment_custom
+#: model:ir.model,name:hr_employment_custom.model_x_hr_employee_work_assignment
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_work_assignment_form
+msgid "Employee Work Assignment"
+msgstr "تكليف عمل الموظف"
+
+#. module: hr_employment_custom
+#: model:ir.actions.act_window,name:hr_employment_custom.action_employee_work_assignments
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_work_assignment_list
+msgid "Employee Work Assignments"
+msgstr "تكليفات عمل الموظفين"
+
+#. module: hr_employment_custom
+#: model:ir.actions.act_window,name:hr_employment_custom.action_employee_work_assignment_create
+msgid "New Work Assignment"
+msgstr "تكليف عمل جديد"
+
+#. module: hr_employment_custom
+#: model:ir.actions.report,name:hr_employment_custom.action_report_mcep_employee_work_assignment
+msgid "Employee Work Assignment Authorization Form"
+msgstr "نموذج تكليف بعمل إضافي"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_work_assignments
+msgid "Assignments"
+msgstr "التكليفات"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_work_assignments
+msgid "New Assignment"
+msgstr "تكليف جديد"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_name
+msgid "Assignment Label"
+msgstr "تسمية التكليف"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_assignment_location
+msgid "Assignment Location"
+msgstr "مكان التكليف"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_assignment_date_from
+msgid "Assignment From"
+msgstr "التكليف من"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_assignment_date_to
+msgid "Assignment To"
+msgstr "التكليف إلى"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_description_purpose
+msgid "Description and Purpose"
+msgstr "وصف العمل والغرض"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_hr_employee__x_work_assignment_ids
+msgid "Work Assignments"
+msgstr "تكليفات العمل"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_work_assignment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_work_assignments
+msgid "Assignment Details"
+msgstr "تفاصيل التكليف"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_work_assignment_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_work_assignments
+msgid "Work assignments cover F-0017 Work Assignment Authorization. PDF generation and four-role Odoo Sign lifecycle are handled on this assignment record."
+msgstr "تغطي التكليفات نموذج F-0017 تكليف بعمل إضافي. تتم إدارة توليد ملف PDF ودورة توقيع أودو بأربعة أدوار من خلال سجل التكليف هذا."
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_work_assignments
+msgid "Work assignments here are Marsellia official F-0017 assignment-form records. They do not create Planning, Project, Timesheet, Attendance, Payroll, Work Entry, Fleet, or GRC records in this pass."
+msgstr "تكليفات العمل هنا هي سجلات نموذج F-0017 الرسمية الخاصة بمارسيليا. لا تنشئ هذه السجلات أي سجلات تخطيط أو مشاريع أو جداول زمنية أو حضور أو مرتبات أو قيود عمل أو أسطول أو GRC في هذه المرحلة."

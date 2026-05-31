@@ -58,7 +58,7 @@
                 </header>
                 <sheet>
                     <div class="alert alert-info" role="alert">
-                        This is the Marsellia official work assignment surface for F-0017. PDF generation and Odoo Sign lifecycle will be added in later Pass 20 slices.
+                        Work assignments cover F-0017 Work Assignment Authorization. PDF generation and four-role Odoo Sign lifecycle are handled on this assignment record.
                     </div>
 
                     <!-- MCEP work assignment unified controls start -->
@@ -237,7 +237,7 @@
                             </header>
                             <sheet>
                                 <div class="alert alert-info" role="alert">
-                                    This is the Marsellia official work assignment surface for F-0017. PDF generation and Odoo Sign lifecycle will be added in later Pass 20 slices.
+                                    Work assignments cover F-0017 Work Assignment Authorization. PDF generation and four-role Odoo Sign lifecycle are handled on this assignment record.
                                 </div>
 
                                 <!-- MCEP work assignment unified controls start -->
