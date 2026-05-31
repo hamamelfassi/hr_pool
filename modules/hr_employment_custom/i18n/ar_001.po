@@ -152,6 +152,8 @@ msgstr "إضافة هوية"
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_work_assignments
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_performance_evaluation_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_performance_evaluations
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_separation_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_separation_requests
 msgid "Approval Metadata"
 msgstr "بيانات الاعتماد"
 
@@ -197,6 +199,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_work_assignments
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_performance_evaluation_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_performance_evaluations
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_separation_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_separation_requests
 msgid "Certificate"
 msgstr "الشهادة"
 
@@ -387,6 +391,7 @@ msgstr "الوصف والحالة"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_direct_manager_user_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_direct_manager_user_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_direct_manager_user_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_direct_manager_user_id
 msgid "Direct Manager User"
 msgstr "مستخدم المدير المباشر"
 
@@ -421,6 +426,7 @@ msgstr "رقم المستند"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_document_reference
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_document_reference
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_document_reference
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_document_reference
 msgid "Document Reference"
 msgstr "مرجع المستند"
 
@@ -451,6 +457,7 @@ msgstr ""
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_leave_download_generated_pdf
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_work_assignment_download_generated_pdf
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_performance_evaluation_download_generated_pdf
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_separation_request_download_generated_pdf
 msgid "Download Generated PDF"
 msgstr "تنزيل ملف PDF المنشأ"
 
@@ -469,6 +476,7 @@ msgstr "تنزيل ملف PDF المنشأ"
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_leave_download_sign_certificate
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_work_assignment_download_sign_certificate
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_performance_evaluation_download_sign_certificate
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_separation_request_download_sign_certificate
 msgid "Download Sign Certificate"
 msgstr "تنزيل شهادة التوقيع"
 
@@ -487,6 +495,7 @@ msgstr "تنزيل شهادة التوقيع"
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_leave_download_signed_pdf
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_work_assignment_download_signed_pdf
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_performance_evaluation_download_signed_pdf
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_separation_request_download_signed_pdf
 msgid "Download Signed PDF"
 msgstr "تنزيل ملف PDF الموقع"
 
@@ -505,6 +514,7 @@ msgstr "تنزيل مرفق المصدر"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_employee_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_employee_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_employee_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_employee_id
 msgid "Employee"
 msgstr "الموظف"
 
@@ -602,6 +612,7 @@ msgstr "هوية الموظف: ضبط الاسم والتسجيل عند الت�
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_employee_notes
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_employee_notes
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_employee_notes
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_employee_notes
 msgid "Employee Notes"
 msgstr "ملاحظات الموظف"
 
@@ -862,6 +873,9 @@ msgstr "روابط الحوكمة"
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_performance_evaluation_generate_pdf
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_performance_evaluation_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_performance_evaluations
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_separation_request_generate_pdf
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_separation_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_separation_requests
 msgid "Generate PDF"
 msgstr "توليد ملف PDF"
 
@@ -873,6 +887,7 @@ msgstr "توليد ملف PDF"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_generated_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_generated_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_generated_on
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_generated_on
 msgid "Generated On"
 msgstr "تاريخ التوليد"
 
@@ -890,6 +905,9 @@ msgstr "تاريخ التوليد"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_pdf_attachment_id
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_performance_evaluation_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_performance_evaluations
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_pdf_attachment_id
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_separation_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_separation_requests
 msgid "Generated PDF"
 msgstr "ملف PDF المنشأ"
 
@@ -908,6 +926,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_hr_user_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_hr_user_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_hr_user_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_hr_user_id
 msgid "HR User"
 msgstr "مستخدم الموارد البشرية"
 
@@ -1087,6 +1106,8 @@ msgstr "إذن تأخير"
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_work_assignments
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_performance_evaluation_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_performance_evaluations
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_separation_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_separation_requests
 msgid "Lifecycle Artifacts"
 msgstr "مرفقات دورة الحياة"
 
@@ -1105,6 +1126,8 @@ msgstr "مرفقات دورة الحياة"
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_work_assignments
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_performance_evaluation_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_performance_evaluations
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_separation_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_separation_requests
 msgid "Manual Decision"
 msgstr "القرار اليدوي"
 
@@ -1116,6 +1139,7 @@ msgstr "القرار اليدوي"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_manual_decision_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_manual_decision_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_manual_decision_attachment_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_manual_decision_attachment_id
 msgid "Manual Decision Attachment"
 msgstr "مرفق القرار اليدوي"
 
@@ -1127,6 +1151,7 @@ msgstr "مرفق القرار اليدوي"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_manual_decision_date
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_manual_decision_date
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_manual_decision_date
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_manual_decision_date
 msgid "Manual Decision Date"
 msgstr "تاريخ القرار اليدوي"
 
@@ -1138,6 +1163,7 @@ msgstr "تاريخ القرار اليدوي"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_manual_decision_number
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_manual_decision_number
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_manual_decision_number
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_manual_decision_number
 msgid "Manual Decision Number"
 msgstr "رقم القرار اليدوي"
 
@@ -1230,6 +1256,9 @@ msgstr "تدريب جديد"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation_line__x_notes
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_performance_evaluation_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_performance_evaluations
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_notes
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_separation_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_separation_requests
 msgid "Notes"
 msgstr "ملاحظات"
 
@@ -1372,6 +1401,7 @@ msgstr "الاسترداد مطلوب عند الإخلال"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_reference_code
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_reference_code
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_reference_code
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_reference_code
 msgid "Reference Code"
 msgstr "كود المرجع"
 
@@ -1440,6 +1470,7 @@ msgstr "يتطلب التوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_responsible_user_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_responsible_user_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_responsible_user_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_responsible_user_id
 msgid "Responsible User"
 msgstr "المستخدم المسؤول"
 
@@ -1524,6 +1555,9 @@ msgstr ""
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_performance_evaluation_send_sign
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_performance_evaluation_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_performance_evaluations
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_separation_request_send_sign
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_separation_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_separation_requests
 msgid "Send to Sign"
 msgstr "إرسال للتوقيع"
 
@@ -1535,6 +1569,7 @@ msgstr "إرسال للتوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_sent_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_sent_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_sent_on
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_sent_on
 msgid "Sent On"
 msgstr "تاريخ الإرسال"
 
@@ -1585,6 +1620,7 @@ msgstr "تسجيل عدم اكتمال التدريب"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_sign_certificate_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_sign_certificate_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_sign_certificate_attachment_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_sign_certificate_attachment_id
 msgid "Sign Certificate"
 msgstr "شهادة التوقيع"
 
@@ -1596,6 +1632,7 @@ msgstr "شهادة التوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_sign_request_res_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_sign_request_res_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_sign_request_res_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_sign_request_res_id
 msgid "Sign Request ID"
 msgstr "معرف طلب التوقيع"
 
@@ -1607,6 +1644,7 @@ msgstr "معرف طلب التوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_sign_request_reference
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_sign_request_reference
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_sign_request_reference
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_sign_request_reference
 msgid "Sign Request Reference"
 msgstr "مرجع طلب التوقيع"
 
@@ -1618,6 +1656,7 @@ msgstr "مرجع طلب التوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_sign_request_state
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_sign_request_state
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_sign_request_state
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_sign_request_state
 msgid "Sign Request State"
 msgstr "حالة طلب التوقيع"
 
@@ -1629,6 +1668,7 @@ msgstr "حالة طلب التوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_sign_request_url
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_sign_request_url
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_sign_request_url
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_sign_request_url
 msgid "Sign Request URL"
 msgstr "رابط طلب التوقيع"
 
@@ -1640,6 +1680,7 @@ msgstr "رابط طلب التوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_signed_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_signed_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_signed_on
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_signed_on
 msgid "Signed On"
 msgstr "تاريخ التوقيع"
 
@@ -1657,6 +1698,9 @@ msgstr "تاريخ التوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_signed_attachment_id
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_performance_evaluation_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_performance_evaluations
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_signed_attachment_id
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_separation_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_separation_requests
 msgid "Signed PDF"
 msgstr "ملف PDF الموقع"
 
@@ -1692,6 +1736,7 @@ msgstr "قيم المصدر"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_state
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_state
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_state
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_state
 msgid "State"
 msgstr "الحالة"
 
@@ -1723,6 +1768,9 @@ msgstr "الحالات"
 #: model:ir.actions.server,name:hr_employment_custom.action_employee_performance_evaluation_sync_sign
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_performance_evaluation_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_performance_evaluations
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_separation_request_sync_sign
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_separation_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_separation_requests
 msgid "Sync"
 msgstr "مزامنة"
 
@@ -1891,6 +1939,8 @@ msgstr "يستخدم مستند بطاقة الشركة"
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_work_assignments
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_performance_evaluation_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_performance_evaluations
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_separation_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_separation_requests
 msgid "Workflow and Artifacts"
 msgstr "سير العمل والمرفقات"
 
@@ -2767,6 +2817,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7209_8acd422d
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7221_ab5cd19a
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7227_e0748706
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7244_1d07ec8f
 msgid "Draft"
 msgstr "مسودة"
 
@@ -2777,6 +2828,7 @@ msgstr "مسودة"
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7214_a2ca82ab
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7225_9eca3f11
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7231_92d551c8
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7248_3a384931
 msgid "Generated"
 msgstr "منشأ"
 
@@ -2787,6 +2839,7 @@ msgstr "منشأ"
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7210_b466fc2f
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7222_14d34abf
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7228_ad1e2c57
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7245_1933b771
 msgid "Signature Requested"
 msgstr "طلب التوقيع"
 
@@ -2797,6 +2850,7 @@ msgstr "طلب التوقيع"
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7212_c7060ded
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7223_9359ca84
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7229_96a3ff55
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7246_8f52f1dd
 msgid "Signed"
 msgstr "موقع"
 
@@ -2807,6 +2861,7 @@ msgstr "موقع"
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7215_7ab45dfb
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7226_e0decb90
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7232_9d875ae4
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7249_d5574641
 msgid "Cancelled"
 msgstr "ملغى"
 
@@ -2816,6 +2871,7 @@ msgstr "ملغى"
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7213_c27c50a8
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7224_3e828273
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7230_ccdddbf2
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7247_0749a5cc
 msgid "Superseded"
 msgstr "مستبدل"
 
@@ -2912,6 +2968,7 @@ msgstr "إجازة تعويضية"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7204_8476c1bb
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7253_6946f4e9
 msgid "Other"
 msgstr "أخرى"
 
@@ -3107,6 +3164,7 @@ msgstr "الموظف المكلف بالعمل"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_general_manager_user_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_work_assignment__x_general_manager_user_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_general_manager_user_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_general_manager_user_id
 msgid "General Manager User"
 msgstr "مستخدم المدير العام"
 
@@ -3361,6 +3419,7 @@ msgstr "توصية مدير الموارد البشرية"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_performance_evaluation__x_direct_manager_employee_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_direct_manager_employee_id
 msgid "Direct Manager Employee"
 msgstr "المدير المباشر"
 
@@ -3512,3 +3571,88 @@ msgstr "أربع نجوم"
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7240_396005fd
 msgid "5 Stars"
 msgstr "خمس نجوم"
+
+#. module: hr_employment_custom
+#: model:ir.model,name:hr_employment_custom.model_x_hr_employee_separation_request
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_separation_request_form
+msgid "Employee Separation Request"
+msgstr "طلب إنهاء خدمة الموظف"
+
+#. module: hr_employment_custom
+#: model:ir.actions.act_window,name:hr_employment_custom.action_employee_separation_requests
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_separation_request_list
+msgid "Employee Separation Requests"
+msgstr "طلبات إنهاء خدمة الموظفين"
+
+#. module: hr_employment_custom
+#: model:ir.actions.report,name:hr_employment_custom.action_report_mcep_employee_separation_request
+msgid "Employee Separation Request Form"
+msgstr "نموذج طلب إنهاء خدمة الموظف"
+
+#. module: hr_employment_custom
+#: model:ir.actions.act_window,name:hr_employment_custom.action_employee_separation_request_create
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_separation_requests
+msgid "New Separation Request"
+msgstr "طلب إنهاء خدمة جديد"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_separation_requests
+msgid "Separation"
+msgstr "إنهاء الخدمة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_name
+msgid "Separation Request Label"
+msgstr "تسمية طلب إنهاء الخدمة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_request_type
+msgid "Request Type"
+msgstr "نوع الطلب"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_effective_date
+msgid "Effective Separation Date"
+msgstr "تاريخ إنهاء الخدمة الفعلي"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_separation_request__x_other_reason_description
+msgid "Other Reason Description"
+msgstr "وصف السبب الآخر"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_hr_employee__x_separation_request_ids
+msgid "Separation Requests"
+msgstr "طلبات إنهاء الخدمة"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_separation_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_separation_requests
+msgid "Request Details"
+msgstr "تفاصيل الطلب"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_separation_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_separation_requests
+msgid "Separation requests cover F-0019. PDF generation and the four-role Odoo Sign lifecycle are handled on this separation request record."
+msgstr "تغطي طلبات إنهاء الخدمة نموذج F-0019. تتم إدارة توليد ملف PDF ودورة توقيع أودو بأربعة أدوار من خلال سجل طلب إنهاء الخدمة هذا."
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_separation_requests
+msgid "Separation requests here are Marsellia official F-0019 records. Governed request capture, PDF generation, and four-role Sign workflow are handled here without native offboarding, contract closing, payroll, final settlement, custody clearance, approval, or GRC integration."
+msgstr "طلبات إنهاء الخدمة هنا هي سجلات مارسيليا الرسمية لنموذج F-0019. تتم هنا إدارة التقاط الطلب المحكوم وتوليد PDF وسير التوقيع بأربعة أدوار دون أي ربط أصلي مع إنهاء الخدمة أو إغلاق العقود أو المرتبات أو التسوية النهائية أو تصفية العهود أو الموافقات أو GRC."
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7250_32fca325
+msgid "Resignation"
+msgstr "استقالة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7251_388001b9
+msgid "Non-Renewal of Contract"
+msgstr "عدم الرغبة في تجديد العقد"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7252_87a9e9a5
+msgid "Medical Reasons"
+msgstr "أسباب مرضية"

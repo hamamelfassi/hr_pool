@@ -60,7 +60,7 @@
                 </header>
                 <sheet>
                     <div class="alert alert-info" role="alert">
-                        Separation requests cover F-0019. This slice adds the controlled request surface only; normalization, PDF generation, and Odoo Sign actions come next.
+                        Separation requests cover F-0019. PDF generation and the four-role Odoo Sign lifecycle are handled on this separation request record.
                     </div>
 
                     <!-- MCEP separation request unified controls start -->
@@ -200,7 +200,7 @@
             <xpath expr="//sheet/notebook" position="inside">
                 <page name="mcep_employee_separation_requests" string="Separation">
                     <div class="alert alert-info" role="alert">
-                        Separation requests here are Marsellia official F-0019 records. This pass focuses on governed request capture, PDF generation, and four-role Sign workflow without native offboarding, contract closing, payroll, final settlement, custody clearance, approval, or GRC integration.
+                        Separation requests here are Marsellia official F-0019 records. Governed request capture, PDF generation, and four-role Sign workflow are handled here without native offboarding, contract closing, payroll, final settlement, custody clearance, approval, or GRC integration.
                     </div>
                     <div class="mb-2">
                         <button name="%(action_employee_separation_request_create)d"
@@ -238,7 +238,7 @@
                             </header>
                             <sheet>
                                 <div class="alert alert-info" role="alert">
-                                    Separation requests cover F-0019. This slice adds the controlled request surface only; normalization, PDF generation, and Odoo Sign actions come next.
+                                    Separation requests cover F-0019. PDF generation and the four-role Odoo Sign lifecycle are handled on this separation request record.
                                 </div>
 
                                 <!-- MCEP separation request unified controls start -->
