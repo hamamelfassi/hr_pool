@@ -36,6 +36,7 @@
  'data/20_employee_leave_automation.xml',
  'data/21_employee_leave_generate_actions.xml',
  'data/22_employee_leave_sign_actions.xml',
+ 'data/23_employee_work_assignment_automation.xml',
  'views/01_employee_identification_views.xml',
  'views/02_employee_declaration_views.xml',
  'views/03_employee_custody_views.xml',
