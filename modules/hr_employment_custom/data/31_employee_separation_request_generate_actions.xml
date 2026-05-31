@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="action_employee_separation_request_generate_pdf" model="ir.actions.server">
+            <field name="name">Generate PDF</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_separation_request"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def reload_request(rec):
+    view = env.ref('hr_employment_custom.view_employee_separation_request_form', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Employee Separation Request',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+for rec in records.sudo():
+    if rec.x_state in ('signature_requested', 'signed'):
+        action = toast(
+            'Generate PDF',
+            'This separation request has already entered the signature lifecycle. PDF regeneration is blocked.',
+            'warning',
+            True,
+            reload_request(rec),
+        )
+        continue
+
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+
+    if not employee:
+        action = toast('Generate PDF', 'Cannot generate the separation request form without a linked employee.', 'danger', True, reload_request(rec))
+        continue
+
+    if not rec.x_request_type:
+        action = toast('Generate PDF', 'Select the request type before generating the form.', 'warning', True, reload_request(rec))
+        continue
+
+    if not rec.x_effective_date:
+        action = toast('Generate PDF', 'Set the effective separation date before generating the form.', 'warning', True, reload_request(rec))
+        continue
+
+    if rec.x_request_type == 'other' and not rec.x_other_reason_description:
+        action = toast('Generate PDF', 'Enter the Other reason description before generating the form.', 'warning', True, reload_request(rec))
+        continue
+
+    generated_on = datetime.datetime.now()
+    form_code = rec.x_reference_code or 'MCEP-HR-F-0019'
+    form_title = 'Separation Request'
+    emp_part = employee.id if employee else 0
+
+    document_reference = rec.x_document_reference
+    if not document_reference:
+        document_reference = '%s-%05d-%05d' % (form_code, emp_part, rec.id)
+    elif '-EMP-' in document_reference:
+        document_reference = document_reference.replace('-EMP-', '-', 1)
+
+    vals = {
+        'x_state': rec.x_state or 'draft',
+        'x_reference_code': form_code,
+        'x_document_reference': document_reference,
+        'x_responsible_user_id': rec.x_responsible_user_id.id or env.user.id,
+    }
+
+    if employee.parent_id:
+        vals['x_direct_manager_employee_id'] = employee.parent_id.id
+        if employee.parent_id.user_id:
+            vals['x_direct_manager_user_id'] = employee.parent_id.user_id.id
+
+    if 'hr_responsible_id' in employee._fields and employee.hr_responsible_id:
+        vals['x_hr_user_id'] = employee.hr_responsible_id.id
+
+    if rec.x_request_type != 'other' and rec.x_other_reason_description:
+        vals['x_other_reason_description'] = False
+
+    normalized_name = '%s - %s - %s' % (
+        employee.name or employee.display_name or 'Employee',
+        form_title,
+        document_reference,
+    )
+    vals['x_name'] = normalized_name
+
+    rec.write(vals)
+    rec = rec.sudo().browse(rec.id)
+
+    report_xmlid = 'hr_employment_custom.action_report_mcep_employee_separation_request'
+    pdf_content, _content_type = env['ir.actions.report'].sudo()._render_qweb_pdf(report_xmlid, [rec.id])
+
+    filename = '%s - %s.pdf' % (rec.x_document_reference or form_code, form_title)
+
+    attachment = env['ir.attachment'].sudo().create({
+        'name': filename,
+        'type': 'binary',
+        'raw': pdf_content,
+        'mimetype': 'application/pdf',
+        'res_model': rec._name,
+        'res_id': rec.id,
+    })
+
+    rec.write({
+        'x_pdf_attachment_id': attachment.id,
+        'x_generated_on': generated_on,
+        'x_state': 'generated',
+    })
+
+    employee.message_post(
+        body='تم توليد نموذج طلب إنهاء الخدمة %s وربطه بسجل الموظف.' % form_code,
+        subtype_xmlid='mail.mt_note',
+        attachment_ids=[attachment.id],
+    )
+
+    action = toast('Generate PDF', '%s was generated and posted to the employee record.' % form_title, 'success', False, reload_request(rec))
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+        <record id="action_employee_separation_request_download_generated_pdf" model="ir.actions.server">
+            <field name="name">Download Generated PDF</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_separation_request"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+for rec in records.sudo():
+    attachment = rec.x_pdf_attachment_id
+    if attachment:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Download Generated PDF',
+                'message': 'No generated PDF is linked to this separation request yet.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+        <record id="action_employee_separation_request_download_signed_pdf" model="ir.actions.server">
+            <field name="name">Download Signed PDF</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_separation_request"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+for rec in records.sudo():
+    attachment = rec.x_signed_attachment_id
+    if attachment:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Download Signed PDF',
+                'message': 'No signed PDF is linked to this separation request yet.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+        <record id="action_employee_separation_request_download_sign_certificate" model="ir.actions.server">
+            <field name="name">Download Sign Certificate</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_separation_request"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+for rec in records.sudo():
+    attachment = rec.x_sign_certificate_attachment_id
+    if attachment:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Download Sign Certificate',
+                'message': 'No Sign certificate is linked to this separation request yet.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>

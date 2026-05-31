@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_mcep_employee_separation_request_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <head>
+                    <meta charset="UTF-8"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                </head>
+
+                <t t-set="employee" t-value="o.x_employee_id"/>
+                <t t-set="form_code" t-value="o.x_reference_code or 'MCEP-HR-F-0019'"/>
+                <t t-set="form_title_en" t-value="'Separation Request'"/>
+                <t t-set="form_title_ar" t-value="'طلب إنهاء خدمة'"/>
+                <t t-set="employee_number" t-value="(employee.registration_number if 'registration_number' in employee._fields else '') or (employee.barcode if 'barcode' in employee._fields else '') or employee.id or ''"/>
+                <t t-set="job_title" t-value="(employee.job_title if 'job_title' in employee._fields else '') or (employee.job_id.name if 'job_id' in employee._fields and employee.job_id else '') or ''"/>
+                <t t-set="department_name" t-value="employee.department_id.name if employee.department_id else ''"/>
+                <t t-set="contract" t-value="employee.contract_id if 'contract_id' in employee._fields and employee.contract_id else False"/>
+                <t t-set="employment_start" t-value="(employee.first_contract_date if 'first_contract_date' in employee._fields else '') or (contract.date_start if contract and 'date_start' in contract._fields else '') or ''"/>
+                <t t-set="contract_end" t-value="(contract.date_end if contract and 'date_end' in contract._fields else '') or ''"/>
+                <t t-set="contract_duration" t-value="''"/>
+                <t t-set="manager_name" t-value="o.x_direct_manager_employee_id.name or (employee.parent_id.name if employee.parent_id else '')"/>
+                <t t-set="hr_name" t-value="o.x_hr_user_id.name or ''"/>
+                <t t-set="gm_name" t-value="o.x_general_manager_user_id.name or ''"/>
+                <t t-set="request_type_ar" t-value="{'resignation': 'استقالة', 'non_renewal': 'عدم الرغبة في تجديد العقد', 'medical_reasons': 'أسباب مرضية', 'other': 'أخرى'}.get(o.x_request_type, '')"/>
+                <t t-set="request_type_en" t-value="{'resignation': 'Resignation', 'non_renewal': 'Non-Renewal of Contract', 'medical_reasons': 'Medical Reasons', 'other': 'Other'}.get(o.x_request_type, '')"/>
+
+                <t t-call="hr_employment_custom.mcep_employee_report_assets"/>
+
+                <div class="page mcep-emp-page mcep-separation-page">
+                    <t t-set="page_label" t-value="'Page 1 / 1'"/>
+                    <t t-call="hr_employment_custom.mcep_employee_report_header"/>
+
+                    <style>
+                        .mcep-separation-page {
+                            font-size: 14.2px;
+                            line-height: 1.22;
+                            padding-top: 4.5mm;
+                            padding-bottom: 2.5mm;
+                        }
+
+                        .mcep-separation-page .mcep-emp-header {
+                            margin-bottom: 3mm;
+                        }
+
+                        .mcep-separation-title {
+                            text-align: center;
+                            font-size: 28px;
+                            font-weight: 700;
+                            margin: 1.2mm 0 0.8mm 0;
+                        }
+
+                        .mcep-separation-subtitle {
+                            text-align: center;
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 18px;
+                            font-weight: 700;
+                            margin: 0 0 3.6mm 0;
+                        }
+
+                        .mcep-separation-section {
+                            font-size: 16px;
+                            font-weight: 700;
+                            margin: 2.6mm 0 1.2mm 0;
+                            padding: 1.4mm 2mm;
+                            background: #eef2f7;
+                            border: 1px solid #9aa4b2;
+                            text-align: right;
+                            direction: rtl;
+                        }
+
+                        .mcep-separation-section .en {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 11.2px;
+                            color: #374151;
+                        }
+
+                        .mcep-separation-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            table-layout: fixed;
+                            margin-bottom: 2.4mm;
+                            font-size: 13.1px;
+                        }
+
+                        .mcep-separation-table th,
+                        .mcep-separation-table td {
+                            border: 1px solid #6b7280;
+                            padding: 1.25mm 1.6mm;
+                            vertical-align: middle;
+                            line-height: 1.18;
+                        }
+
+                        .mcep-separation-table th {
+                            background: #f8fafc;
+                            font-weight: 700;
+                            text-align: center;
+                        }
+
+                        .mcep-separation-value {
+                            min-height: 5.8mm;
+                            text-align: center;
+                            font-weight: 600;
+                        }
+
+                        .mcep-separation-en {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 10.6px;
+                            color: #374151;
+                        }
+
+                        .mcep-separation-type-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            table-layout: fixed;
+                            margin-bottom: 2.4mm;
+                            font-size: 13px;
+                        }
+
+                        .mcep-separation-type-table th,
+                        .mcep-separation-type-table td {
+                            border: 1px solid #6b7280;
+                            padding: 1.35mm 1.6mm;
+                            vertical-align: middle;
+                            line-height: 1.20;
+                        }
+
+                        .mcep-separation-type-intro {
+                            text-align: center;
+                            font-weight: 700;
+                            background: #f8fafc;
+                        }
+
+                        .mcep-separation-checkbox {
+                            font-size: 17px;
+                            font-weight: 700;
+                            padding: 0 1mm;
+                        }
+
+                        .mcep-separation-effective {
+                            text-align: center;
+                            font-weight: 700;
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                        }
+
+                        .mcep-separation-reason-box {
+                            min-height: 27mm;
+                            border: 1px solid #6b7280;
+                            padding: 2.8mm;
+                            margin-bottom: 2.8mm;
+                            white-space: pre-wrap;
+                            text-align: right;
+                            direction: rtl;
+                            line-height: 1.28;
+                            font-size: 13.6px;
+                        }
+
+                        .mcep-separation-sign-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            table-layout: fixed;
+                            font-size: 12.6px;
+                            margin-top: 2mm;
+                        }
+
+                        .mcep-separation-sign-table th,
+                        .mcep-separation-sign-table td {
+                            border: 1px solid #6b7280;
+                            padding: 1.45mm 1.7mm;
+                            vertical-align: middle;
+                            line-height: 1.16;
+                        }
+
+                        .mcep-separation-sign-title {
+                            background: #f8fafc;
+                            text-align: center;
+                            font-weight: 700;
+                        }
+
+                        .mcep-separation-sign-line {
+                            height: 10.8mm;
+                        }
+
+                        .mcep-separation-date-line {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            text-align: center;
+                        }
+                    </style>
+
+                    <div class="mcep-separation-title">
+                        <span t-out="form_title_ar"/>
+                    </div>
+                    <div class="mcep-separation-subtitle">
+                        <span t-out="form_title_en"/>
+                    </div>
+
+                    <div class="mcep-separation-section">
+                        أولًا: المعلومات الشخصية
+                        <span class="en">Personal Information</span>
+                    </div>
+
+                    <table class="mcep-separation-table">
+                        <tr>
+                            <th style="width: 20%;">الاسم الكامل<br/><span class="mcep-separation-en">Full Name</span></th>
+                            <td style="width: 30%;"><div class="mcep-separation-value"><span t-out="employee.name or ''"/></div></td>
+                            <th style="width: 20%;">الرقم الوظيفي<br/><span class="mcep-separation-en">Employee ID</span></th>
+                            <td style="width: 30%;"><div class="mcep-separation-value"><span t-out="employee_number"/></div></td>
+                        </tr>
+                        <tr>
+                            <th>المسمى الوظيفي<br/><span class="mcep-separation-en">Job Title</span></th>
+                            <td><div class="mcep-separation-value"><span t-out="job_title"/></div></td>
+                            <th>القسم / الإدارة<br/><span class="mcep-separation-en">Department</span></th>
+                            <td><div class="mcep-separation-value"><span t-out="department_name"/></div></td>
+                        </tr>
+                        <tr>
+                            <th>بداية العمل<br/><span class="mcep-separation-en">Employment Start Date</span></th>
+                            <td><div class="mcep-separation-value"><span t-out="employment_start"/></div></td>
+                            <th>مدة العقد<br/><span class="mcep-separation-en">Contract Duration</span></th>
+                            <td><div class="mcep-separation-value"><span t-out="contract_duration"/></div></td>
+                        </tr>
+                        <tr>
+                            <th>نهاية العقد<br/><span class="mcep-separation-en">Contract End Date</span></th>
+                            <td><div class="mcep-separation-value"><span t-out="contract_end"/></div></td>
+                            <th>مرجع النموذج<br/><span class="mcep-separation-en">Document Reference</span></th>
+                            <td><div class="mcep-separation-value"><span t-out="o.x_document_reference or form_code"/></div></td>
+                        </tr>
+                    </table>
+
+                    <div class="mcep-separation-section">
+                        ثانيًا: نوع الطلب
+                        <span class="en">Request Type</span>
+                    </div>
+
+                    <table class="mcep-separation-type-table">
+                        <tr>
+                            <td colspan="4" class="mcep-separation-type-intro">
+                                أتقدم أنا الموقّع أدناه بهذا الطلب:
+                                <span class="mcep-separation-en">I, the undersigned, hereby submit this application:</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%;">
+                                <span class="mcep-separation-checkbox" t-out="'☑' if o.x_request_type == 'resignation' else '☐'"/>
+                                استقالة
+                                <span class="mcep-separation-en">Resignation</span>
+                            </td>
+                            <td style="width: 25%;">
+                                <span class="mcep-separation-checkbox" t-out="'☑' if o.x_request_type == 'non_renewal' else '☐'"/>
+                                عدم الرغبة في تجديد العقد
+                                <span class="mcep-separation-en">Non-Renewal of Contract</span>
+                            </td>
+                            <td style="width: 25%;">
+                                <span class="mcep-separation-checkbox" t-out="'☑' if o.x_request_type == 'medical_reasons' else '☐'"/>
+                                أسباب مرضية
+                                <span class="mcep-separation-en">Medical Reasons</span>
+                            </td>
+                            <td style="width: 25%;">
+                                <span class="mcep-separation-checkbox" t-out="'☑' if o.x_request_type == 'other' else '☐'"/>
+                                أخرى
+                                <span class="mcep-separation-en">Other</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">
+                                وأرجو إنهاء خدماتي اعتبارًا من:
+                                <span class="mcep-separation-en">I request termination of my employment effective as of:</span>
+                            </th>
+                            <td colspan="2" class="mcep-separation-effective">
+                                <span t-out="o.x_effective_date or ''"/>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="mcep-separation-section">
+                        وهذا للأسباب التالية
+                        <span class="en">For the following reasons</span>
+                    </div>
+
+                    <div class="mcep-separation-reason-box">
+                        <t t-if="o.x_request_type == 'other' and o.x_other_reason_description">
+                            <span t-out="o.x_other_reason_description"/>
+                        </t>
+                        <t t-if="o.x_request_type != 'other'">
+                            <span t-out="request_type_ar"/> / <span t-out="request_type_en"/>
+                        </t>
+                    </div>
+
+                    <div class="mcep-separation-section">
+                        ثالثًا: التوقيعات
+                        <span class="en">Signatures</span>
+                    </div>
+
+                    <table class="mcep-separation-sign-table">
+                        <tr>
+                            <th class="mcep-separation-sign-title" colspan="3">
+                                توقيع الموظف
+                                <span class="mcep-separation-en">Employee Signature</span>
+                            </th>
+                            <th class="mcep-separation-sign-title" colspan="3">
+                                اعتماد المدير المباشر
+                                <span class="mcep-separation-en">Direct Manager Approval</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td style="width: 12%;">الإسم<br/><span class="mcep-separation-en">Name</span></td>
+                            <td class="mcep-separation-sign-line" colspan="2">
+                                <span t-out="employee.name or ''"/>
+                            </td>
+                            <td style="width: 12%;">الإسم<br/><span class="mcep-separation-en">Name</span></td>
+                            <td class="mcep-separation-sign-line" colspan="2">
+                                <span t-out="manager_name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>التوقيع<br/><span class="mcep-separation-en">Signature</span></td>
+                            <td class="mcep-separation-sign-line" colspan="2"></td>
+                            <td>التوقيع<br/><span class="mcep-separation-en">Signature</span></td>
+                            <td class="mcep-separation-sign-line" colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td>التاريخ<br/><span class="mcep-separation-en">Date</span></td>
+                            <td class="mcep-separation-date-line" colspan="2">____ / ____ / ________</td>
+                            <td>التاريخ<br/><span class="mcep-separation-en">Date</span></td>
+                            <td class="mcep-separation-date-line" colspan="2">____ / ____ / ________</td>
+                        </tr>
+                    </table>
+
+                    <table class="mcep-separation-sign-table">
+                        <tr>
+                            <th class="mcep-separation-sign-title" colspan="3">
+                                اعتماد الموارد البشرية
+                                <span class="mcep-separation-en">HR Approval</span>
+                            </th>
+                            <th class="mcep-separation-sign-title" colspan="3">
+                                اعتماد المدير العام
+                                <span class="mcep-separation-en">General Manager Approval</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td style="width: 12%;">الإسم<br/><span class="mcep-separation-en">Name</span></td>
+                            <td class="mcep-separation-sign-line" colspan="2">
+                                <span t-out="hr_name"/>
+                            </td>
+                            <td style="width: 12%;">الإسم<br/><span class="mcep-separation-en">Name</span></td>
+                            <td class="mcep-separation-sign-line" colspan="2">
+                                <span t-out="gm_name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>التوقيع<br/><span class="mcep-separation-en">Signature</span></td>
+                            <td class="mcep-separation-sign-line" colspan="2"></td>
+                            <td>التوقيع<br/><span class="mcep-separation-en">Signature</span></td>
+                            <td class="mcep-separation-sign-line" colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td>التاريخ<br/><span class="mcep-separation-en">Date</span></td>
+                            <td class="mcep-separation-date-line" colspan="2">____ / ____ / ________</td>
+                            <td>التاريخ<br/><span class="mcep-separation-en">Date</span></td>
+                            <td class="mcep-separation-date-line" colspan="2">____ / ____ / ________</td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>
