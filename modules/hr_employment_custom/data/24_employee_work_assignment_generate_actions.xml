@@ -68,7 +68,7 @@ for rec in records.sudo():
 
     generated_on = datetime.datetime.now()
     form_code = rec.x_reference_code or 'MCEP-HR-F-0017'
-    form_title = 'Work Assignment'
+    form_title = 'Work Assignment Authorization'
     emp_part = employee.id if employee else 0
 
     document_reference = rec.x_document_reference

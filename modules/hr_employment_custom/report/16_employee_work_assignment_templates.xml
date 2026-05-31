@@ -11,8 +11,8 @@
 
                 <t t-set="employee" t-value="o.x_employee_id"/>
                 <t t-set="form_code" t-value="o.x_reference_code or 'MCEP-HR-F-0017'"/>
-                <t t-set="form_title_en" t-value="'Work Assignment'"/>
-                <t t-set="form_title_ar" t-value="'تكليف عمل'"/>
+                <t t-set="form_title_en" t-value="'Work Assignment Authorization'"/>
+                <t t-set="form_title_ar" t-value="'تكليف بعمل إضافي'"/>
                 <t t-set="employee_number" t-value="(employee.registration_number if 'registration_number' in employee._fields else '') or (employee.barcode if 'barcode' in employee._fields else '') or employee.id or ''"/>
                 <t t-set="job_title" t-value="(employee.job_title if 'job_title' in employee._fields else '') or (employee.job_id.name if 'job_id' in employee._fields and employee.job_id else '') or ''"/>
                 <t t-set="department_name" t-value="employee.department_id.name if employee.department_id else ''"/>

@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="action_employee_work_assignment_send_sign" model="ir.actions.server">
+            <field name="name">Send to Sign</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_work_assignment"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+sign_template_model = env['sign.template'].sudo()
+sign_document_model = env['sign.document'].sudo()
+sign_item_model = env['sign.item'].sudo()
+sign_role_model = env['sign.item.role'].sudo()
+sign_send_model = env['sign.send.request'].sudo()
+sign_send_signer_model = env['sign.send.request.signer'].sudo()
+sign_request_model = env['sign.request'].sudo()
+partner_model = env['res.partner'].sudo()
+
+signature_type = env.ref('sign.sign_item_type_signature', raise_if_not_found=False)
+date_type = env.ref('sign.sign_item_type_date', raise_if_not_found=False)
+
+action = False
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def reload_assignment(rec):
+    view = env.ref('hr_employment_custom.view_employee_work_assignment_form', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Employee Work Assignment',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+def get_or_create_role(name):
+    role = sign_role_model.search([('name', '=', name)], order='id asc', limit=1)
+    if role:
+        return role
+    return sign_role_model.create({'name': name})
+
+
+def employee_partner(employee):
+    if not employee:
+        return False
+    partner = False
+    if 'work_contact_id' in employee._fields and employee.work_contact_id:
+        partner = employee.work_contact_id.sudo()
+    if not partner and 'user_id' in employee._fields and employee.user_id and employee.user_id.partner_id:
+        partner = employee.user_id.partner_id.sudo()
+    email = employee.work_email if 'work_email' in employee._fields else False
+    if not partner and email:
+        partner = partner_model.search([('email', '=', email)], order='id asc', limit=1)
+    if not partner and email:
+        partner = partner_model.create({
+            'name': employee.name or email,
+            'email': email,
+        })
+    return partner
+
+
+def user_partner(user):
+    if not user:
+        return False
+    partner = user.partner_id.sudo() if user.partner_id else False
+    if partner:
+        return partner
+    email = user.email or user.login or False
+    if email:
+        partner = partner_model.search([('email', '=', email)], order='id asc', limit=1)
+    if not partner and email:
+        partner = partner_model.create({
+            'name': user.name or email,
+            'email': email,
+        })
+    return partner
+
+
+def signer_order_vals(order):
+    vals = {'mail_sent_order': order}
+    for optional_field in ('sequence', 'sign_order'):
+        if optional_field in sign_send_signer_model._fields:
+            vals[optional_field] = order
+    return vals
+
+
+if not signature_type:
+    action = toast('Odoo Sign setup missing', 'Signature field type sign.sign_item_type_signature was not found.', 'warning', True)
+elif not date_type:
+    action = toast('Odoo Sign setup missing', 'Date field type sign.sign_item_type_date was not found.', 'warning', True)
+else:
+    employee_role = get_or_create_role('Employee')
+    manager_role = get_or_create_role('Direct Manager')
+    hr_role = get_or_create_role('HR Responsible')
+    gm_role = get_or_create_role('General Manager')
+
+    for rec in records.sudo():
+        employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+
+        if rec.x_state == 'signed' or rec.x_signed_attachment_id:
+            action = toast('Already signed', 'This work assignment is already signed.', 'warning', False, reload_assignment(rec))
+            continue
+
+        if rec.x_sign_request_res_id:
+            existing_request = sign_request_model.browse(rec.x_sign_request_res_id)
+            if existing_request.exists() and (existing_request.state or '') not in ('cancelled', 'canceled'):
+                action = toast('Duplicate Sign request blocked', 'An active Odoo Sign request already exists for this work assignment. Use Sync instead.', 'warning', True, reload_assignment(rec))
+                continue
+
+        if rec.x_state != 'generated' or not rec.x_pdf_attachment_id:
+            action = toast('Generate PDF first', 'Generate the work assignment PDF before sending it to Odoo Sign.', 'warning', False, reload_assignment(rec))
+            continue
+
+        if not employee:
+            action = toast('Missing employee', 'This work assignment has no linked employee.', 'warning', True, reload_assignment(rec))
+            continue
+
+        employee_sign_partner = employee_partner(employee)
+        manager_user = rec.x_direct_manager_user_id.sudo() if rec.x_direct_manager_user_id else False
+        hr_user = rec.x_hr_user_id.sudo() if rec.x_hr_user_id else False
+        gm_user = rec.x_general_manager_user_id.sudo() if rec.x_general_manager_user_id else False
+
+        manager_sign_partner = user_partner(manager_user)
+        hr_sign_partner = user_partner(hr_user)
+        gm_sign_partner = user_partner(gm_user)
+
+        if not employee_sign_partner or not employee_sign_partner.email:
+            action = toast('Missing employee email', 'The employee needs a partner/work contact with email before sending this work assignment to Sign.', 'warning', True, reload_assignment(rec))
+            continue
+
+        if not manager_sign_partner or not manager_sign_partner.email:
+            action = toast('Missing direct manager email', 'Set a Direct Manager User with an email before sending this work assignment to Sign.', 'warning', True, reload_assignment(rec))
+            continue
+
+        if not hr_sign_partner or not hr_sign_partner.email:
+            action = toast('Missing HR user email', 'Set an HR User with an email before sending this work assignment to Sign.', 'warning', True, reload_assignment(rec))
+            continue
+
+        if not gm_sign_partner or not gm_sign_partner.email:
+            action = toast('Missing general manager email', 'Set a General Manager User with an email before sending this work assignment to Sign.', 'warning', True, reload_assignment(rec))
+            continue
+
+        pdf_attachment = rec.x_pdf_attachment_id.sudo()
+        form_code = rec.x_reference_code or 'MCEP-HR-F-0017'
+        form_title = 'Work Assignment Authorization'
+        filename = pdf_attachment.name or ('%s - %s.pdf' % (rec.x_document_reference or form_code, form_title))
+        sent_on = datetime.datetime.now()
+        validity_date = datetime.date.today() + datetime.timedelta(days=60)
+
+        sign_template = sign_template_model.create({
+            'name': filename,
+            'user_id': env.user.id,
+            'signature_request_validity': 60,
+        })
+
+        sign_document = sign_document_model.create({
+            'template_id': sign_template.id,
+            'attachment_id': pdf_attachment.id,
+            'name': filename,
+            'sequence': 1,
+        })
+
+        # F-0017 locked page-1 geometry after Pass 20D layout acceptance.
+        # Coordinates are normalized fractions of the PDF page.
+        sign_items = [
+            (employee_role, signature_type, 'Employee Signature', 0.515, 0.697, 0.220, 0.030),
+            (employee_role, date_type, 'Employee Signing Date', 0.555, 0.733, 0.145, 0.020),
+
+            (manager_role, signature_type, 'Direct Manager Signature', 0.080, 0.697, 0.220, 0.030),
+            (manager_role, date_type, 'Direct Manager Signing Date', 0.115, 0.733, 0.145, 0.020),
+
+            (hr_role, signature_type, 'HR Signature', 0.515, 0.819, 0.220, 0.030),
+            (hr_role, date_type, 'HR Signing Date', 0.555, 0.854, 0.145, 0.020),
+
+            (gm_role, signature_type, 'General Manager Signature', 0.080, 0.819, 0.220, 0.030),
+            (gm_role, date_type, 'General Manager Signing Date', 0.115, 0.854, 0.145, 0.020),
+        ]
+
+        for role, item_type, item_name, pos_x, pos_y, width, height in sign_items:
+            sign_item_model.create({
+                'document_id': sign_document.id,
+                'type_id': item_type.id,
+                'responsible_id': role.id,
+                'page': 1,
+                'posX': pos_x,
+                'posY': pos_y,
+                'width': width,
+                'height': height,
+                'required': True,
+                'name': item_name,
+                'alignment': 'left',
+                'constant': False,
+            })
+
+        subject = 'Signature Request - %s' % filename
+        body = '<p>Please review and sign the attached employee work assignment authorization form.</p>'
+
+        send_vals = {
+            'template_id': sign_template.id,
+            'signer_id': employee_sign_partner.id,
+            'subject': subject,
+            'body': body,
+            'validity': validity_date,
+            'certificate_reference': False,
+            'reminder_enabled': False,
+            'model': 'x_hr.employee_work_assignment',
+            'res_ids': str([rec.id]),
+        }
+        if 'set_sign_order' in sign_send_model._fields:
+            send_vals['set_sign_order'] = True
+
+        send_request = sign_send_model.create(send_vals)
+
+        signer_map = [
+            (employee_role, employee_sign_partner, 1),
+            (manager_role, manager_sign_partner, 2),
+            (hr_role, hr_sign_partner, 3),
+            (gm_role, gm_sign_partner, 4),
+        ]
+
+        for role, partner, order in signer_map:
+            signer_line = send_request.signer_ids.filtered(lambda line: line.role_id.id == role.id)[:1]
+            ordered_vals = signer_order_vals(order)
+            ordered_vals['partner_id'] = partner.id
+            if signer_line:
+                signer_line.sudo().write(ordered_vals)
+            else:
+                create_vals = signer_order_vals(order)
+                create_vals.update({
+                    'sign_send_request_id': send_request.id,
+                    'role_id': role.id,
+                    'partner_id': partner.id,
+                })
+                sign_send_signer_model.create(create_vals)
+
+        if 'set_sign_order' in send_request._fields:
+            send_request.sudo().write({'set_sign_order': True})
+
+        send_request.send_request()
+
+        generated_request = sign_request_model.search([
+            ('template_id', '=', sign_template.id),
+        ], order='create_date desc, id desc', limit=1)
+
+        if generated_request:
+            rec.write({
+                'x_state': 'signature_requested',
+                'x_sent_on': sent_on,
+                'x_sign_request_res_id': generated_request.id,
+                'x_sign_request_state': generated_request.state or 'sent',
+                'x_sign_request_reference': generated_request.reference or filename,
+                'x_sign_request_url': '/odoo/sign/%s' % generated_request.id,
+                'x_responsible_user_id': env.user.id,
+                'x_notes': ((rec.x_notes or '') + '\nNative Odoo Sign request created for %s on %s. Request ID: %s. Employee: %s. Direct Manager: %s. HR: %s. General Manager: %s.' % (form_code, sent_on, generated_request.id, employee_sign_partner.display_name, manager_sign_partner.display_name, hr_sign_partner.display_name, gm_sign_partner.display_name)).strip(),
+            })
+
+            employee.message_post(
+                body='تم إرسال نموذج تكليف العمل %s للتوقيع عبر توقيع أودو. رقم طلب التوقيع: %s.' % (form_code, generated_request.id),
+                subtype_xmlid='mail.mt_note',
+                attachment_ids=[pdf_attachment.id],
+            )
+
+            action = toast('Sent to Sign', '%s was sent to the employee, direct manager, HR responsible, and general manager.' % form_title, 'success', False, reload_assignment(rec))
+        else:
+            action = toast('Sign request not found', 'Odoo Sign send was executed, but the resulting sign.request could not be located. Use Sync after checking Sign Requests.', 'warning', True, reload_assignment(rec))
+
+        break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+        <record id="action_employee_work_assignment_sync_sign" model="ir.actions.server">
+            <field name="name">Sync</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_work_assignment"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+sign_request_model = env['sign.request'].sudo()
+attachment_model = env['ir.attachment'].sudo()
+action = False
+
+
+def reload_assignment(rec):
+    view = env.ref('hr_employment_custom.view_employee_work_assignment_form', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Employee Work Assignment',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def looks_like_certificate(attachment):
+    name = (attachment.name or '').lower()
+    return (
+        'certificate' in name
+        or 'completion' in name
+        or 'completed' in name
+        or 'history' in name
+        or 'audit' in name
+        or 'trail' in name
+        or 'شهادة' in name
+        or 'إكمال' in name
+        or 'اكمال' in name
+    )
+
+
+for rec in records.sudo():
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+    form_code = rec.x_reference_code or 'MCEP-HR-F-0017'
+
+    if not employee:
+        action = toast('Missing employee', 'This work assignment has no linked employee.', 'warning', True, reload_assignment(rec))
+        continue
+
+    if not rec.x_sign_request_res_id:
+        action = toast('No Sign request', 'No linked Odoo Sign request was found for this work assignment.', 'warning', False, reload_assignment(rec))
+        continue
+
+    sign_request = sign_request_model.browse(rec.x_sign_request_res_id)
+    if not sign_request.exists():
+        rec.write({'x_sign_request_state': 'missing_sign_request'})
+        action = toast('Missing Sign request', 'The linked Odoo Sign request no longer exists or cannot be accessed.', 'warning', True, reload_assignment(rec))
+        continue
+
+    request_state = sign_request.state or 'unknown'
+
+    values = {
+        'x_sign_request_state': request_state,
+        'x_sign_request_reference': sign_request.reference or rec.x_sign_request_reference,
+    }
+
+    if request_state not in ('signed', 'completed'):
+        if rec.x_state != 'signature_requested':
+            values['x_state'] = 'signature_requested'
+        if not rec.x_sent_on:
+            values['x_sent_on'] = sign_request.create_date or datetime.datetime.now()
+        rec.write(values)
+        employee.message_post(
+            body='تمت مزامنة حالة توقيع نموذج تكليف العمل %s. الحالة الحالية: %s.' % (form_code, request_state),
+            subtype_xmlid='mail.mt_note',
+        )
+        action = toast('Sign state synced', 'Work assignment Sign state is currently: %s.' % request_state, 'warning', False, reload_assignment(rec))
+        continue
+
+    completed_attachments = sign_request.completed_document_attachment_ids
+
+    related_attachments = attachment_model.search([
+        ('res_model', '=', 'sign.request'),
+        ('res_id', '=', sign_request.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    employee_attachments = attachment_model.search([
+        ('res_model', '=', 'hr.employee'),
+        ('res_id', '=', employee.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    assignment_attachments = attachment_model.search([
+        ('res_model', '=', rec._name),
+        ('res_id', '=', rec.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    all_attachments = completed_attachments | related_attachments | employee_attachments | assignment_attachments
+
+    signed_native = False
+    certificate_native = False
+
+    for attachment in all_attachments:
+        if rec.x_pdf_attachment_id and attachment.id == rec.x_pdf_attachment_id.id:
+            continue
+        if looks_like_certificate(attachment):
+            if not certificate_native:
+                certificate_native = attachment
+        elif not signed_native:
+            signed_native = attachment
+
+    if not signed_native:
+        rec.write({
+            'x_sign_request_state': 'signed_no_business_document_found',
+            'x_notes': ((rec.x_notes or '') + '\nOdoo Sign request %s is signed, but no signed business PDF was found during work assignment sync on %s.' % (sign_request.id, datetime.datetime.now())).strip(),
+        })
+        action = toast('Signed PDF not found', 'The Sign request is signed, but the completed signed PDF was not found yet. Try Sync again after Odoo finishes processing.', 'warning', True, reload_assignment(rec))
+        continue
+
+    signed_copy = rec.x_signed_attachment_id
+    if signed_copy and looks_like_certificate(signed_copy):
+        signed_copy = False
+    if signed_copy and rec.x_pdf_attachment_id and signed_copy.id == rec.x_pdf_attachment_id.id:
+        signed_copy = False
+
+    if not signed_copy:
+        signed_name = signed_native.name or ('Signed %s - %s.pdf' % (form_code, employee.name or rec.x_document_reference or rec.id))
+        if signed_native.res_model == 'hr.employee' and signed_native.res_id == employee.id:
+            signed_copy = signed_native
+        else:
+            signed_copy = signed_native.copy({
+                'name': signed_name,
+                'res_model': 'hr.employee',
+                'res_id': employee.id,
+            })
+
+    certificate_copy = rec.x_sign_certificate_attachment_id
+    if not certificate_copy and certificate_native:
+        certificate_name = certificate_native.name or ('Sign Certificate %s - %s.pdf' % (form_code, employee.name or rec.x_document_reference or rec.id))
+        if certificate_native.res_model == 'hr.employee' and certificate_native.res_id == employee.id:
+            certificate_copy = certificate_native
+        else:
+            certificate_copy = certificate_native.copy({
+                'name': certificate_name,
+                'res_model': 'hr.employee',
+                'res_id': employee.id,
+            })
+
+    signed_on = False
+    if sign_request.write_date:
+        signed_on = sign_request.write_date
+
+    signer_items = sign_request.request_item_ids.filtered(lambda item: item.state == 'completed')
+    for signer_item in signer_items:
+        if signer_item.write_date and (not signed_on or signer_item.write_date > signed_on):
+            signed_on = signer_item.write_date
+
+    if not signed_on and sign_request.completion_date:
+        signed_on = datetime.datetime.combine(sign_request.completion_date, datetime.time(12, 0, 0))
+
+    if not signed_on:
+        signed_on = datetime.datetime.now()
+
+    write_vals = {
+        'x_state': 'signed',
+        'x_signed_on': signed_on,
+        'x_signed_attachment_id': signed_copy.id,
+        'x_sign_request_state': request_state,
+        'x_sign_request_reference': sign_request.reference or rec.x_sign_request_reference,
+        'x_sign_request_url': rec.x_sign_request_url or ('/odoo/sign/%s' % sign_request.id),
+        'x_notes': ((rec.x_notes or '') + '\nNative Odoo Sign completion synced for %s on %s. Sign request ID: %s. Signed artifact: %s.' % (form_code, datetime.datetime.now(), sign_request.id, signed_copy.name)).strip(),
+    }
+
+    if not rec.x_sent_on:
+        write_vals['x_sent_on'] = sign_request.create_date or signed_on
+
+    if certificate_copy:
+        write_vals['x_sign_certificate_attachment_id'] = certificate_copy.id
+
+    rec.write(write_vals)
+
+    attachment_ids = [signed_copy.id]
+    if certificate_copy:
+        attachment_ids.append(certificate_copy.id)
+
+    employee.message_post(
+        body='تم توقيع نموذج تكليف العمل %s عبر توقيع أودو وربط النسخة الموقعة والشهادة، عند توفرها، بسجل الموظف.' % form_code,
+        subtype_xmlid='mail.mt_note',
+        attachment_ids=attachment_ids,
+    )
+
+    action = toast('Work assignment signed', 'Work assignment Sign result was synced and the signed PDF was copied to the employee record.', 'success', False, reload_assignment(rec))
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>

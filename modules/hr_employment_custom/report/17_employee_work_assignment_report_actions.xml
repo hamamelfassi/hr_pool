@@ -3,7 +3,7 @@
     <data noupdate="0">
 
         <record id="action_report_mcep_employee_work_assignment" model="ir.actions.report">
-            <field name="name">Employee Work Assignment Form</field>
+            <field name="name">Employee Work Assignment Authorization Form</field>
             <field name="model">x_hr.employee_work_assignment</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">hr_employment_custom.report_mcep_employee_work_assignment_document</field>

@@ -19,7 +19,7 @@ for rec in records.sudo():
     employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
 
     form_code = 'MCEP-HR-F-0017'
-    form_title = 'Work Assignment'
+    form_title = 'Work Assignment Authorization'
     employee_name = employee.name or employee.display_name or 'Employee'
 
     vals = {}
@@ -87,7 +87,7 @@ for rec in records.sudo():
     employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
 
     form_code = rec.x_reference_code or 'MCEP-HR-F-0017'
-    form_title = 'Work Assignment'
+    form_title = 'Work Assignment Authorization'
     employee_name = employee.name or employee.display_name or 'Employee'
 
     vals = {}
