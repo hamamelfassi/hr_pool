@@ -249,3 +249,38 @@ It uses one custom operational model, `x_hr.employee_separation_request`, with r
 Pass 22 explicitly defers employee archiving, contract closure, payroll/final settlement, leave balance settlement, custody clearance, native offboarding workflows, and GRC decision instances.
 
 <!-- PASS22_README_LOCK:END -->
+
+<!-- PASS22_MODULE_README_START -->
+## Pass 22 accepted module baseline — Employee Separation Request
+
+Pass 22 adds the F-0019 Employee Separation Request governed document flow.
+
+Core files:
+
+- `models/09_employee_separation_request.xml`
+- `views/09_employee_separation_request_views.xml`
+- `data/30_employee_separation_request_automation.xml`
+- `data/31_employee_separation_request_generate_actions.xml`
+- `data/32_employee_separation_request_sign_actions.xml`
+- `report/20_employee_separation_request_templates.xml`
+- `report/21_employee_separation_request_report_actions.xml`
+- `i18n/ar_001.po`
+
+Model:
+
+    x_hr.employee_separation_request
+
+Employee tab:
+
+    Separation / إنهاء الخدمة
+
+Lifecycle:
+
+    Draft → Generated → Signature Requested → Signed
+
+Signer order:
+
+    Employee → Direct Manager → HR Manager → General Manager
+
+Pass 22 remains a documentary governance workflow only. It does not trigger native offboarding, contract closure, payroll/final settlement, custody clearance, approval workflow, or GRC decision records.
+<!-- PASS22_MODULE_README_END -->

@@ -778,3 +778,64 @@ The direct manager signer must resolve from the direct manager employee record (
 Generated PDF, signed PDF, and certificate follow the existing attachment/chatter/files behavior used by Passes 19–21.
 
 <!-- PASS22_SEPARATION_SIGNING:END -->
+
+<!-- PASS22_ACCEPTED_ARTIFACT_SIGN_START -->
+## Pass 22 accepted F-0019 artifact and Sign pattern
+
+F-0019 Employee Separation Request is an accepted custom document/sign workflow.
+
+Source record:
+
+    x_hr.employee_separation_request
+
+Report files:
+
+    report/20_employee_separation_request_templates.xml
+    report/21_employee_separation_request_report_actions.xml
+
+Server-action files:
+
+    data/30_employee_separation_request_automation.xml
+    data/31_employee_separation_request_generate_actions.xml
+    data/32_employee_separation_request_sign_actions.xml
+
+Artifact behavior:
+
+- generated PDF is stored in `x_pdf_attachment_id`;
+- signed PDF is stored in `x_signed_attachment_id`;
+- Sign certificate, where exposed by Odoo, is stored in `x_sign_certificate_attachment_id`;
+- all business artifacts are downloadable through `/web/content/<attachment_id>?download=true`;
+- generated and signed artifacts are posted to employee chatter/files.
+
+QWeb behavior:
+
+- personal information renders from `hr.employee` where safely available;
+- request type renders as selected checkbox;
+- effective separation date renders on the form;
+- reason area renders fixed request-type text for the three fixed types;
+- reason area renders `x_other_reason_description` for Other;
+- employee/direct-manager/HR/general-manager signature and date blocks render on page 1;
+- final accepted PDF remains one page after readability polish.
+
+Sign behavior:
+
+- native Odoo Sign template and items are generated dynamically from the accepted PDF;
+- duplicate active Sign requests are blocked;
+- Sync remains the authoritative action for source-record update after Odoo Sign progresses;
+- completed Sign artifacts are copied to employee chatter/files.
+
+Locked F-0019 Sign geometry:
+
+| Role | Signature posX | Signature posY | Width | Height | Date posX | Date posY | Date width |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Employee | 0.540 | 0.686 | 0.255 | 0.030 | 0.560 | 0.722 | 0.165 |
+| Direct Manager | 0.105 | 0.686 | 0.255 | 0.030 | 0.130 | 0.722 | 0.165 |
+| HR Manager | 0.540 | 0.800 | 0.255 | 0.030 | 0.560 | 0.834 | 0.165 |
+| General Manager | 0.105 | 0.800 | 0.255 | 0.030 | 0.130 | 0.834 | 0.165 |
+
+Signer order:
+
+    Employee → Direct Manager → HR Manager → General Manager
+
+Employee and Direct Manager signer resolution is employee/contact based. HR and General Manager signer resolution remains user/partner based.
+<!-- PASS22_ACCEPTED_ARTIFACT_SIGN_END -->

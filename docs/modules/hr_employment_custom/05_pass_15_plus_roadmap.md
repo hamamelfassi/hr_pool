@@ -586,3 +586,42 @@ Implementation slices:
 Native offboarding, contract/payroll/settlement, custody clearance, and GRC decision integration are deferred.
 
 <!-- PASS22_ROADMAP_LOCK:END -->
+
+<!-- PASS22_ROADMAP_CLOSURE_START -->
+## Pass 22 closure — F-0019 Employee Separation Request
+
+Status: Accepted and closed.
+
+Pass 22 added the official Marsellia F-0019 Employee Separation Request workflow using one custom operational model:
+
+    x_hr.employee_separation_request
+
+Accepted scope:
+
+- request type selection: Resignation / Non-Renewal of Contract / Medical Reasons / Other;
+- effective separation date;
+- Other reason text field;
+- employee Separation tab;
+- normalization/defaulting;
+- generated one-page QWeb/PDF;
+- four-role Odoo Sign lifecycle;
+- signed PDF/certificate sync;
+- employee chatter/files posting;
+- Arabic UI/selection translations.
+
+Signer sequence:
+
+    Employee → Direct Manager → HR Manager → General Manager
+
+Key doctrine locked:
+
+- direct manager is an employee snapshot from `hr.employee.parent_id`;
+- employee/direct-manager signers resolve through employee contact/email, not mandatory user accounts;
+- native offboarding, contract, payroll, settlement, custody, approval, and GRC bridge behavior is deferred.
+
+Recommended future bridge pass:
+
+    Employee Separation Bridge / Offboarding Consequences
+
+That future pass should consider native offboarding, contract closure, employee archive, payroll/final settlement, leave balance, custody clearance, and GRC decision generation only after the documentary workflow remains stable in production.
+<!-- PASS22_ROADMAP_CLOSURE_END -->

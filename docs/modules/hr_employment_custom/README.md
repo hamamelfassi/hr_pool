@@ -301,3 +301,29 @@ It uses one custom operational model, `x_hr.employee_separation_request`, with r
 Pass 22 explicitly defers employee archiving, contract closure, payroll/final settlement, leave balance settlement, custody clearance, native offboarding workflows, and GRC decision instances.
 
 <!-- PASS22_README_LOCK:END -->
+
+<!-- PASS22_README_BASELINE_START -->
+## Current baseline after Pass 22
+
+`hr_employment_custom` now includes the accepted F-0019 Employee Separation Request workflow.
+
+Accepted Pass 22 objects:
+
+- model: `x_hr.employee_separation_request`;
+- employee tab: `Separation / إنهاء الخدمة`;
+- form code: `MCEP-HR-F-0019`;
+- report files: `report/20_employee_separation_request_templates.xml`, `report/21_employee_separation_request_report_actions.xml`;
+- automation/action files: `data/30_employee_separation_request_automation.xml`, `data/31_employee_separation_request_generate_actions.xml`, `data/32_employee_separation_request_sign_actions.xml`;
+- view file: `views/09_employee_separation_request_views.xml`;
+- translation file: `i18n/ar_001.po`.
+
+Accepted lifecycle:
+
+    Draft → Generated → Signature Requested → Signed
+
+Accepted signer sequence:
+
+    Employee → Direct Manager → HR Manager → General Manager
+
+Deferred integrations remain out of scope: native offboarding, contract closure, payroll/final settlement, custody clearance, approval workflows, project/planning/fleet effects, and GRC decision instances.
+<!-- PASS22_README_BASELINE_END -->

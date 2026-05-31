@@ -1512,3 +1512,59 @@ The pass does not archive employees, close contracts, compute final settlement, 
 The direct manager is treated as an employee snapshot from `hr.employee.parent_id`, not as a required user account.
 
 <!-- PASS22_SEPARATION_REQUEST:END -->
+
+<!-- PASS22_ACCEPTED_SEPARATION_REQUEST_START -->
+## Pass 22 accepted implementation — F-0019 Employee Separation Request
+
+Pass 22 implements Marsellia employee separation requests as a governed custom process record:
+
+    x_hr.employee_separation_request
+
+Document identity:
+
+    MCEP-HR-F-0019
+    طلب إنهاء خدمة
+    Separation Request
+
+The accepted process captures:
+
+- employee;
+- request type;
+- effective separation date;
+- Other reason description when relevant;
+- employee notes;
+- direct manager employee snapshot from `hr.employee.parent_id`;
+- optional hidden direct manager user snapshot;
+- HR user from `hr.employee.hr_responsible_id` where available;
+- manually selected general manager user;
+- generated PDF;
+- four-role native Odoo Sign lifecycle;
+- signed PDF/certificate sync;
+- employee chatter/files artifact posting;
+- Arabic UI and selection translations.
+
+Visible lifecycle:
+
+    draft
+    generated
+    signature_requested
+    signed
+
+Accepted signer order:
+
+1. Employee
+2. Direct Manager
+3. HR Manager
+4. General Manager
+
+Request type values:
+
+- Resignation;
+- Non-Renewal of Contract;
+- Medical Reasons;
+- Other.
+
+The direct manager signer is employee-based and derives from `hr.employee.parent_id`. The employee and direct manager signers are resolved from employee work contact / linked user partner / work email. A user account is not required for the direct manager employee.
+
+Pass 22 does not create or update native offboarding, employee archive, contract, payroll, final settlement, leave balance, custody clearance, approval, project, planning, fleet, or GRC records.
+<!-- PASS22_ACCEPTED_SEPARATION_REQUEST_END -->

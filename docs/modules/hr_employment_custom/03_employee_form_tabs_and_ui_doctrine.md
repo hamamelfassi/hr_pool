@@ -674,3 +674,45 @@ The tab must follow the current process-tab pattern:
 - Arabic labels through exported PO anchors, not mixed source XML labels.
 
 <!-- PASS22_SEPARATION_TAB:END -->
+
+<!-- PASS22_ACCEPTED_UI_START -->
+## Pass 22 accepted Separation tab UI doctrine
+
+The accepted F-0019 employee tab is:
+
+    Separation / إنهاء الخدمة
+
+The tab follows the accepted custom-process UI pattern.
+
+Accepted UI pattern:
+
+- info alert;
+- New Separation Request button;
+- embedded list;
+- controlled modal form;
+- standalone list/form action;
+- visible statusbar;
+- workflow/artifact control strip;
+- header artifact download icons;
+- Request Details section;
+- Approval Metadata section;
+- hidden Lifecycle Artifacts section;
+- Manual Decision section;
+- Notes section;
+- request type selection;
+- Other Reason Description visible only when request type is Other;
+- Direct Manager Employee displayed as `hr.employee`, not forced to `res.users`;
+- legacy Direct Manager User hidden;
+- Arabic UI labels through exported-anchor PO workflow.
+
+Accepted visible sections:
+
+- Workflow and Artifacts;
+- Request Details;
+- Approval Metadata;
+- Lifecycle Artifacts;
+- Manual Decision;
+- Notes.
+
+The Separation tab must remain a governed documentary request/sign surface only. It must not introduce native offboarding, contract closing, payroll, final settlement, custody clearance, approval, project, planning, fleet, or GRC widgets unless a later pass explicitly scopes that integration.
+<!-- PASS22_ACCEPTED_UI_END -->

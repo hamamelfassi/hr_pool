@@ -528,3 +528,21 @@ Expected chatter events:
 No employee archival, contract closure, payroll, leave settlement, custody clearance, or native offboarding activity is triggered in Pass 22.
 
 <!-- PASS22_SEPARATION_ARTIFACTS:END -->
+
+<!-- PASS22_ACCEPTED_CHATTER_FILES_START -->
+## Pass 22 accepted chatter/files posture
+
+F-0019 Employee Separation Request posts lifecycle evidence to employee chatter/files.
+
+Accepted chatter events:
+
+- separation request creation note;
+- generated PDF note with generated F-0019 PDF attached;
+- Sign request sent note with generated PDF attached;
+- Sign sync/status note;
+- signed completion note with signed PDF and certificate, where available.
+
+No activity chain, `approval.request`, offboarding checklist, contract close, payroll settlement, leave settlement, custody clearance, project, planning, fleet, or GRC decision record is created in Pass 22.
+
+The chatter/files posture remains evidentiary only. It proves the document lifecycle but does not trigger employment consequences.
+<!-- PASS22_ACCEPTED_CHATTER_FILES_END -->
