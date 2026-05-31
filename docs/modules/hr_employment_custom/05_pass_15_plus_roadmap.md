@@ -564,3 +564,25 @@ Deferred beyond Pass 21:
 <!-- PASS21_CLOSURE_ROADMAP_START -->
 Pass 21 is closed as F-0018 Employee Performance Evaluation. It proved the governed scoring-line pattern: parent + fixed line model, create-and-open seeded modal, score validation, computed total/percentage/grade/stars, QWeb checkbox matrix, three-role Odoo Sign, employee chatter/files, and exact-anchor Arabic UI translation, with all native appraisal/payroll/GRC integrations deferred.
 <!-- PASS21_CLOSURE_ROADMAP_END -->
+
+<!-- PASS22_ROADMAP_LOCK:BEGIN -->
+
+## Pass 22 roadmap lock — F-0019 Separation Request
+
+Pass 22 is locked as F-0019 Employee Separation Request.
+
+Implementation slices:
+
+```text
+22A — documentation/execution plan lock
+22B — model + access + employee tab scaffold
+22C — normalization/defaulting + request-type validation
+22D — F-0019 QWeb/PDF generation
+22E — four-role Odoo Sign lifecycle
+22F — Arabic UI/selection translations and polish
+22G — documentation closure
+```
+
+Native offboarding, contract/payroll/settlement, custody clearance, and GRC decision integration are deferred.
+
+<!-- PASS22_ROADMAP_LOCK:END -->

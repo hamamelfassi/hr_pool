@@ -757,3 +757,24 @@ Direct Manager signer resolution is employee-based:
 
 It must not require `parent_id.user_id` to exist.
 <!-- PASS21_ACCEPTED_ARTIFACT_SIGN_END -->
+
+<!-- PASS22_SEPARATION_SIGNING:BEGIN -->
+
+## Pass 22 F-0019 signing pattern
+
+F-0019 follows the standard generated-artifact and Sign lifecycle.
+
+Expected Sign order:
+
+```text
+1. Employee
+2. Direct Manager
+3. HR Manager
+4. General Manager
+```
+
+The direct manager signer must resolve from the direct manager employee record (`x_direct_manager_employee_id`) using work contact, user partner, or work email. The flow must not require the manager employee to have a linked `res.users` account.
+
+Generated PDF, signed PDF, and certificate follow the existing attachment/chatter/files behavior used by Passes 19–21.
+
+<!-- PASS22_SEPARATION_SIGNING:END -->

@@ -289,3 +289,15 @@ It provides:
 
 It deliberately does not create or update Appraisals, Payroll, Salary Adjustment, Contract, Disciplinary, Planning, Project, Timesheet, Attendance, Work Entry, Fleet, Approval, or GRC records. Those integrations remain deferred.
 <!-- PASS21_README_CLOSURE_END -->
+
+<!-- PASS22_README_LOCK:BEGIN -->
+
+## Pass 22 — F-0019 Employee Separation Request
+
+Pass 22 is scoped as F-0019 Employee Separation Request.
+
+It uses one custom operational model, `x_hr.employee_separation_request`, with request type selection, effective separation date, optional Other reason description, generated PDF, four-role Odoo Sign, and employee chatter/files artifact posting.
+
+Pass 22 explicitly defers employee archiving, contract closure, payroll/final settlement, leave balance settlement, custody clearance, native offboarding workflows, and GRC decision instances.
+
+<!-- PASS22_README_LOCK:END -->

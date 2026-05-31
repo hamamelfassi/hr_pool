@@ -642,3 +642,35 @@ Accepted visible sections:
 
 The Evaluations tab must remain a governed documentary scoring/sign surface only. It must not introduce Appraisals, Payroll, Contract, Disciplinary, Planning, Project, Timesheet, Attendance, Work Entry, Fleet, Approval, or GRC widgets unless a later pass explicitly scopes that integration.
 <!-- PASS21_ACCEPTED_UI_END -->
+
+<!-- PASS22_SEPARATION_TAB:BEGIN -->
+
+## Pass 22 employee Separation tab
+
+Pass 22 adds an employee tab for separation requests.
+
+Source tab label:
+
+```text
+Separation
+```
+
+Arabic target:
+
+```text
+إنهاء الخدمة
+```
+
+The tab must follow the current process-tab pattern:
+
+- info alert;
+- `New Separation Request` button;
+- embedded list;
+- modal create/edit form;
+- standalone action/form;
+- statusbar;
+- workflow/artifact strip;
+- header download icons;
+- Arabic labels through exported PO anchors, not mixed source XML labels.
+
+<!-- PASS22_SEPARATION_TAB:END -->

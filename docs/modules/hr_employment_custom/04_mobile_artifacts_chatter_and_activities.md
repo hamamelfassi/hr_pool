@@ -511,3 +511,20 @@ No activity chain, `approval.request`, Appraisal, Payroll, Salary Adjustment, Co
 
 The source evaluation record remains the documentary lifecycle authority. Employee chatter/files is the operational evidence stream for HR users and mobile access.
 <!-- PASS21_ACCEPTED_CHATTER_END -->
+
+<!-- PASS22_SEPARATION_ARTIFACTS:BEGIN -->
+
+## Pass 22 separation artifacts and chatter
+
+F-0019 generated and signed artifacts are attached to the separation request and copied/posted to the linked employee record.
+
+Expected chatter events:
+
+- creation note after request creation/normalization;
+- generated PDF note with attachment;
+- Sign request sent note with generated PDF;
+- Sign sync completion note with signed PDF and certificate if available.
+
+No employee archival, contract closure, payroll, leave settlement, custody clearance, or native offboarding activity is triggered in Pass 22.
+
+<!-- PASS22_SEPARATION_ARTIFACTS:END -->

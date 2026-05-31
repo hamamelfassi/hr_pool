@@ -1491,3 +1491,24 @@ Pass 21 does not create or update Appraisals, Payroll, Salary Adjustment, Contra
 
 The direct-manager signer doctrine is employee-based: use `hr.employee.parent_id`, not a mandatory `res.users` account.
 <!-- PASS21_ACCEPTED_PERFORMANCE_EVALUATION_END -->
+
+<!-- PASS22_SEPARATION_REQUEST:BEGIN -->
+
+## Pass 22 — F-0019 Employee Separation Request
+
+Pass 22 adds a governed separation-request process record for `MCEP-HR-F-0019`.
+
+The process is intentionally document-first:
+
+```text
+employee separation request
+→ generated F-0019 PDF
+→ four-role Odoo Sign
+→ signed artifact copied to employee chatter/files
+```
+
+The pass does not archive employees, close contracts, compute final settlement, settle leave balances, trigger payroll, or create native offboarding records. Those actions are deferred to a later separation/offboarding bridge pass.
+
+The direct manager is treated as an employee snapshot from `hr.employee.parent_id`, not as a required user account.
+
+<!-- PASS22_SEPARATION_REQUEST:END -->
