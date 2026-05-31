@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_mcep_employee_work_assignment_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <head>
+                    <meta charset="UTF-8"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                </head>
+
+                <t t-set="employee" t-value="o.x_employee_id"/>
+                <t t-set="form_code" t-value="o.x_reference_code or 'MCEP-HR-F-0017'"/>
+                <t t-set="form_title_en" t-value="'Work Assignment'"/>
+                <t t-set="form_title_ar" t-value="'تكليف عمل'"/>
+                <t t-set="employee_number" t-value="(employee.registration_number if 'registration_number' in employee._fields else '') or (employee.barcode if 'barcode' in employee._fields else '') or employee.id or ''"/>
+                <t t-set="job_title" t-value="(employee.job_title if 'job_title' in employee._fields else '') or (employee.job_id.name if 'job_id' in employee._fields and employee.job_id else '') or ''"/>
+                <t t-set="department_name" t-value="employee.department_id.name if employee.department_id else ''"/>
+                <t t-set="manager_name" t-value="o.x_direct_manager_user_id.name or (employee.parent_id.name if employee.parent_id else '')"/>
+                <t t-set="hr_name" t-value="o.x_hr_user_id.name or ''"/>
+                <t t-set="gm_name" t-value="o.x_general_manager_user_id.name or ''"/>
+
+                <t t-call="hr_employment_custom.mcep_employee_report_assets"/>
+
+                <div class="page mcep-emp-page mcep-assignment-page">
+                    <t t-set="page_label" t-value="'Page 1 / 1'"/>
+                    <t t-call="hr_employment_custom.mcep_employee_report_header"/>
+
+                    <style>
+                        .mcep-assignment-page {
+                            font-size: 14.2px;
+                            line-height: 1.24;
+                            padding-top: 5mm;
+                            padding-bottom: 2mm;
+                        }
+
+                        .mcep-assignment-page .mcep-emp-header {
+                            margin-bottom: 3.5mm;
+                        }
+
+                        .mcep-assignment-title {
+                            text-align: center;
+                            font-size: 29px;
+                            font-weight: 700;
+                            margin: 1.5mm 0 1mm 0;
+                        }
+
+                        .mcep-assignment-subtitle {
+                            text-align: center;
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 18px;
+                            font-weight: 700;
+                            margin: 0 0 4mm 0;
+                        }
+
+                        .mcep-assignment-section {
+                            font-size: 17px;
+                            font-weight: 700;
+                            margin: 3mm 0 1.5mm 0;
+                            padding: 1.5mm 2mm;
+                            background: #eef2f7;
+                            border: 1px solid #9aa4b2;
+                            text-align: right;
+                            direction: rtl;
+                        }
+
+                        .mcep-assignment-section .en {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 12px;
+                            color: #374151;
+                        }
+
+                        .mcep-assignment-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            table-layout: fixed;
+                            margin-bottom: 3mm;
+                            font-size: 14px;
+                        }
+
+                        .mcep-assignment-table th,
+                        .mcep-assignment-table td {
+                            border: 1px solid #6b7280;
+                            padding: 1.8mm 2mm;
+                            vertical-align: middle;
+                            line-height: 1.20;
+                        }
+
+                        .mcep-assignment-table th {
+                            background: #f8fafc;
+                            font-weight: 700;
+                            text-align: center;
+                        }
+
+                        .mcep-assignment-value {
+                            min-height: 7mm;
+                            text-align: center;
+                            font-weight: 600;
+                        }
+
+                        .mcep-assignment-en {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 11.4px;
+                            color: #374151;
+                        }
+
+                        .mcep-assignment-purpose-box {
+                            min-height: 37mm;
+                            border: 1px solid #6b7280;
+                            padding: 2.8mm;
+                            margin-bottom: 3mm;
+                            white-space: pre-wrap;
+                            text-align: right;
+                            direction: rtl;
+                            line-height: 1.30;
+                            font-size: 14.4px;
+                        }
+
+                        .mcep-assignment-sign-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            table-layout: fixed;
+                            font-size: 13.2px;
+                            margin-top: 1.8mm;
+                        }
+
+                        .mcep-assignment-sign-table th,
+                        .mcep-assignment-sign-table td {
+                            border: 1px solid #6b7280;
+                            padding: 1.6mm 1.8mm;
+                            vertical-align: middle;
+                            line-height: 1.16;
+                        }
+
+                        .mcep-assignment-sign-title {
+                            background: #f8fafc;
+                            text-align: center;
+                            font-weight: 700;
+                        }
+
+                        .mcep-assignment-sign-line {
+                            height: 11mm;
+                        }
+
+                        .mcep-assignment-date-line {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            text-align: center;
+                        }
+                    </style>
+
+                    <div class="mcep-assignment-title">
+                        <span t-out="form_title_ar"/>
+                    </div>
+                    <div class="mcep-assignment-subtitle">
+                        <span t-out="form_title_en"/>
+                    </div>
+
+                    <div class="mcep-assignment-section">
+                        أولًا: المعلومات الشخصية
+                        <span class="en">Personal Information</span>
+                    </div>
+
+                    <table class="mcep-assignment-table">
+                        <tr>
+                            <th style="width: 25%;">الاسم الكامل<br/><span class="mcep-assignment-en">Full Name</span></th>
+                            <td style="width: 75%;" colspan="3">
+                                <div class="mcep-assignment-value">
+                                    <span t-out="employee.name or ''"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>الرقم الوظيفي<br/><span class="mcep-assignment-en">Employee ID</span></th>
+                            <td>
+                                <div class="mcep-assignment-value">
+                                    <span t-out="employee_number"/>
+                                </div>
+                            </td>
+                            <th>المسمى الوظيفي<br/><span class="mcep-assignment-en">Job Title</span></th>
+                            <td>
+                                <div class="mcep-assignment-value">
+                                    <span t-out="job_title"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>القسم / الإدارة<br/><span class="mcep-assignment-en">Department</span></th>
+                            <td colspan="3">
+                                <div class="mcep-assignment-value">
+                                    <span t-out="department_name"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="mcep-assignment-section">
+                        ثانيًا: تفاصيل التكليف
+                        <span class="en">Assignment Details</span>
+                    </div>
+
+                    <table class="mcep-assignment-table">
+                        <tr>
+                            <th style="width: 25%;">مكان التكليف<br/><span class="mcep-assignment-en">Assignment Location</span></th>
+                            <td style="width: 75%;" colspan="3">
+                                <div class="mcep-assignment-value">
+                                    <span t-out="o.x_assignment_location or ''"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>مدة التكليف<br/><span class="mcep-assignment-en">Assignment Period</span></th>
+                            <td>
+                                من تاريخ:
+                                <span class="mcep-assignment-en">From:</span>
+                                <strong><span t-out="o.x_assignment_date_from or ''"/></strong>
+                            </td>
+                            <td>
+                                إلى تاريخ:
+                                <span class="mcep-assignment-en">To:</span>
+                                <strong><span t-out="o.x_assignment_date_to or ''"/></strong>
+                            </td>
+                            <td>
+                                <span t-out="form_code"/>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="mcep-assignment-section">
+                        ثالثًا: وصف العمل / الغرض من التكليف
+                        <span class="en">Description / Purpose</span>
+                    </div>
+
+                    <div class="mcep-assignment-purpose-box">
+                        <span t-out="o.x_description_purpose or ''"/>
+                    </div>
+
+                    <div class="mcep-assignment-section">
+                        رابعًا: توقيعات واعتمادات
+                        <span class="en">Signatures and Approvals</span>
+                    </div>
+
+                    <table class="mcep-assignment-sign-table">
+                        <tr>
+                            <th class="mcep-assignment-sign-title" colspan="3">
+                                توقيع الموظف
+                                <span class="mcep-assignment-en">Employee Signature</span>
+                            </th>
+                            <th class="mcep-assignment-sign-title" colspan="3">
+                                اعتماد المدير المباشر
+                                <span class="mcep-assignment-en">Direct Manager Approval</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td style="width: 12%;">الإسم<br/><span class="mcep-assignment-en">Name</span></td>
+                            <td class="mcep-assignment-sign-line" colspan="2">
+                                <span t-out="employee.name or ''"/>
+                            </td>
+                            <td style="width: 12%;">الإسم<br/><span class="mcep-assignment-en">Name</span></td>
+                            <td class="mcep-assignment-sign-line" colspan="2">
+                                <span t-out="manager_name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>التوقيع<br/><span class="mcep-assignment-en">Signature</span></td>
+                            <td class="mcep-assignment-sign-line" colspan="2"></td>
+                            <td>التوقيع<br/><span class="mcep-assignment-en">Signature</span></td>
+                            <td class="mcep-assignment-sign-line" colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td>التاريخ<br/><span class="mcep-assignment-en">Date</span></td>
+                            <td class="mcep-assignment-date-line" colspan="2">____ / ____ / ________</td>
+                            <td>التاريخ<br/><span class="mcep-assignment-en">Date</span></td>
+                            <td class="mcep-assignment-date-line" colspan="2">____ / ____ / ________</td>
+                        </tr>
+                    </table>
+
+                    <table class="mcep-assignment-sign-table">
+                        <tr>
+                            <th class="mcep-assignment-sign-title" colspan="3">
+                                اعتماد الموارد البشرية
+                                <span class="mcep-assignment-en">HR Approval</span>
+                            </th>
+                            <th class="mcep-assignment-sign-title" colspan="3">
+                                اعتماد المدير العام
+                                <span class="mcep-assignment-en">General Manager Approval</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td style="width: 12%;">الإسم<br/><span class="mcep-assignment-en">Name</span></td>
+                            <td class="mcep-assignment-sign-line" colspan="2">
+                                <span t-out="hr_name"/>
+                            </td>
+                            <td style="width: 12%;">الإسم<br/><span class="mcep-assignment-en">Name</span></td>
+                            <td class="mcep-assignment-sign-line" colspan="2">
+                                <span t-out="gm_name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>التوقيع<br/><span class="mcep-assignment-en">Signature</span></td>
+                            <td class="mcep-assignment-sign-line" colspan="2"></td>
+                            <td>التوقيع<br/><span class="mcep-assignment-en">Signature</span></td>
+                            <td class="mcep-assignment-sign-line" colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td>التاريخ<br/><span class="mcep-assignment-en">Date</span></td>
+                            <td class="mcep-assignment-date-line" colspan="2">____ / ____ / ________</td>
+                            <td>التاريخ<br/><span class="mcep-assignment-en">Date</span></td>
+                            <td class="mcep-assignment-date-line" colspan="2">____ / ____ / ________</td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>
