@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="action_employee_performance_evaluation_create_from_employee" model="ir.actions.server">
+            <field name="name">New Performance Evaluation</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+evaluation_model = env['x_hr.employee_performance_evaluation'].sudo()
+
+
+def toast(title, message, kind='warning', sticky=False):
+    return {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': title,
+            'message': message,
+            'type': kind,
+            'sticky': sticky,
+        }
+    }
+
+
+employee = records[:1].sudo() if records else False
+if not employee:
+    active_id = env.context.get('active_id') or env.context.get('default_x_employee_id')
+    employee = env['hr.employee'].sudo().browse(active_id) if active_id else False
+
+if not employee or not employee.exists():
+    action = toast('New Performance Evaluation', 'Open this action from an employee record so the evaluation can be linked and seeded correctly.', 'warning', True)
+else:
+    evaluation = evaluation_model.create({
+        'x_employee_id': employee.id,
+        'x_state': 'draft',
+        'x_max_score': 60,
+        'x_grade': 'not_scored',
+        'x_star_rating': '0',
+        'x_responsible_user_id': env.user.id,
+    })
+
+    # The 21C create automation seeds the 12 lines synchronously.
+    evaluation = evaluation_model.browse(evaluation.id)
+
+    view = env.ref('hr_employment_custom.view_employee_performance_evaluation_form', raise_if_not_found=False)
+
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': evaluation.x_name or 'New Performance Evaluation',
+        'res_model': 'x_hr.employee_performance_evaluation',
+        'res_id': evaluation.id,
+        'view_mode': 'form',
+        'target': 'new',
+        'context': {
+            'default_x_employee_id': employee.id,
+        },
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>

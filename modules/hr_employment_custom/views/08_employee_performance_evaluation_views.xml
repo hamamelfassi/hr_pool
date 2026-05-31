@@ -83,16 +83,26 @@
                         <field name="x_star_rating" readonly="1"/>
                     </group>
                     <group string="Evaluation Items">
-                        <field name="x_line_ids" nolabel="1">
-                            <list editable="bottom">
-                                <field name="x_sequence" readonly="1"/>
-                                <field name="x_item_code" readonly="1"/>
-                                <field name="x_item_label_ar" readonly="1"/>
-                                <field name="x_item_label_en" readonly="1"/>
-                                <field name="x_score"/>
-                                <field name="x_max_score" readonly="1"/>
+                                                <field name="x_line_ids" nolabel="1" readonly="x_state != 'draft'">
+                            <list editable="bottom" create="false" delete="false">
+                                <field name="x_sequence" string="#" readonly="1"/>
+                                <field name="x_item_label_ar" string="Evaluation Item" readonly="1"/>
+                                <field name="x_score"
+                                    string="Score"
+                                    options="{'type': 'number', 'min': 1, 'max': 5}"/>
                                 <field name="x_notes" optional="hide"/>
                             </list>
+                            <form string="Performance Evaluation Item">
+                                <group>
+                                    <field name="x_sequence" readonly="1"/>
+                                    <field name="x_item_code" readonly="1"/>
+                                    <field name="x_item_label_ar" readonly="1"/>
+                                    <field name="x_item_label_en" readonly="1"/>
+                                    <field name="x_score"
+                                        options="{'type': 'number', 'min': 1, 'max': 5}"/>
+                                    <field name="x_notes"/>
+                                </group>
+                            </form>
                         </field>
                     </group>
                     <group string="Recommendations">
@@ -157,7 +167,7 @@
                         Performance evaluations here are Marsellia official F-0018 records. This pass focuses on governed scoring, PDF generation, and two-role Sign workflow without native Appraisals, Payroll, Salary Adjustment, GRC, or disciplinary integration.
                     </div>
                     <div class="mb-2">
-                        <button name="%(action_employee_performance_evaluation_create)d"
+                        <button name="%(action_employee_performance_evaluation_create_from_employee)d"
                             type="action"
                             string="New Evaluation"
                             class="btn btn-primary"
@@ -220,16 +230,26 @@
                                     <field name="x_star_rating" readonly="1"/>
                                 </group>
                                 <group string="Evaluation Items">
-                                    <field name="x_line_ids" nolabel="1">
-                                        <list editable="bottom">
-                                            <field name="x_sequence" readonly="1"/>
-                                            <field name="x_item_code" readonly="1"/>
-                                            <field name="x_item_label_ar" readonly="1"/>
-                                            <field name="x_item_label_en" readonly="1"/>
-                                            <field name="x_score"/>
-                                            <field name="x_max_score" readonly="1"/>
+                                                                        <field name="x_line_ids" nolabel="1" readonly="x_state != 'draft'">
+                                        <list editable="bottom" create="false" delete="false">
+                                            <field name="x_sequence" string="#" readonly="1"/>
+                                            <field name="x_item_label_ar" string="Evaluation Item" readonly="1"/>
+                                            <field name="x_score"
+                                                string="Score"
+                                                options="{'type': 'number', 'min': 1, 'max': 5}"/>
                                             <field name="x_notes" optional="hide"/>
                                         </list>
+                                        <form string="Performance Evaluation Item">
+                                            <group>
+                                                <field name="x_sequence" readonly="1"/>
+                                                <field name="x_item_code" readonly="1"/>
+                                                <field name="x_item_label_ar" readonly="1"/>
+                                                <field name="x_item_label_en" readonly="1"/>
+                                                <field name="x_score"
+                                                    options="{'type': 'number', 'min': 1, 'max': 5}"/>
+                                                <field name="x_notes"/>
+                                            </group>
+                                        </form>
                                     </field>
                                 </group>
                                 <group string="Recommendations">
