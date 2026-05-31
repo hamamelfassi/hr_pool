@@ -110,11 +110,92 @@
                         options="{'clickable': false}"
                         statusbar_visible="draft,generated,signature_requested,signed"
                         readonly="1"/>
+                    <button type="action"
+                        name="%(action_employee_leave_download_generated_pdf)d"
+                        string=""
+                        title="Download Generated PDF"
+                        icon="fa-download"
+                        class="btn-link"
+                        invisible="not x_pdf_attachment_id"/>
+                    <button type="action"
+                        name="%(action_employee_leave_download_signed_pdf)d"
+                        string=""
+                        title="Download Signed PDF"
+                        icon="fa-file-pdf-o"
+                        class="btn-link"
+                        invisible="not x_signed_attachment_id"/>
+                    <button type="action"
+                        name="%(action_employee_leave_download_sign_certificate)d"
+                        string=""
+                        title="Download Sign Certificate"
+                        icon="fa-certificate"
+                        class="btn-link"
+                        invisible="not x_sign_certificate_attachment_id"/>
                 </header>
                 <sheet>
                     <div class="alert alert-info" role="alert">
                         This is the Marsellia official leave request surface. HR balance values are manually verified in this pass. Native Odoo Time Off creation is reserved for a later bridge action.
                     </div>
+
+                    <!-- MCEP leave unified controls start -->
+
+                    <div class="mcep-leave-controls" style="width: 100%; margin: 12px 0 18px 0;">
+
+                        <div class="o_horizontal_separator">Workflow and Artifacts</div>
+
+                        <div style="display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 8px;">
+
+                            <button name="%(action_employee_leave_generate_pdf)d"
+
+                                type="action"
+
+                                string="Generate PDF"
+
+                                class="btn btn-primary"
+
+                                invisible="x_state in ('signature_requested', 'signed')"/>
+
+                            <button type="action"
+
+                                name="%(action_employee_leave_download_generated_pdf)d"
+
+                                string="Generated PDF"
+
+                                icon="fa-download"
+
+                                class="btn btn-secondary"
+
+                                invisible="not x_pdf_attachment_id"/>
+
+                            <button type="action"
+
+                                name="%(action_employee_leave_download_signed_pdf)d"
+
+                                string="Signed PDF"
+
+                                icon="fa-file-pdf-o"
+
+                                class="btn btn-secondary"
+
+                                invisible="not x_signed_attachment_id"/>
+
+                            <button type="action"
+
+                                name="%(action_employee_leave_download_sign_certificate)d"
+
+                                string="Certificate"
+
+                                icon="fa-certificate"
+
+                                class="btn btn-secondary"
+
+                                invisible="not x_sign_certificate_attachment_id"/>
+
+                        </div>
+
+                    </div>
+
+                    <!-- MCEP leave unified controls end -->
                     <group>
                         <field name="x_employee_id" options="{'no_create': True, 'no_create_edit': True}"/>
                         <field name="x_leave_type_policy_id"/>
@@ -255,6 +336,66 @@
                                 <div class="alert alert-info" role="alert">
                                     This is the Marsellia official leave request surface. HR balance values are manually verified in this pass. Native Odoo Time Off creation is reserved for a later bridge action.
                                 </div>
+
+                                <!-- MCEP leave unified controls start -->
+
+                                <div class="mcep-leave-controls" style="width: 100%; margin: 12px 0 18px 0;">
+
+                                    <div class="o_horizontal_separator">Workflow and Artifacts</div>
+
+                                    <div style="display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 8px;">
+
+                                        <button name="%(action_employee_leave_generate_pdf)d"
+
+                                            type="action"
+
+                                            string="Generate PDF"
+
+                                            class="btn btn-primary"
+
+                                            invisible="x_state in ('signature_requested', 'signed')"/>
+
+                                        <button type="action"
+
+                                            name="%(action_employee_leave_download_generated_pdf)d"
+
+                                            string="Generated PDF"
+
+                                            icon="fa-download"
+
+                                            class="btn btn-secondary"
+
+                                            invisible="not x_pdf_attachment_id"/>
+
+                                        <button type="action"
+
+                                            name="%(action_employee_leave_download_signed_pdf)d"
+
+                                            string="Signed PDF"
+
+                                            icon="fa-file-pdf-o"
+
+                                            class="btn btn-secondary"
+
+                                            invisible="not x_signed_attachment_id"/>
+
+                                        <button type="action"
+
+                                            name="%(action_employee_leave_download_sign_certificate)d"
+
+                                            string="Certificate"
+
+                                            icon="fa-certificate"
+
+                                            class="btn btn-secondary"
+
+                                            invisible="not x_sign_certificate_attachment_id"/>
+
+                                    </div>
+
+                                </div>
+
+                                <!-- MCEP leave unified controls end -->
                                 <group>
                                     <field name="x_employee_id" readonly="1" force_save="1"/>
                                     <field name="x_leave_type_policy_id"/>

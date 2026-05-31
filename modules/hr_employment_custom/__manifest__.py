@@ -33,6 +33,7 @@
  'data/18_employee_permission_sign_actions.xml',
  'data/19_employee_leave_policy_data.xml',
  'data/20_employee_leave_automation.xml',
+ 'data/21_employee_leave_generate_actions.xml',
  'views/01_employee_identification_views.xml',
  'views/02_employee_declaration_views.xml',
  'views/03_employee_custody_views.xml',
@@ -51,5 +52,7 @@
  'report/10_employee_training_f0008_templates.xml',
  'report/11_employee_training_report_actions.xml',
  'report/12_employee_permission_templates.xml',
- 'report/13_employee_permission_report_actions.xml'],
+ 'report/13_employee_permission_report_actions.xml',
+ 'report/14_employee_leave_templates.xml',
+ 'report/15_employee_leave_report_actions.xml'],
 }

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="action_employee_leave_generate_pdf" model="ir.actions.server">
+            <field name="name">Generate PDF</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_leave_request"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def reload_leave(rec):
+    view = env.ref('hr_employment_custom.view_employee_leave_request_form', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Employee Leave Request',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+for rec in records.sudo():
+    if rec.x_state in ('signature_requested', 'signed'):
+        action = toast(
+            'Generate PDF',
+            'This leave request has already entered the signature lifecycle. PDF regeneration is blocked.',
+            'warning',
+            True,
+            reload_leave(rec),
+        )
+        continue
+
+    employee = rec.x_employee_id.sudo() if rec.x_employee_id else False
+    policy = rec.x_leave_type_policy_id.sudo() if rec.x_leave_type_policy_id else False
+
+    if not employee:
+        action = toast('Generate PDF', 'Cannot generate the leave form without a linked employee.', 'danger', True, reload_leave(rec))
+        continue
+    if not policy:
+        action = toast('Generate PDF', 'Select a leave type policy before generating the form.', 'warning', True, reload_leave(rec))
+        continue
+    if not rec.x_request_date:
+        action = toast('Generate PDF', 'Set the request date before generating the form.', 'warning', True, reload_leave(rec))
+        continue
+    if not rec.x_leave_date_from or not rec.x_leave_date_to:
+        action = toast('Generate PDF', 'Set both Leave From and Leave To before generating the form.', 'warning', True, reload_leave(rec))
+        continue
+    if not rec.x_requested_days or rec.x_requested_days <= 0:
+        action = toast('Generate PDF', 'Enter the manually verified requested leave days before generating the form.', 'warning', True, reload_leave(rec))
+        continue
+    if policy.x_requires_balance_check and not rec.x_hr_balance_allowed:
+        action = toast('Generate PDF', 'HR balance approval is required for this leave policy before generation.', 'warning', True, reload_leave(rec))
+        continue
+    if policy.x_requires_address_during_leave and not rec.x_address_during_leave:
+        action = toast('Generate PDF', 'Enter the address during leave before generating the form.', 'warning', True, reload_leave(rec))
+        continue
+    if policy.x_requires_contact_during_leave and not rec.x_contact_during_leave:
+        action = toast('Generate PDF', 'Enter the contact during leave before generating the form.', 'warning', True, reload_leave(rec))
+        continue
+    if policy.x_requires_acting_employee and not rec.x_acting_employee_id:
+        action = toast('Generate PDF', 'Select the acting employee before generating this leave form.', 'warning', True, reload_leave(rec))
+        continue
+    if not rec.x_reason:
+        action = toast('Generate PDF', 'Enter the reason for the leave request before generating the form.', 'warning', True, reload_leave(rec))
+        continue
+
+    generated_on = datetime.datetime.now()
+    form_code = policy.x_form_code or rec.x_reference_code or 'MCEP-HR-F-0016'
+    form_title = policy.x_form_title or policy.x_name or 'Leave Request'
+    emp_part = employee.id if employee else 0
+
+    document_reference = rec.x_document_reference
+    if not document_reference:
+        document_reference = '%s-%05d-%05d' % (form_code, emp_part, rec.id)
+    elif '-EMP-' in document_reference:
+        document_reference = document_reference.replace('-EMP-', '-', 1)
+
+    vals = {
+        'x_state': rec.x_state or 'draft',
+        'x_reference_code': form_code,
+        'x_document_reference': document_reference,
+        'x_native_leave_sync_state': rec.x_native_leave_sync_state or 'not_created',
+        'x_responsible_user_id': rec.x_responsible_user_id.id or env.user.id,
+    }
+
+    if policy.x_work_entry_type_id and not rec.x_work_entry_type_id:
+        vals['x_work_entry_type_id'] = policy.x_work_entry_type_id.id
+
+    if employee.parent_id and employee.parent_id.user_id:
+        vals['x_direct_manager_user_id'] = employee.parent_id.user_id.id
+
+    if 'hr_responsible_id' in employee._fields and employee.hr_responsible_id:
+        vals['x_hr_user_id'] = employee.hr_responsible_id.id
+    elif not rec.x_hr_user_id:
+        vals['x_hr_user_id'] = env.user.id
+
+    if rec.x_hr_balance_allowed and not rec.x_balance_verified_by_user_id:
+        vals['x_balance_verified_by_user_id'] = env.user.id
+        vals['x_balance_verified_on'] = generated_on
+
+    normalized_name = '%s - %s - %s' % (
+        employee.name or employee.display_name or 'Employee',
+        form_title,
+        document_reference,
+    )
+    vals['x_name'] = normalized_name
+
+    rec.write(vals)
+    rec = rec.sudo().browse(rec.id)
+
+    report_xmlid = 'hr_employment_custom.action_report_mcep_employee_leave'
+    pdf_content, _content_type = env['ir.actions.report'].sudo()._render_qweb_pdf(report_xmlid, [rec.id])
+
+    filename = '%s - %s.pdf' % (rec.x_document_reference or form_code, form_title)
+
+    attachment = env['ir.attachment'].sudo().create({
+        'name': filename,
+        'type': 'binary',
+        'raw': pdf_content,
+        'mimetype': 'application/pdf',
+        'res_model': rec._name,
+        'res_id': rec.id,
+    })
+
+    rec.write({
+        'x_pdf_attachment_id': attachment.id,
+        'x_generated_on': generated_on,
+        'x_state': 'generated',
+        'x_native_leave_sync_state': rec.x_native_leave_sync_state or 'not_created',
+    })
+
+    employee.message_post(
+        body='تم توليد نموذج طلب الإجازة %s وربطه بسجل الموظف.' % form_code,
+        subtype_xmlid='mail.mt_note',
+        attachment_ids=[attachment.id],
+    )
+
+    action = toast('Generate PDF', '%s was generated and posted to the employee record.' % form_title, 'success', False, reload_leave(rec))
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+        <record id="action_employee_leave_download_generated_pdf" model="ir.actions.server">
+            <field name="name">Download Generated PDF</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_leave_request"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+for rec in records.sudo():
+    attachment = rec.x_pdf_attachment_id
+    if attachment:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Download Generated PDF',
+                'message': 'No generated PDF is linked to this leave request yet.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+        <record id="action_employee_leave_download_signed_pdf" model="ir.actions.server">
+            <field name="name">Download Signed PDF</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_leave_request"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+for rec in records.sudo():
+    attachment = rec.x_signed_attachment_id
+    if attachment:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Download Signed PDF',
+                'message': 'No signed PDF is linked to this leave request yet.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+        <record id="action_employee_leave_download_sign_certificate" model="ir.actions.server">
+            <field name="name">Download Sign Certificate</field>
+            <field name="model_id" ref="hr_employment_custom.model_x_hr_employee_leave_request"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+for rec in records.sudo():
+    attachment = rec.x_sign_certificate_attachment_id
+    if attachment:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Download Sign Certificate',
+                'message': 'No Sign certificate is linked to this leave request yet.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>

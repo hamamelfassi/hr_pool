@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_mcep_employee_leave_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <head>
+                    <meta charset="UTF-8"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                </head>
+
+                <t t-set="employee" t-value="o.x_employee_id"/>
+                <t t-set="policy" t-value="o.x_leave_type_policy_id"/>
+                <t t-set="form_code" t-value="policy.x_form_code or o.x_reference_code or 'MCEP-HR-F-0016'"/>
+                <t t-set="form_title_en" t-value="policy.x_form_title or 'Leave Request'"/>
+                <t t-set="form_title_ar" t-value="'طلب إجازة'"/>
+                <t t-set="employee_number" t-value="(employee.registration_number if 'registration_number' in employee._fields else '') or (employee.barcode if 'barcode' in employee._fields else '') or employee.id or ''"/>
+                <t t-set="job_title" t-value="(employee.job_title if 'job_title' in employee._fields else '') or (employee.job_id.name if 'job_id' in employee._fields and employee.job_id else '') or ''"/>
+                <t t-set="department_name" t-value="employee.department_id.name if employee.department_id else ''"/>
+                <t t-set="manager_name" t-value="o.x_direct_manager_user_id.name or (employee.parent_id.name if employee.parent_id else '')"/>
+                <t t-set="hr_name" t-value="o.x_hr_user_id.name or ''"/>
+                <t t-set="gm_name" t-value="o.x_general_manager_user_id.name or ''"/>
+                <t t-set="acting_name" t-value="o.x_acting_employee_id.name if o.x_acting_employee_id else ''"/>
+
+                <t t-call="hr_employment_custom.mcep_employee_report_assets"/>
+
+                <div class="page mcep-emp-page mcep-leave-page">
+                    <t t-set="page_label" t-value="'Page 1 / 1'"/>
+                    <t t-call="hr_employment_custom.mcep_employee_report_header"/>
+
+                    <style>
+                        .mcep-leave-page {
+                            font-size: 12.8px;
+                            line-height: 1.20;
+                            padding-top: 4mm;
+                            padding-bottom: 2mm;
+                        }
+
+                        .mcep-leave-page .mcep-emp-header {
+                            margin-bottom: 3mm;
+                        }
+
+                        .mcep-leave-title {
+                            text-align: center;
+                            font-size: 26px;
+                            font-weight: 700;
+                            margin: 1mm 0 0.5mm 0;
+                        }
+
+                        .mcep-leave-subtitle {
+                            text-align: center;
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 16px;
+                            font-weight: 700;
+                            margin: 0 0 3.2mm 0;
+                        }
+
+                        .mcep-leave-section {
+                            font-size: 15px;
+                            font-weight: 700;
+                            margin: 2.6mm 0 1.2mm 0;
+                            padding: 1.2mm 1.8mm;
+                            background: #eef2f7;
+                            border: 1px solid #9aa4b2;
+                            text-align: right;
+                            direction: rtl;
+                        }
+
+                        .mcep-leave-section .en {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 10.8px;
+                            color: #374151;
+                        }
+
+                        .mcep-leave-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            table-layout: fixed;
+                            margin-bottom: 2.4mm;
+                            font-size: 12.5px;
+                        }
+
+                        .mcep-leave-table th,
+                        .mcep-leave-table td {
+                            border: 1px solid #6b7280;
+                            padding: 1.35mm 1.55mm;
+                            vertical-align: middle;
+                            line-height: 1.16;
+                        }
+
+                        .mcep-leave-table th {
+                            background: #f8fafc;
+                            font-weight: 700;
+                            text-align: center;
+                        }
+
+                        .mcep-leave-value {
+                            min-height: 5.5mm;
+                            text-align: center;
+                            font-weight: 600;
+                        }
+
+                        .mcep-leave-en {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 10.4px;
+                            color: #374151;
+                        }
+
+                        .mcep-leave-reason-box {
+                            min-height: 17mm;
+                            border: 1px solid #6b7280;
+                            padding: 1.8mm;
+                            margin-bottom: 2.4mm;
+                            white-space: pre-wrap;
+                            text-align: right;
+                            direction: rtl;
+                            line-height: 1.20;
+                            font-size: 12.8px;
+                        }
+
+                        .mcep-leave-sign-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            table-layout: fixed;
+                            font-size: 11.8px;
+                            margin-top: 1.3mm;
+                        }
+
+                        .mcep-leave-sign-table th,
+                        .mcep-leave-sign-table td {
+                            border: 1px solid #6b7280;
+                            padding: 1.2mm 1.4mm;
+                            vertical-align: middle;
+                            line-height: 1.12;
+                        }
+
+                        .mcep-leave-sign-title {
+                            background: #f8fafc;
+                            text-align: center;
+                            font-weight: 700;
+                        }
+
+                        .mcep-leave-sign-line {
+                            height: 9mm;
+                        }
+
+                        .mcep-leave-date-line {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            text-align: center;
+                        }
+                    </style>
+
+                    <div class="mcep-leave-title">
+                        <span t-out="form_title_ar"/>
+                    </div>
+                    <div class="mcep-leave-subtitle">
+                        <span t-out="form_title_en"/>
+                    </div>
+
+                    <div class="mcep-leave-section">
+                        أولًا: المعلومات الشخصية
+                        <span class="en">Personal Information</span>
+                    </div>
+
+                    <table class="mcep-leave-table">
+                        <tr>
+                            <th style="width: 25%;">الاسم الكامل<br/><span class="mcep-leave-en">Full Name</span></th>
+                            <td style="width: 75%;" colspan="3">
+                                <div class="mcep-leave-value">
+                                    <span t-out="employee.name or ''"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>الرقم الوظيفي<br/><span class="mcep-leave-en">Employee ID</span></th>
+                            <td>
+                                <div class="mcep-leave-value">
+                                    <span t-out="employee_number"/>
+                                </div>
+                            </td>
+                            <th>المسمى الوظيفي<br/><span class="mcep-leave-en">Job Title</span></th>
+                            <td>
+                                <div class="mcep-leave-value">
+                                    <span t-out="job_title"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>القسم / الإدارة<br/><span class="mcep-leave-en">Department</span></th>
+                            <td colspan="3">
+                                <div class="mcep-leave-value">
+                                    <span t-out="department_name"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="mcep-leave-section">
+                        ثانيًا: تفاصيل الإجازة
+                        <span class="en">Leave Details</span>
+                    </div>
+
+                    <table class="mcep-leave-table">
+                        <tr>
+                            <th style="width: 22%;">نوع الإجازة<br/><span class="mcep-leave-en">Leave Type</span></th>
+                            <td style="width: 28%;">
+                                <div class="mcep-leave-value">
+                                    <span t-out="policy.x_name or ''"/>
+                                </div>
+                            </td>
+                            <th style="width: 22%;">تاريخ الطلب<br/><span class="mcep-leave-en">Request Date</span></th>
+                            <td style="width: 28%;">
+                                <div class="mcep-leave-value">
+                                    <span t-out="o.x_request_date or ''"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>من تاريخ<br/><span class="mcep-leave-en">From</span></th>
+                            <td>
+                                <div class="mcep-leave-value">
+                                    <span t-out="o.x_leave_date_from or ''"/>
+                                </div>
+                            </td>
+                            <th>إلى تاريخ<br/><span class="mcep-leave-en">To</span></th>
+                            <td>
+                                <div class="mcep-leave-value">
+                                    <span t-out="o.x_leave_date_to or ''"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>الأيام التقويمية<br/><span class="mcep-leave-en">Calendar Days</span></th>
+                            <td>
+                                <div class="mcep-leave-value">
+                                    <span t-out="'%.2f' % (o.x_requested_calendar_days or 0.0)"/>
+                                </div>
+                            </td>
+                            <th>الأيام المطلوبة<br/><span class="mcep-leave-en">Requested Days</span></th>
+                            <td>
+                                <div class="mcep-leave-value">
+                                    <span t-out="'%.2f' % (o.x_requested_days or 0.0)"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>عطلة نهاية الأسبوع المستبعدة<br/><span class="mcep-leave-en">Excluded Weekend</span></th>
+                            <td>
+                                <div class="mcep-leave-value">
+                                    <span t-out="'%.2f' % (o.x_excluded_weekend_days or 0.0)"/>
+                                </div>
+                            </td>
+                            <th>العطل الرسمية المستبعدة<br/><span class="mcep-leave-en">Excluded Public Holidays</span></th>
+                            <td>
+                                <div class="mcep-leave-value">
+                                    <span t-out="'%.2f' % (o.x_excluded_public_holiday_days or 0.0)"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="mcep-leave-section">
+                        ثالثًا: رصيد الإجازة المعتمد من الموارد البشرية
+                        <span class="en">HR Balance Verification</span>
+                    </div>
+
+                    <table class="mcep-leave-table">
+                        <tr>
+                            <th>الرصيد الحالي<br/><span class="mcep-leave-en">Current Balance</span></th>
+                            <td>
+                                <div class="mcep-leave-value">
+                                    <span t-out="'%.2f' % (o.x_current_balance_days or 0.0)"/>
+                                </div>
+                            </td>
+                            <th>الرصيد المستخدم<br/><span class="mcep-leave-en">Used Balance</span></th>
+                            <td>
+                                <div class="mcep-leave-value">
+                                    <span t-out="'%.2f' % (o.x_used_balance_days or 0.0)"/>
+                                </div>
+                            </td>
+                            <th>الرصيد المتبقي<br/><span class="mcep-leave-en">Remaining</span></th>
+                            <td>
+                                <div class="mcep-leave-value">
+                                    <span t-out="'%.2f' % (o.x_remaining_balance_days or 0.0)"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>السماح من الموارد البشرية<br/><span class="mcep-leave-en">HR Allowed</span></th>
+                            <td>
+                                <div class="mcep-leave-value">
+                                    <span t-out="'نعم / Yes' if o.x_hr_balance_allowed else 'لا / No'"/>
+                                </div>
+                            </td>
+                            <th>تم التحقق بواسطة<br/><span class="mcep-leave-en">Verified By</span></th>
+                            <td>
+                                <div class="mcep-leave-value">
+                                    <span t-out="o.x_balance_verified_by_user_id.name or ''"/>
+                                </div>
+                            </td>
+                            <th>تاريخ التحقق<br/><span class="mcep-leave-en">Verified On</span></th>
+                            <td>
+                                <div class="mcep-leave-value">
+                                    <span t-out="o.x_balance_verified_on or ''"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="mcep-leave-section">
+                        رابعًا: بيانات الاتصال والتكليف أثناء الإجازة
+                        <span class="en">Contact and Acting Assignment</span>
+                    </div>
+
+                    <table class="mcep-leave-table">
+                        <tr>
+                            <th style="width: 22%;">العنوان أثناء الإجازة<br/><span class="mcep-leave-en">Address During Leave</span></th>
+                            <td style="width: 78%;" colspan="3">
+                                <div class="mcep-leave-value">
+                                    <span t-out="o.x_address_during_leave or ''"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>وسيلة الاتصال<br/><span class="mcep-leave-en">Contact</span></th>
+                            <td>
+                                <div class="mcep-leave-value">
+                                    <span t-out="o.x_contact_during_leave or ''"/>
+                                </div>
+                            </td>
+                            <th>الموظف المكلف بالعمل<br/><span class="mcep-leave-en">Acting Employee</span></th>
+                            <td>
+                                <div class="mcep-leave-value">
+                                    <span t-out="acting_name"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="mcep-leave-section">
+                        خامسًا: سبب الطلب
+                        <span class="en">Reason for Request</span>
+                    </div>
+
+                    <div class="mcep-leave-reason-box">
+                        <span t-out="o.x_reason or ''"/>
+                    </div>
+
+                    <div class="mcep-leave-section">
+                        سادسًا: توقيعات واعتمادات
+                        <span class="en">Signatures and Approvals</span>
+                    </div>
+
+                    <table class="mcep-leave-sign-table">
+                        <tr>
+                            <th class="mcep-leave-sign-title" colspan="3">
+                                توقيع الموظف
+                                <span class="mcep-leave-en">Employee Signature</span>
+                            </th>
+                            <th class="mcep-leave-sign-title" colspan="3">
+                                اعتماد المدير المباشر
+                                <span class="mcep-leave-en">Direct Manager Approval</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td style="width: 12%;">الإسم<br/><span class="mcep-leave-en">Name</span></td>
+                            <td class="mcep-leave-sign-line" colspan="2">
+                                <span t-out="employee.name or ''"/>
+                            </td>
+                            <td style="width: 12%;">الإسم<br/><span class="mcep-leave-en">Name</span></td>
+                            <td class="mcep-leave-sign-line" colspan="2">
+                                <span t-out="manager_name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>التوقيع<br/><span class="mcep-leave-en">Signature</span></td>
+                            <td class="mcep-leave-sign-line" colspan="2"></td>
+                            <td>التوقيع<br/><span class="mcep-leave-en">Signature</span></td>
+                            <td class="mcep-leave-sign-line" colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td>التاريخ<br/><span class="mcep-leave-en">Date</span></td>
+                            <td class="mcep-leave-date-line" colspan="2">____ / ____ / ________</td>
+                            <td>التاريخ<br/><span class="mcep-leave-en">Date</span></td>
+                            <td class="mcep-leave-date-line" colspan="2">____ / ____ / ________</td>
+                        </tr>
+                    </table>
+
+                    <table class="mcep-leave-sign-table">
+                        <tr>
+                            <th class="mcep-leave-sign-title" colspan="3">
+                                الموارد البشرية
+                                <span class="mcep-leave-en">HR Approval</span>
+                            </th>
+                            <th class="mcep-leave-sign-title" colspan="3">
+                                اعتماد المدير العام
+                                <span class="mcep-leave-en">General Manager Approval</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td style="width: 12%;">الإسم<br/><span class="mcep-leave-en">Name</span></td>
+                            <td class="mcep-leave-sign-line" colspan="2">
+                                <span t-out="hr_name"/>
+                            </td>
+                            <td style="width: 12%;">الإسم<br/><span class="mcep-leave-en">Name</span></td>
+                            <td class="mcep-leave-sign-line" colspan="2">
+                                <span t-out="gm_name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>التوقيع<br/><span class="mcep-leave-en">Signature</span></td>
+                            <td class="mcep-leave-sign-line" colspan="2"></td>
+                            <td>التوقيع<br/><span class="mcep-leave-en">Signature</span></td>
+                            <td class="mcep-leave-sign-line" colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td>التاريخ<br/><span class="mcep-leave-en">Date</span></td>
+                            <td class="mcep-leave-date-line" colspan="2">____ / ____ / ________</td>
+                            <td>التاريخ<br/><span class="mcep-leave-en">Date</span></td>
+                            <td class="mcep-leave-date-line" colspan="2">____ / ____ / ________</td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>
