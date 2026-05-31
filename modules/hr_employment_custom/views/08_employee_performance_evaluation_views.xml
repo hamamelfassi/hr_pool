@@ -84,7 +84,7 @@
                 </header>
                 <sheet>
                     <div class="alert alert-info" role="alert">
-                        Performance evaluations cover F-0018. This slice adds the controlled evaluation surface only; line seeding, scoring, validation, PDF generation, and Odoo Sign actions come next.
+                        Performance evaluations cover F-0018. Scoring, PDF generation, and the three-role Odoo Sign lifecycle are handled on this evaluation record.
                     </div>
 
                     <!-- MCEP performance evaluation unified controls start -->
@@ -257,7 +257,7 @@
             <xpath expr="//sheet/notebook" position="inside">
                 <page name="mcep_employee_performance_evaluations" string="Evaluations">
                     <div class="alert alert-info" role="alert">
-                        Performance evaluations here are Marsellia official F-0018 records. This pass focuses on governed scoring, PDF generation, and two-role Sign workflow without native Appraisals, Payroll, Salary Adjustment, GRC, or disciplinary integration.
+                        Performance evaluations here are Marsellia official F-0018 records. This pass focuses on governed scoring, PDF generation, and three-role Sign workflow without native Appraisals, Payroll, Salary Adjustment, GRC, or disciplinary integration.
                     </div>
                     <div class="mb-2">
                         <button name="%(action_employee_performance_evaluation_create_from_employee)d"
@@ -303,7 +303,7 @@
                             </header>
                             <sheet>
                                 <div class="alert alert-info" role="alert">
-                                    Performance evaluations cover F-0018. This slice adds the controlled evaluation surface only; line seeding, scoring, validation, PDF generation, and Odoo Sign actions come next.
+                                    Performance evaluations cover F-0018. Scoring, PDF generation, and the three-role Odoo Sign lifecycle are handled on this evaluation record.
                                 </div>
 
                                 <!-- MCEP performance evaluation unified controls start -->
