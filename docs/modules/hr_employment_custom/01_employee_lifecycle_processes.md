@@ -1307,3 +1307,36 @@ The document lifecycle must not be polluted with native Time Off bridge state. T
 
 Manual HR balance values are accepted in Pass 19. Automated balance, accrual, weekend, public-holiday, payroll, and native allocation computation are deferred.
 <!-- PASS19_LEAVE_LIFECYCLE_END -->
+
+<!-- PASS20_WORK_ASSIGNMENT_LIFECYCLE_START -->
+## Pass 20 planned work assignment lifecycle
+
+Pass 20 implements F-0017 Employee Work Assignment as a custom Marsellia documentary process.
+
+Primary process record:
+
+    x_hr.employee_work_assignment
+
+The record owns:
+
+- employee assignment location;
+- assignment from/to dates;
+- description / purpose;
+- approval metadata;
+- generated PDF artifact;
+- Odoo Sign request metadata;
+- signed PDF and certificate artifacts;
+- manual decision metadata.
+
+Document lifecycle:
+
+    draft -> generated -> signature_requested -> signed
+
+The visible statusbar remains:
+
+    Draft -> Generated -> Signature Requested -> Signed
+
+Pass 20 does not create or update Planning, Project, Timesheet, Attendance, Work Entry, Payroll, Fleet, approval.request, or GRC decision records.
+
+F-0017 is handled as the approved documentary evidence workflow only. Downstream operational integrations are deferred to later pass cycles.
+<!-- PASS20_WORK_ASSIGNMENT_LIFECYCLE_END -->

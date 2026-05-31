@@ -425,3 +425,43 @@ Deferred leave bridge cycle:
 
 Next pass is not launched by this closure. Start the next implementation thread/slice only after new user scope instructions are provided.
 <!-- PASS19_ROADMAP_CLOSURE_END -->
+
+<!-- PASS20_WORK_ASSIGNMENT_ROADMAP_START -->
+## Pass 20 roadmap lock — F-0017 Employee Work Assignment
+
+Pass 20 is locked as F-0017 Employee Work Assignment.
+
+Implementation posture:
+
+    custom x_hr.employee_work_assignment process record
+    official F-0017 QWeb/PDF generation
+    four-role Odoo Sign lifecycle
+    employee chatter/files artifacts
+    Arabic UI/QWeb translations
+
+No typed/helper assignment model is included in Pass 20.
+
+No native operational integration is included in Pass 20.
+
+Deferred integration candidates:
+
+- Planning;
+- Project/tasks;
+- Timesheets;
+- Attendance;
+- Work Entries;
+- Payroll/overtime/per diem;
+- Fleet/site logistics;
+- approval.request;
+- GRC decision instances.
+
+Pass 20 slices:
+
+- 20A — documentation/execution-plan lock;
+- 20B — model/access/employee tab scaffold;
+- 20C — normalization/defaulting;
+- 20D — F-0017 QWeb/PDF generation;
+- 20E — four-role Sign lifecycle;
+- 20F — Arabic UI/QWeb polish;
+- 20G — documentation closure.
+<!-- PASS20_WORK_ASSIGNMENT_ROADMAP_END -->

@@ -154,3 +154,25 @@ The native Odoo Time Off models remain future bridge targets:
 
 No native Time Off bridge is active in the accepted Pass 19 baseline.
 <!-- PASS19_README_BASELINE_END -->
+
+<!-- PASS20_WORK_ASSIGNMENT_README_START -->
+## Pass 20 planned baseline — Employee Work Assignments
+
+Pass 20 implements F-0017 Employee Work Assignment as a governed form/sign workflow in `hr_employment_custom`.
+
+Primary model:
+
+    x_hr.employee_work_assignment
+
+Pass 20 captures only manual assignment form data:
+
+- employee;
+- assignment location;
+- assignment from date;
+- assignment to date;
+- description / purpose.
+
+All standard document metadata, artifact fields, and Sign metadata follow the accepted custom process doctrine from Declarations, Custody, Training, Permissions, and Leave.
+
+Pass 20 deliberately excludes native Planning, Project, Timesheet, Attendance, Work Entry, Payroll, Fleet, approval.request, and GRC decision integrations.
+<!-- PASS20_WORK_ASSIGNMENT_README_END -->

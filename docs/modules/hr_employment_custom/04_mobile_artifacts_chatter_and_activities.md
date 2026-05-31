@@ -443,3 +443,19 @@ Leave request artifacts follow the mobile-safe employee record pattern:
 
 This pass does not create native `hr.leave` records, so native Time Off dashboards/reports are not treated as the artifact source of truth yet.
 <!-- PASS19_LEAVE_MOBILE_ARTIFACTS_END -->
+
+<!-- PASS20_WORK_ASSIGNMENT_CHATTER_START -->
+## Pass 20 planned chatter/files posture
+
+F-0017 Employee Work Assignment must post governed artifacts to employee chatter/files:
+
+- creation note, if included in normalization;
+- generated PDF note and attachment;
+- Sign request sent note;
+- Sign sync note;
+- signed PDF and certificate note/attachments.
+
+Chatter posts should be concise and Arabic-friendly, following the accepted Permissions and Leave patterns.
+
+No activities, approval.request records, Planning tasks, Project tasks, Timesheets, Attendance records, Work Entries, Payroll records, or GRC decision records are created in Pass 20.
+<!-- PASS20_WORK_ASSIGNMENT_CHATTER_END -->

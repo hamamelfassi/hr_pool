@@ -510,3 +510,29 @@ as a root-level configuration section, not buried under the Employee subsection.
 
 Arabic UI delivery remains PO-based. Source XML stays English.
 <!-- PASS19_LEAVE_UI_DOCTRINE_END -->
+
+<!-- PASS20_WORK_ASSIGNMENT_UI_START -->
+## Pass 20 planned Assignments tab UI doctrine
+
+Employee work assignments will use the accepted custom HR process tab pattern.
+
+Planned employee tab:
+
+    Assignments / التكليفات
+
+Required UI structure:
+
+- short info alert;
+- `New Assignment` button;
+- embedded one2many list;
+- controlled modal form;
+- standalone list/form action;
+- statusbar at top;
+- full-width `Workflow and Artifacts` strip for modal parity;
+- header artifact download icons where clean;
+- generated/signed/certificate download buttons;
+- clean English source XML labels;
+- Arabic via exported-anchor PO workflow.
+
+The Assignments tab must follow the Permissions and Leave implementation patterns. It must not introduce Planning/Project/Timesheet/Attendance/Payroll widgets or hidden integration fields in Pass 20.
+<!-- PASS20_WORK_ASSIGNMENT_UI_END -->

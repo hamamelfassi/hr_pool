@@ -587,3 +587,32 @@ Duplicate active Sign requests are blocked. Sync remains the explicit recovery/c
 
 No native `hr.leave` bridge action is included in the Sign slice.
 <!-- PASS19_LEAVE_ARTIFACT_SIGN_END -->
+
+<!-- PASS20_WORK_ASSIGNMENT_ARTIFACT_SIGN_START -->
+## Pass 20 planned F-0017 artifact and Sign pattern
+
+F-0017 Employee Work Assignment will follow the accepted custom process artifact doctrine:
+
+1. Generate QWeb PDF from the assignment record.
+2. Store generated PDF on `x_pdf_attachment_id`.
+3. Post generated PDF to employee chatter/files.
+4. Create dynamic native Odoo Sign template/document/items from the generated PDF.
+5. Send in ordered four-role sequence.
+6. Sync Odoo Sign state.
+7. Copy signed PDF and certificate, when available, to employee chatter/files.
+
+Planned signer sequence:
+
+    1. Employee
+    2. Direct Manager
+    3. HR Responsible
+    4. General Manager
+
+Sign coordinates are not locked in 20A. They must be calibrated after the first accepted generated F-0017 PDF.
+
+Pass 20 must keep artifact download behavior through:
+
+    /web/content/<attachment_id>?download=true
+
+No direct navigation to `ir.attachment` machine views should be used.
+<!-- PASS20_WORK_ASSIGNMENT_ARTIFACT_SIGN_END -->
