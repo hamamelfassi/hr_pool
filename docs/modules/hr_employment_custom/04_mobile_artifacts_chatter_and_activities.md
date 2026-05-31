@@ -477,3 +477,19 @@ No activity chain, `approval.request`, Planning task, Project task, Timesheet li
 
 The source process record remains the documentary lifecycle authority. Employee chatter/files is the operational evidence stream for HR users and mobile access.
 <!-- PASS20_ACCEPTED_CHATTER_END -->
+
+<!-- PASS21_PERFORMANCE_EVALUATION_CHATTER_START -->
+## Pass 21 — Performance Evaluation Chatter and Files
+
+Pass 21 must post employee chatter notes at the following moments:
+
+- evaluation record creation;
+- generated F-0018 PDF creation;
+- Odoo Sign request send;
+- Sign sync before completion where useful;
+- Sign completion, with signed PDF and certificate where available.
+
+Generated and signed artifacts must be copied/linked to employee chatter/files in the same accepted way as Leave and Work Assignment.
+
+No generated PDFs, signed PDFs, certificates, screenshots, or temporary exports should be committed to Git.
+<!-- PASS21_PERFORMANCE_EVALUATION_CHATTER_END -->

@@ -569,3 +569,31 @@ Accepted visible sections:
 
 The Assignments tab must remain a document/process surface only. It must not introduce Planning, Project, Timesheet, Attendance, Work Entry, Payroll, Fleet, Approval, or GRC widgets in the current pass family unless a later pass explicitly scopes that integration.
 <!-- PASS20_ACCEPTED_UI_END -->
+
+<!-- PASS21_PERFORMANCE_EVALUATION_UI_START -->
+## Pass 21 — Employee Evaluations Tab Doctrine
+
+Pass 21 adds an employee evaluation surface on `hr.employee`.
+
+Preferred tab label:
+
+    Evaluations / التقييمات
+
+Accepted UI pattern:
+
+- information alert;
+- `New Evaluation` button;
+- embedded list;
+- controlled modal form;
+- standalone list/form action;
+- statusbar;
+- workflow/artifact control strip;
+- header download icons;
+- editable score lines;
+- visible total score / percentage / grade / star rating;
+- Arabic UI labels via exact exported PO anchors.
+
+The line table must be usable in the modal form. It should not require users to open each line as a full separate machine record during normal scoring unless the Odoo UI imposes that behavior.
+
+The field and section labels must remain English in source XML. Arabic must be delivered through the exported-anchor PO workflow.
+<!-- PASS21_PERFORMANCE_EVALUATION_UI_END -->

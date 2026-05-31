@@ -196,3 +196,18 @@ It provides:
 
 It deliberately does not create or update Planning, Project, Timesheet, Attendance, Work Entry, Payroll, Fleet, Approval, or GRC records. Those integrations remain deferred.
 <!-- PASS20_README_CLOSURE_END -->
+
+<!-- PASS21_PERFORMANCE_EVALUATION_README_START -->
+## Pass 21 — F-0018 Performance Evaluation Baseline
+
+Pass 21 implements the governed Marsellia F-0018 employee performance evaluation workflow.
+
+Model posture:
+
+    x_hr.employee_performance_evaluation
+    x_hr.employee_performance_evaluation_line
+
+The pass covers 12 fixed evaluation items, validated 1–5 scoring, computed total score out of 60, computed grade, star rating, generated F-0018 PDF, two-role Odoo Sign, and employee chatter/files artifacts.
+
+Native Appraisals, Payroll, Salary Adjustment, Promotion/Demotion, Disciplinary, GRC decision, and analytics bridges are deferred.
+<!-- PASS21_PERFORMANCE_EVALUATION_README_END -->

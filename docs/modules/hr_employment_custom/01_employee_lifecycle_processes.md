@@ -1385,3 +1385,57 @@ The accepted signer order is:
 
 This pattern is the reference for future simple governed employment documents that require manual process data but no immediate native operational integration.
 <!-- PASS20_ACCEPTED_WORK_ASSIGNMENT_END -->
+
+<!-- PASS21_PERFORMANCE_EVALUATION_START -->
+## Pass 21 — F-0018 Employee Performance Evaluation
+
+Pass 21 adds the governed employee performance evaluation workflow for Marsellia form F-0018.
+
+Accepted architecture posture:
+
+    x_hr.employee_performance_evaluation
+    x_hr.employee_performance_evaluation_line
+
+This pass uses a parent evaluation record and 12 score lines. The line model is required because F-0018 is a structured score matrix, not a flat request form.
+
+The evaluation captures:
+
+- employee;
+- evaluation period from/to;
+- 12 fixed evaluation item scores;
+- direct manager recommendation;
+- HR manager recommendation;
+- standard artifact/sign/manual governance metadata.
+
+The evaluation computes:
+
+- total score out of 60;
+- percentage;
+- grade;
+- star rating / score visual;
+- document reference;
+- evaluation label.
+
+The visible lifecycle remains:
+
+    Draft → Generated → Signature Requested → Signed
+
+Pass 21 explicitly does not create Odoo Appraisals, payroll effects, salary adjustments, promotion/demotion records, disciplinary records, GRC decision instances, or any other native integration record.
+
+Validation doctrine:
+
+- Each item score must be between 1 and 5.
+- Values below 1 must be blocked.
+- Values above 5 must be blocked.
+- PDF generation must not proceed unless all 12 items are present and scored.
+
+Direct manager derivation doctrine:
+
+- Direct manager user must be derived from `hr.employee.parent_id.user_id`.
+- It must not silently default to the current user.
+- If no valid direct manager user/email exists, Sign must block with a clear message.
+
+Deferred technical debt:
+
+- Audit earlier Pass 18–20 forms for any direct-manager fallback behavior that may have silently used the current user instead of `hr.employee.parent_id.user_id`.
+<!-- PASS21_PERFORMANCE_EVALUATION_END -->

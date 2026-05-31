@@ -494,3 +494,34 @@ Pass 20 slices:
 <!-- PASS20_CLOSURE_ROADMAP_START -->
 Pass 20 is closed as F-0017 Work Assignment Authorization. It proved the lean governed-form pattern: one custom operational model, manual form fields, QWeb/PDF, four-role Odoo Sign, employee chatter/files, and exact-anchor Arabic UI translation, with all native operational integrations deferred.
 <!-- PASS20_CLOSURE_ROADMAP_END -->
+
+<!-- PASS21_PERFORMANCE_EVALUATION_ROADMAP_START -->
+## Pass 21 — F-0018 Employee Performance Evaluation
+
+Status at Pass 21A:
+
+    scoped / execution-plan locked
+
+Implementation direction:
+
+- Use `x_hr.employee_performance_evaluation` parent model.
+- Use `x_hr.employee_performance_evaluation_line` line model.
+- Generate 12 fixed F-0018 evaluation lines.
+- Validate score range 1–5.
+- Compute total score out of 60.
+- Compute percentage, grade, and star rating.
+- Generate F-0018 PDF with checkbox matrix and grade checkboxes.
+- Use two-role native Odoo Sign:
+  - Direct Manager;
+  - HR Manager.
+- Use exact-anchor Arabic UI/QWeb translation workflow.
+
+Deferred beyond Pass 21:
+
+- Odoo Appraisals bridge;
+- payroll/salary/promotion/disciplinary consequences;
+- GRC decision instances;
+- configurable evaluation templates;
+- employee self-review / 360 review;
+- analytics and historical performance dashboards.
+<!-- PASS21_PERFORMANCE_EVALUATION_ROADMAP_END -->

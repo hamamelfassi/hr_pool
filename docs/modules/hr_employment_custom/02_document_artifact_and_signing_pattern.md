@@ -664,3 +664,32 @@ Signer order:
 
     Employee → Direct Manager → HR Responsible → General Manager
 <!-- PASS20_ACCEPTED_ARTIFACT_SIGN_END -->
+
+<!-- PASS21_PERFORMANCE_EVALUATION_ARTIFACT_START -->
+## Pass 21 — F-0018 Artifact and Sign Pattern
+
+F-0018 follows the modern governed artifact pattern established in Passes 18–20:
+
+    custom process record
+    → generated QWeb/PDF
+    → stored generated PDF attachment
+    → employee chatter/files posting
+    → native Odoo Sign request
+    → signed PDF/certificate sync
+    → employee chatter/files posting
+
+Distinct Pass 21 behavior:
+
+- The QWeb report renders a 12-row score matrix with 5/4/3/2/1 checkbox cells.
+- The final score is computed out of 60.
+- Grade is rendered as checkbox output, not hand-entered text.
+- Star rating is rendered from the computed score.
+- The Sign sequence is two-role only:
+
+      1. Direct Manager
+      2. HR Manager
+
+- The physical form may show a general manager approval area, but Pass 21 does not add a general manager Sign role unless explicitly re-scoped.
+
+The older F-0002 interview evaluation files are valid reference material for scoring/checklist behavior only. Pass 21 must use the current shared QWeb assets/header/paperformat and current Sign send/sync lifecycle patterns.
+<!-- PASS21_PERFORMANCE_EVALUATION_ARTIFACT_END -->
