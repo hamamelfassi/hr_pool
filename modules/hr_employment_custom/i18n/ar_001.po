@@ -2623,6 +2623,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_permission__x_state__draft
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7197_ee2fc578
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7184_5774b8cb
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7209_8acd422d
 msgid "Draft"
 msgstr "مسودة"
 
@@ -2630,6 +2631,7 @@ msgstr "مسودة"
 #: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_permission__x_state__generated
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7201_93bb9b2e
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7185_8342d78f
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7214_a2ca82ab
 msgid "Generated"
 msgstr "منشأ"
 
@@ -2637,6 +2639,7 @@ msgstr "منشأ"
 #: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_permission__x_state__signature_requested
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7198_a46ce52a
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7187_afa46f6b
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7210_b466fc2f
 msgid "Signature Requested"
 msgstr "طلب التوقيع"
 
@@ -2644,6 +2647,7 @@ msgstr "طلب التوقيع"
 #: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_permission__x_state__signed
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7199_0213418f
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7186_0030efac
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7212_c7060ded
 msgid "Signed"
 msgstr "موقع"
 
@@ -2651,12 +2655,14 @@ msgstr "موقع"
 #: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_permission__x_state__cancelled
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7202_49a69e21
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7192_f580f754
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7215_7ab45dfb
 msgid "Cancelled"
 msgstr "ملغى"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields.selection,name:hr_employment_custom.selection__x_hr_employee_permission__x_state__superseded
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7200_70375510
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7213_c27c50a8
 msgid "Superseded"
 msgstr "مستبدل"
 
@@ -2694,3 +2700,207 @@ msgstr "مكتمل التدريب"
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7195_ecc30105
 msgid "Training Incomplete"
 msgstr "غير مكتمل التدريب"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7211_5b537f76
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7218_eceae698
+msgid "Blocked"
+msgstr "محظور"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7219_0c2276a9
+msgid "Not Created"
+msgstr "غير منشأ"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7217_0a6d9e21
+msgid "Ready"
+msgstr "جاهز"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7216_c8fd4cdb
+msgid "Created"
+msgstr "منشأ"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7220_a8cc2eec
+msgid "Error"
+msgstr "خطأ"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7205_6e37ae10
+msgid "Annual Leave"
+msgstr "إجازة سنوية"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7208_744e15b0
+msgid "Emergency Leave"
+msgstr "إجازة طارئة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7207_4a5d9161
+msgid "Sick Leave"
+msgstr "إجازة مرضية"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7206_73089dd8
+msgid "Unpaid Leave"
+msgstr "إجازة بدون مرتب"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7203_badadd62
+msgid "Compensatory Leave"
+msgstr "إجازة تعويضية"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7204_8476c1bb
+msgid "Other"
+msgstr "أخرى"
+
+#. module: hr_employment_custom
+msgid "Leave"
+msgstr "الإجازات"
+
+#. module: hr_employment_custom
+msgid "Leave Request"
+msgstr "طلب إجازة"
+
+#. module: hr_employment_custom
+msgid "Leave Request Label"
+msgstr "تسمية طلب الإجازة"
+
+#. module: hr_employment_custom
+msgid "Employee Leave Request"
+msgstr "طلب إجازة الموظف"
+
+#. module: hr_employment_custom
+msgid "Employee Leave Requests"
+msgstr "طلبات إجازات الموظفين"
+
+#. module: hr_employment_custom
+msgid "Employee Leave Type Policies"
+msgstr "سياسات أنواع الإجازات"
+
+#. module: hr_employment_custom
+msgid "Leave Type Policy"
+msgstr "سياسة نوع الإجازة"
+
+#. module: hr_employment_custom
+msgid "Leave Type Policies"
+msgstr "سياسات أنواع الإجازات"
+
+#. module: hr_employment_custom
+msgid "Leave Policy"
+msgstr "سياسة الإجازة"
+
+#. module: hr_employment_custom
+msgid "Leave Category"
+msgstr "فئة الإجازة"
+
+#. module: hr_employment_custom
+msgid "Native Time Off Type"
+msgstr "نوع الإجازة الأصلي في أودو"
+
+#. module: hr_employment_custom
+msgid "Native Time Off Record"
+msgstr "سجل الإجازة الأصلي في أودو"
+
+#. module: hr_employment_custom
+msgid "Native Leave Sync State"
+msgstr "حالة مزامنة الإجازة الأصلية"
+
+#. module: hr_employment_custom
+msgid "Native Leave Created On"
+msgstr "تاريخ إنشاء الإجازة الأصلية"
+
+#. module: hr_employment_custom
+msgid "Native Leave Notes"
+msgstr "ملاحظات الإجازة الأصلية"
+
+#. module: hr_employment_custom
+msgid "Leave Dates"
+msgstr "تواريخ الإجازة"
+
+#. module: hr_employment_custom
+msgid "Request Date"
+msgstr "تاريخ الطلب"
+
+#. module: hr_employment_custom
+msgid "Leave From"
+msgstr "الإجازة من"
+
+#. module: hr_employment_custom
+msgid "Leave To"
+msgstr "الإجازة إلى"
+
+#. module: hr_employment_custom
+msgid "Requested Days"
+msgstr "الأيام المطلوبة"
+
+#. module: hr_employment_custom
+msgid "Requested Calendar Days"
+msgstr "الأيام التقويمية المطلوبة"
+
+#. module: hr_employment_custom
+msgid "Excluded Weekend Days"
+msgstr "أيام نهاية الأسبوع المستبعدة"
+
+#. module: hr_employment_custom
+msgid "Excluded Public Holiday Days"
+msgstr "أيام العطل الرسمية المستبعدة"
+
+#. module: hr_employment_custom
+msgid "Manual HR Balance Verification"
+msgstr "التحقق اليدوي من رصيد الموارد البشرية"
+
+#. module: hr_employment_custom
+msgid "Current Balance Days"
+msgstr "أيام الرصيد الحالي"
+
+#. module: hr_employment_custom
+msgid "Used Balance Days"
+msgstr "أيام الرصيد المستخدم"
+
+#. module: hr_employment_custom
+msgid "Remaining Balance Days"
+msgstr "أيام الرصيد المتبقي"
+
+#. module: hr_employment_custom
+msgid "HR Balance Allowed"
+msgstr "مسموح من رصيد الموارد البشرية"
+
+#. module: hr_employment_custom
+msgid "Balance Verified By"
+msgstr "تم التحقق من الرصيد بواسطة"
+
+#. module: hr_employment_custom
+msgid "Balance Verified On"
+msgstr "تاريخ التحقق من الرصيد"
+
+#. module: hr_employment_custom
+msgid "Balance Notes"
+msgstr "ملاحظات الرصيد"
+
+#. module: hr_employment_custom
+msgid "Leave Contact and Handover"
+msgstr "بيانات الاتصال والتسليم أثناء الإجازة"
+
+#. module: hr_employment_custom
+msgid "Address During Leave"
+msgstr "العنوان أثناء الإجازة"
+
+#. module: hr_employment_custom
+msgid "Contact During Leave"
+msgstr "وسيلة الاتصال أثناء الإجازة"
+
+#. module: hr_employment_custom
+msgid "Acting Employee"
+msgstr "الموظف المكلف بالعمل"
+
+#. module: hr_employment_custom
+msgid "General Manager User"
+msgstr "مستخدم المدير العام"
+
+#. module: hr_employment_custom
+msgid "New Leave Request"
+msgstr "طلب إجازة جديد"

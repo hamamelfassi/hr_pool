@@ -460,7 +460,7 @@
                         <div><strong>النموذج:</strong> <span t-out="form_code"/></div>
                         <div><strong>الوثيقة:</strong> <span t-out="form_title_ar"/></div>
                         <div><strong>المرجع:</strong> <span t-out="o.x_document_reference or ''"/></div>
-                        <div><strong>الحالة:</strong> <span t-out="o.x_state or ''"/></div>
+                        <div><strong>الحالة:</strong> <span t-out="{'draft': 'مسودة', 'generated': 'منشأ', 'signature_requested': 'طلب التوقيع', 'signed': 'موقع', 'cancelled': 'ملغى', 'superseded': 'مستبدل', 'blocked': 'محظور'}.get(o.x_state, o.x_state)"/></div>
                         <div class="mcep-emp-header-page-label"><span t-out="page_label or ''"/></div>
                     </div>
                 </td>

@@ -14,6 +14,7 @@
                 <t t-set="form_code" t-value="policy.x_form_code or o.x_reference_code or 'MCEP-HR-F-0016'"/>
                 <t t-set="form_title_en" t-value="policy.x_form_title or 'Leave Request'"/>
                 <t t-set="form_title_ar" t-value="'طلب إجازة'"/>
+                <t t-set="leave_policy_name_ar" t-value="{'annual_leave': 'إجازة سنوية', 'emergency_leave': 'إجازة طارئة', 'sick_leave': 'إجازة مرضية', 'unpaid_leave': 'إجازة بدون مرتب', 'compensatory_leave': 'إجازة تعويضية', 'other': 'أخرى'}.get(policy.x_code, policy.x_name)"/>
                 <t t-set="employee_number" t-value="(employee.registration_number if 'registration_number' in employee._fields else '') or (employee.barcode if 'barcode' in employee._fields else '') or employee.id or ''"/>
                 <t t-set="job_title" t-value="(employee.job_title if 'job_title' in employee._fields else '') or (employee.job_id.name if 'job_id' in employee._fields and employee.job_id else '') or ''"/>
                 <t t-set="department_name" t-value="employee.department_id.name if employee.department_id else ''"/>
@@ -209,7 +210,7 @@
                             <th style="width: 22%;">نوع الإجازة<br/><span class="mcep-leave-en">Leave Type</span></th>
                             <td style="width: 28%;">
                                 <div class="mcep-leave-value">
-                                    <span t-out="policy.x_name or ''"/>
+                                    <span t-out="leave_policy_name_ar"/>
                                 </div>
                             </td>
                             <th style="width: 22%;">تاريخ الطلب<br/><span class="mcep-leave-en">Request Date</span></th>
