@@ -14,3 +14,5 @@ access_employee_work_assignment_hr_user,employee work assignment hr user,hr_empl
 access_employee_performance_evaluation_hr_user,employee performance evaluation hr user,hr_employment_custom.model_x_hr_employee_performance_evaluation,hr.group_hr_user,1,1,1,1
 access_employee_performance_evaluation_line_hr_user,employee performance evaluation line hr user,hr_employment_custom.model_x_hr_employee_performance_evaluation_line,hr.group_hr_user,1,1,1,1
 access_employee_separation_request_hr_user,employee separation request hr user,hr_employment_custom.model_x_hr_employee_separation_request,hr.group_hr_user,1,1,1,1
+access_employee_clearance_request_hr_user,employee clearance request hr user,hr_employment_custom.model_x_hr_employee_clearance_request,hr.group_hr_user,1,1,1,1
+access_employee_clearance_line_hr_user,employee clearance line hr user,hr_employment_custom.model_x_hr_employee_clearance_line,hr.group_hr_user,1,1,1,1

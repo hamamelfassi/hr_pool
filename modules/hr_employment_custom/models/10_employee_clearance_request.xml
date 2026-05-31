@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ========================================================= -->
+        <!-- Marsellia Employee Clearance Request                     -->
+        <!-- F-0020 parent model                                      -->
+        <!-- ========================================================= -->
+
+        <record id="model_x_hr_employee_clearance_request" model="ir.model">
+            <field name="name">Employee Clearance Request</field>
+            <field name="model">x_hr.employee_clearance_request</field>
+            <field name="state">manual</field>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_name" model="ir.model.fields">
+            <field name="name">x_name</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Clearance Request Label</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_employee_id" model="ir.model.fields">
+            <field name="name">x_employee_id</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Employee</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.employee</field>
+            <field name="required" eval="True"/>
+            <field name="on_delete">cascade</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_reference_code" model="ir.model.fields">
+            <field name="name">x_reference_code</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Reference Code</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_document_reference" model="ir.model.fields">
+            <field name="name">x_document_reference</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Document Reference</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_state" model="ir.model.fields">
+            <field name="name">x_state</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">State</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('draft', 'Draft'),
+                ('generated', 'Generated'),
+                ('signature_requested', 'Signature Requested'),
+                ('signed', 'Signed'),
+                ('cancelled', 'Cancelled'),
+                ('superseded', 'Superseded')
+            ]</field>
+            <field name="readonly" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_reason_for_termination" model="ir.model.fields">
+            <field name="name">x_reason_for_termination</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Reason for Termination</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('resignation', 'Resignation'),
+                ('company_termination', 'Termination by Company'),
+                ('contract_end', 'Contract End'),
+                ('other', 'Other Reasons')
+            ]</field>
+            <field name="required" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_other_reason_description" model="ir.model.fields">
+            <field name="name">x_other_reason_description</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Other Reason Description</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_date_of_joining" model="ir.model.fields">
+            <field name="name">x_date_of_joining</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Date of Joining</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_last_working_day" model="ir.model.fields">
+            <field name="name">x_last_working_day</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Last Working Day</field>
+            <field name="ttype">date</field>
+        </record>
+
+        <!-- Six clearance section responsible employees. These link to hr.employee, not res.users. -->
+
+        <record id="field_x_hr_employee_clearance_request__x_assigned_department_responsible_employee_id" model="ir.model.fields">
+            <field name="name">x_assigned_department_responsible_employee_id</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Assigned Department Responsible Employee</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.employee</field>
+            <field name="on_delete">set null</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_it_responsible_employee_id" model="ir.model.fields">
+            <field name="name">x_it_responsible_employee_id</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">IT Responsible Employee</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.employee</field>
+            <field name="on_delete">set null</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_stores_responsible_employee_id" model="ir.model.fields">
+            <field name="name">x_stores_responsible_employee_id</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Stores Responsible Employee</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.employee</field>
+            <field name="on_delete">set null</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_transport_responsible_employee_id" model="ir.model.fields">
+            <field name="name">x_transport_responsible_employee_id</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Transport Responsible Employee</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.employee</field>
+            <field name="on_delete">set null</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_finance_responsible_employee_id" model="ir.model.fields">
+            <field name="name">x_finance_responsible_employee_id</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Finance Responsible Employee</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.employee</field>
+            <field name="on_delete">set null</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_hr_clearance_responsible_employee_id" model="ir.model.fields">
+            <field name="name">x_hr_clearance_responsible_employee_id</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">HR Clearance Responsible Employee</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">hr.employee</field>
+            <field name="on_delete">set null</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <!-- Final approval users. These remain users because Odoo Sign sends to partners/users at final approval layer. -->
+
+        <record id="field_x_hr_employee_clearance_request__x_hr_user_id" model="ir.model.fields">
+            <field name="name">x_hr_user_id</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">HR Responsible User</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_general_manager_user_id" model="ir.model.fields">
+            <field name="name">x_general_manager_user_id</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">General Manager User</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_responsible_user_id" model="ir.model.fields">
+            <field name="name">x_responsible_user_id</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Responsible User</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
+        <!-- Lifecycle artifacts and Sign metadata -->
+
+        <record id="field_x_hr_employee_clearance_request__x_pdf_attachment_id" model="ir.model.fields">
+            <field name="name">x_pdf_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Generated PDF</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_signed_attachment_id" model="ir.model.fields">
+            <field name="name">x_signed_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Signed PDF</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_sign_certificate_attachment_id" model="ir.model.fields">
+            <field name="name">x_sign_certificate_attachment_id</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Sign Certificate</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">ir.attachment</field>
+            <field name="on_delete">set null</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_sign_request_res_id" model="ir.model.fields">
+            <field name="name">x_sign_request_res_id</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Sign Request ID</field>
+            <field name="ttype">integer</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_sign_request_state" model="ir.model.fields">
+            <field name="name">x_sign_request_state</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Sign Request State</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_sign_request_reference" model="ir.model.fields">
+            <field name="name">x_sign_request_reference</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Sign Request Reference</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_sign_request_url" model="ir.model.fields">
+            <field name="name">x_sign_request_url</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Sign Request URL</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_generated_on" model="ir.model.fields">
+            <field name="name">x_generated_on</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Generated On</field>
+            <field name="ttype">datetime</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_sent_on" model="ir.model.fields">
+            <field name="name">x_sent_on</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Sent On</field>
+            <field name="ttype">datetime</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_signed_on" model="ir.model.fields">
+            <field name="name">x_signed_on</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Signed On</field>
+            <field name="ttype">datetime</field>
+            <field name="readonly" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_request__x_notes" model="ir.model.fields">
+            <field name="name">x_notes</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Notes</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <!-- ========================================================= -->
+        <!-- Marsellia Employee Clearance Line                        -->
+        <!-- F-0020 seeded clearance items                            -->
+        <!-- ========================================================= -->
+
+        <record id="model_x_hr_employee_clearance_line" model="ir.model">
+            <field name="name">Employee Clearance Line</field>
+            <field name="model">x_hr.employee_clearance_line</field>
+            <field name="state">manual</field>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_line__x_name" model="ir.model.fields">
+            <field name="name">x_name</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_line"/>
+            <field name="field_description">Clearance Item Label</field>
+            <field name="ttype">char</field>
+            <field name="readonly" eval="True"/>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_line__x_clearance_id" model="ir.model.fields">
+            <field name="name">x_clearance_id</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_line"/>
+            <field name="field_description">Clearance Request</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">x_hr.employee_clearance_request</field>
+            <field name="required" eval="True"/>
+            <field name="on_delete">cascade</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_line__x_section_code" model="ir.model.fields">
+            <field name="name">x_section_code</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_line"/>
+            <field name="field_description">Clearance Section</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[
+                ('assigned_department', 'Assigned Department'),
+                ('it', 'IT Department'),
+                ('stores', 'Stores'),
+                ('transport', 'Transport'),
+                ('finance', 'Finance'),
+                ('hr_clearance', 'HR Clearance')
+            ]</field>
+            <field name="required" eval="True"/>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_line__x_sequence" model="ir.model.fields">
+            <field name="name">x_sequence</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_line"/>
+            <field name="field_description">Sequence</field>
+            <field name="ttype">integer</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_line__x_item_code" model="ir.model.fields">
+            <field name="name">x_item_code</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_line"/>
+            <field name="field_description">Item Code</field>
+            <field name="ttype">char</field>
+            <field name="index" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_line__x_item_label_ar" model="ir.model.fields">
+            <field name="name">x_item_label_ar</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_line"/>
+            <field name="field_description">Clearance Item Arabic</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_line__x_item_label_en" model="ir.model.fields">
+            <field name="name">x_item_label_en</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_line"/>
+            <field name="field_description">Clearance Item English</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <record id="field_x_hr_employee_clearance_line__x_notes" model="ir.model.fields">
+            <field name="name">x_notes</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_line"/>
+            <field name="field_description">Notes</field>
+            <field name="ttype">text</field>
+            <field name="translate" eval="True"/>
+        </record>
+
+        <!-- Parent One2many after inverse Many2one exists -->
+
+        <record id="field_x_hr_employee_clearance_request__x_clearance_line_ids" model="ir.model.fields">
+            <field name="name">x_clearance_line_ids</field>
+            <field name="model_id" ref="model_x_hr_employee_clearance_request"/>
+            <field name="field_description">Clearance Lines</field>
+            <field name="ttype">one2many</field>
+            <field name="relation">x_hr.employee_clearance_line</field>
+            <field name="relation_field">x_clearance_id</field>
+        </record>
+
+        <!-- Employee inverse field -->
+
+        <record id="field_hr_employee__x_clearance_request_ids" model="ir.model.fields">
+            <field name="name">x_clearance_request_ids</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="field_description">Clearance Requests</field>
+            <field name="ttype">one2many</field>
+            <field name="relation">x_hr.employee_clearance_request</field>
+            <field name="relation_field">x_employee_id</field>
+        </record>
+
+    </data>
+</odoo>
