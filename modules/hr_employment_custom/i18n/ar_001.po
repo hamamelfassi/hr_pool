@@ -121,6 +121,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission_type__x_active
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training__x_active
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_active
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_type_policy__x_active
 msgid "Active"
 msgstr "نشط"
 
@@ -145,6 +146,8 @@ msgstr "إضافة هوية"
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_leave_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_leave_requests
 msgid "Approval Metadata"
 msgstr "بيانات الاعتماد"
 
@@ -213,8 +216,9 @@ msgstr "حالة إخلاء الطرف"
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_code
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission_type__x_code
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_type_policy__x_code
 msgid "Code"
-msgstr "الرمز"
+msgstr "الكود"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_commitment_end_date
@@ -372,6 +376,7 @@ msgstr "الوصف والحالة"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_direct_manager_user_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_direct_manager_user_id
 msgid "Direct Manager User"
 msgstr "مستخدم المدير المباشر"
 
@@ -403,6 +408,7 @@ msgstr "رقم المستند"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_document_reference
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_document_reference
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_document_reference
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_document_reference
 msgid "Document Reference"
 msgstr "مرجع المستند"
 
@@ -430,6 +436,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_leave_download_generated_pdf
 msgid "Download Generated PDF"
 msgstr "تنزيل ملف PDF المنشأ"
 
@@ -445,6 +452,7 @@ msgstr "تنزيل ملف PDF المنشأ"
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_leave_download_sign_certificate
 msgid "Download Sign Certificate"
 msgstr "تنزيل شهادة التوقيع"
 
@@ -460,6 +468,7 @@ msgstr "تنزيل شهادة التوقيع"
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_leave_download_signed_pdf
 msgid "Download Signed PDF"
 msgstr "تنزيل ملف PDF الموقع"
 
@@ -475,6 +484,7 @@ msgstr "تنزيل مرفق المصدر"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_identification_document__x_employee_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_employee_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_employee_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_employee_id
 msgid "Employee"
 msgstr "الموظف"
 
@@ -570,6 +580,7 @@ msgstr "هوية الموظف: ضبط الاسم والتسجيل عند الت�
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_employee_notes
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_employee_notes
 msgid "Employee Notes"
 msgstr "ملاحظات الموظف"
 
@@ -764,8 +775,9 @@ msgstr ""
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_form_code
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission_type__x_form_code
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_type_policy__x_form_code
 msgid "Form Code"
-msgstr "رمز النموذج"
+msgstr "كود النموذج"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_state
@@ -774,6 +786,7 @@ msgstr "حالة دورة النموذج"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission_type__x_form_title
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_type_policy__x_form_title
 msgid "Form Title"
 msgstr "عنوان النموذج"
 
@@ -830,8 +843,9 @@ msgstr "توليد ملف PDF"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_generated_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_generated_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_generated_on
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_generated_on
 msgid "Generated On"
-msgstr "تاريخ الإنشاء"
+msgstr "تاريخ التوليد"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_pdf_attachment_id
@@ -840,6 +854,7 @@ msgstr "تاريخ الإنشاء"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_pdf_attachment_id
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_pdf_attachment_id
 msgid "Generated PDF"
 msgstr "ملف PDF المنشأ"
 
@@ -855,6 +870,7 @@ msgstr ""
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_hr_user_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_hr_user_id
 msgid "HR User"
 msgstr "مستخدم الموارد البشرية"
 
@@ -1028,8 +1044,10 @@ msgstr "إذن تأخير"
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_custody
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_leave_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_leave_requests
 msgid "Lifecycle Artifacts"
-msgstr "المرفقات الرسمية"
+msgstr "مرفقات دورة الحياة"
 
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_custody_item_form
@@ -1040,6 +1058,8 @@ msgstr "المرفقات الرسمية"
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_declarations
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_training
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_leave_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_leave_requests
 msgid "Manual Decision"
 msgstr "القرار اليدوي"
 
@@ -1048,6 +1068,7 @@ msgstr "القرار اليدوي"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_manual_decision_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_manual_decision_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_manual_decision_attachment_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_manual_decision_attachment_id
 msgid "Manual Decision Attachment"
 msgstr "مرفق القرار اليدوي"
 
@@ -1056,6 +1077,7 @@ msgstr "مرفق القرار اليدوي"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_manual_decision_date
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_manual_decision_date
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_manual_decision_date
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_manual_decision_date
 msgid "Manual Decision Date"
 msgstr "تاريخ القرار اليدوي"
 
@@ -1064,6 +1086,7 @@ msgstr "تاريخ القرار اليدوي"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_manual_decision_number
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_manual_decision_number
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_manual_decision_number
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_manual_decision_number
 msgid "Manual Decision Number"
 msgstr "رقم القرار اليدوي"
 
@@ -1147,6 +1170,8 @@ msgstr "تدريب جديد"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_training_course__x_notes
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_course_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_training_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_leave_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_leave_requests
 msgid "Notes"
 msgstr "ملاحظات"
 
@@ -1257,8 +1282,9 @@ msgstr "الكمية"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_reason
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_reason
 msgid "Reason"
-msgstr "سبب الطلب"
+msgstr "السبب"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_recovery_amount
@@ -1285,8 +1311,9 @@ msgstr "الاسترداد مطلوب عند الإخلال"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_item__x_reference_code
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_reference_code
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_reference_code
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_reference_code
 msgid "Reference Code"
-msgstr "رمز المرجع"
+msgstr "كود المرجع"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_custody_type__x_replacement_fee_amount
@@ -1315,6 +1342,7 @@ msgstr "مطلوب حسب الدور"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission_type__x_requires_direct_manager_approval
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_type_policy__x_requires_direct_manager_approval
 msgid "Requires Direct Manager Approval"
 msgstr "يتطلب اعتماد المدير المباشر"
 
@@ -1325,6 +1353,7 @@ msgstr "يتطلب وقت من/إلى"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission_type__x_requires_hr_approval
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_type_policy__x_requires_hr_approval
 msgid "Requires HR Approval"
 msgstr "يتطلب اعتماد الموارد البشرية"
 
@@ -1348,6 +1377,7 @@ msgstr "يتطلب التوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_responsible_user_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_responsible_user_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_responsible_user_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_responsible_user_id
 msgid "Responsible User"
 msgstr "المستخدم المسؤول"
 
@@ -1434,6 +1464,7 @@ msgstr "إرسال للتوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sent_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_sent_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_sent_on
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_sent_on
 msgid "Sent On"
 msgstr "تاريخ الإرسال"
 
@@ -1481,6 +1512,7 @@ msgstr "تسجيل عدم اكتمال التدريب"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sign_certificate_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_sign_certificate_attachment_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_sign_certificate_attachment_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_sign_certificate_attachment_id
 msgid "Sign Certificate"
 msgstr "شهادة التوقيع"
 
@@ -1489,6 +1521,7 @@ msgstr "شهادة التوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sign_request_res_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_sign_request_res_id
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_sign_request_res_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_sign_request_res_id
 msgid "Sign Request ID"
 msgstr "معرف طلب التوقيع"
 
@@ -1497,6 +1530,7 @@ msgstr "معرف طلب التوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sign_request_reference
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_sign_request_reference
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_sign_request_reference
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_sign_request_reference
 msgid "Sign Request Reference"
 msgstr "مرجع طلب التوقيع"
 
@@ -1505,6 +1539,7 @@ msgstr "مرجع طلب التوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sign_request_state
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_sign_request_state
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_sign_request_state
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_sign_request_state
 msgid "Sign Request State"
 msgstr "حالة طلب التوقيع"
 
@@ -1513,6 +1548,7 @@ msgstr "حالة طلب التوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_sign_request_url
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_sign_request_url
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_sign_request_url
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_sign_request_url
 msgid "Sign Request URL"
 msgstr "رابط طلب التوقيع"
 
@@ -1521,6 +1557,7 @@ msgstr "رابط طلب التوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_declaration__x_signed_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_signed_on
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_signed_on
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_signed_on
 msgid "Signed On"
 msgstr "تاريخ التوقيع"
 
@@ -1531,6 +1568,7 @@ msgstr "تاريخ التوقيع"
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_training_commitment__x_signed_attachment_id
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_signed_attachment_id
 msgid "Signed PDF"
 msgstr "ملف PDF الموقع"
 
@@ -1563,6 +1601,7 @@ msgstr "قيم المصدر"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_permission__x_state
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_state
 msgid "State"
 msgstr "الحالة"
 
@@ -1750,6 +1789,8 @@ msgstr "يستخدم مستند بطاقة الشركة"
 #. module: hr_employment_custom
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_permission_form
 #: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_permissions
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_leave_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_leave_requests
 msgid "Workflow and Artifacts"
 msgstr "سير العمل والمرفقات"
 
@@ -2729,26 +2770,31 @@ msgstr "خطأ"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7205_6e37ae10
+#: model:x_hr.employee_leave_type_policy,x_name:hr_employment_custom.employee_leave_policy_annual_leave
 msgid "Annual Leave"
 msgstr "إجازة سنوية"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7208_744e15b0
+#: model:x_hr.employee_leave_type_policy,x_name:hr_employment_custom.employee_leave_policy_emergency_leave
 msgid "Emergency Leave"
 msgstr "إجازة طارئة"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7207_4a5d9161
+#: model:x_hr.employee_leave_type_policy,x_name:hr_employment_custom.employee_leave_policy_sick_leave
 msgid "Sick Leave"
 msgstr "إجازة مرضية"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7206_73089dd8
+#: model:x_hr.employee_leave_type_policy,x_name:hr_employment_custom.employee_leave_policy_unpaid_leave
 msgid "Unpaid Leave"
 msgstr "إجازة بدون مرتب"
 
 #. module: hr_employment_custom
 #: model:ir.model.fields.selection,name:__export__.ir_model_fields_selection_7203_badadd62
+#: model:x_hr.employee_leave_type_policy,x_name:hr_employment_custom.employee_leave_policy_compensatory_leave
 msgid "Compensatory Leave"
 msgstr "إجازة تعويضية"
 
@@ -2758,6 +2804,8 @@ msgid "Other"
 msgstr "أخرى"
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_leave_requests
+#: model:ir.ui.menu,name:hr_employment_custom.menu_employee_leave_configuration_section
 msgid "Leave"
 msgstr "الإجازات"
 
@@ -2766,141 +2814,260 @@ msgid "Leave Request"
 msgstr "طلب إجازة"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_name
 msgid "Leave Request Label"
 msgstr "تسمية طلب الإجازة"
 
 #. module: hr_employment_custom
+#: model:ir.model,name:hr_employment_custom.model_x_hr_employee_leave_request
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_leave_generate_pdf
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_leave_send_sign
+#: model:ir.actions.server,name:hr_employment_custom.action_employee_leave_sync_sign
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_notes
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_type_policy__x_notes
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_leave_type_policy_form
 msgid "Employee Leave Request"
-msgstr "طلب إجازة الموظف"
+msgstr "طلبات الإجازة هنا هي سجلات نماذج الإجازة الرسمية الخاصة بمارسيليا. تم تأجيل الربط مع إجازات أودو الأصلية عمدًا إلى حين إثبات سير عمل المستند الموقع."
 
 #. module: hr_employment_custom
+#: model:ir.ui.menu,name:hr_employment_custom.menu_employee_leave_requests
+#: model:ir.actions.act_window,name:hr_employment_custom.action_employee_leave_requests
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_leave_request_list
 msgid "Employee Leave Requests"
 msgstr "طلبات إجازات الموظفين"
 
 #. module: hr_employment_custom
+#: model:ir.actions.act_window,name:hr_employment_custom.action_employee_leave_type_policies
 msgid "Employee Leave Type Policies"
 msgstr "سياسات أنواع الإجازات"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_leave_type_policy_id
 msgid "Leave Type Policy"
 msgstr "سياسة نوع الإجازة"
 
 #. module: hr_employment_custom
+#: model:ir.ui.menu,name:hr_employment_custom.menu_employee_leave_type_policies
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_leave_type_policy_list
 msgid "Leave Type Policies"
 msgstr "سياسات أنواع الإجازات"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_type_policy__x_name
 msgid "Leave Policy"
 msgstr "سياسة الإجازة"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_type_policy__x_leave_category
 msgid "Leave Category"
 msgstr "فئة الإجازة"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_type_policy__x_work_entry_type_id
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_work_entry_type_id
 msgid "Native Time Off Type"
 msgstr "نوع الإجازة الأصلي في أودو"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_native_leave_id
 msgid "Native Time Off Record"
 msgstr "سجل الإجازة الأصلي في أودو"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_native_leave_sync_state
 msgid "Native Leave Sync State"
 msgstr "حالة مزامنة الإجازة الأصلية"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_native_leave_created_on
 msgid "Native Leave Created On"
 msgstr "تاريخ إنشاء الإجازة الأصلية"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_native_leave_notes
 msgid "Native Leave Notes"
 msgstr "ملاحظات الإجازة الأصلية"
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_leave_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_leave_requests
 msgid "Leave Dates"
 msgstr "تواريخ الإجازة"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_request_date
 msgid "Request Date"
 msgstr "تاريخ الطلب"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_leave_date_from
 msgid "Leave From"
 msgstr "الإجازة من"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_leave_date_to
 msgid "Leave To"
 msgstr "الإجازة إلى"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_requested_days
 msgid "Requested Days"
 msgstr "الأيام المطلوبة"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_requested_calendar_days
 msgid "Requested Calendar Days"
 msgstr "الأيام التقويمية المطلوبة"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_excluded_weekend_days
 msgid "Excluded Weekend Days"
 msgstr "أيام نهاية الأسبوع المستبعدة"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_excluded_public_holiday_days
 msgid "Excluded Public Holiday Days"
 msgstr "أيام العطل الرسمية المستبعدة"
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_leave_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_leave_requests
 msgid "Manual HR Balance Verification"
 msgstr "التحقق اليدوي من رصيد الموارد البشرية"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_current_balance_days
 msgid "Current Balance Days"
 msgstr "أيام الرصيد الحالي"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_used_balance_days
 msgid "Used Balance Days"
 msgstr "أيام الرصيد المستخدم"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_remaining_balance_days
 msgid "Remaining Balance Days"
 msgstr "أيام الرصيد المتبقي"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_hr_balance_allowed
 msgid "HR Balance Allowed"
 msgstr "مسموح من رصيد الموارد البشرية"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_balance_verified_by_user_id
 msgid "Balance Verified By"
 msgstr "تم التحقق من الرصيد بواسطة"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_balance_verified_on
 msgid "Balance Verified On"
 msgstr "تاريخ التحقق من الرصيد"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_balance_notes
 msgid "Balance Notes"
 msgstr "ملاحظات الرصيد"
 
 #. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_leave_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_leave_requests
 msgid "Leave Contact and Handover"
 msgstr "بيانات الاتصال والتسليم أثناء الإجازة"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_address_during_leave
 msgid "Address During Leave"
 msgstr "العنوان أثناء الإجازة"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_contact_during_leave
 msgid "Contact During Leave"
 msgstr "وسيلة الاتصال أثناء الإجازة"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_acting_employee_id
 msgid "Acting Employee"
 msgstr "الموظف المكلف بالعمل"
 
 #. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_request__x_general_manager_user_id
 msgid "General Manager User"
 msgstr "مستخدم المدير العام"
 
 #. module: hr_employment_custom
+#: model:ir.actions.act_window,name:hr_employment_custom.action_employee_leave_request_create
 msgid "New Leave Request"
 msgstr "طلب إجازة جديد"
+
+#. module: hr_employment_custom
+#: model:ir.model,name:hr_employment_custom.model_x_hr_employee_leave_type_policy
+msgid "Employee Leave Type Policy"
+msgstr "سياسة نوع إجازة الموظف"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_type_policy__x_requires_balance_check
+msgid "Requires Balance Check"
+msgstr "يتطلب فحص الرصيد"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_type_policy__x_requires_acting_employee
+msgid "Requires Acting Employee"
+msgstr "يتطلب موظفًا مكلفًا"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_type_policy__x_requires_address_during_leave
+msgid "Requires Address During Leave"
+msgstr "يتطلب العنوان أثناء الإجازة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_type_policy__x_requires_contact_during_leave
+msgid "Requires Contact During Leave"
+msgstr "يتطلب وسيلة اتصال أثناء الإجازة"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_type_policy__x_requires_general_manager_approval
+msgid "Requires General Manager Approval"
+msgstr "يتطلب اعتماد المدير العام"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_type_policy__x_default_entitlement_days
+msgid "Default Entitlement Days"
+msgstr "أيام الاستحقاق الافتراضية"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_x_hr_employee_leave_type_policy__x_default_emergency_limit_days
+msgid "Default Emergency Limit Days"
+msgstr "حد الإجازة الطارئة الافتراضي بالأيام"
+
+#. module: hr_employment_custom
+#: model:ir.model.fields,field_description:hr_employment_custom.field_hr_employee__x_leave_request_ids
+msgid "Leave Requests"
+msgstr "طلبات الإجازات"
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_leave_type_policy_form
+msgid "Leave policies are Marsellia form-policy records. The native Odoo Time Off type is only a bridge target for future hr.leave creation."
+msgstr "سياسات الإجازات هي سجلات سياسة نماذج خاصة بمارسيليا. نوع الإجازة الأصلي في أودو هو هدف ربط فقط لإنشاء سجلات الإجازة الأصلية لاحقًا."
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_leave_type_policy_form
+msgid "This is the Marsellia official leave request surface. HR balance values are manually verified in this pass. Native Odoo Time Off creation is reserved for a later bridge action."
+msgstr "هذه واجهة طلب الإجازة الرسمية الخاصة بمارسيليا. يتم التحقق من قيم رصيد الموارد البشرية يدويًا في هذه المرحلة. إنشاء إجازة أودو الأصلية مؤجل إلى إجراء ربط لاحق."
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_leave_type_policy_form
+msgid "Leave requests here are Marsellia official leave-form records. Native Odoo Time Off integration is intentionally deferred until the signed-document workflow is proven."
+msgstr "طلبات الإجازة هنا هي سجلات نماذج الإجازة الرسمية الخاصة بمارسيليا. تم تأجيل الربط مع إجازات أودو الأصلية عمدًا إلى حين إثبات سير عمل المستند الموقع."
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_leave_type_policy_form
+msgid "Leave requests here are Marsellia official leave-form records. Native Odoo Time Off integration is intentionally deferred until the signed-document workflow is proven"
+msgstr "طلبات الإجازة هنا هي سجلات نماذج الإجازة الرسمية الخاصة بمارسيليا. تم تأجيل الربط مع إجازات أودو الأصلية عمدًا إلى حين إثبات سير عمل المستند الموقع."
+
+#. module: hr_employment_custom
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_employee_leave_request_form
+#: model_terms:ir.ui.view,arch_db:hr_employment_custom.view_hr_employee_form_inherit_employee_leave_requests
+msgid "Native Time Off Bridge"
+msgstr "جسر الإجازات الأصلي في أودو"
