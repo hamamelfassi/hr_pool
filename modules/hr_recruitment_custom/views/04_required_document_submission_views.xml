@@ -36,21 +36,21 @@
         <field name="model">x_hr.applicant_required_document_submission</field>
         <field name="priority" eval="5" />
         <field name="arch" type="xml">
-            <form string="تقديم المستند المطلوب" create="false" delete="false">
+            <form string="Required Document Submission" create="false" delete="false">
                 <header>
                     <button type="action"
                         name="hr_recruitment_custom.action_required_document_submission_accept"
-                        string="اعتماد التقديم"
+                        string="Accept"
                         class="btn-primary"
                         invisible="x_state != 'submitted'" />
                     <button type="action"
                         name="hr_recruitment_custom.action_required_document_submission_reject"
-                        string="رفض التقديم"
+                        string="Reject"
                         class="btn-secondary"
                         invisible="x_state != 'submitted'" />
                     <button type="action"
                         name="hr_recruitment_custom.action_required_document_submission_download_submitted_attachment"
-                        string="تنزيل المستند"
+                        string="Download Evidence"
                         icon="fa-download"
                         class="btn-secondary"
                         invisible="not x_attachment_id" />
@@ -185,6 +185,7 @@
                             placeholder="Internal notes about this submitted evidence." />
                     </group>
                 </sheet>
+                <chatter />
             </form>
         </field>
     </record>

@@ -19,6 +19,22 @@
 submission_model = env['x_hr.applicant_required_document_submission'].sudo()
 action = False
 
+
+def reload_submission(rec):
+    view = env.ref('hr_recruitment_custom.view_required_document_submission_form_controlled', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Required Document Submission',
+        'res_model': 'x_hr.applicant_required_document_submission',
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
 for rec in records.sudo():
     line = rec.x_line_id
     checklist = rec.x_checklist_id or (line.x_checklist_id if line else False)
@@ -205,7 +221,8 @@ for rec in records.sudo():
     )
 
 if not action:
-    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+    rec = records[:1].sudo() if records else False
+    action = reload_submission(rec) if rec else {'type': 'ir.actions.client', 'tag': 'reload'}
             ]]></field>
         </record>
 
@@ -220,6 +237,22 @@ if not action:
             <field name="code"><![CDATA[
 submission_model = env['x_hr.applicant_required_document_submission'].sudo()
 action = False
+
+
+def reload_submission(rec):
+    view = env.ref('hr_recruitment_custom.view_required_document_submission_form_controlled', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Required Document Submission',
+        'res_model': 'x_hr.applicant_required_document_submission',
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
 
 for rec in records.sudo():
     line = rec.x_line_id
@@ -355,7 +388,8 @@ for rec in records.sudo():
     )
 
 if not action:
-    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+    rec = records[:1].sudo() if records else False
+    action = reload_submission(rec) if rec else {'type': 'ir.actions.client', 'tag': 'reload'}
             ]]></field>
         </record>
         <!-- ========================================================= -->
@@ -451,6 +485,38 @@ for line in records.sudo():
                 'message': 'This checklist line is missing applicant, checklist, or document type linkage.',
                 'type': 'warning',
                 'sticky': True,
+            }
+        }
+        continue
+
+
+    if line.x_status in ('submitted', 'accepted', 'resubmission_requested'):
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Manual submission blocked',
+                'message': 'A manual submission cannot be created while this checklist line is Submitted, Accepted, or waiting for resubmission. Open the latest submission instead.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+        continue
+
+    existing_active_submission = submission_model.search([
+        ('x_line_id', '=', line.id),
+        ('x_state', '=', 'submitted'),
+    ], order='id desc', limit=1)
+
+    if existing_active_submission:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Manual submission blocked',
+                'message': 'There is already an active submitted evidence record for this checklist line. Open the latest submission instead.',
+                'type': 'warning',
+                'sticky': False,
             }
         }
         continue

@@ -92,7 +92,7 @@
                                     invisible="not id or not x_pdf_attachment_id or x_document_state != 'generated'" />
                                 <button type="action"
                                     name="hr_recruitment_custom.action_mcep_interview_sync_native_sign_completion"
-                                    string="مزامنة نتيجة التوقيع"
+                                    string="Sync"
                                     class="btn-secondary"
                                     invisible="not id or x_document_state != 'sent'" />
                             </header>
@@ -442,7 +442,7 @@
                             string="Prepare Checklist"
                             class="btn-primary"
                             invisible="not id" />
-                        <div class="text-muted">
+                        <div class="alert alert-info" role="alert">
                             Review required documents, generate the checklist, send it for signature, then sync the signed result.
                         </div>
                     </group>
@@ -469,18 +469,23 @@
                                     class="btn-primary"
                                     invisible="not id" />
                                 <button type="action"
+                                    name="hr_recruitment_custom.action_required_document_checklist_prepare_submission_request"
+                                    string="Prepare Submission Request"
+                                    class="btn-secondary"
+                                    invisible="not id or x_state in ('signature_requested', 'signed', 'cancelled')" />
+                                <button type="action"
                                     name="hr_recruitment_custom.action_required_document_checklist_generate_pdf"
-                                    string="Generate F-0003 PDF"
+                                    string="Generate PDF"
                                     class="btn-secondary"
                                     invisible="x_state != 'ready_for_pdf' and x_state != 'generated'" />
                                 <button type="action"
                                     name="hr_recruitment_custom.action_required_document_checklist_send_native_sign"
-                                    string="Send via Odoo Sign"
+                                    string="Sign"
                                     class="btn-primary"
                                     invisible="x_state != 'generated' or not x_pdf_attachment_id" />
                                 <button type="action"
                                     name="hr_recruitment_custom.action_required_document_checklist_sync_native_sign_completion"
-                                    string="مزامنة نتيجة التوقيع"
+                                    string="Sync"
                                     class="btn-secondary"
                                     invisible="x_state != 'signature_requested'" />
                                 <field name="x_state"
@@ -545,7 +550,8 @@
                                             string=""
                                             title="إنشاء تقديم يدوي"
                                             icon="fa-upload"
-                                            class="btn-link" />
+                                            class="btn-link"
+                                            invisible="x_status in ('submitted', 'accepted', 'resubmission_requested')" />
                                         <button type="action"
                                             name="hr_recruitment_custom.action_required_document_line_open_latest_submission"
                                             string=""
@@ -556,7 +562,8 @@
                                         <field name="x_document_name_en" string="Name (EN)" readonly="1" />
                                         <field name="x_required" readonly="1" />
                                         <field name="x_status" string="Status" readonly="1" widget="badge"
-                                            decoration-warning="x_status in ('missing', 'submitted', 'resubmission_requested')"
+                                            decoration-warning="x_status in ('missing', 'resubmission_requested')"
+                                decoration-info="x_status == 'submitted'"
                                             decoration-success="x_status == 'accepted'"
                                             decoration-danger="x_status == 'rejected'"
                                             decoration-muted="x_status == 'not_applicable'" />
@@ -673,12 +680,12 @@
                             <header>
                                 <button type="action"
                                     name="hr_recruitment_custom.action_required_document_submission_accept"
-                                    string="Accept Submission"
+                                    string="Accept"
                                     class="btn-primary"
                                     invisible="x_state != 'submitted'" />
                                 <button type="action"
                                     name="hr_recruitment_custom.action_required_document_submission_reject"
-                                    string="Reject Submission"
+                                    string="Reject"
                                     class="btn-secondary"
                                     invisible="x_state != 'submitted'" />
                                 <button type="action"
@@ -880,7 +887,7 @@
                                     invisible="x_declaration_type != 'legal_documents_validity_declaration' or x_state != 'generated' or not x_pdf_attachment_id" />
                                 <button type="action"
                                     name="hr_recruitment_custom.action_applicant_declaration_sync_f0004_native_sign_completion"
-                                    string="مزامنة نتيجة التوقيع"
+                                    string="Sync"
                                     class="btn-secondary"
                                     invisible="x_declaration_type != 'legal_documents_validity_declaration' or x_state != 'signature_requested'" />
                                 <button type="action"
@@ -1284,7 +1291,7 @@
                         invisible="not id or not x_pdf_attachment_id or x_document_state != 'generated'" />
                     <button type="action"
                         name="hr_recruitment_custom.action_mcep_interview_sync_native_sign_completion"
-                        string="مزامنة نتيجة التوقيع"
+                        string="Sync"
                         class="btn-secondary"
                         invisible="not id or x_document_state != 'sent'" />
                 </header>

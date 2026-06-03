@@ -59,7 +59,7 @@
                         invisible="not id or not x_generated_url" />
                     <button type="action"
                         name="hr_recruitment_custom.action_required_document_submission_request_sync_lines_from_submissions"
-                        string="Sync Lines from Submissions"
+                        string="Sync"
                         class="btn-secondary"
                         invisible="not id" />
                     <button type="action"

@@ -17,6 +17,24 @@ doc_type_model = env['x_hr.recruitment_required_document_type'].sudo()
 checklist_model = env['x_hr.applicant_required_document_checklist'].sudo()
 line_model = env['x_hr.applicant_required_document_line'].sudo()
 
+
+def open_checklist_form(checklist):
+    view = env.ref('hr_recruitment_custom.view_required_document_checklist_form_controlled', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': checklist.x_name or 'Required Document Checklist',
+        'res_model': 'x_hr.applicant_required_document_checklist',
+        'res_id': checklist.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+action = False
+
 active_types = doc_type_model.search([
     ('x_active', '=', True),
 ], order='x_sequence asc, id asc')
@@ -26,7 +44,7 @@ if not active_types:
 
 now = datetime.datetime.now()
 
-for applicant in records:
+for applicant in records.sudo():
     checklist = checklist_model.search([
         ('x_applicant_id', '=', applicant.id),
         ('x_state', 'not in', ['cancelled', 'signed']),
@@ -81,10 +99,7 @@ for applicant in records:
                 'x_notes': doc_type.x_notes,
             })
             added_count += 1
-            
-    # Normalize checklist-line snapshots from the current document type library.
-    # This is intentionally additive/non-destructive: it updates snapshot metadata
-    # but does not delete historical lines.
+
     for line in checklist.x_line_ids:
         doc_type = line.x_document_type_id
         if not doc_type:
@@ -112,9 +127,6 @@ for applicant in records:
         if line.x_structured_data_required != doc_type.x_structured_data_required:
             line_values['x_structured_data_required'] = doc_type.x_structured_data_required
 
-        # Retire the old combined identity row on editable checklists only.
-        # The row is kept for upgrade safety but should not remain a required
-        # public or signed checklist line after the split into passport/id card/license.
         if doc_type.x_code == 'identity_document_copy' and line.x_status != 'accepted':
             line_values.update({
                 'x_required': False,
@@ -144,8 +156,12 @@ for applicant in records:
             body='F-0003 Required Documents Checklist already exists and is up to date.'
         )
 
-action = {'type': 'ir.actions.client', 'tag': 'reload'}
-            ]]></field>
+    action = open_checklist_form(checklist)
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+]]></field>
         </record>
 
 
