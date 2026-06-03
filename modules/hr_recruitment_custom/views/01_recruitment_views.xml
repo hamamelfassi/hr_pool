@@ -436,16 +436,16 @@
                     </group>
                 </page>
                 <page string="Documents">
-                    <group>
+                    <div class="d-flex justify-content-start mb-2">
                         <button type="action"
                             name="hr_recruitment_custom.action_hr_applicant_prepare_required_document_checklist"
                             string="Prepare Checklist"
                             class="btn-primary"
                             invisible="not id" />
-                        <div class="alert alert-info" role="alert">
-                            Review required documents, generate the checklist, send it for signature, then sync the signed result.
-                        </div>
-                    </group>
+                    </div>
+                    <div class="alert alert-info" role="alert">
+                        Review required documents, prepare the checklist, collect submissions, generate the PDF, send for signature, then sync the signed result.
+                    </div>
 
                     <field name="x_required_document_checklist_ids"
                         context="{'default_x_applicant_id': id}">
@@ -493,6 +493,27 @@
                                     options="{'clickable': false}"
                                     statusbar_visible="draft,in_review,ready_for_pdf,generated,signature_requested,signed"
                                     readonly="1" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_required_document_checklist_download_generated_pdf"
+                                    string=""
+                                    title="Download Generated PDF"
+                                    icon="fa-download"
+                                    class="btn-link"
+                                    invisible="not x_pdf_attachment_id" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_required_document_checklist_download_signed_pdf"
+                                    string=""
+                                    title="Download Signed PDF"
+                                    icon="fa-file-pdf-o"
+                                    class="btn-link"
+                                    invisible="not x_signed_attachment_id" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_required_document_checklist_download_sign_certificate"
+                                    string=""
+                                    title="Download Sign Certificate"
+                                    icon="fa-certificate"
+                                    class="btn-link"
+                                    invisible="x_state != 'signed'" />
                             </header>
                             <sheet>
                                 <group>
@@ -509,33 +530,8 @@
                                         <field name="x_generated_on" readonly="1" />
                                         <field name="x_sent_on" readonly="1" />
                                         <field name="x_signed_on" readonly="1" />
-
-                                        <div class="o_row">
-                                            <field name="x_pdf_attachment_id" string="Draft PDF" readonly="1"
-                                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
-                                                domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]" />
-                                            <button type="action"
-                                                name="hr_recruitment_custom.action_required_document_checklist_download_generated_pdf"
-                                                string=""
-                                                title="Download Draft PDF"
-                                                icon="fa-download"
-                                                class="btn-link"
-                                                invisible="not x_pdf_attachment_id" />
-                                        </div>
-
-                                        <div class="o_row">
-                                            <field name="x_signed_attachment_id" string="Signed PDF" readonly="1"
-                                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
-                                                domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]"
-                                                context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}" />
-                                            <button type="action"
-                                                name="hr_recruitment_custom.action_required_document_checklist_download_signed_pdf"
-                                                string=""
-                                                title="Download Signed PDF"
-                                                icon="fa-download"
-                                                class="btn-link"
-                                                invisible="not x_signed_attachment_id" />
-                                        </div>
+                            <field name="x_pdf_attachment_id" invisible="1" />
+                            <field name="x_signed_attachment_id" invisible="1" />
                                     </group>
                                 </group>
                                     <div class="alert alert-info" role="alert">

@@ -54,14 +54,14 @@
                         invisible="not id or x_state not in ('draft', 'prepared')" />
                     <button type="action"
                         name="hr_recruitment_custom.action_required_document_submission_request_open_url"
-                        string="Open URL"
+                        string="Open Link"
                         class="btn-secondary"
-                        invisible="not id or not x_generated_url" />
+                        invisible="not id or not x_generated_url or x_state not in ('draft', 'prepared')" />
                     <button type="action"
                         name="hr_recruitment_custom.action_required_document_submission_request_sync_lines_from_submissions"
                         string="Sync"
                         class="btn-secondary"
-                        invisible="not id" />
+                        invisible="not id or x_state in ('completed', 'cancelled')" />
                     <button type="action"
                         name="hr_recruitment_custom.action_required_document_submission_request_send_email"
                         string="Send Request Email"
@@ -96,17 +96,14 @@
                         </group>
                     </group>
 
-                    <group string="Fillout Continuation URL">
+                    <group string="Fillout Continuation URL" invisible="x_state not in ('draft', 'prepared')">
                         <field name="x_form_base_url"
                             readonly="x_state not in ('draft', 'prepared')" />
-                        <field name="x_generated_url"
-                            readonly="1"
-                            widget="url"
-                            invisible="x_state in ('completed', 'cancelled')" />
+                        <field name="x_generated_url" invisible="1" readonly="1" />
                     </group>
 
                     <separator string="Request Lines" />
-                    <field name="x_line_ids">
+                    <field name="x_line_ids" readonly="1">
                         <list create="false" delete="false">
                             <field name="x_sequence" widget="handle" />
                             <field name="x_document_code" string="Code" readonly="1" />
@@ -121,42 +118,22 @@
                             <field name="x_latest_submission_id" string="Latest Submission" readonly="1"
                                 options="{'no_open': True}" />
                         </list>
-                        <form string="Required Document Request Line" create="false" delete="false">
+                        <form string="Required Document Request Line" create="false" delete="false" edit="false">
                             <group>
                                 <group string="Line Identity">
                                     <field name="x_name" readonly="1" />
                                     <field name="x_sequence" readonly="1" />
-                                    <field name="x_state" />
-                                    <field name="x_applicant_id" readonly="1" />
-                                    <field name="x_checklist_id" readonly="1" />
-                                    <field name="x_checklist_line_id" readonly="1" />
-                                    <field name="x_document_type_id" readonly="1" />
-                                </group>
-                                <group string="Fillout Routing">
+                                    <field name="x_state" readonly="1" />
                                     <field name="x_document_code" readonly="1" />
-                                    <field name="x_fillout_prefix" readonly="1" />
-                                    <field name="x_public_request_enabled" readonly="1" />
+                                    <field name="x_checklist_line_id" readonly="1" options="{'no_open': True}" />
+                                    <field name="x_document_type_id" readonly="1" options="{'no_open': True}" />
+                                </group>
+                                <group string="Submission Linkage">
                                     <field name="x_requires_attachment" readonly="1" />
                                     <field name="x_structured_data_required" readonly="1" />
-                                    <field name="x_manual_review_expected" readonly="1" />
+                                    <field name="x_latest_submission_id" readonly="1" options="{'no_open': True}" />
+                                    <field name="x_notes" readonly="1" />
                                 </group>
-                            </group>
-                            <group string="URL Parameter Names">
-                                <group>
-                                    <field name="x_show_param_name" readonly="1" />
-                                    <field name="x_request_line_param_name" readonly="1" />
-                                    <field name="x_checklist_line_param_name" readonly="1" />
-                                </group>
-                                <group>
-                                    <field name="x_document_type_param_name" readonly="1" />
-                                    <field name="x_document_code_param_name" readonly="1" />
-                                </group>
-                            </group>
-                            <group string="Submission Linkage">
-                                <field name="x_latest_submission_id" readonly="1" />
-                            </group>
-                            <group string="Notes">
-                                <field name="x_notes" />
                             </group>
                         </form>
                     </field>

@@ -429,7 +429,42 @@ for applicant in records.sudo():
         body='تم توحيد أسماء القائمة وطلبات التقديم وبنود الطلبات والمستندات المقدمة.'
     )
 
-action = {'type': 'ir.actions.client', 'tag': 'reload'}
+action = False
+applicant = records[:1].sudo() if records else False
+if applicant:
+    checklist = checklist_model.search([
+        ('x_applicant_id', '=', applicant.id),
+        ('x_state', 'not in', ['cancelled']),
+    ], order='id desc', limit=1)
+
+    if checklist:
+        view = env.ref('hr_recruitment_custom.view_required_document_checklist_form_controlled', raise_if_not_found=False)
+        action = {
+            'type': 'ir.actions.act_window',
+            'name': checklist.x_name or 'Required Document Checklist',
+            'res_model': 'x_hr.applicant_required_document_checklist',
+            'res_id': checklist.id,
+            'view_mode': 'form',
+            'target': 'current',
+            'context': dict(env.context, mcep_return_tab='documents'),
+        }
+        if view:
+            action['views'] = [(view.id, 'form')]
+    else:
+        view = env.ref('hr_recruitment_custom.hr_applicant_form_inherit_mcep_custom', raise_if_not_found=False)
+        action = {
+            'type': 'ir.actions.act_window',
+            'name': applicant.display_name or 'Applicant',
+            'res_model': 'hr.applicant',
+            'res_id': applicant.id,
+            'view_mode': 'form',
+            'target': 'current',
+            'context': dict(env.context, mcep_return_tab='submissions'),
+        }
+        if view:
+            action['views'] = [(view.id, 'form')]
+else:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
             ]]></field>
         </record>
 

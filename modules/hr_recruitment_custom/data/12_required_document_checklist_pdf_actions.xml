@@ -777,6 +777,48 @@ for rec in records:
             ]]></field>
         </record>
 
+        <record id="action_required_document_checklist_download_sign_certificate" model="ir.actions.server">
+            <field name="name">Download F-0003 Sign Certificate</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_required_document_checklist"/>
+            <field name="binding_model_id" ref="hr_recruitment_custom.model_x_hr_applicant_required_document_checklist"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+recruitment_document_model = env['x_hr.recruitment_document'].sudo()
+
+for rec in records.sudo():
+    registry_doc = recruitment_document_model.search([
+        ('x_document_type', '=', 'required_documents_checklist'),
+        ('x_source_model', '=', 'x_hr.applicant_required_document_checklist'),
+        ('x_source_res_id', '=', rec.id),
+    ], order='id desc', limit=1)
+
+    attachment = registry_doc.x_sign_certificate_attachment_id if registry_doc else False
+
+    if attachment:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'No Sign certificate',
+                'message': 'No F-0003 Sign certificate is linked to this checklist registry row yet.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
         <record id="action_recruitment_document_download_generated_artifact" model="ir.actions.server">
             <field name="name">Download Generated Artifact</field>
             <field name="model_id" ref="hr_recruitment_custom.model_x_hr_recruitment_document"/>

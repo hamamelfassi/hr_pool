@@ -38,30 +38,43 @@
         <field name="arch" type="xml">
             <form string="Required Document Submission" create="false" delete="false">
                 <header>
-                    <button type="action"
-                        name="hr_recruitment_custom.action_required_document_submission_accept"
-                        string="Accept"
-                        class="btn-primary"
-                        invisible="x_state != 'submitted'" />
-                    <button type="action"
-                        name="hr_recruitment_custom.action_required_document_submission_reject"
-                        string="Reject"
-                        class="btn-secondary"
-                        invisible="x_state != 'submitted'" />
-                    <button type="action"
-                        name="hr_recruitment_custom.action_required_document_submission_download_submitted_attachment"
-                        string="Download Evidence"
-                        icon="fa-download"
-                        class="btn-secondary"
-                        invisible="not x_attachment_id" />
                     <field name="x_state"
                         widget="statusbar"
                         options="{'clickable': false}"
                         statusbar_visible="submitted,accepted,rejected,superseded"
                         readonly="1" />
+                    <button type="action"
+                        name="hr_recruitment_custom.action_required_document_submission_download_submitted_attachment"
+                        string=""
+                        title="Download Evidence"
+                        icon="fa-download"
+                        class="btn-link"
+                        invisible="not x_attachment_id" />
                 </header>
 
                 <sheet>
+                    <div class="mcep-submission-controls" style="width: 100%; margin: 12px 0 18px 0;">
+                        <div class="o_horizontal_separator">Workflow and Evidence</div>
+                        <div style="display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 8px; margin-top: 8px;">
+                            <button type="action"
+                                name="hr_recruitment_custom.action_required_document_submission_accept"
+                                string="Accept"
+                                class="btn btn-primary"
+                                invisible="x_state != 'submitted'" />
+                            <button type="action"
+                                name="hr_recruitment_custom.action_required_document_submission_reject"
+                                string="Reject"
+                                class="btn btn-secondary"
+                                invisible="x_state != 'submitted'" />
+                            <button type="action"
+                                name="hr_recruitment_custom.action_required_document_submission_download_submitted_attachment"
+                                string="Download Evidence"
+                                icon="fa-download"
+                                class="btn btn-secondary"
+                                invisible="not x_attachment_id" />
+                        </div>
+                    </div>
+
                     <group>
                         <group string="Submission Identity">
                             <field name="x_submission_sequence" string="No." readonly="1" />

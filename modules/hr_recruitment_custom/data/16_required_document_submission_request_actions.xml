@@ -487,6 +487,22 @@ for request in records.sudo():
 mail_model = env['mail.mail'].sudo()
 action = False
 
+
+def reload_request(request):
+    view = env.ref('hr_recruitment_custom.view_required_document_submission_request_form_controlled', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': request.x_name or 'Required Document Submission Request',
+        'res_model': 'x_hr.applicant_required_document_submission_request',
+        'res_id': request.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
 for request in records.sudo():
     if request.x_state not in ('draft', 'prepared'):
         action = {
@@ -589,7 +605,8 @@ for request in records.sudo():
         request.x_applicant_id.message_post(body='Required document submission request sent: %s.' % (request.x_request_reference or request.x_name))
 
 if not action:
-    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+    request = records[:1].sudo() if records else False
+    action = reload_request(request) if request else {'type': 'ir.actions.client', 'tag': 'reload'}
             ]]></field>
         </record>
 
@@ -599,6 +616,22 @@ if not action:
             <field name="state">code</field>
             <field name="code"><![CDATA[
 action = False
+
+
+def reload_request(request):
+    view = env.ref('hr_recruitment_custom.view_required_document_submission_request_form_controlled', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': request.x_name or 'Required Document Submission Request',
+        'res_model': 'x_hr.applicant_required_document_submission_request',
+        'res_id': request.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
 
 for request in records.sudo():
     if request.x_state not in ('draft', 'prepared'):
@@ -656,7 +689,8 @@ for request in records.sudo():
         request.x_applicant_id.message_post(body='Required document submission request marked as manually sent: %s.' % (request.x_request_reference or request.x_name))
 
 if not action:
-    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+    request = records[:1].sudo() if records else False
+    action = reload_request(request) if request else {'type': 'ir.actions.client', 'tag': 'reload'}
             ]]></field>
         </record>
 
