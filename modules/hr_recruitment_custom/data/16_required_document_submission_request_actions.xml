@@ -12,10 +12,35 @@
             <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
             <field name="state">code</field>
             <field name="code"><![CDATA[
-request_model = env['x_hr.applicant_required_document_submission_request'].sudo()
 checklist_model = env['x_hr.applicant_required_document_checklist'].sudo()
-
+request_model = env['x_hr.applicant_required_document_submission_request'].sudo()
 action = False
+
+def open_request_form(request):
+    view = env.ref('hr_recruitment_custom.view_required_document_submission_request_form_controlled', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': request.x_name or 'Required Document Submission Request',
+        'res_model': 'x_hr.applicant_required_document_submission_request',
+        'res_id': request.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+def toast(title, message, kind='warning', sticky=False):
+    return {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': title,
+            'message': message,
+            'type': kind,
+            'sticky': sticky,
+        }
+    }
 
 for applicant in records.sudo():
     checklist = checklist_model.search([
@@ -24,66 +49,63 @@ for applicant in records.sudo():
     ], order='id desc', limit=1)
 
     if not checklist:
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'F-0003 checklist missing',
-                'message': 'Prepare an active F-0003 required document checklist before creating a submission request.',
-                'type': 'warning',
-                'sticky': False,
-            }
-        }
+        action = toast(
+            'F-0003 checklist missing',
+            'Prepare an active F-0003 required document checklist before preparing a submission request.',
+            'warning',
+            False,
+        )
         continue
 
-    request = request_model.search([
+    requestable_lines = checklist.x_line_ids.filtered(
+        lambda line: line.x_required
+        and line.x_public_request_enabled
+        and line.x_status in ('missing', 'rejected', 'resubmission_requested')
+    )
+
+    if not requestable_lines:
+        action = toast(
+            'No requestable document lines',
+            'No missing, rejected, or resubmission-requested public document lines were found for this checklist.',
+            'warning',
+            False,
+        )
+        continue
+
+    existing = request_model.search([
         ('x_applicant_id', '=', applicant.id),
         ('x_checklist_id', '=', checklist.id),
-        ('x_state', 'in', ['draft', 'prepared', 'sent']),
+        ('x_state', 'in', ['draft', 'prepared']),
     ], order='id desc', limit=1)
 
-    if not request:
-        sequence = request_model.search_count([
-            ('x_applicant_id', '=', applicant.id),
-        ]) + 1
+    if existing:
+        action = open_request_form(existing)
+        continue
 
-        candidate_name = applicant.partner_name or applicant.name or ''
-        candidate_email = applicant.email_from or ''
+    prepare_action = env.ref(
+        'hr_recruitment_custom.action_required_document_checklist_prepare_submission_request',
+        raise_if_not_found=False,
+    )
 
-        request = request_model.create({
-            'x_name': '%s / طلب #%s' % (candidate_name or applicant.display_name, sequence),
-            'x_sequence': sequence,
-            'x_applicant_id': applicant.id,
-            'x_checklist_id': checklist.id,
-            'x_state': 'draft',
-            'x_form_base_url': 'https://forms.fillout.com/t/sZFxwo2u1bus',
-            'x_candidate_name_snapshot': candidate_name,
-            'x_candidate_email_snapshot': candidate_email,
-            'x_requested_by_user_id': env.user.id,
-            'x_requested_on': datetime.datetime.now(),
-        })
+    if not prepare_action:
+        action = toast(
+            'Prepare action missing',
+            'The checklist-level Prepare Submission Request action was not found.',
+            'danger',
+            True,
+        )
+        continue
 
-        request.write({
-            'x_request_reference': 'MCEP-HR-F-0003-REQ-%05d' % request.id,
-            'x_name': '%s / طلب #%s' % (
-                candidate_name or applicant.display_name,
-                sequence,
-            ),
-        })
+    action = prepare_action.with_context(
+        active_model='x_hr.applicant_required_document_checklist',
+        active_id=checklist.id,
+        active_ids=[checklist.id],
+    ).run()
+    break
 
-        request.message_post(body='Required document submission request created.')
-        checklist.message_post(body='Required document submission request created: %s.' % request.x_request_reference)
-        applicant.message_post(body='Required document submission request created: %s.' % request.x_request_reference)
-
-    action = {
-        'type': 'ir.actions.act_window',
-        'name': 'Required Document Submission Request',
-        'res_model': 'x_hr.applicant_required_document_submission_request',
-        'view_mode': 'form',
-        'res_id': request.id,
-        'target': 'current',
-    }
-            ]]></field>
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+]]></field>
         </record>
 
 

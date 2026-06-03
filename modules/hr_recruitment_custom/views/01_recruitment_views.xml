@@ -621,7 +621,7 @@
                             invisible="not id" />
                         <button type="action"
                             name="hr_recruitment_custom.action_hr_applicant_create_required_document_submission_request"
-                            string="Request Submission"
+                            string="Prepare Submission Request"
                             icon="fa-link"
                             class="btn-primary"
                             invisible="not id" />

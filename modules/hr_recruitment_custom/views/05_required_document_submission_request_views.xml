@@ -46,12 +46,12 @@
                         name="hr_recruitment_custom.action_required_document_submission_request_generate_lines"
                         string="Generate Request Lines"
                         class="btn-primary"
-                        invisible="not id or x_state not in ('draft', 'prepared')" />
+                        invisible="1" />
                     <button type="action"
                         name="hr_recruitment_custom.action_required_document_submission_request_generate_url"
                         string="Generate Continuation URL"
                         class="btn-secondary"
-                        invisible="not id or x_state not in ('draft', 'prepared')" />
+                        invisible="1" />
                     <button type="action"
                         name="hr_recruitment_custom.action_required_document_submission_request_open_url"
                         string="Open Link"

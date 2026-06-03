@@ -27,6 +27,30 @@
             <field name="code"><![CDATA[
 submission_model = env['x_hr.applicant_required_document_submission'].sudo()
 
+def reflect_submission_state_to_checklist_line(rec):
+    line = rec.x_line_id
+    if not line or line.x_status in ('accepted', 'not_applicable'):
+        return
+
+    if rec.x_state == 'submitted':
+        line.sudo().write({
+            'x_status': 'submitted',
+        })
+        return
+
+    if rec.x_state == 'rejected':
+        note = line.x_notes or ''
+        reason = rec.x_reviewer_note or 'Submission classified by the Marsellia writeback gateway as incomplete or requiring resubmission.'
+        if reason and reason not in note:
+            note = (note + '\n\nResubmission note: ' + reason).strip()
+
+        line.sudo().write({
+            'x_status': 'resubmission_requested',
+            'x_notes': note,
+        })
+        return
+
+
 for rec in records.sudo():
     values = {}
 
@@ -119,6 +143,9 @@ for rec in records.sudo():
 
     if values:
         rec.sudo().write(values)
+
+    rec = rec.sudo().browse(rec.id)
+    reflect_submission_state_to_checklist_line(rec)
             ]]></field>
         </record>
 
@@ -148,6 +175,30 @@ for rec in records.sudo():
             <field name="state">code</field>
             <field name="code"><![CDATA[
 submission_model = env['x_hr.applicant_required_document_submission'].sudo()
+
+def reflect_submission_state_to_checklist_line(rec):
+    line = rec.x_line_id
+    if not line or line.x_status in ('accepted', 'not_applicable'):
+        return
+
+    if rec.x_state == 'submitted':
+        line.sudo().write({
+            'x_status': 'submitted',
+        })
+        return
+
+    if rec.x_state == 'rejected':
+        note = line.x_notes or ''
+        reason = rec.x_reviewer_note or 'Submission classified by the Marsellia writeback gateway as incomplete or requiring resubmission.'
+        if reason and reason not in note:
+            note = (note + '\n\nResubmission note: ' + reason).strip()
+
+        line.sudo().write({
+            'x_status': 'resubmission_requested',
+            'x_notes': note,
+        })
+        return
+
 
 for rec in records.sudo():
     values = {}
@@ -239,6 +290,9 @@ for rec in records.sudo():
 
     if values:
         rec.sudo().write(values)
+
+    rec = rec.sudo().browse(rec.id)
+    reflect_submission_state_to_checklist_line(rec)
             ]]></field>
         </record>
 
