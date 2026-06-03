@@ -44,17 +44,17 @@
                         invisible="not id" />
                     <button type="action"
                         name="hr_recruitment_custom.action_required_document_checklist_generate_pdf"
-                        string="Generate F-0003 PDF"
+                        string="Generate PDF"
                         class="btn-secondary"
                         invisible="x_state != 'ready_for_pdf' and x_state != 'generated'" />
                     <button type="action"
                         name="hr_recruitment_custom.action_required_document_checklist_send_native_sign"
-                        string="Send via Odoo Sign"
+                        string="Sign"
                         class="btn-primary"
                         invisible="x_state != 'generated' or not x_pdf_attachment_id" />
                     <button type="action"
                         name="hr_recruitment_custom.action_required_document_checklist_sync_native_sign_completion"
-                        string="Sync Signed Result"
+                        string="Sync"
                         class="btn-secondary"
                         invisible="x_state != 'signature_requested'" />
                     <field name="x_state"

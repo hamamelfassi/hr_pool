@@ -162,14 +162,53 @@ action = {'type': 'ir.actions.client', 'tag': 'reload'}
             <field name="state">code</field>
                         <field name="code"><![CDATA[
 submission_model = env['x_hr.applicant_required_document_submission'].sudo()
+line_model = env['x_hr.applicant_required_document_line'].sudo()
+
+
+def reload_checklist(rec):
+    view = env.ref('hr_recruitment_custom.view_required_document_checklist_form_controlled', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Required Document Checklist',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+action = False
+protected_states = ['generated', 'signature_requested', 'signed']
 
 for rec in records.sudo():
     required_lines = rec.x_line_ids.filtered(lambda line: line.x_required)
 
     if not required_lines:
-        raise Warning('This F-0003 checklist has no required document lines.')
+        action = toast(
+            'F-0003 checklist has no required lines',
+            'This F-0003 checklist has no required document lines.',
+            'warning',
+            True,
+            reload_checklist(rec),
+        )
+        continue
 
-    missing_lines = env['x_hr.applicant_required_document_line'].sudo()
+    missing_lines = line_model.browse([])
 
     for line in required_lines:
         accepted_domain = [
@@ -229,6 +268,35 @@ for rec in records.sudo():
             })
             missing_lines |= line
 
+    # Critical R1 guard: readiness refresh may update line statuses, but it must
+    # never downgrade a generated/signature-requested/signed checklist back to
+    # in_review or ready_for_pdf.
+    if rec.x_state in protected_states:
+        rec.write({'x_reviewer_user_id': env.user.id})
+        if missing_lines:
+            rec.message_post(
+                body='F-0003 checklist readiness was refreshed without changing lifecycle state %s. %s required line(s) still lack accepted evidence.' % (rec.x_state, len(missing_lines))
+            )
+            action = toast(
+                'F-0003 readiness refreshed',
+                'Checklist evidence statuses were refreshed, but lifecycle state was preserved as %s because the PDF/Sign lifecycle has already started. Use Sync for signed Odoo Sign results.' % rec.x_state,
+                'warning',
+                False,
+                reload_checklist(rec),
+            )
+        else:
+            rec.message_post(
+                body='F-0003 checklist readiness was refreshed without changing lifecycle state %s. All required lines currently have accepted evidence.' % rec.x_state
+            )
+            action = toast(
+                'F-0003 readiness refreshed',
+                'Checklist evidence statuses were refreshed. Lifecycle state was preserved as %s.' % rec.x_state,
+                'success',
+                False,
+                reload_checklist(rec),
+            )
+        continue
+
     if missing_lines:
         rec.write({
             'x_state': 'in_review',
@@ -236,6 +304,13 @@ for rec in records.sudo():
         })
         rec.message_post(
             body='F-0003 checklist remains In Review. %s required document line(s) do not have accepted evidence submissions yet.' % len(missing_lines)
+        )
+        action = toast(
+            'F-0003 still in review',
+            '%s required document line(s) still need accepted evidence before PDF generation.' % len(missing_lines),
+            'warning',
+            False,
+            reload_checklist(rec),
         )
     else:
         rec.write({
@@ -245,9 +320,17 @@ for rec in records.sudo():
         rec.message_post(
             body='F-0003 checklist is ready for PDF generation. All required document lines have accepted evidence submissions.'
         )
+        action = toast(
+            'F-0003 ready for PDF',
+            'All required document lines have accepted evidence. The checklist is ready for PDF generation.',
+            'success',
+            False,
+            reload_checklist(rec),
+        )
 
-action = {'type': 'ir.actions.client', 'tag': 'reload'}
-            ]]></field>
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+]]></field>
         </record>
 
     </data>

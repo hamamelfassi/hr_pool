@@ -12,20 +12,91 @@ registry_model = env['x_hr.recruitment_document'].sudo()
 attachment_model = env['ir.attachment'].sudo()
 report_service = env['ir.actions.report'].sudo()
 
-for rec in records:
+action = False
+
+
+def reload_checklist(rec):
+    view = env.ref('hr_recruitment_custom.view_required_document_checklist_form_controlled', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Required Document Checklist',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+for rec in records.sudo():
+    if rec.x_state in ['signature_requested', 'signed']:
+        action = toast(
+            'F-0003 PDF generation blocked',
+            'This checklist has already entered the Odoo Sign lifecycle. Use Sync instead of regenerating the PDF.',
+            'warning',
+            True,
+            reload_checklist(rec),
+        )
+        continue
+
     if rec.x_state not in ['ready_for_pdf', 'generated']:
-        raise Warning('F-0003 checklist must be Ready for PDF before generating the checklist PDF.')
+        action = toast(
+            'F-0003 is not ready for PDF',
+            'F-0003 checklist must be Ready for PDF before generating the checklist PDF.',
+            'warning',
+            False,
+            reload_checklist(rec),
+        )
+        continue
 
     required_lines = rec.x_line_ids.filtered(lambda line: line.x_required)
     if not required_lines:
-        raise Warning('This F-0003 checklist has no required document lines.')
+        action = toast(
+            'F-0003 checklist has no required lines',
+            'This F-0003 checklist has no required document lines.',
+            'warning',
+            True,
+            reload_checklist(rec),
+        )
+        continue
 
     missing_lines = required_lines.filtered(lambda line: line.x_status != 'accepted')
     if missing_lines:
-        raise Warning('Cannot generate F-0003 PDF. All required document lines must be Accepted first.')
+        action = toast(
+            'F-0003 PDF generation blocked',
+            'Cannot generate F-0003 PDF. All required document lines must be Accepted first.',
+            'warning',
+            True,
+            reload_checklist(rec),
+        )
+        continue
 
     generated_on = datetime.datetime.now()
     applicant = rec.x_applicant_id
+    if not applicant:
+        action = toast(
+            'Applicant missing',
+            'F-0003 checklist is not linked to an applicant.',
+            'warning',
+            True,
+            reload_checklist(rec),
+        )
+        continue
+
     applicant_name = applicant.partner_name or applicant.name or applicant.display_name
     reference = rec.x_document_reference or ('MCEP-HR-F-0003-%05d' % applicant.id)
 
@@ -45,7 +116,7 @@ for rec in records:
         'mimetype': 'application/pdf',
     })
 
-    rec.sudo().write({
+    rec.write({
         'x_state': 'generated',
         'x_document_reference': reference,
         'x_generated_on': generated_on,
@@ -96,12 +167,18 @@ for rec in records:
     rec.message_post(body='F-0003 Required Documents Checklist PDF generated and recruitment document registry marked as Generated.')
     applicant.message_post(body='F-0003 Required Documents Checklist PDF generated and linked to the recruitment document registry.')
 
-    action = {
-        'type': 'ir.actions.act_url',
-        'url': '/web/content/%s?download=true' % attachment.id,
-        'target': 'new',
-    }
-            ]]></field>
+    action = toast(
+        'F-0003 PDF generated',
+        'Generated F-0003 PDF was linked to this checklist and posted on the applicant record.',
+        'success',
+        False,
+        reload_checklist(rec),
+    )
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+]]></field>
         </record>
 
                 <record id="action_required_document_checklist_send_native_sign" model="ir.actions.server">
@@ -122,110 +199,128 @@ sign_request_model = env['sign.request'].sudo()
 signature_type = env.ref('sign.sign_item_type_signature', raise_if_not_found=False)
 reviewer_role = sign_role_model.search([('name', '=', 'Reviewer')], order='id asc', limit=1)
 
+action = False
+
+
+def reload_checklist(rec):
+    view = env.ref('hr_recruitment_custom.view_required_document_checklist_form_controlled', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Required Document Checklist',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def close_from_signed_registry(rec, registry_doc):
+    values = {'x_state': 'signed'}
+    if registry_doc.x_signed_attachment_id:
+        values['x_signed_attachment_id'] = registry_doc.x_signed_attachment_id.id
+    elif registry_doc.x_sign_completed_attachment_id:
+        values['x_signed_attachment_id'] = registry_doc.x_sign_completed_attachment_id.id
+    if registry_doc.x_signed_on:
+        values['x_signed_on'] = registry_doc.x_signed_on
+    elif registry_doc.x_sign_completed_on:
+        values['x_signed_on'] = registry_doc.x_sign_completed_on
+    rec.write(values)
+
+
 setup_error = False
 if not signature_type:
     setup_error = 'Odoo Sign signature field type could not be found: sign.sign_item_type_signature.'
 elif not reviewer_role:
     setup_error = 'Odoo Sign role "Reviewer" was not found. Create a Reviewer role in Sign before sending F-0003 through native Sign.'
 
-for rec in records:
+for rec in records.sudo():
     if setup_error:
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'F-0003 Odoo Sign setup incomplete',
-                'message': setup_error,
-                'type': 'warning',
-                'sticky': True,
-            }
-        }
-        continue
-
-    if rec.x_state == 'signed':
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'F-0003 already signed',
-                'message': 'This F-0003 checklist is already signed. No duplicate Odoo Sign request was created.',
-                'type': 'warning',
-                'sticky': False,
-            }
-        }
-        continue
-
-    if rec.x_state != 'generated':
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'F-0003 is not ready to send',
-                'message': 'F-0003 checklist must be Generated before it can be sent through Odoo Sign.',
-                'type': 'warning',
-                'sticky': False,
-            }
-        }
-        continue
-
-    if not rec.x_pdf_attachment_id:
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'F-0003 PDF missing',
-                'message': 'Generate the F-0003 PDF before sending through Odoo Sign.',
-                'type': 'warning',
-                'sticky': False,
-            }
-        }
+        action = toast('F-0003 Odoo Sign setup incomplete', setup_error, 'warning', True, reload_checklist(rec))
         continue
 
     applicant = rec.x_applicant_id
     if not applicant:
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'Applicant missing',
-                'message': 'F-0003 checklist is not linked to an applicant.',
-                'type': 'warning',
-                'sticky': True,
-            }
-        }
+        action = toast('Applicant missing', 'F-0003 checklist is not linked to an applicant.', 'warning', True, reload_checklist(rec))
+        continue
+
+    signed_registry = registry_model.search([
+        ('x_document_type', '=', 'required_documents_checklist'),
+        ('x_source_model', '=', 'x_hr.applicant_required_document_checklist'),
+        ('x_source_res_id', '=', rec.id),
+        ('x_state', '=', 'signed'),
+    ], order='x_version desc, id desc', limit=1)
+
+    if rec.x_state == 'signed' or signed_registry:
+        if signed_registry and rec.x_state != 'signed':
+            close_from_signed_registry(rec, signed_registry)
+        action = toast(
+            'F-0003 already signed',
+            'This F-0003 checklist is already signed. No duplicate Odoo Sign request was created.',
+            'warning',
+            False,
+            reload_checklist(rec),
+        )
+        continue
+
+    if rec.x_state != 'generated':
+        action = toast(
+            'F-0003 is not ready to sign',
+            'F-0003 checklist must be Generated before it can be sent through Odoo Sign.',
+            'warning',
+            False,
+            reload_checklist(rec),
+        )
+        continue
+
+    if not rec.x_pdf_attachment_id:
+        action = toast(
+            'F-0003 PDF missing',
+            'Generate the F-0003 PDF before sending through Odoo Sign.',
+            'warning',
+            False,
+            reload_checklist(rec),
+        )
         continue
 
     reviewer_user = rec.x_reviewer_user_id or env.user
     reviewer_partner = reviewer_user.partner_id
     if not reviewer_partner:
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'Reviewer contact missing',
-                'message': 'Reviewer user has no linked contact/partner and cannot be used as an Odoo Sign signer.',
-                'type': 'warning',
-                'sticky': True,
-            }
-        }
+        action = toast(
+            'Reviewer contact missing',
+            'Reviewer user has no linked contact/partner and cannot be used as an Odoo Sign signer.',
+            'warning',
+            True,
+            reload_checklist(rec),
+        )
         continue
 
     reviewer_email = reviewer_partner.email or reviewer_user.email
     if not reviewer_email:
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'Reviewer email missing',
-                'message': 'Reviewer contact has no email address. Add an email before sending F-0003 through Odoo Sign.',
-                'type': 'warning',
-                'sticky': True,
-            }
-        }
+        action = toast(
+            'Reviewer email missing',
+            'Reviewer contact has no email address. Add an email before sending F-0003 through Odoo Sign.',
+            'warning',
+            True,
+            reload_checklist(rec),
+        )
         continue
 
     applicant_name = applicant.partner_name or applicant.name or applicant.display_name
-    reference = rec.x_document_reference or ('MCEP-HR-F-0003-%05d' % applicant.id)
     pdf_attachment = rec.x_pdf_attachment_id
     filename = pdf_attachment.name or ('%s - F-0003 Required Documents Checklist.pdf' % applicant_name)
 
@@ -264,39 +359,17 @@ for rec in records:
             'x_notes': 'F-0003 registry row recovered during native Odoo Sign send probe.',
         })
 
-    if registry_doc.x_state == 'signed':
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'F-0003 already signed',
-                'message': 'This F-0003 registry document is already signed. No duplicate Odoo Sign request was created.',
-                'type': 'warning',
-                'sticky': False,
-            }
-        }
-        continue
-
     if registry_doc.x_sign_request_res_id:
         existing_request = sign_request_model.browse(registry_doc.x_sign_request_res_id)
         if existing_request.exists():
             existing_state = existing_request.state or registry_doc.x_sign_request_state or 'unknown'
             if existing_state not in ['cancelled', 'canceled']:
-                if existing_state == 'signed':
-                    message = 'The linked Odoo Sign request is already signed. Use Sync Signed Result to close the F-0003 registry/checklist instead of creating a duplicate request.'
+                if existing_state in ['signed', 'completed']:
+                    message = 'The linked Odoo Sign request is already signed/completed. Use Sync to close the F-0003 registry/checklist instead of creating a duplicate request.'
                 else:
                     message = 'This F-0003 already has an active linked Odoo Sign request in state "%s". Ask the signer to complete it, or sync the signed result after completion. Duplicate requests are blocked.' % existing_state
 
-                action = {
-                    'type': 'ir.actions.client',
-                    'tag': 'display_notification',
-                    'params': {
-                        'title': 'Duplicate Sign request blocked',
-                        'message': message,
-                        'type': 'warning',
-                        'sticky': True,
-                    }
-                }
+                action = toast('Duplicate Sign request blocked', message, 'warning', True, reload_checklist(rec))
                 continue
 
     sent_on = datetime.datetime.now()
@@ -315,23 +388,6 @@ for rec in records:
         'sequence': 1,
     })
 
-    # F-0003 native Sign profile contract.
-    #
-    # Document type: required_documents_checklist
-    # Source model: x_hr.applicant_required_document_checklist
-    # Generated attachment: x_pdf_attachment_id
-    # Signed attachment: x_signed_attachment_id
-    #
-    # Role profile:
-    # - role_key: reviewer
-    # - Odoo Sign role name: Reviewer
-    # - signer source: x_reviewer_user_id.partner_id
-    # - sequence: 1
-    # - required: true
-    # - geometry: page=1, posX=0.073, posY=0.591, width=0.565, height=0.075
-    #
-    # Later F-0002/F-0004 reuse should promote this contract into a generic
-    # signature profile registry instead of hardcoding per-document coordinates.
     sign_item_model.create({
         'document_id': sign_document.id,
         'type_id': signature_type.id,
@@ -400,26 +456,18 @@ for rec in records:
             'x_sign_request_url': '/odoo/sign/%s' % generated_request.id,
             'x_notes': ((registry_doc.x_notes or '') + '\nNative Odoo Sign request created for F-0003 on %s. Request ID: %s. Reviewer: %s.' % (sent_on, generated_request.id, reviewer_partner.display_name)).strip(),
         })
-        rec.sudo().write({
+        rec.write({
             'x_state': 'signature_requested',
             'x_sent_on': sent_on,
             'x_reviewer_user_id': reviewer_user.id,
         })
-        rec.message_post(body='F-0003 sent through native Odoo Sign to %s. Sign request ID: %s.' % (reviewer_partner.display_name, generated_request.id))
-        applicant.message_post(body='F-0003 Required Documents Checklist sent through native Odoo Sign to %s.' % reviewer_partner.display_name)
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'F-0003 sent through Odoo Sign',
-                'message': 'Native Odoo Sign request created and sent to %s.' % reviewer_partner.display_name,
-                'type': 'success',
-                'sticky': False,
-            }
-        }
+        rec.message_post(body='F-0003 checklist sent through native Odoo Sign. Request ID: %s.' % generated_request.id)
+        applicant.message_post(body='F-0003 Required Documents Checklist sent through native Odoo Sign. Request ID: %s.' % generated_request.id)
+        action = toast('F-0003 sent to Sign', 'F-0003 was sent to Odoo Sign for reviewer signature.', 'success', False, reload_checklist(rec))
     else:
         registry_doc.write({
-            'x_state': 'generated',
+            'x_state': 'signature_requested',
+            'x_sent_on': sent_on,
             'x_responsible_user_id': env.user.id,
             'x_source_model': 'x_hr.applicant_required_document_checklist',
             'x_source_res_id': rec.id,
@@ -431,17 +479,13 @@ for rec in records:
         })
         rec.message_post(body='Native Odoo Sign send_request() executed for F-0003, but the generated sign.request could not be located automatically. Check Sign app template/request created from template ID %s.' % sign_template.id)
         applicant.message_post(body='Native Odoo Sign send_request() executed for F-0003, but the generated sign.request could not be located automatically. Check Sign app template/request created from template ID %s.' % sign_template.id)
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'F-0003 Sign request lookup failed',
-                'message': 'send_request() executed, but the generated sign.request was not found automatically. Check Sign app before retrying.',
-                'type': 'warning',
-                'sticky': True,
-            }
-        }
-            ]]></field>
+        action = toast('F-0003 Sign request lookup failed', 'send_request() executed, but the generated sign.request was not found automatically. Check Sign app before retrying.', 'warning', True, reload_checklist(rec))
+
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+]]></field>
         </record>
 
         <record id="action_required_document_checklist_sync_native_sign_completion" model="ir.actions.server">
@@ -452,11 +496,58 @@ for rec in records:
             <field name="code"><![CDATA[
 registry_model = env['x_hr.recruitment_document'].sudo()
 sign_request_model = env['sign.request'].sudo()
+attachment_model = env['ir.attachment'].sudo()
 
-for rec in records:
+action = False
+
+
+def reload_checklist(rec):
+    view = env.ref('hr_recruitment_custom.view_required_document_checklist_form_controlled', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Required Document Checklist',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def looks_like_certificate(attachment):
+    name = (attachment.name or '').lower()
+    return (
+        'certificate' in name
+        or 'completion' in name
+        or 'completed' in name
+        or 'history' in name
+        or 'audit' in name
+        or 'trail' in name
+        or 'شهادة' in name
+        or 'إكمال' in name
+        or 'اكمال' in name
+    )
+
+
+for rec in records.sudo():
     applicant = rec.x_applicant_id
     if not applicant:
-        raise Warning('F-0003 checklist is not linked to an applicant.')
+        action = toast('Applicant missing', 'F-0003 checklist is not linked to an applicant.', 'warning', True, reload_checklist(rec))
+        continue
 
     registry_doc = registry_model.search([
         ('x_document_type', '=', 'required_documents_checklist'),
@@ -468,20 +559,31 @@ for rec in records:
     if not registry_doc:
         registry_doc = registry_model.search([
             ('x_document_type', '=', 'required_documents_checklist'),
+            ('x_source_model', '=', 'x_hr.applicant_required_document_checklist'),
+            ('x_source_res_id', '=', rec.id),
+        ], order='x_version desc, id desc', limit=1)
+
+    if not registry_doc:
+        registry_doc = registry_model.search([
+            ('x_document_type', '=', 'required_documents_checklist'),
             ('x_applicant_id', '=', applicant.id),
             ('x_signature_mode', '=', 'native_sign'),
             ('x_sign_request_res_id', '!=', False),
         ], order='x_version desc, id desc', limit=1)
 
     if not registry_doc:
-        raise Warning('No native Odoo Sign recruitment document registry row was found for this F-0003 checklist.')
+        action = toast('No F-0003 Sign registry row', 'No native Odoo Sign recruitment document registry row was found for this F-0003 checklist.', 'warning', True, reload_checklist(rec))
+        continue
 
     if not registry_doc.x_sign_request_res_id:
-        raise Warning('The F-0003 recruitment document registry row has no linked Odoo Sign request ID.')
+        action = toast('No linked Sign request', 'The F-0003 recruitment document registry row has no linked Odoo Sign request ID.', 'warning', True, reload_checklist(rec))
+        continue
 
     sign_request = sign_request_model.browse(registry_doc.x_sign_request_res_id)
     if not sign_request.exists():
-        raise Warning('The linked Odoo Sign request no longer exists or cannot be accessed.')
+        registry_doc.write({'x_sign_request_state': 'missing_sign_request'})
+        action = toast('Missing Sign request', 'The linked Odoo Sign request no longer exists or cannot be accessed.', 'warning', True, reload_checklist(rec))
+        continue
 
     request_state = sign_request.state or 'unknown'
     registry_doc.write({
@@ -489,67 +591,97 @@ for rec in records:
         'x_sign_request_reference': sign_request.reference or registry_doc.x_sign_request_reference,
     })
 
-    if request_state not in ['signed']:
+    if request_state not in ['signed', 'completed']:
+        if rec.x_state != 'signature_requested':
+            rec.write({'x_state': 'signature_requested'})
         rec.message_post(body='F-0003 native Odoo Sign request is not fully signed yet. Current Sign request state: %s. Ask the signer to complete signing, then sync again.' % request_state)
         applicant.message_post(body='F-0003 native Odoo Sign completion sync checked request %s. Current state: %s. Registry was not closed.' % (sign_request.id, request_state))
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'F-0003 not fully signed yet',
-                'message': 'Odoo Sign request is still in state: %s. Ask the signer to complete signing, then sync again.' % request_state,
-                'type': 'warning',
-                'sticky': False,
-            }
-        }
+        action = toast('F-0003 not fully signed yet', 'Odoo Sign request is still in state: %s. Ask the signer to complete signing, then sync again.' % request_state, 'warning', False, reload_checklist(rec))
         continue
 
-    completed_attachments = sign_request.completed_document_attachment_ids
-    if not completed_attachments:
-        registry_doc.write({
-            'x_sign_request_state': 'signed_no_completed_attachment_found',
-            'x_notes': ((registry_doc.x_notes or '') + '\nOdoo Sign request %s is signed, but no completed document attachments were found during sync on %s.' % (sign_request.id, datetime.datetime.now())).strip(),
-        })
-        raise Warning('Odoo Sign request is signed, but no completed document attachments were found. Registry was not closed.')
+    completed_attachments = sign_request.completed_document_attachment_ids if 'completed_document_attachment_ids' in sign_request._fields else attachment_model.browse([])
+
+    related_attachments = attachment_model.search([
+        ('res_model', '=', 'sign.request'),
+        ('res_id', '=', sign_request.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    applicant_attachments = attachment_model.search([
+        ('res_model', '=', 'hr.applicant'),
+        ('res_id', '=', applicant.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    checklist_attachments = attachment_model.search([
+        ('res_model', '=', rec._name),
+        ('res_id', '=', rec.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    all_attachments = completed_attachments | related_attachments | applicant_attachments | checklist_attachments
 
     signed_native = False
     certificate_native = False
-    for attachment in completed_attachments:
-        attachment_name = (attachment.name or '').lower()
-        if not certificate_native and ('certificate' in attachment_name or 'completion' in attachment_name or 'history' in attachment_name):
-            certificate_native = attachment
+
+    for attachment in all_attachments:
+        if rec.x_pdf_attachment_id and attachment.id == rec.x_pdf_attachment_id.id:
+            continue
+        if registry_doc.x_generated_attachment_id and attachment.id == registry_doc.x_generated_attachment_id.id:
+            continue
+        if looks_like_certificate(attachment):
+            if not certificate_native:
+                certificate_native = attachment
         elif not signed_native:
             signed_native = attachment
 
     if not signed_native:
-        signed_native = completed_attachments[0]
+        registry_doc.write({
+            'x_sign_request_state': 'signed_no_business_document_found',
+            'x_notes': ((registry_doc.x_notes or '') + '\nOdoo Sign request %s is signed/completed, but no signed business PDF was found during sync on %s.' % (sign_request.id, datetime.datetime.now())).strip(),
+        })
+        action = toast('Signed PDF not found', 'The Sign request is signed/completed, but the completed signed PDF was not found yet. Try Sync again after Odoo finishes processing.', 'warning', True, reload_checklist(rec))
+        continue
 
     signed_copy = registry_doc.x_signed_attachment_id
+    if signed_copy and looks_like_certificate(signed_copy):
+        signed_copy = False
+    if signed_copy and rec.x_pdf_attachment_id and signed_copy.id == rec.x_pdf_attachment_id.id:
+        signed_copy = False
+
     if not signed_copy:
-        signed_copy = signed_native.copy({
-            'name': signed_native.name or ('Signed F-0003 - %s.pdf' % (applicant.partner_name or applicant.name or applicant.display_name)),
-            'res_model': 'hr.applicant',
-            'res_id': applicant.id,
-        })
+        signed_name = signed_native.name or ('Signed F-0003 - %s.pdf' % (applicant.partner_name or applicant.name or applicant.display_name))
+        if signed_native.res_model == 'hr.applicant' and signed_native.res_id == applicant.id:
+            signed_copy = signed_native
+        else:
+            signed_copy = signed_native.copy({
+                'name': signed_name,
+                'res_model': 'hr.applicant',
+                'res_id': applicant.id,
+            })
 
     certificate_copy = registry_doc.x_sign_certificate_attachment_id
-    if certificate_native and not certificate_copy:
-        certificate_copy = certificate_native.copy({
-            'name': certificate_native.name or ('Certificate of completion - F-0003 - %s.pdf' % (applicant.partner_name or applicant.name or applicant.display_name)),
-            'res_model': 'hr.applicant',
-            'res_id': applicant.id,
-        })
+    if not certificate_copy and certificate_native:
+        certificate_name = certificate_native.name or ('Certificate of completion - F-0003 - %s.pdf' % (applicant.partner_name or applicant.name or applicant.display_name))
+        if certificate_native.res_model == 'hr.applicant' and certificate_native.res_id == applicant.id:
+            certificate_copy = certificate_native
+        else:
+            certificate_copy = certificate_native.copy({
+                'name': certificate_name,
+                'res_model': 'hr.applicant',
+                'res_id': applicant.id,
+            })
 
-    # Prefer real datetime fields over sign.request.item.signing_date because
-    # signing_date is date-only in this SaaS schema and causes midnight timestamps.
-    signed_on = sign_request.write_date or datetime.datetime.now()
+    signed_on = False
+    if sign_request.write_date:
+        signed_on = sign_request.write_date
 
     signer_items = sign_request.request_item_ids.filtered(lambda item: item.state == 'completed')
     for signer_item in signer_items:
-        if signer_item.write_date and signer_item.write_date > signed_on:
+        if signer_item.write_date and (not signed_on or signer_item.write_date > signed_on):
             signed_on = signer_item.write_date
 
-    if not signed_on and sign_request.completion_date:
+    if not signed_on and 'completion_date' in sign_request._fields and sign_request.completion_date:
         signed_on = datetime.datetime.combine(sign_request.completion_date, datetime.time(12, 0, 0))
 
     if not signed_on:
@@ -573,7 +705,7 @@ for rec in records:
 
     registry_doc.write(registry_values)
 
-    rec.sudo().write({
+    rec.write({
         'x_state': 'signed',
         'x_signed_on': signed_on,
         'x_signed_attachment_id': signed_copy.id,
@@ -582,17 +714,12 @@ for rec in records:
     rec.message_post(body='F-0003 native Odoo Sign completion synced. Signed artifact linked: %s.' % signed_copy.name)
     applicant.message_post(body='F-0003 Required Documents Checklist signed through native Odoo Sign. Signed F-0003 artifact and certificate, where available, were linked to the recruitment document registry.')
 
-    action = {
-        'type': 'ir.actions.client',
-        'tag': 'display_notification',
-        'params': {
-            'title': 'F-0003 signed',
-            'message': 'Signed F-0003 result synced. Signed artifact and certificate, where available, were linked to the recruitment registry.',
-            'type': 'success',
-            'sticky': False,
-        }
-    }
-            ]]></field>
+    action = toast('F-0003 signed', 'Signed F-0003 result synced. Signed artifact and certificate, where available, were linked to the recruitment registry.', 'success', False, reload_checklist(rec))
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+]]></field>
         </record>        
         <record id="action_required_document_checklist_download_generated_pdf" model="ir.actions.server">
             <field name="name">Download F-0003 Generated PDF</field>
