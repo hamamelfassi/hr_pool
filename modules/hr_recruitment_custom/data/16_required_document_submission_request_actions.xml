@@ -12,9 +12,13 @@
             <field name="model_id" ref="hr_recruitment.model_hr_applicant" />
             <field name="state">code</field>
             <field name="code"><![CDATA[
-checklist_model = env['x_hr.applicant_required_document_checklist'].sudo()
 request_model = env['x_hr.applicant_required_document_submission_request'].sudo()
+line_model = env['x_hr.applicant_required_document_submission_request_line'].sudo()
+checklist_model = env['x_hr.applicant_required_document_checklist'].sudo()
+doc_type_model = env['x_hr.recruitment_required_document_type'].sudo()
+
 action = False
+
 
 def open_request_form(request):
     view = env.ref('hr_recruitment_custom.view_required_document_submission_request_form_controlled', raise_if_not_found=False)
@@ -30,17 +34,79 @@ def open_request_form(request):
         action['views'] = [(view.id, 'form')]
     return action
 
-def toast(title, message, kind='warning', sticky=False):
-    return {
-        'type': 'ir.actions.client',
-        'tag': 'display_notification',
-        'params': {
-            'title': title,
-            'message': message,
-            'type': kind,
-            'sticky': sticky,
-        }
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
     }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def url_escape(value):
+    if value in (False, None):
+        return ''
+    raw = str(value)
+    result = ''
+    for b in raw.encode('utf-8'):
+        if (b >= 48 and b <= 57) or (b >= 65 and b <= 90) or (b >= 97 and b <= 122) or b in (45, 46, 95, 126):
+            result += chr(b)
+        elif b == 32:
+            result += '%20'
+        else:
+            result += '%%%02X' % b
+    return result
+
+
+def add_param(params, key, value):
+    params.append('%s=%s' % (url_escape(key), url_escape(value)))
+
+
+def ensure_request(checklist, applicant):
+    request = request_model.search([
+        ('x_applicant_id', '=', applicant.id),
+        ('x_checklist_id', '=', checklist.id),
+        ('x_state', 'in', ['draft', 'prepared']),
+    ], order='id desc', limit=1)
+
+    if request:
+        return request, False
+
+    sequence = request_model.search_count([
+        ('x_applicant_id', '=', applicant.id),
+    ]) + 1
+
+    candidate_name = applicant.partner_name or applicant.name or applicant.display_name or ''
+    candidate_email = applicant.email_from or ''
+
+    request = request_model.create({
+        'x_name': '%s / طلب #%s' % (candidate_name or applicant.display_name, sequence),
+        'x_sequence': sequence,
+        'x_applicant_id': applicant.id,
+        'x_checklist_id': checklist.id,
+        'x_state': 'draft',
+        'x_form_base_url': 'https://forms.fillout.com/t/sZFxwo2u1bus',
+        'x_candidate_name_snapshot': candidate_name,
+        'x_candidate_email_snapshot': candidate_email,
+        'x_requested_by_user_id': env.user.id,
+        'x_requested_on': datetime.datetime.now(),
+    })
+
+    request.write({
+        'x_request_reference': 'MCEP-HR-F-0003-REQ-%05d' % request.id,
+        'x_name': '%s / طلب #%s' % (candidate_name or applicant.display_name, sequence),
+    })
+
+    request.message_post(body='Required document submission request created from applicant Submissions tab.')
+    checklist.message_post(body='Required document submission request created from applicant Submissions tab: %s.' % request.x_request_reference)
+    applicant.message_post(body='Required document submission request created from applicant Submissions tab: %s.' % request.x_request_reference)
+
+    return request, True
+
 
 for applicant in records.sudo():
     checklist = checklist_model.search([
@@ -57,13 +123,13 @@ for applicant in records.sudo():
         )
         continue
 
-    requestable_lines = checklist.x_line_ids.filtered(
+    target_lines = checklist.x_line_ids.filtered(
         lambda line: line.x_required
         and line.x_public_request_enabled
         and line.x_status in ('missing', 'rejected', 'resubmission_requested')
-    )
+    ).sorted(key=lambda line: ((line.x_sequence or 0), line.id))
 
-    if not requestable_lines:
+    if not target_lines:
         action = toast(
             'No requestable document lines',
             'No missing, rejected, or resubmission-requested public document lines were found for this checklist.',
@@ -72,35 +138,163 @@ for applicant in records.sudo():
         )
         continue
 
-    existing = request_model.search([
-        ('x_applicant_id', '=', applicant.id),
-        ('x_checklist_id', '=', checklist.id),
-        ('x_state', 'in', ['draft', 'prepared']),
-    ], order='id desc', limit=1)
+    request, created = ensure_request(checklist, applicant)
 
-    if existing:
-        action = open_request_form(existing)
-        continue
-
-    prepare_action = env.ref(
-        'hr_recruitment_custom.action_required_document_checklist_prepare_submission_request',
-        raise_if_not_found=False,
-    )
-
-    if not prepare_action:
+    if request.x_state not in ('draft', 'prepared'):
         action = toast(
-            'Prepare action missing',
-            'The checklist-level Prepare Submission Request action was not found.',
-            'danger',
+            'Request locked',
+            'The latest request is locked. Prepare a new request only after the current request is completed or cancelled.',
+            'warning',
             True,
+            open_request_form(request),
         )
         continue
 
-    action = prepare_action.with_context(
-        active_model='x_hr.applicant_required_document_checklist',
-        active_id=checklist.id,
-        active_ids=[checklist.id],
-    ).run()
+    candidate_name = applicant.partner_name or applicant.name or applicant.display_name or ''
+    candidate_email = applicant.email_from or ''
+
+    request.write({
+        'x_candidate_name_snapshot': candidate_name,
+        'x_candidate_email_snapshot': candidate_email,
+        'x_generated_url': False,
+    })
+
+    target_line_ids = []
+    created_or_updated = 0
+
+    for checklist_line in target_lines:
+        target_line_ids.append(checklist_line.id)
+
+        document_type = checklist_line.x_document_type_id
+        document_code = checklist_line.x_document_code or (document_type.x_code if document_type else False)
+        prefix = checklist_line.x_fillout_prefix or document_code
+
+        if not prefix:
+            continue
+
+        existing = line_model.search([
+            ('x_request_id', '=', request.id),
+            ('x_checklist_line_id', '=', checklist_line.id),
+        ], order='id desc', limit=1)
+
+        values = {
+            'x_request_id': request.id,
+            'x_sequence': checklist_line.x_sequence or 0,
+            'x_applicant_id': applicant.id,
+            'x_checklist_id': checklist.id,
+            'x_checklist_line_id': checklist_line.id,
+            'x_document_type_id': document_type.id if document_type else False,
+            'x_document_code': document_code,
+            'x_fillout_prefix': prefix,
+            'x_public_request_enabled': checklist_line.x_public_request_enabled,
+            'x_requires_attachment': checklist_line.x_requires_attachment,
+            'x_manual_review_expected': checklist_line.x_manual_review_expected,
+            'x_structured_data_required': checklist_line.x_structured_data_required,
+            'x_show_param_name': '%s_show' % prefix,
+            'x_request_line_param_name': '%s_request_line_id' % prefix,
+            'x_checklist_line_param_name': '%s_checklist_line_id' % prefix,
+            'x_document_type_param_name': '%s_document_type_id' % prefix,
+            'x_document_code_param_name': '%s_document_code' % prefix,
+            'x_state': 'requested',
+            'x_notes': checklist_line.x_notes or False,
+        }
+
+        request_label = 'طلب #%s' % (request.x_sequence or request.id)
+        document_label = checklist_line.x_document_name_ar or checklist_line.x_document_name_en or document_code or 'المستند المطلوب'
+        values['x_name'] = '%s / %s' % (request_label, document_label)
+
+        if existing:
+            existing.write(values)
+        else:
+            line_model.create(values)
+
+        created_or_updated += 1
+
+    stale_lines = line_model.search([
+        ('x_request_id', '=', request.id),
+        ('x_checklist_line_id', 'not in', target_line_ids),
+        ('x_state', '=', 'requested'),
+    ])
+    if stale_lines:
+        stale_lines.write({
+            'x_state': 'cancelled',
+            'x_notes': 'Cancelled because the checklist line is no longer requestable.',
+        })
+
+    now = datetime.datetime.now()
+    reference = request.x_request_reference or ('MCEP-HR-F-0003-REQ-%05d' % request.id)
+    base_url = request.x_form_base_url or 'https://forms.fillout.com/t/sZFxwo2u1bus'
+    expires_at = request.x_expires_at or (now + datetime.timedelta(days=14))
+    token = request.x_token_reference or ('MCEP-F0003-%05d-%s-%s' % (
+        request.id,
+        applicant.id,
+        now.strftime('%Y%m%d%H%M%S%f'),
+    ))
+
+    request.write({
+        'x_request_reference': reference,
+        'x_form_base_url': base_url,
+        'x_candidate_name_snapshot': candidate_name,
+        'x_candidate_email_snapshot': candidate_email,
+        'x_expires_at': expires_at,
+        'x_token_reference': token,
+        'x_state': 'prepared',
+        'x_requested_by_user_id': request.x_requested_by_user_id.id or env.user.id,
+        'x_requested_on': request.x_requested_on or now,
+        'x_name': '%s / طلب #%s' % (candidate_name or applicant.display_name, request.x_sequence or request.id),
+    })
+
+    active_request_lines = request.x_line_ids.filtered(lambda line: line.x_state != 'cancelled' and line.x_public_request_enabled)
+    line_by_prefix = {}
+    for request_line in active_request_lines:
+        prefix = request_line.x_fillout_prefix or request_line.x_document_code
+        if prefix:
+            line_by_prefix[prefix] = request_line
+
+    params = []
+    add_param(params, 'odoo_request_id', request.id)
+    add_param(params, 'odoo_applicant_id', applicant.id)
+    add_param(params, 'odoo_checklist_id', checklist.id)
+    add_param(params, 'request_reference', reference)
+    add_param(params, 'candidate_name', candidate_name)
+    add_param(params, 'candidate_email', candidate_email)
+    add_param(params, 'token_reference', token)
+    add_param(params, 'expires_at', expires_at.isoformat() if expires_at else '')
+    add_param(params, 'form_base_url', base_url)
+    add_param(params, 'state', 'prepared')
+    add_param(params, 'sent_at', request.x_sent_on.isoformat() if request.x_sent_on else '')
+    add_param(params, 'last_response_at', request.x_last_response_at.isoformat() if request.x_last_response_at else '')
+
+    public_doc_types = doc_type_model.search([
+        ('x_active', '=', True),
+        ('x_public_request_enabled', '=', True),
+    ], order='x_sequence asc, id asc')
+
+    for doc_type in public_doc_types:
+        prefix = doc_type.x_fillout_prefix or doc_type.x_code
+        if not prefix:
+            continue
+
+        request_line = line_by_prefix.get(prefix)
+        add_param(params, '%s_show' % prefix, '1' if request_line else '0')
+        add_param(params, '%s_request_line_id' % prefix, request_line.id if request_line else '')
+        add_param(params, '%s_checklist_line_id' % prefix, request_line.x_checklist_line_id.id if request_line else '')
+        add_param(params, '%s_document_type_id' % prefix, request_line.x_document_type_id.id if request_line else doc_type.id)
+        add_param(params, '%s_document_code' % prefix, request_line.x_document_code if request_line else doc_type.x_code)
+
+    separator = '&' if '?' in base_url else '?'
+    final_url = base_url + separator + '&'.join(params)
+
+    request.write({
+        'x_generated_url': final_url,
+        'x_state': 'prepared',
+    })
+
+    request.message_post(body='Prepared submission request from applicant Submissions tab. Request lines prepared: %s. Continuation URL generated.' % created_or_updated)
+    checklist.message_post(body='Prepared submission request %s from applicant Submissions tab and generated continuation URL.' % request.x_request_reference)
+    applicant.message_post(body='Prepared required document submission request %s from applicant Submissions tab.' % request.x_request_reference)
+
+    action = open_request_form(request)
     break
 
 if not action:
