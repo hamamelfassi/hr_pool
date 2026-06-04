@@ -837,6 +837,24 @@ for rec in records.sudo():
     pdf_attachment = rec.x_pdf_attachment_id
     filename = pdf_attachment.name or ('%s - F-0004 Legal Documents Validity Declaration.pdf' % applicant_name)
 
+    form_code = rec.x_declaration_code or 'Declaration'
+    form_reference = rec.x_document_reference or rec.x_name or ''
+    form_title = {
+        'legal_documents_validity_declaration': 'Legal Documents Validity Declaration',
+        'policies_compliance_declaration': 'Policies and Procedures Compliance Declaration',
+        'non_disclosure_agreement': 'Confidentiality and Non-Disclosure Declaration',
+    }.get(rec.x_declaration_type, rec.x_declaration_type or 'Declaration')
+
+    sign_request_label = ' - '.join([
+        part for part in [
+            form_code,
+            form_reference,
+            form_title,
+            applicant_name,
+        ] if part
+    ])
+
+
     registry_doc = registry_model.search([
         ('x_document_type', '=', 'legal_documents_validity_declaration'),
         ('x_source_model', '=', 'x_hr.applicant_declaration'),
@@ -904,7 +922,7 @@ for rec in records.sudo():
     validity_date = datetime.date.today() + datetime.timedelta(days=60)
 
     sign_template = sign_template_model.create({
-        'name': filename,
+        'name': sign_request_label,
         'user_id': env.user.id,
         'signature_request_validity': 60,
     })
@@ -912,7 +930,7 @@ for rec in records.sudo():
     sign_document = sign_document_model.create({
         'template_id': sign_template.id,
         'attachment_id': pdf_attachment.id,
-        'name': filename,
+        'name': sign_request_label,
         'sequence': 1,
     })
 
@@ -934,7 +952,7 @@ for rec in records.sudo():
         'constant': False,
     })
 
-    subject = 'Signature Request - %s' % filename
+    subject = 'Signature Request - %s' % sign_request_label
     body = '<p>Please review and sign the attached F-0004 Legal Documents Validity Declaration.</p>'
 
     send_vals = {
@@ -980,6 +998,16 @@ for rec in records.sudo():
     if generated_request:
         if 'reference_doc' in sign_request_model._fields:
             generated_request.sudo().write({'reference_doc': 'hr.applicant,%s' % applicant.id})
+
+        sign_request_label_vals = {}
+        if 'reference' in sign_request_model._fields:
+            sign_request_label_vals['reference'] = sign_request_label
+        if 'subject' in sign_request_model._fields:
+            sign_request_label_vals['subject'] = subject
+        if 'name' in sign_request_model._fields:
+            sign_request_label_vals['name'] = sign_request_label
+        if sign_request_label_vals:
+            generated_request.sudo().write(sign_request_label_vals)
 
         registry_doc.write({
             'x_state': 'signature_requested',
@@ -1146,6 +1174,24 @@ for rec in records.sudo():
     pdf_attachment = rec.x_pdf_attachment_id
     filename = pdf_attachment.name or ('%s - F-0007 إقرار الالتزام باللوائح والسياسات.pdf' % applicant_name)
 
+    form_code = rec.x_declaration_code or 'Declaration'
+    form_reference = rec.x_document_reference or rec.x_name or ''
+    form_title = {
+        'legal_documents_validity_declaration': 'Legal Documents Validity Declaration',
+        'policies_compliance_declaration': 'Policies and Procedures Compliance Declaration',
+        'non_disclosure_agreement': 'Confidentiality and Non-Disclosure Declaration',
+    }.get(rec.x_declaration_type, rec.x_declaration_type or 'Declaration')
+
+    sign_request_label = ' - '.join([
+        part for part in [
+            form_code,
+            form_reference,
+            form_title,
+            applicant_name,
+        ] if part
+    ])
+
+
     registry_doc = registry_model.search([
         ('x_document_type', '=', 'policies_compliance_declaration'),
         ('x_source_model', '=', 'x_hr.applicant_declaration'),
@@ -1194,7 +1240,7 @@ for rec in records.sudo():
     validity_date = datetime.date.today() + datetime.timedelta(days=60)
 
     sign_template = sign_template_model.create({
-        'name': filename,
+        'name': sign_request_label,
         'user_id': env.user.id,
         'signature_request_validity': 60,
     })
@@ -1202,7 +1248,7 @@ for rec in records.sudo():
     sign_document = sign_document_model.create({
         'template_id': sign_template.id,
         'attachment_id': pdf_attachment.id,
-        'name': filename,
+        'name': sign_request_label,
         'sequence': 1,
     })
 
@@ -1241,7 +1287,7 @@ for rec in records.sudo():
             'constant': False,
         })
 
-    subject = 'Signature Request - %s' % filename
+    subject = 'Signature Request - %s' % sign_request_label
     body = '<p>Please review and sign the attached F-0007 Policies Compliance Declaration.</p>'
 
     send_vals = {
@@ -1287,6 +1333,16 @@ for rec in records.sudo():
     if generated_request:
         if 'reference_doc' in sign_request_model._fields:
             generated_request.sudo().write({'reference_doc': 'hr.applicant,%s' % applicant.id})
+
+        sign_request_label_vals = {}
+        if 'reference' in sign_request_model._fields:
+            sign_request_label_vals['reference'] = sign_request_label
+        if 'subject' in sign_request_model._fields:
+            sign_request_label_vals['subject'] = subject
+        if 'name' in sign_request_model._fields:
+            sign_request_label_vals['name'] = sign_request_label
+        if sign_request_label_vals:
+            generated_request.sudo().write(sign_request_label_vals)
 
         registry_doc.write({
             'x_state': 'signature_requested',
@@ -1441,6 +1497,24 @@ for rec in records.sudo():
     pdf_attachment = rec.x_pdf_attachment_id
     filename = pdf_attachment.name or ('%s - F-0009 إقرار السرية وعدم الإفصاح.pdf' % applicant_name)
 
+    form_code = rec.x_declaration_code or 'Declaration'
+    form_reference = rec.x_document_reference or rec.x_name or ''
+    form_title = {
+        'legal_documents_validity_declaration': 'Legal Documents Validity Declaration',
+        'policies_compliance_declaration': 'Policies and Procedures Compliance Declaration',
+        'non_disclosure_agreement': 'Confidentiality and Non-Disclosure Declaration',
+    }.get(rec.x_declaration_type, rec.x_declaration_type or 'Declaration')
+
+    sign_request_label = ' - '.join([
+        part for part in [
+            form_code,
+            form_reference,
+            form_title,
+            applicant_name,
+        ] if part
+    ])
+
+
     registry_doc = registry_model.search([
         ('x_document_type', '=', 'non_disclosure_agreement'),
         ('x_source_model', '=', 'x_hr.applicant_declaration'),
@@ -1489,7 +1563,7 @@ for rec in records.sudo():
     validity_date = datetime.date.today() + datetime.timedelta(days=60)
 
     sign_template = sign_template_model.create({
-        'name': filename,
+        'name': sign_request_label,
         'user_id': env.user.id,
         'signature_request_validity': 60,
     })
@@ -1497,7 +1571,7 @@ for rec in records.sudo():
     sign_document = sign_document_model.create({
         'template_id': sign_template.id,
         'attachment_id': pdf_attachment.id,
-        'name': filename,
+        'name': sign_request_label,
         'sequence': 1,
     })
 
@@ -1536,7 +1610,7 @@ for rec in records.sudo():
             'constant': False,
         })
 
-    subject = 'Signature Request - %s' % filename
+    subject = 'Signature Request - %s' % sign_request_label
     body = '<p>Please review and sign the attached F-0009 Non-Disclosure Agreement.</p>'
 
     send_vals = {
@@ -1582,6 +1656,16 @@ for rec in records.sudo():
     if generated_request:
         if 'reference_doc' in sign_request_model._fields:
             generated_request.sudo().write({'reference_doc': 'hr.applicant,%s' % applicant.id})
+
+        sign_request_label_vals = {}
+        if 'reference' in sign_request_model._fields:
+            sign_request_label_vals['reference'] = sign_request_label
+        if 'subject' in sign_request_model._fields:
+            sign_request_label_vals['subject'] = subject
+        if 'name' in sign_request_model._fields:
+            sign_request_label_vals['name'] = sign_request_label
+        if sign_request_label_vals:
+            generated_request.sudo().write(sign_request_label_vals)
 
         registry_doc.write({
             'x_state': 'signature_requested',
