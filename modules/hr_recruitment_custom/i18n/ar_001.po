@@ -360,8 +360,10 @@ msgstr "رقم القائمة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model,name:hr_recruitment_custom.model_x_hr_applicant_declaration
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
 msgid "Applicant Declaration"
-msgstr ""
+msgstr "إقرار المتقدم"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_decision_instance_x_hr_department_id
@@ -879,8 +881,11 @@ msgstr ""
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_declaration_x_declaration_type
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_list
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
 msgid "Declaration Type"
-msgstr ""
+msgstr "نوع الإقرار"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_declaration_ids
@@ -1052,6 +1057,7 @@ msgstr "تنزيل المستند"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
 msgid "Download Generated PDF"
 msgstr "تنزيل ملف PDF المنشأ"
 
@@ -1069,6 +1075,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
 msgid "Download Sign Certificate"
 msgstr "تنزيل شهادة التوقيع"
 
@@ -1082,6 +1089,7 @@ msgstr "تنزيل المستند الموقّع"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
 msgid "Download Signed PDF"
 msgstr "تنزيل ملف PDF الموقع"
 
@@ -1433,7 +1441,7 @@ msgstr ""
 #. module: hr_recruitment_custom
 #: model:ir.actions.report,name:hr_recruitment_custom.action_report_mcep_legal_document_validity_declaration
 msgid "F-0004 Legal Documents Validity Declaration"
-msgstr ""
+msgstr "إقرار صحة المستندات F-0004"
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.report,name:hr_recruitment_custom.action_report_employment_contract_f0005
@@ -1443,12 +1451,12 @@ msgstr ""
 #. module: hr_recruitment_custom
 #: model:ir.actions.report,name:hr_recruitment_custom.action_report_mcep_policies_compliance_declaration
 msgid "F-0007 Policies Compliance Declaration"
-msgstr ""
+msgstr "إقرار الالتزام باللوائح والسياسات F-0007"
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.report,name:hr_recruitment_custom.action_report_mcep_non_disclosure_agreement
 msgid "F-0009 Non-Disclosure Agreement"
-msgstr ""
+msgstr "إقرار السرية وعدم الإفصاح F-0009"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
@@ -1673,6 +1681,8 @@ msgstr "ملف F-0003 المولد"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_generated_on
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_list
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
 msgid "Generated On"
 msgstr "تاريخ التوليد"
 
@@ -2172,7 +2182,7 @@ msgstr "بند الهوية المركب القديم"
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_mcep_legal_document_validity_declaration_document
 msgid "Legal Documents Validity Declaration"
-msgstr ""
+msgstr "إقرار صحة المستندات"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
@@ -2521,6 +2531,7 @@ msgstr "غير مقبول"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_form_controlled
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_form
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
 msgid "Notes"
 msgstr "ملاحظات"
 
@@ -2849,8 +2860,10 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_form_controlled
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_list
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_list
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
 msgid "Reference"
-msgstr "الإشاري"
+msgstr "المرجع"
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.server,name:hr_recruitment_custom.action_required_document_submission_request_refresh_candidate_snapshot
@@ -3278,6 +3291,8 @@ msgstr "أرسله"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_sent_on
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_list
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
 msgid "Sent On"
 msgstr "تاريخ الإرسال"
 
@@ -3382,6 +3397,8 @@ msgstr "ملف تقييم المقابلة الموقع"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_signed_on
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_list
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
 msgid "Signed On"
 msgstr "تاريخ التوقيع"
 
@@ -3512,6 +3529,8 @@ msgstr "الحالة"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_list_controlled
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_list
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_list
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
 msgid "Status"
 msgstr "الحالة"
 
@@ -6002,6 +6021,7 @@ msgstr "بيانات المقابلة"
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
 msgid "Document Lifecycle"
 msgstr "دورة المستند"
 
@@ -6118,3 +6138,122 @@ msgstr "بند المهمة"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "HR notes about the responsibilities version or signature lifecycle."
 msgstr "ملاحظات الموارد البشرية حول نسخة المهام أو مسار التوقيع."
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Create F-0004"
+msgstr "إنشاء F-0004"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Create F-0007"
+msgstr "إنشاء F-0007"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Create F-0009"
+msgstr "إنشاء F-0009"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Use this page to create and track applicant declarations: F-0004 legal documents validity, F-0007 policies and procedures compliance, and F-0009 confidentiality and non-disclosure."
+msgstr "استخدم هذه الصفحة لإنشاء ومتابعة إقرارات المتقدم: F-0004 صحة المستندات، F-0007 الالتزام باللوائح والسياسات، و F-0009 السرية وعدم الإفصاح."
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_list
+msgid "Applicant Declarations"
+msgstr "إقرارات المتقدم"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
+msgid "Generate F-0004 PDF"
+msgstr "توليد ملف F-0004 PDF"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
+msgid "Generate F-0007 PDF"
+msgstr "توليد ملف F-0007 PDF"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
+msgid "Generate F-0009 PDF"
+msgstr "توليد ملف F-0009 PDF"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
+msgid "Send F-0004 for Signature"
+msgstr "إرسال F-0004 للتوقيع"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
+msgid "Send F-0007 for Signature"
+msgstr "إرسال F-0007 للتوقيع"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
+msgid "Send F-0009 for Signature"
+msgstr "إرسال F-0009 للتوقيع"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
+msgid "Sync Signature"
+msgstr "مزامنة التوقيع"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
+msgid "Sync F-0007 Signature"
+msgstr "مزامنة توقيع F-0007"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
+msgid "Sync F-0009 Signature"
+msgstr "مزامنة توقيع F-0009"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
+msgid "Declaration Identity"
+msgstr "بيانات الإقرار"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
+msgid "Official Attachments"
+msgstr "المرفقات الرسمية"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
+msgid "Generated PDF"
+msgstr "المستند المنشأ"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
+msgid "Signed PDF"
+msgstr "المستند الموقع"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
+msgid "Internal notes about this declaration."
+msgstr "ملاحظات داخلية عن هذا الإقرار."
+
+#. module: hr_recruitment_custom
+msgid "Policies and Procedures Compliance Declaration"
+msgstr "إقرار الالتزام باللوائح والسياسات"
+
+#. module: hr_recruitment_custom
+msgid "Confidentiality and Non-Disclosure Declaration"
+msgstr "إقرار السرية وعدم الإفصاح"
+
+#. module: hr_recruitment_custom
+msgid "Signature Requested"
+msgstr "تم طلب التوقيع"
+
+#. module: hr_recruitment_custom
+msgid "Cancelled"
+msgstr "ملغى"
