@@ -204,12 +204,15 @@ for rec in records.sudo():
 
 if len(records) == 1 and last_attachment:
     action = {
-        'type': 'ir.actions.act_window',
-        'name': 'مسودة الوصف الوظيفي',
-        'res_model': 'ir.attachment',
-        'view_mode': 'form',
-        'res_id': last_attachment.id,
-        'target': 'new',
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': 'Responsibilities PDF generated',
+            'message': 'F-0006 draft PDF was generated in the background and linked to the applicant record.',
+            'type': 'success',
+            'sticky': False,
+            'next': {'type': 'ir.actions.client', 'tag': 'reload'},
+        },
     }
 elif not action:
     action = toast('لم يتم توليد مسودة', 'لم يتم توليد أي مسودة وصف وظيفي.', 'warning', False)
@@ -371,8 +374,8 @@ for rec in records.sudo():
         if existing_request.exists():
             existing_state = existing_request.state or registry_doc.x_sign_request_state or 'unknown'
             if existing_state not in ['cancelled', 'canceled']:
-                if existing_state == 'signed':
-                    message = 'طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة التوقيع لإغلاق السجل.'
+                if existing_state in ['signed', 'completed']:
+                    message = 'طلب توقيع أودو المرتبط مكتمل/موقّع بالفعل. استخدم مزامنة التوقيع لإغلاق السجل.'
                 else:
                     message = 'يوجد طلب توقيع أودو نشط لهذا الوصف الوظيفي بحالة "%s". لن يتم إنشاء طلب مكرر.' % existing_state
                 action = toast('تم منع طلب توقيع مكرر', message, 'warning', True)
@@ -439,7 +442,7 @@ for rec in records.sudo():
     subject = 'Signature Request - %s' % filename
     body = '<p>Please review and sign the attached Job Description / Terms of Responsibilities.</p>'
 
-    send_request = sign_send_model.create({
+    send_vals = {
         'template_id': sign_template.id,
         'signer_id': applicant_partner.id,
         'subject': subject,
@@ -449,7 +452,12 @@ for rec in records.sudo():
         'reminder_enabled': False,
         'model': 'hr.applicant',
         'res_ids': str([rec.id]),
-    })
+    }
+
+    if 'reference_doc' in sign_send_model._fields:
+        send_vals['reference_doc'] = 'hr.applicant,%s' % rec.id
+
+    send_request = sign_send_model.create(send_vals)
 
     signer_profiles = [
         (manager_role, manager_partner, 1),
@@ -661,7 +669,7 @@ for rec in records.sudo():
         'x_sign_request_reference': sign_request.reference or registry_doc.x_sign_request_reference,
     })
 
-    if request_state != 'signed':
+    if request_state not in ['signed', 'completed']:
         rec.message_post(body='تم فحص حالة توقيع الوصف الوظيفي. الحالة الحالية: %s.' % request_state)
         action = toast(
             'التوقيع لم يكتمل بعد',
@@ -861,12 +869,9 @@ for rec in records.sudo():
         continue
 
     action = {
-        'type': 'ir.actions.act_window',
-        'name': 'مسودة الوصف الوظيفي',
-        'res_model': 'ir.attachment',
-        'view_mode': 'form',
-        'res_id': attachment.id,
-        'target': 'new',
+        'type': 'ir.actions.act_url',
+        'url': '/web/content/%s?download=true' % attachment.id,
+        'target': 'self',
     }
     break
 
@@ -951,12 +956,9 @@ for rec in records.sudo():
         continue
 
     action = {
-        'type': 'ir.actions.act_window',
-        'name': 'النسخة الموقعة للوصف الوظيفي',
-        'res_model': 'ir.attachment',
-        'view_mode': 'form',
-        'res_id': attachment.id,
-        'target': 'new',
+        'type': 'ir.actions.act_url',
+        'url': '/web/content/%s?download=true' % attachment.id,
+        'target': 'self',
     }
     break
 
