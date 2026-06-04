@@ -273,5 +273,96 @@ else:
             ]]></field>
         </record>
 
+
+        <record id="action_hr_applicant_download_board_decision_generated_pdf" model="ir.actions.server">
+            <field name="name">Download Board Decision Generated PDF</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+rec = records.sudo()[:1]
+attachment = rec.x_board_decision_generated_attachment_id if rec else False
+
+if not rec:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {'title': 'No applicant', 'message': 'Open an applicant first.', 'type': 'warning', 'sticky': False},
+    }
+elif not attachment:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {'title': 'No generated PDF', 'message': 'No generated board decision PDF is linked to this applicant yet.', 'type': 'warning', 'sticky': False},
+    }
+else:
+    action = {
+        'type': 'ir.actions.act_url',
+        'url': '/web/content/%s?download=true' % attachment.id,
+        'target': 'self',
+    }
+            ]]></field>
+        </record>
+
+        <record id="action_hr_applicant_download_board_decision_signed_pdf" model="ir.actions.server">
+            <field name="name">Download Board Decision Signed PDF</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+rec = records.sudo()[:1]
+attachment = rec.x_board_decision_signed_attachment_id if rec else False
+
+if not rec:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {'title': 'No applicant', 'message': 'Open an applicant first.', 'type': 'warning', 'sticky': False},
+    }
+elif not attachment:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {'title': 'No signed PDF', 'message': 'No signed board decision PDF is linked to this applicant yet.', 'type': 'warning', 'sticky': False},
+    }
+else:
+    action = {
+        'type': 'ir.actions.act_url',
+        'url': '/web/content/%s?download=true' % attachment.id,
+        'target': 'self',
+    }
+            ]]></field>
+        </record>
+
+        <record id="action_hr_applicant_download_board_decision_sign_certificate" model="ir.actions.server">
+            <field name="name">Download Board Decision Sign Certificate</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+rec = records.sudo()[:1]
+attachment = rec.x_board_decision_certificate_attachment_id if rec else False
+
+if not rec:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {'title': 'No applicant', 'message': 'Open an applicant first.', 'type': 'warning', 'sticky': False},
+    }
+elif not attachment:
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {'title': 'No Sign certificate', 'message': 'No board decision Sign certificate is linked to this applicant yet.', 'type': 'warning', 'sticky': False},
+    }
+else:
+    action = {
+        'type': 'ir.actions.act_url',
+        'url': '/web/content/%s?download=true' % attachment.id,
+        'target': 'self',
+    }
+            ]]></field>
+        </record>
+
     </data>
 </odoo>
