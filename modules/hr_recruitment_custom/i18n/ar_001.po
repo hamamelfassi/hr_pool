@@ -219,12 +219,12 @@ msgstr "مقبول"
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
 msgid "Accepted Evidence"
-msgstr ""
+msgstr "المستند المقبول"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
 msgid "Accepted Structured Values"
-msgstr ""
+msgstr "القيم التفصيلية المقبولة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_line_x_account_number
@@ -357,7 +357,7 @@ msgstr "المرفقات الرسمية"
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_form_controlled
 msgid "Attachment"
-msgstr ""
+msgstr "المرفق"
 
 #. module: hr_recruitment_custom
 #: model:x_mcep.interview_question,x_name:hr_recruitment_custom.mcep_interview_question_06
@@ -439,7 +439,7 @@ msgstr "قائمة المستندات"
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
 msgid "Checklist Identity"
-msgstr ""
+msgstr "بيانات القائمة"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
@@ -457,7 +457,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_form_controlled
 msgid "Checklist Linkage"
-msgstr "إشاري القائمة"
+msgstr "ربط القائمة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_checklist_x_name
@@ -675,7 +675,7 @@ msgstr "المستندات"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
 msgid "Download Accepted Evidence"
-msgstr "تنزيل مستند مصدق"
+msgstr "تنزيل المستند المقبول"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_form
@@ -692,7 +692,7 @@ msgstr "تنزيل مسودة PDF"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_form_controlled
 msgid "Download Evidence"
-msgstr "تنزيل"
+msgstr "تنزيل المستند"
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.server,name:hr_recruitment_custom.action_required_document_checklist_download_generated_pdf
@@ -831,7 +831,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_form_controlled
 msgid "Family / Next of Kin"
-msgstr "العائلة / أقرب الأقارب"
+msgstr "الوضع العائلي / أقرب قريب"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_line_x_family_paper_number
@@ -859,7 +859,7 @@ msgstr "أنثى"
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_form_controlled
 msgid "Fillout Continuation URL"
-msgstr "رابط النموذج"
+msgstr "رابط نموذج التقديم"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_request_x_form_base_url
@@ -1001,7 +1001,7 @@ msgstr ""
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
 msgid "Generic"
-msgstr ""
+msgstr "عام"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_grade_good
@@ -1233,7 +1233,7 @@ msgstr "تواريخ دورة الحياة"
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_form_controlled
 msgid "Line Identity"
-msgstr ""
+msgstr "بيانات البند"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_function_line_x_name
@@ -1294,7 +1294,7 @@ msgstr "تعيين حالة توقيع المقابلة عند إرفاق الم
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_form_controlled
 msgid "Mark Manually Sent"
-msgstr "مرسل يدويًا"
+msgstr "تعيين كمرسل يدوياً"
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.server,name:hr_recruitment_custom.action_required_document_submission_request_mark_manual_sent
@@ -1749,7 +1749,7 @@ msgstr "الحالة"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_request_x_line_ids
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_form_controlled
 msgid "Request Lines"
-msgstr "بنود القائمة"
+msgstr "بنود الطلب"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_request_x_name
@@ -1798,8 +1798,9 @@ msgstr "مطلوب"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_request_x_checklist_id
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_x_checklist_id
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
+#: model:ir.actions.act_window,name:hr_recruitment_custom.action_required_document_checklists
 msgid "Required Document Checklist"
-msgstr "قائمة المستندات"
+msgstr "قائمة المستندات المطلوبة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_request_line_x_checklist_line_id
@@ -1818,7 +1819,7 @@ msgstr "قوائم المستندات المطلوبة"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
 msgid "Required Document Line"
-msgstr "بند القائمة"
+msgstr "بند المستند المطلوب"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_checklist_x_line_ids
@@ -1830,24 +1831,24 @@ msgstr "بنود المستندات المطلوبة"
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_form_controlled
 msgid "Required Document Request Line"
-msgstr ""
+msgstr "بند طلب المستند المطلوب"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_form_controlled
 msgid "Required Document Submission"
-msgstr "تقديم مستند"
+msgstr "تقديم مستند مطلوب"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_form_controlled
 msgid "Required Document Submission Request"
-msgstr ""
+msgstr "طلب تقديم المستندات المطلوبة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_required_document_submission_request_ids
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_list_controlled
 msgid "Required Document Submission Requests"
-msgstr "طلبات المستندات"
+msgstr "طلبات تقديم المستندات المطلوبة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_required_document_submission_ids
@@ -1855,7 +1856,7 @@ msgstr "طلبات المستندات"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_list_controlled
 msgid "Required Document Submissions"
-msgstr "تقديم المستندات"
+msgstr "تقديمات المستندات المطلوبة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_line_x_document_type_id
@@ -2210,7 +2211,7 @@ msgstr "بيانات التقديم"
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_form_controlled
 msgid "Submission Linkage"
-msgstr ""
+msgstr "ربط التقديم"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_x_name
@@ -2242,7 +2243,7 @@ msgstr "بنود طلب المستندات"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_checklist_x_submission_request_ids
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Submission Requests"
-msgstr "طلبات المستندات"
+msgstr "طلبات تقديم المستندات"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_x_submission_sequence
@@ -3883,3 +3884,108 @@ msgstr "جاهزة"
 #: model:ir.actions.server,name:hr_recruitment_custom.action_hr_applicant_refresh_preboarding_gate
 msgid "تحديث جاهزية بوابة ما قبل التوظيف"
 msgstr "تحديث جاهزية بوابة ما قبل التوظيف"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
+msgid "Prepare Submission Request"
+msgstr "إعداد طلب تقديم المستندات"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Review required documents, prepare the checklist, collect submissions, generate the PDF, send for signature, then sync the signed result."
+msgstr "راجع المستندات المطلوبة، ثم أعد القائمة، واجمع التقديمات، وولّد ملف PDF، وأرسله للتوقيع، ثم زامن النتيجة الموقعة."
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
+msgid "Download Generated PDF"
+msgstr "تنزيل ملف PDF المنشأ"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
+msgid "Download Sign Certificate"
+msgstr "تنزيل شهادة التوقيع"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
+msgid "Generate PDF"
+msgstr "توليد ملف PDF"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
+msgid "Sign"
+msgstr "توقيع"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_form_controlled
+msgid "Sync"
+msgstr "مزامنة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_form_controlled
+msgid "Open Link"
+msgstr "فتح الرابط"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_form_controlled
+msgid "Workflow and Evidence"
+msgstr "سير العمل والمستند"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_form_controlled
+msgid "Accept"
+msgstr "قبول"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_form_controlled
+msgid "Reject"
+msgstr "رفض"
+
+#. module: hr_recruitment_custom
+msgid "Prepared"
+msgstr "مُعد"
+
+#. module: hr_recruitment_custom
+msgid "Completed"
+msgstr "مكتمل"
+
+#. module: hr_recruitment_custom
+msgid "Expired"
+msgstr "منتهي"
+
+#. module: hr_recruitment_custom
+msgid "Requested"
+msgstr "مطلوب"
+
+#. module: hr_recruitment_custom
+msgid "Submitted"
+msgstr "مقدم"
+
+#. module: hr_recruitment_custom
+msgid "Accepted"
+msgstr "مقبول"
+
+#. module: hr_recruitment_custom
+msgid "Rejected"
+msgstr "مرفوض"
+
+#. module: hr_recruitment_custom
+msgid "Missing"
+msgstr "ناقص"
+
+#. module: hr_recruitment_custom
+msgid "Resubmission Requested"
+msgstr "مطلوب إعادة التقديم"
+
+#. module: hr_recruitment_custom
+msgid "Not Applicable"
+msgstr "غير منطبق"
+
+#. module: hr_recruitment_custom
+msgid "Manual"
+msgstr "يدوي"
+
+#. module: hr_recruitment_custom
+msgid "Fillout / Zite"
+msgstr "Fillout / Zite"
