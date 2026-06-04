@@ -348,6 +348,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_applicant_id
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_form_controlled
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_list_controlled
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_list
 msgid "Applicant"
 msgstr "المتقدم"
 
@@ -637,6 +639,7 @@ msgstr "الاسم"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_career_aspirations
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Career Aspirations"
 msgstr "الطموحات العملية"
 
@@ -749,8 +752,9 @@ msgstr "ملاحظات الأجر والمزايا"
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.server,name:hr_recruitment_custom.action_hr_applicant_conduct_interview
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Conduct Interview"
-msgstr "إجراء المقابلة"
+msgstr "إجراء مقابلة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_contract_date
@@ -822,6 +826,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_form_controlled
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_list_controlled
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Created On"
 msgstr "تاريخ الإنشاء"
 
@@ -968,8 +973,9 @@ msgstr "رقم المستند"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_declaration_x_document_reference
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Document Reference"
-msgstr ""
+msgstr "مرجع المستند"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_type_x_name
@@ -1042,8 +1048,9 @@ msgstr "تنزيل المستند"
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Download Generated PDF"
-msgstr "تنزيل ملف PDF المنشأ"
+msgstr "تنزيل المستند المولد"
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.server,name:hr_recruitment_custom.action_required_document_line_download_latest_accepted_attachment
@@ -1058,6 +1065,7 @@ msgstr ""
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Download Sign Certificate"
 msgstr "تنزيل شهادة التوقيع"
 
@@ -1070,8 +1078,9 @@ msgstr "تنزيل المستند الموقّع"
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Download Signed PDF"
-msgstr "تنزيل ملف PDF الموقع"
+msgstr "تنزيل الملف الموقع"
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.server,name:hr_recruitment_custom.action_required_document_submission_download_submitted_attachment
@@ -1119,6 +1128,7 @@ msgstr ""
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_employee_number_snapshot
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Employee Number"
 msgstr "الرقم الوظيفي"
 
@@ -1537,6 +1547,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_mcep_non_disclosure_agreement_document
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_mcep_policies_compliance_declaration_document
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_mcep_required_document_checklist_document
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Full Name"
 msgstr "الاسم الكامل"
 
@@ -1564,6 +1575,7 @@ msgstr "الوظائف"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_gender
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_gender
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Gender"
 msgstr "الجنس"
 
@@ -1592,8 +1604,9 @@ msgstr "طباعة تقيبم المقابلة"
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Generate PDF"
-msgstr "توليد ملف PDF"
+msgstr "توليد الملف"
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.server,name:hr_recruitment_custom.action_required_document_submission_request_generate_lines
@@ -1653,6 +1666,7 @@ msgstr "ملف F-0003 المولد"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_generated_on
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_checklist_x_generated_on
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_generated_on
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Generated On"
 msgstr "تاريخ التوليد"
 
@@ -2008,7 +2022,7 @@ msgstr ""
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_list
 msgid "Interview Evaluations"
-msgstr "تقييمات المقابلة"
+msgstr "تقييمات المقابلات"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_line_ids
@@ -2038,6 +2052,7 @@ msgstr "سؤال المقابلة"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_question_list
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Interview Questions"
 msgstr "أسئلة المقابلة"
 
@@ -2054,8 +2069,11 @@ msgstr "لقطة بيانات المقابلة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_interviewer_user_id
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_list
 msgid "Interviewer"
-msgstr "مُجري المقابلة"
+msgstr "المقابل"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_line_x_issue_date
@@ -2275,8 +2293,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_line_x_max_score
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_max_score
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_interview_question_x_default_max_score
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Max Score"
-msgstr "الحد الأعلى للدرجات"
+msgstr "الدرجة القصوى"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_ministry_accredited_attachment_id
@@ -2344,6 +2363,7 @@ msgstr "الاسم الإنجليزي"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_national_id
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_national_id
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_mcep_legal_document_validity_declaration_document
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "National ID"
 msgstr "الرقم الوطني"
 
@@ -2482,7 +2502,7 @@ msgstr ""
 #. module: hr_recruitment_custom
 #: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_grade_not_acceptable
 msgid "Not Acceptable"
-msgstr "غير مناسب"
+msgstr "غير مقبول"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_declaration_x_notes
@@ -2493,6 +2513,7 @@ msgstr "غير مناسب"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_form_controlled
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_form_controlled
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Notes"
 msgstr "ملاحظات"
 
@@ -2740,6 +2761,7 @@ msgstr "نوع المؤهل"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_line_x_question_id
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_interview_question_x_name
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Question"
 msgstr "السؤال"
 
@@ -2757,8 +2779,9 @@ msgstr "السؤال (إنجليزي)"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_ready_for_pdf
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Ready for PDF"
-msgstr "جاهز للتوليد"
+msgstr "جاهز لتوليد PDF"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_career_reasonable
@@ -2816,6 +2839,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_list_controlled
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_form_controlled
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_list
 msgid "Reference"
 msgstr "الإشاري"
 
@@ -2849,6 +2874,7 @@ msgstr ""
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_remarks
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Remarks"
 msgstr "ملاحظات"
 
@@ -3242,6 +3268,7 @@ msgstr "أرسله"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_checklist_x_sent_on
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_request_x_sent_on
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_sent_on
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Sent On"
 msgstr "تاريخ الإرسال"
 
@@ -3263,6 +3290,7 @@ msgstr ""
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Sign"
 msgstr "توقيع"
 
@@ -3343,6 +3371,7 @@ msgstr "ملف تقييم المقابلة الموقع"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_declaration_x_signed_on
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_checklist_x_signed_on
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_signed_on
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Signed On"
 msgstr "تاريخ التوقيع"
 
@@ -3471,6 +3500,8 @@ msgstr "الحالة"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_list_controlled
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_form_controlled
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_list_controlled
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_list
 msgid "Status"
 msgstr "الحالة"
 
@@ -3796,7 +3827,7 @@ msgstr "الإصدار"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields.selection,name:hr_recruitment_custom.sel_interview_grade_very_good
 msgid "Very Good"
-msgstr "جيد جدًا"
+msgstr "جيد جداً"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_visual_star_rating
@@ -6052,3 +6083,87 @@ msgstr "العقد"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Employment"
 msgstr "الترحيل"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Create a new interview evaluation, then generate the F-0002 PDF, send it for signature, and sync the signed result from the evaluation record."
+msgstr "أنشئ تقييم مقابلة جديداً، ثم ولّد ملف F-0002، وأرسله للتوقيع، ثم زامن النتيجة الموقعة من سجل التقييم."
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+msgid "Interview Identity"
+msgstr "بيانات المقابلة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+msgid "Document Lifecycle"
+msgstr "دورة المستند"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+msgid "Score Summary"
+msgstr "ملخص الدرجات"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_list
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+msgid "Position Applied"
+msgstr "المنصب المتقدم له"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_list
+msgid "Score"
+msgstr "الدرجات"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_list
+msgid "%"
+msgstr "النسبة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_list
+msgid "Grade"
+msgstr "التقدير"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_list
+msgid "Mark"
+msgstr "الدرجة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_list
+msgid "Recommended"
+msgstr "التوصية"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+msgid "Long Term Employment Expected"
+msgstr "استمرارية العمل متوقعة"
+
+#. module: hr_recruitment_custom
+msgid "No Rating"
+msgstr "بدون تقييم"
+
+#. module: hr_recruitment_custom
+msgid "Yes"
+msgstr "نعم"
+
+#. module: hr_recruitment_custom
+msgid "No"
+msgstr "لا"
