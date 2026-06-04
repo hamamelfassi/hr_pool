@@ -712,66 +712,66 @@
                 </page>
 
                 <page string="Responsibilities">
-                    <div class="d-flex justify-content-start mb-2">
-                        <button type="action"
-                            name="hr_recruitment_custom.action_hr_applicant_normalize_tor_header_on_change"
-                            string="Update"
-                            class="btn-secondary"
-                            invisible="not id or x_tor_state not in ['draft', False]" />
-                        <button type="action"
-                            name="hr_recruitment_custom.action_hr_applicant_generate_tor_pdf"
-                            string="Generate PDF"
-                            class="btn-primary"
-                            invisible="not id or x_tor_state in ['sent', 'signed', 'superseded']" />
-                        <button type="action"
-                            name="hr_recruitment_custom.action_hr_applicant_send_tor_for_signature"
-                            string="Sign"
-                            class="btn-secondary"
-                            invisible="not id or not x_tor_pdf_attachment_id or x_tor_state != 'generated'" />
-                        <button type="action"
-                            name="hr_recruitment_custom.action_hr_applicant_sync_tor_native_sign_completion"
-                            string="Sync"
-                            class="btn-secondary"
-                            invisible="not id or x_tor_state not in ['sent', 'signed']" />
-                    </div>
-
-                    <div class="alert alert-info" role="alert">
-                        Prepare the applicant responsibilities, generate the F-0006 PDF, send it for signature, then sync the signed result.
-                    </div>
-
-                    <group>
-                        <group>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div>
                             <field name="x_tor_state"
                                 string="Status"
                                 widget="statusbar"
                                 options="{'clickable': false}"
                                 statusbar_visible="draft,generated,sent,signed,superseded"
                                 readonly="1" />
-                        </group>
-                        <group>
+                        </div>
+                        <div class="d-flex gap-2">
                             <button type="action"
-                                name="hr_recruitment_custom.action_hr_applicant_download_tor_generated_pdf"
-                                string=""
-                                title="Download Generated PDF"
-                                icon="fa-download"
-                                class="btn-link"
-                                invisible="not id or not x_tor_pdf_attachment_id" />
+                                name="hr_recruitment_custom.action_hr_applicant_normalize_tor_header_on_change"
+                                string="Update"
+                                class="btn-secondary"
+                                invisible="not id or x_tor_state not in ['draft', False]" />
                             <button type="action"
-                                name="hr_recruitment_custom.action_hr_applicant_download_tor_signed_pdf"
-                                string=""
-                                title="Download Signed PDF"
-                                icon="fa-file-pdf-o"
-                                class="btn-link"
-                                invisible="not id or not x_tor_signed_attachment_id" />
+                                name="hr_recruitment_custom.action_hr_applicant_generate_tor_pdf"
+                                string="Generate PDF"
+                                class="btn-primary"
+                                invisible="not id or x_tor_state in ['sent', 'signed', 'superseded']" />
                             <button type="action"
-                                name="hr_recruitment_custom.action_hr_applicant_download_tor_sign_certificate"
-                                string=""
-                                title="Download Sign Certificate"
-                                icon="fa-certificate"
-                                class="btn-link"
-                                invisible="not id or x_tor_state != 'signed'" />
-                        </group>
-                    </group>
+                                name="hr_recruitment_custom.action_hr_applicant_send_tor_for_signature"
+                                string="Sign"
+                                class="btn-secondary"
+                                invisible="not id or not x_tor_pdf_attachment_id or x_tor_state != 'generated'" />
+                            <button type="action"
+                                name="hr_recruitment_custom.action_hr_applicant_sync_tor_native_sign_completion"
+                                string="Sync"
+                                class="btn-secondary"
+                                invisible="not id or x_tor_state not in ['sent', 'signed']" />
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info" role="alert">
+                        Prepare the applicant responsibilities, generate the F-0006 PDF, send it for signature, then sync the signed result.
+                    </div>
+
+                    <div class="d-flex justify-content-start mb-2">
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_download_tor_generated_pdf"
+                            string=""
+                            title="Download Generated PDF"
+                            icon="fa-download"
+                            class="btn-link"
+                            invisible="not id or not x_tor_pdf_attachment_id" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_download_tor_signed_pdf"
+                            string=""
+                            title="Download Signed PDF"
+                            icon="fa-file-pdf-o"
+                            class="btn-link"
+                            invisible="not id or not x_tor_signed_attachment_id" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_download_tor_sign_certificate"
+                            string=""
+                            title="Download Sign Certificate"
+                            icon="fa-certificate"
+                            class="btn-link"
+                            invisible="not id or x_tor_state != 'signed'" />
+                    </div>
 
                     <group>
                         <group string="Responsibilities Identity">
@@ -786,11 +786,11 @@
                             <field name="x_tor_department_id"
                                 string="Linked Department"
                                 options="{'no_create': True, 'no_create_edit': True}" />
-                            <field name="x_tor_version_label" string="Version" readonly="1" />
                             <field name="x_tor_document_reference" string="Document Reference" readonly="1" />
                             <field name="x_tor_generated_on" string="Generated On" readonly="1" />
                             <field name="x_tor_sent_on" string="Sent On" readonly="1" />
                             <field name="x_tor_signed_on" string="Signed On" readonly="1" />
+                            <field name="x_tor_version_label" invisible="1" readonly="1" />
                             <field name="x_tor_pdf_attachment_id" invisible="1" readonly="1" />
                             <field name="x_tor_signed_attachment_id" invisible="1" readonly="1" />
                         </group>
