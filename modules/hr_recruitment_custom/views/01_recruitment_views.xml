@@ -21,15 +21,7 @@
         <field name="model">hr.applicant</field>
         <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form" />
         <field name="arch" type="xml">
-            <xpath expr="//form/header" position="inside">
-                <button type="action"
-                    name="hr_recruitment_custom.action_hr_applicant_evaluation_to_contract_proposal"
-                    string="تهيئة التعاقد"
-                    class="btn-primary"
-                    invisible="not id or x_contract_proposal_gate_passed" />
-            </xpath>
-
-            <xpath expr="//sheet/div[@name='button_box']" position="inside">
+<xpath expr="//sheet/div[@name='button_box']" position="inside">
                 <button type="action"
                     name="hr_recruitment_custom.action_hr_recruitment_document_for_applicant"
                     class="oe_stat_button"
@@ -856,6 +848,12 @@
 
                 <page string="Decision">
                     <group string="إجراءات القرار" col="6">
+                        
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_evaluation_to_contract_proposal"
+                            string="تهيئة التعاقد"
+                            class="btn-primary"
+                            invisible="not id or x_contract_proposal_gate_passed"/>
                         <button type="action"
                             name="hr_recruitment_custom.action_hr_applicant_create_board_decision"
                             string="إنشاء القرار"
