@@ -702,7 +702,7 @@
                                             context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}" />
                                     </group>
                                 </group>
-                                <group string="ملاحظات">
+                                <group string="Notes">
                                     <field name="x_notes" readonly="x_state == 'signed'"
                                         placeholder="ملاحظات داخلية عن هذا الإقرار." />
                                 </group>
@@ -878,7 +878,7 @@
                                 readonly="1"
                                 options="{'no_create': True, 'no_create_edit': True}"/>
                             <field name="x_board_decision_generated_on" string="تاريخ توليد المستند" readonly="1"/>
-                            <field name="x_board_decision_sent_on" string="تاريخ الإرسال للتوقيع" readonly="1"/>
+                            <field name="x_board_decision_sent_on" string="Sent On" readonly="1"/>
                             <field name="x_board_decision_signed_on" string="تاريخ التوقيع" readonly="1"/>
                         </group>
                     </group>
@@ -936,7 +936,7 @@
                         </field>
                     </group>
 
-                    <group string="ملاحظات">
+                    <group string="Notes">
                         <field name="x_board_decision_notes" nolabel="1"/>
                     </group>
                 </page>
@@ -1025,7 +1025,7 @@
                         </group>
                     </group>
 
-                    <group string="ملاحظات">
+                    <group string="Notes">
                         <field name="x_employment_contract_notes" nolabel="1"/>
                     </group>
                 </page>

@@ -894,8 +894,9 @@ msgstr "الإقرارات"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_hr_applicant_tor_document
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_mcep_non_disclosure_agreement_document
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_mcep_policies_compliance_declaration_document
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Department"
-msgstr "الإدارة"
+msgstr "القسم"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_department_name_ar
@@ -909,8 +910,9 @@ msgstr ""
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_hr_applicant_tor_document
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Direct Supervisor"
-msgstr ""
+msgstr "المسؤول المباشر"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
@@ -974,6 +976,7 @@ msgstr "رقم المستند"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_declaration_x_document_reference
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Document Reference"
 msgstr "مرجع المستند"
 
@@ -1050,7 +1053,7 @@ msgstr "تنزيل المستند"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Download Generated PDF"
-msgstr "تنزيل المستند المولد"
+msgstr "تنزيل ملف PDF المنشأ"
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.server,name:hr_recruitment_custom.action_required_document_line_download_latest_accepted_attachment
@@ -1080,7 +1083,7 @@ msgstr "تنزيل المستند الموقّع"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Download Signed PDF"
-msgstr "تنزيل الملف الموقع"
+msgstr "تنزيل ملف PDF الموقع"
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.server,name:hr_recruitment_custom.action_required_document_submission_download_submitted_attachment
@@ -1129,6 +1132,7 @@ msgstr ""
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_employee_number_snapshot
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Employee Number"
 msgstr "الرقم الوظيفي"
 
@@ -1564,6 +1568,7 @@ msgstr "الوظيفة"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_function_line_x_functional_area_id
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_job_x_baseline_functional_area_id
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Functional Area"
 msgstr "المجال الوظيفي"
 
@@ -1606,7 +1611,7 @@ msgstr "طباعة تقيبم المقابلة"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "Generate PDF"
-msgstr "توليد الملف"
+msgstr "توليد ملف PDF"
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.server,name:hr_recruitment_custom.action_required_document_submission_request_generate_lines
@@ -1667,6 +1672,7 @@ msgstr "ملف F-0003 المولد"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_checklist_x_generated_on
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_generated_on
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Generated On"
 msgstr "تاريخ التوليد"
 
@@ -2118,8 +2124,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_hr_applicant_tor_document
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_mcep_non_disclosure_agreement_document
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_mcep_policies_compliance_declaration_document
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Job Title"
-msgstr ""
+msgstr "المسمى الوظيفي"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_job_title_ar
@@ -2790,8 +2797,9 @@ msgstr "معقول"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_hr_applicant_tor_document
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Recipient Name"
-msgstr ""
+msgstr "اسم المستلم"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_recommend_for_employment
@@ -3269,6 +3277,7 @@ msgstr "أرسله"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_request_x_sent_on
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_sent_on
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Sent On"
 msgstr "تاريخ الإرسال"
 
@@ -3372,6 +3381,7 @@ msgstr "ملف تقييم المقابلة الموقع"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_checklist_x_signed_on
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_signed_on
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Signed On"
 msgstr "تاريخ التوقيع"
 
@@ -3821,6 +3831,7 @@ msgstr "مبالغ فيه"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_version
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Version"
 msgstr "الإصدار"
 
@@ -4098,11 +4109,6 @@ msgstr ""
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
-msgid "إجراءات الوصف الوظيفي"
-msgstr ""
-
-#. module: hr_recruitment_custom
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
 msgid "إرسال F-0002 عبر توقيع أودو"
 msgstr ""
@@ -4140,7 +4146,6 @@ msgstr ""
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.server,name:hr_recruitment_custom.action_hr_applicant_send_tor_for_signature
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "إرسال الوصف الوظيفي للتوقيع"
 msgstr ""
 
@@ -4148,11 +4153,6 @@ msgstr ""
 #: model:ir.actions.server,name:hr_recruitment_custom.action_decision_instance_send_board_decision_sign
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_decision_instance_form_hr_document_signature
 msgid "إرسال للتوقيع"
-msgstr ""
-
-#. module: hr_recruitment_custom
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
-msgid "إصدار الوصف الوظيفي"
 msgstr ""
 
 #. module: hr_recruitment_custom
@@ -4296,7 +4296,6 @@ msgstr ""
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_hr_applicant_tor_document
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "اسم المستلم"
 msgstr ""
 
@@ -4401,11 +4400,6 @@ msgid "التاريخ<br/><span class=\"tor-ltr\">Date</span>"
 msgstr ""
 
 #. module: hr_recruitment_custom
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
-msgid "الترتيب"
-msgstr ""
-
-#. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_form
 msgid "الترحيل للموظف"
 msgstr ""
@@ -4473,7 +4467,6 @@ msgstr ""
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_hr_applicant_tor_document
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "الرقم الوظيفي"
 msgstr ""
 
@@ -4526,13 +4519,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_hr_applicant_tor_document
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_mcep_non_disclosure_agreement_document
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_mcep_policies_compliance_declaration_document
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "القسم"
-msgstr ""
-
-#. module: hr_recruitment_custom
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
-msgid "القسم المرتبط"
 msgstr ""
 
 #. module: hr_recruitment_custom
@@ -4544,11 +4531,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_decision_instance_form_hr_document_signature
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_list
 msgid "المتقدم"
-msgstr ""
-
-#. module: hr_recruitment_custom
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
-msgid "المجال الوظيفي"
 msgstr ""
 
 #. module: hr_recruitment_custom
@@ -4580,7 +4562,6 @@ msgstr ""
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_hr_applicant_tor_document
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "المسؤول المباشر"
 msgstr ""
 
@@ -4678,16 +4659,6 @@ msgid "المنصب الوظيفي"
 msgstr ""
 
 #. module: hr_recruitment_custom
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
-msgid "المهام المتفق عليها"
-msgstr ""
-
-#. module: hr_recruitment_custom
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
-msgid "المهمة / الوظيفة المحكومة"
-msgstr ""
-
-#. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_hr_applicant_tor_document
 msgid "الموظف <span class=\"tor-ltr\">Employee</span>"
 msgstr ""
@@ -4743,7 +4714,6 @@ msgstr ""
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_form
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "النسخة الموقعة"
 msgstr ""
 
@@ -4773,7 +4743,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_hr_applicant_tor_document
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_mcep_required_document_checklist_document
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_form
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "الوظيفة"
 msgstr ""
 
@@ -4836,11 +4805,6 @@ msgid "بيانات العقد"
 msgstr ""
 
 #. module: hr_recruitment_custom
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
-msgid "بيانات الوصف الوظيفي"
-msgstr ""
-
-#. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_hr_applicant_tor_document
 msgid "ت"
 msgstr ""
@@ -4866,11 +4830,6 @@ msgid "تاريخ إنشاء الموظف"
 msgstr ""
 
 #. module: hr_recruitment_custom
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
-msgid "تاريخ اكتمال التوقيع"
-msgstr ""
-
-#. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_list
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "تاريخ الإرسال"
@@ -4878,7 +4837,6 @@ msgstr ""
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_decision_instance_form_hr_document_signature
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "تاريخ الإرسال للتوقيع"
 msgstr ""
 
@@ -4890,7 +4848,6 @@ msgstr ""
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_hr_applicant_tor_document
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "تاريخ الاستلام"
 msgstr ""
 
@@ -4930,11 +4887,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_decision_instance_form_hr_document_signature
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "تاريخ توليد المستند"
-msgstr ""
-
-#. module: hr_recruitment_custom
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
-msgid "تاريخ توليد المسودة"
 msgstr ""
 
 #. module: hr_recruitment_custom
@@ -5014,11 +4966,6 @@ msgid "تحديث بيانات العقد"
 msgstr ""
 
 #. module: hr_recruitment_custom
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
-msgid "تحديث بيانات الوصف الوظيفي"
-msgstr ""
-
-#. module: hr_recruitment_custom
 #: model:ir.actions.server,name:hr_recruitment_custom.action_hr_applicant_refresh_preboarding_gate
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "تحديث جاهزية التوظيف"
@@ -5049,11 +4996,6 @@ msgstr ""
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_hr_applicant_tor_font_probe_document
 msgid "تفاصيل المهام"
-msgstr ""
-
-#. module: hr_recruitment_custom
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
-msgid "تفصيل مهمة"
 msgstr ""
 
 #. module: hr_recruitment_custom
@@ -5106,7 +5048,6 @@ msgstr ""
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_form
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "تنزيل المسودة"
 msgstr ""
 
@@ -5129,7 +5070,6 @@ msgstr ""
 #. module: hr_recruitment_custom
 #: model:ir.actions.server,name:hr_recruitment_custom.action_employment_contract_download_signed_pdf
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_form
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "تنزيل النسخة الموقعة"
 msgstr ""
 
@@ -5142,7 +5082,6 @@ msgstr ""
 #: model:ir.actions.server,name:hr_recruitment_custom.action_applicant_declaration_download_sign_certificate
 #: model:ir.actions.server,name:hr_recruitment_custom.action_decision_instance_download_certificate
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "تنزيل شهادة التوقيع"
 msgstr ""
 
@@ -5210,7 +5149,6 @@ msgstr ""
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.server,name:hr_recruitment_custom.action_hr_applicant_generate_tor_pdf
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "توليد مسودة الوصف الوظيفي"
 msgstr ""
 
@@ -5362,11 +5300,6 @@ msgstr ""
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
-msgid "حالة الوصف الوظيفي"
-msgstr ""
-
-#. module: hr_recruitment_custom
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "حالة بدء التوظيف"
 msgstr ""
 
@@ -5378,11 +5311,6 @@ msgstr ""
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "حالة ترحيل الهوية"
-msgstr ""
-
-#. module: hr_recruitment_custom
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
-msgid "حالة سير الوصف الوظيفي"
 msgstr ""
 
 #. module: hr_recruitment_custom
@@ -5600,7 +5528,6 @@ msgstr ""
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_form
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "فتح المسودة"
 msgstr ""
 
@@ -5623,7 +5550,6 @@ msgstr ""
 #. module: hr_recruitment_custom
 #: model:ir.actions.server,name:hr_recruitment_custom.action_employment_contract_open_signed_pdf
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_form
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "فتح النسخة الموقعة"
 msgstr ""
 
@@ -5743,14 +5669,8 @@ msgid "مرجع الوثيقة:"
 msgstr ""
 
 #. module: hr_recruitment_custom
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
-msgid "مرجع الوصف الوظيفي"
-msgstr ""
-
-#. module: hr_recruitment_custom
 #: model:ir.actions.server,name:hr_recruitment_custom.action_decision_instance_sync_board_decision_sign
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_decision_instance_form_hr_document_signature
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "مزامنة التوقيع"
 msgstr ""
 
@@ -5802,11 +5722,6 @@ msgstr ""
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_form
 msgid "مستند الهوية"
-msgstr ""
-
-#. module: hr_recruitment_custom
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
-msgid "مسودة الوصف الوظيفي"
 msgstr ""
 
 #. module: hr_recruitment_custom
@@ -5888,11 +5803,6 @@ msgstr ""
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
-msgid "ملاحظات الموارد البشرية حول نسخة الوصف الوظيفي أو مسار التوقيع."
-msgstr ""
-
-#. module: hr_recruitment_custom
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "ملاحظات بدء التوظيف"
 msgstr ""
 
@@ -5940,11 +5850,6 @@ msgstr ""
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "ملفات القرار"
-msgstr ""
-
-#. module: hr_recruitment_custom
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
-msgid "ملفات الوصف الوظيفي"
 msgstr ""
 
 #. module: hr_recruitment_custom
@@ -6096,6 +6001,7 @@ msgstr "بيانات المقابلة"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_mcep_interview_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Document Lifecycle"
 msgstr "دورة المستند"
 
@@ -6167,3 +6073,48 @@ msgstr "نعم"
 #. module: hr_recruitment_custom
 msgid "No"
 msgstr "لا"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Update"
+msgstr "تحديث"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Prepare the applicant responsibilities, generate the F-0006 PDF, send it for signature, then sync the signed result."
+msgstr "أعد مهام المتقدم، ثم ولّد ملف F-0006، وأرسله للتوقيع، ثم زامن النتيجة الموقعة."
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Responsibilities Identity"
+msgstr "بيانات المهام"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Responsibilities Lines"
+msgstr "بنود المهام"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Receipt Date"
+msgstr "تاريخ الاستلام"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Linked Department"
+msgstr "القسم المرتبط"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Responsibility"
+msgstr "المهمة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Responsibility Line"
+msgstr "بند المهمة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "HR notes about the responsibilities version or signature lifecycle."
+msgstr "ملاحظات الموارد البشرية حول نسخة المهام أو مسار التوقيع."
