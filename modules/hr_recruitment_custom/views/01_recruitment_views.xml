@@ -26,7 +26,7 @@
                     name="hr_recruitment_custom.action_hr_applicant_evaluation_to_contract_proposal"
                     string="تهيئة التعاقد"
                     class="btn-primary"
-                    invisible="not id" />
+                    invisible="not id or x_contract_proposal_gate_passed" />
             </xpath>
 
             <xpath expr="//sheet/div[@name='button_box']" position="inside">
@@ -45,6 +45,9 @@
             <xpath expr="//field[@name='partner_phone']" position="after">
                 <field name="x_gender" />
                 <field name="x_national_id" />
+                <field name="x_contract_proposal_gate_passed" invisible="1"/>
+                <field name="x_contract_proposal_gate_passed_on" invisible="1"/>
+                <field name="x_contract_proposal_gate_passed_by_user_id" invisible="1"/>
             </xpath>
 
             <xpath expr="//sheet/notebook" position="inside">
@@ -601,12 +604,12 @@
                             name="hr_recruitment_custom.action_hr_applicant_generate_f0007_placeholder"
                             string="إنشاء F-0007"
                             class="btn-secondary"
-                            invisible="not id" />
+                            invisible="not id or not x_contract_proposal_gate_passed" />
                         <button type="action"
                             name="hr_recruitment_custom.action_hr_applicant_generate_f0009_placeholder"
                             string="إنشاء F-0009"
                             class="btn-secondary"
-                            invisible="not id" />
+                            invisible="not id or not x_contract_proposal_gate_passed" />
                         <div class="text-muted">
                             استخدم هذه الصفحة لإنشاء ومتابعة إقرارات المتقدم: F-0004 صحة المستندات، F-0007 الالتزام باللوائح والسياسات، و F-0009 السرية وعدم الإفصاح.
                         </div>
@@ -726,22 +729,22 @@
                                 name="hr_recruitment_custom.action_hr_applicant_normalize_tor_header_on_change"
                                 string="Update"
                                 class="btn-secondary"
-                                invisible="not id or x_tor_state not in ['draft', False]" />
+                                invisible="not id or x_tor_state not in ['draft', False] or not x_contract_proposal_gate_passed" />
                             <button type="action"
                                 name="hr_recruitment_custom.action_hr_applicant_generate_tor_pdf"
                                 string="Generate PDF"
                                 class="btn-primary"
-                                invisible="not id or x_tor_state in ['sent', 'signed', 'superseded']" />
+                                invisible="not id or x_tor_state in ['sent', 'signed', 'superseded'] or not x_contract_proposal_gate_passed" />
                             <button type="action"
                                 name="hr_recruitment_custom.action_hr_applicant_send_tor_for_signature"
                                 string="Sign"
                                 class="btn-secondary"
-                                invisible="not id or not x_tor_pdf_attachment_id or x_tor_state != 'generated'" />
+                                invisible="not id or not x_tor_pdf_attachment_id or x_tor_state != 'generated' or not x_contract_proposal_gate_passed" />
                             <button type="action"
                                 name="hr_recruitment_custom.action_hr_applicant_sync_tor_native_sign_completion"
                                 string="Sync"
                                 class="btn-secondary"
-                                invisible="not id or x_tor_state not in ['sent', 'signed']" />
+                                invisible="not id or x_tor_state not in ['sent', 'signed'] or not x_contract_proposal_gate_passed" />
                         </div>
                     </div>
 
@@ -829,7 +832,7 @@
                             name="hr_recruitment_custom.action_hr_applicant_create_board_decision"
                             string="إنشاء القرار"
                             class="btn-primary"
-                            invisible="not id or x_board_decision_instance_id"/>
+                            invisible="not id or x_board_decision_instance_id or not x_contract_proposal_gate_passed"/>
                         <button type="action"
                             name="hr_recruitment_custom.action_hr_applicant_update_board_decision"
                             string="تحديث القرار"
@@ -947,7 +950,7 @@
                             name="hr_recruitment_custom.action_hr_applicant_create_employment_contract"
                             string="إنشاء العقد"
                             class="btn-primary"
-                            invisible="not id or x_employment_contract_id"/>
+                            invisible="not id or x_employment_contract_id or not x_contract_proposal_gate_passed"/>
                         <button type="action"
                             name="hr_recruitment_custom.action_hr_applicant_update_employment_contract_data"
                             string="تحديث بيانات العقد"

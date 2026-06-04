@@ -1547,4 +1547,29 @@
         </record>
 
     </data>
+
+        <!-- R5B-0: evaluation-to-contract proposal gate flag -->
+        <record id="field_hr_applicant_x_contract_proposal_gate_passed" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_contract_proposal_gate_passed</field>
+            <field name="field_description">Contract Proposal Gate Passed</field>
+            <field name="ttype">boolean</field>
+        </record>
+
+        <record id="field_hr_applicant_x_contract_proposal_gate_passed_on" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_contract_proposal_gate_passed_on</field>
+            <field name="field_description">Contract Proposal Gate Passed On</field>
+            <field name="ttype">datetime</field>
+        </record>
+
+        <record id="field_hr_applicant_x_contract_proposal_gate_passed_by_user_id" model="ir.model.fields">
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="name">x_contract_proposal_gate_passed_by_user_id</field>
+            <field name="field_description">Contract Proposal Gate Passed By</field>
+            <field name="ttype">many2one</field>
+            <field name="relation">res.users</field>
+            <field name="on_delete">set null</field>
+        </record>
+
 </odoo>

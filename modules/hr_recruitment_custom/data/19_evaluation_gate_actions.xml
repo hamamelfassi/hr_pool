@@ -82,6 +82,9 @@ else:
 
         applicant.write({
             'stage_id': target_stage.id,
+            'x_contract_proposal_gate_passed': True,
+            'x_contract_proposal_gate_passed_on': datetime.datetime.now(),
+            'x_contract_proposal_gate_passed_by_user_id': env.user.id,
         })
 
         applicant.message_post(
@@ -202,6 +205,9 @@ else:
 
         applicant.write({
             'stage_id': target_stage.id,
+            'x_contract_proposal_gate_passed': True,
+            'x_contract_proposal_gate_passed_on': datetime.datetime.now(),
+            'x_contract_proposal_gate_passed_by_user_id': env.user.id,
         })
 
         applicant.message_post(
