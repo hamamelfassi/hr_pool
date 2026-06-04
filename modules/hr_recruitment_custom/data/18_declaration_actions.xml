@@ -373,7 +373,7 @@ for rec in records.sudo():
     action = {
         'type': 'ir.actions.act_url',
         'url': '/web/content/%s?download=true' % attachment.id,
-        'target': 'new',
+        'target': 'self',
     }
 
     break
@@ -516,7 +516,7 @@ for rec in records.sudo():
     action = {
         'type': 'ir.actions.act_url',
         'url': '/web/content/%s?download=true' % attachment.id,
-        'target': 'new',
+        'target': 'self',
     }
 
     break
@@ -659,7 +659,7 @@ for rec in records.sudo():
     action = {
         'type': 'ir.actions.act_url',
         'url': '/web/content/%s?download=true' % attachment.id,
-        'target': 'new',
+        'target': 'self',
     }
 
     break
@@ -883,7 +883,7 @@ for rec in records.sudo():
         if existing_request.exists():
             existing_state = existing_request.state or registry_doc.x_sign_request_state or 'unknown'
             if existing_state not in ['cancelled', 'canceled']:
-                if existing_state == 'signed':
+                if existing_state in ['signed', 'completed']:
                     message = 'طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة نتيجة التوقيع لإغلاق السجل.'
                 else:
                     message = 'يوجد طلب توقيع أودو نشط لهذا الإقرار بحالة "%s". لن يتم إنشاء طلب مكرر.' % existing_state
@@ -937,7 +937,7 @@ for rec in records.sudo():
     subject = 'Signature Request - %s' % filename
     body = '<p>Please review and sign the attached F-0004 Legal Documents Validity Declaration.</p>'
 
-    send_request = sign_send_model.create({
+    send_vals = {
         'template_id': sign_template.id,
         'signer_id': applicant_partner.id,
         'subject': subject,
@@ -947,7 +947,12 @@ for rec in records.sudo():
         'reminder_enabled': False,
         'model': 'x_hr.applicant_declaration',
         'res_ids': str([rec.id]),
-    })
+    }
+
+    if 'reference_doc' in sign_send_model._fields:
+        send_vals['reference_doc'] = 'hr.applicant,%s' % applicant.id
+
+    send_request = sign_send_model.create(send_vals)
 
     if send_request.signer_ids:
         signer_line = send_request.signer_ids.filtered(lambda line: line.role_id.id == applicant_role.id)[:1]
@@ -973,6 +978,9 @@ for rec in records.sudo():
     ], order='create_date desc, id desc', limit=1)
 
     if generated_request:
+        if 'reference_doc' in sign_request_model._fields:
+            generated_request.sudo().write({'reference_doc': 'hr.applicant,%s' % applicant.id})
+
         registry_doc.write({
             'x_state': 'signature_requested',
             'x_sent_on': sent_on,
@@ -1175,7 +1183,7 @@ for rec in records.sudo():
         if existing_request.exists():
             existing_state = existing_request.state or registry_doc.x_sign_request_state or 'unknown'
             if existing_state not in ['cancelled', 'canceled']:
-                if existing_state == 'signed':
+                if existing_state in ['signed', 'completed']:
                     message = 'طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة نتيجة التوقيع لإغلاق السجل.'
                 else:
                     message = 'يوجد طلب توقيع أودو نشط لهذا الإقرار بحالة "%s". لن يتم إنشاء طلب مكرر.' % existing_state
@@ -1236,7 +1244,7 @@ for rec in records.sudo():
     subject = 'Signature Request - %s' % filename
     body = '<p>Please review and sign the attached F-0007 Policies Compliance Declaration.</p>'
 
-    send_request = sign_send_model.create({
+    send_vals = {
         'template_id': sign_template.id,
         'signer_id': applicant_partner.id,
         'subject': subject,
@@ -1246,7 +1254,12 @@ for rec in records.sudo():
         'reminder_enabled': False,
         'model': 'x_hr.applicant_declaration',
         'res_ids': str([rec.id]),
-    })
+    }
+
+    if 'reference_doc' in sign_send_model._fields:
+        send_vals['reference_doc'] = 'hr.applicant,%s' % applicant.id
+
+    send_request = sign_send_model.create(send_vals)
 
     if send_request.signer_ids:
         signer_line = send_request.signer_ids.filtered(lambda line: line.role_id.id == applicant_role.id)[:1]
@@ -1272,6 +1285,9 @@ for rec in records.sudo():
     ], order='create_date desc, id desc', limit=1)
 
     if generated_request:
+        if 'reference_doc' in sign_request_model._fields:
+            generated_request.sudo().write({'reference_doc': 'hr.applicant,%s' % applicant.id})
+
         registry_doc.write({
             'x_state': 'signature_requested',
             'x_sent_on': sent_on,
@@ -1462,7 +1478,7 @@ for rec in records.sudo():
         if existing_request.exists():
             existing_state = existing_request.state or registry_doc.x_sign_request_state or 'unknown'
             if existing_state not in ['cancelled', 'canceled']:
-                if existing_state == 'signed':
+                if existing_state in ['signed', 'completed']:
                     message = 'طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة نتيجة التوقيع لإغلاق السجل.'
                 else:
                     message = 'يوجد طلب توقيع أودو نشط لهذا الإقرار بحالة "%s". لن يتم إنشاء طلب مكرر.' % existing_state
@@ -1523,7 +1539,7 @@ for rec in records.sudo():
     subject = 'Signature Request - %s' % filename
     body = '<p>Please review and sign the attached F-0009 Non-Disclosure Agreement.</p>'
 
-    send_request = sign_send_model.create({
+    send_vals = {
         'template_id': sign_template.id,
         'signer_id': applicant_partner.id,
         'subject': subject,
@@ -1533,7 +1549,12 @@ for rec in records.sudo():
         'reminder_enabled': False,
         'model': 'x_hr.applicant_declaration',
         'res_ids': str([rec.id]),
-    })
+    }
+
+    if 'reference_doc' in sign_send_model._fields:
+        send_vals['reference_doc'] = 'hr.applicant,%s' % applicant.id
+
+    send_request = sign_send_model.create(send_vals)
 
     if send_request.signer_ids:
         signer_line = send_request.signer_ids.filtered(lambda line: line.role_id.id == applicant_role.id)[:1]
@@ -1559,6 +1580,9 @@ for rec in records.sudo():
     ], order='create_date desc, id desc', limit=1)
 
     if generated_request:
+        if 'reference_doc' in sign_request_model._fields:
+            generated_request.sudo().write({'reference_doc': 'hr.applicant,%s' % applicant.id})
+
         registry_doc.write({
             'x_state': 'signature_requested',
             'x_sent_on': sent_on,
@@ -1714,7 +1738,7 @@ for rec in records.sudo():
         'x_sign_request_reference': sign_request.reference or registry_doc.x_sign_request_reference,
     })
 
-    if request_state != 'signed':
+    if request_state not in ['signed', 'completed']:
         rec.message_post(body='طلب توقيع %s لم يكتمل بعد. حالة الطلب الحالية: %s.' % (target_code, request_state))
         applicant.message_post(body='تم فحص حالة توقيع %s. الحالة الحالية: %s.' % (target_code, request_state))
         action = toast('%s لم يكتمل توقيعه' % target_code, 'طلب توقيع أودو لا يزال بحالة: %s.' % request_state, 'warning', False)
@@ -1972,7 +1996,7 @@ for rec in records.sudo():
         'x_sign_request_reference': sign_request.reference or registry_doc.x_sign_request_reference,
     })
 
-    if request_state != 'signed':
+    if request_state not in ['signed', 'completed']:
         rec.message_post(body='طلب توقيع %s لم يكتمل بعد. حالة الطلب الحالية: %s.' % (target_code, request_state))
         applicant.message_post(body='تم فحص حالة توقيع %s. الحالة الحالية: %s.' % (target_code, request_state))
         action = toast('%s لم يكتمل توقيعه' % target_code, 'طلب توقيع أودو لا يزال بحالة: %s.' % request_state, 'warning', False)
@@ -2206,7 +2230,7 @@ for rec in records.sudo():
         'x_sign_request_reference': sign_request.reference or registry_doc.x_sign_request_reference,
     })
 
-    if request_state != 'signed':
+    if request_state not in ['signed', 'completed']:
         rec.message_post(body='طلب توقيع F-0004 لم يكتمل بعد. حالة الطلب الحالية: %s.' % request_state)
         applicant.message_post(body='تم فحص حالة توقيع F-0004. الحالة الحالية: %s.' % request_state)
 
