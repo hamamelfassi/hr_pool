@@ -594,7 +594,7 @@
                 </page>
 
                 <page string="Declarations">
-                    <group>
+                    <div class="d-flex justify-content-start mb-2">
                         <button type="action"
                             name="hr_recruitment_custom.action_hr_applicant_generate_f0004_declaration"
                             string="Create F-0004"
@@ -610,10 +610,11 @@
                             string="Create F-0009"
                             class="btn-secondary"
                             invisible="not id or not x_contract_proposal_gate_passed" />
-                        <div class="text-muted">
-                            Use this page to create and track applicant declarations: F-0004 legal documents validity, F-0007 policies and procedures compliance, and F-0009 confidentiality and non-disclosure.
-                        </div>
-                    </group>
+                    </div>
+
+                    <div class="alert alert-info" role="alert">
+                        Use this page to create and track applicant declarations: F-0004 legal documents validity, F-0007 policies and procedures compliance, and F-0009 confidentiality and non-disclosure.
+                    </div>
 
                     <field name="x_declaration_ids" context="{'default_x_applicant_id': id}">
                         <list string="Applicant Declarations" create="false" delete="false">
@@ -631,15 +632,60 @@
                         </list>
                         <form string="Applicant Declaration">
                             <header>
-                                <field name="x_state" widget="statusbar"
-                                    options="{'clickable': false}"
-                                    statusbar_visible="draft,generated,signature_requested,signed"
-                                    readonly="1" />
                                 <button type="action"
                                     name="hr_recruitment_custom.action_applicant_declaration_generate_f0004_pdf"
                                     string="Generate F-0004 PDF"
                                     class="btn-primary"
                                     invisible="x_declaration_type != 'legal_documents_validity_declaration' or x_state != 'draft'" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_applicant_declaration_generate_f0007_pdf"
+                                    string="Generate F-0007 PDF"
+                                    class="btn-primary"
+                                    invisible="x_declaration_type != 'policies_compliance_declaration' or x_state in ['signature_requested', 'signed', 'cancelled', 'superseded']" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_applicant_declaration_generate_f0009_pdf"
+                                    string="Generate F-0009 PDF"
+                                    class="btn-primary"
+                                    invisible="x_declaration_type != 'non_disclosure_agreement' or x_state in ['signature_requested', 'signed', 'cancelled', 'superseded']" />
+
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_applicant_declaration_send_f0004_native_sign"
+                                    string="Sign"
+                                    class="btn-secondary"
+                                    invisible="x_declaration_type != 'legal_documents_validity_declaration' or x_state != 'generated' or not x_pdf_attachment_id" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_applicant_declaration_send_f0007_native_sign"
+                                    string="Sign"
+                                    class="btn-secondary"
+                                    invisible="x_declaration_type != 'policies_compliance_declaration' or x_state != 'generated' or not x_pdf_attachment_id" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_applicant_declaration_send_f0009_native_sign"
+                                    string="Sign"
+                                    class="btn-secondary"
+                                    invisible="x_declaration_type != 'non_disclosure_agreement' or x_state != 'generated' or not x_pdf_attachment_id" />
+
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_applicant_declaration_sync_f0004_native_sign_completion"
+                                    string="Sync"
+                                    class="btn-secondary"
+                                    invisible="x_declaration_type != 'legal_documents_validity_declaration' or x_state not in ['signature_requested', 'signed']" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_applicant_declaration_sync_f0007_native_sign_completion"
+                                    string="Sync"
+                                    class="btn-secondary"
+                                    invisible="x_declaration_type != 'policies_compliance_declaration' or x_state not in ['signature_requested', 'signed']" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_applicant_declaration_sync_f0009_native_sign_completion"
+                                    string="Sync"
+                                    class="btn-secondary"
+                                    invisible="x_declaration_type != 'non_disclosure_agreement' or x_state not in ['signature_requested', 'signed']" />
+
+                                <field name="x_state"
+                                    widget="statusbar"
+                                    options="{'clickable': false}"
+                                    statusbar_visible="draft,generated,signature_requested,signed"
+                                    readonly="1" />
+
                                 <button type="action"
                                     name="hr_recruitment_custom.action_applicant_declaration_download_generated_pdf"
                                     string=""
@@ -647,16 +693,6 @@
                                     icon="fa-download"
                                     class="btn-link"
                                     invisible="not x_pdf_attachment_id" />
-                                <button type="action"
-                                    name="hr_recruitment_custom.action_applicant_declaration_send_f0004_native_sign"
-                                    string="Send F-0004 for Signature"
-                                    class="btn-secondary"
-                                    invisible="x_declaration_type != 'legal_documents_validity_declaration' or x_state != 'generated' or not x_pdf_attachment_id" />
-                                <button type="action"
-                                    name="hr_recruitment_custom.action_applicant_declaration_sync_f0004_native_sign_completion"
-                                    string="Sync"
-                                    class="btn-secondary"
-                                    invisible="x_declaration_type != 'legal_documents_validity_declaration' or x_state != 'signature_requested'" />
                                 <button type="action"
                                     name="hr_recruitment_custom.action_applicant_declaration_download_signed_pdf"
                                     string=""
@@ -675,38 +711,30 @@
                             <sheet>
                                 <group>
                                     <group string="Declaration Identity">
-                                        <field name="x_name" readonly="1" />
-                                        <field name="x_applicant_id" readonly="1" />
-                                        <field name="x_declaration_type" readonly="x_state != 'draft'" />
-                                        <field name="x_declaration_code" readonly="1" />
-                                        <field name="x_document_reference" readonly="1" />
-                                        <field name="x_sequence" readonly="1" />
+                                        <field name="x_name" string="Reference" readonly="1" />
+                                        <field name="x_applicant_id" string="Applicant" readonly="1" />
+                                        <field name="x_declaration_type" string="Declaration Type" readonly="x_state != 'draft'" />
+                                        <field name="x_declaration_code" string="Declaration Code" readonly="1" />
+                                        <field name="x_document_reference" string="Document Reference" readonly="1" />
+                                        <field name="x_sequence" string="Sequence" readonly="1" />
                                     </group>
                                     <group string="Document Lifecycle">
-                                        <field name="x_prepared_by_user_id" readonly="1" />
-                                        <field name="x_prepared_on" readonly="1" />
-                                        <field name="x_reviewer_user_id" readonly="x_state != 'draft'" />
-                                        <field name="x_reviewed_on" readonly="1" />
-                                        <field name="x_generated_on" readonly="1" />
-                                        <field name="x_sent_on" readonly="1" />
-                                        <field name="x_signed_on" readonly="1" />
+                                        <field name="x_prepared_by_user_id" string="Prepared By" readonly="1" />
+                                        <field name="x_prepared_on" string="Prepared On" readonly="1" />
+                                        <field name="x_reviewer_user_id" string="Reviewer" readonly="x_state != 'draft'" />
+                                        <field name="x_reviewed_on" string="Reviewed On" readonly="1" />
+                                        <field name="x_generated_on" string="Generated On" readonly="1" />
+                                        <field name="x_sent_on" string="Sent On" readonly="1" />
+                                        <field name="x_signed_on" string="Signed On" readonly="1" />
+                                        <field name="x_pdf_attachment_id" invisible="1" readonly="1" />
+                                        <field name="x_signed_attachment_id" invisible="1" readonly="1" />
                                     </group>
                                 </group>
-                                <group string="Official Attachments">
-                                    <group>
-                                        <field name="x_pdf_attachment_id" string="Generated PDF" readonly="1"
-                                            options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
-                                            domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]" />
-                                    </group>
-                                    <group>
-                                        <field name="x_signed_attachment_id" string="Signed PDF" readonly="1"
-                                            options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
-                                            domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]"
-                                            context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}" />
-                                    </group>
-                                </group>
+
                                 <group string="Notes">
-                                    <field name="x_notes" readonly="x_state == 'signed'"
+                                    <field name="x_notes"
+                                        nolabel="1"
+                                        readonly="x_state == 'signed'"
                                         placeholder="Internal notes about this declaration." />
                                 </group>
                             </sheet>

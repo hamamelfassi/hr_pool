@@ -4,7 +4,7 @@
         <field name="name">x.hr.applicant.declaration.list</field>
         <field name="model">x_hr.applicant_declaration</field>
         <field name="arch" type="xml">
-            <list string="Declarations" create="false" delete="false">
+            <list string="Applicant Declarations" create="false" delete="false">
                 <field name="x_document_reference" string="Reference" readonly="1" />
                 <field name="x_declaration_type" string="Declaration Type" readonly="1" widget="badge" />
                 <field name="x_state" string="Status" readonly="1" widget="badge"
@@ -24,127 +24,115 @@
         <field name="name">x.hr.applicant.declaration.form</field>
         <field name="model">x_hr.applicant_declaration</field>
         <field name="arch" type="xml">
-            <form string="Applicant Declaration">
-                <header>
-                    <field name="x_state" widget="statusbar"
-                        options="{'clickable': false}"
-                        statusbar_visible="draft,generated,signature_requested,signed"
-                        readonly="1" />
-                    <button type="action"
-                        name="hr_recruitment_custom.action_applicant_declaration_download_generated_pdf"
-                        string=""
-                        title="Download Generated PDF"
-                        icon="fa-download"
-                        class="btn-link"
-                        invisible="not x_pdf_attachment_id" />
-                    <button type="action"
-                        name="hr_recruitment_custom.action_applicant_declaration_download_signed_pdf"
-                        string=""
-                        title="Download Signed PDF"
-                        icon="fa-file-pdf-o"
-                        class="btn-link"
-                        invisible="not x_signed_attachment_id" />
-                    <button type="action"
-                        name="hr_recruitment_custom.action_applicant_declaration_download_sign_certificate"
-                        string=""
-                        title="Download Sign Certificate"
-                        icon="fa-certificate"
-                        class="btn-link"
-                        invisible="x_state != 'signed'" />
-                </header>
-                <sheet>
-                    <!-- 11F-A declaration workflow buttons: start -->
-                    <div name="mcep_declaration_workflow_actions"
-                         class="o_mcep_declaration_workflow_actions"
-                         style="direction: ltr; text-align: left; display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 8px; margin: 0 0 16px 0;">
-                        <button type="action"
-                            name="hr_recruitment_custom.action_applicant_declaration_generate_f0004_pdf"
-                            string="Generate F-0004 PDF"
-                            class="btn-primary"
-                            invisible="x_declaration_type != 'legal_documents_validity_declaration' or x_state != 'draft'" />
-                        <button type="action"
-                            name="hr_recruitment_custom.action_applicant_declaration_generate_f0007_pdf"
-                            string="Generate F-0007 PDF"
-                            class="btn-primary"
-                            invisible="x_declaration_type != 'policies_compliance_declaration' or x_state in ['signature_requested', 'signed', 'cancelled', 'superseded']" />
-                        <button type="action"
-                            name="hr_recruitment_custom.action_applicant_declaration_generate_f0009_pdf"
-                            string="Generate F-0009 PDF"
-                            class="btn-primary"
-                            invisible="x_declaration_type != 'non_disclosure_agreement' or x_state in ['signature_requested', 'signed', 'cancelled', 'superseded']" />
+<form string="Applicant Declaration">
+                            <header>
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_applicant_declaration_generate_f0004_pdf"
+                                    string="Generate F-0004 PDF"
+                                    class="btn-primary"
+                                    invisible="x_declaration_type != 'legal_documents_validity_declaration' or x_state != 'draft'" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_applicant_declaration_generate_f0007_pdf"
+                                    string="Generate F-0007 PDF"
+                                    class="btn-primary"
+                                    invisible="x_declaration_type != 'policies_compliance_declaration' or x_state in ['signature_requested', 'signed', 'cancelled', 'superseded']" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_applicant_declaration_generate_f0009_pdf"
+                                    string="Generate F-0009 PDF"
+                                    class="btn-primary"
+                                    invisible="x_declaration_type != 'non_disclosure_agreement' or x_state in ['signature_requested', 'signed', 'cancelled', 'superseded']" />
 
-                        <button type="action"
-                            name="hr_recruitment_custom.action_applicant_declaration_send_f0004_native_sign"
-                            string="Send F-0004 for Signature"
-                            class="btn-secondary"
-                            invisible="x_declaration_type != 'legal_documents_validity_declaration' or x_state != 'generated' or not x_pdf_attachment_id" />
-                        <button type="action"
-                            name="hr_recruitment_custom.action_applicant_declaration_send_f0007_native_sign"
-                            string="Send F-0007 for Signature"
-                            class="btn-secondary"
-                            invisible="x_declaration_type != 'policies_compliance_declaration' or x_state != 'generated' or not x_pdf_attachment_id" />
-                        <button type="action"
-                            name="hr_recruitment_custom.action_applicant_declaration_send_f0009_native_sign"
-                            string="Send F-0009 for Signature"
-                            class="btn-secondary"
-                            invisible="x_declaration_type != 'non_disclosure_agreement' or x_state != 'generated' or not x_pdf_attachment_id" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_applicant_declaration_send_f0004_native_sign"
+                                    string="Sign"
+                                    class="btn-secondary"
+                                    invisible="x_declaration_type != 'legal_documents_validity_declaration' or x_state != 'generated' or not x_pdf_attachment_id" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_applicant_declaration_send_f0007_native_sign"
+                                    string="Sign"
+                                    class="btn-secondary"
+                                    invisible="x_declaration_type != 'policies_compliance_declaration' or x_state != 'generated' or not x_pdf_attachment_id" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_applicant_declaration_send_f0009_native_sign"
+                                    string="Sign"
+                                    class="btn-secondary"
+                                    invisible="x_declaration_type != 'non_disclosure_agreement' or x_state != 'generated' or not x_pdf_attachment_id" />
 
-                        <button type="action"
-                            name="hr_recruitment_custom.action_applicant_declaration_sync_f0004_native_sign_completion"
-                            string="Sync Signature"
-                            class="btn-secondary"
-                            invisible="x_declaration_type != 'legal_documents_validity_declaration' or x_state not in ['signature_requested', 'signed']" />
-                        <button type="action"
-                            name="hr_recruitment_custom.action_applicant_declaration_sync_f0007_native_sign_completion"
-                            string="Sync F-0007 Signature"
-                            class="btn-secondary"
-                            invisible="x_declaration_type != 'policies_compliance_declaration' or x_state not in ['signature_requested', 'signed']" />
-                        <button type="action"
-                            name="hr_recruitment_custom.action_applicant_declaration_sync_f0009_native_sign_completion"
-                            string="Sync F-0009 Signature"
-                            class="btn-secondary"
-                            invisible="x_declaration_type != 'non_disclosure_agreement' or x_state not in ['signature_requested', 'signed']" />
-                    </div>
-                    <!-- 11F-A declaration workflow buttons: end -->
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_applicant_declaration_sync_f0004_native_sign_completion"
+                                    string="Sync"
+                                    class="btn-secondary"
+                                    invisible="x_declaration_type != 'legal_documents_validity_declaration' or x_state not in ['signature_requested', 'signed']" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_applicant_declaration_sync_f0007_native_sign_completion"
+                                    string="Sync"
+                                    class="btn-secondary"
+                                    invisible="x_declaration_type != 'policies_compliance_declaration' or x_state not in ['signature_requested', 'signed']" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_applicant_declaration_sync_f0009_native_sign_completion"
+                                    string="Sync"
+                                    class="btn-secondary"
+                                    invisible="x_declaration_type != 'non_disclosure_agreement' or x_state not in ['signature_requested', 'signed']" />
 
-                    <group>
-                        <group string="Declaration Identity">
-                            <field name="x_name" readonly="1" />
-                            <field name="x_applicant_id" readonly="1" />
-                            <field name="x_declaration_type" readonly="x_state != 'draft'" />
-                            <field name="x_declaration_code" readonly="1" />
-                            <field name="x_document_reference" readonly="1" />
-                            <field name="x_sequence" readonly="1" />
-                        </group>
-                        <group string="Document Lifecycle">
-                            <field name="x_prepared_by_user_id" readonly="1" />
-                            <field name="x_prepared_on" readonly="1" />
-                            <field name="x_reviewer_user_id" readonly="x_state != 'draft'" />
-                            <field name="x_reviewed_on" readonly="1" />
-                            <field name="x_generated_on" readonly="1" />
-                            <field name="x_sent_on" readonly="1" />
-                            <field name="x_signed_on" readonly="1" />
-                        </group>
-                    </group>
-                    <group string="Official Attachments">
-                        <group>
-                            <field name="x_pdf_attachment_id" string="Generated PDF" readonly="1"
-                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
-                                domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]" />
-                        </group>
-                        <group>
-                            <field name="x_signed_attachment_id" string="Signed PDF" readonly="1"
-                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
-                                domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', x_applicant_id)]"
-                                context="{'default_res_model': 'hr.applicant', 'default_res_id': x_applicant_id}" />
-                        </group>
-                    </group>
-                    <group string="Notes">
-                        <field name="x_notes" readonly="x_state == 'signed'"
-                            placeholder="Internal notes about this declaration." />
-                    </group>
-                    <chatter />
-                </sheet>
+                                <field name="x_state"
+                                    widget="statusbar"
+                                    options="{'clickable': false}"
+                                    statusbar_visible="draft,generated,signature_requested,signed"
+                                    readonly="1" />
+
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_applicant_declaration_download_generated_pdf"
+                                    string=""
+                                    title="Download Generated PDF"
+                                    icon="fa-download"
+                                    class="btn-link"
+                                    invisible="not x_pdf_attachment_id" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_applicant_declaration_download_signed_pdf"
+                                    string=""
+                                    title="Download Signed PDF"
+                                    icon="fa-file-pdf-o"
+                                    class="btn-link"
+                                    invisible="not x_signed_attachment_id" />
+                                <button type="action"
+                                    name="hr_recruitment_custom.action_applicant_declaration_download_sign_certificate"
+                                    string=""
+                                    title="Download Sign Certificate"
+                                    icon="fa-certificate"
+                                    class="btn-link"
+                                    invisible="x_state != 'signed'" />
+                            </header>
+                            <sheet>
+                                <group>
+                                    <group string="Declaration Identity">
+                                        <field name="x_name" string="Reference" readonly="1" />
+                                        <field name="x_applicant_id" string="Applicant" readonly="1" />
+                                        <field name="x_declaration_type" string="Declaration Type" readonly="x_state != 'draft'" />
+                                        <field name="x_declaration_code" string="Declaration Code" readonly="1" />
+                                        <field name="x_document_reference" string="Document Reference" readonly="1" />
+                                        <field name="x_sequence" string="Sequence" readonly="1" />
+                                    </group>
+                                    <group string="Document Lifecycle">
+                                        <field name="x_prepared_by_user_id" string="Prepared By" readonly="1" />
+                                        <field name="x_prepared_on" string="Prepared On" readonly="1" />
+                                        <field name="x_reviewer_user_id" string="Reviewer" readonly="x_state != 'draft'" />
+                                        <field name="x_reviewed_on" string="Reviewed On" readonly="1" />
+                                        <field name="x_generated_on" string="Generated On" readonly="1" />
+                                        <field name="x_sent_on" string="Sent On" readonly="1" />
+                                        <field name="x_signed_on" string="Signed On" readonly="1" />
+                                        <field name="x_pdf_attachment_id" invisible="1" readonly="1" />
+                                        <field name="x_signed_attachment_id" invisible="1" readonly="1" />
+                                    </group>
+                                </group>
+
+                                <group string="Notes">
+                                    <field name="x_notes"
+                                        nolabel="1"
+                                        readonly="x_state == 'signed'"
+                                        placeholder="Internal notes about this declaration." />
+                                </group>
+                            </sheet>
+                            <chatter />
             </form>
         </field>
     </record>
