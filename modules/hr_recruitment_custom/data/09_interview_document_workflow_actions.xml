@@ -5,16 +5,72 @@
         <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview" />
         <field name="state">code</field>
         <field name="code"><![CDATA[
-attachment = False
+registry_model = env['x_hr.recruitment_document'].sudo()
+attachment_model = env['ir.attachment'].sudo()
+interview_model = env['x_hr.applicant_mcep_interview'].sudo()
 
-for rec in records:
+action = False
+
+
+def build_interview_reference(rec):
+    applicant = rec.x_applicant_id
+    applicant_id = applicant.id if applicant else 0
+    today = datetime.datetime.now().strftime('%d%m%y')
+
+    sequence = 1
+    if applicant:
+        existing = interview_model.search([
+            ('x_applicant_id', '=', applicant.id),
+            ('id', '<=', rec.id),
+        ], order='id asc')
+        sequence = 0
+        for item in existing:
+            sequence += 1
+            if item.id == rec.id:
+                break
+        if not sequence:
+            sequence = len(existing) + 1
+
+    return 'HR-0002-%s-%s-%s' % (applicant_id, sequence, today)
+
+
+def reload_interview(rec):
+    view = env.ref('hr_recruitment_custom.view_mcep_interview_form', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Interview Evaluation',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+def toast(title, message, kind='success', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+for rec in records.sudo():
     if not rec.x_applicant_id:
-        raise Warning('Link this interview to an applicant before generating the interview PDF.')
+        action = toast('Applicant missing', 'Link this interview to an applicant before generating the interview PDF.', 'warning', True, reload_interview(rec))
+        continue
 
     if rec.x_document_state in ['generated', 'sent', 'signed'] or rec.x_pdf_attachment_id:
-        raise Warning('F-0002 has already been generated for this interview. The generated/signed evidence artifact is locked. Create a new interview record if a corrected evaluation is required.')
+        action = toast('F-0002 already generated', 'F-0002 has already been generated for this interview. Create a new interview record if a corrected evaluation is required.', 'warning', True, reload_interview(rec))
+        continue
 
-    existing_registry_doc = env['x_hr.recruitment_document'].sudo().search([
+    existing_registry_doc = registry_model.search([
         ('x_document_type', '=', 'interview_evaluation'),
         ('x_source_model', '=', 'x_hr.applicant_mcep_interview'),
         ('x_source_res_id', '=', rec.id),
@@ -25,41 +81,58 @@ for rec in records:
         or existing_registry_doc.x_sign_request_res_id
         or existing_registry_doc.x_signed_attachment_id
     ):
-        raise Warning('F-0002 already has a signature lifecycle or signed artifact in the recruitment document registry. Create a new interview record for corrections.')
+        action = toast('F-0002 lifecycle already exists', 'F-0002 already has a signature lifecycle or signed artifact in the recruitment document registry. Create a new interview record for corrections.', 'warning', True, reload_interview(rec))
+        continue
 
     values = {}
-    if rec.id and not rec.x_document_reference:
-        values['x_document_reference'] = 'MCEP-HR-F-0002-%05d' % rec.id
+    instance_reference = rec.x_document_reference or rec.x_name or build_interview_reference(rec)
+
+    if rec.x_name != instance_reference:
+        values['x_name'] = instance_reference
+
+    if rec.x_document_reference != instance_reference:
+        values['x_document_reference'] = instance_reference
+
     if not rec.x_document_state:
         values['x_document_state'] = 'draft'
-    if rec.x_applicant_id:
-        applicant = rec.x_applicant_id
-        if applicant.partner_name or applicant.name or applicant.display_name:
-            values['x_full_name_snapshot'] = applicant.partner_name or applicant.name or applicant.display_name
-        if applicant.x_gender:
-            values['x_gender_snapshot'] = applicant.x_gender
-        if applicant.x_national_id:
-            values['x_national_id_snapshot'] = applicant.x_national_id
-        if applicant.job_id:
-            values['x_position_applied_snapshot'] = applicant.job_id.with_context(lang='ar_001').name or applicant.job_id.name or applicant.job_id.display_name or False
-        employee_number = False
-        if 'x_employee_number' in applicant._fields:
-            employee_number = applicant['x_employee_number']
-        if not employee_number and 'employee_number' in applicant._fields:
-            employee_number = applicant['employee_number']
-        if employee_number:
-            values['x_employee_number_snapshot'] = employee_number
+
+    applicant = rec.x_applicant_id
+
+    if applicant.partner_name or applicant.name or applicant.display_name:
+        values['x_full_name_snapshot'] = applicant.partner_name or applicant.name or applicant.display_name
+    if applicant.x_gender:
+        values['x_gender_snapshot'] = applicant.x_gender
+    if applicant.x_national_id:
+        values['x_national_id_snapshot'] = applicant.x_national_id
+    if applicant.job_id:
+        values['x_position_applied_snapshot'] = applicant.job_id.with_context(lang='ar_001').name or applicant.job_id.name or applicant.job_id.display_name or False
+
+    employee_number = False
+    if 'x_employee_number' in applicant._fields:
+        employee_number = applicant['x_employee_number']
+    if not employee_number and 'employee_number' in applicant._fields:
+        employee_number = applicant['employee_number']
+    if employee_number:
+        values['x_employee_number_snapshot'] = employee_number
+
     if values:
-        rec.sudo().write(values)
+        rec.write(values)
+        rec = interview_model.browse(rec.id)
 
     if not rec.x_line_ids:
-        raise Warning('Interview lines are required before generating the interview PDF.')
+        action = toast('Interview lines missing', 'Interview lines are required before generating the interview PDF.', 'warning', True, reload_interview(rec))
+        continue
 
     for line in rec.x_line_ids:
         if line.x_actual_score in (False, None):
-            raise Warning('Complete all interview question scores before generating the interview PDF.')
+            action = toast('Interview scores incomplete', 'Complete all interview question scores before generating the interview PDF.', 'warning', False, reload_interview(rec))
+            break
         if line.x_actual_score < 1 or line.x_actual_score > 5:
-            raise Warning('Interview question score must be between 1 and 5.')
+            action = toast('Invalid score', 'Interview question score must be between 1 and 5.', 'warning', False, reload_interview(rec))
+            break
+
+    if action and action.get('tag') == 'display_notification':
+        continue
 
     sequence_number = 0
     for line in rec.x_line_ids.sorted(key=lambda item: ((item.x_sequence or 0), item.id)):
@@ -74,17 +147,21 @@ for rec in records:
         if line_values:
             line.sudo().write(line_values)
 
-    rec = env['x_hr.applicant_mcep_interview'].sudo().with_context(prefetch_fields=False).browse(rec.id)
+    rec = interview_model.with_context(prefetch_fields=False).browse(rec.id)
 
     if not rec.x_full_name_snapshot:
-        raise Warning('Set the applicant full name before generating the interview PDF.')
+        action = toast('Applicant name missing', 'Set the applicant full name before generating the interview PDF.', 'warning', True, reload_interview(rec))
+        continue
 
     pdf_content, content_type = env['ir.actions.report'].sudo()._render_qweb_pdf(
         'hr_recruitment_custom.action_report_mcep_interview_tor',
         [rec.id]
     )
-    filename = '%s - Interview.pdf' % (rec.x_full_name_snapshot or rec.x_name or 'Interview')
-    attachment = env['ir.attachment'].sudo().create({
+
+    instance_reference = rec.x_document_reference or rec.x_name or build_interview_reference(rec)
+    filename = '%s-0.pdf' % instance_reference
+
+    attachment = attachment_model.create({
         'name': filename,
         'type': 'binary',
         'raw': pdf_content,
@@ -95,7 +172,9 @@ for rec in records:
 
     generated_on = datetime.datetime.now()
 
-    rec.sudo().write({
+    rec.write({
+        'x_name': instance_reference,
+        'x_document_reference': instance_reference,
         'x_pdf_attachment_id': attachment.id,
         'x_generated_on': generated_on,
         'x_document_state': 'generated',
@@ -104,66 +183,43 @@ for rec in records:
         'x_signed_attachment_id': False,
     })
 
-    registry_model = env['x_hr.recruitment_document'].sudo()
     registry_doc = registry_model.search([
         ('x_document_type', '=', 'interview_evaluation'),
         ('x_source_model', '=', 'x_hr.applicant_mcep_interview'),
         ('x_source_res_id', '=', rec.id),
     ], limit=1)
 
-    if registry_doc:
-        registry_version = (registry_doc.x_version or 1) + 1
-        registry_doc.write({
-            'x_name': 'تقييم المقابلة - %s - v%s' % (
-                rec.x_full_name_snapshot or rec.x_applicant_id.partner_name or rec.x_applicant_id.name or rec.display_name,
-                registry_version,
-            ),
-            'x_applicant_id': rec.x_applicant_id.id,
-            'x_state': 'generated',
-            'x_generated_attachment_id': attachment.id,
-            'x_signed_attachment_id': False,
-            'x_version': registry_version,
-            'x_generated_on': generated_on,
-            'x_sent_on': False,
-            'x_signed_on': False,
-            'x_responsible_user_id': env.user.id,
-            'x_source_model': 'x_hr.applicant_mcep_interview',
-            'x_source_res_id': rec.id,
-            'x_notes': 'Interview PDF regenerated from the interview workflow. Previous signed/sent registry state was cleared for the new version.',
-        })
-    else:
-        registry_doc = registry_model.create({
-            'x_name': 'تقييم المقابلة - %s - v1' % (
-                rec.x_full_name_snapshot or rec.x_applicant_id.partner_name or rec.x_applicant_id.name or rec.display_name,
-            ),
-            'x_applicant_id': rec.x_applicant_id.id,
-            'x_document_type': 'interview_evaluation',
-            'x_state': 'generated',
-            'x_generated_attachment_id': attachment.id,
-            'x_signed_attachment_id': False,
-            'x_version': 1,
-            'x_generated_on': generated_on,
-            'x_sent_on': False,
-            'x_signed_on': False,
-            'x_responsible_user_id': env.user.id,
-            'x_source_model': 'x_hr.applicant_mcep_interview',
-            'x_source_res_id': rec.id,
-            'x_notes': 'Interview PDF generated from the interview workflow.',
-        })
-
-    rec.message_post(body='Interview PDF generated and attached to applicant Files. Recruitment document registry updated. Use the send button to begin interviewer signature.')
-    rec.x_applicant_id.message_post(body='Interview PDF generated and attached to applicant Files. Recruitment document registry updated.')
-
-if len(records) == 1 and attachment:
-    action = {
-        'type': 'ir.actions.act_window',
-        'name': 'Generated Interview PDF',
-        'res_model': 'ir.attachment',
-        'view_mode': 'form',
-        'res_id': attachment.id,
-        'target': 'new',
+    registry_values = {
+        'x_name': '%s / F-0002 Interview Evaluation' % instance_reference,
+        'x_applicant_id': rec.x_applicant_id.id,
+        'x_document_type': 'interview_evaluation',
+        'x_state': 'generated',
+        'x_generated_attachment_id': attachment.id,
+        'x_signed_attachment_id': False,
+        'x_generated_on': generated_on,
+        'x_sent_on': False,
+        'x_signed_on': False,
+        'x_responsible_user_id': env.user.id,
+        'x_source_model': 'x_hr.applicant_mcep_interview',
+        'x_source_res_id': rec.id,
+        'x_notes': 'F-0002 Interview PDF generated from interview workflow. Instance: %s. Draft artifact: %s.' % (instance_reference, filename),
     }
-        ]]></field>
+
+    if registry_doc:
+        registry_doc.write(registry_values)
+    else:
+        registry_values['x_version'] = 1
+        registry_doc = registry_model.create(registry_values)
+
+    rec.message_post(body='F-0002 Interview PDF generated in the background. Draft artifact: %s.' % filename)
+    rec.x_applicant_id.message_post(body='F-0002 Interview PDF generated and attached to applicant Files. Draft artifact: %s.' % filename)
+
+    action = toast('F-0002 PDF generated', 'Draft PDF generated: %s.' % filename, 'success', False, reload_interview(rec))
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+]]></field>
     </record>
 
     <record id="action_mcep_interview_send_for_signature" model="ir.actions.server">
@@ -179,6 +235,36 @@ sign_role_model = env['sign.item.role'].sudo()
 sign_send_model = env['sign.send.request'].sudo()
 sign_send_signer_model = env['sign.send.request.signer'].sudo()
 sign_request_model = env['sign.request'].sudo()
+
+action = False
+
+
+def reload_interview(rec):
+    view = env.ref('hr_recruitment_custom.view_mcep_interview_form', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Interview Evaluation',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
 
 signature_type = env.ref('sign.sign_item_type_signature', raise_if_not_found=False)
 
@@ -196,106 +282,43 @@ if not signature_type:
 elif not interviewer_role:
     setup_error = 'No Odoo Sign signer role was found. Create an Interviewer or Reviewer role in Sign before sending F-0002.'
 
-for rec in records:
+for rec in records.sudo():
     if setup_error:
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'F-0002 Odoo Sign setup incomplete',
-                'message': setup_error,
-                'type': 'warning',
-                'sticky': True,
-            }
-        }
+        action = toast('F-0002 Odoo Sign setup incomplete', setup_error, 'warning', True, reload_interview(rec))
         continue
 
     if rec.x_document_state == 'signed':
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'F-0002 already signed',
-                'message': 'This interview evaluation is already signed. No duplicate Odoo Sign request was created.',
-                'type': 'warning',
-                'sticky': False,
-            }
-        }
+        action = toast('F-0002 already signed', 'This interview evaluation is already signed. No duplicate Odoo Sign request was created.', 'warning', False, reload_interview(rec))
         continue
 
     if rec.x_document_state != 'generated':
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'F-0002 is not ready to send',
-                'message': 'Generate the F-0002 interview PDF before sending it through Odoo Sign.',
-                'type': 'warning',
-                'sticky': False,
-            }
-        }
+        action = toast('F-0002 is not ready to send', 'Generate the F-0002 interview PDF before sending it through Odoo Sign.', 'warning', False, reload_interview(rec))
         continue
 
     if not rec.x_pdf_attachment_id:
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'F-0002 PDF missing',
-                'message': 'Generate the interview PDF before sending through Odoo Sign.',
-                'type': 'warning',
-                'sticky': False,
-            }
-        }
+        action = toast('F-0002 PDF missing', 'Generate the interview PDF before sending through Odoo Sign.', 'warning', False, reload_interview(rec))
         continue
 
     applicant = rec.x_applicant_id
     if not applicant:
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'Applicant missing',
-                'message': 'This interview is not linked to an applicant.',
-                'type': 'warning',
-                'sticky': True,
-            }
-        }
+        action = toast('Applicant missing', 'This interview is not linked to an applicant.', 'warning', True, reload_interview(rec))
         continue
 
     interviewer_user = rec.x_interviewer_user_id or env.user
     interviewer_partner = interviewer_user.partner_id
 
     if not interviewer_partner:
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'Interviewer contact missing',
-                'message': 'The interviewer user has no linked contact/partner and cannot be used as an Odoo Sign signer.',
-                'type': 'warning',
-                'sticky': True,
-            }
-        }
+        action = toast('Interviewer contact missing', 'The interviewer user has no linked contact/partner and cannot be used as an Odoo Sign signer.', 'warning', True, reload_interview(rec))
         continue
 
     interviewer_email = interviewer_partner.email or interviewer_user.email
     if not interviewer_email:
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'Interviewer email missing',
-                'message': 'The interviewer contact has no email address. Add an email before sending F-0002 through Odoo Sign.',
-                'type': 'warning',
-                'sticky': True,
-            }
-        }
+        action = toast('Interviewer email missing', 'The interviewer contact has no email address. Add an email before sending F-0002 through Odoo Sign.', 'warning', True, reload_interview(rec))
         continue
 
     applicant_name = rec.x_full_name_snapshot or applicant.partner_name or applicant.name or applicant.display_name
     pdf_attachment = rec.x_pdf_attachment_id
-    filename = pdf_attachment.name or ('%s - F-0002 Interview Evaluation.pdf' % applicant_name)
+    filename = pdf_attachment.name or ('%s-0.pdf' % (rec.x_document_reference or rec.x_name or 'HR-0002'))
 
     registry_doc = registry_model.search([
         ('x_document_type', '=', 'interview_evaluation'),
@@ -304,20 +327,13 @@ for rec in records:
     ], order='x_version desc, id desc', limit=1)
 
     if not registry_doc:
-        latest_any = registry_model.search([
-            ('x_document_type', '=', 'interview_evaluation'),
-            ('x_applicant_id', '=', applicant.id),
-        ], order='x_version desc, id desc', limit=1)
-
-        next_version = (latest_any.x_version or 0) + 1 if latest_any else 1
-
         registry_doc = registry_model.create({
-            'x_name': 'تقييم المقابلة - %s - v%s' % (applicant_name, next_version),
+            'x_name': '%s / F-0002 Interview Evaluation' % (rec.x_document_reference or rec.x_name or applicant_name),
             'x_applicant_id': applicant.id,
             'x_document_type': 'interview_evaluation',
             'x_state': 'generated',
             'x_generated_attachment_id': pdf_attachment.id,
-            'x_version': next_version,
+            'x_version': 1,
             'x_generated_on': rec.x_generated_on or datetime.datetime.now(),
             'x_responsible_user_id': env.user.id,
             'x_source_model': 'x_hr.applicant_mcep_interview',
@@ -326,16 +342,7 @@ for rec in records:
         })
 
     if registry_doc.x_state == 'signed':
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'F-0002 already signed',
-                'message': 'This F-0002 registry document is already signed. No duplicate Odoo Sign request was created.',
-                'type': 'warning',
-                'sticky': False,
-            }
-        }
+        action = toast('F-0002 already signed', 'This F-0002 registry document is already signed. No duplicate Odoo Sign request was created.', 'warning', False, reload_interview(rec))
         continue
 
     if registry_doc.x_sign_request_res_id:
@@ -343,21 +350,12 @@ for rec in records:
         if existing_request.exists():
             existing_state = existing_request.state or registry_doc.x_sign_request_state or 'unknown'
             if existing_state not in ['cancelled', 'canceled']:
-                if existing_state == 'signed':
-                    message = 'The linked Odoo Sign request is already signed. Use Sync Signed Result to close the F-0002 registry/interview instead of creating a duplicate request.'
+                if existing_state in ['signed', 'completed']:
+                    message = 'The linked Odoo Sign request is already signed/completed. Use Sync to close the F-0002 registry/interview instead of creating a duplicate request.'
                 else:
                     message = 'This F-0002 already has an active linked Odoo Sign request in state "%s". Ask the signer to complete it, or sync the signed result after completion. Duplicate requests are blocked.' % existing_state
 
-                action = {
-                    'type': 'ir.actions.client',
-                    'tag': 'display_notification',
-                    'params': {
-                        'title': 'Duplicate Sign request blocked',
-                        'message': message,
-                        'type': 'warning',
-                        'sticky': True,
-                    }
-                }
+                action = toast('Duplicate Sign request blocked', message, 'warning', True, reload_interview(rec))
                 continue
 
     sent_on = datetime.datetime.now()
@@ -376,10 +374,6 @@ for rec in records:
         'sequence': 1,
     })
 
-    # F-0002 native Sign profile.
-    # One signer: interviewer.
-    # First coordinate pass targets the fixed interviewer signature row.
-    # If placement is visibly off in Odoo Sign preview, only posX/posY/width/height need adjustment.
     sign_item_model.create({
         'document_id': sign_document.id,
         'type_id': signature_type.id,
@@ -450,7 +444,7 @@ for rec in records:
             'x_notes': ((registry_doc.x_notes or '') + '\nNative Odoo Sign request created for F-0002 on %s. Request ID: %s. Interviewer: %s.' % (sent_on, generated_request.id, interviewer_partner.display_name)).strip(),
         })
 
-        rec.sudo().write({
+        rec.write({
             'x_document_state': 'sent',
             'x_sent_on': sent_on,
             'x_interviewer_user_id': interviewer_user.id,
@@ -459,16 +453,7 @@ for rec in records:
         rec.message_post(body='F-0002 sent through native Odoo Sign to %s. Sign request ID: %s.' % (interviewer_partner.display_name, generated_request.id))
         applicant.message_post(body='F-0002 Interview Evaluation sent through native Odoo Sign to %s.' % interviewer_partner.display_name)
 
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'F-0002 sent through Odoo Sign',
-                'message': 'Native Odoo Sign request created and sent to %s.' % interviewer_partner.display_name,
-                'type': 'success',
-                'sticky': False,
-            }
-        }
+        action = toast('F-0002 sent through Odoo Sign', 'Native Odoo Sign request created and sent to %s.' % interviewer_partner.display_name, 'success', False, reload_interview(rec))
     else:
         registry_doc.write({
             'x_state': 'generated',
@@ -485,17 +470,13 @@ for rec in records:
         rec.message_post(body='Native Odoo Sign send_request() executed for F-0002, but the generated sign.request could not be located automatically. Check Sign app template/request created from template ID %s.' % sign_template.id)
         applicant.message_post(body='Native Odoo Sign send_request() executed for F-0002, but the generated sign.request could not be located automatically. Check Sign app template/request created from template ID %s.' % sign_template.id)
 
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'F-0002 Sign request lookup failed',
-                'message': 'send_request() executed, but the generated sign.request was not found automatically. Check Sign app before retrying.',
-                'type': 'warning',
-                'sticky': True,
-            }
-        }
-        ]]></field>
+        action = toast('F-0002 Sign request lookup failed', 'send_request() executed, but the generated sign.request was not found automatically. Check Sign app before retrying.', 'warning', True, reload_interview(rec))
+
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+]]></field>
     </record>
 
     <record id="action_mcep_interview_sync_native_sign_completion" model="ir.actions.server">
@@ -506,11 +487,58 @@ for rec in records:
         <field name="code"><![CDATA[
 registry_model = env['x_hr.recruitment_document'].sudo()
 sign_request_model = env['sign.request'].sudo()
+attachment_model = env['ir.attachment'].sudo()
 
-for rec in records:
+action = False
+
+
+def reload_interview(rec):
+    view = env.ref('hr_recruitment_custom.view_mcep_interview_form', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or 'Interview Evaluation',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def looks_like_certificate(attachment):
+    name = (attachment.name or '').lower()
+    return (
+        'certificate' in name
+        or 'completion' in name
+        or 'completed' in name
+        or 'history' in name
+        or 'audit' in name
+        or 'trail' in name
+        or 'شهادة' in name
+        or 'إكمال' in name
+        or 'اكمال' in name
+    )
+
+
+for rec in records.sudo():
     applicant = rec.x_applicant_id
     if not applicant:
-        raise Warning('This interview is not linked to an applicant.')
+        action = toast('Applicant missing', 'This interview is not linked to an applicant.', 'warning', True, reload_interview(rec))
+        continue
 
     registry_doc = registry_model.search([
         ('x_document_type', '=', 'interview_evaluation'),
@@ -546,14 +574,17 @@ for rec in records:
         ], order='x_version desc, id desc', limit=1)
 
     if not registry_doc:
-        raise Warning('No native Odoo Sign recruitment document registry row was found for this F-0002 interview.')
+        action = toast('No Sign registry row', 'No native Odoo Sign recruitment document registry row was found for this F-0002 interview.', 'warning', True, reload_interview(rec))
+        continue
 
     if not registry_doc.x_sign_request_res_id:
-        raise Warning('The F-0002 recruitment document registry row has no linked Odoo Sign request ID.')
+        action = toast('No Sign request', 'The F-0002 recruitment document registry row has no linked Odoo Sign request ID.', 'warning', True, reload_interview(rec))
+        continue
 
     sign_request = sign_request_model.browse(registry_doc.x_sign_request_res_id)
     if not sign_request.exists():
-        raise Warning('The linked Odoo Sign request no longer exists or cannot be accessed.')
+        action = toast('Missing Sign request', 'The linked Odoo Sign request no longer exists or cannot be accessed.', 'warning', True, reload_interview(rec))
+        continue
 
     request_state = sign_request.state or 'unknown'
 
@@ -562,47 +593,60 @@ for rec in records:
         'x_sign_request_reference': sign_request.reference or registry_doc.x_sign_request_reference,
     })
 
-    if request_state not in ['signed']:
+    if request_state not in ['signed', 'completed']:
         rec.message_post(body='F-0002 native Odoo Sign request is not fully signed yet. Current Sign request state: %s. Ask the signer to complete signing, then sync again.' % request_state)
         applicant.message_post(body='F-0002 native Odoo Sign completion sync checked request %s. Current state: %s. Registry was not closed.' % (sign_request.id, request_state))
 
-        action = {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'F-0002 not fully signed yet',
-                'message': 'Odoo Sign request is still in state: %s. Ask the signer to complete signing, then sync again.' % request_state,
-                'type': 'warning',
-                'sticky': False,
-            }
-        }
+        action = toast('F-0002 not fully signed yet', 'Odoo Sign request is still in state: %s. Ask the signer to complete signing, then sync again.' % request_state, 'warning', False, reload_interview(rec))
         continue
 
     completed_attachments = sign_request.completed_document_attachment_ids
-    if not completed_attachments:
-        registry_doc.write({
-            'x_sign_request_state': 'signed_no_completed_attachment_found',
-            'x_notes': ((registry_doc.x_notes or '') + '\nOdoo Sign request %s is signed, but no completed document attachments were found during F-0002 sync on %s.' % (sign_request.id, datetime.datetime.now())).strip(),
-        })
-        raise Warning('Odoo Sign request is signed, but no completed document attachments were found. Registry was not closed.')
+
+    related_attachments = attachment_model.search([
+        ('res_model', '=', 'sign.request'),
+        ('res_id', '=', sign_request.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    applicant_attachments = attachment_model.search([
+        ('res_model', '=', 'hr.applicant'),
+        ('res_id', '=', applicant.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    all_attachments = completed_attachments | related_attachments | applicant_attachments
 
     signed_native = False
     certificate_native = False
 
-    for attachment in completed_attachments:
-        attachment_name = (attachment.name or '').lower()
-        if not certificate_native and ('certificate' in attachment_name or 'completion' in attachment_name or 'history' in attachment_name):
-            certificate_native = attachment
+    for attachment in all_attachments:
+        if rec.x_pdf_attachment_id and attachment.id == rec.x_pdf_attachment_id.id:
+            continue
+        if looks_like_certificate(attachment):
+            if not certificate_native:
+                certificate_native = attachment
         elif not signed_native:
             signed_native = attachment
 
     if not signed_native:
-        signed_native = completed_attachments[0]
+        registry_doc.write({
+            'x_sign_request_state': 'signed_no_completed_attachment_found',
+            'x_notes': ((registry_doc.x_notes or '') + '\nOdoo Sign request %s is signed/completed, but no completed business PDF was found during F-0002 sync on %s.' % (sign_request.id, datetime.datetime.now())).strip(),
+        })
+        action = toast('Signed PDF not found', 'Odoo Sign is signed/completed, but the signed business PDF was not found yet. Try Sync again after Odoo finishes processing.', 'warning', True, reload_interview(rec))
+        continue
+
+    instance_reference = rec.x_document_reference or rec.x_name or ('HR-0002-%s-%s' % (applicant.id, rec.id))
 
     signed_copy = registry_doc.x_signed_attachment_id
+    if signed_copy and looks_like_certificate(signed_copy):
+        signed_copy = False
+    if signed_copy and rec.x_pdf_attachment_id and signed_copy.id == rec.x_pdf_attachment_id.id:
+        signed_copy = False
+
     if not signed_copy:
         signed_copy = signed_native.copy({
-            'name': signed_native.name or ('Signed F-0002 - %s.pdf' % (applicant.partner_name or applicant.name or applicant.display_name)),
+            'name': '%s-1.pdf' % instance_reference,
             'res_model': 'hr.applicant',
             'res_id': applicant.id,
         })
@@ -610,7 +654,7 @@ for rec in records:
     certificate_copy = registry_doc.x_sign_certificate_attachment_id
     if certificate_native and not certificate_copy:
         certificate_copy = certificate_native.copy({
-            'name': certificate_native.name or ('Certificate of completion - F-0002 - %s.pdf' % (applicant.partner_name or applicant.name or applicant.display_name)),
+            'name': 'Sign Certificate - %s.pdf' % instance_reference,
             'res_model': 'hr.applicant',
             'res_id': applicant.id,
         })
@@ -647,7 +691,7 @@ for rec in records:
 
     registry_doc.write(registry_values)
 
-    rec.sudo().write({
+    rec.write({
         'x_document_state': 'signed',
         'x_signed_on': signed_on,
         'x_signed_attachment_id': signed_copy.id,
@@ -656,17 +700,12 @@ for rec in records:
     rec.message_post(body='F-0002 native Odoo Sign completion synced. Signed artifact linked: %s.' % signed_copy.name)
     applicant.message_post(body='F-0002 Interview Evaluation signed through native Odoo Sign. Signed artifact and certificate, where available, were linked to the recruitment document registry.')
 
-    action = {
-        'type': 'ir.actions.client',
-        'tag': 'display_notification',
-        'params': {
-            'title': 'F-0002 signed',
-            'message': 'Signed F-0002 result synced. Signed artifact and certificate, where available, were linked to the recruitment registry.',
-            'type': 'success',
-            'sticky': False,
-        }
-    }
-        ]]></field>
+    action = toast('F-0002 signed', 'Signed F-0002 result synced. Signed artifact: %s.' % signed_copy.name, 'success', False, reload_interview(rec))
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+]]></field>
     </record>
 
     <record id="action_mcep_interview_download_generated_pdf" model="ir.actions.server">
@@ -720,6 +759,48 @@ for rec in records:
             }
         }
     break
+        ]]></field>
+    </record>
+
+
+    <record id="action_mcep_interview_download_sign_certificate" model="ir.actions.server">
+        <field name="name">Download F-0002 Sign Certificate</field>
+        <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview" />
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+registry_model = env['x_hr.recruitment_document'].sudo()
+action = False
+
+for rec in records.sudo():
+    registry_doc = registry_model.search([
+        ('x_document_type', '=', 'interview_evaluation'),
+        ('x_source_model', '=', 'x_hr.applicant_mcep_interview'),
+        ('x_source_res_id', '=', rec.id),
+    ], order='id desc', limit=1)
+
+    attachment = registry_doc.x_sign_certificate_attachment_id if registry_doc else False
+
+    if attachment:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'No Sign certificate',
+                'message': 'No F-0002 Sign certificate is linked to this interview registry row yet.',
+                'type': 'warning',
+                'sticky': False,
+            }
+        }
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
         ]]></field>
     </record>
 

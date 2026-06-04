@@ -15,6 +15,7 @@ for rec in records:
         allowed = env.user.id in rec.interviewer_ids.ids
     if not allowed:
         raise Warning('Only selected interviewers or HR administrators can conduct this interview.')
+
     if not Question.search_count([('x_active', '=', True)]):
         raise Warning('Seed the MCEP interview questions before conducting interviews.')
 
@@ -38,7 +39,19 @@ for rec in records:
     if not employee_number and 'employee_number' in rec._fields:
         employee_number = rec['employee_number']
 
+    sequence = Interview.search_count([
+        ('x_applicant_id', '=', rec.id),
+    ]) + 1
+
+    instance_reference = 'HR-0002-%s-%s-%s' % (
+        rec.id,
+        sequence,
+        datetime.datetime.now().strftime('%d%m%y'),
+    )
+
     interview = Interview.create({
+        'x_name': instance_reference,
+        'x_document_reference': instance_reference,
         'x_applicant_id': rec.id,
         'x_interviewer_user_id': env.user.id,
         'x_interview_datetime': datetime.datetime.now(),
@@ -47,10 +60,12 @@ for rec in records:
         'x_national_id_snapshot': rec.x_national_id or False,
         'x_position_applied_snapshot': (rec.job_id.with_context(lang='ar_001').name or rec.job_id.name or rec.job_id.display_name) if rec.job_id else False,
         'x_employee_number_snapshot': employee_number or False,
+        'x_document_state': 'draft',
         'x_ready_for_pdf': False,
         'x_line_ids': line_commands,
     })
-    rec.message_post(body='Interview evaluation record created for the selected interviewer.')
+
+    rec.message_post(body='Interview evaluation record created for the selected interviewer: %s.' % instance_reference)
 
 if len(records) == 1 and interview:
     action = {
@@ -63,6 +78,6 @@ if len(records) == 1 and interview:
         'target': 'current',
         'context': {'form_view_initial_mode': 'edit'},
     }
-        ]]></field>
+]]></field>
     </record>
 </odoo>

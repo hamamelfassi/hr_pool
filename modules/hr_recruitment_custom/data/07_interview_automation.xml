@@ -14,20 +14,51 @@
             ref="hr_recruitment_custom.automation_interview_seed_snapshot_and_lines_on_create" />
         <field name="state">code</field>
         <field name="code"><![CDATA[
+def build_interview_reference(rec):
+    applicant = rec.x_applicant_id
+    applicant_id = applicant.id if applicant else 0
+    today = datetime.datetime.now().strftime('%d%m%y')
+
+    sequence = 1
+    if applicant:
+        existing = env['x_hr.applicant_mcep_interview'].sudo().search([
+            ('x_applicant_id', '=', applicant.id),
+            ('id', '<=', rec.id),
+        ], order='id asc')
+        sequence = 0
+        for item in existing:
+            sequence += 1
+            if item.id == rec.id:
+                break
+        if not sequence:
+            sequence = len(existing) + 1
+
+    return 'HR-0002-%s-%s-%s' % (applicant_id, sequence, today)
+
+
 for rec in records:
     values = {}
+
+    instance_reference = build_interview_reference(rec)
+
     if not rec.x_name and rec.id:
-        values['x_name'] = 'MCEP-INT-%05d' % rec.id
+        values['x_name'] = instance_reference
+
     if rec.id and not rec.x_document_reference:
-        values['x_document_reference'] = 'MCEP-HR-F-0002-%05d' % rec.id
+        values['x_document_reference'] = instance_reference
+
     if not rec.x_interviewer_user_id:
         values['x_interviewer_user_id'] = env.user.id
+
     if not rec.x_interview_datetime:
         values['x_interview_datetime'] = datetime.datetime.now()
+
     if not rec.x_document_state:
         values['x_document_state'] = 'draft'
+
     if rec.x_ready_for_pdf:
         values['x_ready_for_pdf'] = False
+
     if rec.x_applicant_id:
         applicant = rec.x_applicant_id
         if applicant.partner_name or applicant.name or applicant.display_name:
@@ -45,12 +76,13 @@ for rec in records:
             employee_number = applicant['employee_number']
         if employee_number:
             values['x_employee_number_snapshot'] = employee_number
+
     if values:
         rec.sudo().write(values)
 
     if rec.x_line_ids:
         continue
-        ]]></field>
+]]></field>
     </record>
 
     <record id="automation_interview_line_normalize_on_create" model="base.automation">
