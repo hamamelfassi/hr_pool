@@ -823,8 +823,10 @@ msgstr "بلد الميلاد"
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.server,name:hr_recruitment_custom.action_required_document_line_create_manual_submission
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form
 msgid "Create Manual Submission"
-msgstr ""
+msgstr "إنشاء تقديم يدوي"
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.server,name:hr_recruitment_custom.action_hr_applicant_create_required_document_submission_request
@@ -1749,18 +1751,21 @@ msgstr "ملاحظات منع الترحيل"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_handover_contract_date_end
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Handover Contract End Date"
-msgstr ""
+msgstr "تاريخ نهاية العقد للترحيل"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_handover_contract_date_start
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Handover Contract Start Date"
-msgstr ""
+msgstr "تاريخ بداية العقد للترحيل"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_handover_contract_type_id
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Handover Contract Type"
-msgstr ""
+msgstr "نوع العقد للترحيل"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_handover_structure_type_id
@@ -1779,23 +1784,27 @@ msgstr "حالة الترحيل"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_handover_wage
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Handover Wage"
-msgstr ""
+msgstr "الأجر للترحيل"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_handover_wage_type
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Handover Wage Type"
-msgstr ""
+msgstr "نوع الأجر للترحيل"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_handover_work_entry_source
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Handover Work Entry Source"
-msgstr ""
+msgstr "مصدر قيود العمل للترحيل"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_handover_resource_calendar_id
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Handover Working Hours"
-msgstr ""
+msgstr "ساعات العمل للترحيل"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
@@ -2569,8 +2578,10 @@ msgstr ""
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.server,name:hr_recruitment_custom.action_required_document_line_open_latest_submission
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form
 msgid "Open Latest Submission"
-msgstr ""
+msgstr "فتح آخر تقديم"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_form_controlled
@@ -2682,11 +2693,13 @@ msgstr "ملخص مستندات ما قبل التوظيف المتبقية"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_preboarding_gate_notes
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Preboarding Gate Notes"
 msgstr "ملاحظات بوابة ما قبل التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_preboarding_gate_ready
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Preboarding Gate Ready"
 msgstr "جاهزية بوابة ما قبل التوظيف"
 
@@ -2853,6 +2866,7 @@ msgstr "سجل مستند التوظيف"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant__x_recruitment_document_ids
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_list
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_search
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Recruitment Documents"
 msgstr "مستندات التوظيف"
 
@@ -6256,7 +6270,7 @@ msgstr "المستند المنشأ"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_list
 msgid "Signed PDF"
-msgstr "ملف PDF الموقع"
+msgstr "الموقع"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
@@ -6282,6 +6296,7 @@ msgstr "ملغى"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_recruitment_document_form
 msgid "Prepare Contract"
 msgstr "تهيئة التعاقد"
 
@@ -6568,13 +6583,15 @@ msgstr "ملاحظات التوظيف"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_list
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Draft PDF"
-msgstr "ملف PDF المسودة"
+msgstr "المسودة"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_list
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Accredited PDF"
-msgstr "ملف PDF المعتمد"
+msgstr "المعتمد"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_employment_contract_form
@@ -6850,3 +6867,253 @@ msgstr "موقع ومرفوع"
 #. module: hr_recruitment_custom
 msgid "Ministry Accredited"
 msgstr "معتمد من وزارة العمل"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form
+msgid "Download Accepted Document"
+msgstr "تنزيل المستند المقبول"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Handover Actions"
+msgstr "إجراءات الترحيل"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Update Employment Readiness"
+msgstr "تحديث جاهزية التوظيف"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Start Employment"
+msgstr "بدء التوظيف"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Sync Identity"
+msgstr "ترحيل الهوية"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Identity Handover Status"
+msgstr "حالة ترحيل الهوية"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Identity Handover Ready"
+msgstr "جاهزية ترحيل الهوية"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Identity Records Linked"
+msgstr "عدد سجلات الهوية المرحّلة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Identity Checked/Synced On"
+msgstr "تاريخ فحص/ترحيل الهوية"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Identity Checked/Synced By"
+msgstr "فحص/رحّل الهوية بواسطة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Identity Handover Notes"
+msgstr "ملاحظات ترحيل الهوية"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Preboarding Gate"
+msgstr "بوابة ما قبل التوظيف"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Gate Status"
+msgstr "حالة البوابة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Preboarding Gate Status"
+msgstr "حالة بوابة ما قبل التوظيف"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Last Gate Check On"
+msgstr "تاريخ آخر فحص للبوابة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Checked By"
+msgstr "فحصت بواسطة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Missing Items"
+msgstr "النواقص"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Remaining Documents"
+msgstr "المستندات المتبقية"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Default Payroll Settings"
+msgstr "إعدادات الرواتب الافتراضية"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Data Sources"
+msgstr "مصادر البيانات"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Payroll Settings"
+msgstr "إعدادات الرواتب"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Handover Salary Structure Type"
+msgstr "فئة الأجر للترحيل"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Handover Status"
+msgstr "حالة الترحيل"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Employment Start Status"
+msgstr "حالة بدء التوظيف"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Ready to Start Employment"
+msgstr "جاهز لبدء التوظيف"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Linked Employee"
+msgstr "الموظف المرتبط"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Employee Created On"
+msgstr "تاريخ إنشاء الموظف"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Created By"
+msgstr "أنشئ بواسطة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Payroll Ready"
+msgstr "جاهزية الرواتب"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Payroll Checked On"
+msgstr "تاريخ فحص الرواتب"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Payroll Checked By"
+msgstr "فحص الرواتب بواسطة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Linked Bank Account"
+msgstr "الحساب البنكي المرتبط"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Bank Account Ready"
+msgstr "جاهزية الحساب البنكي"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Bank Checked On"
+msgstr "تاريخ فحص البنك"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Bank Checked By"
+msgstr "فحص البنك بواسطة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Artifacts Ready"
+msgstr "جاهزية المرفقات"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Handover Artifacts Count"
+msgstr "عدد المرفقات المرحلة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Artifacts Checked On"
+msgstr "تاريخ فحص المرفقات"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Artifacts Checked By"
+msgstr "فحص المرفقات بواسطة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Handover Closed"
+msgstr "إغلاق الترحيل"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Applicant Stage Moved"
+msgstr "تم نقل مرحلة المتقدم"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Handover Closed On"
+msgstr "تاريخ إغلاق الترحيل"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Closed By"
+msgstr "أغلق بواسطة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Employment Start Checked On"
+msgstr "تاريخ فحص بدء التوظيف"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Employment Start Notes"
+msgstr "ملاحظات بدء التوظيف"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Payroll Readiness Notes"
+msgstr "ملاحظات جاهزية الرواتب"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Bank Account Notes"
+msgstr "ملاحظات الحساب البنكي"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Artifact Handover Notes"
+msgstr "ملاحظات ترحيل المرفقات"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Handover Closure Notes"
+msgstr "ملاحظات إغلاق الترحيل"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Linked Employment Contracts"
+msgstr "العقود المرتبطة"

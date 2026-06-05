@@ -28,8 +28,7 @@
                     icon="fa-files-o"
                     invisible="not id">
                     <div class="o_stat_info">
-                        <span class="o_stat_text">Recruitment</span>
-                        <span class="o_stat_text">Documents</span>
+                        <span class="o_stat_text">Recruitment Documents</span>
                     </div>
                 </button>
             </xpath>
@@ -308,14 +307,14 @@
                                         <button type="action"
                                             name="hr_recruitment_custom.action_required_document_line_create_manual_submission"
                                             string=""
-                                            title="إنشاء تقديم يدوي"
+                                            title="Create Manual Submission"
                                             icon="fa-upload"
                                             class="btn-link"
                                             invisible="x_status in ('submitted', 'accepted', 'resubmission_requested')" />
                                         <button type="action"
                                             name="hr_recruitment_custom.action_required_document_line_open_latest_submission"
                                             string=""
-                                            title="فتح آخر تقديم"
+                                            title="Open Latest Submission"
                                             icon="fa-external-link"
                                             class="btn-link" />
                                         <field name="x_document_name_ar" string="Name (AR)" readonly="1" />
@@ -1112,108 +1111,108 @@
                 </page>
 
                 <page string="Employment">
-                    <group string="إجراءات الترحيل" col="8">
+                    <group string="Handover Actions" col="8">
                         <button type="action"
                             name="hr_recruitment_custom.action_hr_applicant_refresh_preboarding_gate"
-                            string="تحديث جاهزية التوظيف"
+                            string="Update Employment Readiness"
                             class="btn-secondary"
                             invisible="not id"/>
                         <button type="action"
                             name="hr_recruitment_custom.action_hr_applicant_onboard_now_shell"
-                            string="بدء التوظيف"
+                            string="Start Employment"
                             class="btn-primary"
                             invisible="not id or not x_preboarding_gate_ready"/>
                         <button type="action"
                             name="hr_recruitment_custom.action_hr_applicant_sync_employee_identity_documents"
-                            string="ترحيل الهوية"
+                            string="Sync Identity"
                             class="btn-secondary"
                             invisible="not id"/>
                     </group>
 
-                    <group string="حالة ترحيل الهوية">
+                    <group string="Identity Handover Status">
                         <group>
                             <field name="x_employment_identity_ready"
-                                string="جاهزية ترحيل الهوية"
+                                string="Identity Handover Ready"
                                 readonly="1"/>
                             <field name="x_employment_identity_count"
-                                string="عدد سجلات الهوية المرحّلة"
+                                string="Identity Records Linked"
                                 readonly="1"/>
                             <field name="x_employment_identity_checked_on"
-                                string="تاريخ فحص/ترحيل الهوية"
+                                string="Identity Checked/Synced On"
                                 readonly="1"/>
                             <field name="x_employment_identity_checked_by_user_id"
-                                string="فحص/رحّل الهوية بواسطة"
+                                string="Identity Checked/Synced By"
                                 readonly="1"
                                 options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
                         </group>
-                        <group string="ملاحظات ترحيل الهوية">
+                        <group string="Identity Handover Notes">
                             <field name="x_employment_identity_notes" nolabel="1" readonly="1"/>
                         </group>
                     </group>
 
 
-                    <group string="بوابة ما قبل التوظيف">
-                        <group string="حالة البوابة">
+                    <group string="Preboarding Gate">
+                        <group string="Gate Status">
                             <field name="x_preboarding_gate_state"
-                                string="حالة بوابة ما قبل التوظيف"
+                                string="Preboarding Gate Status"
                                 widget="badge"
                                 decoration-muted="x_preboarding_gate_state == 'not_checked'"
                                 decoration-warning="x_preboarding_gate_state == 'blocked'"
                                 decoration-success="x_preboarding_gate_state == 'ready'"
                                 readonly="1"/>
                             <field name="x_preboarding_gate_ready"
-                                string="جاهزية بوابة ما قبل التوظيف"
+                                string="Preboarding Gate Ready"
                                 readonly="1"/>
                             <field name="x_preboarding_gate_checked_on"
-                                string="تاريخ آخر فحص للبوابة"
+                                string="Last Gate Check On"
                                 readonly="1"/>
                             <field name="x_preboarding_gate_checked_by_user_id"
-                                string="فحصت بواسطة"
+                                string="Checked By"
                                 readonly="1"
                                 options="{'no_create': True, 'no_create_edit': True}"/>
                         </group>
-                        <group string="النواقص">
+                        <group string="Missing Items">
                             <field name="x_preboarding_gate_missing_summary"
-                                string="المستندات المتبقية"
+                                string="Remaining Documents"
                                 readonly="1"/>
                             <field name="x_preboarding_gate_notes"
-                                string="ملاحظات بوابة ما قبل التوظيف"
+                                string="Preboarding Gate Notes"
                                 readonly="1"
                                 nolabel="1"/>
                         </group>
                     </group>
 
 
-                    <group string="إعدادات الرواتب الافتراضية">
-                        <group string="مصادر البيانات">
+                    <group string="Default Payroll Settings">
+                        <group string="Data Sources">
                             <field name="x_handover_contract_date_start"
-                                string="تاريخ بداية العقد للترحيل"/>
+                                string="Handover Contract Start Date"/>
                             <field name="x_handover_contract_date_end"
-                                string="تاريخ نهاية العقد للترحيل"/>
+                                string="Handover Contract End Date"/>
                             <field name="x_handover_wage"
-                                string="الأجر للترحيل"/>
+                                string="Handover Wage"/>
                             <field name="x_handover_wage_type"
-                                string="نوع الأجر للترحيل"/>
+                                string="Handover Wage Type"/>
                         </group>
-                        <group string="إعدادات الرواتب">
+                        <group string="Payroll Settings">
                             <field name="x_handover_contract_type_id"
-                                string="نوع العقد للترحيل"
+                                string="Handover Contract Type"
                                 options="{'no_create_edit': True}"/>
                             <field name="x_handover_structure_type_id"
-                                string="فئة الأجر للترحيل"
+                                string="Handover Salary Structure Type"
                                 options="{'no_create_edit': True}"/>
                             <field name="x_handover_work_entry_source"
-                                string="مصدر قيود العمل للترحيل"/>
+                                string="Handover Work Entry Source"/>
                             <field name="x_handover_resource_calendar_id"
-                                string="ساعات العمل للترحيل"
+                                string="Handover Working Hours"
                                 options="{'no_create_edit': True}"/>
                         </group>
                     </group>
 
-                    <group string="بدء التوظيف">
-                        <group string="حالة الترحيل">
+                    <group string="Start Employment">
+                        <group string="Handover Status">
                             <field name="x_employment_handover_state"
-                                string="حالة بدء التوظيف"
+                                string="Employment Start Status"
                                 widget="badge"
                                 decoration-muted="x_employment_handover_state in [False, 'not_started']"
                                 decoration-warning="x_employment_handover_state == 'blocked'"
@@ -1221,102 +1220,102 @@
                                 decoration-success="x_employment_handover_state == 'onboarded'"
                                 readonly="1"/>
                             <field name="x_employment_handover_ready"
-                                string="جاهز لبدء التوظيف"
+                                string="Ready to Start Employment"
                                 readonly="1"/>
                             <field name="x_employment_employee_id"
-                                string="الموظف المرتبط"
+                                string="Linked Employee"
                                 readonly="1"
                                 options="{'no_create': True, 'no_create_edit': True}"/>
                             <field name="x_employment_employee_created_on"
-                                string="تاريخ إنشاء الموظف"
+                                string="Employee Created On"
                                 readonly="1"/>
                             <field name="x_employment_employee_created_by_user_id"
-                                string="أنشئ بواسطة"
+                                string="Created By"
                                 readonly="1"
                                 options="{'no_create': True, 'no_create_edit': True}"/>
                             <field name="x_employment_payroll_ready"
-                                string="جاهزية الرواتب"
+                                string="Payroll Ready"
                                 readonly="1"/>
                             <field name="x_employment_payroll_checked_on"
-                                string="تاريخ فحص الرواتب"
+                                string="Payroll Checked On"
                                 readonly="1"/>
                             <field name="x_employment_payroll_checked_by_user_id"
-                                string="فحص الرواتب بواسطة"
+                                string="Payroll Checked By"
                                 readonly="1"
                                 options="{'no_create': True, 'no_create_edit': True}"/>
                             <field name="x_employment_partner_bank_id"
-                                string="الحساب البنكي المرتبط"
+                                string="Linked Bank Account"
                                 readonly="1"
                                 options="{'no_create': True, 'no_create_edit': True}"/>
                             <field name="x_employment_bank_ready"
-                                string="جاهزية الحساب البنكي"
+                                string="Bank Account Ready"
                                 readonly="1"/>
                             <field name="x_employment_bank_checked_on"
-                                string="تاريخ فحص البنك"
+                                string="Bank Checked On"
                                 readonly="1"/>
                             <field name="x_employment_bank_checked_by_user_id"
-                                string="فحص البنك بواسطة"
+                                string="Bank Checked By"
                                 readonly="1"
                                 options="{'no_create': True, 'no_create_edit': True}"/>
                             <field name="x_employment_artifacts_ready"
-                                string="جاهزية المرفقات"
+                                string="Artifacts Ready"
                                 readonly="1"/>
                             <field name="x_employment_artifacts_count"
-                                string="عدد المرفقات المرحلة"
+                                string="Handover Artifacts Count"
                                 readonly="1"/>
                             <field name="x_employment_artifacts_checked_on"
-                                string="تاريخ فحص المرفقات"
+                                string="Artifacts Checked On"
                                 readonly="1"/>
                             <field name="x_employment_artifacts_checked_by_user_id"
-                                string="فحص المرفقات بواسطة"
+                                string="Artifacts Checked By"
                                 readonly="1"
                                 options="{'no_create': True, 'no_create_edit': True}"/>
                             <field name="x_employment_handover_closed"
-                                string="إغلاق الترحيل"
+                                string="Handover Closed"
                                 readonly="1"/>
                             <field name="x_employment_stage_move_done"
-                                string="تم نقل مرحلة المتقدم"
+                                string="Applicant Stage Moved"
                                 readonly="1"/>
                             <field name="x_employment_handover_closed_on"
-                                string="تاريخ إغلاق الترحيل"
+                                string="Handover Closed On"
                                 readonly="1"/>
                             <field name="x_employment_handover_closed_by_user_id"
-                                string="أغلق بواسطة"
+                                string="Closed By"
                                 readonly="1"
                                 options="{'no_create': True, 'no_create_edit': True}"/>
                             <field name="x_employment_handover_checked_on"
-                                string="تاريخ فحص بدء التوظيف"
+                                string="Employment Start Checked On"
                                 readonly="1"/>
                             <field name="x_employment_handover_checked_by_user_id"
-                                string="فحصت بواسطة"
+                                string="Checked By"
                                 readonly="1"
                                 options="{'no_create': True, 'no_create_edit': True}"/>
                         </group>
-                        <group string="ملاحظات بدء التوظيف">
+                        <group string="Employment Start Notes">
                             <field name="x_employment_handover_notes"
-                                string="ملاحظات بدء التوظيف"
+                                string="Employment Start Notes"
                                 readonly="1"
                                 nolabel="1"/>
                             <field name="x_employment_payroll_notes"
-                                string="ملاحظات جاهزية الرواتب"
+                                string="Payroll Readiness Notes"
                                 readonly="1"
                                 nolabel="1"/>
                             <field name="x_employment_bank_notes"
-                                string="ملاحظات الحساب البنكي"
+                                string="Bank Account Notes"
                                 readonly="1"
                                 nolabel="1"/>
                             <field name="x_employment_artifacts_notes"
-                                string="ملاحظات ترحيل المرفقات"
+                                string="Artifact Handover Notes"
                                 readonly="1"
                                 nolabel="1"/>
                             <field name="x_employment_handover_closure_notes"
-                                string="ملاحظات إغلاق الترحيل"
+                                string="Handover Closure Notes"
                                 readonly="1"
                                 nolabel="1"/>
                         </group>
                     </group>
 
-                    <group string="العقود المرتبطة">
+                    <group string="Linked Employment Contracts">
                         <field name="x_employment_contract_ids"
                             string=" "
                             context="{'default_x_applicant_id': id}"
@@ -1328,17 +1327,17 @@
                                 decoration-warning="x_state == 'printed'"
                                 decoration-success="x_state in ['signed_uploaded', 'ministry_accredited', 'handover_ready']"
                                 decoration-danger="x_state == 'cancelled'">
-                                <field name="x_name" string="اسم العقد"/>
-                                <field name="x_contract_number" string="رقم العقد"/>
+                                <field name="x_name" string="Contract Name"/>
+                                <field name="x_contract_number" string="Contract Number"/>
                                 <field name="x_state" string="Status" widget="badge"
                                     decoration-muted="x_state == 'draft_data'"
                                     decoration-info="x_state in ['ready_to_render', 'generated']"
                                     decoration-warning="x_state == 'printed'"
                                     decoration-success="x_state in ['signed_uploaded', 'ministry_accredited', 'handover_ready']"
                                     decoration-danger="x_state == 'cancelled'"/>
-                                <field name="x_generated_attachment_id" string="المسودة"/>
-                                <field name="x_signed_attachment_id" string="الموقع"/>
-                                <field name="x_ministry_accredited_attachment_id" string="المعتمد"/>
+                                <field name="x_generated_attachment_id" string="Draft PDF"/>
+                                <field name="x_signed_attachment_id" string="Signed PDF"/>
+                                <field name="x_ministry_accredited_attachment_id" string="Accredited PDF"/>
                             </list>
                         </field>
                     </group>

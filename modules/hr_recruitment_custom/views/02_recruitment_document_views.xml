@@ -31,7 +31,7 @@
                     <header>
                         <button type="action"
                             name="hr_recruitment_custom.action_recruitment_document_evaluation_to_contract_proposal"
-                            string="تهيئة التعاقد"
+                            string="Prepare Contract"
                             class="btn-primary"
                             invisible="not x_applicant_id" />
                         <field name="x_state"

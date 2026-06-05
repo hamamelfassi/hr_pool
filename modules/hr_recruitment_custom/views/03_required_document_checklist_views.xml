@@ -118,14 +118,14 @@
                             <button type="action"
                                 name="hr_recruitment_custom.action_required_document_line_create_manual_submission"
                                 string=""
-                                title="إنشاء تقديم يدوي"
+                                title="Create Manual Submission"
                                 icon="fa-upload"
                                 class="btn-link"
                                 invisible="x_status in ('submitted', 'accepted', 'resubmission_requested')" />
                             <button type="action"
                                 name="hr_recruitment_custom.action_required_document_line_open_latest_submission"
                                 string=""
-                                title="فتح آخر تقديم"
+                                title="Open Latest Submission"
                                 icon="fa-external-link"
                                 class="btn-link" />
                             <field name="x_document_name_ar" string="Name (AR)" readonly="1" />
@@ -173,7 +173,7 @@
                                         options="{'no_open': True, 'no_create': True, 'no_create_edit': True}" />
                                     <button type="action"
                                         name="hr_recruitment_custom.action_required_document_line_download_latest_accepted_attachment"
-                                        string="تنزيل المستند المقبول"
+                                        string="Download Accepted Document"
                                         icon="fa-download"
                                         class="btn-link"
                                         invisible="not x_latest_accepted_attachment_id" />
