@@ -11,6 +11,130 @@ interview_model = env['x_hr.applicant_mcep_interview'].sudo()
 
 action = False
 
+UI_TEXT_AR = {
+    "Applicant missing": "المتقدم غير مرتبط",
+    "Link this interview to an applicant before generating the interview PDF.": "اربط تقييم المقابلة بمتقدم قبل توليد ملف PDF.",
+    "F-0002 already generated": "تم توليد F-0002 مسبقاً",
+    "F-0002 has already been generated for this interview. Create a new interview record if a corrected evaluation is required.": "تم توليد F-0002 لهذا التقييم مسبقاً. أنشئ سجل مقابلة جديداً إذا كان التصحيح مطلوباً.",
+    "F-0002 lifecycle already exists": "مسار F-0002 موجود مسبقاً",
+    "F-0002 already has a signature lifecycle or signed artifact in the recruitment document registry. Create a new interview record for corrections.": "يوجد بالفعل مسار توقيع أو مستند موقع لـ F-0002 في سجل مستندات التوظيف. أنشئ سجل مقابلة جديداً للتصحيح.",
+    "Interview lines missing": "بنود المقابلة غير موجودة",
+    "Interview lines are required before generating the interview PDF.": "بنود المقابلة مطلوبة قبل توليد ملف PDF.",
+    "Interview scores incomplete": "درجات المقابلة غير مكتملة",
+    "Complete all interview question scores before generating the interview PDF.": "أكمل جميع درجات أسئلة المقابلة قبل توليد ملف PDF.",
+    "Invalid score": "درجة غير صحيحة",
+    "Interview question score must be between 1 and 5.": "يجب أن تكون درجة سؤال المقابلة بين 1 و5.",
+    "Applicant name missing": "اسم المتقدم غير موجود",
+    "Set the applicant full name before generating the interview PDF.": "أدخل الاسم الكامل للمتقدم قبل توليد ملف PDF.",
+    "F-0002 PDF generated": "تم توليد ملف F-0002",
+    "Draft PDF generated: %s.": "تم توليد مسودة PDF: %s.",
+    "F-0002 Odoo Sign setup incomplete": "إعدادات توقيع أودو لـ F-0002 غير مكتملة",
+    "F-0002 already signed": "F-0002 موقّع مسبقاً",
+    "This interview evaluation is already signed. No duplicate Odoo Sign request was created.": "تقييم المقابلة هذا موقّع مسبقاً. لم يتم إنشاء طلب توقيع أودو مكرر.",
+    "This F-0002 registry document is already signed. No duplicate Odoo Sign request was created.": "سجل مستند F-0002 موقّع مسبقاً. لم يتم إنشاء طلب توقيع أودو مكرر.",
+    "F-0002 is not ready to send": "F-0002 غير جاهز للإرسال",
+    "Generate the interview PDF before sending through Odoo Sign.": "ولّد ملف تقييم المقابلة قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0002 interview PDF before sending it through Odoo Sign.": "ولّد ملف F-0002 قبل إرساله عبر توقيع أودو.",
+    "F-0002 PDF missing": "ملف F-0002 غير موجود",
+    "Interviewer contact missing": "جهة اتصال مجري المقابلة غير موجودة",
+    "The interviewer user has no linked contact/partner and cannot be used as an Odoo Sign signer.": "مستخدم مجري المقابلة لا يملك جهة اتصال/شريك مرتبطاً، ولا يمكن استخدامه كموقّع في أودو.",
+    "Interviewer email missing": "بريد مجري المقابلة غير موجود",
+    "The interviewer contact has no email address. Add an email before sending F-0002 through Odoo Sign.": "جهة اتصال مجري المقابلة لا تحتوي على بريد إلكتروني. أضف البريد قبل إرسال F-0002 عبر توقيع أودو.",
+    "Duplicate Sign request blocked": "تم منع طلب توقيع مكرر",
+    "Native Odoo Sign request created and sent to %s.": "تم إنشاء طلب توقيع أودو وإرساله إلى %s.",
+    "F-0002 sent through Odoo Sign": "تم إرسال F-0002 عبر توقيع أودو",
+    "No Sign request": "لا يوجد طلب توقيع",
+    "Missing Sign request": "طلب التوقيع غير موجود",
+    "F-0002 Sign request lookup failed": "تعذر العثور على طلب توقيع F-0002",
+    "The linked Odoo Sign request no longer exists or cannot be accessed.": "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.",
+    "No Sign registry row": "لا يوجد سجل توقيع",
+    "No native Odoo Sign recruitment document registry row was found for this F-0002 interview.": "لم يتم العثور على سجل مستند توظيف مرتبط بتوقيع أودو لهذه المقابلة F-0002.",
+    "No linked Sign request": "لا يوجد طلب توقيع مرتبط",
+    "The F-0002 recruitment document registry row has no linked Odoo Sign request ID.": "سجل مستند التوظيف F-0002 لا يحتوي على معرف طلب توقيع أودو مرتبط.",
+    "F-0002 not fully signed yet": "لم يكتمل توقيع F-0002 بعد",
+    "Odoo Sign request is still in state: %s. Ask the signer to complete signing, then sync again.": "لا يزال طلب توقيع أودو في الحالة: %s. اطلب من الموقّع إكمال التوقيع ثم زامن مرة أخرى.",
+    "Signed PDF not found": "لم يتم العثور على ملف PDF الموقع",
+    "Odoo Sign is signed/completed, but the signed business PDF was not found yet. Try Sync again after Odoo finishes processing.": "تم توقيع/إكمال طلب توقيع أودو، لكن ملف PDF التجاري الموقع لم يظهر بعد. جرّب المزامنة مرة أخرى بعد اكتمال معالجة أودو.",
+    "F-0002 signed": "تم توقيع F-0002",
+    "Signed F-0002 result synced. Signed artifact: %s.": "تمت مزامنة نتيجة F-0002 الموقعة. المستند الموقع: %s.",
+    "No generated interview PDF": "لا يوجد ملف تقييم منشأ",
+    "No generated interview evaluation PDF is linked to this record.": "لا يوجد ملف تقييم مقابلة منشأ مرتبط بهذا السجل.",
+    "No signed interview PDF": "لا يوجد ملف تقييم موقع",
+    "No signed interview evaluation PDF is linked to this record.": "لا يوجد ملف تقييم مقابلة موقع مرتبط بهذا السجل.",
+    "No Sign certificate": "لا توجد شهادة توقيع",
+    "No F-0002 Sign certificate is linked to this interview registry row yet.": "لا توجد شهادة توقيع F-0002 مرتبطة بسجل المقابلة حتى الآن.",
+    "F-0003 PDF generation blocked": "تم منع توليد ملف F-0003",
+    "This checklist has already entered the Odoo Sign lifecycle. Use Sync instead of regenerating the PDF.": "دخلت هذه القائمة بالفعل في مسار توقيع أودو. استخدم المزامنة بدلاً من إعادة توليد ملف PDF.",
+    "F-0003 is not ready for PDF": "F-0003 غير جاهز لتوليد PDF",
+    "F-0003 checklist must be Ready for PDF before generating the checklist PDF.": "يجب أن تكون قائمة F-0003 جاهزة لتوليد PDF قبل توليد ملف القائمة.",
+    "F-0003 checklist has no required lines": "قائمة F-0003 لا تحتوي على بنود مطلوبة",
+    "This F-0003 checklist has no required document lines.": "قائمة F-0003 لا تحتوي على بنود مستندات مطلوبة.",
+    "Cannot generate F-0003 PDF. All required document lines must be Accepted first.": "لا يمكن توليد ملف F-0003. يجب قبول جميع بنود المستندات المطلوبة أولاً.",
+    "F-0003 checklist is not linked to an applicant.": "قائمة F-0003 غير مرتبطة بمتقدم.",
+    "F-0003 PDF generated": "تم توليد ملف F-0003",
+    "Generated F-0003 PDF was linked to this checklist and posted on the applicant record.": "تم ربط ملف F-0003 المنشأ بهذه القائمة ونشره في سجل المتقدم.",
+    "F-0003 Odoo Sign setup incomplete": "إعدادات توقيع أودو لـ F-0003 غير مكتملة",
+    "F-0003 already signed": "F-0003 موقّع مسبقاً",
+    "This F-0003 checklist is already signed. No duplicate Odoo Sign request was created.": "قائمة F-0003 هذه موقّعة مسبقاً. لم يتم إنشاء طلب توقيع أودو مكرر.",
+    "F-0003 is not ready to sign": "F-0003 غير جاهز للتوقيع",
+    "F-0003 checklist must be Generated before it can be sent through Odoo Sign.": "يجب توليد قائمة F-0003 قبل إرسالها عبر توقيع أودو.",
+    "Generate the F-0003 PDF before sending through Odoo Sign.": "ولّد ملف F-0003 قبل إرساله عبر توقيع أودو.",
+    "Reviewer contact missing": "جهة اتصال المراجع غير موجودة",
+    "Reviewer user has no linked contact/partner and cannot be used as an Odoo Sign signer.": "مستخدم المراجع لا يملك جهة اتصال/شريك مرتبطاً، ولا يمكن استخدامه كموقّع في أودو.",
+    "Reviewer email missing": "بريد المراجع غير موجود",
+    "Reviewer contact has no email address. Add an email before sending F-0003 through Odoo Sign.": "جهة اتصال المراجع لا تحتوي على بريد إلكتروني. أضف البريد قبل إرسال F-0003 عبر توقيع أودو.",
+    "F-0003 was sent to Odoo Sign for reviewer signature.": "تم إرسال F-0003 عبر توقيع أودو لتوقيع المراجع.",
+    "F-0003 sent to Sign": "تم إرسال F-0003 للتوقيع",
+    "F-0003 Sign request lookup failed": "تعذر العثور على طلب توقيع F-0003",
+    "No F-0003 Sign registry row": "لا يوجد سجل توقيع F-0003",
+    "No native Odoo Sign recruitment document registry row was found for this F-0003 checklist.": "لم يتم العثور على سجل مستند توظيف مرتبط بتوقيع أودو لقائمة F-0003.",
+    "The F-0003 recruitment document registry row has no linked Odoo Sign request ID.": "سجل مستند التوظيف F-0003 لا يحتوي على معرف طلب توقيع أودو مرتبط.",
+    "F-0003 not fully signed yet": "لم يكتمل توقيع F-0003 بعد",
+    "The Sign request is signed/completed, but the completed signed PDF was not found yet. Try Sync again after Odoo finishes processing.": "تم توقيع/إكمال طلب التوقيع، لكن ملف PDF الموقع المكتمل لم يظهر بعد. جرّب المزامنة مرة أخرى بعد اكتمال معالجة أودو.",
+    "F-0003 signed": "تم توقيع F-0003",
+    "Signed F-0003 result synced. Signed artifact and certificate, where available, were linked to the recruitment registry.": "تمت مزامنة نتيجة F-0003 الموقعة. وتم ربط المستند الموقع والشهادة، عند توفرها، بسجل التوظيف.",
+    "No generated PDF": "لا يوجد ملف PDF منشأ",
+    "No generated F-0003 PDF is linked to this checklist.": "لا يوجد ملف F-0003 منشأ مرتبط بهذه القائمة.",
+    "No signed PDF": "لا يوجد ملف PDF موقع",
+    "No signed F-0003 PDF is linked to this checklist.": "لا يوجد ملف F-0003 موقع مرتبط بهذه القائمة.",
+    "No F-0003 Sign certificate is linked to this checklist registry row yet.": "لا توجد شهادة توقيع F-0003 مرتبطة بسجل القائمة حتى الآن.",
+    "No generated artifact": "لا يوجد مستند منشأ",
+    "No generated artifact is linked to this recruitment document.": "لا يوجد مستند منشأ مرتبط بمستند التوظيف هذا.",
+    "No signed artifact": "لا يوجد مستند موقع",
+    "No signed artifact is linked to this recruitment document.": "لا يوجد مستند موقع مرتبط بمستند التوظيف هذا.",
+    "No certificate": "لا توجد شهادة",
+    "No Odoo Sign certificate is linked to this recruitment document.": "لا توجد شهادة توقيع أودو مرتبطة بمستند التوظيف هذا."
+}
+
+def ui_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if not lang.startswith('ar'):
+        return text
+
+    if text in UI_TEXT_AR:
+        return UI_TEXT_AR[text]
+
+    for source, target in UI_TEXT_AR.items():
+        if '%s' not in source:
+            continue
+        prefix, suffix = source.split('%s', 1)
+        if text.startswith(prefix) and text.endswith(suffix):
+            value = text[len(prefix):len(text) - len(suffix)] if suffix else text[len(prefix):]
+            try:
+                return target % value
+            except Exception:
+                return target
+
+    return text
+
+
 
 def build_interview_reference(rec):
     applicant = rec.x_applicant_id
@@ -51,8 +175,8 @@ def reload_interview(rec):
 
 def toast(title, message, kind='success', sticky=False, next_action=False):
     params = {
-        'title': title,
-        'message': message,
+        'title': ui_text(title),
+        'message': ui_text(message),
         'type': kind,
         'sticky': sticky,
     }
@@ -238,6 +362,130 @@ sign_request_model = env['sign.request'].sudo()
 
 action = False
 
+UI_TEXT_AR = {
+    "Applicant missing": "المتقدم غير مرتبط",
+    "Link this interview to an applicant before generating the interview PDF.": "اربط تقييم المقابلة بمتقدم قبل توليد ملف PDF.",
+    "F-0002 already generated": "تم توليد F-0002 مسبقاً",
+    "F-0002 has already been generated for this interview. Create a new interview record if a corrected evaluation is required.": "تم توليد F-0002 لهذا التقييم مسبقاً. أنشئ سجل مقابلة جديداً إذا كان التصحيح مطلوباً.",
+    "F-0002 lifecycle already exists": "مسار F-0002 موجود مسبقاً",
+    "F-0002 already has a signature lifecycle or signed artifact in the recruitment document registry. Create a new interview record for corrections.": "يوجد بالفعل مسار توقيع أو مستند موقع لـ F-0002 في سجل مستندات التوظيف. أنشئ سجل مقابلة جديداً للتصحيح.",
+    "Interview lines missing": "بنود المقابلة غير موجودة",
+    "Interview lines are required before generating the interview PDF.": "بنود المقابلة مطلوبة قبل توليد ملف PDF.",
+    "Interview scores incomplete": "درجات المقابلة غير مكتملة",
+    "Complete all interview question scores before generating the interview PDF.": "أكمل جميع درجات أسئلة المقابلة قبل توليد ملف PDF.",
+    "Invalid score": "درجة غير صحيحة",
+    "Interview question score must be between 1 and 5.": "يجب أن تكون درجة سؤال المقابلة بين 1 و5.",
+    "Applicant name missing": "اسم المتقدم غير موجود",
+    "Set the applicant full name before generating the interview PDF.": "أدخل الاسم الكامل للمتقدم قبل توليد ملف PDF.",
+    "F-0002 PDF generated": "تم توليد ملف F-0002",
+    "Draft PDF generated: %s.": "تم توليد مسودة PDF: %s.",
+    "F-0002 Odoo Sign setup incomplete": "إعدادات توقيع أودو لـ F-0002 غير مكتملة",
+    "F-0002 already signed": "F-0002 موقّع مسبقاً",
+    "This interview evaluation is already signed. No duplicate Odoo Sign request was created.": "تقييم المقابلة هذا موقّع مسبقاً. لم يتم إنشاء طلب توقيع أودو مكرر.",
+    "This F-0002 registry document is already signed. No duplicate Odoo Sign request was created.": "سجل مستند F-0002 موقّع مسبقاً. لم يتم إنشاء طلب توقيع أودو مكرر.",
+    "F-0002 is not ready to send": "F-0002 غير جاهز للإرسال",
+    "Generate the interview PDF before sending through Odoo Sign.": "ولّد ملف تقييم المقابلة قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0002 interview PDF before sending it through Odoo Sign.": "ولّد ملف F-0002 قبل إرساله عبر توقيع أودو.",
+    "F-0002 PDF missing": "ملف F-0002 غير موجود",
+    "Interviewer contact missing": "جهة اتصال مجري المقابلة غير موجودة",
+    "The interviewer user has no linked contact/partner and cannot be used as an Odoo Sign signer.": "مستخدم مجري المقابلة لا يملك جهة اتصال/شريك مرتبطاً، ولا يمكن استخدامه كموقّع في أودو.",
+    "Interviewer email missing": "بريد مجري المقابلة غير موجود",
+    "The interviewer contact has no email address. Add an email before sending F-0002 through Odoo Sign.": "جهة اتصال مجري المقابلة لا تحتوي على بريد إلكتروني. أضف البريد قبل إرسال F-0002 عبر توقيع أودو.",
+    "Duplicate Sign request blocked": "تم منع طلب توقيع مكرر",
+    "Native Odoo Sign request created and sent to %s.": "تم إنشاء طلب توقيع أودو وإرساله إلى %s.",
+    "F-0002 sent through Odoo Sign": "تم إرسال F-0002 عبر توقيع أودو",
+    "No Sign request": "لا يوجد طلب توقيع",
+    "Missing Sign request": "طلب التوقيع غير موجود",
+    "F-0002 Sign request lookup failed": "تعذر العثور على طلب توقيع F-0002",
+    "The linked Odoo Sign request no longer exists or cannot be accessed.": "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.",
+    "No Sign registry row": "لا يوجد سجل توقيع",
+    "No native Odoo Sign recruitment document registry row was found for this F-0002 interview.": "لم يتم العثور على سجل مستند توظيف مرتبط بتوقيع أودو لهذه المقابلة F-0002.",
+    "No linked Sign request": "لا يوجد طلب توقيع مرتبط",
+    "The F-0002 recruitment document registry row has no linked Odoo Sign request ID.": "سجل مستند التوظيف F-0002 لا يحتوي على معرف طلب توقيع أودو مرتبط.",
+    "F-0002 not fully signed yet": "لم يكتمل توقيع F-0002 بعد",
+    "Odoo Sign request is still in state: %s. Ask the signer to complete signing, then sync again.": "لا يزال طلب توقيع أودو في الحالة: %s. اطلب من الموقّع إكمال التوقيع ثم زامن مرة أخرى.",
+    "Signed PDF not found": "لم يتم العثور على ملف PDF الموقع",
+    "Odoo Sign is signed/completed, but the signed business PDF was not found yet. Try Sync again after Odoo finishes processing.": "تم توقيع/إكمال طلب توقيع أودو، لكن ملف PDF التجاري الموقع لم يظهر بعد. جرّب المزامنة مرة أخرى بعد اكتمال معالجة أودو.",
+    "F-0002 signed": "تم توقيع F-0002",
+    "Signed F-0002 result synced. Signed artifact: %s.": "تمت مزامنة نتيجة F-0002 الموقعة. المستند الموقع: %s.",
+    "No generated interview PDF": "لا يوجد ملف تقييم منشأ",
+    "No generated interview evaluation PDF is linked to this record.": "لا يوجد ملف تقييم مقابلة منشأ مرتبط بهذا السجل.",
+    "No signed interview PDF": "لا يوجد ملف تقييم موقع",
+    "No signed interview evaluation PDF is linked to this record.": "لا يوجد ملف تقييم مقابلة موقع مرتبط بهذا السجل.",
+    "No Sign certificate": "لا توجد شهادة توقيع",
+    "No F-0002 Sign certificate is linked to this interview registry row yet.": "لا توجد شهادة توقيع F-0002 مرتبطة بسجل المقابلة حتى الآن.",
+    "F-0003 PDF generation blocked": "تم منع توليد ملف F-0003",
+    "This checklist has already entered the Odoo Sign lifecycle. Use Sync instead of regenerating the PDF.": "دخلت هذه القائمة بالفعل في مسار توقيع أودو. استخدم المزامنة بدلاً من إعادة توليد ملف PDF.",
+    "F-0003 is not ready for PDF": "F-0003 غير جاهز لتوليد PDF",
+    "F-0003 checklist must be Ready for PDF before generating the checklist PDF.": "يجب أن تكون قائمة F-0003 جاهزة لتوليد PDF قبل توليد ملف القائمة.",
+    "F-0003 checklist has no required lines": "قائمة F-0003 لا تحتوي على بنود مطلوبة",
+    "This F-0003 checklist has no required document lines.": "قائمة F-0003 لا تحتوي على بنود مستندات مطلوبة.",
+    "Cannot generate F-0003 PDF. All required document lines must be Accepted first.": "لا يمكن توليد ملف F-0003. يجب قبول جميع بنود المستندات المطلوبة أولاً.",
+    "F-0003 checklist is not linked to an applicant.": "قائمة F-0003 غير مرتبطة بمتقدم.",
+    "F-0003 PDF generated": "تم توليد ملف F-0003",
+    "Generated F-0003 PDF was linked to this checklist and posted on the applicant record.": "تم ربط ملف F-0003 المنشأ بهذه القائمة ونشره في سجل المتقدم.",
+    "F-0003 Odoo Sign setup incomplete": "إعدادات توقيع أودو لـ F-0003 غير مكتملة",
+    "F-0003 already signed": "F-0003 موقّع مسبقاً",
+    "This F-0003 checklist is already signed. No duplicate Odoo Sign request was created.": "قائمة F-0003 هذه موقّعة مسبقاً. لم يتم إنشاء طلب توقيع أودو مكرر.",
+    "F-0003 is not ready to sign": "F-0003 غير جاهز للتوقيع",
+    "F-0003 checklist must be Generated before it can be sent through Odoo Sign.": "يجب توليد قائمة F-0003 قبل إرسالها عبر توقيع أودو.",
+    "Generate the F-0003 PDF before sending through Odoo Sign.": "ولّد ملف F-0003 قبل إرساله عبر توقيع أودو.",
+    "Reviewer contact missing": "جهة اتصال المراجع غير موجودة",
+    "Reviewer user has no linked contact/partner and cannot be used as an Odoo Sign signer.": "مستخدم المراجع لا يملك جهة اتصال/شريك مرتبطاً، ولا يمكن استخدامه كموقّع في أودو.",
+    "Reviewer email missing": "بريد المراجع غير موجود",
+    "Reviewer contact has no email address. Add an email before sending F-0003 through Odoo Sign.": "جهة اتصال المراجع لا تحتوي على بريد إلكتروني. أضف البريد قبل إرسال F-0003 عبر توقيع أودو.",
+    "F-0003 was sent to Odoo Sign for reviewer signature.": "تم إرسال F-0003 عبر توقيع أودو لتوقيع المراجع.",
+    "F-0003 sent to Sign": "تم إرسال F-0003 للتوقيع",
+    "F-0003 Sign request lookup failed": "تعذر العثور على طلب توقيع F-0003",
+    "No F-0003 Sign registry row": "لا يوجد سجل توقيع F-0003",
+    "No native Odoo Sign recruitment document registry row was found for this F-0003 checklist.": "لم يتم العثور على سجل مستند توظيف مرتبط بتوقيع أودو لقائمة F-0003.",
+    "The F-0003 recruitment document registry row has no linked Odoo Sign request ID.": "سجل مستند التوظيف F-0003 لا يحتوي على معرف طلب توقيع أودو مرتبط.",
+    "F-0003 not fully signed yet": "لم يكتمل توقيع F-0003 بعد",
+    "The Sign request is signed/completed, but the completed signed PDF was not found yet. Try Sync again after Odoo finishes processing.": "تم توقيع/إكمال طلب التوقيع، لكن ملف PDF الموقع المكتمل لم يظهر بعد. جرّب المزامنة مرة أخرى بعد اكتمال معالجة أودو.",
+    "F-0003 signed": "تم توقيع F-0003",
+    "Signed F-0003 result synced. Signed artifact and certificate, where available, were linked to the recruitment registry.": "تمت مزامنة نتيجة F-0003 الموقعة. وتم ربط المستند الموقع والشهادة، عند توفرها، بسجل التوظيف.",
+    "No generated PDF": "لا يوجد ملف PDF منشأ",
+    "No generated F-0003 PDF is linked to this checklist.": "لا يوجد ملف F-0003 منشأ مرتبط بهذه القائمة.",
+    "No signed PDF": "لا يوجد ملف PDF موقع",
+    "No signed F-0003 PDF is linked to this checklist.": "لا يوجد ملف F-0003 موقع مرتبط بهذه القائمة.",
+    "No F-0003 Sign certificate is linked to this checklist registry row yet.": "لا توجد شهادة توقيع F-0003 مرتبطة بسجل القائمة حتى الآن.",
+    "No generated artifact": "لا يوجد مستند منشأ",
+    "No generated artifact is linked to this recruitment document.": "لا يوجد مستند منشأ مرتبط بمستند التوظيف هذا.",
+    "No signed artifact": "لا يوجد مستند موقع",
+    "No signed artifact is linked to this recruitment document.": "لا يوجد مستند موقع مرتبط بمستند التوظيف هذا.",
+    "No certificate": "لا توجد شهادة",
+    "No Odoo Sign certificate is linked to this recruitment document.": "لا توجد شهادة توقيع أودو مرتبطة بمستند التوظيف هذا."
+}
+
+def ui_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if not lang.startswith('ar'):
+        return text
+
+    if text in UI_TEXT_AR:
+        return UI_TEXT_AR[text]
+
+    for source, target in UI_TEXT_AR.items():
+        if '%s' not in source:
+            continue
+        prefix, suffix = source.split('%s', 1)
+        if text.startswith(prefix) and text.endswith(suffix):
+            value = text[len(prefix):len(text) - len(suffix)] if suffix else text[len(prefix):]
+            try:
+                return target % value
+            except Exception:
+                return target
+
+    return text
+
+
 
 def reload_interview(rec):
     view = env.ref('hr_recruitment_custom.view_mcep_interview_form', raise_if_not_found=False)
@@ -256,8 +504,8 @@ def reload_interview(rec):
 
 def toast(title, message, kind='warning', sticky=False, next_action=False):
     params = {
-        'title': title,
-        'message': message,
+        'title': ui_text(title),
+        'message': ui_text(message),
         'type': kind,
         'sticky': sticky,
     }
@@ -491,6 +739,130 @@ attachment_model = env['ir.attachment'].sudo()
 
 action = False
 
+UI_TEXT_AR = {
+    "Applicant missing": "المتقدم غير مرتبط",
+    "Link this interview to an applicant before generating the interview PDF.": "اربط تقييم المقابلة بمتقدم قبل توليد ملف PDF.",
+    "F-0002 already generated": "تم توليد F-0002 مسبقاً",
+    "F-0002 has already been generated for this interview. Create a new interview record if a corrected evaluation is required.": "تم توليد F-0002 لهذا التقييم مسبقاً. أنشئ سجل مقابلة جديداً إذا كان التصحيح مطلوباً.",
+    "F-0002 lifecycle already exists": "مسار F-0002 موجود مسبقاً",
+    "F-0002 already has a signature lifecycle or signed artifact in the recruitment document registry. Create a new interview record for corrections.": "يوجد بالفعل مسار توقيع أو مستند موقع لـ F-0002 في سجل مستندات التوظيف. أنشئ سجل مقابلة جديداً للتصحيح.",
+    "Interview lines missing": "بنود المقابلة غير موجودة",
+    "Interview lines are required before generating the interview PDF.": "بنود المقابلة مطلوبة قبل توليد ملف PDF.",
+    "Interview scores incomplete": "درجات المقابلة غير مكتملة",
+    "Complete all interview question scores before generating the interview PDF.": "أكمل جميع درجات أسئلة المقابلة قبل توليد ملف PDF.",
+    "Invalid score": "درجة غير صحيحة",
+    "Interview question score must be between 1 and 5.": "يجب أن تكون درجة سؤال المقابلة بين 1 و5.",
+    "Applicant name missing": "اسم المتقدم غير موجود",
+    "Set the applicant full name before generating the interview PDF.": "أدخل الاسم الكامل للمتقدم قبل توليد ملف PDF.",
+    "F-0002 PDF generated": "تم توليد ملف F-0002",
+    "Draft PDF generated: %s.": "تم توليد مسودة PDF: %s.",
+    "F-0002 Odoo Sign setup incomplete": "إعدادات توقيع أودو لـ F-0002 غير مكتملة",
+    "F-0002 already signed": "F-0002 موقّع مسبقاً",
+    "This interview evaluation is already signed. No duplicate Odoo Sign request was created.": "تقييم المقابلة هذا موقّع مسبقاً. لم يتم إنشاء طلب توقيع أودو مكرر.",
+    "This F-0002 registry document is already signed. No duplicate Odoo Sign request was created.": "سجل مستند F-0002 موقّع مسبقاً. لم يتم إنشاء طلب توقيع أودو مكرر.",
+    "F-0002 is not ready to send": "F-0002 غير جاهز للإرسال",
+    "Generate the interview PDF before sending through Odoo Sign.": "ولّد ملف تقييم المقابلة قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0002 interview PDF before sending it through Odoo Sign.": "ولّد ملف F-0002 قبل إرساله عبر توقيع أودو.",
+    "F-0002 PDF missing": "ملف F-0002 غير موجود",
+    "Interviewer contact missing": "جهة اتصال مجري المقابلة غير موجودة",
+    "The interviewer user has no linked contact/partner and cannot be used as an Odoo Sign signer.": "مستخدم مجري المقابلة لا يملك جهة اتصال/شريك مرتبطاً، ولا يمكن استخدامه كموقّع في أودو.",
+    "Interviewer email missing": "بريد مجري المقابلة غير موجود",
+    "The interviewer contact has no email address. Add an email before sending F-0002 through Odoo Sign.": "جهة اتصال مجري المقابلة لا تحتوي على بريد إلكتروني. أضف البريد قبل إرسال F-0002 عبر توقيع أودو.",
+    "Duplicate Sign request blocked": "تم منع طلب توقيع مكرر",
+    "Native Odoo Sign request created and sent to %s.": "تم إنشاء طلب توقيع أودو وإرساله إلى %s.",
+    "F-0002 sent through Odoo Sign": "تم إرسال F-0002 عبر توقيع أودو",
+    "No Sign request": "لا يوجد طلب توقيع",
+    "Missing Sign request": "طلب التوقيع غير موجود",
+    "F-0002 Sign request lookup failed": "تعذر العثور على طلب توقيع F-0002",
+    "The linked Odoo Sign request no longer exists or cannot be accessed.": "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.",
+    "No Sign registry row": "لا يوجد سجل توقيع",
+    "No native Odoo Sign recruitment document registry row was found for this F-0002 interview.": "لم يتم العثور على سجل مستند توظيف مرتبط بتوقيع أودو لهذه المقابلة F-0002.",
+    "No linked Sign request": "لا يوجد طلب توقيع مرتبط",
+    "The F-0002 recruitment document registry row has no linked Odoo Sign request ID.": "سجل مستند التوظيف F-0002 لا يحتوي على معرف طلب توقيع أودو مرتبط.",
+    "F-0002 not fully signed yet": "لم يكتمل توقيع F-0002 بعد",
+    "Odoo Sign request is still in state: %s. Ask the signer to complete signing, then sync again.": "لا يزال طلب توقيع أودو في الحالة: %s. اطلب من الموقّع إكمال التوقيع ثم زامن مرة أخرى.",
+    "Signed PDF not found": "لم يتم العثور على ملف PDF الموقع",
+    "Odoo Sign is signed/completed, but the signed business PDF was not found yet. Try Sync again after Odoo finishes processing.": "تم توقيع/إكمال طلب توقيع أودو، لكن ملف PDF التجاري الموقع لم يظهر بعد. جرّب المزامنة مرة أخرى بعد اكتمال معالجة أودو.",
+    "F-0002 signed": "تم توقيع F-0002",
+    "Signed F-0002 result synced. Signed artifact: %s.": "تمت مزامنة نتيجة F-0002 الموقعة. المستند الموقع: %s.",
+    "No generated interview PDF": "لا يوجد ملف تقييم منشأ",
+    "No generated interview evaluation PDF is linked to this record.": "لا يوجد ملف تقييم مقابلة منشأ مرتبط بهذا السجل.",
+    "No signed interview PDF": "لا يوجد ملف تقييم موقع",
+    "No signed interview evaluation PDF is linked to this record.": "لا يوجد ملف تقييم مقابلة موقع مرتبط بهذا السجل.",
+    "No Sign certificate": "لا توجد شهادة توقيع",
+    "No F-0002 Sign certificate is linked to this interview registry row yet.": "لا توجد شهادة توقيع F-0002 مرتبطة بسجل المقابلة حتى الآن.",
+    "F-0003 PDF generation blocked": "تم منع توليد ملف F-0003",
+    "This checklist has already entered the Odoo Sign lifecycle. Use Sync instead of regenerating the PDF.": "دخلت هذه القائمة بالفعل في مسار توقيع أودو. استخدم المزامنة بدلاً من إعادة توليد ملف PDF.",
+    "F-0003 is not ready for PDF": "F-0003 غير جاهز لتوليد PDF",
+    "F-0003 checklist must be Ready for PDF before generating the checklist PDF.": "يجب أن تكون قائمة F-0003 جاهزة لتوليد PDF قبل توليد ملف القائمة.",
+    "F-0003 checklist has no required lines": "قائمة F-0003 لا تحتوي على بنود مطلوبة",
+    "This F-0003 checklist has no required document lines.": "قائمة F-0003 لا تحتوي على بنود مستندات مطلوبة.",
+    "Cannot generate F-0003 PDF. All required document lines must be Accepted first.": "لا يمكن توليد ملف F-0003. يجب قبول جميع بنود المستندات المطلوبة أولاً.",
+    "F-0003 checklist is not linked to an applicant.": "قائمة F-0003 غير مرتبطة بمتقدم.",
+    "F-0003 PDF generated": "تم توليد ملف F-0003",
+    "Generated F-0003 PDF was linked to this checklist and posted on the applicant record.": "تم ربط ملف F-0003 المنشأ بهذه القائمة ونشره في سجل المتقدم.",
+    "F-0003 Odoo Sign setup incomplete": "إعدادات توقيع أودو لـ F-0003 غير مكتملة",
+    "F-0003 already signed": "F-0003 موقّع مسبقاً",
+    "This F-0003 checklist is already signed. No duplicate Odoo Sign request was created.": "قائمة F-0003 هذه موقّعة مسبقاً. لم يتم إنشاء طلب توقيع أودو مكرر.",
+    "F-0003 is not ready to sign": "F-0003 غير جاهز للتوقيع",
+    "F-0003 checklist must be Generated before it can be sent through Odoo Sign.": "يجب توليد قائمة F-0003 قبل إرسالها عبر توقيع أودو.",
+    "Generate the F-0003 PDF before sending through Odoo Sign.": "ولّد ملف F-0003 قبل إرساله عبر توقيع أودو.",
+    "Reviewer contact missing": "جهة اتصال المراجع غير موجودة",
+    "Reviewer user has no linked contact/partner and cannot be used as an Odoo Sign signer.": "مستخدم المراجع لا يملك جهة اتصال/شريك مرتبطاً، ولا يمكن استخدامه كموقّع في أودو.",
+    "Reviewer email missing": "بريد المراجع غير موجود",
+    "Reviewer contact has no email address. Add an email before sending F-0003 through Odoo Sign.": "جهة اتصال المراجع لا تحتوي على بريد إلكتروني. أضف البريد قبل إرسال F-0003 عبر توقيع أودو.",
+    "F-0003 was sent to Odoo Sign for reviewer signature.": "تم إرسال F-0003 عبر توقيع أودو لتوقيع المراجع.",
+    "F-0003 sent to Sign": "تم إرسال F-0003 للتوقيع",
+    "F-0003 Sign request lookup failed": "تعذر العثور على طلب توقيع F-0003",
+    "No F-0003 Sign registry row": "لا يوجد سجل توقيع F-0003",
+    "No native Odoo Sign recruitment document registry row was found for this F-0003 checklist.": "لم يتم العثور على سجل مستند توظيف مرتبط بتوقيع أودو لقائمة F-0003.",
+    "The F-0003 recruitment document registry row has no linked Odoo Sign request ID.": "سجل مستند التوظيف F-0003 لا يحتوي على معرف طلب توقيع أودو مرتبط.",
+    "F-0003 not fully signed yet": "لم يكتمل توقيع F-0003 بعد",
+    "The Sign request is signed/completed, but the completed signed PDF was not found yet. Try Sync again after Odoo finishes processing.": "تم توقيع/إكمال طلب التوقيع، لكن ملف PDF الموقع المكتمل لم يظهر بعد. جرّب المزامنة مرة أخرى بعد اكتمال معالجة أودو.",
+    "F-0003 signed": "تم توقيع F-0003",
+    "Signed F-0003 result synced. Signed artifact and certificate, where available, were linked to the recruitment registry.": "تمت مزامنة نتيجة F-0003 الموقعة. وتم ربط المستند الموقع والشهادة، عند توفرها، بسجل التوظيف.",
+    "No generated PDF": "لا يوجد ملف PDF منشأ",
+    "No generated F-0003 PDF is linked to this checklist.": "لا يوجد ملف F-0003 منشأ مرتبط بهذه القائمة.",
+    "No signed PDF": "لا يوجد ملف PDF موقع",
+    "No signed F-0003 PDF is linked to this checklist.": "لا يوجد ملف F-0003 موقع مرتبط بهذه القائمة.",
+    "No F-0003 Sign certificate is linked to this checklist registry row yet.": "لا توجد شهادة توقيع F-0003 مرتبطة بسجل القائمة حتى الآن.",
+    "No generated artifact": "لا يوجد مستند منشأ",
+    "No generated artifact is linked to this recruitment document.": "لا يوجد مستند منشأ مرتبط بمستند التوظيف هذا.",
+    "No signed artifact": "لا يوجد مستند موقع",
+    "No signed artifact is linked to this recruitment document.": "لا يوجد مستند موقع مرتبط بمستند التوظيف هذا.",
+    "No certificate": "لا توجد شهادة",
+    "No Odoo Sign certificate is linked to this recruitment document.": "لا توجد شهادة توقيع أودو مرتبطة بمستند التوظيف هذا."
+}
+
+def ui_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if not lang.startswith('ar'):
+        return text
+
+    if text in UI_TEXT_AR:
+        return UI_TEXT_AR[text]
+
+    for source, target in UI_TEXT_AR.items():
+        if '%s' not in source:
+            continue
+        prefix, suffix = source.split('%s', 1)
+        if text.startswith(prefix) and text.endswith(suffix):
+            value = text[len(prefix):len(text) - len(suffix)] if suffix else text[len(prefix):]
+            try:
+                return target % value
+            except Exception:
+                return target
+
+    return text
+
+
 
 def reload_interview(rec):
     view = env.ref('hr_recruitment_custom.view_mcep_interview_form', raise_if_not_found=False)
@@ -509,8 +881,8 @@ def reload_interview(rec):
 
 def toast(title, message, kind='warning', sticky=False, next_action=False):
     params = {
-        'title': title,
-        'message': message,
+        'title': ui_text(title),
+        'message': ui_text(message),
         'type': kind,
         'sticky': sticky,
     }
@@ -713,6 +1085,130 @@ if not action:
         <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview" />
         <field name="state">code</field>
         <field name="code"><![CDATA[
+UI_TEXT_AR = {
+    "Applicant missing": "المتقدم غير مرتبط",
+    "Link this interview to an applicant before generating the interview PDF.": "اربط تقييم المقابلة بمتقدم قبل توليد ملف PDF.",
+    "F-0002 already generated": "تم توليد F-0002 مسبقاً",
+    "F-0002 has already been generated for this interview. Create a new interview record if a corrected evaluation is required.": "تم توليد F-0002 لهذا التقييم مسبقاً. أنشئ سجل مقابلة جديداً إذا كان التصحيح مطلوباً.",
+    "F-0002 lifecycle already exists": "مسار F-0002 موجود مسبقاً",
+    "F-0002 already has a signature lifecycle or signed artifact in the recruitment document registry. Create a new interview record for corrections.": "يوجد بالفعل مسار توقيع أو مستند موقع لـ F-0002 في سجل مستندات التوظيف. أنشئ سجل مقابلة جديداً للتصحيح.",
+    "Interview lines missing": "بنود المقابلة غير موجودة",
+    "Interview lines are required before generating the interview PDF.": "بنود المقابلة مطلوبة قبل توليد ملف PDF.",
+    "Interview scores incomplete": "درجات المقابلة غير مكتملة",
+    "Complete all interview question scores before generating the interview PDF.": "أكمل جميع درجات أسئلة المقابلة قبل توليد ملف PDF.",
+    "Invalid score": "درجة غير صحيحة",
+    "Interview question score must be between 1 and 5.": "يجب أن تكون درجة سؤال المقابلة بين 1 و5.",
+    "Applicant name missing": "اسم المتقدم غير موجود",
+    "Set the applicant full name before generating the interview PDF.": "أدخل الاسم الكامل للمتقدم قبل توليد ملف PDF.",
+    "F-0002 PDF generated": "تم توليد ملف F-0002",
+    "Draft PDF generated: %s.": "تم توليد مسودة PDF: %s.",
+    "F-0002 Odoo Sign setup incomplete": "إعدادات توقيع أودو لـ F-0002 غير مكتملة",
+    "F-0002 already signed": "F-0002 موقّع مسبقاً",
+    "This interview evaluation is already signed. No duplicate Odoo Sign request was created.": "تقييم المقابلة هذا موقّع مسبقاً. لم يتم إنشاء طلب توقيع أودو مكرر.",
+    "This F-0002 registry document is already signed. No duplicate Odoo Sign request was created.": "سجل مستند F-0002 موقّع مسبقاً. لم يتم إنشاء طلب توقيع أودو مكرر.",
+    "F-0002 is not ready to send": "F-0002 غير جاهز للإرسال",
+    "Generate the interview PDF before sending through Odoo Sign.": "ولّد ملف تقييم المقابلة قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0002 interview PDF before sending it through Odoo Sign.": "ولّد ملف F-0002 قبل إرساله عبر توقيع أودو.",
+    "F-0002 PDF missing": "ملف F-0002 غير موجود",
+    "Interviewer contact missing": "جهة اتصال مجري المقابلة غير موجودة",
+    "The interviewer user has no linked contact/partner and cannot be used as an Odoo Sign signer.": "مستخدم مجري المقابلة لا يملك جهة اتصال/شريك مرتبطاً، ولا يمكن استخدامه كموقّع في أودو.",
+    "Interviewer email missing": "بريد مجري المقابلة غير موجود",
+    "The interviewer contact has no email address. Add an email before sending F-0002 through Odoo Sign.": "جهة اتصال مجري المقابلة لا تحتوي على بريد إلكتروني. أضف البريد قبل إرسال F-0002 عبر توقيع أودو.",
+    "Duplicate Sign request blocked": "تم منع طلب توقيع مكرر",
+    "Native Odoo Sign request created and sent to %s.": "تم إنشاء طلب توقيع أودو وإرساله إلى %s.",
+    "F-0002 sent through Odoo Sign": "تم إرسال F-0002 عبر توقيع أودو",
+    "No Sign request": "لا يوجد طلب توقيع",
+    "Missing Sign request": "طلب التوقيع غير موجود",
+    "F-0002 Sign request lookup failed": "تعذر العثور على طلب توقيع F-0002",
+    "The linked Odoo Sign request no longer exists or cannot be accessed.": "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.",
+    "No Sign registry row": "لا يوجد سجل توقيع",
+    "No native Odoo Sign recruitment document registry row was found for this F-0002 interview.": "لم يتم العثور على سجل مستند توظيف مرتبط بتوقيع أودو لهذه المقابلة F-0002.",
+    "No linked Sign request": "لا يوجد طلب توقيع مرتبط",
+    "The F-0002 recruitment document registry row has no linked Odoo Sign request ID.": "سجل مستند التوظيف F-0002 لا يحتوي على معرف طلب توقيع أودو مرتبط.",
+    "F-0002 not fully signed yet": "لم يكتمل توقيع F-0002 بعد",
+    "Odoo Sign request is still in state: %s. Ask the signer to complete signing, then sync again.": "لا يزال طلب توقيع أودو في الحالة: %s. اطلب من الموقّع إكمال التوقيع ثم زامن مرة أخرى.",
+    "Signed PDF not found": "لم يتم العثور على ملف PDF الموقع",
+    "Odoo Sign is signed/completed, but the signed business PDF was not found yet. Try Sync again after Odoo finishes processing.": "تم توقيع/إكمال طلب توقيع أودو، لكن ملف PDF التجاري الموقع لم يظهر بعد. جرّب المزامنة مرة أخرى بعد اكتمال معالجة أودو.",
+    "F-0002 signed": "تم توقيع F-0002",
+    "Signed F-0002 result synced. Signed artifact: %s.": "تمت مزامنة نتيجة F-0002 الموقعة. المستند الموقع: %s.",
+    "No generated interview PDF": "لا يوجد ملف تقييم منشأ",
+    "No generated interview evaluation PDF is linked to this record.": "لا يوجد ملف تقييم مقابلة منشأ مرتبط بهذا السجل.",
+    "No signed interview PDF": "لا يوجد ملف تقييم موقع",
+    "No signed interview evaluation PDF is linked to this record.": "لا يوجد ملف تقييم مقابلة موقع مرتبط بهذا السجل.",
+    "No Sign certificate": "لا توجد شهادة توقيع",
+    "No F-0002 Sign certificate is linked to this interview registry row yet.": "لا توجد شهادة توقيع F-0002 مرتبطة بسجل المقابلة حتى الآن.",
+    "F-0003 PDF generation blocked": "تم منع توليد ملف F-0003",
+    "This checklist has already entered the Odoo Sign lifecycle. Use Sync instead of regenerating the PDF.": "دخلت هذه القائمة بالفعل في مسار توقيع أودو. استخدم المزامنة بدلاً من إعادة توليد ملف PDF.",
+    "F-0003 is not ready for PDF": "F-0003 غير جاهز لتوليد PDF",
+    "F-0003 checklist must be Ready for PDF before generating the checklist PDF.": "يجب أن تكون قائمة F-0003 جاهزة لتوليد PDF قبل توليد ملف القائمة.",
+    "F-0003 checklist has no required lines": "قائمة F-0003 لا تحتوي على بنود مطلوبة",
+    "This F-0003 checklist has no required document lines.": "قائمة F-0003 لا تحتوي على بنود مستندات مطلوبة.",
+    "Cannot generate F-0003 PDF. All required document lines must be Accepted first.": "لا يمكن توليد ملف F-0003. يجب قبول جميع بنود المستندات المطلوبة أولاً.",
+    "F-0003 checklist is not linked to an applicant.": "قائمة F-0003 غير مرتبطة بمتقدم.",
+    "F-0003 PDF generated": "تم توليد ملف F-0003",
+    "Generated F-0003 PDF was linked to this checklist and posted on the applicant record.": "تم ربط ملف F-0003 المنشأ بهذه القائمة ونشره في سجل المتقدم.",
+    "F-0003 Odoo Sign setup incomplete": "إعدادات توقيع أودو لـ F-0003 غير مكتملة",
+    "F-0003 already signed": "F-0003 موقّع مسبقاً",
+    "This F-0003 checklist is already signed. No duplicate Odoo Sign request was created.": "قائمة F-0003 هذه موقّعة مسبقاً. لم يتم إنشاء طلب توقيع أودو مكرر.",
+    "F-0003 is not ready to sign": "F-0003 غير جاهز للتوقيع",
+    "F-0003 checklist must be Generated before it can be sent through Odoo Sign.": "يجب توليد قائمة F-0003 قبل إرسالها عبر توقيع أودو.",
+    "Generate the F-0003 PDF before sending through Odoo Sign.": "ولّد ملف F-0003 قبل إرساله عبر توقيع أودو.",
+    "Reviewer contact missing": "جهة اتصال المراجع غير موجودة",
+    "Reviewer user has no linked contact/partner and cannot be used as an Odoo Sign signer.": "مستخدم المراجع لا يملك جهة اتصال/شريك مرتبطاً، ولا يمكن استخدامه كموقّع في أودو.",
+    "Reviewer email missing": "بريد المراجع غير موجود",
+    "Reviewer contact has no email address. Add an email before sending F-0003 through Odoo Sign.": "جهة اتصال المراجع لا تحتوي على بريد إلكتروني. أضف البريد قبل إرسال F-0003 عبر توقيع أودو.",
+    "F-0003 was sent to Odoo Sign for reviewer signature.": "تم إرسال F-0003 عبر توقيع أودو لتوقيع المراجع.",
+    "F-0003 sent to Sign": "تم إرسال F-0003 للتوقيع",
+    "F-0003 Sign request lookup failed": "تعذر العثور على طلب توقيع F-0003",
+    "No F-0003 Sign registry row": "لا يوجد سجل توقيع F-0003",
+    "No native Odoo Sign recruitment document registry row was found for this F-0003 checklist.": "لم يتم العثور على سجل مستند توظيف مرتبط بتوقيع أودو لقائمة F-0003.",
+    "The F-0003 recruitment document registry row has no linked Odoo Sign request ID.": "سجل مستند التوظيف F-0003 لا يحتوي على معرف طلب توقيع أودو مرتبط.",
+    "F-0003 not fully signed yet": "لم يكتمل توقيع F-0003 بعد",
+    "The Sign request is signed/completed, but the completed signed PDF was not found yet. Try Sync again after Odoo finishes processing.": "تم توقيع/إكمال طلب التوقيع، لكن ملف PDF الموقع المكتمل لم يظهر بعد. جرّب المزامنة مرة أخرى بعد اكتمال معالجة أودو.",
+    "F-0003 signed": "تم توقيع F-0003",
+    "Signed F-0003 result synced. Signed artifact and certificate, where available, were linked to the recruitment registry.": "تمت مزامنة نتيجة F-0003 الموقعة. وتم ربط المستند الموقع والشهادة، عند توفرها، بسجل التوظيف.",
+    "No generated PDF": "لا يوجد ملف PDF منشأ",
+    "No generated F-0003 PDF is linked to this checklist.": "لا يوجد ملف F-0003 منشأ مرتبط بهذه القائمة.",
+    "No signed PDF": "لا يوجد ملف PDF موقع",
+    "No signed F-0003 PDF is linked to this checklist.": "لا يوجد ملف F-0003 موقع مرتبط بهذه القائمة.",
+    "No F-0003 Sign certificate is linked to this checklist registry row yet.": "لا توجد شهادة توقيع F-0003 مرتبطة بسجل القائمة حتى الآن.",
+    "No generated artifact": "لا يوجد مستند منشأ",
+    "No generated artifact is linked to this recruitment document.": "لا يوجد مستند منشأ مرتبط بمستند التوظيف هذا.",
+    "No signed artifact": "لا يوجد مستند موقع",
+    "No signed artifact is linked to this recruitment document.": "لا يوجد مستند موقع مرتبط بمستند التوظيف هذا.",
+    "No certificate": "لا توجد شهادة",
+    "No Odoo Sign certificate is linked to this recruitment document.": "لا توجد شهادة توقيع أودو مرتبطة بمستند التوظيف هذا."
+}
+
+def ui_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if not lang.startswith('ar'):
+        return text
+
+    if text in UI_TEXT_AR:
+        return UI_TEXT_AR[text]
+
+    for source, target in UI_TEXT_AR.items():
+        if '%s' not in source:
+            continue
+        prefix, suffix = source.split('%s', 1)
+        if text.startswith(prefix) and text.endswith(suffix):
+            value = text[len(prefix):len(text) - len(suffix)] if suffix else text[len(prefix):]
+            try:
+                return target % value
+            except Exception:
+                return target
+
+    return text
+
+
 for rec in records:
     if rec.x_pdf_attachment_id:
         action = {
@@ -725,8 +1221,8 @@ for rec in records:
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
-                'title': 'لا يوجد ملف تقييم منشأ',
-                'message': 'لا يوجد ملف تقييم مقابلة منشأ مرتبط بهذا السجل.',
+                'title': ui_text('No generated interview PDF'),
+                'message': ui_text('No generated interview evaluation PDF is linked to this record.'),
                 'type': 'warning',
                 'sticky': False,
             }
@@ -740,6 +1236,130 @@ for rec in records:
         <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_mcep_interview" />
         <field name="state">code</field>
         <field name="code"><![CDATA[
+UI_TEXT_AR = {
+    "Applicant missing": "المتقدم غير مرتبط",
+    "Link this interview to an applicant before generating the interview PDF.": "اربط تقييم المقابلة بمتقدم قبل توليد ملف PDF.",
+    "F-0002 already generated": "تم توليد F-0002 مسبقاً",
+    "F-0002 has already been generated for this interview. Create a new interview record if a corrected evaluation is required.": "تم توليد F-0002 لهذا التقييم مسبقاً. أنشئ سجل مقابلة جديداً إذا كان التصحيح مطلوباً.",
+    "F-0002 lifecycle already exists": "مسار F-0002 موجود مسبقاً",
+    "F-0002 already has a signature lifecycle or signed artifact in the recruitment document registry. Create a new interview record for corrections.": "يوجد بالفعل مسار توقيع أو مستند موقع لـ F-0002 في سجل مستندات التوظيف. أنشئ سجل مقابلة جديداً للتصحيح.",
+    "Interview lines missing": "بنود المقابلة غير موجودة",
+    "Interview lines are required before generating the interview PDF.": "بنود المقابلة مطلوبة قبل توليد ملف PDF.",
+    "Interview scores incomplete": "درجات المقابلة غير مكتملة",
+    "Complete all interview question scores before generating the interview PDF.": "أكمل جميع درجات أسئلة المقابلة قبل توليد ملف PDF.",
+    "Invalid score": "درجة غير صحيحة",
+    "Interview question score must be between 1 and 5.": "يجب أن تكون درجة سؤال المقابلة بين 1 و5.",
+    "Applicant name missing": "اسم المتقدم غير موجود",
+    "Set the applicant full name before generating the interview PDF.": "أدخل الاسم الكامل للمتقدم قبل توليد ملف PDF.",
+    "F-0002 PDF generated": "تم توليد ملف F-0002",
+    "Draft PDF generated: %s.": "تم توليد مسودة PDF: %s.",
+    "F-0002 Odoo Sign setup incomplete": "إعدادات توقيع أودو لـ F-0002 غير مكتملة",
+    "F-0002 already signed": "F-0002 موقّع مسبقاً",
+    "This interview evaluation is already signed. No duplicate Odoo Sign request was created.": "تقييم المقابلة هذا موقّع مسبقاً. لم يتم إنشاء طلب توقيع أودو مكرر.",
+    "This F-0002 registry document is already signed. No duplicate Odoo Sign request was created.": "سجل مستند F-0002 موقّع مسبقاً. لم يتم إنشاء طلب توقيع أودو مكرر.",
+    "F-0002 is not ready to send": "F-0002 غير جاهز للإرسال",
+    "Generate the interview PDF before sending through Odoo Sign.": "ولّد ملف تقييم المقابلة قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0002 interview PDF before sending it through Odoo Sign.": "ولّد ملف F-0002 قبل إرساله عبر توقيع أودو.",
+    "F-0002 PDF missing": "ملف F-0002 غير موجود",
+    "Interviewer contact missing": "جهة اتصال مجري المقابلة غير موجودة",
+    "The interviewer user has no linked contact/partner and cannot be used as an Odoo Sign signer.": "مستخدم مجري المقابلة لا يملك جهة اتصال/شريك مرتبطاً، ولا يمكن استخدامه كموقّع في أودو.",
+    "Interviewer email missing": "بريد مجري المقابلة غير موجود",
+    "The interviewer contact has no email address. Add an email before sending F-0002 through Odoo Sign.": "جهة اتصال مجري المقابلة لا تحتوي على بريد إلكتروني. أضف البريد قبل إرسال F-0002 عبر توقيع أودو.",
+    "Duplicate Sign request blocked": "تم منع طلب توقيع مكرر",
+    "Native Odoo Sign request created and sent to %s.": "تم إنشاء طلب توقيع أودو وإرساله إلى %s.",
+    "F-0002 sent through Odoo Sign": "تم إرسال F-0002 عبر توقيع أودو",
+    "No Sign request": "لا يوجد طلب توقيع",
+    "Missing Sign request": "طلب التوقيع غير موجود",
+    "F-0002 Sign request lookup failed": "تعذر العثور على طلب توقيع F-0002",
+    "The linked Odoo Sign request no longer exists or cannot be accessed.": "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.",
+    "No Sign registry row": "لا يوجد سجل توقيع",
+    "No native Odoo Sign recruitment document registry row was found for this F-0002 interview.": "لم يتم العثور على سجل مستند توظيف مرتبط بتوقيع أودو لهذه المقابلة F-0002.",
+    "No linked Sign request": "لا يوجد طلب توقيع مرتبط",
+    "The F-0002 recruitment document registry row has no linked Odoo Sign request ID.": "سجل مستند التوظيف F-0002 لا يحتوي على معرف طلب توقيع أودو مرتبط.",
+    "F-0002 not fully signed yet": "لم يكتمل توقيع F-0002 بعد",
+    "Odoo Sign request is still in state: %s. Ask the signer to complete signing, then sync again.": "لا يزال طلب توقيع أودو في الحالة: %s. اطلب من الموقّع إكمال التوقيع ثم زامن مرة أخرى.",
+    "Signed PDF not found": "لم يتم العثور على ملف PDF الموقع",
+    "Odoo Sign is signed/completed, but the signed business PDF was not found yet. Try Sync again after Odoo finishes processing.": "تم توقيع/إكمال طلب توقيع أودو، لكن ملف PDF التجاري الموقع لم يظهر بعد. جرّب المزامنة مرة أخرى بعد اكتمال معالجة أودو.",
+    "F-0002 signed": "تم توقيع F-0002",
+    "Signed F-0002 result synced. Signed artifact: %s.": "تمت مزامنة نتيجة F-0002 الموقعة. المستند الموقع: %s.",
+    "No generated interview PDF": "لا يوجد ملف تقييم منشأ",
+    "No generated interview evaluation PDF is linked to this record.": "لا يوجد ملف تقييم مقابلة منشأ مرتبط بهذا السجل.",
+    "No signed interview PDF": "لا يوجد ملف تقييم موقع",
+    "No signed interview evaluation PDF is linked to this record.": "لا يوجد ملف تقييم مقابلة موقع مرتبط بهذا السجل.",
+    "No Sign certificate": "لا توجد شهادة توقيع",
+    "No F-0002 Sign certificate is linked to this interview registry row yet.": "لا توجد شهادة توقيع F-0002 مرتبطة بسجل المقابلة حتى الآن.",
+    "F-0003 PDF generation blocked": "تم منع توليد ملف F-0003",
+    "This checklist has already entered the Odoo Sign lifecycle. Use Sync instead of regenerating the PDF.": "دخلت هذه القائمة بالفعل في مسار توقيع أودو. استخدم المزامنة بدلاً من إعادة توليد ملف PDF.",
+    "F-0003 is not ready for PDF": "F-0003 غير جاهز لتوليد PDF",
+    "F-0003 checklist must be Ready for PDF before generating the checklist PDF.": "يجب أن تكون قائمة F-0003 جاهزة لتوليد PDF قبل توليد ملف القائمة.",
+    "F-0003 checklist has no required lines": "قائمة F-0003 لا تحتوي على بنود مطلوبة",
+    "This F-0003 checklist has no required document lines.": "قائمة F-0003 لا تحتوي على بنود مستندات مطلوبة.",
+    "Cannot generate F-0003 PDF. All required document lines must be Accepted first.": "لا يمكن توليد ملف F-0003. يجب قبول جميع بنود المستندات المطلوبة أولاً.",
+    "F-0003 checklist is not linked to an applicant.": "قائمة F-0003 غير مرتبطة بمتقدم.",
+    "F-0003 PDF generated": "تم توليد ملف F-0003",
+    "Generated F-0003 PDF was linked to this checklist and posted on the applicant record.": "تم ربط ملف F-0003 المنشأ بهذه القائمة ونشره في سجل المتقدم.",
+    "F-0003 Odoo Sign setup incomplete": "إعدادات توقيع أودو لـ F-0003 غير مكتملة",
+    "F-0003 already signed": "F-0003 موقّع مسبقاً",
+    "This F-0003 checklist is already signed. No duplicate Odoo Sign request was created.": "قائمة F-0003 هذه موقّعة مسبقاً. لم يتم إنشاء طلب توقيع أودو مكرر.",
+    "F-0003 is not ready to sign": "F-0003 غير جاهز للتوقيع",
+    "F-0003 checklist must be Generated before it can be sent through Odoo Sign.": "يجب توليد قائمة F-0003 قبل إرسالها عبر توقيع أودو.",
+    "Generate the F-0003 PDF before sending through Odoo Sign.": "ولّد ملف F-0003 قبل إرساله عبر توقيع أودو.",
+    "Reviewer contact missing": "جهة اتصال المراجع غير موجودة",
+    "Reviewer user has no linked contact/partner and cannot be used as an Odoo Sign signer.": "مستخدم المراجع لا يملك جهة اتصال/شريك مرتبطاً، ولا يمكن استخدامه كموقّع في أودو.",
+    "Reviewer email missing": "بريد المراجع غير موجود",
+    "Reviewer contact has no email address. Add an email before sending F-0003 through Odoo Sign.": "جهة اتصال المراجع لا تحتوي على بريد إلكتروني. أضف البريد قبل إرسال F-0003 عبر توقيع أودو.",
+    "F-0003 was sent to Odoo Sign for reviewer signature.": "تم إرسال F-0003 عبر توقيع أودو لتوقيع المراجع.",
+    "F-0003 sent to Sign": "تم إرسال F-0003 للتوقيع",
+    "F-0003 Sign request lookup failed": "تعذر العثور على طلب توقيع F-0003",
+    "No F-0003 Sign registry row": "لا يوجد سجل توقيع F-0003",
+    "No native Odoo Sign recruitment document registry row was found for this F-0003 checklist.": "لم يتم العثور على سجل مستند توظيف مرتبط بتوقيع أودو لقائمة F-0003.",
+    "The F-0003 recruitment document registry row has no linked Odoo Sign request ID.": "سجل مستند التوظيف F-0003 لا يحتوي على معرف طلب توقيع أودو مرتبط.",
+    "F-0003 not fully signed yet": "لم يكتمل توقيع F-0003 بعد",
+    "The Sign request is signed/completed, but the completed signed PDF was not found yet. Try Sync again after Odoo finishes processing.": "تم توقيع/إكمال طلب التوقيع، لكن ملف PDF الموقع المكتمل لم يظهر بعد. جرّب المزامنة مرة أخرى بعد اكتمال معالجة أودو.",
+    "F-0003 signed": "تم توقيع F-0003",
+    "Signed F-0003 result synced. Signed artifact and certificate, where available, were linked to the recruitment registry.": "تمت مزامنة نتيجة F-0003 الموقعة. وتم ربط المستند الموقع والشهادة، عند توفرها، بسجل التوظيف.",
+    "No generated PDF": "لا يوجد ملف PDF منشأ",
+    "No generated F-0003 PDF is linked to this checklist.": "لا يوجد ملف F-0003 منشأ مرتبط بهذه القائمة.",
+    "No signed PDF": "لا يوجد ملف PDF موقع",
+    "No signed F-0003 PDF is linked to this checklist.": "لا يوجد ملف F-0003 موقع مرتبط بهذه القائمة.",
+    "No F-0003 Sign certificate is linked to this checklist registry row yet.": "لا توجد شهادة توقيع F-0003 مرتبطة بسجل القائمة حتى الآن.",
+    "No generated artifact": "لا يوجد مستند منشأ",
+    "No generated artifact is linked to this recruitment document.": "لا يوجد مستند منشأ مرتبط بمستند التوظيف هذا.",
+    "No signed artifact": "لا يوجد مستند موقع",
+    "No signed artifact is linked to this recruitment document.": "لا يوجد مستند موقع مرتبط بمستند التوظيف هذا.",
+    "No certificate": "لا توجد شهادة",
+    "No Odoo Sign certificate is linked to this recruitment document.": "لا توجد شهادة توقيع أودو مرتبطة بمستند التوظيف هذا."
+}
+
+def ui_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if not lang.startswith('ar'):
+        return text
+
+    if text in UI_TEXT_AR:
+        return UI_TEXT_AR[text]
+
+    for source, target in UI_TEXT_AR.items():
+        if '%s' not in source:
+            continue
+        prefix, suffix = source.split('%s', 1)
+        if text.startswith(prefix) and text.endswith(suffix):
+            value = text[len(prefix):len(text) - len(suffix)] if suffix else text[len(prefix):]
+            try:
+                return target % value
+            except Exception:
+                return target
+
+    return text
+
+
 for rec in records:
     if rec.x_signed_attachment_id:
         action = {
@@ -752,8 +1372,8 @@ for rec in records:
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
-                'title': 'لا يوجد ملف تقييم موقع',
-                'message': 'لا يوجد ملف تقييم مقابلة موقع مرتبط بهذا السجل.',
+                'title': ui_text('No signed interview PDF'),
+                'message': ui_text('No signed interview evaluation PDF is linked to this record.'),
                 'type': 'warning',
                 'sticky': False,
             }
@@ -770,6 +1390,130 @@ for rec in records:
         <field name="code"><![CDATA[
 registry_model = env['x_hr.recruitment_document'].sudo()
 action = False
+
+UI_TEXT_AR = {
+    "Applicant missing": "المتقدم غير مرتبط",
+    "Link this interview to an applicant before generating the interview PDF.": "اربط تقييم المقابلة بمتقدم قبل توليد ملف PDF.",
+    "F-0002 already generated": "تم توليد F-0002 مسبقاً",
+    "F-0002 has already been generated for this interview. Create a new interview record if a corrected evaluation is required.": "تم توليد F-0002 لهذا التقييم مسبقاً. أنشئ سجل مقابلة جديداً إذا كان التصحيح مطلوباً.",
+    "F-0002 lifecycle already exists": "مسار F-0002 موجود مسبقاً",
+    "F-0002 already has a signature lifecycle or signed artifact in the recruitment document registry. Create a new interview record for corrections.": "يوجد بالفعل مسار توقيع أو مستند موقع لـ F-0002 في سجل مستندات التوظيف. أنشئ سجل مقابلة جديداً للتصحيح.",
+    "Interview lines missing": "بنود المقابلة غير موجودة",
+    "Interview lines are required before generating the interview PDF.": "بنود المقابلة مطلوبة قبل توليد ملف PDF.",
+    "Interview scores incomplete": "درجات المقابلة غير مكتملة",
+    "Complete all interview question scores before generating the interview PDF.": "أكمل جميع درجات أسئلة المقابلة قبل توليد ملف PDF.",
+    "Invalid score": "درجة غير صحيحة",
+    "Interview question score must be between 1 and 5.": "يجب أن تكون درجة سؤال المقابلة بين 1 و5.",
+    "Applicant name missing": "اسم المتقدم غير موجود",
+    "Set the applicant full name before generating the interview PDF.": "أدخل الاسم الكامل للمتقدم قبل توليد ملف PDF.",
+    "F-0002 PDF generated": "تم توليد ملف F-0002",
+    "Draft PDF generated: %s.": "تم توليد مسودة PDF: %s.",
+    "F-0002 Odoo Sign setup incomplete": "إعدادات توقيع أودو لـ F-0002 غير مكتملة",
+    "F-0002 already signed": "F-0002 موقّع مسبقاً",
+    "This interview evaluation is already signed. No duplicate Odoo Sign request was created.": "تقييم المقابلة هذا موقّع مسبقاً. لم يتم إنشاء طلب توقيع أودو مكرر.",
+    "This F-0002 registry document is already signed. No duplicate Odoo Sign request was created.": "سجل مستند F-0002 موقّع مسبقاً. لم يتم إنشاء طلب توقيع أودو مكرر.",
+    "F-0002 is not ready to send": "F-0002 غير جاهز للإرسال",
+    "Generate the interview PDF before sending through Odoo Sign.": "ولّد ملف تقييم المقابلة قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0002 interview PDF before sending it through Odoo Sign.": "ولّد ملف F-0002 قبل إرساله عبر توقيع أودو.",
+    "F-0002 PDF missing": "ملف F-0002 غير موجود",
+    "Interviewer contact missing": "جهة اتصال مجري المقابلة غير موجودة",
+    "The interviewer user has no linked contact/partner and cannot be used as an Odoo Sign signer.": "مستخدم مجري المقابلة لا يملك جهة اتصال/شريك مرتبطاً، ولا يمكن استخدامه كموقّع في أودو.",
+    "Interviewer email missing": "بريد مجري المقابلة غير موجود",
+    "The interviewer contact has no email address. Add an email before sending F-0002 through Odoo Sign.": "جهة اتصال مجري المقابلة لا تحتوي على بريد إلكتروني. أضف البريد قبل إرسال F-0002 عبر توقيع أودو.",
+    "Duplicate Sign request blocked": "تم منع طلب توقيع مكرر",
+    "Native Odoo Sign request created and sent to %s.": "تم إنشاء طلب توقيع أودو وإرساله إلى %s.",
+    "F-0002 sent through Odoo Sign": "تم إرسال F-0002 عبر توقيع أودو",
+    "No Sign request": "لا يوجد طلب توقيع",
+    "Missing Sign request": "طلب التوقيع غير موجود",
+    "F-0002 Sign request lookup failed": "تعذر العثور على طلب توقيع F-0002",
+    "The linked Odoo Sign request no longer exists or cannot be accessed.": "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.",
+    "No Sign registry row": "لا يوجد سجل توقيع",
+    "No native Odoo Sign recruitment document registry row was found for this F-0002 interview.": "لم يتم العثور على سجل مستند توظيف مرتبط بتوقيع أودو لهذه المقابلة F-0002.",
+    "No linked Sign request": "لا يوجد طلب توقيع مرتبط",
+    "The F-0002 recruitment document registry row has no linked Odoo Sign request ID.": "سجل مستند التوظيف F-0002 لا يحتوي على معرف طلب توقيع أودو مرتبط.",
+    "F-0002 not fully signed yet": "لم يكتمل توقيع F-0002 بعد",
+    "Odoo Sign request is still in state: %s. Ask the signer to complete signing, then sync again.": "لا يزال طلب توقيع أودو في الحالة: %s. اطلب من الموقّع إكمال التوقيع ثم زامن مرة أخرى.",
+    "Signed PDF not found": "لم يتم العثور على ملف PDF الموقع",
+    "Odoo Sign is signed/completed, but the signed business PDF was not found yet. Try Sync again after Odoo finishes processing.": "تم توقيع/إكمال طلب توقيع أودو، لكن ملف PDF التجاري الموقع لم يظهر بعد. جرّب المزامنة مرة أخرى بعد اكتمال معالجة أودو.",
+    "F-0002 signed": "تم توقيع F-0002",
+    "Signed F-0002 result synced. Signed artifact: %s.": "تمت مزامنة نتيجة F-0002 الموقعة. المستند الموقع: %s.",
+    "No generated interview PDF": "لا يوجد ملف تقييم منشأ",
+    "No generated interview evaluation PDF is linked to this record.": "لا يوجد ملف تقييم مقابلة منشأ مرتبط بهذا السجل.",
+    "No signed interview PDF": "لا يوجد ملف تقييم موقع",
+    "No signed interview evaluation PDF is linked to this record.": "لا يوجد ملف تقييم مقابلة موقع مرتبط بهذا السجل.",
+    "No Sign certificate": "لا توجد شهادة توقيع",
+    "No F-0002 Sign certificate is linked to this interview registry row yet.": "لا توجد شهادة توقيع F-0002 مرتبطة بسجل المقابلة حتى الآن.",
+    "F-0003 PDF generation blocked": "تم منع توليد ملف F-0003",
+    "This checklist has already entered the Odoo Sign lifecycle. Use Sync instead of regenerating the PDF.": "دخلت هذه القائمة بالفعل في مسار توقيع أودو. استخدم المزامنة بدلاً من إعادة توليد ملف PDF.",
+    "F-0003 is not ready for PDF": "F-0003 غير جاهز لتوليد PDF",
+    "F-0003 checklist must be Ready for PDF before generating the checklist PDF.": "يجب أن تكون قائمة F-0003 جاهزة لتوليد PDF قبل توليد ملف القائمة.",
+    "F-0003 checklist has no required lines": "قائمة F-0003 لا تحتوي على بنود مطلوبة",
+    "This F-0003 checklist has no required document lines.": "قائمة F-0003 لا تحتوي على بنود مستندات مطلوبة.",
+    "Cannot generate F-0003 PDF. All required document lines must be Accepted first.": "لا يمكن توليد ملف F-0003. يجب قبول جميع بنود المستندات المطلوبة أولاً.",
+    "F-0003 checklist is not linked to an applicant.": "قائمة F-0003 غير مرتبطة بمتقدم.",
+    "F-0003 PDF generated": "تم توليد ملف F-0003",
+    "Generated F-0003 PDF was linked to this checklist and posted on the applicant record.": "تم ربط ملف F-0003 المنشأ بهذه القائمة ونشره في سجل المتقدم.",
+    "F-0003 Odoo Sign setup incomplete": "إعدادات توقيع أودو لـ F-0003 غير مكتملة",
+    "F-0003 already signed": "F-0003 موقّع مسبقاً",
+    "This F-0003 checklist is already signed. No duplicate Odoo Sign request was created.": "قائمة F-0003 هذه موقّعة مسبقاً. لم يتم إنشاء طلب توقيع أودو مكرر.",
+    "F-0003 is not ready to sign": "F-0003 غير جاهز للتوقيع",
+    "F-0003 checklist must be Generated before it can be sent through Odoo Sign.": "يجب توليد قائمة F-0003 قبل إرسالها عبر توقيع أودو.",
+    "Generate the F-0003 PDF before sending through Odoo Sign.": "ولّد ملف F-0003 قبل إرساله عبر توقيع أودو.",
+    "Reviewer contact missing": "جهة اتصال المراجع غير موجودة",
+    "Reviewer user has no linked contact/partner and cannot be used as an Odoo Sign signer.": "مستخدم المراجع لا يملك جهة اتصال/شريك مرتبطاً، ولا يمكن استخدامه كموقّع في أودو.",
+    "Reviewer email missing": "بريد المراجع غير موجود",
+    "Reviewer contact has no email address. Add an email before sending F-0003 through Odoo Sign.": "جهة اتصال المراجع لا تحتوي على بريد إلكتروني. أضف البريد قبل إرسال F-0003 عبر توقيع أودو.",
+    "F-0003 was sent to Odoo Sign for reviewer signature.": "تم إرسال F-0003 عبر توقيع أودو لتوقيع المراجع.",
+    "F-0003 sent to Sign": "تم إرسال F-0003 للتوقيع",
+    "F-0003 Sign request lookup failed": "تعذر العثور على طلب توقيع F-0003",
+    "No F-0003 Sign registry row": "لا يوجد سجل توقيع F-0003",
+    "No native Odoo Sign recruitment document registry row was found for this F-0003 checklist.": "لم يتم العثور على سجل مستند توظيف مرتبط بتوقيع أودو لقائمة F-0003.",
+    "The F-0003 recruitment document registry row has no linked Odoo Sign request ID.": "سجل مستند التوظيف F-0003 لا يحتوي على معرف طلب توقيع أودو مرتبط.",
+    "F-0003 not fully signed yet": "لم يكتمل توقيع F-0003 بعد",
+    "The Sign request is signed/completed, but the completed signed PDF was not found yet. Try Sync again after Odoo finishes processing.": "تم توقيع/إكمال طلب التوقيع، لكن ملف PDF الموقع المكتمل لم يظهر بعد. جرّب المزامنة مرة أخرى بعد اكتمال معالجة أودو.",
+    "F-0003 signed": "تم توقيع F-0003",
+    "Signed F-0003 result synced. Signed artifact and certificate, where available, were linked to the recruitment registry.": "تمت مزامنة نتيجة F-0003 الموقعة. وتم ربط المستند الموقع والشهادة، عند توفرها، بسجل التوظيف.",
+    "No generated PDF": "لا يوجد ملف PDF منشأ",
+    "No generated F-0003 PDF is linked to this checklist.": "لا يوجد ملف F-0003 منشأ مرتبط بهذه القائمة.",
+    "No signed PDF": "لا يوجد ملف PDF موقع",
+    "No signed F-0003 PDF is linked to this checklist.": "لا يوجد ملف F-0003 موقع مرتبط بهذه القائمة.",
+    "No F-0003 Sign certificate is linked to this checklist registry row yet.": "لا توجد شهادة توقيع F-0003 مرتبطة بسجل القائمة حتى الآن.",
+    "No generated artifact": "لا يوجد مستند منشأ",
+    "No generated artifact is linked to this recruitment document.": "لا يوجد مستند منشأ مرتبط بمستند التوظيف هذا.",
+    "No signed artifact": "لا يوجد مستند موقع",
+    "No signed artifact is linked to this recruitment document.": "لا يوجد مستند موقع مرتبط بمستند التوظيف هذا.",
+    "No certificate": "لا توجد شهادة",
+    "No Odoo Sign certificate is linked to this recruitment document.": "لا توجد شهادة توقيع أودو مرتبطة بمستند التوظيف هذا."
+}
+
+def ui_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if not lang.startswith('ar'):
+        return text
+
+    if text in UI_TEXT_AR:
+        return UI_TEXT_AR[text]
+
+    for source, target in UI_TEXT_AR.items():
+        if '%s' not in source:
+            continue
+        prefix, suffix = source.split('%s', 1)
+        if text.startswith(prefix) and text.endswith(suffix):
+            value = text[len(prefix):len(text) - len(suffix)] if suffix else text[len(prefix):]
+            try:
+                return target % value
+            except Exception:
+                return target
+
+    return text
+
 
 for rec in records.sudo():
     registry_doc = registry_model.search([
@@ -791,8 +1535,8 @@ for rec in records.sudo():
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
-                'title': 'No Sign certificate',
-                'message': 'No F-0002 Sign certificate is linked to this interview registry row yet.',
+                'title': ui_text('No Sign certificate'),
+                'message': ui_text('No F-0002 Sign certificate is linked to this interview registry row yet.'),
                 'type': 'warning',
                 'sticky': False,
             }
