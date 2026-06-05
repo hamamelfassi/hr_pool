@@ -17,6 +17,113 @@
 submission_model = env['x_hr.applicant_required_document_submission'].sudo()
 action = False
 
+UI_TEXT_AR = {
+    "F-0003 checklist has no required lines": "قائمة F-0003 لا تحتوي على بنود مطلوبة",
+    "This F-0003 checklist has no required document lines.": "قائمة F-0003 هذه لا تحتوي على بنود مستندات مطلوبة.",
+    "F-0003 readiness refreshed": "تم تحديث جاهزية F-0003",
+    "Checklist evidence statuses were refreshed, but lifecycle state was preserved as %s because the PDF/Sign lifecycle has already started. Use Sync for signed Odoo Sign results.": "تم تحديث حالات أدلة القائمة، لكن تم الحفاظ على حالة دورة المستند كما هي: %s لأن مسار PDF/التوقيع قد بدأ بالفعل. استخدم المزامنة لنتائج توقيع أودو الموقعة.",
+    "Checklist evidence statuses were refreshed. Lifecycle state was preserved as %s.": "تم تحديث حالات أدلة القائمة. وتم الحفاظ على حالة دورة المستند كما هي: %s.",
+    "F-0003 still in review": "لا تزال F-0003 قيد المراجعة",
+    "%s required document line(s) still need accepted evidence before PDF generation.": "لا يزال هناك %s بند مستند مطلوب يحتاج إلى دليل مقبول قبل توليد ملف PDF.",
+    "F-0003 ready for PDF": "F-0003 جاهزة لتوليد PDF",
+    "All required document lines have accepted evidence. The checklist is ready for PDF generation.": "جميع بنود المستندات المطلوبة لديها أدلة مقبولة. القائمة جاهزة لتوليد ملف PDF.",
+    "F-0003 checklist missing": "قائمة F-0003 غير موجودة",
+    "Prepare an active F-0003 required document checklist before preparing a submission request.": "أعد قائمة مستندات F-0003 نشطة قبل إعداد طلب تقديم المستندات.",
+    "Request snapshot locked": "لقطة الطلب مقفلة",
+    "Candidate snapshot can only be refreshed while the request is Draft or Prepared.": "لا يمكن تحديث لقطة المرشح إلا عندما يكون الطلب في حالة مسودة أو معد.",
+    "Applicant missing": "المتقدم غير مرتبط",
+    "Cannot refresh candidate snapshot because the request is not linked to an applicant.": "لا يمكن تحديث لقطة المرشح لأن الطلب غير مرتبط بمتقدم.",
+    "Request locked": "الطلب مقفل",
+    "Request lines can only be regenerated while the request is Draft or Prepared.": "لا يمكن إعادة توليد بنود الطلب إلا عندما يكون الطلب في حالة مسودة أو معد.",
+    "Cannot generate request lines because the request is not linked to an applicant.": "لا يمكن توليد بنود الطلب لأن الطلب غير مرتبط بمتقدم.",
+    "Checklist missing": "القائمة غير مرتبطة",
+    "Cannot generate request lines because the request is not linked to an F-0003 checklist.": "لا يمكن توليد بنود الطلب لأن الطلب غير مرتبط بقائمة F-0003.",
+    "No requestable document lines": "لا توجد بنود مستندات قابلة للطلب",
+    "No missing, rejected, or resubmission-requested public document lines were found for this checklist.": "لم يتم العثور على بنود مستندات عامة مفقودة أو مرفوضة أو مطلوبة لإعادة التقديم في هذه القائمة.",
+    "Continuation URLs can only be regenerated while the request is Draft or Prepared.": "لا يمكن إعادة توليد روابط الاستكمال إلا عندما يكون الطلب في حالة مسودة أو معد.",
+    "Request linkage missing": "روابط الطلب غير مكتملة",
+    "Cannot generate the Fillout URL because applicant or checklist linkage is missing.": "لا يمكن توليد رابط Fillout لأن ربط المتقدم أو القائمة غير مكتمل.",
+    "Request lines missing": "بنود الطلب غير موجودة",
+    "Generate request lines before generating the continuation URL.": "ولّد بنود الطلب قبل توليد رابط الاستكمال.",
+    "URL missing": "الرابط غير موجود",
+    "Generate the continuation URL before opening it.": "ولّد رابط الاستكمال قبل فتحه.",
+    "Request already locked": "الطلب مقفل مسبقاً",
+    "Only Draft or Prepared requests can be sent.": "لا يمكن إرسال إلا الطلبات في حالة مسودة أو معد.",
+    "Generate request lines before sending this request.": "ولّد بنود الطلب قبل إرسال هذا الطلب.",
+    "Continuation URL missing": "رابط الاستكمال غير موجود",
+    "Generate the continuation URL before sending this request.": "ولّد رابط الاستكمال قبل إرسال هذا الطلب.",
+    "Candidate email missing": "بريد المرشح غير موجود",
+    "Refresh the candidate snapshot or add an applicant email before sending.": "حدّث لقطة المرشح أو أضف بريد المتقدم قبل الإرسال.",
+    "Only Draft or Prepared requests can be marked as manually sent.": "لا يمكن تعليم الطلب كمرسل يدوياً إلا عندما يكون في حالة مسودة أو معد.",
+    "Generate request lines before marking this request as sent.": "ولّد بنود الطلب قبل تعليم هذا الطلب كمرسل.",
+    "Generate the continuation URL before marking this request as sent.": "ولّد رابط الاستكمال قبل تعليم هذا الطلب كمرسل.",
+    "No active request lines": "لا توجد بنود طلب نشطة",
+    "The latest request is locked. Prepare a new request only after the current request is completed or cancelled.": "الطلب الأخير مقفل. أعد طلباً جديداً فقط بعد اكتمال الطلب الحالي أو إلغائه.",
+    "Cannot prepare a submission request because this checklist is not linked to an applicant.": "لا يمكن إعداد طلب تقديم لأن هذه القائمة غير مرتبطة بمتقدم.",
+    "Checklist locked": "القائمة مقفلة",
+    "Submission requests can only be prepared while the F-0003 checklist is still operational and not cancelled/signed.": "لا يمكن إعداد طلبات التقديم إلا عندما تكون قائمة F-0003 ما زالت تشغيلية وغير ملغاة/موقعة.",
+    "The latest request is locked. Create a new checklist request after the current request is closed or cancelled.": "الطلب الأخير مقفل. أنشئ طلب قائمة جديداً بعد إغلاق الطلب الحالي أو إلغائه.",
+    "Checklist line missing": "بند القائمة غير مرتبط",
+    "Submitted attachment missing": "المرفق المقدم غير موجود",
+    "Bank information incomplete": "بيانات المصرف غير مكتملة",
+    "Reviewer note required": "ملاحظة المراجع مطلوبة",
+    "No submitted evidence": "لا يوجد دليل مقدم",
+    "No accepted evidence": "لا يوجد دليل مقبول",
+    "No submission found": "لم يتم العثور على تقديم",
+    "Cannot create submission": "لا يمكن إنشاء التقديم",
+    "Manual submission blocked": "تم منع التقديم اليدوي",
+    "Cannot accept this submission because it is not linked to an applicant.": "لا يمكن قبول هذا التقديم لأنه غير مرتبط بمتقدم.",
+    "Cannot accept this submission because it is not linked to a required document checklist.": "لا يمكن قبول هذا التقديم لأنه غير مرتبط بقائمة مستندات مطلوبة.",
+    "Cannot accept this submission because it is not linked to a required document checklist line.": "لا يمكن قبول هذا التقديم لأنه غير مرتبط ببند في قائمة المستندات المطلوبة.",
+    "Cannot accept this submission because this checklist line requires an attachment.": "لا يمكن قبول هذا التقديم لأن بند القائمة يتطلب مرفقاً.",
+    "Please complete required bank information before accepting: %s.": "يرجى إكمال بيانات المصرف المطلوبة قبل القبول: %s.",
+    "Cannot reject this submission because it is not linked to an applicant.": "لا يمكن رفض هذا التقديم لأنه غير مرتبط بمتقدم.",
+    "Cannot reject this submission because it is not linked to a required document checklist.": "لا يمكن رفض هذا التقديم لأنه غير مرتبط بقائمة مستندات مطلوبة.",
+    "Cannot reject this submission because it is not linked to a required document checklist line.": "لا يمكن رفض هذا التقديم لأنه غير مرتبط ببند في قائمة المستندات المطلوبة.",
+    "Please enter a reviewer note / rejection reason before rejecting this submission.": "يرجى إدخال ملاحظة المراجع / سبب الرفض قبل رفض هذا التقديم.",
+    "No submitted attachment is linked to this required document submission.": "لا يوجد مرفق مقدم مرتبط بهذا التقديم.",
+    "No accepted evidence attachment is linked to this required document checklist line.": "لا يوجد مرفق دليل مقبول مرتبط ببند قائمة المستندات المطلوبة.",
+    "No submitted evidence is linked to this checklist line yet.": "لا يوجد دليل مقدم مرتبط بهذا البند حتى الآن.",
+    "This checklist line is missing applicant, checklist, or document type linkage.": "هذا البند يفتقد ربط المتقدم أو القائمة أو نوع المستند.",
+    "A manual submission cannot be created while this checklist line is Submitted, Accepted, or waiting for resubmission. Open the latest submission instead.": "لا يمكن إنشاء تقديم يدوي عندما يكون هذا البند مقدماً أو مقبولاً أو بانتظار إعادة التقديم. افتح آخر تقديم بدلاً من ذلك.",
+    "There is already an active submitted evidence record for this checklist line. Open the latest submission instead.": "يوجد بالفعل سجل دليل مقدم نشط لهذا البند. افتح آخر تقديم بدلاً من ذلك.",
+    "No request lines": "لا توجد بنود طلب",
+    "Request lines synced": "تمت مزامنة بنود الطلب",
+    "No submissions found": "لم يتم العثور على تقديمات",
+    "This request has no request lines to sync.": "هذا الطلب لا يحتوي على بنود لمزامنتها.",
+    "Synced %s request line(s) from existing submissions.": "تمت مزامنة %s بند طلب من التقديمات الموجودة.",
+    "No matching submitted, accepted, or rejected evidence records were found for active request lines.": "لم يتم العثور على سجلات أدلة مطابقة بحالة مقدم أو مقبول أو مرفوض لبنود الطلب النشطة."
+}
+
+def ui_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if not lang.startswith('ar'):
+        return text
+
+    if text in UI_TEXT_AR:
+        return UI_TEXT_AR[text]
+
+    for source, target in UI_TEXT_AR.items():
+        if '%s' not in source:
+            continue
+        prefix, suffix = source.split('%s', 1)
+        if text.startswith(prefix) and text.endswith(suffix):
+            value = text[len(prefix):len(text) - len(suffix)] if suffix else text[len(prefix):]
+            try:
+                return target % value
+            except Exception:
+                return target
+
+    return text
+
+
 
 def reload_request(request):
     view = env.ref('hr_recruitment_custom.view_required_document_submission_request_form_controlled', raise_if_not_found=False)
@@ -38,8 +145,8 @@ for request in records.sudo():
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
-                'title': 'No request lines',
-                'message': 'This request has no request lines to sync.',
+                'title': ui_text('No request lines'),
+                'message': ui_text('This request has no request lines to sync.'),
                 'type': 'warning',
                 'sticky': False,
             }
@@ -128,8 +235,8 @@ for request in records.sudo():
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
-                'title': 'Request lines synced',
-                'message': 'Synced %s request line(s) from existing submissions.' % synced_count,
+                'title': ui_text('Request lines synced'),
+                'message': ui_text('Synced %s request line(s) from existing submissions.') % synced_count,
                 'type': 'success',
                 'sticky': False,
             }
@@ -139,8 +246,8 @@ for request in records.sudo():
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
-                'title': 'No submissions found',
-                'message': 'No matching submitted, accepted, or rejected evidence records were found for active request lines.',
+                'title': ui_text('No submissions found'),
+                'message': ui_text('No matching submitted, accepted, or rejected evidence records were found for active request lines.'),
                 'type': 'warning',
                 'sticky': False,
             }
