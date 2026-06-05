@@ -702,7 +702,7 @@ msgstr "الحالة"
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
 msgid "Checklist-level notes for HR/recruitment review."
-msgstr ""
+msgstr "ملاحظات على مستوى القائمة لمراجعة الموارد البشرية/التوظيف."
 
 #. module: hr_recruitment_custom
 #: model:base.automation,name:hr_recruitment_custom.automation_required_document_submission_cleanup_on_create
@@ -870,8 +870,10 @@ msgstr ""
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_declaration_x_declaration_code
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
 msgid "Declaration Code"
-msgstr ""
+msgstr "رمز الإقرار"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_declaration_x_name
@@ -1007,8 +1009,9 @@ msgstr ""
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_form
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_recruitment_document_form
 msgid "Document lifecycle notes..."
-msgstr ""
+msgstr "ملاحظات دورة المستند..."
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
@@ -2131,7 +2134,7 @@ msgstr "مكان الإصدار / البلدية"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_form_controlled
 msgid "Issuing authority as written on the submitted document."
-msgstr ""
+msgstr "جهة الإصدار كما وردت في المستند المقدم."
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_job_id
@@ -2635,7 +2638,7 @@ msgstr "مكان الإصدار"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_form_controlled
 msgid "Place of issue as written on the submitted document."
-msgstr ""
+msgstr "مكان الإصدار كما ورد في المستند المقدم."
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.report_mcep_policies_compliance_declaration_document
@@ -3261,7 +3264,7 @@ msgstr "ملاحظة المراجع أو سبب الرفض. مطلوبة قبل 
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_checklist_form_controlled
 msgid "Reviewer notes, rejection reason, or structured capture notes."
-msgstr ""
+msgstr "ملاحظات المراجع، أو سبب الرفض، أو ملاحظات التقاط البيانات المنظمة."
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
@@ -7117,3 +7120,14 @@ msgstr "ملاحظات إغلاق الترحيل"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Linked Employment Contracts"
 msgstr "العقود المرتبطة"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Required when creating the board decision"
+msgstr "مطلوب عند إنشاء قرار التعيين"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
+msgid "Reviewer"
+msgstr "المراجع"
