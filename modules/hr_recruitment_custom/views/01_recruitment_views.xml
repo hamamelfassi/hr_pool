@@ -735,37 +735,36 @@
                 </page>
 
                 <page string="Responsibilities">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <div>
-                            <field name="x_tor_state"
-                                string="Status"
-                                widget="statusbar"
-                                options="{'clickable': false}"
-                                statusbar_visible="draft,generated,sent,signed,superseded"
-                                readonly="1" />
-                        </div>
-                        <div class="d-flex gap-2">
-                            <button type="action"
-                                name="hr_recruitment_custom.action_hr_applicant_normalize_tor_header_on_change"
-                                string="Update"
-                                class="btn-secondary"
-                                invisible="not id or x_tor_state not in ['draft', False] or not x_contract_proposal_gate_passed" />
-                            <button type="action"
-                                name="hr_recruitment_custom.action_hr_applicant_generate_tor_pdf"
-                                string="Generate PDF"
-                                class="btn-primary"
-                                invisible="not id or x_tor_state in ['sent', 'signed', 'superseded'] or not x_contract_proposal_gate_passed" />
-                            <button type="action"
-                                name="hr_recruitment_custom.action_hr_applicant_send_tor_for_signature"
-                                string="Sign"
-                                class="btn-secondary"
-                                invisible="not id or not x_tor_pdf_attachment_id or x_tor_state != 'generated' or not x_contract_proposal_gate_passed" />
-                            <button type="action"
-                                name="hr_recruitment_custom.action_hr_applicant_sync_tor_native_sign_completion"
-                                string="Sync"
-                                class="btn-secondary"
-                                invisible="not id or x_tor_state not in ['sent', 'signed'] or not x_contract_proposal_gate_passed" />
-                        </div>
+                    <div class="d-flex justify-content-end align-items-center mb-2">
+                        <field name="x_tor_state"
+                            string="Status"
+                            widget="statusbar"
+                            options="{'clickable': false}"
+                            statusbar_visible="draft,generated,sent,signed,superseded"
+                            readonly="1" />
+                    </div>
+
+                    <div class="d-flex justify-content-start gap-2 flex-wrap mb-2">
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_normalize_tor_header_on_change"
+                            string="Update"
+                            class="btn-secondary"
+                            invisible="not id or x_tor_state not in ['draft', False] or not x_contract_proposal_gate_passed" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_generate_tor_pdf"
+                            string="Generate PDF"
+                            class="btn-primary"
+                            invisible="not id or x_tor_state in ['sent', 'signed', 'superseded'] or not x_contract_proposal_gate_passed" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_send_tor_for_signature"
+                            string="Sign"
+                            class="btn-secondary"
+                            invisible="not id or not x_tor_pdf_attachment_id or x_tor_state != 'generated' or not x_contract_proposal_gate_passed" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_sync_tor_native_sign_completion"
+                            string="Sync"
+                            class="btn-secondary"
+                            invisible="not id or x_tor_state not in ['sent', 'signed'] or not x_contract_proposal_gate_passed" />
                     </div>
 
                     <div class="alert alert-info" role="alert">
@@ -820,8 +819,8 @@
                     </group>
 
                     <separator string="Responsibilities Lines" />
-                    <field name="x_role_and_duty_line_ids" context="{'default_x_applicant_id': id}">
-                        <list editable="bottom">
+                    <field name="x_role_and_duty_line_ids" context="{'default_x_applicant_id': id}" class="w-100">
+                        <list editable="bottom" class="w-100">
                             <field name="x_sequence" widget="handle" string="#" />
                             <field name="x_functional_area_id" string="Functional Area" />
                             <field name="x_function_id"
@@ -847,37 +846,36 @@
                 </page>
 
                 <page string="Decision">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <div>
-                            <field name="x_board_decision_document_state"
-                                string="Document Status"
-                                widget="statusbar"
-                                options="{'clickable': false}"
-                                statusbar_visible="none,generated,sent,signed,stamped"
-                                readonly="1" />
-                        </div>
-                        <div class="d-flex gap-2">
-                            <button type="action"
-                                name="hr_recruitment_custom.action_hr_applicant_evaluation_to_contract_proposal"
-                                string="Prepare Contract"
-                                class="btn-primary"
-                                invisible="not id or x_contract_proposal_gate_passed" />
-                            <button type="action"
-                                name="hr_recruitment_custom.action_hr_applicant_create_board_decision"
-                                string="Create Board Decision"
-                                class="btn-primary"
-                                invisible="not id or x_board_decision_instance_id or not x_contract_proposal_gate_passed" />
-                            <button type="action"
-                                name="hr_recruitment_custom.action_hr_applicant_update_board_decision"
-                                string="Update Decision"
-                                class="btn-secondary"
-                                invisible="not id or not x_board_decision_instance_id or x_board_decision_state in ['locked', 'cancelled']" />
-                            <button type="action"
-                                name="hr_recruitment_custom.action_hr_applicant_open_board_decision"
-                                string="Open Decision"
-                                class="btn-secondary"
-                                invisible="not id or not x_board_decision_instance_id" />
-                        </div>
+                    <div class="d-flex justify-content-end align-items-center mb-2">
+                        <field name="x_board_decision_document_state"
+                            string="Document Status"
+                            widget="statusbar"
+                            options="{'clickable': false}"
+                            statusbar_visible="none,generated,sent,signed,stamped"
+                            readonly="1" />
+                    </div>
+
+                    <div class="d-flex justify-content-start gap-2 flex-wrap mb-2">
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_evaluation_to_contract_proposal"
+                            string="Prepare Contract"
+                            class="btn-primary"
+                            invisible="not id or x_contract_proposal_gate_passed" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_create_board_decision"
+                            string="Create Board Decision"
+                            class="btn-primary"
+                            invisible="not id or x_board_decision_instance_id or not x_contract_proposal_gate_passed" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_update_board_decision"
+                            string="Update Decision"
+                            class="btn-secondary"
+                            invisible="not id or not x_board_decision_instance_id or x_board_decision_state in ['locked', 'cancelled']" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_open_board_decision"
+                            string="Open Decision"
+                            class="btn-secondary"
+                            invisible="not id or not x_board_decision_instance_id" />
                     </div>
 
                     <div class="alert alert-info" role="alert">
@@ -952,31 +950,31 @@
                         </group>
                     </group>
 
-                    <group string="Linked Board Decisions">
-                        <field name="x_board_decision_instance_ids"
-                            string=" "
-                            context="{'default_x_hr_applicant_id': id}"
-                            readonly="1"
-                            nolabel="1">
-                            <list create="false" delete="false"
+                    <separator string="Linked Board Decisions" />
+                    <field name="x_board_decision_instance_ids"
+                        string=" "
+                        context="{'default_x_hr_applicant_id': id}"
+                        readonly="1"
+                        nolabel="1"
+                        class="w-100">
+                        <list create="false" delete="false" class="w-100"
+                            decoration-muted="x_state == 'draft'"
+                            decoration-info="x_state == 'prepared'"
+                            decoration-success="x_state == 'locked'"
+                            decoration-danger="x_state == 'cancelled'">
+                            <field name="x_name" string="Decision Name" />
+                            <field name="x_decision_number" string="Decision Number" />
+                            <field name="x_state" string="Decision Status" widget="badge"
                                 decoration-muted="x_state == 'draft'"
                                 decoration-info="x_state == 'prepared'"
                                 decoration-success="x_state == 'locked'"
-                                decoration-danger="x_state == 'cancelled'">
-                                <field name="x_name" string="Decision Name" />
-                                <field name="x_decision_number" string="Decision Number" />
-                                <field name="x_state" string="Decision Status" widget="badge"
-                                    decoration-muted="x_state == 'draft'"
-                                    decoration-info="x_state == 'prepared'"
-                                    decoration-success="x_state == 'locked'"
-                                    decoration-danger="x_state == 'cancelled'" />
-                                <field name="x_hr_document_state" string="Document Status" widget="badge"
-                                    decoration-muted="not x_hr_document_state or x_hr_document_state == 'none'"
-                                    decoration-info="x_hr_document_state in ['generated', 'sent']"
-                                    decoration-success="x_hr_document_state in ['signed', 'stamped']" />
-                            </list>
-                        </field>
-                    </group>
+                                decoration-danger="x_state == 'cancelled'" />
+                            <field name="x_hr_document_state" string="Document Status" widget="badge"
+                                decoration-muted="not x_hr_document_state or x_hr_document_state == 'none'"
+                                decoration-info="x_hr_document_state in ['generated', 'sent']"
+                                decoration-success="x_hr_document_state in ['signed', 'stamped']" />
+                        </list>
+                    </field>
 
                     <group string="Notes">
                         <field name="x_board_decision_notes"
@@ -986,32 +984,31 @@
                 </page>
 
                 <page string="Contract">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <div>
-                            <field name="x_employment_contract_state"
-                                string="Contract Status"
-                                widget="statusbar"
-                                options="{'clickable': false}"
-                                statusbar_visible="draft_data,ready_to_render,generated,printed,signed_uploaded,ministry_accredited,handover_ready"
-                                readonly="1" />
-                        </div>
-                        <div class="d-flex gap-2">
-                            <button type="action"
-                                name="hr_recruitment_custom.action_hr_applicant_create_employment_contract"
-                                string="Create Contract"
-                                class="btn-primary"
-                                invisible="not id or not x_contract_proposal_gate_passed or x_employment_contract_id" />
-                            <button type="action"
-                                name="hr_recruitment_custom.action_hr_applicant_update_employment_contract_data"
-                                string="Update Contract"
-                                class="btn-secondary"
-                                invisible="not id or not x_employment_contract_id or x_employment_contract_state in ['ministry_accredited', 'cancelled']" />
-                            <button type="action"
-                                name="hr_recruitment_custom.action_hr_applicant_open_employment_contract"
-                                string="Open Contract"
-                                class="btn-secondary"
-                                invisible="not id or not x_employment_contract_id" />
-                        </div>
+                    <div class="d-flex justify-content-end align-items-center mb-2">
+                        <field name="x_employment_contract_state"
+                            string="Contract Status"
+                            widget="statusbar"
+                            options="{'clickable': false}"
+                            statusbar_visible="draft_data,ready_to_render,generated,printed,signed_uploaded,ministry_accredited,handover_ready"
+                            readonly="1" />
+                    </div>
+
+                    <div class="d-flex justify-content-start gap-2 flex-wrap mb-2">
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_create_employment_contract"
+                            string="Create Contract"
+                            class="btn-primary"
+                            invisible="not id or not x_contract_proposal_gate_passed or x_employment_contract_id" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_update_employment_contract_data"
+                            string="Update Contract"
+                            class="btn-secondary"
+                            invisible="not id or not x_employment_contract_id or x_employment_contract_state in ['ministry_accredited', 'cancelled']" />
+                        <button type="action"
+                            name="hr_recruitment_custom.action_hr_applicant_open_employment_contract"
+                            string="Open Contract"
+                            class="btn-secondary"
+                            invisible="not id or not x_employment_contract_id" />
                     </div>
 
                     <div class="alert alert-info" role="alert">
@@ -1082,30 +1079,30 @@
                         </group>
                     </group>
 
-                    <group string="Linked Contracts">
-                        <field name="x_employment_contract_ids"
-                            string=" "
-                            context="{'default_x_applicant_id': id}"
-                            readonly="1"
-                            nolabel="1">
-                            <list create="false" delete="false"
+                    <separator string="Linked Contracts" />
+                    <field name="x_employment_contract_ids"
+                        string=" "
+                        context="{'default_x_applicant_id': id}"
+                        readonly="1"
+                        nolabel="1"
+                        class="w-100">
+                        <list create="false" delete="false" class="w-100"
+                            decoration-muted="x_state == 'draft_data'"
+                            decoration-info="x_state in ['ready_to_render', 'generated', 'printed']"
+                            decoration-success="x_state in ['signed_uploaded', 'ministry_accredited', 'handover_ready']"
+                            decoration-danger="x_state == 'cancelled'">
+                            <field name="x_name" string="Contract Name" />
+                            <field name="x_contract_number" string="Contract Number" />
+                            <field name="x_state" string="Contract Status" widget="badge"
                                 decoration-muted="x_state == 'draft_data'"
                                 decoration-info="x_state in ['ready_to_render', 'generated', 'printed']"
                                 decoration-success="x_state in ['signed_uploaded', 'ministry_accredited', 'handover_ready']"
-                                decoration-danger="x_state == 'cancelled'">
-                                <field name="x_name" string="Contract Name" />
-                                <field name="x_contract_number" string="Contract Number" />
-                                <field name="x_state" string="Contract Status" widget="badge"
-                                    decoration-muted="x_state == 'draft_data'"
-                                    decoration-info="x_state in ['ready_to_render', 'generated', 'printed']"
-                                    decoration-success="x_state in ['signed_uploaded', 'ministry_accredited', 'handover_ready']"
-                                    decoration-danger="x_state == 'cancelled'" />
-                                <field name="x_contract_date" string="Contract Date" />
-                                <field name="x_contract_start_date" string="Start Date" />
-                                <field name="x_contract_end_date" string="End Date" />
-                            </list>
-                        </field>
-                    </group>
+                                decoration-danger="x_state == 'cancelled'" />
+                            <field name="x_contract_date" string="Contract Date" />
+                            <field name="x_contract_start_date" string="Start Date" />
+                            <field name="x_contract_end_date" string="End Date" />
+                        </list>
+                    </field>
 
                     <group string="Notes">
                         <field name="x_employment_contract_notes"
