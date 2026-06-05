@@ -6,6 +6,254 @@
         <field name="state">code</field>
         <field name="code"><![CDATA[
 action = False
+
+UI_TEXT_AR = {
+    "No applicant": "لا يوجد متقدم",
+    "Unsupported declaration type": "نوع إقرار غير مدعوم",
+    "F-0004 already created": "تم إنشاء F-0004 مسبقاً",
+    "Cannot recreate F-0007": "لا يمكن إعادة إنشاء F-0007",
+    "Cannot recreate F-0009": "لا يمكن إعادة إنشاء F-0009",
+    "No generated PDF": "لا يوجد ملف منشأ",
+    "Odoo Sign setup incomplete": "إعداد توقيع أودو غير مكتمل",
+    "F-0004 already signed": "F-0004 موقّع مسبقاً",
+    "F-0007 already signed": "F-0007 موقّع مسبقاً",
+    "F-0009 already signed": "F-0009 موقّع مسبقاً",
+    "F-0004 is not ready to send": "F-0004 غير جاهز للإرسال",
+    "F-0007 is not ready to send": "F-0007 غير جاهز للإرسال",
+    "F-0009 is not ready to send": "F-0009 غير جاهز للإرسال",
+    "Applicant email missing": "بريد المتقدم غير موجود",
+    "Duplicate Sign request blocked": "تم منع طلب توقيع مكرر",
+    "F-0004 sent for signature": "تم إرسال F-0004 للتوقيع",
+    "F-0007 sent for signature": "تم إرسال F-0007 للتوقيع",
+    "F-0009 sent for signature": "تم إرسال F-0009 للتوقيع",
+    "Sign request lookup failed": "تعذر العثور على طلب التوقيع",
+    "No linked Sign request": "لا يوجد طلب توقيع مرتبط",
+    "Sign request missing": "طلب التوقيع غير موجود",
+    "F-0004 is not fully signed": "F-0004 لم يكتمل توقيعه",
+    "Signed document missing": "المستند الموقع غير موجود",
+    "F-0004 signed": "تم توقيع F-0004",
+    "Invalid signed file": "الملف الموقع غير صحيح",
+    "No signed file": "لا يوجد ملف موقع",
+    "Signed copy missing": "النسخة الموقعة غير موجودة",
+    "Save the applicant record before creating the declaration.": "احفظ سجل المتقدم قبل إنشاء الإقرار.",
+    "Save the applicant record before creating the policies and procedures compliance declaration.": "احفظ سجل المتقدم قبل إنشاء إقرار الالتزام باللوائح والسياسات.",
+    "Save the applicant record before creating the confidentiality and non-disclosure declaration.": "احفظ سجل المتقدم قبل إنشاء إقرار السرية وعدم الإفصاح.",
+    "PDF generation is currently available only for F-0004.": "إنشاء PDF متاح حالياً فقط لإقرار F-0004.",
+    "F-0004 PDF has already been generated for this declaration. Create a new declaration if a correction is required.": "تم إنشاء ملف F-0004 لهذا الإقرار مسبقاً. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0004 without a linked applicant.": "لا يمكن إنشاء F-0004 بدون ربط الإقرار بمتقدم.",
+    "This PDF generation action is only for the F-0007 policies and procedures compliance declaration.": "إنشاء PDF هذا مخصص فقط لإقرار F-0007 الالتزام باللوائح والسياسات.",
+    "F-0007 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.": "لا يمكن إعادة إنشاء ملف F-0007 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0007 without a linked applicant.": "لا يمكن إنشاء F-0007 بدون ربط الإقرار بمتقدم.",
+    "This PDF generation action is only for the F-0009 confidentiality and non-disclosure declaration.": "إنشاء PDF هذا مخصص فقط لإقرار F-0009 السرية وعدم الإفصاح.",
+    "F-0009 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.": "لا يمكن إعادة إنشاء ملف F-0009 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0009 without a linked applicant.": "لا يمكن إنشاء F-0009 بدون ربط الإقرار بمتقدم.",
+    "No generated F-0004 PDF is linked to this declaration.": "لا يوجد ملف F-0004 منشأ مرتبط بهذا الإقرار.",
+    "Sending through Odoo Sign is currently available only for F-0004.": "الإرسال عبر توقيع أودو متاح حالياً فقط لإقرار F-0004.",
+    "This Odoo Sign send action is only for F-0007.": "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0007.",
+    "This Odoo Sign send action is only for F-0009.": "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0009.",
+    "This declaration is already signed. No duplicate Odoo Sign request was created.": "هذا الإقرار موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.",
+    "Generate the F-0004 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0004 PDF قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0007 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0007 PDF قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0009 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0009 PDF قبل إرساله عبر توقيع أودو.",
+    "Cannot send F-0004 without a linked applicant.": "لا يمكن إرسال F-0004 بدون متقدم مرتبط.",
+    "Cannot send F-0007 without a linked applicant.": "لا يمكن إرسال F-0007 بدون متقدم مرتبط.",
+    "Cannot send F-0009 without a linked applicant.": "لا يمكن إرسال F-0009 بدون متقدم مرتبط.",
+    "Add an applicant email before sending F-0004 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0004 عبر توقيع أودو.",
+    "Add an applicant email before sending F-0007 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0007 عبر توقيع أودو.",
+    "Add an applicant email before sending F-0009 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0009 عبر توقيع أودو.",
+    "The recruitment document registry for this declaration is already signed.": "سجل مستندات التوظيف لهذا الإقرار موقّع مسبقاً.",
+    "The linked Odoo Sign request is already signed. Use Sync Signed Result to close the record.": "طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة نتيجة التوقيع لإغلاق السجل.",
+    "There is an active Odoo Sign request for this declaration in state \"%s\". A duplicate request will not be created.": "يوجد طلب توقيع أودو نشط لهذا الإقرار بحالة \"%s\". لن يتم إنشاء طلب مكرر.",
+    "Odoo Sign request was created and sent to %s.": "تم إنشاء طلب توقيع أودو وإرساله إلى %s.",
+    "Odoo Sign request was created and sent to the applicant.": "تم إنشاء طلب توقيع أودو وإرساله إلى المتقدم.",
+    "The send action ran, but sign.request was not found automatically. Review the Sign app before retrying.": "تم تنفيذ الإرسال، لكن لم يتم العثور على sign.request تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.",
+    "Cannot sync F-0004 without a linked applicant.": "لا يمكن مزامنة F-0004 بدون متقدم مرتبط.",
+    "Cannot sync %s without a linked applicant.": "لا يمكن مزامنة %s بدون متقدم مرتبط.",
+    "No F-0004 registry row linked to an Odoo Sign request was found.": "لم يتم العثور على سجل F-0004 مرتبط بطلب توقيع أودو.",
+    "The linked Odoo Sign request no longer exists or cannot be accessed.": "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.",
+    "The Odoo Sign request is still in state: %s.": "طلب توقيع أودو لا يزال بحالة: %s.",
+    "%s is not fully signed yet": "%s لم يكتمل توقيعه",
+    "The Sign request is signed, but the completed document attachments were not found.": "طلب التوقيع موقّع، لكن لم يتم العثور على مرفقات المستند المكتمل.",
+    "Only the signing certificate was found. The signed F-0004 copy was not found. Open the original Sign request and verify attachments before syncing again.": "تم العثور على شهادة التوقيع فقط، ولم يتم العثور على نسخة F-0004 الموقعة. افتح طلب التوقيع الأصلي وتحقق من المرفقات قبل إعادة المزامنة.",
+    "Only the signing certificate/log was found. The signed %s copy was not found.": "تم العثور على شهادة/سجل التوقيع فقط، ولم يتم العثور على نسخة %s الموقعة.",
+    "The signed result was synced and the signed document and certificate were linked where available.": "تمت مزامنة نتيجة التوقيع وربط المستند الموقع والشهادة عند توفرها.",
+    "Signed %s": "تم توقيع %s",
+    "The attachment linked as signed file appears to be a signing certificate, not the signed F-0004 copy. Run Sync Signed Result again for this declaration.": "المرفق المرتبط كملف موقع يبدو أنه شهادة توقيع وليس نسخة F-0004 الموقعة. أعد تشغيل مزامنة نتيجة التوقيع لهذا الإقرار.",
+    "No signed F-0004 PDF is linked to this declaration.": "لا يوجد ملف F-0004 موقع مرتبط بهذا الإقرار.",
+    "Responsibilities PDF generated": "تم توليد ملف المهام",
+    "F-0006 draft PDF was generated in the background and linked to the applicant record.": "تم توليد مسودة F-0006 في الخلفية وربطها بسجل المتقدم.",
+    "Responsibilities sent for signature": "تم إرسال المهام للتوقيع",
+    "Odoo Sign request was created and sent to the responsible manager and applicant.": "تم إنشاء طلب توقيع أودو وإرساله إلى المدير المسؤول والمتقدم.",
+    "Regeneration disabled": "إعادة التوليد موقوفة",
+    "Open Sign request": "طلب توقيع مفتوح",
+    "Missing data": "بيانات ناقصة",
+    "No draft generated": "لم يتم توليد مسودة",
+    "Responsibilities already signed": "الوصف الوظيفي موقّع مسبقاً",
+    "Draft is not ready": "المسودة غير جاهزة",
+    "Responsible manager contact missing": "جهة اتصال المدير المسؤول غير موجودة",
+    "Responsible manager email missing": "بريد المدير المسؤول غير موجود",
+    "No draft": "لا توجد مسودة",
+    "No signed copy": "لا توجد نسخة موقعة",
+    "No Sign certificate": "لا توجد شهادة توقيع",
+    "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.": "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.",
+    "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.": "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.",
+    "Cannot generate the responsibilities draft before completing: %s.": "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.",
+    "No responsibilities draft was generated.": "لم يتم توليد أي مسودة وصف وظيفي.",
+    "This responsibilities document is already signed. No duplicate Odoo Sign request was created.": "هذا الوصف الوظيفي موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.",
+    "Generate the responsibilities draft before sending it through Odoo Sign.": "ولّد مسودة الوصف الوظيفي قبل إرسالها عبر توقيع أودو.",
+    "Add an applicant email before sending responsibilities through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال الوصف الوظيفي عبر توقيع أودو.",
+    "The current user has no linked contact and cannot be used as responsible-manager signer.": "المستخدم الحالي لا يملك جهة اتصال مرتبطة ولا يمكن استخدامه كموقّع للمدير المسؤول.",
+    "Add an email to the current user's contact before sending responsibilities for signature.": "أضف بريداً إلكترونياً إلى جهة اتصال المستخدم الحالي قبل إرسال الوصف الوظيفي للتوقيع.",
+    "The recruitment document registry for this responsibilities document is already signed.": "سجل مستندات التوظيف لهذا الوصف الوظيفي موقّع مسبقاً.",
+    "The linked Odoo Sign request is completed/signed. Use Sync Signature to close the record.": "طلب توقيع أودو المرتبط مكتمل/موقّع بالفعل. استخدم مزامنة التوقيع لإغلاق السجل.",
+    "There is an active Odoo Sign request for this responsibilities document in state \"%s\". A duplicate request will not be created.": "يوجد طلب توقيع أودو نشط لهذا الوصف الوظيفي بحالة \"%s\". لن يتم إنشاء طلب مكرر.",
+    "No responsibilities draft has been generated for this applicant yet.": "لم يتم توليد مسودة الوصف الوظيفي لهذا المتقدم بعد.",
+    "The signed responsibilities copy is not linked yet. Use signature sync first.": "لم يتم ربط النسخة الموقعة من الوصف الوظيفي بعد. استخدم مزامنة التوقيع أولاً.",
+    "No responsibilities Sign certificate was found. Use signature sync first or review Odoo Sign attachments.": "لم يتم العثور على شهادة توقيع للوصف الوظيفي. استخدم مزامنة التوقيع أولاً أو راجع مرفقات أودو Sign."
+}
+AR_TEXT_EN = {
+    "لا يوجد متقدم": "No applicant",
+    "نوع إقرار غير مدعوم": "Unsupported declaration type",
+    "تم إنشاء F-0004 مسبقاً": "F-0004 already created",
+    "لا يمكن إعادة إنشاء F-0007": "Cannot recreate F-0007",
+    "لا يمكن إعادة إنشاء F-0009": "Cannot recreate F-0009",
+    "لا يوجد ملف منشأ": "No generated PDF",
+    "إعداد توقيع أودو غير مكتمل": "Odoo Sign setup incomplete",
+    "F-0004 موقّع مسبقاً": "F-0004 already signed",
+    "F-0007 موقّع مسبقاً": "F-0007 already signed",
+    "F-0009 موقّع مسبقاً": "F-0009 already signed",
+    "F-0004 غير جاهز للإرسال": "F-0004 is not ready to send",
+    "F-0007 غير جاهز للإرسال": "F-0007 is not ready to send",
+    "F-0009 غير جاهز للإرسال": "F-0009 is not ready to send",
+    "بريد المتقدم غير موجود": "Applicant email missing",
+    "تم منع طلب توقيع مكرر": "Duplicate Sign request blocked",
+    "تم إرسال F-0004 للتوقيع": "F-0004 sent for signature",
+    "تم إرسال F-0007 للتوقيع": "F-0007 sent for signature",
+    "تم إرسال F-0009 للتوقيع": "F-0009 sent for signature",
+    "تعذر العثور على طلب التوقيع": "Sign request lookup failed",
+    "لا يوجد طلب توقيع مرتبط": "No linked Sign request",
+    "طلب التوقيع غير موجود": "Sign request missing",
+    "F-0004 لم يكتمل توقيعه": "F-0004 is not fully signed",
+    "المستند الموقع غير موجود": "Signed document missing",
+    "تم توقيع F-0004": "F-0004 signed",
+    "الملف الموقع غير صحيح": "Invalid signed file",
+    "لا يوجد ملف موقع": "No signed file",
+    "النسخة الموقعة غير موجودة": "Signed copy missing",
+    "احفظ سجل المتقدم قبل إنشاء الإقرار.": "Save the applicant record before creating the declaration.",
+    "احفظ سجل المتقدم قبل إنشاء إقرار الالتزام باللوائح والسياسات.": "Save the applicant record before creating the policies and procedures compliance declaration.",
+    "احفظ سجل المتقدم قبل إنشاء إقرار السرية وعدم الإفصاح.": "Save the applicant record before creating the confidentiality and non-disclosure declaration.",
+    "إنشاء PDF متاح حالياً فقط لإقرار F-0004.": "PDF generation is currently available only for F-0004.",
+    "تم إنشاء ملف F-0004 لهذا الإقرار مسبقاً. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0004 PDF has already been generated for this declaration. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0004 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0004 without a linked applicant.",
+    "إنشاء PDF هذا مخصص فقط لإقرار F-0007 الالتزام باللوائح والسياسات.": "This PDF generation action is only for the F-0007 policies and procedures compliance declaration.",
+    "لا يمكن إعادة إنشاء ملف F-0007 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0007 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0007 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0007 without a linked applicant.",
+    "إنشاء PDF هذا مخصص فقط لإقرار F-0009 السرية وعدم الإفصاح.": "This PDF generation action is only for the F-0009 confidentiality and non-disclosure declaration.",
+    "لا يمكن إعادة إنشاء ملف F-0009 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0009 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0009 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0009 without a linked applicant.",
+    "لا يوجد ملف F-0004 منشأ مرتبط بهذا الإقرار.": "No generated F-0004 PDF is linked to this declaration.",
+    "الإرسال عبر توقيع أودو متاح حالياً فقط لإقرار F-0004.": "Sending through Odoo Sign is currently available only for F-0004.",
+    "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0007.": "This Odoo Sign send action is only for F-0007.",
+    "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0009.": "This Odoo Sign send action is only for F-0009.",
+    "هذا الإقرار موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.": "This declaration is already signed. No duplicate Odoo Sign request was created.",
+    "أنشئ ملف F-0004 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0004 PDF before sending it through Odoo Sign.",
+    "أنشئ ملف F-0007 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0007 PDF before sending it through Odoo Sign.",
+    "أنشئ ملف F-0009 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0009 PDF before sending it through Odoo Sign.",
+    "لا يمكن إرسال F-0004 بدون متقدم مرتبط.": "Cannot send F-0004 without a linked applicant.",
+    "لا يمكن إرسال F-0007 بدون متقدم مرتبط.": "Cannot send F-0007 without a linked applicant.",
+    "لا يمكن إرسال F-0009 بدون متقدم مرتبط.": "Cannot send F-0009 without a linked applicant.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0004 عبر توقيع أودو.": "Add an applicant email before sending F-0004 through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0007 عبر توقيع أودو.": "Add an applicant email before sending F-0007 through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0009 عبر توقيع أودو.": "Add an applicant email before sending F-0009 through Odoo Sign.",
+    "سجل مستندات التوظيف لهذا الإقرار موقّع مسبقاً.": "The recruitment document registry for this declaration is already signed.",
+    "طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة نتيجة التوقيع لإغلاق السجل.": "The linked Odoo Sign request is already signed. Use Sync Signed Result to close the record.",
+    "يوجد طلب توقيع أودو نشط لهذا الإقرار بحالة \"%s\". لن يتم إنشاء طلب مكرر.": "There is an active Odoo Sign request for this declaration in state \"%s\". A duplicate request will not be created.",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى %s.": "Odoo Sign request was created and sent to %s.",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى المتقدم.": "Odoo Sign request was created and sent to the applicant.",
+    "تم تنفيذ الإرسال، لكن لم يتم العثور على sign.request تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.": "The send action ran, but sign.request was not found automatically. Review the Sign app before retrying.",
+    "لا يمكن مزامنة F-0004 بدون متقدم مرتبط.": "Cannot sync F-0004 without a linked applicant.",
+    "لا يمكن مزامنة %s بدون متقدم مرتبط.": "Cannot sync %s without a linked applicant.",
+    "لم يتم العثور على سجل F-0004 مرتبط بطلب توقيع أودو.": "No F-0004 registry row linked to an Odoo Sign request was found.",
+    "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.": "The linked Odoo Sign request no longer exists or cannot be accessed.",
+    "طلب توقيع أودو لا يزال بحالة: %s.": "The Odoo Sign request is still in state: %s.",
+    "%s لم يكتمل توقيعه": "%s is not fully signed yet",
+    "طلب التوقيع موقّع، لكن لم يتم العثور على مرفقات المستند المكتمل.": "The Sign request is signed, but the completed document attachments were not found.",
+    "تم العثور على شهادة التوقيع فقط، ولم يتم العثور على نسخة F-0004 الموقعة. افتح طلب التوقيع الأصلي وتحقق من المرفقات قبل إعادة المزامنة.": "Only the signing certificate was found. The signed F-0004 copy was not found. Open the original Sign request and verify attachments before syncing again.",
+    "تم العثور على شهادة/سجل التوقيع فقط، ولم يتم العثور على نسخة %s الموقعة.": "Only the signing certificate/log was found. The signed %s copy was not found.",
+    "تمت مزامنة نتيجة التوقيع وربط المستند الموقع والشهادة عند توفرها.": "The signed result was synced and the signed document and certificate were linked where available.",
+    "تم توقيع %s": "Signed %s",
+    "المرفق المرتبط كملف موقع يبدو أنه شهادة توقيع وليس نسخة F-0004 الموقعة. أعد تشغيل مزامنة نتيجة التوقيع لهذا الإقرار.": "The attachment linked as signed file appears to be a signing certificate, not the signed F-0004 copy. Run Sync Signed Result again for this declaration.",
+    "لا يوجد ملف F-0004 موقع مرتبط بهذا الإقرار.": "No signed F-0004 PDF is linked to this declaration.",
+    "تم توليد ملف المهام": "Responsibilities PDF generated",
+    "تم توليد مسودة F-0006 في الخلفية وربطها بسجل المتقدم.": "F-0006 draft PDF was generated in the background and linked to the applicant record.",
+    "تم إرسال المهام للتوقيع": "Responsibilities sent for signature",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى المدير المسؤول والمتقدم.": "Odoo Sign request was created and sent to the responsible manager and applicant.",
+    "إعادة التوليد موقوفة": "Regeneration disabled",
+    "طلب توقيع مفتوح": "Open Sign request",
+    "بيانات ناقصة": "Missing data",
+    "لم يتم توليد مسودة": "No draft generated",
+    "الوصف الوظيفي موقّع مسبقاً": "Responsibilities already signed",
+    "المسودة غير جاهزة": "Draft is not ready",
+    "جهة اتصال المدير المسؤول غير موجودة": "Responsible manager contact missing",
+    "بريد المدير المسؤول غير موجود": "Responsible manager email missing",
+    "لا توجد مسودة": "No draft",
+    "لا توجد نسخة موقعة": "No signed copy",
+    "لا توجد شهادة توقيع": "No Sign certificate",
+    "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.": "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.",
+    "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.": "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.",
+    "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.": "Cannot generate the responsibilities draft before completing: %s.",
+    "لم يتم توليد أي مسودة وصف وظيفي.": "No responsibilities draft was generated.",
+    "هذا الوصف الوظيفي موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.": "This responsibilities document is already signed. No duplicate Odoo Sign request was created.",
+    "ولّد مسودة الوصف الوظيفي قبل إرسالها عبر توقيع أودو.": "Generate the responsibilities draft before sending it through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال الوصف الوظيفي عبر توقيع أودو.": "Add an applicant email before sending responsibilities through Odoo Sign.",
+    "المستخدم الحالي لا يملك جهة اتصال مرتبطة ولا يمكن استخدامه كموقّع للمدير المسؤول.": "The current user has no linked contact and cannot be used as responsible-manager signer.",
+    "أضف بريداً إلكترونياً إلى جهة اتصال المستخدم الحالي قبل إرسال الوصف الوظيفي للتوقيع.": "Add an email to the current user's contact before sending responsibilities for signature.",
+    "سجل مستندات التوظيف لهذا الوصف الوظيفي موقّع مسبقاً.": "The recruitment document registry for this responsibilities document is already signed.",
+    "طلب توقيع أودو المرتبط مكتمل/موقّع بالفعل. استخدم مزامنة التوقيع لإغلاق السجل.": "The linked Odoo Sign request is completed/signed. Use Sync Signature to close the record.",
+    "يوجد طلب توقيع أودو نشط لهذا الوصف الوظيفي بحالة \"%s\". لن يتم إنشاء طلب مكرر.": "There is an active Odoo Sign request for this responsibilities document in state \"%s\". A duplicate request will not be created.",
+    "لم يتم توليد مسودة الوصف الوظيفي لهذا المتقدم بعد.": "No responsibilities draft has been generated for this applicant yet.",
+    "لم يتم ربط النسخة الموقعة من الوصف الوظيفي بعد. استخدم مزامنة التوقيع أولاً.": "The signed responsibilities copy is not linked yet. Use signature sync first.",
+    "لم يتم العثور على شهادة توقيع للوصف الوظيفي. استخدم مزامنة التوقيع أولاً أو راجع مرفقات أودو Sign.": "No responsibilities Sign certificate was found. Use signature sync first or review Odoo Sign attachments."
+}
+
+def _pattern_translate(text, mapping):
+    if text in mapping:
+        return mapping[text]
+
+    for source, target in mapping.items():
+        if '%s' not in source:
+            continue
+        prefix, suffix = source.split('%s', 1)
+        if text.startswith(prefix) and text.endswith(suffix):
+            value = text[len(prefix):len(text) - len(suffix)] if suffix else text[len(prefix):]
+            try:
+                return target % value
+            except Exception:
+                return target
+
+    return None
+
+def ui_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        translated = _pattern_translate(text, UI_TEXT_AR)
+        if translated:
+            return translated
+        return text
+
+    translated = _pattern_translate(text, AR_TEXT_EN)
+    if translated:
+        return translated
+
+    return text
+
 last_attachment = False
 
 
@@ -14,8 +262,8 @@ def toast(title, message, kind='warning', sticky=False):
         'type': 'ir.actions.client',
         'tag': 'display_notification',
         'params': {
-            'title': title,
-            'message': message,
+            'title': ui_text(title),
+            'message': ui_text(message),
             'type': kind,
             'sticky': sticky,
         },
@@ -207,8 +455,8 @@ if len(records) == 1 and last_attachment:
         'type': 'ir.actions.client',
         'tag': 'display_notification',
         'params': {
-            'title': 'Responsibilities PDF generated',
-            'message': 'F-0006 draft PDF was generated in the background and linked to the applicant record.',
+            'title': ui_text('Responsibilities PDF generated'),
+            'message': ui_text('F-0006 draft PDF was generated in the background and linked to the applicant record.'),
             'type': 'success',
             'sticky': False,
             'next': {'type': 'ir.actions.client', 'tag': 'reload'},
@@ -225,6 +473,254 @@ elif not action:
         <field name="state">code</field>
         <field name="code"><![CDATA[
 action = False
+
+UI_TEXT_AR = {
+    "No applicant": "لا يوجد متقدم",
+    "Unsupported declaration type": "نوع إقرار غير مدعوم",
+    "F-0004 already created": "تم إنشاء F-0004 مسبقاً",
+    "Cannot recreate F-0007": "لا يمكن إعادة إنشاء F-0007",
+    "Cannot recreate F-0009": "لا يمكن إعادة إنشاء F-0009",
+    "No generated PDF": "لا يوجد ملف منشأ",
+    "Odoo Sign setup incomplete": "إعداد توقيع أودو غير مكتمل",
+    "F-0004 already signed": "F-0004 موقّع مسبقاً",
+    "F-0007 already signed": "F-0007 موقّع مسبقاً",
+    "F-0009 already signed": "F-0009 موقّع مسبقاً",
+    "F-0004 is not ready to send": "F-0004 غير جاهز للإرسال",
+    "F-0007 is not ready to send": "F-0007 غير جاهز للإرسال",
+    "F-0009 is not ready to send": "F-0009 غير جاهز للإرسال",
+    "Applicant email missing": "بريد المتقدم غير موجود",
+    "Duplicate Sign request blocked": "تم منع طلب توقيع مكرر",
+    "F-0004 sent for signature": "تم إرسال F-0004 للتوقيع",
+    "F-0007 sent for signature": "تم إرسال F-0007 للتوقيع",
+    "F-0009 sent for signature": "تم إرسال F-0009 للتوقيع",
+    "Sign request lookup failed": "تعذر العثور على طلب التوقيع",
+    "No linked Sign request": "لا يوجد طلب توقيع مرتبط",
+    "Sign request missing": "طلب التوقيع غير موجود",
+    "F-0004 is not fully signed": "F-0004 لم يكتمل توقيعه",
+    "Signed document missing": "المستند الموقع غير موجود",
+    "F-0004 signed": "تم توقيع F-0004",
+    "Invalid signed file": "الملف الموقع غير صحيح",
+    "No signed file": "لا يوجد ملف موقع",
+    "Signed copy missing": "النسخة الموقعة غير موجودة",
+    "Save the applicant record before creating the declaration.": "احفظ سجل المتقدم قبل إنشاء الإقرار.",
+    "Save the applicant record before creating the policies and procedures compliance declaration.": "احفظ سجل المتقدم قبل إنشاء إقرار الالتزام باللوائح والسياسات.",
+    "Save the applicant record before creating the confidentiality and non-disclosure declaration.": "احفظ سجل المتقدم قبل إنشاء إقرار السرية وعدم الإفصاح.",
+    "PDF generation is currently available only for F-0004.": "إنشاء PDF متاح حالياً فقط لإقرار F-0004.",
+    "F-0004 PDF has already been generated for this declaration. Create a new declaration if a correction is required.": "تم إنشاء ملف F-0004 لهذا الإقرار مسبقاً. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0004 without a linked applicant.": "لا يمكن إنشاء F-0004 بدون ربط الإقرار بمتقدم.",
+    "This PDF generation action is only for the F-0007 policies and procedures compliance declaration.": "إنشاء PDF هذا مخصص فقط لإقرار F-0007 الالتزام باللوائح والسياسات.",
+    "F-0007 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.": "لا يمكن إعادة إنشاء ملف F-0007 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0007 without a linked applicant.": "لا يمكن إنشاء F-0007 بدون ربط الإقرار بمتقدم.",
+    "This PDF generation action is only for the F-0009 confidentiality and non-disclosure declaration.": "إنشاء PDF هذا مخصص فقط لإقرار F-0009 السرية وعدم الإفصاح.",
+    "F-0009 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.": "لا يمكن إعادة إنشاء ملف F-0009 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0009 without a linked applicant.": "لا يمكن إنشاء F-0009 بدون ربط الإقرار بمتقدم.",
+    "No generated F-0004 PDF is linked to this declaration.": "لا يوجد ملف F-0004 منشأ مرتبط بهذا الإقرار.",
+    "Sending through Odoo Sign is currently available only for F-0004.": "الإرسال عبر توقيع أودو متاح حالياً فقط لإقرار F-0004.",
+    "This Odoo Sign send action is only for F-0007.": "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0007.",
+    "This Odoo Sign send action is only for F-0009.": "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0009.",
+    "This declaration is already signed. No duplicate Odoo Sign request was created.": "هذا الإقرار موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.",
+    "Generate the F-0004 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0004 PDF قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0007 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0007 PDF قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0009 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0009 PDF قبل إرساله عبر توقيع أودو.",
+    "Cannot send F-0004 without a linked applicant.": "لا يمكن إرسال F-0004 بدون متقدم مرتبط.",
+    "Cannot send F-0007 without a linked applicant.": "لا يمكن إرسال F-0007 بدون متقدم مرتبط.",
+    "Cannot send F-0009 without a linked applicant.": "لا يمكن إرسال F-0009 بدون متقدم مرتبط.",
+    "Add an applicant email before sending F-0004 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0004 عبر توقيع أودو.",
+    "Add an applicant email before sending F-0007 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0007 عبر توقيع أودو.",
+    "Add an applicant email before sending F-0009 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0009 عبر توقيع أودو.",
+    "The recruitment document registry for this declaration is already signed.": "سجل مستندات التوظيف لهذا الإقرار موقّع مسبقاً.",
+    "The linked Odoo Sign request is already signed. Use Sync Signed Result to close the record.": "طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة نتيجة التوقيع لإغلاق السجل.",
+    "There is an active Odoo Sign request for this declaration in state \"%s\". A duplicate request will not be created.": "يوجد طلب توقيع أودو نشط لهذا الإقرار بحالة \"%s\". لن يتم إنشاء طلب مكرر.",
+    "Odoo Sign request was created and sent to %s.": "تم إنشاء طلب توقيع أودو وإرساله إلى %s.",
+    "Odoo Sign request was created and sent to the applicant.": "تم إنشاء طلب توقيع أودو وإرساله إلى المتقدم.",
+    "The send action ran, but sign.request was not found automatically. Review the Sign app before retrying.": "تم تنفيذ الإرسال، لكن لم يتم العثور على sign.request تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.",
+    "Cannot sync F-0004 without a linked applicant.": "لا يمكن مزامنة F-0004 بدون متقدم مرتبط.",
+    "Cannot sync %s without a linked applicant.": "لا يمكن مزامنة %s بدون متقدم مرتبط.",
+    "No F-0004 registry row linked to an Odoo Sign request was found.": "لم يتم العثور على سجل F-0004 مرتبط بطلب توقيع أودو.",
+    "The linked Odoo Sign request no longer exists or cannot be accessed.": "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.",
+    "The Odoo Sign request is still in state: %s.": "طلب توقيع أودو لا يزال بحالة: %s.",
+    "%s is not fully signed yet": "%s لم يكتمل توقيعه",
+    "The Sign request is signed, but the completed document attachments were not found.": "طلب التوقيع موقّع، لكن لم يتم العثور على مرفقات المستند المكتمل.",
+    "Only the signing certificate was found. The signed F-0004 copy was not found. Open the original Sign request and verify attachments before syncing again.": "تم العثور على شهادة التوقيع فقط، ولم يتم العثور على نسخة F-0004 الموقعة. افتح طلب التوقيع الأصلي وتحقق من المرفقات قبل إعادة المزامنة.",
+    "Only the signing certificate/log was found. The signed %s copy was not found.": "تم العثور على شهادة/سجل التوقيع فقط، ولم يتم العثور على نسخة %s الموقعة.",
+    "The signed result was synced and the signed document and certificate were linked where available.": "تمت مزامنة نتيجة التوقيع وربط المستند الموقع والشهادة عند توفرها.",
+    "Signed %s": "تم توقيع %s",
+    "The attachment linked as signed file appears to be a signing certificate, not the signed F-0004 copy. Run Sync Signed Result again for this declaration.": "المرفق المرتبط كملف موقع يبدو أنه شهادة توقيع وليس نسخة F-0004 الموقعة. أعد تشغيل مزامنة نتيجة التوقيع لهذا الإقرار.",
+    "No signed F-0004 PDF is linked to this declaration.": "لا يوجد ملف F-0004 موقع مرتبط بهذا الإقرار.",
+    "Responsibilities PDF generated": "تم توليد ملف المهام",
+    "F-0006 draft PDF was generated in the background and linked to the applicant record.": "تم توليد مسودة F-0006 في الخلفية وربطها بسجل المتقدم.",
+    "Responsibilities sent for signature": "تم إرسال المهام للتوقيع",
+    "Odoo Sign request was created and sent to the responsible manager and applicant.": "تم إنشاء طلب توقيع أودو وإرساله إلى المدير المسؤول والمتقدم.",
+    "Regeneration disabled": "إعادة التوليد موقوفة",
+    "Open Sign request": "طلب توقيع مفتوح",
+    "Missing data": "بيانات ناقصة",
+    "No draft generated": "لم يتم توليد مسودة",
+    "Responsibilities already signed": "الوصف الوظيفي موقّع مسبقاً",
+    "Draft is not ready": "المسودة غير جاهزة",
+    "Responsible manager contact missing": "جهة اتصال المدير المسؤول غير موجودة",
+    "Responsible manager email missing": "بريد المدير المسؤول غير موجود",
+    "No draft": "لا توجد مسودة",
+    "No signed copy": "لا توجد نسخة موقعة",
+    "No Sign certificate": "لا توجد شهادة توقيع",
+    "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.": "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.",
+    "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.": "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.",
+    "Cannot generate the responsibilities draft before completing: %s.": "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.",
+    "No responsibilities draft was generated.": "لم يتم توليد أي مسودة وصف وظيفي.",
+    "This responsibilities document is already signed. No duplicate Odoo Sign request was created.": "هذا الوصف الوظيفي موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.",
+    "Generate the responsibilities draft before sending it through Odoo Sign.": "ولّد مسودة الوصف الوظيفي قبل إرسالها عبر توقيع أودو.",
+    "Add an applicant email before sending responsibilities through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال الوصف الوظيفي عبر توقيع أودو.",
+    "The current user has no linked contact and cannot be used as responsible-manager signer.": "المستخدم الحالي لا يملك جهة اتصال مرتبطة ولا يمكن استخدامه كموقّع للمدير المسؤول.",
+    "Add an email to the current user's contact before sending responsibilities for signature.": "أضف بريداً إلكترونياً إلى جهة اتصال المستخدم الحالي قبل إرسال الوصف الوظيفي للتوقيع.",
+    "The recruitment document registry for this responsibilities document is already signed.": "سجل مستندات التوظيف لهذا الوصف الوظيفي موقّع مسبقاً.",
+    "The linked Odoo Sign request is completed/signed. Use Sync Signature to close the record.": "طلب توقيع أودو المرتبط مكتمل/موقّع بالفعل. استخدم مزامنة التوقيع لإغلاق السجل.",
+    "There is an active Odoo Sign request for this responsibilities document in state \"%s\". A duplicate request will not be created.": "يوجد طلب توقيع أودو نشط لهذا الوصف الوظيفي بحالة \"%s\". لن يتم إنشاء طلب مكرر.",
+    "No responsibilities draft has been generated for this applicant yet.": "لم يتم توليد مسودة الوصف الوظيفي لهذا المتقدم بعد.",
+    "The signed responsibilities copy is not linked yet. Use signature sync first.": "لم يتم ربط النسخة الموقعة من الوصف الوظيفي بعد. استخدم مزامنة التوقيع أولاً.",
+    "No responsibilities Sign certificate was found. Use signature sync first or review Odoo Sign attachments.": "لم يتم العثور على شهادة توقيع للوصف الوظيفي. استخدم مزامنة التوقيع أولاً أو راجع مرفقات أودو Sign."
+}
+AR_TEXT_EN = {
+    "لا يوجد متقدم": "No applicant",
+    "نوع إقرار غير مدعوم": "Unsupported declaration type",
+    "تم إنشاء F-0004 مسبقاً": "F-0004 already created",
+    "لا يمكن إعادة إنشاء F-0007": "Cannot recreate F-0007",
+    "لا يمكن إعادة إنشاء F-0009": "Cannot recreate F-0009",
+    "لا يوجد ملف منشأ": "No generated PDF",
+    "إعداد توقيع أودو غير مكتمل": "Odoo Sign setup incomplete",
+    "F-0004 موقّع مسبقاً": "F-0004 already signed",
+    "F-0007 موقّع مسبقاً": "F-0007 already signed",
+    "F-0009 موقّع مسبقاً": "F-0009 already signed",
+    "F-0004 غير جاهز للإرسال": "F-0004 is not ready to send",
+    "F-0007 غير جاهز للإرسال": "F-0007 is not ready to send",
+    "F-0009 غير جاهز للإرسال": "F-0009 is not ready to send",
+    "بريد المتقدم غير موجود": "Applicant email missing",
+    "تم منع طلب توقيع مكرر": "Duplicate Sign request blocked",
+    "تم إرسال F-0004 للتوقيع": "F-0004 sent for signature",
+    "تم إرسال F-0007 للتوقيع": "F-0007 sent for signature",
+    "تم إرسال F-0009 للتوقيع": "F-0009 sent for signature",
+    "تعذر العثور على طلب التوقيع": "Sign request lookup failed",
+    "لا يوجد طلب توقيع مرتبط": "No linked Sign request",
+    "طلب التوقيع غير موجود": "Sign request missing",
+    "F-0004 لم يكتمل توقيعه": "F-0004 is not fully signed",
+    "المستند الموقع غير موجود": "Signed document missing",
+    "تم توقيع F-0004": "F-0004 signed",
+    "الملف الموقع غير صحيح": "Invalid signed file",
+    "لا يوجد ملف موقع": "No signed file",
+    "النسخة الموقعة غير موجودة": "Signed copy missing",
+    "احفظ سجل المتقدم قبل إنشاء الإقرار.": "Save the applicant record before creating the declaration.",
+    "احفظ سجل المتقدم قبل إنشاء إقرار الالتزام باللوائح والسياسات.": "Save the applicant record before creating the policies and procedures compliance declaration.",
+    "احفظ سجل المتقدم قبل إنشاء إقرار السرية وعدم الإفصاح.": "Save the applicant record before creating the confidentiality and non-disclosure declaration.",
+    "إنشاء PDF متاح حالياً فقط لإقرار F-0004.": "PDF generation is currently available only for F-0004.",
+    "تم إنشاء ملف F-0004 لهذا الإقرار مسبقاً. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0004 PDF has already been generated for this declaration. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0004 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0004 without a linked applicant.",
+    "إنشاء PDF هذا مخصص فقط لإقرار F-0007 الالتزام باللوائح والسياسات.": "This PDF generation action is only for the F-0007 policies and procedures compliance declaration.",
+    "لا يمكن إعادة إنشاء ملف F-0007 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0007 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0007 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0007 without a linked applicant.",
+    "إنشاء PDF هذا مخصص فقط لإقرار F-0009 السرية وعدم الإفصاح.": "This PDF generation action is only for the F-0009 confidentiality and non-disclosure declaration.",
+    "لا يمكن إعادة إنشاء ملف F-0009 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0009 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0009 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0009 without a linked applicant.",
+    "لا يوجد ملف F-0004 منشأ مرتبط بهذا الإقرار.": "No generated F-0004 PDF is linked to this declaration.",
+    "الإرسال عبر توقيع أودو متاح حالياً فقط لإقرار F-0004.": "Sending through Odoo Sign is currently available only for F-0004.",
+    "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0007.": "This Odoo Sign send action is only for F-0007.",
+    "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0009.": "This Odoo Sign send action is only for F-0009.",
+    "هذا الإقرار موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.": "This declaration is already signed. No duplicate Odoo Sign request was created.",
+    "أنشئ ملف F-0004 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0004 PDF before sending it through Odoo Sign.",
+    "أنشئ ملف F-0007 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0007 PDF before sending it through Odoo Sign.",
+    "أنشئ ملف F-0009 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0009 PDF before sending it through Odoo Sign.",
+    "لا يمكن إرسال F-0004 بدون متقدم مرتبط.": "Cannot send F-0004 without a linked applicant.",
+    "لا يمكن إرسال F-0007 بدون متقدم مرتبط.": "Cannot send F-0007 without a linked applicant.",
+    "لا يمكن إرسال F-0009 بدون متقدم مرتبط.": "Cannot send F-0009 without a linked applicant.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0004 عبر توقيع أودو.": "Add an applicant email before sending F-0004 through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0007 عبر توقيع أودو.": "Add an applicant email before sending F-0007 through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0009 عبر توقيع أودو.": "Add an applicant email before sending F-0009 through Odoo Sign.",
+    "سجل مستندات التوظيف لهذا الإقرار موقّع مسبقاً.": "The recruitment document registry for this declaration is already signed.",
+    "طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة نتيجة التوقيع لإغلاق السجل.": "The linked Odoo Sign request is already signed. Use Sync Signed Result to close the record.",
+    "يوجد طلب توقيع أودو نشط لهذا الإقرار بحالة \"%s\". لن يتم إنشاء طلب مكرر.": "There is an active Odoo Sign request for this declaration in state \"%s\". A duplicate request will not be created.",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى %s.": "Odoo Sign request was created and sent to %s.",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى المتقدم.": "Odoo Sign request was created and sent to the applicant.",
+    "تم تنفيذ الإرسال، لكن لم يتم العثور على sign.request تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.": "The send action ran, but sign.request was not found automatically. Review the Sign app before retrying.",
+    "لا يمكن مزامنة F-0004 بدون متقدم مرتبط.": "Cannot sync F-0004 without a linked applicant.",
+    "لا يمكن مزامنة %s بدون متقدم مرتبط.": "Cannot sync %s without a linked applicant.",
+    "لم يتم العثور على سجل F-0004 مرتبط بطلب توقيع أودو.": "No F-0004 registry row linked to an Odoo Sign request was found.",
+    "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.": "The linked Odoo Sign request no longer exists or cannot be accessed.",
+    "طلب توقيع أودو لا يزال بحالة: %s.": "The Odoo Sign request is still in state: %s.",
+    "%s لم يكتمل توقيعه": "%s is not fully signed yet",
+    "طلب التوقيع موقّع، لكن لم يتم العثور على مرفقات المستند المكتمل.": "The Sign request is signed, but the completed document attachments were not found.",
+    "تم العثور على شهادة التوقيع فقط، ولم يتم العثور على نسخة F-0004 الموقعة. افتح طلب التوقيع الأصلي وتحقق من المرفقات قبل إعادة المزامنة.": "Only the signing certificate was found. The signed F-0004 copy was not found. Open the original Sign request and verify attachments before syncing again.",
+    "تم العثور على شهادة/سجل التوقيع فقط، ولم يتم العثور على نسخة %s الموقعة.": "Only the signing certificate/log was found. The signed %s copy was not found.",
+    "تمت مزامنة نتيجة التوقيع وربط المستند الموقع والشهادة عند توفرها.": "The signed result was synced and the signed document and certificate were linked where available.",
+    "تم توقيع %s": "Signed %s",
+    "المرفق المرتبط كملف موقع يبدو أنه شهادة توقيع وليس نسخة F-0004 الموقعة. أعد تشغيل مزامنة نتيجة التوقيع لهذا الإقرار.": "The attachment linked as signed file appears to be a signing certificate, not the signed F-0004 copy. Run Sync Signed Result again for this declaration.",
+    "لا يوجد ملف F-0004 موقع مرتبط بهذا الإقرار.": "No signed F-0004 PDF is linked to this declaration.",
+    "تم توليد ملف المهام": "Responsibilities PDF generated",
+    "تم توليد مسودة F-0006 في الخلفية وربطها بسجل المتقدم.": "F-0006 draft PDF was generated in the background and linked to the applicant record.",
+    "تم إرسال المهام للتوقيع": "Responsibilities sent for signature",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى المدير المسؤول والمتقدم.": "Odoo Sign request was created and sent to the responsible manager and applicant.",
+    "إعادة التوليد موقوفة": "Regeneration disabled",
+    "طلب توقيع مفتوح": "Open Sign request",
+    "بيانات ناقصة": "Missing data",
+    "لم يتم توليد مسودة": "No draft generated",
+    "الوصف الوظيفي موقّع مسبقاً": "Responsibilities already signed",
+    "المسودة غير جاهزة": "Draft is not ready",
+    "جهة اتصال المدير المسؤول غير موجودة": "Responsible manager contact missing",
+    "بريد المدير المسؤول غير موجود": "Responsible manager email missing",
+    "لا توجد مسودة": "No draft",
+    "لا توجد نسخة موقعة": "No signed copy",
+    "لا توجد شهادة توقيع": "No Sign certificate",
+    "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.": "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.",
+    "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.": "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.",
+    "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.": "Cannot generate the responsibilities draft before completing: %s.",
+    "لم يتم توليد أي مسودة وصف وظيفي.": "No responsibilities draft was generated.",
+    "هذا الوصف الوظيفي موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.": "This responsibilities document is already signed. No duplicate Odoo Sign request was created.",
+    "ولّد مسودة الوصف الوظيفي قبل إرسالها عبر توقيع أودو.": "Generate the responsibilities draft before sending it through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال الوصف الوظيفي عبر توقيع أودو.": "Add an applicant email before sending responsibilities through Odoo Sign.",
+    "المستخدم الحالي لا يملك جهة اتصال مرتبطة ولا يمكن استخدامه كموقّع للمدير المسؤول.": "The current user has no linked contact and cannot be used as responsible-manager signer.",
+    "أضف بريداً إلكترونياً إلى جهة اتصال المستخدم الحالي قبل إرسال الوصف الوظيفي للتوقيع.": "Add an email to the current user's contact before sending responsibilities for signature.",
+    "سجل مستندات التوظيف لهذا الوصف الوظيفي موقّع مسبقاً.": "The recruitment document registry for this responsibilities document is already signed.",
+    "طلب توقيع أودو المرتبط مكتمل/موقّع بالفعل. استخدم مزامنة التوقيع لإغلاق السجل.": "The linked Odoo Sign request is completed/signed. Use Sync Signature to close the record.",
+    "يوجد طلب توقيع أودو نشط لهذا الوصف الوظيفي بحالة \"%s\". لن يتم إنشاء طلب مكرر.": "There is an active Odoo Sign request for this responsibilities document in state \"%s\". A duplicate request will not be created.",
+    "لم يتم توليد مسودة الوصف الوظيفي لهذا المتقدم بعد.": "No responsibilities draft has been generated for this applicant yet.",
+    "لم يتم ربط النسخة الموقعة من الوصف الوظيفي بعد. استخدم مزامنة التوقيع أولاً.": "The signed responsibilities copy is not linked yet. Use signature sync first.",
+    "لم يتم العثور على شهادة توقيع للوصف الوظيفي. استخدم مزامنة التوقيع أولاً أو راجع مرفقات أودو Sign.": "No responsibilities Sign certificate was found. Use signature sync first or review Odoo Sign attachments."
+}
+
+def _pattern_translate(text, mapping):
+    if text in mapping:
+        return mapping[text]
+
+    for source, target in mapping.items():
+        if '%s' not in source:
+            continue
+        prefix, suffix = source.split('%s', 1)
+        if text.startswith(prefix) and text.endswith(suffix):
+            value = text[len(prefix):len(text) - len(suffix)] if suffix else text[len(prefix):]
+            try:
+                return target % value
+            except Exception:
+                return target
+
+    return None
+
+def ui_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        translated = _pattern_translate(text, UI_TEXT_AR)
+        if translated:
+            return translated
+        return text
+
+    translated = _pattern_translate(text, AR_TEXT_EN)
+    if translated:
+        return translated
+
+    return text
+
 
 registry_model = env['x_hr.recruitment_document'].sudo()
 sign_template_model = env['sign.template'].sudo()
@@ -256,8 +752,8 @@ def toast(title, message, kind='warning', sticky=False):
         'type': 'ir.actions.client',
         'tag': 'display_notification',
         'params': {
-            'title': title,
-            'message': message,
+            'title': ui_text(title),
+            'message': ui_text(message),
             'type': kind,
             'sticky': sticky,
         },
@@ -557,7 +1053,7 @@ for rec in records.sudo():
             'tag': 'display_notification',
             'params': {
                 'title': 'تم إرسال الوصف الوظيفي للتوقيع',
-                'message': 'تم إنشاء طلب توقيع أودو وإرساله إلى المدير المسؤول والمتقدم.',
+                'message': ui_text('تم إنشاء طلب توقيع أودو وإرساله إلى المدير المسؤول والمتقدم.'),
                 'type': 'success',
                 'sticky': False,
                 'next': {'type': 'ir.actions.client', 'tag': 'reload'},
@@ -594,11 +1090,259 @@ sign_request_model = env['sign.request'].sudo()
 attachment_model = env['ir.attachment'].sudo()
 action = False
 
+UI_TEXT_AR = {
+    "No applicant": "لا يوجد متقدم",
+    "Unsupported declaration type": "نوع إقرار غير مدعوم",
+    "F-0004 already created": "تم إنشاء F-0004 مسبقاً",
+    "Cannot recreate F-0007": "لا يمكن إعادة إنشاء F-0007",
+    "Cannot recreate F-0009": "لا يمكن إعادة إنشاء F-0009",
+    "No generated PDF": "لا يوجد ملف منشأ",
+    "Odoo Sign setup incomplete": "إعداد توقيع أودو غير مكتمل",
+    "F-0004 already signed": "F-0004 موقّع مسبقاً",
+    "F-0007 already signed": "F-0007 موقّع مسبقاً",
+    "F-0009 already signed": "F-0009 موقّع مسبقاً",
+    "F-0004 is not ready to send": "F-0004 غير جاهز للإرسال",
+    "F-0007 is not ready to send": "F-0007 غير جاهز للإرسال",
+    "F-0009 is not ready to send": "F-0009 غير جاهز للإرسال",
+    "Applicant email missing": "بريد المتقدم غير موجود",
+    "Duplicate Sign request blocked": "تم منع طلب توقيع مكرر",
+    "F-0004 sent for signature": "تم إرسال F-0004 للتوقيع",
+    "F-0007 sent for signature": "تم إرسال F-0007 للتوقيع",
+    "F-0009 sent for signature": "تم إرسال F-0009 للتوقيع",
+    "Sign request lookup failed": "تعذر العثور على طلب التوقيع",
+    "No linked Sign request": "لا يوجد طلب توقيع مرتبط",
+    "Sign request missing": "طلب التوقيع غير موجود",
+    "F-0004 is not fully signed": "F-0004 لم يكتمل توقيعه",
+    "Signed document missing": "المستند الموقع غير موجود",
+    "F-0004 signed": "تم توقيع F-0004",
+    "Invalid signed file": "الملف الموقع غير صحيح",
+    "No signed file": "لا يوجد ملف موقع",
+    "Signed copy missing": "النسخة الموقعة غير موجودة",
+    "Save the applicant record before creating the declaration.": "احفظ سجل المتقدم قبل إنشاء الإقرار.",
+    "Save the applicant record before creating the policies and procedures compliance declaration.": "احفظ سجل المتقدم قبل إنشاء إقرار الالتزام باللوائح والسياسات.",
+    "Save the applicant record before creating the confidentiality and non-disclosure declaration.": "احفظ سجل المتقدم قبل إنشاء إقرار السرية وعدم الإفصاح.",
+    "PDF generation is currently available only for F-0004.": "إنشاء PDF متاح حالياً فقط لإقرار F-0004.",
+    "F-0004 PDF has already been generated for this declaration. Create a new declaration if a correction is required.": "تم إنشاء ملف F-0004 لهذا الإقرار مسبقاً. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0004 without a linked applicant.": "لا يمكن إنشاء F-0004 بدون ربط الإقرار بمتقدم.",
+    "This PDF generation action is only for the F-0007 policies and procedures compliance declaration.": "إنشاء PDF هذا مخصص فقط لإقرار F-0007 الالتزام باللوائح والسياسات.",
+    "F-0007 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.": "لا يمكن إعادة إنشاء ملف F-0007 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0007 without a linked applicant.": "لا يمكن إنشاء F-0007 بدون ربط الإقرار بمتقدم.",
+    "This PDF generation action is only for the F-0009 confidentiality and non-disclosure declaration.": "إنشاء PDF هذا مخصص فقط لإقرار F-0009 السرية وعدم الإفصاح.",
+    "F-0009 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.": "لا يمكن إعادة إنشاء ملف F-0009 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0009 without a linked applicant.": "لا يمكن إنشاء F-0009 بدون ربط الإقرار بمتقدم.",
+    "No generated F-0004 PDF is linked to this declaration.": "لا يوجد ملف F-0004 منشأ مرتبط بهذا الإقرار.",
+    "Sending through Odoo Sign is currently available only for F-0004.": "الإرسال عبر توقيع أودو متاح حالياً فقط لإقرار F-0004.",
+    "This Odoo Sign send action is only for F-0007.": "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0007.",
+    "This Odoo Sign send action is only for F-0009.": "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0009.",
+    "This declaration is already signed. No duplicate Odoo Sign request was created.": "هذا الإقرار موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.",
+    "Generate the F-0004 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0004 PDF قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0007 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0007 PDF قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0009 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0009 PDF قبل إرساله عبر توقيع أودو.",
+    "Cannot send F-0004 without a linked applicant.": "لا يمكن إرسال F-0004 بدون متقدم مرتبط.",
+    "Cannot send F-0007 without a linked applicant.": "لا يمكن إرسال F-0007 بدون متقدم مرتبط.",
+    "Cannot send F-0009 without a linked applicant.": "لا يمكن إرسال F-0009 بدون متقدم مرتبط.",
+    "Add an applicant email before sending F-0004 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0004 عبر توقيع أودو.",
+    "Add an applicant email before sending F-0007 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0007 عبر توقيع أودو.",
+    "Add an applicant email before sending F-0009 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0009 عبر توقيع أودو.",
+    "The recruitment document registry for this declaration is already signed.": "سجل مستندات التوظيف لهذا الإقرار موقّع مسبقاً.",
+    "The linked Odoo Sign request is already signed. Use Sync Signed Result to close the record.": "طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة نتيجة التوقيع لإغلاق السجل.",
+    "There is an active Odoo Sign request for this declaration in state \"%s\". A duplicate request will not be created.": "يوجد طلب توقيع أودو نشط لهذا الإقرار بحالة \"%s\". لن يتم إنشاء طلب مكرر.",
+    "Odoo Sign request was created and sent to %s.": "تم إنشاء طلب توقيع أودو وإرساله إلى %s.",
+    "Odoo Sign request was created and sent to the applicant.": "تم إنشاء طلب توقيع أودو وإرساله إلى المتقدم.",
+    "The send action ran, but sign.request was not found automatically. Review the Sign app before retrying.": "تم تنفيذ الإرسال، لكن لم يتم العثور على sign.request تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.",
+    "Cannot sync F-0004 without a linked applicant.": "لا يمكن مزامنة F-0004 بدون متقدم مرتبط.",
+    "Cannot sync %s without a linked applicant.": "لا يمكن مزامنة %s بدون متقدم مرتبط.",
+    "No F-0004 registry row linked to an Odoo Sign request was found.": "لم يتم العثور على سجل F-0004 مرتبط بطلب توقيع أودو.",
+    "The linked Odoo Sign request no longer exists or cannot be accessed.": "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.",
+    "The Odoo Sign request is still in state: %s.": "طلب توقيع أودو لا يزال بحالة: %s.",
+    "%s is not fully signed yet": "%s لم يكتمل توقيعه",
+    "The Sign request is signed, but the completed document attachments were not found.": "طلب التوقيع موقّع، لكن لم يتم العثور على مرفقات المستند المكتمل.",
+    "Only the signing certificate was found. The signed F-0004 copy was not found. Open the original Sign request and verify attachments before syncing again.": "تم العثور على شهادة التوقيع فقط، ولم يتم العثور على نسخة F-0004 الموقعة. افتح طلب التوقيع الأصلي وتحقق من المرفقات قبل إعادة المزامنة.",
+    "Only the signing certificate/log was found. The signed %s copy was not found.": "تم العثور على شهادة/سجل التوقيع فقط، ولم يتم العثور على نسخة %s الموقعة.",
+    "The signed result was synced and the signed document and certificate were linked where available.": "تمت مزامنة نتيجة التوقيع وربط المستند الموقع والشهادة عند توفرها.",
+    "Signed %s": "تم توقيع %s",
+    "The attachment linked as signed file appears to be a signing certificate, not the signed F-0004 copy. Run Sync Signed Result again for this declaration.": "المرفق المرتبط كملف موقع يبدو أنه شهادة توقيع وليس نسخة F-0004 الموقعة. أعد تشغيل مزامنة نتيجة التوقيع لهذا الإقرار.",
+    "No signed F-0004 PDF is linked to this declaration.": "لا يوجد ملف F-0004 موقع مرتبط بهذا الإقرار.",
+    "Responsibilities PDF generated": "تم توليد ملف المهام",
+    "F-0006 draft PDF was generated in the background and linked to the applicant record.": "تم توليد مسودة F-0006 في الخلفية وربطها بسجل المتقدم.",
+    "Responsibilities sent for signature": "تم إرسال المهام للتوقيع",
+    "Odoo Sign request was created and sent to the responsible manager and applicant.": "تم إنشاء طلب توقيع أودو وإرساله إلى المدير المسؤول والمتقدم.",
+    "Regeneration disabled": "إعادة التوليد موقوفة",
+    "Open Sign request": "طلب توقيع مفتوح",
+    "Missing data": "بيانات ناقصة",
+    "No draft generated": "لم يتم توليد مسودة",
+    "Responsibilities already signed": "الوصف الوظيفي موقّع مسبقاً",
+    "Draft is not ready": "المسودة غير جاهزة",
+    "Responsible manager contact missing": "جهة اتصال المدير المسؤول غير موجودة",
+    "Responsible manager email missing": "بريد المدير المسؤول غير موجود",
+    "No draft": "لا توجد مسودة",
+    "No signed copy": "لا توجد نسخة موقعة",
+    "No Sign certificate": "لا توجد شهادة توقيع",
+    "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.": "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.",
+    "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.": "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.",
+    "Cannot generate the responsibilities draft before completing: %s.": "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.",
+    "No responsibilities draft was generated.": "لم يتم توليد أي مسودة وصف وظيفي.",
+    "This responsibilities document is already signed. No duplicate Odoo Sign request was created.": "هذا الوصف الوظيفي موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.",
+    "Generate the responsibilities draft before sending it through Odoo Sign.": "ولّد مسودة الوصف الوظيفي قبل إرسالها عبر توقيع أودو.",
+    "Add an applicant email before sending responsibilities through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال الوصف الوظيفي عبر توقيع أودو.",
+    "The current user has no linked contact and cannot be used as responsible-manager signer.": "المستخدم الحالي لا يملك جهة اتصال مرتبطة ولا يمكن استخدامه كموقّع للمدير المسؤول.",
+    "Add an email to the current user's contact before sending responsibilities for signature.": "أضف بريداً إلكترونياً إلى جهة اتصال المستخدم الحالي قبل إرسال الوصف الوظيفي للتوقيع.",
+    "The recruitment document registry for this responsibilities document is already signed.": "سجل مستندات التوظيف لهذا الوصف الوظيفي موقّع مسبقاً.",
+    "The linked Odoo Sign request is completed/signed. Use Sync Signature to close the record.": "طلب توقيع أودو المرتبط مكتمل/موقّع بالفعل. استخدم مزامنة التوقيع لإغلاق السجل.",
+    "There is an active Odoo Sign request for this responsibilities document in state \"%s\". A duplicate request will not be created.": "يوجد طلب توقيع أودو نشط لهذا الوصف الوظيفي بحالة \"%s\". لن يتم إنشاء طلب مكرر.",
+    "No responsibilities draft has been generated for this applicant yet.": "لم يتم توليد مسودة الوصف الوظيفي لهذا المتقدم بعد.",
+    "The signed responsibilities copy is not linked yet. Use signature sync first.": "لم يتم ربط النسخة الموقعة من الوصف الوظيفي بعد. استخدم مزامنة التوقيع أولاً.",
+    "No responsibilities Sign certificate was found. Use signature sync first or review Odoo Sign attachments.": "لم يتم العثور على شهادة توقيع للوصف الوظيفي. استخدم مزامنة التوقيع أولاً أو راجع مرفقات أودو Sign."
+}
+AR_TEXT_EN = {
+    "لا يوجد متقدم": "No applicant",
+    "نوع إقرار غير مدعوم": "Unsupported declaration type",
+    "تم إنشاء F-0004 مسبقاً": "F-0004 already created",
+    "لا يمكن إعادة إنشاء F-0007": "Cannot recreate F-0007",
+    "لا يمكن إعادة إنشاء F-0009": "Cannot recreate F-0009",
+    "لا يوجد ملف منشأ": "No generated PDF",
+    "إعداد توقيع أودو غير مكتمل": "Odoo Sign setup incomplete",
+    "F-0004 موقّع مسبقاً": "F-0004 already signed",
+    "F-0007 موقّع مسبقاً": "F-0007 already signed",
+    "F-0009 موقّع مسبقاً": "F-0009 already signed",
+    "F-0004 غير جاهز للإرسال": "F-0004 is not ready to send",
+    "F-0007 غير جاهز للإرسال": "F-0007 is not ready to send",
+    "F-0009 غير جاهز للإرسال": "F-0009 is not ready to send",
+    "بريد المتقدم غير موجود": "Applicant email missing",
+    "تم منع طلب توقيع مكرر": "Duplicate Sign request blocked",
+    "تم إرسال F-0004 للتوقيع": "F-0004 sent for signature",
+    "تم إرسال F-0007 للتوقيع": "F-0007 sent for signature",
+    "تم إرسال F-0009 للتوقيع": "F-0009 sent for signature",
+    "تعذر العثور على طلب التوقيع": "Sign request lookup failed",
+    "لا يوجد طلب توقيع مرتبط": "No linked Sign request",
+    "طلب التوقيع غير موجود": "Sign request missing",
+    "F-0004 لم يكتمل توقيعه": "F-0004 is not fully signed",
+    "المستند الموقع غير موجود": "Signed document missing",
+    "تم توقيع F-0004": "F-0004 signed",
+    "الملف الموقع غير صحيح": "Invalid signed file",
+    "لا يوجد ملف موقع": "No signed file",
+    "النسخة الموقعة غير موجودة": "Signed copy missing",
+    "احفظ سجل المتقدم قبل إنشاء الإقرار.": "Save the applicant record before creating the declaration.",
+    "احفظ سجل المتقدم قبل إنشاء إقرار الالتزام باللوائح والسياسات.": "Save the applicant record before creating the policies and procedures compliance declaration.",
+    "احفظ سجل المتقدم قبل إنشاء إقرار السرية وعدم الإفصاح.": "Save the applicant record before creating the confidentiality and non-disclosure declaration.",
+    "إنشاء PDF متاح حالياً فقط لإقرار F-0004.": "PDF generation is currently available only for F-0004.",
+    "تم إنشاء ملف F-0004 لهذا الإقرار مسبقاً. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0004 PDF has already been generated for this declaration. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0004 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0004 without a linked applicant.",
+    "إنشاء PDF هذا مخصص فقط لإقرار F-0007 الالتزام باللوائح والسياسات.": "This PDF generation action is only for the F-0007 policies and procedures compliance declaration.",
+    "لا يمكن إعادة إنشاء ملف F-0007 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0007 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0007 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0007 without a linked applicant.",
+    "إنشاء PDF هذا مخصص فقط لإقرار F-0009 السرية وعدم الإفصاح.": "This PDF generation action is only for the F-0009 confidentiality and non-disclosure declaration.",
+    "لا يمكن إعادة إنشاء ملف F-0009 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0009 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0009 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0009 without a linked applicant.",
+    "لا يوجد ملف F-0004 منشأ مرتبط بهذا الإقرار.": "No generated F-0004 PDF is linked to this declaration.",
+    "الإرسال عبر توقيع أودو متاح حالياً فقط لإقرار F-0004.": "Sending through Odoo Sign is currently available only for F-0004.",
+    "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0007.": "This Odoo Sign send action is only for F-0007.",
+    "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0009.": "This Odoo Sign send action is only for F-0009.",
+    "هذا الإقرار موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.": "This declaration is already signed. No duplicate Odoo Sign request was created.",
+    "أنشئ ملف F-0004 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0004 PDF before sending it through Odoo Sign.",
+    "أنشئ ملف F-0007 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0007 PDF before sending it through Odoo Sign.",
+    "أنشئ ملف F-0009 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0009 PDF before sending it through Odoo Sign.",
+    "لا يمكن إرسال F-0004 بدون متقدم مرتبط.": "Cannot send F-0004 without a linked applicant.",
+    "لا يمكن إرسال F-0007 بدون متقدم مرتبط.": "Cannot send F-0007 without a linked applicant.",
+    "لا يمكن إرسال F-0009 بدون متقدم مرتبط.": "Cannot send F-0009 without a linked applicant.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0004 عبر توقيع أودو.": "Add an applicant email before sending F-0004 through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0007 عبر توقيع أودو.": "Add an applicant email before sending F-0007 through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0009 عبر توقيع أودو.": "Add an applicant email before sending F-0009 through Odoo Sign.",
+    "سجل مستندات التوظيف لهذا الإقرار موقّع مسبقاً.": "The recruitment document registry for this declaration is already signed.",
+    "طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة نتيجة التوقيع لإغلاق السجل.": "The linked Odoo Sign request is already signed. Use Sync Signed Result to close the record.",
+    "يوجد طلب توقيع أودو نشط لهذا الإقرار بحالة \"%s\". لن يتم إنشاء طلب مكرر.": "There is an active Odoo Sign request for this declaration in state \"%s\". A duplicate request will not be created.",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى %s.": "Odoo Sign request was created and sent to %s.",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى المتقدم.": "Odoo Sign request was created and sent to the applicant.",
+    "تم تنفيذ الإرسال، لكن لم يتم العثور على sign.request تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.": "The send action ran, but sign.request was not found automatically. Review the Sign app before retrying.",
+    "لا يمكن مزامنة F-0004 بدون متقدم مرتبط.": "Cannot sync F-0004 without a linked applicant.",
+    "لا يمكن مزامنة %s بدون متقدم مرتبط.": "Cannot sync %s without a linked applicant.",
+    "لم يتم العثور على سجل F-0004 مرتبط بطلب توقيع أودو.": "No F-0004 registry row linked to an Odoo Sign request was found.",
+    "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.": "The linked Odoo Sign request no longer exists or cannot be accessed.",
+    "طلب توقيع أودو لا يزال بحالة: %s.": "The Odoo Sign request is still in state: %s.",
+    "%s لم يكتمل توقيعه": "%s is not fully signed yet",
+    "طلب التوقيع موقّع، لكن لم يتم العثور على مرفقات المستند المكتمل.": "The Sign request is signed, but the completed document attachments were not found.",
+    "تم العثور على شهادة التوقيع فقط، ولم يتم العثور على نسخة F-0004 الموقعة. افتح طلب التوقيع الأصلي وتحقق من المرفقات قبل إعادة المزامنة.": "Only the signing certificate was found. The signed F-0004 copy was not found. Open the original Sign request and verify attachments before syncing again.",
+    "تم العثور على شهادة/سجل التوقيع فقط، ولم يتم العثور على نسخة %s الموقعة.": "Only the signing certificate/log was found. The signed %s copy was not found.",
+    "تمت مزامنة نتيجة التوقيع وربط المستند الموقع والشهادة عند توفرها.": "The signed result was synced and the signed document and certificate were linked where available.",
+    "تم توقيع %s": "Signed %s",
+    "المرفق المرتبط كملف موقع يبدو أنه شهادة توقيع وليس نسخة F-0004 الموقعة. أعد تشغيل مزامنة نتيجة التوقيع لهذا الإقرار.": "The attachment linked as signed file appears to be a signing certificate, not the signed F-0004 copy. Run Sync Signed Result again for this declaration.",
+    "لا يوجد ملف F-0004 موقع مرتبط بهذا الإقرار.": "No signed F-0004 PDF is linked to this declaration.",
+    "تم توليد ملف المهام": "Responsibilities PDF generated",
+    "تم توليد مسودة F-0006 في الخلفية وربطها بسجل المتقدم.": "F-0006 draft PDF was generated in the background and linked to the applicant record.",
+    "تم إرسال المهام للتوقيع": "Responsibilities sent for signature",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى المدير المسؤول والمتقدم.": "Odoo Sign request was created and sent to the responsible manager and applicant.",
+    "إعادة التوليد موقوفة": "Regeneration disabled",
+    "طلب توقيع مفتوح": "Open Sign request",
+    "بيانات ناقصة": "Missing data",
+    "لم يتم توليد مسودة": "No draft generated",
+    "الوصف الوظيفي موقّع مسبقاً": "Responsibilities already signed",
+    "المسودة غير جاهزة": "Draft is not ready",
+    "جهة اتصال المدير المسؤول غير موجودة": "Responsible manager contact missing",
+    "بريد المدير المسؤول غير موجود": "Responsible manager email missing",
+    "لا توجد مسودة": "No draft",
+    "لا توجد نسخة موقعة": "No signed copy",
+    "لا توجد شهادة توقيع": "No Sign certificate",
+    "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.": "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.",
+    "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.": "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.",
+    "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.": "Cannot generate the responsibilities draft before completing: %s.",
+    "لم يتم توليد أي مسودة وصف وظيفي.": "No responsibilities draft was generated.",
+    "هذا الوصف الوظيفي موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.": "This responsibilities document is already signed. No duplicate Odoo Sign request was created.",
+    "ولّد مسودة الوصف الوظيفي قبل إرسالها عبر توقيع أودو.": "Generate the responsibilities draft before sending it through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال الوصف الوظيفي عبر توقيع أودو.": "Add an applicant email before sending responsibilities through Odoo Sign.",
+    "المستخدم الحالي لا يملك جهة اتصال مرتبطة ولا يمكن استخدامه كموقّع للمدير المسؤول.": "The current user has no linked contact and cannot be used as responsible-manager signer.",
+    "أضف بريداً إلكترونياً إلى جهة اتصال المستخدم الحالي قبل إرسال الوصف الوظيفي للتوقيع.": "Add an email to the current user's contact before sending responsibilities for signature.",
+    "سجل مستندات التوظيف لهذا الوصف الوظيفي موقّع مسبقاً.": "The recruitment document registry for this responsibilities document is already signed.",
+    "طلب توقيع أودو المرتبط مكتمل/موقّع بالفعل. استخدم مزامنة التوقيع لإغلاق السجل.": "The linked Odoo Sign request is completed/signed. Use Sync Signature to close the record.",
+    "يوجد طلب توقيع أودو نشط لهذا الوصف الوظيفي بحالة \"%s\". لن يتم إنشاء طلب مكرر.": "There is an active Odoo Sign request for this responsibilities document in state \"%s\". A duplicate request will not be created.",
+    "لم يتم توليد مسودة الوصف الوظيفي لهذا المتقدم بعد.": "No responsibilities draft has been generated for this applicant yet.",
+    "لم يتم ربط النسخة الموقعة من الوصف الوظيفي بعد. استخدم مزامنة التوقيع أولاً.": "The signed responsibilities copy is not linked yet. Use signature sync first.",
+    "لم يتم العثور على شهادة توقيع للوصف الوظيفي. استخدم مزامنة التوقيع أولاً أو راجع مرفقات أودو Sign.": "No responsibilities Sign certificate was found. Use signature sync first or review Odoo Sign attachments."
+}
+
+def _pattern_translate(text, mapping):
+    if text in mapping:
+        return mapping[text]
+
+    for source, target in mapping.items():
+        if '%s' not in source:
+            continue
+        prefix, suffix = source.split('%s', 1)
+        if text.startswith(prefix) and text.endswith(suffix):
+            value = text[len(prefix):len(text) - len(suffix)] if suffix else text[len(prefix):]
+            try:
+                return target % value
+            except Exception:
+                return target
+
+    return None
+
+def ui_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        translated = _pattern_translate(text, UI_TEXT_AR)
+        if translated:
+            return translated
+        return text
+
+    translated = _pattern_translate(text, AR_TEXT_EN)
+    if translated:
+        return translated
+
+    return text
+
+
 
 def toast(title, message, kind='warning', sticky=False, reload=False):
     params = {
-        'title': title,
-        'message': message,
+        'title': ui_text(title),
+        'message': ui_text(message),
         'type': kind,
         'sticky': sticky,
     }
@@ -850,13 +1594,261 @@ if not action:
         <field name="code"><![CDATA[
 action = False
 
+UI_TEXT_AR = {
+    "No applicant": "لا يوجد متقدم",
+    "Unsupported declaration type": "نوع إقرار غير مدعوم",
+    "F-0004 already created": "تم إنشاء F-0004 مسبقاً",
+    "Cannot recreate F-0007": "لا يمكن إعادة إنشاء F-0007",
+    "Cannot recreate F-0009": "لا يمكن إعادة إنشاء F-0009",
+    "No generated PDF": "لا يوجد ملف منشأ",
+    "Odoo Sign setup incomplete": "إعداد توقيع أودو غير مكتمل",
+    "F-0004 already signed": "F-0004 موقّع مسبقاً",
+    "F-0007 already signed": "F-0007 موقّع مسبقاً",
+    "F-0009 already signed": "F-0009 موقّع مسبقاً",
+    "F-0004 is not ready to send": "F-0004 غير جاهز للإرسال",
+    "F-0007 is not ready to send": "F-0007 غير جاهز للإرسال",
+    "F-0009 is not ready to send": "F-0009 غير جاهز للإرسال",
+    "Applicant email missing": "بريد المتقدم غير موجود",
+    "Duplicate Sign request blocked": "تم منع طلب توقيع مكرر",
+    "F-0004 sent for signature": "تم إرسال F-0004 للتوقيع",
+    "F-0007 sent for signature": "تم إرسال F-0007 للتوقيع",
+    "F-0009 sent for signature": "تم إرسال F-0009 للتوقيع",
+    "Sign request lookup failed": "تعذر العثور على طلب التوقيع",
+    "No linked Sign request": "لا يوجد طلب توقيع مرتبط",
+    "Sign request missing": "طلب التوقيع غير موجود",
+    "F-0004 is not fully signed": "F-0004 لم يكتمل توقيعه",
+    "Signed document missing": "المستند الموقع غير موجود",
+    "F-0004 signed": "تم توقيع F-0004",
+    "Invalid signed file": "الملف الموقع غير صحيح",
+    "No signed file": "لا يوجد ملف موقع",
+    "Signed copy missing": "النسخة الموقعة غير موجودة",
+    "Save the applicant record before creating the declaration.": "احفظ سجل المتقدم قبل إنشاء الإقرار.",
+    "Save the applicant record before creating the policies and procedures compliance declaration.": "احفظ سجل المتقدم قبل إنشاء إقرار الالتزام باللوائح والسياسات.",
+    "Save the applicant record before creating the confidentiality and non-disclosure declaration.": "احفظ سجل المتقدم قبل إنشاء إقرار السرية وعدم الإفصاح.",
+    "PDF generation is currently available only for F-0004.": "إنشاء PDF متاح حالياً فقط لإقرار F-0004.",
+    "F-0004 PDF has already been generated for this declaration. Create a new declaration if a correction is required.": "تم إنشاء ملف F-0004 لهذا الإقرار مسبقاً. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0004 without a linked applicant.": "لا يمكن إنشاء F-0004 بدون ربط الإقرار بمتقدم.",
+    "This PDF generation action is only for the F-0007 policies and procedures compliance declaration.": "إنشاء PDF هذا مخصص فقط لإقرار F-0007 الالتزام باللوائح والسياسات.",
+    "F-0007 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.": "لا يمكن إعادة إنشاء ملف F-0007 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0007 without a linked applicant.": "لا يمكن إنشاء F-0007 بدون ربط الإقرار بمتقدم.",
+    "This PDF generation action is only for the F-0009 confidentiality and non-disclosure declaration.": "إنشاء PDF هذا مخصص فقط لإقرار F-0009 السرية وعدم الإفصاح.",
+    "F-0009 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.": "لا يمكن إعادة إنشاء ملف F-0009 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0009 without a linked applicant.": "لا يمكن إنشاء F-0009 بدون ربط الإقرار بمتقدم.",
+    "No generated F-0004 PDF is linked to this declaration.": "لا يوجد ملف F-0004 منشأ مرتبط بهذا الإقرار.",
+    "Sending through Odoo Sign is currently available only for F-0004.": "الإرسال عبر توقيع أودو متاح حالياً فقط لإقرار F-0004.",
+    "This Odoo Sign send action is only for F-0007.": "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0007.",
+    "This Odoo Sign send action is only for F-0009.": "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0009.",
+    "This declaration is already signed. No duplicate Odoo Sign request was created.": "هذا الإقرار موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.",
+    "Generate the F-0004 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0004 PDF قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0007 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0007 PDF قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0009 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0009 PDF قبل إرساله عبر توقيع أودو.",
+    "Cannot send F-0004 without a linked applicant.": "لا يمكن إرسال F-0004 بدون متقدم مرتبط.",
+    "Cannot send F-0007 without a linked applicant.": "لا يمكن إرسال F-0007 بدون متقدم مرتبط.",
+    "Cannot send F-0009 without a linked applicant.": "لا يمكن إرسال F-0009 بدون متقدم مرتبط.",
+    "Add an applicant email before sending F-0004 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0004 عبر توقيع أودو.",
+    "Add an applicant email before sending F-0007 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0007 عبر توقيع أودو.",
+    "Add an applicant email before sending F-0009 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0009 عبر توقيع أودو.",
+    "The recruitment document registry for this declaration is already signed.": "سجل مستندات التوظيف لهذا الإقرار موقّع مسبقاً.",
+    "The linked Odoo Sign request is already signed. Use Sync Signed Result to close the record.": "طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة نتيجة التوقيع لإغلاق السجل.",
+    "There is an active Odoo Sign request for this declaration in state \"%s\". A duplicate request will not be created.": "يوجد طلب توقيع أودو نشط لهذا الإقرار بحالة \"%s\". لن يتم إنشاء طلب مكرر.",
+    "Odoo Sign request was created and sent to %s.": "تم إنشاء طلب توقيع أودو وإرساله إلى %s.",
+    "Odoo Sign request was created and sent to the applicant.": "تم إنشاء طلب توقيع أودو وإرساله إلى المتقدم.",
+    "The send action ran, but sign.request was not found automatically. Review the Sign app before retrying.": "تم تنفيذ الإرسال، لكن لم يتم العثور على sign.request تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.",
+    "Cannot sync F-0004 without a linked applicant.": "لا يمكن مزامنة F-0004 بدون متقدم مرتبط.",
+    "Cannot sync %s without a linked applicant.": "لا يمكن مزامنة %s بدون متقدم مرتبط.",
+    "No F-0004 registry row linked to an Odoo Sign request was found.": "لم يتم العثور على سجل F-0004 مرتبط بطلب توقيع أودو.",
+    "The linked Odoo Sign request no longer exists or cannot be accessed.": "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.",
+    "The Odoo Sign request is still in state: %s.": "طلب توقيع أودو لا يزال بحالة: %s.",
+    "%s is not fully signed yet": "%s لم يكتمل توقيعه",
+    "The Sign request is signed, but the completed document attachments were not found.": "طلب التوقيع موقّع، لكن لم يتم العثور على مرفقات المستند المكتمل.",
+    "Only the signing certificate was found. The signed F-0004 copy was not found. Open the original Sign request and verify attachments before syncing again.": "تم العثور على شهادة التوقيع فقط، ولم يتم العثور على نسخة F-0004 الموقعة. افتح طلب التوقيع الأصلي وتحقق من المرفقات قبل إعادة المزامنة.",
+    "Only the signing certificate/log was found. The signed %s copy was not found.": "تم العثور على شهادة/سجل التوقيع فقط، ولم يتم العثور على نسخة %s الموقعة.",
+    "The signed result was synced and the signed document and certificate were linked where available.": "تمت مزامنة نتيجة التوقيع وربط المستند الموقع والشهادة عند توفرها.",
+    "Signed %s": "تم توقيع %s",
+    "The attachment linked as signed file appears to be a signing certificate, not the signed F-0004 copy. Run Sync Signed Result again for this declaration.": "المرفق المرتبط كملف موقع يبدو أنه شهادة توقيع وليس نسخة F-0004 الموقعة. أعد تشغيل مزامنة نتيجة التوقيع لهذا الإقرار.",
+    "No signed F-0004 PDF is linked to this declaration.": "لا يوجد ملف F-0004 موقع مرتبط بهذا الإقرار.",
+    "Responsibilities PDF generated": "تم توليد ملف المهام",
+    "F-0006 draft PDF was generated in the background and linked to the applicant record.": "تم توليد مسودة F-0006 في الخلفية وربطها بسجل المتقدم.",
+    "Responsibilities sent for signature": "تم إرسال المهام للتوقيع",
+    "Odoo Sign request was created and sent to the responsible manager and applicant.": "تم إنشاء طلب توقيع أودو وإرساله إلى المدير المسؤول والمتقدم.",
+    "Regeneration disabled": "إعادة التوليد موقوفة",
+    "Open Sign request": "طلب توقيع مفتوح",
+    "Missing data": "بيانات ناقصة",
+    "No draft generated": "لم يتم توليد مسودة",
+    "Responsibilities already signed": "الوصف الوظيفي موقّع مسبقاً",
+    "Draft is not ready": "المسودة غير جاهزة",
+    "Responsible manager contact missing": "جهة اتصال المدير المسؤول غير موجودة",
+    "Responsible manager email missing": "بريد المدير المسؤول غير موجود",
+    "No draft": "لا توجد مسودة",
+    "No signed copy": "لا توجد نسخة موقعة",
+    "No Sign certificate": "لا توجد شهادة توقيع",
+    "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.": "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.",
+    "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.": "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.",
+    "Cannot generate the responsibilities draft before completing: %s.": "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.",
+    "No responsibilities draft was generated.": "لم يتم توليد أي مسودة وصف وظيفي.",
+    "This responsibilities document is already signed. No duplicate Odoo Sign request was created.": "هذا الوصف الوظيفي موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.",
+    "Generate the responsibilities draft before sending it through Odoo Sign.": "ولّد مسودة الوصف الوظيفي قبل إرسالها عبر توقيع أودو.",
+    "Add an applicant email before sending responsibilities through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال الوصف الوظيفي عبر توقيع أودو.",
+    "The current user has no linked contact and cannot be used as responsible-manager signer.": "المستخدم الحالي لا يملك جهة اتصال مرتبطة ولا يمكن استخدامه كموقّع للمدير المسؤول.",
+    "Add an email to the current user's contact before sending responsibilities for signature.": "أضف بريداً إلكترونياً إلى جهة اتصال المستخدم الحالي قبل إرسال الوصف الوظيفي للتوقيع.",
+    "The recruitment document registry for this responsibilities document is already signed.": "سجل مستندات التوظيف لهذا الوصف الوظيفي موقّع مسبقاً.",
+    "The linked Odoo Sign request is completed/signed. Use Sync Signature to close the record.": "طلب توقيع أودو المرتبط مكتمل/موقّع بالفعل. استخدم مزامنة التوقيع لإغلاق السجل.",
+    "There is an active Odoo Sign request for this responsibilities document in state \"%s\". A duplicate request will not be created.": "يوجد طلب توقيع أودو نشط لهذا الوصف الوظيفي بحالة \"%s\". لن يتم إنشاء طلب مكرر.",
+    "No responsibilities draft has been generated for this applicant yet.": "لم يتم توليد مسودة الوصف الوظيفي لهذا المتقدم بعد.",
+    "The signed responsibilities copy is not linked yet. Use signature sync first.": "لم يتم ربط النسخة الموقعة من الوصف الوظيفي بعد. استخدم مزامنة التوقيع أولاً.",
+    "No responsibilities Sign certificate was found. Use signature sync first or review Odoo Sign attachments.": "لم يتم العثور على شهادة توقيع للوصف الوظيفي. استخدم مزامنة التوقيع أولاً أو راجع مرفقات أودو Sign."
+}
+AR_TEXT_EN = {
+    "لا يوجد متقدم": "No applicant",
+    "نوع إقرار غير مدعوم": "Unsupported declaration type",
+    "تم إنشاء F-0004 مسبقاً": "F-0004 already created",
+    "لا يمكن إعادة إنشاء F-0007": "Cannot recreate F-0007",
+    "لا يمكن إعادة إنشاء F-0009": "Cannot recreate F-0009",
+    "لا يوجد ملف منشأ": "No generated PDF",
+    "إعداد توقيع أودو غير مكتمل": "Odoo Sign setup incomplete",
+    "F-0004 موقّع مسبقاً": "F-0004 already signed",
+    "F-0007 موقّع مسبقاً": "F-0007 already signed",
+    "F-0009 موقّع مسبقاً": "F-0009 already signed",
+    "F-0004 غير جاهز للإرسال": "F-0004 is not ready to send",
+    "F-0007 غير جاهز للإرسال": "F-0007 is not ready to send",
+    "F-0009 غير جاهز للإرسال": "F-0009 is not ready to send",
+    "بريد المتقدم غير موجود": "Applicant email missing",
+    "تم منع طلب توقيع مكرر": "Duplicate Sign request blocked",
+    "تم إرسال F-0004 للتوقيع": "F-0004 sent for signature",
+    "تم إرسال F-0007 للتوقيع": "F-0007 sent for signature",
+    "تم إرسال F-0009 للتوقيع": "F-0009 sent for signature",
+    "تعذر العثور على طلب التوقيع": "Sign request lookup failed",
+    "لا يوجد طلب توقيع مرتبط": "No linked Sign request",
+    "طلب التوقيع غير موجود": "Sign request missing",
+    "F-0004 لم يكتمل توقيعه": "F-0004 is not fully signed",
+    "المستند الموقع غير موجود": "Signed document missing",
+    "تم توقيع F-0004": "F-0004 signed",
+    "الملف الموقع غير صحيح": "Invalid signed file",
+    "لا يوجد ملف موقع": "No signed file",
+    "النسخة الموقعة غير موجودة": "Signed copy missing",
+    "احفظ سجل المتقدم قبل إنشاء الإقرار.": "Save the applicant record before creating the declaration.",
+    "احفظ سجل المتقدم قبل إنشاء إقرار الالتزام باللوائح والسياسات.": "Save the applicant record before creating the policies and procedures compliance declaration.",
+    "احفظ سجل المتقدم قبل إنشاء إقرار السرية وعدم الإفصاح.": "Save the applicant record before creating the confidentiality and non-disclosure declaration.",
+    "إنشاء PDF متاح حالياً فقط لإقرار F-0004.": "PDF generation is currently available only for F-0004.",
+    "تم إنشاء ملف F-0004 لهذا الإقرار مسبقاً. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0004 PDF has already been generated for this declaration. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0004 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0004 without a linked applicant.",
+    "إنشاء PDF هذا مخصص فقط لإقرار F-0007 الالتزام باللوائح والسياسات.": "This PDF generation action is only for the F-0007 policies and procedures compliance declaration.",
+    "لا يمكن إعادة إنشاء ملف F-0007 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0007 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0007 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0007 without a linked applicant.",
+    "إنشاء PDF هذا مخصص فقط لإقرار F-0009 السرية وعدم الإفصاح.": "This PDF generation action is only for the F-0009 confidentiality and non-disclosure declaration.",
+    "لا يمكن إعادة إنشاء ملف F-0009 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0009 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0009 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0009 without a linked applicant.",
+    "لا يوجد ملف F-0004 منشأ مرتبط بهذا الإقرار.": "No generated F-0004 PDF is linked to this declaration.",
+    "الإرسال عبر توقيع أودو متاح حالياً فقط لإقرار F-0004.": "Sending through Odoo Sign is currently available only for F-0004.",
+    "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0007.": "This Odoo Sign send action is only for F-0007.",
+    "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0009.": "This Odoo Sign send action is only for F-0009.",
+    "هذا الإقرار موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.": "This declaration is already signed. No duplicate Odoo Sign request was created.",
+    "أنشئ ملف F-0004 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0004 PDF before sending it through Odoo Sign.",
+    "أنشئ ملف F-0007 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0007 PDF before sending it through Odoo Sign.",
+    "أنشئ ملف F-0009 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0009 PDF before sending it through Odoo Sign.",
+    "لا يمكن إرسال F-0004 بدون متقدم مرتبط.": "Cannot send F-0004 without a linked applicant.",
+    "لا يمكن إرسال F-0007 بدون متقدم مرتبط.": "Cannot send F-0007 without a linked applicant.",
+    "لا يمكن إرسال F-0009 بدون متقدم مرتبط.": "Cannot send F-0009 without a linked applicant.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0004 عبر توقيع أودو.": "Add an applicant email before sending F-0004 through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0007 عبر توقيع أودو.": "Add an applicant email before sending F-0007 through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0009 عبر توقيع أودو.": "Add an applicant email before sending F-0009 through Odoo Sign.",
+    "سجل مستندات التوظيف لهذا الإقرار موقّع مسبقاً.": "The recruitment document registry for this declaration is already signed.",
+    "طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة نتيجة التوقيع لإغلاق السجل.": "The linked Odoo Sign request is already signed. Use Sync Signed Result to close the record.",
+    "يوجد طلب توقيع أودو نشط لهذا الإقرار بحالة \"%s\". لن يتم إنشاء طلب مكرر.": "There is an active Odoo Sign request for this declaration in state \"%s\". A duplicate request will not be created.",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى %s.": "Odoo Sign request was created and sent to %s.",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى المتقدم.": "Odoo Sign request was created and sent to the applicant.",
+    "تم تنفيذ الإرسال، لكن لم يتم العثور على sign.request تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.": "The send action ran, but sign.request was not found automatically. Review the Sign app before retrying.",
+    "لا يمكن مزامنة F-0004 بدون متقدم مرتبط.": "Cannot sync F-0004 without a linked applicant.",
+    "لا يمكن مزامنة %s بدون متقدم مرتبط.": "Cannot sync %s without a linked applicant.",
+    "لم يتم العثور على سجل F-0004 مرتبط بطلب توقيع أودو.": "No F-0004 registry row linked to an Odoo Sign request was found.",
+    "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.": "The linked Odoo Sign request no longer exists or cannot be accessed.",
+    "طلب توقيع أودو لا يزال بحالة: %s.": "The Odoo Sign request is still in state: %s.",
+    "%s لم يكتمل توقيعه": "%s is not fully signed yet",
+    "طلب التوقيع موقّع، لكن لم يتم العثور على مرفقات المستند المكتمل.": "The Sign request is signed, but the completed document attachments were not found.",
+    "تم العثور على شهادة التوقيع فقط، ولم يتم العثور على نسخة F-0004 الموقعة. افتح طلب التوقيع الأصلي وتحقق من المرفقات قبل إعادة المزامنة.": "Only the signing certificate was found. The signed F-0004 copy was not found. Open the original Sign request and verify attachments before syncing again.",
+    "تم العثور على شهادة/سجل التوقيع فقط، ولم يتم العثور على نسخة %s الموقعة.": "Only the signing certificate/log was found. The signed %s copy was not found.",
+    "تمت مزامنة نتيجة التوقيع وربط المستند الموقع والشهادة عند توفرها.": "The signed result was synced and the signed document and certificate were linked where available.",
+    "تم توقيع %s": "Signed %s",
+    "المرفق المرتبط كملف موقع يبدو أنه شهادة توقيع وليس نسخة F-0004 الموقعة. أعد تشغيل مزامنة نتيجة التوقيع لهذا الإقرار.": "The attachment linked as signed file appears to be a signing certificate, not the signed F-0004 copy. Run Sync Signed Result again for this declaration.",
+    "لا يوجد ملف F-0004 موقع مرتبط بهذا الإقرار.": "No signed F-0004 PDF is linked to this declaration.",
+    "تم توليد ملف المهام": "Responsibilities PDF generated",
+    "تم توليد مسودة F-0006 في الخلفية وربطها بسجل المتقدم.": "F-0006 draft PDF was generated in the background and linked to the applicant record.",
+    "تم إرسال المهام للتوقيع": "Responsibilities sent for signature",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى المدير المسؤول والمتقدم.": "Odoo Sign request was created and sent to the responsible manager and applicant.",
+    "إعادة التوليد موقوفة": "Regeneration disabled",
+    "طلب توقيع مفتوح": "Open Sign request",
+    "بيانات ناقصة": "Missing data",
+    "لم يتم توليد مسودة": "No draft generated",
+    "الوصف الوظيفي موقّع مسبقاً": "Responsibilities already signed",
+    "المسودة غير جاهزة": "Draft is not ready",
+    "جهة اتصال المدير المسؤول غير موجودة": "Responsible manager contact missing",
+    "بريد المدير المسؤول غير موجود": "Responsible manager email missing",
+    "لا توجد مسودة": "No draft",
+    "لا توجد نسخة موقعة": "No signed copy",
+    "لا توجد شهادة توقيع": "No Sign certificate",
+    "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.": "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.",
+    "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.": "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.",
+    "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.": "Cannot generate the responsibilities draft before completing: %s.",
+    "لم يتم توليد أي مسودة وصف وظيفي.": "No responsibilities draft was generated.",
+    "هذا الوصف الوظيفي موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.": "This responsibilities document is already signed. No duplicate Odoo Sign request was created.",
+    "ولّد مسودة الوصف الوظيفي قبل إرسالها عبر توقيع أودو.": "Generate the responsibilities draft before sending it through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال الوصف الوظيفي عبر توقيع أودو.": "Add an applicant email before sending responsibilities through Odoo Sign.",
+    "المستخدم الحالي لا يملك جهة اتصال مرتبطة ولا يمكن استخدامه كموقّع للمدير المسؤول.": "The current user has no linked contact and cannot be used as responsible-manager signer.",
+    "أضف بريداً إلكترونياً إلى جهة اتصال المستخدم الحالي قبل إرسال الوصف الوظيفي للتوقيع.": "Add an email to the current user's contact before sending responsibilities for signature.",
+    "سجل مستندات التوظيف لهذا الوصف الوظيفي موقّع مسبقاً.": "The recruitment document registry for this responsibilities document is already signed.",
+    "طلب توقيع أودو المرتبط مكتمل/موقّع بالفعل. استخدم مزامنة التوقيع لإغلاق السجل.": "The linked Odoo Sign request is completed/signed. Use Sync Signature to close the record.",
+    "يوجد طلب توقيع أودو نشط لهذا الوصف الوظيفي بحالة \"%s\". لن يتم إنشاء طلب مكرر.": "There is an active Odoo Sign request for this responsibilities document in state \"%s\". A duplicate request will not be created.",
+    "لم يتم توليد مسودة الوصف الوظيفي لهذا المتقدم بعد.": "No responsibilities draft has been generated for this applicant yet.",
+    "لم يتم ربط النسخة الموقعة من الوصف الوظيفي بعد. استخدم مزامنة التوقيع أولاً.": "The signed responsibilities copy is not linked yet. Use signature sync first.",
+    "لم يتم العثور على شهادة توقيع للوصف الوظيفي. استخدم مزامنة التوقيع أولاً أو راجع مرفقات أودو Sign.": "No responsibilities Sign certificate was found. Use signature sync first or review Odoo Sign attachments."
+}
+
+def _pattern_translate(text, mapping):
+    if text in mapping:
+        return mapping[text]
+
+    for source, target in mapping.items():
+        if '%s' not in source:
+            continue
+        prefix, suffix = source.split('%s', 1)
+        if text.startswith(prefix) and text.endswith(suffix):
+            value = text[len(prefix):len(text) - len(suffix)] if suffix else text[len(prefix):]
+            try:
+                return target % value
+            except Exception:
+                return target
+
+    return None
+
+def ui_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        translated = _pattern_translate(text, UI_TEXT_AR)
+        if translated:
+            return translated
+        return text
+
+    translated = _pattern_translate(text, AR_TEXT_EN)
+    if translated:
+        return translated
+
+    return text
+
+
 def toast(title, message, kind='warning', sticky=False):
     return {
         'type': 'ir.actions.client',
         'tag': 'display_notification',
         'params': {
-            'title': title,
-            'message': message,
+            'title': ui_text(title),
+            'message': ui_text(message),
             'type': kind,
             'sticky': sticky,
         },
@@ -887,13 +1879,261 @@ if not action:
         <field name="code"><![CDATA[
 action = False
 
+UI_TEXT_AR = {
+    "No applicant": "لا يوجد متقدم",
+    "Unsupported declaration type": "نوع إقرار غير مدعوم",
+    "F-0004 already created": "تم إنشاء F-0004 مسبقاً",
+    "Cannot recreate F-0007": "لا يمكن إعادة إنشاء F-0007",
+    "Cannot recreate F-0009": "لا يمكن إعادة إنشاء F-0009",
+    "No generated PDF": "لا يوجد ملف منشأ",
+    "Odoo Sign setup incomplete": "إعداد توقيع أودو غير مكتمل",
+    "F-0004 already signed": "F-0004 موقّع مسبقاً",
+    "F-0007 already signed": "F-0007 موقّع مسبقاً",
+    "F-0009 already signed": "F-0009 موقّع مسبقاً",
+    "F-0004 is not ready to send": "F-0004 غير جاهز للإرسال",
+    "F-0007 is not ready to send": "F-0007 غير جاهز للإرسال",
+    "F-0009 is not ready to send": "F-0009 غير جاهز للإرسال",
+    "Applicant email missing": "بريد المتقدم غير موجود",
+    "Duplicate Sign request blocked": "تم منع طلب توقيع مكرر",
+    "F-0004 sent for signature": "تم إرسال F-0004 للتوقيع",
+    "F-0007 sent for signature": "تم إرسال F-0007 للتوقيع",
+    "F-0009 sent for signature": "تم إرسال F-0009 للتوقيع",
+    "Sign request lookup failed": "تعذر العثور على طلب التوقيع",
+    "No linked Sign request": "لا يوجد طلب توقيع مرتبط",
+    "Sign request missing": "طلب التوقيع غير موجود",
+    "F-0004 is not fully signed": "F-0004 لم يكتمل توقيعه",
+    "Signed document missing": "المستند الموقع غير موجود",
+    "F-0004 signed": "تم توقيع F-0004",
+    "Invalid signed file": "الملف الموقع غير صحيح",
+    "No signed file": "لا يوجد ملف موقع",
+    "Signed copy missing": "النسخة الموقعة غير موجودة",
+    "Save the applicant record before creating the declaration.": "احفظ سجل المتقدم قبل إنشاء الإقرار.",
+    "Save the applicant record before creating the policies and procedures compliance declaration.": "احفظ سجل المتقدم قبل إنشاء إقرار الالتزام باللوائح والسياسات.",
+    "Save the applicant record before creating the confidentiality and non-disclosure declaration.": "احفظ سجل المتقدم قبل إنشاء إقرار السرية وعدم الإفصاح.",
+    "PDF generation is currently available only for F-0004.": "إنشاء PDF متاح حالياً فقط لإقرار F-0004.",
+    "F-0004 PDF has already been generated for this declaration. Create a new declaration if a correction is required.": "تم إنشاء ملف F-0004 لهذا الإقرار مسبقاً. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0004 without a linked applicant.": "لا يمكن إنشاء F-0004 بدون ربط الإقرار بمتقدم.",
+    "This PDF generation action is only for the F-0007 policies and procedures compliance declaration.": "إنشاء PDF هذا مخصص فقط لإقرار F-0007 الالتزام باللوائح والسياسات.",
+    "F-0007 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.": "لا يمكن إعادة إنشاء ملف F-0007 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0007 without a linked applicant.": "لا يمكن إنشاء F-0007 بدون ربط الإقرار بمتقدم.",
+    "This PDF generation action is only for the F-0009 confidentiality and non-disclosure declaration.": "إنشاء PDF هذا مخصص فقط لإقرار F-0009 السرية وعدم الإفصاح.",
+    "F-0009 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.": "لا يمكن إعادة إنشاء ملف F-0009 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0009 without a linked applicant.": "لا يمكن إنشاء F-0009 بدون ربط الإقرار بمتقدم.",
+    "No generated F-0004 PDF is linked to this declaration.": "لا يوجد ملف F-0004 منشأ مرتبط بهذا الإقرار.",
+    "Sending through Odoo Sign is currently available only for F-0004.": "الإرسال عبر توقيع أودو متاح حالياً فقط لإقرار F-0004.",
+    "This Odoo Sign send action is only for F-0007.": "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0007.",
+    "This Odoo Sign send action is only for F-0009.": "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0009.",
+    "This declaration is already signed. No duplicate Odoo Sign request was created.": "هذا الإقرار موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.",
+    "Generate the F-0004 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0004 PDF قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0007 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0007 PDF قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0009 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0009 PDF قبل إرساله عبر توقيع أودو.",
+    "Cannot send F-0004 without a linked applicant.": "لا يمكن إرسال F-0004 بدون متقدم مرتبط.",
+    "Cannot send F-0007 without a linked applicant.": "لا يمكن إرسال F-0007 بدون متقدم مرتبط.",
+    "Cannot send F-0009 without a linked applicant.": "لا يمكن إرسال F-0009 بدون متقدم مرتبط.",
+    "Add an applicant email before sending F-0004 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0004 عبر توقيع أودو.",
+    "Add an applicant email before sending F-0007 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0007 عبر توقيع أودو.",
+    "Add an applicant email before sending F-0009 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0009 عبر توقيع أودو.",
+    "The recruitment document registry for this declaration is already signed.": "سجل مستندات التوظيف لهذا الإقرار موقّع مسبقاً.",
+    "The linked Odoo Sign request is already signed. Use Sync Signed Result to close the record.": "طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة نتيجة التوقيع لإغلاق السجل.",
+    "There is an active Odoo Sign request for this declaration in state \"%s\". A duplicate request will not be created.": "يوجد طلب توقيع أودو نشط لهذا الإقرار بحالة \"%s\". لن يتم إنشاء طلب مكرر.",
+    "Odoo Sign request was created and sent to %s.": "تم إنشاء طلب توقيع أودو وإرساله إلى %s.",
+    "Odoo Sign request was created and sent to the applicant.": "تم إنشاء طلب توقيع أودو وإرساله إلى المتقدم.",
+    "The send action ran, but sign.request was not found automatically. Review the Sign app before retrying.": "تم تنفيذ الإرسال، لكن لم يتم العثور على sign.request تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.",
+    "Cannot sync F-0004 without a linked applicant.": "لا يمكن مزامنة F-0004 بدون متقدم مرتبط.",
+    "Cannot sync %s without a linked applicant.": "لا يمكن مزامنة %s بدون متقدم مرتبط.",
+    "No F-0004 registry row linked to an Odoo Sign request was found.": "لم يتم العثور على سجل F-0004 مرتبط بطلب توقيع أودو.",
+    "The linked Odoo Sign request no longer exists or cannot be accessed.": "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.",
+    "The Odoo Sign request is still in state: %s.": "طلب توقيع أودو لا يزال بحالة: %s.",
+    "%s is not fully signed yet": "%s لم يكتمل توقيعه",
+    "The Sign request is signed, but the completed document attachments were not found.": "طلب التوقيع موقّع، لكن لم يتم العثور على مرفقات المستند المكتمل.",
+    "Only the signing certificate was found. The signed F-0004 copy was not found. Open the original Sign request and verify attachments before syncing again.": "تم العثور على شهادة التوقيع فقط، ولم يتم العثور على نسخة F-0004 الموقعة. افتح طلب التوقيع الأصلي وتحقق من المرفقات قبل إعادة المزامنة.",
+    "Only the signing certificate/log was found. The signed %s copy was not found.": "تم العثور على شهادة/سجل التوقيع فقط، ولم يتم العثور على نسخة %s الموقعة.",
+    "The signed result was synced and the signed document and certificate were linked where available.": "تمت مزامنة نتيجة التوقيع وربط المستند الموقع والشهادة عند توفرها.",
+    "Signed %s": "تم توقيع %s",
+    "The attachment linked as signed file appears to be a signing certificate, not the signed F-0004 copy. Run Sync Signed Result again for this declaration.": "المرفق المرتبط كملف موقع يبدو أنه شهادة توقيع وليس نسخة F-0004 الموقعة. أعد تشغيل مزامنة نتيجة التوقيع لهذا الإقرار.",
+    "No signed F-0004 PDF is linked to this declaration.": "لا يوجد ملف F-0004 موقع مرتبط بهذا الإقرار.",
+    "Responsibilities PDF generated": "تم توليد ملف المهام",
+    "F-0006 draft PDF was generated in the background and linked to the applicant record.": "تم توليد مسودة F-0006 في الخلفية وربطها بسجل المتقدم.",
+    "Responsibilities sent for signature": "تم إرسال المهام للتوقيع",
+    "Odoo Sign request was created and sent to the responsible manager and applicant.": "تم إنشاء طلب توقيع أودو وإرساله إلى المدير المسؤول والمتقدم.",
+    "Regeneration disabled": "إعادة التوليد موقوفة",
+    "Open Sign request": "طلب توقيع مفتوح",
+    "Missing data": "بيانات ناقصة",
+    "No draft generated": "لم يتم توليد مسودة",
+    "Responsibilities already signed": "الوصف الوظيفي موقّع مسبقاً",
+    "Draft is not ready": "المسودة غير جاهزة",
+    "Responsible manager contact missing": "جهة اتصال المدير المسؤول غير موجودة",
+    "Responsible manager email missing": "بريد المدير المسؤول غير موجود",
+    "No draft": "لا توجد مسودة",
+    "No signed copy": "لا توجد نسخة موقعة",
+    "No Sign certificate": "لا توجد شهادة توقيع",
+    "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.": "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.",
+    "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.": "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.",
+    "Cannot generate the responsibilities draft before completing: %s.": "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.",
+    "No responsibilities draft was generated.": "لم يتم توليد أي مسودة وصف وظيفي.",
+    "This responsibilities document is already signed. No duplicate Odoo Sign request was created.": "هذا الوصف الوظيفي موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.",
+    "Generate the responsibilities draft before sending it through Odoo Sign.": "ولّد مسودة الوصف الوظيفي قبل إرسالها عبر توقيع أودو.",
+    "Add an applicant email before sending responsibilities through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال الوصف الوظيفي عبر توقيع أودو.",
+    "The current user has no linked contact and cannot be used as responsible-manager signer.": "المستخدم الحالي لا يملك جهة اتصال مرتبطة ولا يمكن استخدامه كموقّع للمدير المسؤول.",
+    "Add an email to the current user's contact before sending responsibilities for signature.": "أضف بريداً إلكترونياً إلى جهة اتصال المستخدم الحالي قبل إرسال الوصف الوظيفي للتوقيع.",
+    "The recruitment document registry for this responsibilities document is already signed.": "سجل مستندات التوظيف لهذا الوصف الوظيفي موقّع مسبقاً.",
+    "The linked Odoo Sign request is completed/signed. Use Sync Signature to close the record.": "طلب توقيع أودو المرتبط مكتمل/موقّع بالفعل. استخدم مزامنة التوقيع لإغلاق السجل.",
+    "There is an active Odoo Sign request for this responsibilities document in state \"%s\". A duplicate request will not be created.": "يوجد طلب توقيع أودو نشط لهذا الوصف الوظيفي بحالة \"%s\". لن يتم إنشاء طلب مكرر.",
+    "No responsibilities draft has been generated for this applicant yet.": "لم يتم توليد مسودة الوصف الوظيفي لهذا المتقدم بعد.",
+    "The signed responsibilities copy is not linked yet. Use signature sync first.": "لم يتم ربط النسخة الموقعة من الوصف الوظيفي بعد. استخدم مزامنة التوقيع أولاً.",
+    "No responsibilities Sign certificate was found. Use signature sync first or review Odoo Sign attachments.": "لم يتم العثور على شهادة توقيع للوصف الوظيفي. استخدم مزامنة التوقيع أولاً أو راجع مرفقات أودو Sign."
+}
+AR_TEXT_EN = {
+    "لا يوجد متقدم": "No applicant",
+    "نوع إقرار غير مدعوم": "Unsupported declaration type",
+    "تم إنشاء F-0004 مسبقاً": "F-0004 already created",
+    "لا يمكن إعادة إنشاء F-0007": "Cannot recreate F-0007",
+    "لا يمكن إعادة إنشاء F-0009": "Cannot recreate F-0009",
+    "لا يوجد ملف منشأ": "No generated PDF",
+    "إعداد توقيع أودو غير مكتمل": "Odoo Sign setup incomplete",
+    "F-0004 موقّع مسبقاً": "F-0004 already signed",
+    "F-0007 موقّع مسبقاً": "F-0007 already signed",
+    "F-0009 موقّع مسبقاً": "F-0009 already signed",
+    "F-0004 غير جاهز للإرسال": "F-0004 is not ready to send",
+    "F-0007 غير جاهز للإرسال": "F-0007 is not ready to send",
+    "F-0009 غير جاهز للإرسال": "F-0009 is not ready to send",
+    "بريد المتقدم غير موجود": "Applicant email missing",
+    "تم منع طلب توقيع مكرر": "Duplicate Sign request blocked",
+    "تم إرسال F-0004 للتوقيع": "F-0004 sent for signature",
+    "تم إرسال F-0007 للتوقيع": "F-0007 sent for signature",
+    "تم إرسال F-0009 للتوقيع": "F-0009 sent for signature",
+    "تعذر العثور على طلب التوقيع": "Sign request lookup failed",
+    "لا يوجد طلب توقيع مرتبط": "No linked Sign request",
+    "طلب التوقيع غير موجود": "Sign request missing",
+    "F-0004 لم يكتمل توقيعه": "F-0004 is not fully signed",
+    "المستند الموقع غير موجود": "Signed document missing",
+    "تم توقيع F-0004": "F-0004 signed",
+    "الملف الموقع غير صحيح": "Invalid signed file",
+    "لا يوجد ملف موقع": "No signed file",
+    "النسخة الموقعة غير موجودة": "Signed copy missing",
+    "احفظ سجل المتقدم قبل إنشاء الإقرار.": "Save the applicant record before creating the declaration.",
+    "احفظ سجل المتقدم قبل إنشاء إقرار الالتزام باللوائح والسياسات.": "Save the applicant record before creating the policies and procedures compliance declaration.",
+    "احفظ سجل المتقدم قبل إنشاء إقرار السرية وعدم الإفصاح.": "Save the applicant record before creating the confidentiality and non-disclosure declaration.",
+    "إنشاء PDF متاح حالياً فقط لإقرار F-0004.": "PDF generation is currently available only for F-0004.",
+    "تم إنشاء ملف F-0004 لهذا الإقرار مسبقاً. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0004 PDF has already been generated for this declaration. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0004 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0004 without a linked applicant.",
+    "إنشاء PDF هذا مخصص فقط لإقرار F-0007 الالتزام باللوائح والسياسات.": "This PDF generation action is only for the F-0007 policies and procedures compliance declaration.",
+    "لا يمكن إعادة إنشاء ملف F-0007 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0007 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0007 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0007 without a linked applicant.",
+    "إنشاء PDF هذا مخصص فقط لإقرار F-0009 السرية وعدم الإفصاح.": "This PDF generation action is only for the F-0009 confidentiality and non-disclosure declaration.",
+    "لا يمكن إعادة إنشاء ملف F-0009 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0009 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0009 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0009 without a linked applicant.",
+    "لا يوجد ملف F-0004 منشأ مرتبط بهذا الإقرار.": "No generated F-0004 PDF is linked to this declaration.",
+    "الإرسال عبر توقيع أودو متاح حالياً فقط لإقرار F-0004.": "Sending through Odoo Sign is currently available only for F-0004.",
+    "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0007.": "This Odoo Sign send action is only for F-0007.",
+    "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0009.": "This Odoo Sign send action is only for F-0009.",
+    "هذا الإقرار موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.": "This declaration is already signed. No duplicate Odoo Sign request was created.",
+    "أنشئ ملف F-0004 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0004 PDF before sending it through Odoo Sign.",
+    "أنشئ ملف F-0007 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0007 PDF before sending it through Odoo Sign.",
+    "أنشئ ملف F-0009 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0009 PDF before sending it through Odoo Sign.",
+    "لا يمكن إرسال F-0004 بدون متقدم مرتبط.": "Cannot send F-0004 without a linked applicant.",
+    "لا يمكن إرسال F-0007 بدون متقدم مرتبط.": "Cannot send F-0007 without a linked applicant.",
+    "لا يمكن إرسال F-0009 بدون متقدم مرتبط.": "Cannot send F-0009 without a linked applicant.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0004 عبر توقيع أودو.": "Add an applicant email before sending F-0004 through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0007 عبر توقيع أودو.": "Add an applicant email before sending F-0007 through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0009 عبر توقيع أودو.": "Add an applicant email before sending F-0009 through Odoo Sign.",
+    "سجل مستندات التوظيف لهذا الإقرار موقّع مسبقاً.": "The recruitment document registry for this declaration is already signed.",
+    "طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة نتيجة التوقيع لإغلاق السجل.": "The linked Odoo Sign request is already signed. Use Sync Signed Result to close the record.",
+    "يوجد طلب توقيع أودو نشط لهذا الإقرار بحالة \"%s\". لن يتم إنشاء طلب مكرر.": "There is an active Odoo Sign request for this declaration in state \"%s\". A duplicate request will not be created.",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى %s.": "Odoo Sign request was created and sent to %s.",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى المتقدم.": "Odoo Sign request was created and sent to the applicant.",
+    "تم تنفيذ الإرسال، لكن لم يتم العثور على sign.request تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.": "The send action ran, but sign.request was not found automatically. Review the Sign app before retrying.",
+    "لا يمكن مزامنة F-0004 بدون متقدم مرتبط.": "Cannot sync F-0004 without a linked applicant.",
+    "لا يمكن مزامنة %s بدون متقدم مرتبط.": "Cannot sync %s without a linked applicant.",
+    "لم يتم العثور على سجل F-0004 مرتبط بطلب توقيع أودو.": "No F-0004 registry row linked to an Odoo Sign request was found.",
+    "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.": "The linked Odoo Sign request no longer exists or cannot be accessed.",
+    "طلب توقيع أودو لا يزال بحالة: %s.": "The Odoo Sign request is still in state: %s.",
+    "%s لم يكتمل توقيعه": "%s is not fully signed yet",
+    "طلب التوقيع موقّع، لكن لم يتم العثور على مرفقات المستند المكتمل.": "The Sign request is signed, but the completed document attachments were not found.",
+    "تم العثور على شهادة التوقيع فقط، ولم يتم العثور على نسخة F-0004 الموقعة. افتح طلب التوقيع الأصلي وتحقق من المرفقات قبل إعادة المزامنة.": "Only the signing certificate was found. The signed F-0004 copy was not found. Open the original Sign request and verify attachments before syncing again.",
+    "تم العثور على شهادة/سجل التوقيع فقط، ولم يتم العثور على نسخة %s الموقعة.": "Only the signing certificate/log was found. The signed %s copy was not found.",
+    "تمت مزامنة نتيجة التوقيع وربط المستند الموقع والشهادة عند توفرها.": "The signed result was synced and the signed document and certificate were linked where available.",
+    "تم توقيع %s": "Signed %s",
+    "المرفق المرتبط كملف موقع يبدو أنه شهادة توقيع وليس نسخة F-0004 الموقعة. أعد تشغيل مزامنة نتيجة التوقيع لهذا الإقرار.": "The attachment linked as signed file appears to be a signing certificate, not the signed F-0004 copy. Run Sync Signed Result again for this declaration.",
+    "لا يوجد ملف F-0004 موقع مرتبط بهذا الإقرار.": "No signed F-0004 PDF is linked to this declaration.",
+    "تم توليد ملف المهام": "Responsibilities PDF generated",
+    "تم توليد مسودة F-0006 في الخلفية وربطها بسجل المتقدم.": "F-0006 draft PDF was generated in the background and linked to the applicant record.",
+    "تم إرسال المهام للتوقيع": "Responsibilities sent for signature",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى المدير المسؤول والمتقدم.": "Odoo Sign request was created and sent to the responsible manager and applicant.",
+    "إعادة التوليد موقوفة": "Regeneration disabled",
+    "طلب توقيع مفتوح": "Open Sign request",
+    "بيانات ناقصة": "Missing data",
+    "لم يتم توليد مسودة": "No draft generated",
+    "الوصف الوظيفي موقّع مسبقاً": "Responsibilities already signed",
+    "المسودة غير جاهزة": "Draft is not ready",
+    "جهة اتصال المدير المسؤول غير موجودة": "Responsible manager contact missing",
+    "بريد المدير المسؤول غير موجود": "Responsible manager email missing",
+    "لا توجد مسودة": "No draft",
+    "لا توجد نسخة موقعة": "No signed copy",
+    "لا توجد شهادة توقيع": "No Sign certificate",
+    "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.": "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.",
+    "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.": "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.",
+    "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.": "Cannot generate the responsibilities draft before completing: %s.",
+    "لم يتم توليد أي مسودة وصف وظيفي.": "No responsibilities draft was generated.",
+    "هذا الوصف الوظيفي موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.": "This responsibilities document is already signed. No duplicate Odoo Sign request was created.",
+    "ولّد مسودة الوصف الوظيفي قبل إرسالها عبر توقيع أودو.": "Generate the responsibilities draft before sending it through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال الوصف الوظيفي عبر توقيع أودو.": "Add an applicant email before sending responsibilities through Odoo Sign.",
+    "المستخدم الحالي لا يملك جهة اتصال مرتبطة ولا يمكن استخدامه كموقّع للمدير المسؤول.": "The current user has no linked contact and cannot be used as responsible-manager signer.",
+    "أضف بريداً إلكترونياً إلى جهة اتصال المستخدم الحالي قبل إرسال الوصف الوظيفي للتوقيع.": "Add an email to the current user's contact before sending responsibilities for signature.",
+    "سجل مستندات التوظيف لهذا الوصف الوظيفي موقّع مسبقاً.": "The recruitment document registry for this responsibilities document is already signed.",
+    "طلب توقيع أودو المرتبط مكتمل/موقّع بالفعل. استخدم مزامنة التوقيع لإغلاق السجل.": "The linked Odoo Sign request is completed/signed. Use Sync Signature to close the record.",
+    "يوجد طلب توقيع أودو نشط لهذا الوصف الوظيفي بحالة \"%s\". لن يتم إنشاء طلب مكرر.": "There is an active Odoo Sign request for this responsibilities document in state \"%s\". A duplicate request will not be created.",
+    "لم يتم توليد مسودة الوصف الوظيفي لهذا المتقدم بعد.": "No responsibilities draft has been generated for this applicant yet.",
+    "لم يتم ربط النسخة الموقعة من الوصف الوظيفي بعد. استخدم مزامنة التوقيع أولاً.": "The signed responsibilities copy is not linked yet. Use signature sync first.",
+    "لم يتم العثور على شهادة توقيع للوصف الوظيفي. استخدم مزامنة التوقيع أولاً أو راجع مرفقات أودو Sign.": "No responsibilities Sign certificate was found. Use signature sync first or review Odoo Sign attachments."
+}
+
+def _pattern_translate(text, mapping):
+    if text in mapping:
+        return mapping[text]
+
+    for source, target in mapping.items():
+        if '%s' not in source:
+            continue
+        prefix, suffix = source.split('%s', 1)
+        if text.startswith(prefix) and text.endswith(suffix):
+            value = text[len(prefix):len(text) - len(suffix)] if suffix else text[len(prefix):]
+            try:
+                return target % value
+            except Exception:
+                return target
+
+    return None
+
+def ui_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        translated = _pattern_translate(text, UI_TEXT_AR)
+        if translated:
+            return translated
+        return text
+
+    translated = _pattern_translate(text, AR_TEXT_EN)
+    if translated:
+        return translated
+
+    return text
+
+
 def toast(title, message, kind='warning', sticky=False):
     return {
         'type': 'ir.actions.client',
         'tag': 'display_notification',
         'params': {
-            'title': title,
-            'message': message,
+            'title': ui_text(title),
+            'message': ui_text(message),
             'type': kind,
             'sticky': sticky,
         },
@@ -925,13 +2165,261 @@ if not action:
 registry_model = env['x_hr.recruitment_document'].sudo()
 action = False
 
+UI_TEXT_AR = {
+    "No applicant": "لا يوجد متقدم",
+    "Unsupported declaration type": "نوع إقرار غير مدعوم",
+    "F-0004 already created": "تم إنشاء F-0004 مسبقاً",
+    "Cannot recreate F-0007": "لا يمكن إعادة إنشاء F-0007",
+    "Cannot recreate F-0009": "لا يمكن إعادة إنشاء F-0009",
+    "No generated PDF": "لا يوجد ملف منشأ",
+    "Odoo Sign setup incomplete": "إعداد توقيع أودو غير مكتمل",
+    "F-0004 already signed": "F-0004 موقّع مسبقاً",
+    "F-0007 already signed": "F-0007 موقّع مسبقاً",
+    "F-0009 already signed": "F-0009 موقّع مسبقاً",
+    "F-0004 is not ready to send": "F-0004 غير جاهز للإرسال",
+    "F-0007 is not ready to send": "F-0007 غير جاهز للإرسال",
+    "F-0009 is not ready to send": "F-0009 غير جاهز للإرسال",
+    "Applicant email missing": "بريد المتقدم غير موجود",
+    "Duplicate Sign request blocked": "تم منع طلب توقيع مكرر",
+    "F-0004 sent for signature": "تم إرسال F-0004 للتوقيع",
+    "F-0007 sent for signature": "تم إرسال F-0007 للتوقيع",
+    "F-0009 sent for signature": "تم إرسال F-0009 للتوقيع",
+    "Sign request lookup failed": "تعذر العثور على طلب التوقيع",
+    "No linked Sign request": "لا يوجد طلب توقيع مرتبط",
+    "Sign request missing": "طلب التوقيع غير موجود",
+    "F-0004 is not fully signed": "F-0004 لم يكتمل توقيعه",
+    "Signed document missing": "المستند الموقع غير موجود",
+    "F-0004 signed": "تم توقيع F-0004",
+    "Invalid signed file": "الملف الموقع غير صحيح",
+    "No signed file": "لا يوجد ملف موقع",
+    "Signed copy missing": "النسخة الموقعة غير موجودة",
+    "Save the applicant record before creating the declaration.": "احفظ سجل المتقدم قبل إنشاء الإقرار.",
+    "Save the applicant record before creating the policies and procedures compliance declaration.": "احفظ سجل المتقدم قبل إنشاء إقرار الالتزام باللوائح والسياسات.",
+    "Save the applicant record before creating the confidentiality and non-disclosure declaration.": "احفظ سجل المتقدم قبل إنشاء إقرار السرية وعدم الإفصاح.",
+    "PDF generation is currently available only for F-0004.": "إنشاء PDF متاح حالياً فقط لإقرار F-0004.",
+    "F-0004 PDF has already been generated for this declaration. Create a new declaration if a correction is required.": "تم إنشاء ملف F-0004 لهذا الإقرار مسبقاً. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0004 without a linked applicant.": "لا يمكن إنشاء F-0004 بدون ربط الإقرار بمتقدم.",
+    "This PDF generation action is only for the F-0007 policies and procedures compliance declaration.": "إنشاء PDF هذا مخصص فقط لإقرار F-0007 الالتزام باللوائح والسياسات.",
+    "F-0007 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.": "لا يمكن إعادة إنشاء ملف F-0007 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0007 without a linked applicant.": "لا يمكن إنشاء F-0007 بدون ربط الإقرار بمتقدم.",
+    "This PDF generation action is only for the F-0009 confidentiality and non-disclosure declaration.": "إنشاء PDF هذا مخصص فقط لإقرار F-0009 السرية وعدم الإفصاح.",
+    "F-0009 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.": "لا يمكن إعادة إنشاء ملف F-0009 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0009 without a linked applicant.": "لا يمكن إنشاء F-0009 بدون ربط الإقرار بمتقدم.",
+    "No generated F-0004 PDF is linked to this declaration.": "لا يوجد ملف F-0004 منشأ مرتبط بهذا الإقرار.",
+    "Sending through Odoo Sign is currently available only for F-0004.": "الإرسال عبر توقيع أودو متاح حالياً فقط لإقرار F-0004.",
+    "This Odoo Sign send action is only for F-0007.": "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0007.",
+    "This Odoo Sign send action is only for F-0009.": "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0009.",
+    "This declaration is already signed. No duplicate Odoo Sign request was created.": "هذا الإقرار موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.",
+    "Generate the F-0004 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0004 PDF قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0007 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0007 PDF قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0009 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0009 PDF قبل إرساله عبر توقيع أودو.",
+    "Cannot send F-0004 without a linked applicant.": "لا يمكن إرسال F-0004 بدون متقدم مرتبط.",
+    "Cannot send F-0007 without a linked applicant.": "لا يمكن إرسال F-0007 بدون متقدم مرتبط.",
+    "Cannot send F-0009 without a linked applicant.": "لا يمكن إرسال F-0009 بدون متقدم مرتبط.",
+    "Add an applicant email before sending F-0004 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0004 عبر توقيع أودو.",
+    "Add an applicant email before sending F-0007 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0007 عبر توقيع أودو.",
+    "Add an applicant email before sending F-0009 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0009 عبر توقيع أودو.",
+    "The recruitment document registry for this declaration is already signed.": "سجل مستندات التوظيف لهذا الإقرار موقّع مسبقاً.",
+    "The linked Odoo Sign request is already signed. Use Sync Signed Result to close the record.": "طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة نتيجة التوقيع لإغلاق السجل.",
+    "There is an active Odoo Sign request for this declaration in state \"%s\". A duplicate request will not be created.": "يوجد طلب توقيع أودو نشط لهذا الإقرار بحالة \"%s\". لن يتم إنشاء طلب مكرر.",
+    "Odoo Sign request was created and sent to %s.": "تم إنشاء طلب توقيع أودو وإرساله إلى %s.",
+    "Odoo Sign request was created and sent to the applicant.": "تم إنشاء طلب توقيع أودو وإرساله إلى المتقدم.",
+    "The send action ran, but sign.request was not found automatically. Review the Sign app before retrying.": "تم تنفيذ الإرسال، لكن لم يتم العثور على sign.request تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.",
+    "Cannot sync F-0004 without a linked applicant.": "لا يمكن مزامنة F-0004 بدون متقدم مرتبط.",
+    "Cannot sync %s without a linked applicant.": "لا يمكن مزامنة %s بدون متقدم مرتبط.",
+    "No F-0004 registry row linked to an Odoo Sign request was found.": "لم يتم العثور على سجل F-0004 مرتبط بطلب توقيع أودو.",
+    "The linked Odoo Sign request no longer exists or cannot be accessed.": "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.",
+    "The Odoo Sign request is still in state: %s.": "طلب توقيع أودو لا يزال بحالة: %s.",
+    "%s is not fully signed yet": "%s لم يكتمل توقيعه",
+    "The Sign request is signed, but the completed document attachments were not found.": "طلب التوقيع موقّع، لكن لم يتم العثور على مرفقات المستند المكتمل.",
+    "Only the signing certificate was found. The signed F-0004 copy was not found. Open the original Sign request and verify attachments before syncing again.": "تم العثور على شهادة التوقيع فقط، ولم يتم العثور على نسخة F-0004 الموقعة. افتح طلب التوقيع الأصلي وتحقق من المرفقات قبل إعادة المزامنة.",
+    "Only the signing certificate/log was found. The signed %s copy was not found.": "تم العثور على شهادة/سجل التوقيع فقط، ولم يتم العثور على نسخة %s الموقعة.",
+    "The signed result was synced and the signed document and certificate were linked where available.": "تمت مزامنة نتيجة التوقيع وربط المستند الموقع والشهادة عند توفرها.",
+    "Signed %s": "تم توقيع %s",
+    "The attachment linked as signed file appears to be a signing certificate, not the signed F-0004 copy. Run Sync Signed Result again for this declaration.": "المرفق المرتبط كملف موقع يبدو أنه شهادة توقيع وليس نسخة F-0004 الموقعة. أعد تشغيل مزامنة نتيجة التوقيع لهذا الإقرار.",
+    "No signed F-0004 PDF is linked to this declaration.": "لا يوجد ملف F-0004 موقع مرتبط بهذا الإقرار.",
+    "Responsibilities PDF generated": "تم توليد ملف المهام",
+    "F-0006 draft PDF was generated in the background and linked to the applicant record.": "تم توليد مسودة F-0006 في الخلفية وربطها بسجل المتقدم.",
+    "Responsibilities sent for signature": "تم إرسال المهام للتوقيع",
+    "Odoo Sign request was created and sent to the responsible manager and applicant.": "تم إنشاء طلب توقيع أودو وإرساله إلى المدير المسؤول والمتقدم.",
+    "Regeneration disabled": "إعادة التوليد موقوفة",
+    "Open Sign request": "طلب توقيع مفتوح",
+    "Missing data": "بيانات ناقصة",
+    "No draft generated": "لم يتم توليد مسودة",
+    "Responsibilities already signed": "الوصف الوظيفي موقّع مسبقاً",
+    "Draft is not ready": "المسودة غير جاهزة",
+    "Responsible manager contact missing": "جهة اتصال المدير المسؤول غير موجودة",
+    "Responsible manager email missing": "بريد المدير المسؤول غير موجود",
+    "No draft": "لا توجد مسودة",
+    "No signed copy": "لا توجد نسخة موقعة",
+    "No Sign certificate": "لا توجد شهادة توقيع",
+    "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.": "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.",
+    "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.": "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.",
+    "Cannot generate the responsibilities draft before completing: %s.": "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.",
+    "No responsibilities draft was generated.": "لم يتم توليد أي مسودة وصف وظيفي.",
+    "This responsibilities document is already signed. No duplicate Odoo Sign request was created.": "هذا الوصف الوظيفي موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.",
+    "Generate the responsibilities draft before sending it through Odoo Sign.": "ولّد مسودة الوصف الوظيفي قبل إرسالها عبر توقيع أودو.",
+    "Add an applicant email before sending responsibilities through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال الوصف الوظيفي عبر توقيع أودو.",
+    "The current user has no linked contact and cannot be used as responsible-manager signer.": "المستخدم الحالي لا يملك جهة اتصال مرتبطة ولا يمكن استخدامه كموقّع للمدير المسؤول.",
+    "Add an email to the current user's contact before sending responsibilities for signature.": "أضف بريداً إلكترونياً إلى جهة اتصال المستخدم الحالي قبل إرسال الوصف الوظيفي للتوقيع.",
+    "The recruitment document registry for this responsibilities document is already signed.": "سجل مستندات التوظيف لهذا الوصف الوظيفي موقّع مسبقاً.",
+    "The linked Odoo Sign request is completed/signed. Use Sync Signature to close the record.": "طلب توقيع أودو المرتبط مكتمل/موقّع بالفعل. استخدم مزامنة التوقيع لإغلاق السجل.",
+    "There is an active Odoo Sign request for this responsibilities document in state \"%s\". A duplicate request will not be created.": "يوجد طلب توقيع أودو نشط لهذا الوصف الوظيفي بحالة \"%s\". لن يتم إنشاء طلب مكرر.",
+    "No responsibilities draft has been generated for this applicant yet.": "لم يتم توليد مسودة الوصف الوظيفي لهذا المتقدم بعد.",
+    "The signed responsibilities copy is not linked yet. Use signature sync first.": "لم يتم ربط النسخة الموقعة من الوصف الوظيفي بعد. استخدم مزامنة التوقيع أولاً.",
+    "No responsibilities Sign certificate was found. Use signature sync first or review Odoo Sign attachments.": "لم يتم العثور على شهادة توقيع للوصف الوظيفي. استخدم مزامنة التوقيع أولاً أو راجع مرفقات أودو Sign."
+}
+AR_TEXT_EN = {
+    "لا يوجد متقدم": "No applicant",
+    "نوع إقرار غير مدعوم": "Unsupported declaration type",
+    "تم إنشاء F-0004 مسبقاً": "F-0004 already created",
+    "لا يمكن إعادة إنشاء F-0007": "Cannot recreate F-0007",
+    "لا يمكن إعادة إنشاء F-0009": "Cannot recreate F-0009",
+    "لا يوجد ملف منشأ": "No generated PDF",
+    "إعداد توقيع أودو غير مكتمل": "Odoo Sign setup incomplete",
+    "F-0004 موقّع مسبقاً": "F-0004 already signed",
+    "F-0007 موقّع مسبقاً": "F-0007 already signed",
+    "F-0009 موقّع مسبقاً": "F-0009 already signed",
+    "F-0004 غير جاهز للإرسال": "F-0004 is not ready to send",
+    "F-0007 غير جاهز للإرسال": "F-0007 is not ready to send",
+    "F-0009 غير جاهز للإرسال": "F-0009 is not ready to send",
+    "بريد المتقدم غير موجود": "Applicant email missing",
+    "تم منع طلب توقيع مكرر": "Duplicate Sign request blocked",
+    "تم إرسال F-0004 للتوقيع": "F-0004 sent for signature",
+    "تم إرسال F-0007 للتوقيع": "F-0007 sent for signature",
+    "تم إرسال F-0009 للتوقيع": "F-0009 sent for signature",
+    "تعذر العثور على طلب التوقيع": "Sign request lookup failed",
+    "لا يوجد طلب توقيع مرتبط": "No linked Sign request",
+    "طلب التوقيع غير موجود": "Sign request missing",
+    "F-0004 لم يكتمل توقيعه": "F-0004 is not fully signed",
+    "المستند الموقع غير موجود": "Signed document missing",
+    "تم توقيع F-0004": "F-0004 signed",
+    "الملف الموقع غير صحيح": "Invalid signed file",
+    "لا يوجد ملف موقع": "No signed file",
+    "النسخة الموقعة غير موجودة": "Signed copy missing",
+    "احفظ سجل المتقدم قبل إنشاء الإقرار.": "Save the applicant record before creating the declaration.",
+    "احفظ سجل المتقدم قبل إنشاء إقرار الالتزام باللوائح والسياسات.": "Save the applicant record before creating the policies and procedures compliance declaration.",
+    "احفظ سجل المتقدم قبل إنشاء إقرار السرية وعدم الإفصاح.": "Save the applicant record before creating the confidentiality and non-disclosure declaration.",
+    "إنشاء PDF متاح حالياً فقط لإقرار F-0004.": "PDF generation is currently available only for F-0004.",
+    "تم إنشاء ملف F-0004 لهذا الإقرار مسبقاً. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0004 PDF has already been generated for this declaration. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0004 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0004 without a linked applicant.",
+    "إنشاء PDF هذا مخصص فقط لإقرار F-0007 الالتزام باللوائح والسياسات.": "This PDF generation action is only for the F-0007 policies and procedures compliance declaration.",
+    "لا يمكن إعادة إنشاء ملف F-0007 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0007 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0007 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0007 without a linked applicant.",
+    "إنشاء PDF هذا مخصص فقط لإقرار F-0009 السرية وعدم الإفصاح.": "This PDF generation action is only for the F-0009 confidentiality and non-disclosure declaration.",
+    "لا يمكن إعادة إنشاء ملف F-0009 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0009 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0009 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0009 without a linked applicant.",
+    "لا يوجد ملف F-0004 منشأ مرتبط بهذا الإقرار.": "No generated F-0004 PDF is linked to this declaration.",
+    "الإرسال عبر توقيع أودو متاح حالياً فقط لإقرار F-0004.": "Sending through Odoo Sign is currently available only for F-0004.",
+    "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0007.": "This Odoo Sign send action is only for F-0007.",
+    "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0009.": "This Odoo Sign send action is only for F-0009.",
+    "هذا الإقرار موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.": "This declaration is already signed. No duplicate Odoo Sign request was created.",
+    "أنشئ ملف F-0004 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0004 PDF before sending it through Odoo Sign.",
+    "أنشئ ملف F-0007 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0007 PDF before sending it through Odoo Sign.",
+    "أنشئ ملف F-0009 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0009 PDF before sending it through Odoo Sign.",
+    "لا يمكن إرسال F-0004 بدون متقدم مرتبط.": "Cannot send F-0004 without a linked applicant.",
+    "لا يمكن إرسال F-0007 بدون متقدم مرتبط.": "Cannot send F-0007 without a linked applicant.",
+    "لا يمكن إرسال F-0009 بدون متقدم مرتبط.": "Cannot send F-0009 without a linked applicant.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0004 عبر توقيع أودو.": "Add an applicant email before sending F-0004 through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0007 عبر توقيع أودو.": "Add an applicant email before sending F-0007 through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0009 عبر توقيع أودو.": "Add an applicant email before sending F-0009 through Odoo Sign.",
+    "سجل مستندات التوظيف لهذا الإقرار موقّع مسبقاً.": "The recruitment document registry for this declaration is already signed.",
+    "طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة نتيجة التوقيع لإغلاق السجل.": "The linked Odoo Sign request is already signed. Use Sync Signed Result to close the record.",
+    "يوجد طلب توقيع أودو نشط لهذا الإقرار بحالة \"%s\". لن يتم إنشاء طلب مكرر.": "There is an active Odoo Sign request for this declaration in state \"%s\". A duplicate request will not be created.",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى %s.": "Odoo Sign request was created and sent to %s.",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى المتقدم.": "Odoo Sign request was created and sent to the applicant.",
+    "تم تنفيذ الإرسال، لكن لم يتم العثور على sign.request تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.": "The send action ran, but sign.request was not found automatically. Review the Sign app before retrying.",
+    "لا يمكن مزامنة F-0004 بدون متقدم مرتبط.": "Cannot sync F-0004 without a linked applicant.",
+    "لا يمكن مزامنة %s بدون متقدم مرتبط.": "Cannot sync %s without a linked applicant.",
+    "لم يتم العثور على سجل F-0004 مرتبط بطلب توقيع أودو.": "No F-0004 registry row linked to an Odoo Sign request was found.",
+    "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.": "The linked Odoo Sign request no longer exists or cannot be accessed.",
+    "طلب توقيع أودو لا يزال بحالة: %s.": "The Odoo Sign request is still in state: %s.",
+    "%s لم يكتمل توقيعه": "%s is not fully signed yet",
+    "طلب التوقيع موقّع، لكن لم يتم العثور على مرفقات المستند المكتمل.": "The Sign request is signed, but the completed document attachments were not found.",
+    "تم العثور على شهادة التوقيع فقط، ولم يتم العثور على نسخة F-0004 الموقعة. افتح طلب التوقيع الأصلي وتحقق من المرفقات قبل إعادة المزامنة.": "Only the signing certificate was found. The signed F-0004 copy was not found. Open the original Sign request and verify attachments before syncing again.",
+    "تم العثور على شهادة/سجل التوقيع فقط، ولم يتم العثور على نسخة %s الموقعة.": "Only the signing certificate/log was found. The signed %s copy was not found.",
+    "تمت مزامنة نتيجة التوقيع وربط المستند الموقع والشهادة عند توفرها.": "The signed result was synced and the signed document and certificate were linked where available.",
+    "تم توقيع %s": "Signed %s",
+    "المرفق المرتبط كملف موقع يبدو أنه شهادة توقيع وليس نسخة F-0004 الموقعة. أعد تشغيل مزامنة نتيجة التوقيع لهذا الإقرار.": "The attachment linked as signed file appears to be a signing certificate, not the signed F-0004 copy. Run Sync Signed Result again for this declaration.",
+    "لا يوجد ملف F-0004 موقع مرتبط بهذا الإقرار.": "No signed F-0004 PDF is linked to this declaration.",
+    "تم توليد ملف المهام": "Responsibilities PDF generated",
+    "تم توليد مسودة F-0006 في الخلفية وربطها بسجل المتقدم.": "F-0006 draft PDF was generated in the background and linked to the applicant record.",
+    "تم إرسال المهام للتوقيع": "Responsibilities sent for signature",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى المدير المسؤول والمتقدم.": "Odoo Sign request was created and sent to the responsible manager and applicant.",
+    "إعادة التوليد موقوفة": "Regeneration disabled",
+    "طلب توقيع مفتوح": "Open Sign request",
+    "بيانات ناقصة": "Missing data",
+    "لم يتم توليد مسودة": "No draft generated",
+    "الوصف الوظيفي موقّع مسبقاً": "Responsibilities already signed",
+    "المسودة غير جاهزة": "Draft is not ready",
+    "جهة اتصال المدير المسؤول غير موجودة": "Responsible manager contact missing",
+    "بريد المدير المسؤول غير موجود": "Responsible manager email missing",
+    "لا توجد مسودة": "No draft",
+    "لا توجد نسخة موقعة": "No signed copy",
+    "لا توجد شهادة توقيع": "No Sign certificate",
+    "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.": "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.",
+    "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.": "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.",
+    "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.": "Cannot generate the responsibilities draft before completing: %s.",
+    "لم يتم توليد أي مسودة وصف وظيفي.": "No responsibilities draft was generated.",
+    "هذا الوصف الوظيفي موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.": "This responsibilities document is already signed. No duplicate Odoo Sign request was created.",
+    "ولّد مسودة الوصف الوظيفي قبل إرسالها عبر توقيع أودو.": "Generate the responsibilities draft before sending it through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال الوصف الوظيفي عبر توقيع أودو.": "Add an applicant email before sending responsibilities through Odoo Sign.",
+    "المستخدم الحالي لا يملك جهة اتصال مرتبطة ولا يمكن استخدامه كموقّع للمدير المسؤول.": "The current user has no linked contact and cannot be used as responsible-manager signer.",
+    "أضف بريداً إلكترونياً إلى جهة اتصال المستخدم الحالي قبل إرسال الوصف الوظيفي للتوقيع.": "Add an email to the current user's contact before sending responsibilities for signature.",
+    "سجل مستندات التوظيف لهذا الوصف الوظيفي موقّع مسبقاً.": "The recruitment document registry for this responsibilities document is already signed.",
+    "طلب توقيع أودو المرتبط مكتمل/موقّع بالفعل. استخدم مزامنة التوقيع لإغلاق السجل.": "The linked Odoo Sign request is completed/signed. Use Sync Signature to close the record.",
+    "يوجد طلب توقيع أودو نشط لهذا الوصف الوظيفي بحالة \"%s\". لن يتم إنشاء طلب مكرر.": "There is an active Odoo Sign request for this responsibilities document in state \"%s\". A duplicate request will not be created.",
+    "لم يتم توليد مسودة الوصف الوظيفي لهذا المتقدم بعد.": "No responsibilities draft has been generated for this applicant yet.",
+    "لم يتم ربط النسخة الموقعة من الوصف الوظيفي بعد. استخدم مزامنة التوقيع أولاً.": "The signed responsibilities copy is not linked yet. Use signature sync first.",
+    "لم يتم العثور على شهادة توقيع للوصف الوظيفي. استخدم مزامنة التوقيع أولاً أو راجع مرفقات أودو Sign.": "No responsibilities Sign certificate was found. Use signature sync first or review Odoo Sign attachments."
+}
+
+def _pattern_translate(text, mapping):
+    if text in mapping:
+        return mapping[text]
+
+    for source, target in mapping.items():
+        if '%s' not in source:
+            continue
+        prefix, suffix = source.split('%s', 1)
+        if text.startswith(prefix) and text.endswith(suffix):
+            value = text[len(prefix):len(text) - len(suffix)] if suffix else text[len(prefix):]
+            try:
+                return target % value
+            except Exception:
+                return target
+
+    return None
+
+def ui_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        translated = _pattern_translate(text, UI_TEXT_AR)
+        if translated:
+            return translated
+        return text
+
+    translated = _pattern_translate(text, AR_TEXT_EN)
+    if translated:
+        return translated
+
+    return text
+
+
 def toast(title, message, kind='warning', sticky=False):
     return {
         'type': 'ir.actions.client',
         'tag': 'display_notification',
         'params': {
-            'title': title,
-            'message': message,
+            'title': ui_text(title),
+            'message': ui_text(message),
             'type': kind,
             'sticky': sticky,
         },
@@ -975,13 +2463,261 @@ if not action:
 registry_model = env['x_hr.recruitment_document'].sudo()
 action = False
 
+UI_TEXT_AR = {
+    "No applicant": "لا يوجد متقدم",
+    "Unsupported declaration type": "نوع إقرار غير مدعوم",
+    "F-0004 already created": "تم إنشاء F-0004 مسبقاً",
+    "Cannot recreate F-0007": "لا يمكن إعادة إنشاء F-0007",
+    "Cannot recreate F-0009": "لا يمكن إعادة إنشاء F-0009",
+    "No generated PDF": "لا يوجد ملف منشأ",
+    "Odoo Sign setup incomplete": "إعداد توقيع أودو غير مكتمل",
+    "F-0004 already signed": "F-0004 موقّع مسبقاً",
+    "F-0007 already signed": "F-0007 موقّع مسبقاً",
+    "F-0009 already signed": "F-0009 موقّع مسبقاً",
+    "F-0004 is not ready to send": "F-0004 غير جاهز للإرسال",
+    "F-0007 is not ready to send": "F-0007 غير جاهز للإرسال",
+    "F-0009 is not ready to send": "F-0009 غير جاهز للإرسال",
+    "Applicant email missing": "بريد المتقدم غير موجود",
+    "Duplicate Sign request blocked": "تم منع طلب توقيع مكرر",
+    "F-0004 sent for signature": "تم إرسال F-0004 للتوقيع",
+    "F-0007 sent for signature": "تم إرسال F-0007 للتوقيع",
+    "F-0009 sent for signature": "تم إرسال F-0009 للتوقيع",
+    "Sign request lookup failed": "تعذر العثور على طلب التوقيع",
+    "No linked Sign request": "لا يوجد طلب توقيع مرتبط",
+    "Sign request missing": "طلب التوقيع غير موجود",
+    "F-0004 is not fully signed": "F-0004 لم يكتمل توقيعه",
+    "Signed document missing": "المستند الموقع غير موجود",
+    "F-0004 signed": "تم توقيع F-0004",
+    "Invalid signed file": "الملف الموقع غير صحيح",
+    "No signed file": "لا يوجد ملف موقع",
+    "Signed copy missing": "النسخة الموقعة غير موجودة",
+    "Save the applicant record before creating the declaration.": "احفظ سجل المتقدم قبل إنشاء الإقرار.",
+    "Save the applicant record before creating the policies and procedures compliance declaration.": "احفظ سجل المتقدم قبل إنشاء إقرار الالتزام باللوائح والسياسات.",
+    "Save the applicant record before creating the confidentiality and non-disclosure declaration.": "احفظ سجل المتقدم قبل إنشاء إقرار السرية وعدم الإفصاح.",
+    "PDF generation is currently available only for F-0004.": "إنشاء PDF متاح حالياً فقط لإقرار F-0004.",
+    "F-0004 PDF has already been generated for this declaration. Create a new declaration if a correction is required.": "تم إنشاء ملف F-0004 لهذا الإقرار مسبقاً. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0004 without a linked applicant.": "لا يمكن إنشاء F-0004 بدون ربط الإقرار بمتقدم.",
+    "This PDF generation action is only for the F-0007 policies and procedures compliance declaration.": "إنشاء PDF هذا مخصص فقط لإقرار F-0007 الالتزام باللوائح والسياسات.",
+    "F-0007 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.": "لا يمكن إعادة إنشاء ملف F-0007 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0007 without a linked applicant.": "لا يمكن إنشاء F-0007 بدون ربط الإقرار بمتقدم.",
+    "This PDF generation action is only for the F-0009 confidentiality and non-disclosure declaration.": "إنشاء PDF هذا مخصص فقط لإقرار F-0009 السرية وعدم الإفصاح.",
+    "F-0009 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.": "لا يمكن إعادة إنشاء ملف F-0009 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0009 without a linked applicant.": "لا يمكن إنشاء F-0009 بدون ربط الإقرار بمتقدم.",
+    "No generated F-0004 PDF is linked to this declaration.": "لا يوجد ملف F-0004 منشأ مرتبط بهذا الإقرار.",
+    "Sending through Odoo Sign is currently available only for F-0004.": "الإرسال عبر توقيع أودو متاح حالياً فقط لإقرار F-0004.",
+    "This Odoo Sign send action is only for F-0007.": "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0007.",
+    "This Odoo Sign send action is only for F-0009.": "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0009.",
+    "This declaration is already signed. No duplicate Odoo Sign request was created.": "هذا الإقرار موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.",
+    "Generate the F-0004 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0004 PDF قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0007 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0007 PDF قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0009 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0009 PDF قبل إرساله عبر توقيع أودو.",
+    "Cannot send F-0004 without a linked applicant.": "لا يمكن إرسال F-0004 بدون متقدم مرتبط.",
+    "Cannot send F-0007 without a linked applicant.": "لا يمكن إرسال F-0007 بدون متقدم مرتبط.",
+    "Cannot send F-0009 without a linked applicant.": "لا يمكن إرسال F-0009 بدون متقدم مرتبط.",
+    "Add an applicant email before sending F-0004 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0004 عبر توقيع أودو.",
+    "Add an applicant email before sending F-0007 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0007 عبر توقيع أودو.",
+    "Add an applicant email before sending F-0009 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0009 عبر توقيع أودو.",
+    "The recruitment document registry for this declaration is already signed.": "سجل مستندات التوظيف لهذا الإقرار موقّع مسبقاً.",
+    "The linked Odoo Sign request is already signed. Use Sync Signed Result to close the record.": "طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة نتيجة التوقيع لإغلاق السجل.",
+    "There is an active Odoo Sign request for this declaration in state \"%s\". A duplicate request will not be created.": "يوجد طلب توقيع أودو نشط لهذا الإقرار بحالة \"%s\". لن يتم إنشاء طلب مكرر.",
+    "Odoo Sign request was created and sent to %s.": "تم إنشاء طلب توقيع أودو وإرساله إلى %s.",
+    "Odoo Sign request was created and sent to the applicant.": "تم إنشاء طلب توقيع أودو وإرساله إلى المتقدم.",
+    "The send action ran, but sign.request was not found automatically. Review the Sign app before retrying.": "تم تنفيذ الإرسال، لكن لم يتم العثور على sign.request تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.",
+    "Cannot sync F-0004 without a linked applicant.": "لا يمكن مزامنة F-0004 بدون متقدم مرتبط.",
+    "Cannot sync %s without a linked applicant.": "لا يمكن مزامنة %s بدون متقدم مرتبط.",
+    "No F-0004 registry row linked to an Odoo Sign request was found.": "لم يتم العثور على سجل F-0004 مرتبط بطلب توقيع أودو.",
+    "The linked Odoo Sign request no longer exists or cannot be accessed.": "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.",
+    "The Odoo Sign request is still in state: %s.": "طلب توقيع أودو لا يزال بحالة: %s.",
+    "%s is not fully signed yet": "%s لم يكتمل توقيعه",
+    "The Sign request is signed, but the completed document attachments were not found.": "طلب التوقيع موقّع، لكن لم يتم العثور على مرفقات المستند المكتمل.",
+    "Only the signing certificate was found. The signed F-0004 copy was not found. Open the original Sign request and verify attachments before syncing again.": "تم العثور على شهادة التوقيع فقط، ولم يتم العثور على نسخة F-0004 الموقعة. افتح طلب التوقيع الأصلي وتحقق من المرفقات قبل إعادة المزامنة.",
+    "Only the signing certificate/log was found. The signed %s copy was not found.": "تم العثور على شهادة/سجل التوقيع فقط، ولم يتم العثور على نسخة %s الموقعة.",
+    "The signed result was synced and the signed document and certificate were linked where available.": "تمت مزامنة نتيجة التوقيع وربط المستند الموقع والشهادة عند توفرها.",
+    "Signed %s": "تم توقيع %s",
+    "The attachment linked as signed file appears to be a signing certificate, not the signed F-0004 copy. Run Sync Signed Result again for this declaration.": "المرفق المرتبط كملف موقع يبدو أنه شهادة توقيع وليس نسخة F-0004 الموقعة. أعد تشغيل مزامنة نتيجة التوقيع لهذا الإقرار.",
+    "No signed F-0004 PDF is linked to this declaration.": "لا يوجد ملف F-0004 موقع مرتبط بهذا الإقرار.",
+    "Responsibilities PDF generated": "تم توليد ملف المهام",
+    "F-0006 draft PDF was generated in the background and linked to the applicant record.": "تم توليد مسودة F-0006 في الخلفية وربطها بسجل المتقدم.",
+    "Responsibilities sent for signature": "تم إرسال المهام للتوقيع",
+    "Odoo Sign request was created and sent to the responsible manager and applicant.": "تم إنشاء طلب توقيع أودو وإرساله إلى المدير المسؤول والمتقدم.",
+    "Regeneration disabled": "إعادة التوليد موقوفة",
+    "Open Sign request": "طلب توقيع مفتوح",
+    "Missing data": "بيانات ناقصة",
+    "No draft generated": "لم يتم توليد مسودة",
+    "Responsibilities already signed": "الوصف الوظيفي موقّع مسبقاً",
+    "Draft is not ready": "المسودة غير جاهزة",
+    "Responsible manager contact missing": "جهة اتصال المدير المسؤول غير موجودة",
+    "Responsible manager email missing": "بريد المدير المسؤول غير موجود",
+    "No draft": "لا توجد مسودة",
+    "No signed copy": "لا توجد نسخة موقعة",
+    "No Sign certificate": "لا توجد شهادة توقيع",
+    "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.": "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.",
+    "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.": "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.",
+    "Cannot generate the responsibilities draft before completing: %s.": "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.",
+    "No responsibilities draft was generated.": "لم يتم توليد أي مسودة وصف وظيفي.",
+    "This responsibilities document is already signed. No duplicate Odoo Sign request was created.": "هذا الوصف الوظيفي موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.",
+    "Generate the responsibilities draft before sending it through Odoo Sign.": "ولّد مسودة الوصف الوظيفي قبل إرسالها عبر توقيع أودو.",
+    "Add an applicant email before sending responsibilities through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال الوصف الوظيفي عبر توقيع أودو.",
+    "The current user has no linked contact and cannot be used as responsible-manager signer.": "المستخدم الحالي لا يملك جهة اتصال مرتبطة ولا يمكن استخدامه كموقّع للمدير المسؤول.",
+    "Add an email to the current user's contact before sending responsibilities for signature.": "أضف بريداً إلكترونياً إلى جهة اتصال المستخدم الحالي قبل إرسال الوصف الوظيفي للتوقيع.",
+    "The recruitment document registry for this responsibilities document is already signed.": "سجل مستندات التوظيف لهذا الوصف الوظيفي موقّع مسبقاً.",
+    "The linked Odoo Sign request is completed/signed. Use Sync Signature to close the record.": "طلب توقيع أودو المرتبط مكتمل/موقّع بالفعل. استخدم مزامنة التوقيع لإغلاق السجل.",
+    "There is an active Odoo Sign request for this responsibilities document in state \"%s\". A duplicate request will not be created.": "يوجد طلب توقيع أودو نشط لهذا الوصف الوظيفي بحالة \"%s\". لن يتم إنشاء طلب مكرر.",
+    "No responsibilities draft has been generated for this applicant yet.": "لم يتم توليد مسودة الوصف الوظيفي لهذا المتقدم بعد.",
+    "The signed responsibilities copy is not linked yet. Use signature sync first.": "لم يتم ربط النسخة الموقعة من الوصف الوظيفي بعد. استخدم مزامنة التوقيع أولاً.",
+    "No responsibilities Sign certificate was found. Use signature sync first or review Odoo Sign attachments.": "لم يتم العثور على شهادة توقيع للوصف الوظيفي. استخدم مزامنة التوقيع أولاً أو راجع مرفقات أودو Sign."
+}
+AR_TEXT_EN = {
+    "لا يوجد متقدم": "No applicant",
+    "نوع إقرار غير مدعوم": "Unsupported declaration type",
+    "تم إنشاء F-0004 مسبقاً": "F-0004 already created",
+    "لا يمكن إعادة إنشاء F-0007": "Cannot recreate F-0007",
+    "لا يمكن إعادة إنشاء F-0009": "Cannot recreate F-0009",
+    "لا يوجد ملف منشأ": "No generated PDF",
+    "إعداد توقيع أودو غير مكتمل": "Odoo Sign setup incomplete",
+    "F-0004 موقّع مسبقاً": "F-0004 already signed",
+    "F-0007 موقّع مسبقاً": "F-0007 already signed",
+    "F-0009 موقّع مسبقاً": "F-0009 already signed",
+    "F-0004 غير جاهز للإرسال": "F-0004 is not ready to send",
+    "F-0007 غير جاهز للإرسال": "F-0007 is not ready to send",
+    "F-0009 غير جاهز للإرسال": "F-0009 is not ready to send",
+    "بريد المتقدم غير موجود": "Applicant email missing",
+    "تم منع طلب توقيع مكرر": "Duplicate Sign request blocked",
+    "تم إرسال F-0004 للتوقيع": "F-0004 sent for signature",
+    "تم إرسال F-0007 للتوقيع": "F-0007 sent for signature",
+    "تم إرسال F-0009 للتوقيع": "F-0009 sent for signature",
+    "تعذر العثور على طلب التوقيع": "Sign request lookup failed",
+    "لا يوجد طلب توقيع مرتبط": "No linked Sign request",
+    "طلب التوقيع غير موجود": "Sign request missing",
+    "F-0004 لم يكتمل توقيعه": "F-0004 is not fully signed",
+    "المستند الموقع غير موجود": "Signed document missing",
+    "تم توقيع F-0004": "F-0004 signed",
+    "الملف الموقع غير صحيح": "Invalid signed file",
+    "لا يوجد ملف موقع": "No signed file",
+    "النسخة الموقعة غير موجودة": "Signed copy missing",
+    "احفظ سجل المتقدم قبل إنشاء الإقرار.": "Save the applicant record before creating the declaration.",
+    "احفظ سجل المتقدم قبل إنشاء إقرار الالتزام باللوائح والسياسات.": "Save the applicant record before creating the policies and procedures compliance declaration.",
+    "احفظ سجل المتقدم قبل إنشاء إقرار السرية وعدم الإفصاح.": "Save the applicant record before creating the confidentiality and non-disclosure declaration.",
+    "إنشاء PDF متاح حالياً فقط لإقرار F-0004.": "PDF generation is currently available only for F-0004.",
+    "تم إنشاء ملف F-0004 لهذا الإقرار مسبقاً. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0004 PDF has already been generated for this declaration. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0004 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0004 without a linked applicant.",
+    "إنشاء PDF هذا مخصص فقط لإقرار F-0007 الالتزام باللوائح والسياسات.": "This PDF generation action is only for the F-0007 policies and procedures compliance declaration.",
+    "لا يمكن إعادة إنشاء ملف F-0007 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0007 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0007 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0007 without a linked applicant.",
+    "إنشاء PDF هذا مخصص فقط لإقرار F-0009 السرية وعدم الإفصاح.": "This PDF generation action is only for the F-0009 confidentiality and non-disclosure declaration.",
+    "لا يمكن إعادة إنشاء ملف F-0009 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0009 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0009 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0009 without a linked applicant.",
+    "لا يوجد ملف F-0004 منشأ مرتبط بهذا الإقرار.": "No generated F-0004 PDF is linked to this declaration.",
+    "الإرسال عبر توقيع أودو متاح حالياً فقط لإقرار F-0004.": "Sending through Odoo Sign is currently available only for F-0004.",
+    "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0007.": "This Odoo Sign send action is only for F-0007.",
+    "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0009.": "This Odoo Sign send action is only for F-0009.",
+    "هذا الإقرار موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.": "This declaration is already signed. No duplicate Odoo Sign request was created.",
+    "أنشئ ملف F-0004 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0004 PDF before sending it through Odoo Sign.",
+    "أنشئ ملف F-0007 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0007 PDF before sending it through Odoo Sign.",
+    "أنشئ ملف F-0009 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0009 PDF before sending it through Odoo Sign.",
+    "لا يمكن إرسال F-0004 بدون متقدم مرتبط.": "Cannot send F-0004 without a linked applicant.",
+    "لا يمكن إرسال F-0007 بدون متقدم مرتبط.": "Cannot send F-0007 without a linked applicant.",
+    "لا يمكن إرسال F-0009 بدون متقدم مرتبط.": "Cannot send F-0009 without a linked applicant.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0004 عبر توقيع أودو.": "Add an applicant email before sending F-0004 through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0007 عبر توقيع أودو.": "Add an applicant email before sending F-0007 through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0009 عبر توقيع أودو.": "Add an applicant email before sending F-0009 through Odoo Sign.",
+    "سجل مستندات التوظيف لهذا الإقرار موقّع مسبقاً.": "The recruitment document registry for this declaration is already signed.",
+    "طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة نتيجة التوقيع لإغلاق السجل.": "The linked Odoo Sign request is already signed. Use Sync Signed Result to close the record.",
+    "يوجد طلب توقيع أودو نشط لهذا الإقرار بحالة \"%s\". لن يتم إنشاء طلب مكرر.": "There is an active Odoo Sign request for this declaration in state \"%s\". A duplicate request will not be created.",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى %s.": "Odoo Sign request was created and sent to %s.",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى المتقدم.": "Odoo Sign request was created and sent to the applicant.",
+    "تم تنفيذ الإرسال، لكن لم يتم العثور على sign.request تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.": "The send action ran, but sign.request was not found automatically. Review the Sign app before retrying.",
+    "لا يمكن مزامنة F-0004 بدون متقدم مرتبط.": "Cannot sync F-0004 without a linked applicant.",
+    "لا يمكن مزامنة %s بدون متقدم مرتبط.": "Cannot sync %s without a linked applicant.",
+    "لم يتم العثور على سجل F-0004 مرتبط بطلب توقيع أودو.": "No F-0004 registry row linked to an Odoo Sign request was found.",
+    "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.": "The linked Odoo Sign request no longer exists or cannot be accessed.",
+    "طلب توقيع أودو لا يزال بحالة: %s.": "The Odoo Sign request is still in state: %s.",
+    "%s لم يكتمل توقيعه": "%s is not fully signed yet",
+    "طلب التوقيع موقّع، لكن لم يتم العثور على مرفقات المستند المكتمل.": "The Sign request is signed, but the completed document attachments were not found.",
+    "تم العثور على شهادة التوقيع فقط، ولم يتم العثور على نسخة F-0004 الموقعة. افتح طلب التوقيع الأصلي وتحقق من المرفقات قبل إعادة المزامنة.": "Only the signing certificate was found. The signed F-0004 copy was not found. Open the original Sign request and verify attachments before syncing again.",
+    "تم العثور على شهادة/سجل التوقيع فقط، ولم يتم العثور على نسخة %s الموقعة.": "Only the signing certificate/log was found. The signed %s copy was not found.",
+    "تمت مزامنة نتيجة التوقيع وربط المستند الموقع والشهادة عند توفرها.": "The signed result was synced and the signed document and certificate were linked where available.",
+    "تم توقيع %s": "Signed %s",
+    "المرفق المرتبط كملف موقع يبدو أنه شهادة توقيع وليس نسخة F-0004 الموقعة. أعد تشغيل مزامنة نتيجة التوقيع لهذا الإقرار.": "The attachment linked as signed file appears to be a signing certificate, not the signed F-0004 copy. Run Sync Signed Result again for this declaration.",
+    "لا يوجد ملف F-0004 موقع مرتبط بهذا الإقرار.": "No signed F-0004 PDF is linked to this declaration.",
+    "تم توليد ملف المهام": "Responsibilities PDF generated",
+    "تم توليد مسودة F-0006 في الخلفية وربطها بسجل المتقدم.": "F-0006 draft PDF was generated in the background and linked to the applicant record.",
+    "تم إرسال المهام للتوقيع": "Responsibilities sent for signature",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى المدير المسؤول والمتقدم.": "Odoo Sign request was created and sent to the responsible manager and applicant.",
+    "إعادة التوليد موقوفة": "Regeneration disabled",
+    "طلب توقيع مفتوح": "Open Sign request",
+    "بيانات ناقصة": "Missing data",
+    "لم يتم توليد مسودة": "No draft generated",
+    "الوصف الوظيفي موقّع مسبقاً": "Responsibilities already signed",
+    "المسودة غير جاهزة": "Draft is not ready",
+    "جهة اتصال المدير المسؤول غير موجودة": "Responsible manager contact missing",
+    "بريد المدير المسؤول غير موجود": "Responsible manager email missing",
+    "لا توجد مسودة": "No draft",
+    "لا توجد نسخة موقعة": "No signed copy",
+    "لا توجد شهادة توقيع": "No Sign certificate",
+    "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.": "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.",
+    "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.": "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.",
+    "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.": "Cannot generate the responsibilities draft before completing: %s.",
+    "لم يتم توليد أي مسودة وصف وظيفي.": "No responsibilities draft was generated.",
+    "هذا الوصف الوظيفي موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.": "This responsibilities document is already signed. No duplicate Odoo Sign request was created.",
+    "ولّد مسودة الوصف الوظيفي قبل إرسالها عبر توقيع أودو.": "Generate the responsibilities draft before sending it through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال الوصف الوظيفي عبر توقيع أودو.": "Add an applicant email before sending responsibilities through Odoo Sign.",
+    "المستخدم الحالي لا يملك جهة اتصال مرتبطة ولا يمكن استخدامه كموقّع للمدير المسؤول.": "The current user has no linked contact and cannot be used as responsible-manager signer.",
+    "أضف بريداً إلكترونياً إلى جهة اتصال المستخدم الحالي قبل إرسال الوصف الوظيفي للتوقيع.": "Add an email to the current user's contact before sending responsibilities for signature.",
+    "سجل مستندات التوظيف لهذا الوصف الوظيفي موقّع مسبقاً.": "The recruitment document registry for this responsibilities document is already signed.",
+    "طلب توقيع أودو المرتبط مكتمل/موقّع بالفعل. استخدم مزامنة التوقيع لإغلاق السجل.": "The linked Odoo Sign request is completed/signed. Use Sync Signature to close the record.",
+    "يوجد طلب توقيع أودو نشط لهذا الوصف الوظيفي بحالة \"%s\". لن يتم إنشاء طلب مكرر.": "There is an active Odoo Sign request for this responsibilities document in state \"%s\". A duplicate request will not be created.",
+    "لم يتم توليد مسودة الوصف الوظيفي لهذا المتقدم بعد.": "No responsibilities draft has been generated for this applicant yet.",
+    "لم يتم ربط النسخة الموقعة من الوصف الوظيفي بعد. استخدم مزامنة التوقيع أولاً.": "The signed responsibilities copy is not linked yet. Use signature sync first.",
+    "لم يتم العثور على شهادة توقيع للوصف الوظيفي. استخدم مزامنة التوقيع أولاً أو راجع مرفقات أودو Sign.": "No responsibilities Sign certificate was found. Use signature sync first or review Odoo Sign attachments."
+}
+
+def _pattern_translate(text, mapping):
+    if text in mapping:
+        return mapping[text]
+
+    for source, target in mapping.items():
+        if '%s' not in source:
+            continue
+        prefix, suffix = source.split('%s', 1)
+        if text.startswith(prefix) and text.endswith(suffix):
+            value = text[len(prefix):len(text) - len(suffix)] if suffix else text[len(prefix):]
+            try:
+                return target % value
+            except Exception:
+                return target
+
+    return None
+
+def ui_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        translated = _pattern_translate(text, UI_TEXT_AR)
+        if translated:
+            return translated
+        return text
+
+    translated = _pattern_translate(text, AR_TEXT_EN)
+    if translated:
+        return translated
+
+    return text
+
+
 def toast(title, message, kind='warning', sticky=False):
     return {
         'type': 'ir.actions.client',
         'tag': 'display_notification',
         'params': {
-            'title': title,
-            'message': message,
+            'title': ui_text(title),
+            'message': ui_text(message),
             'type': kind,
             'sticky': sticky,
         },
@@ -1026,13 +2762,261 @@ registry_model = env['x_hr.recruitment_document'].sudo()
 attachment_model = env['ir.attachment'].sudo()
 action = False
 
+UI_TEXT_AR = {
+    "No applicant": "لا يوجد متقدم",
+    "Unsupported declaration type": "نوع إقرار غير مدعوم",
+    "F-0004 already created": "تم إنشاء F-0004 مسبقاً",
+    "Cannot recreate F-0007": "لا يمكن إعادة إنشاء F-0007",
+    "Cannot recreate F-0009": "لا يمكن إعادة إنشاء F-0009",
+    "No generated PDF": "لا يوجد ملف منشأ",
+    "Odoo Sign setup incomplete": "إعداد توقيع أودو غير مكتمل",
+    "F-0004 already signed": "F-0004 موقّع مسبقاً",
+    "F-0007 already signed": "F-0007 موقّع مسبقاً",
+    "F-0009 already signed": "F-0009 موقّع مسبقاً",
+    "F-0004 is not ready to send": "F-0004 غير جاهز للإرسال",
+    "F-0007 is not ready to send": "F-0007 غير جاهز للإرسال",
+    "F-0009 is not ready to send": "F-0009 غير جاهز للإرسال",
+    "Applicant email missing": "بريد المتقدم غير موجود",
+    "Duplicate Sign request blocked": "تم منع طلب توقيع مكرر",
+    "F-0004 sent for signature": "تم إرسال F-0004 للتوقيع",
+    "F-0007 sent for signature": "تم إرسال F-0007 للتوقيع",
+    "F-0009 sent for signature": "تم إرسال F-0009 للتوقيع",
+    "Sign request lookup failed": "تعذر العثور على طلب التوقيع",
+    "No linked Sign request": "لا يوجد طلب توقيع مرتبط",
+    "Sign request missing": "طلب التوقيع غير موجود",
+    "F-0004 is not fully signed": "F-0004 لم يكتمل توقيعه",
+    "Signed document missing": "المستند الموقع غير موجود",
+    "F-0004 signed": "تم توقيع F-0004",
+    "Invalid signed file": "الملف الموقع غير صحيح",
+    "No signed file": "لا يوجد ملف موقع",
+    "Signed copy missing": "النسخة الموقعة غير موجودة",
+    "Save the applicant record before creating the declaration.": "احفظ سجل المتقدم قبل إنشاء الإقرار.",
+    "Save the applicant record before creating the policies and procedures compliance declaration.": "احفظ سجل المتقدم قبل إنشاء إقرار الالتزام باللوائح والسياسات.",
+    "Save the applicant record before creating the confidentiality and non-disclosure declaration.": "احفظ سجل المتقدم قبل إنشاء إقرار السرية وعدم الإفصاح.",
+    "PDF generation is currently available only for F-0004.": "إنشاء PDF متاح حالياً فقط لإقرار F-0004.",
+    "F-0004 PDF has already been generated for this declaration. Create a new declaration if a correction is required.": "تم إنشاء ملف F-0004 لهذا الإقرار مسبقاً. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0004 without a linked applicant.": "لا يمكن إنشاء F-0004 بدون ربط الإقرار بمتقدم.",
+    "This PDF generation action is only for the F-0007 policies and procedures compliance declaration.": "إنشاء PDF هذا مخصص فقط لإقرار F-0007 الالتزام باللوائح والسياسات.",
+    "F-0007 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.": "لا يمكن إعادة إنشاء ملف F-0007 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0007 without a linked applicant.": "لا يمكن إنشاء F-0007 بدون ربط الإقرار بمتقدم.",
+    "This PDF generation action is only for the F-0009 confidentiality and non-disclosure declaration.": "إنشاء PDF هذا مخصص فقط لإقرار F-0009 السرية وعدم الإفصاح.",
+    "F-0009 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.": "لا يمكن إعادة إنشاء ملف F-0009 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.",
+    "Cannot generate F-0009 without a linked applicant.": "لا يمكن إنشاء F-0009 بدون ربط الإقرار بمتقدم.",
+    "No generated F-0004 PDF is linked to this declaration.": "لا يوجد ملف F-0004 منشأ مرتبط بهذا الإقرار.",
+    "Sending through Odoo Sign is currently available only for F-0004.": "الإرسال عبر توقيع أودو متاح حالياً فقط لإقرار F-0004.",
+    "This Odoo Sign send action is only for F-0007.": "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0007.",
+    "This Odoo Sign send action is only for F-0009.": "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0009.",
+    "This declaration is already signed. No duplicate Odoo Sign request was created.": "هذا الإقرار موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.",
+    "Generate the F-0004 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0004 PDF قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0007 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0007 PDF قبل إرساله عبر توقيع أودو.",
+    "Generate the F-0009 PDF before sending it through Odoo Sign.": "أنشئ ملف F-0009 PDF قبل إرساله عبر توقيع أودو.",
+    "Cannot send F-0004 without a linked applicant.": "لا يمكن إرسال F-0004 بدون متقدم مرتبط.",
+    "Cannot send F-0007 without a linked applicant.": "لا يمكن إرسال F-0007 بدون متقدم مرتبط.",
+    "Cannot send F-0009 without a linked applicant.": "لا يمكن إرسال F-0009 بدون متقدم مرتبط.",
+    "Add an applicant email before sending F-0004 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0004 عبر توقيع أودو.",
+    "Add an applicant email before sending F-0007 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0007 عبر توقيع أودو.",
+    "Add an applicant email before sending F-0009 through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0009 عبر توقيع أودو.",
+    "The recruitment document registry for this declaration is already signed.": "سجل مستندات التوظيف لهذا الإقرار موقّع مسبقاً.",
+    "The linked Odoo Sign request is already signed. Use Sync Signed Result to close the record.": "طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة نتيجة التوقيع لإغلاق السجل.",
+    "There is an active Odoo Sign request for this declaration in state \"%s\". A duplicate request will not be created.": "يوجد طلب توقيع أودو نشط لهذا الإقرار بحالة \"%s\". لن يتم إنشاء طلب مكرر.",
+    "Odoo Sign request was created and sent to %s.": "تم إنشاء طلب توقيع أودو وإرساله إلى %s.",
+    "Odoo Sign request was created and sent to the applicant.": "تم إنشاء طلب توقيع أودو وإرساله إلى المتقدم.",
+    "The send action ran, but sign.request was not found automatically. Review the Sign app before retrying.": "تم تنفيذ الإرسال، لكن لم يتم العثور على sign.request تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.",
+    "Cannot sync F-0004 without a linked applicant.": "لا يمكن مزامنة F-0004 بدون متقدم مرتبط.",
+    "Cannot sync %s without a linked applicant.": "لا يمكن مزامنة %s بدون متقدم مرتبط.",
+    "No F-0004 registry row linked to an Odoo Sign request was found.": "لم يتم العثور على سجل F-0004 مرتبط بطلب توقيع أودو.",
+    "The linked Odoo Sign request no longer exists or cannot be accessed.": "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.",
+    "The Odoo Sign request is still in state: %s.": "طلب توقيع أودو لا يزال بحالة: %s.",
+    "%s is not fully signed yet": "%s لم يكتمل توقيعه",
+    "The Sign request is signed, but the completed document attachments were not found.": "طلب التوقيع موقّع، لكن لم يتم العثور على مرفقات المستند المكتمل.",
+    "Only the signing certificate was found. The signed F-0004 copy was not found. Open the original Sign request and verify attachments before syncing again.": "تم العثور على شهادة التوقيع فقط، ولم يتم العثور على نسخة F-0004 الموقعة. افتح طلب التوقيع الأصلي وتحقق من المرفقات قبل إعادة المزامنة.",
+    "Only the signing certificate/log was found. The signed %s copy was not found.": "تم العثور على شهادة/سجل التوقيع فقط، ولم يتم العثور على نسخة %s الموقعة.",
+    "The signed result was synced and the signed document and certificate were linked where available.": "تمت مزامنة نتيجة التوقيع وربط المستند الموقع والشهادة عند توفرها.",
+    "Signed %s": "تم توقيع %s",
+    "The attachment linked as signed file appears to be a signing certificate, not the signed F-0004 copy. Run Sync Signed Result again for this declaration.": "المرفق المرتبط كملف موقع يبدو أنه شهادة توقيع وليس نسخة F-0004 الموقعة. أعد تشغيل مزامنة نتيجة التوقيع لهذا الإقرار.",
+    "No signed F-0004 PDF is linked to this declaration.": "لا يوجد ملف F-0004 موقع مرتبط بهذا الإقرار.",
+    "Responsibilities PDF generated": "تم توليد ملف المهام",
+    "F-0006 draft PDF was generated in the background and linked to the applicant record.": "تم توليد مسودة F-0006 في الخلفية وربطها بسجل المتقدم.",
+    "Responsibilities sent for signature": "تم إرسال المهام للتوقيع",
+    "Odoo Sign request was created and sent to the responsible manager and applicant.": "تم إنشاء طلب توقيع أودو وإرساله إلى المدير المسؤول والمتقدم.",
+    "Regeneration disabled": "إعادة التوليد موقوفة",
+    "Open Sign request": "طلب توقيع مفتوح",
+    "Missing data": "بيانات ناقصة",
+    "No draft generated": "لم يتم توليد مسودة",
+    "Responsibilities already signed": "الوصف الوظيفي موقّع مسبقاً",
+    "Draft is not ready": "المسودة غير جاهزة",
+    "Responsible manager contact missing": "جهة اتصال المدير المسؤول غير موجودة",
+    "Responsible manager email missing": "بريد المدير المسؤول غير موجود",
+    "No draft": "لا توجد مسودة",
+    "No signed copy": "لا توجد نسخة موقعة",
+    "No Sign certificate": "لا توجد شهادة توقيع",
+    "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.": "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.",
+    "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.": "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.",
+    "Cannot generate the responsibilities draft before completing: %s.": "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.",
+    "No responsibilities draft was generated.": "لم يتم توليد أي مسودة وصف وظيفي.",
+    "This responsibilities document is already signed. No duplicate Odoo Sign request was created.": "هذا الوصف الوظيفي موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.",
+    "Generate the responsibilities draft before sending it through Odoo Sign.": "ولّد مسودة الوصف الوظيفي قبل إرسالها عبر توقيع أودو.",
+    "Add an applicant email before sending responsibilities through Odoo Sign.": "أضف بريداً إلكترونياً للمتقدم قبل إرسال الوصف الوظيفي عبر توقيع أودو.",
+    "The current user has no linked contact and cannot be used as responsible-manager signer.": "المستخدم الحالي لا يملك جهة اتصال مرتبطة ولا يمكن استخدامه كموقّع للمدير المسؤول.",
+    "Add an email to the current user's contact before sending responsibilities for signature.": "أضف بريداً إلكترونياً إلى جهة اتصال المستخدم الحالي قبل إرسال الوصف الوظيفي للتوقيع.",
+    "The recruitment document registry for this responsibilities document is already signed.": "سجل مستندات التوظيف لهذا الوصف الوظيفي موقّع مسبقاً.",
+    "The linked Odoo Sign request is completed/signed. Use Sync Signature to close the record.": "طلب توقيع أودو المرتبط مكتمل/موقّع بالفعل. استخدم مزامنة التوقيع لإغلاق السجل.",
+    "There is an active Odoo Sign request for this responsibilities document in state \"%s\". A duplicate request will not be created.": "يوجد طلب توقيع أودو نشط لهذا الوصف الوظيفي بحالة \"%s\". لن يتم إنشاء طلب مكرر.",
+    "No responsibilities draft has been generated for this applicant yet.": "لم يتم توليد مسودة الوصف الوظيفي لهذا المتقدم بعد.",
+    "The signed responsibilities copy is not linked yet. Use signature sync first.": "لم يتم ربط النسخة الموقعة من الوصف الوظيفي بعد. استخدم مزامنة التوقيع أولاً.",
+    "No responsibilities Sign certificate was found. Use signature sync first or review Odoo Sign attachments.": "لم يتم العثور على شهادة توقيع للوصف الوظيفي. استخدم مزامنة التوقيع أولاً أو راجع مرفقات أودو Sign."
+}
+AR_TEXT_EN = {
+    "لا يوجد متقدم": "No applicant",
+    "نوع إقرار غير مدعوم": "Unsupported declaration type",
+    "تم إنشاء F-0004 مسبقاً": "F-0004 already created",
+    "لا يمكن إعادة إنشاء F-0007": "Cannot recreate F-0007",
+    "لا يمكن إعادة إنشاء F-0009": "Cannot recreate F-0009",
+    "لا يوجد ملف منشأ": "No generated PDF",
+    "إعداد توقيع أودو غير مكتمل": "Odoo Sign setup incomplete",
+    "F-0004 موقّع مسبقاً": "F-0004 already signed",
+    "F-0007 موقّع مسبقاً": "F-0007 already signed",
+    "F-0009 موقّع مسبقاً": "F-0009 already signed",
+    "F-0004 غير جاهز للإرسال": "F-0004 is not ready to send",
+    "F-0007 غير جاهز للإرسال": "F-0007 is not ready to send",
+    "F-0009 غير جاهز للإرسال": "F-0009 is not ready to send",
+    "بريد المتقدم غير موجود": "Applicant email missing",
+    "تم منع طلب توقيع مكرر": "Duplicate Sign request blocked",
+    "تم إرسال F-0004 للتوقيع": "F-0004 sent for signature",
+    "تم إرسال F-0007 للتوقيع": "F-0007 sent for signature",
+    "تم إرسال F-0009 للتوقيع": "F-0009 sent for signature",
+    "تعذر العثور على طلب التوقيع": "Sign request lookup failed",
+    "لا يوجد طلب توقيع مرتبط": "No linked Sign request",
+    "طلب التوقيع غير موجود": "Sign request missing",
+    "F-0004 لم يكتمل توقيعه": "F-0004 is not fully signed",
+    "المستند الموقع غير موجود": "Signed document missing",
+    "تم توقيع F-0004": "F-0004 signed",
+    "الملف الموقع غير صحيح": "Invalid signed file",
+    "لا يوجد ملف موقع": "No signed file",
+    "النسخة الموقعة غير موجودة": "Signed copy missing",
+    "احفظ سجل المتقدم قبل إنشاء الإقرار.": "Save the applicant record before creating the declaration.",
+    "احفظ سجل المتقدم قبل إنشاء إقرار الالتزام باللوائح والسياسات.": "Save the applicant record before creating the policies and procedures compliance declaration.",
+    "احفظ سجل المتقدم قبل إنشاء إقرار السرية وعدم الإفصاح.": "Save the applicant record before creating the confidentiality and non-disclosure declaration.",
+    "إنشاء PDF متاح حالياً فقط لإقرار F-0004.": "PDF generation is currently available only for F-0004.",
+    "تم إنشاء ملف F-0004 لهذا الإقرار مسبقاً. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0004 PDF has already been generated for this declaration. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0004 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0004 without a linked applicant.",
+    "إنشاء PDF هذا مخصص فقط لإقرار F-0007 الالتزام باللوائح والسياسات.": "This PDF generation action is only for the F-0007 policies and procedures compliance declaration.",
+    "لا يمكن إعادة إنشاء ملف F-0007 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0007 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0007 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0007 without a linked applicant.",
+    "إنشاء PDF هذا مخصص فقط لإقرار F-0009 السرية وعدم الإفصاح.": "This PDF generation action is only for the F-0009 confidentiality and non-disclosure declaration.",
+    "لا يمكن إعادة إنشاء ملف F-0009 بعد بدء التوقيع أو اكتماله. أنشئ إقراراً جديداً إذا كان التصحيح مطلوباً.": "F-0009 cannot be regenerated after signing has started or completed. Create a new declaration if a correction is required.",
+    "لا يمكن إنشاء F-0009 بدون ربط الإقرار بمتقدم.": "Cannot generate F-0009 without a linked applicant.",
+    "لا يوجد ملف F-0004 منشأ مرتبط بهذا الإقرار.": "No generated F-0004 PDF is linked to this declaration.",
+    "الإرسال عبر توقيع أودو متاح حالياً فقط لإقرار F-0004.": "Sending through Odoo Sign is currently available only for F-0004.",
+    "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0007.": "This Odoo Sign send action is only for F-0007.",
+    "الإرسال عبر توقيع أودو هذا مخصص فقط لإقرار F-0009.": "This Odoo Sign send action is only for F-0009.",
+    "هذا الإقرار موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.": "This declaration is already signed. No duplicate Odoo Sign request was created.",
+    "أنشئ ملف F-0004 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0004 PDF before sending it through Odoo Sign.",
+    "أنشئ ملف F-0007 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0007 PDF before sending it through Odoo Sign.",
+    "أنشئ ملف F-0009 PDF قبل إرساله عبر توقيع أودو.": "Generate the F-0009 PDF before sending it through Odoo Sign.",
+    "لا يمكن إرسال F-0004 بدون متقدم مرتبط.": "Cannot send F-0004 without a linked applicant.",
+    "لا يمكن إرسال F-0007 بدون متقدم مرتبط.": "Cannot send F-0007 without a linked applicant.",
+    "لا يمكن إرسال F-0009 بدون متقدم مرتبط.": "Cannot send F-0009 without a linked applicant.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0004 عبر توقيع أودو.": "Add an applicant email before sending F-0004 through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0007 عبر توقيع أودو.": "Add an applicant email before sending F-0007 through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال F-0009 عبر توقيع أودو.": "Add an applicant email before sending F-0009 through Odoo Sign.",
+    "سجل مستندات التوظيف لهذا الإقرار موقّع مسبقاً.": "The recruitment document registry for this declaration is already signed.",
+    "طلب توقيع أودو المرتبط موقّع بالفعل. استخدم مزامنة نتيجة التوقيع لإغلاق السجل.": "The linked Odoo Sign request is already signed. Use Sync Signed Result to close the record.",
+    "يوجد طلب توقيع أودو نشط لهذا الإقرار بحالة \"%s\". لن يتم إنشاء طلب مكرر.": "There is an active Odoo Sign request for this declaration in state \"%s\". A duplicate request will not be created.",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى %s.": "Odoo Sign request was created and sent to %s.",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى المتقدم.": "Odoo Sign request was created and sent to the applicant.",
+    "تم تنفيذ الإرسال، لكن لم يتم العثور على sign.request تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.": "The send action ran, but sign.request was not found automatically. Review the Sign app before retrying.",
+    "لا يمكن مزامنة F-0004 بدون متقدم مرتبط.": "Cannot sync F-0004 without a linked applicant.",
+    "لا يمكن مزامنة %s بدون متقدم مرتبط.": "Cannot sync %s without a linked applicant.",
+    "لم يتم العثور على سجل F-0004 مرتبط بطلب توقيع أودو.": "No F-0004 registry row linked to an Odoo Sign request was found.",
+    "طلب توقيع أودو المرتبط لم يعد موجوداً أو لا يمكن الوصول إليه.": "The linked Odoo Sign request no longer exists or cannot be accessed.",
+    "طلب توقيع أودو لا يزال بحالة: %s.": "The Odoo Sign request is still in state: %s.",
+    "%s لم يكتمل توقيعه": "%s is not fully signed yet",
+    "طلب التوقيع موقّع، لكن لم يتم العثور على مرفقات المستند المكتمل.": "The Sign request is signed, but the completed document attachments were not found.",
+    "تم العثور على شهادة التوقيع فقط، ولم يتم العثور على نسخة F-0004 الموقعة. افتح طلب التوقيع الأصلي وتحقق من المرفقات قبل إعادة المزامنة.": "Only the signing certificate was found. The signed F-0004 copy was not found. Open the original Sign request and verify attachments before syncing again.",
+    "تم العثور على شهادة/سجل التوقيع فقط، ولم يتم العثور على نسخة %s الموقعة.": "Only the signing certificate/log was found. The signed %s copy was not found.",
+    "تمت مزامنة نتيجة التوقيع وربط المستند الموقع والشهادة عند توفرها.": "The signed result was synced and the signed document and certificate were linked where available.",
+    "تم توقيع %s": "Signed %s",
+    "المرفق المرتبط كملف موقع يبدو أنه شهادة توقيع وليس نسخة F-0004 الموقعة. أعد تشغيل مزامنة نتيجة التوقيع لهذا الإقرار.": "The attachment linked as signed file appears to be a signing certificate, not the signed F-0004 copy. Run Sync Signed Result again for this declaration.",
+    "لا يوجد ملف F-0004 موقع مرتبط بهذا الإقرار.": "No signed F-0004 PDF is linked to this declaration.",
+    "تم توليد ملف المهام": "Responsibilities PDF generated",
+    "تم توليد مسودة F-0006 في الخلفية وربطها بسجل المتقدم.": "F-0006 draft PDF was generated in the background and linked to the applicant record.",
+    "تم إرسال المهام للتوقيع": "Responsibilities sent for signature",
+    "تم إنشاء طلب توقيع أودو وإرساله إلى المدير المسؤول والمتقدم.": "Odoo Sign request was created and sent to the responsible manager and applicant.",
+    "إعادة التوليد موقوفة": "Regeneration disabled",
+    "طلب توقيع مفتوح": "Open Sign request",
+    "بيانات ناقصة": "Missing data",
+    "لم يتم توليد مسودة": "No draft generated",
+    "الوصف الوظيفي موقّع مسبقاً": "Responsibilities already signed",
+    "المسودة غير جاهزة": "Draft is not ready",
+    "جهة اتصال المدير المسؤول غير موجودة": "Responsible manager contact missing",
+    "بريد المدير المسؤول غير موجود": "Responsible manager email missing",
+    "لا توجد مسودة": "No draft",
+    "لا توجد نسخة موقعة": "No signed copy",
+    "لا توجد شهادة توقيع": "No Sign certificate",
+    "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.": "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.",
+    "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.": "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.",
+    "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.": "Cannot generate the responsibilities draft before completing: %s.",
+    "لم يتم توليد أي مسودة وصف وظيفي.": "No responsibilities draft was generated.",
+    "هذا الوصف الوظيفي موقّع مسبقاً. لن يتم إنشاء طلب توقيع مكرر.": "This responsibilities document is already signed. No duplicate Odoo Sign request was created.",
+    "ولّد مسودة الوصف الوظيفي قبل إرسالها عبر توقيع أودو.": "Generate the responsibilities draft before sending it through Odoo Sign.",
+    "أضف بريداً إلكترونياً للمتقدم قبل إرسال الوصف الوظيفي عبر توقيع أودو.": "Add an applicant email before sending responsibilities through Odoo Sign.",
+    "المستخدم الحالي لا يملك جهة اتصال مرتبطة ولا يمكن استخدامه كموقّع للمدير المسؤول.": "The current user has no linked contact and cannot be used as responsible-manager signer.",
+    "أضف بريداً إلكترونياً إلى جهة اتصال المستخدم الحالي قبل إرسال الوصف الوظيفي للتوقيع.": "Add an email to the current user's contact before sending responsibilities for signature.",
+    "سجل مستندات التوظيف لهذا الوصف الوظيفي موقّع مسبقاً.": "The recruitment document registry for this responsibilities document is already signed.",
+    "طلب توقيع أودو المرتبط مكتمل/موقّع بالفعل. استخدم مزامنة التوقيع لإغلاق السجل.": "The linked Odoo Sign request is completed/signed. Use Sync Signature to close the record.",
+    "يوجد طلب توقيع أودو نشط لهذا الوصف الوظيفي بحالة \"%s\". لن يتم إنشاء طلب مكرر.": "There is an active Odoo Sign request for this responsibilities document in state \"%s\". A duplicate request will not be created.",
+    "لم يتم توليد مسودة الوصف الوظيفي لهذا المتقدم بعد.": "No responsibilities draft has been generated for this applicant yet.",
+    "لم يتم ربط النسخة الموقعة من الوصف الوظيفي بعد. استخدم مزامنة التوقيع أولاً.": "The signed responsibilities copy is not linked yet. Use signature sync first.",
+    "لم يتم العثور على شهادة توقيع للوصف الوظيفي. استخدم مزامنة التوقيع أولاً أو راجع مرفقات أودو Sign.": "No responsibilities Sign certificate was found. Use signature sync first or review Odoo Sign attachments."
+}
+
+def _pattern_translate(text, mapping):
+    if text in mapping:
+        return mapping[text]
+
+    for source, target in mapping.items():
+        if '%s' not in source:
+            continue
+        prefix, suffix = source.split('%s', 1)
+        if text.startswith(prefix) and text.endswith(suffix):
+            value = text[len(prefix):len(text) - len(suffix)] if suffix else text[len(prefix):]
+            try:
+                return target % value
+            except Exception:
+                return target
+
+    return None
+
+def ui_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        translated = _pattern_translate(text, UI_TEXT_AR)
+        if translated:
+            return translated
+        return text
+
+    translated = _pattern_translate(text, AR_TEXT_EN)
+    if translated:
+        return translated
+
+    return text
+
+
 def toast(title, message, kind='warning', sticky=False):
     return {
         'type': 'ir.actions.client',
         'tag': 'display_notification',
         'params': {
-            'title': title,
-            'message': message,
+            'title': ui_text(title),
+            'message': ui_text(message),
             'type': kind,
             'sticky': sticky,
         },
