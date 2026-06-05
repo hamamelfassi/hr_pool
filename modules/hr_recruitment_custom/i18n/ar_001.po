@@ -7131,3 +7131,8 @@ msgstr "مطلوب عند إنشاء قرار التعيين"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_applicant_declaration_form
 msgid "Reviewer"
 msgstr "المراجع"
+
+#. module: hr_recruitment_custom
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
+msgid "Save checklist line changes before refreshing. The checklist is ready only when all required lines are accepted."
+msgstr "احفظ تغييرات بنود القائمة قبل التحديث. تصبح القائمة جاهزة فقط عندما تكون جميع البنود المطلوبة مقبولة."

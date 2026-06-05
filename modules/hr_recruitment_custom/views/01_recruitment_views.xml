@@ -298,7 +298,7 @@
                                     </group>
                                 </group>
                                     <div class="alert alert-info" role="alert">
-                                        احفظ تغييرات بنود القائمة قبل التحديث. تصبح القائمة جاهزة فقط عندما تكون جميع البنود المطلوبة مقبولة.
+                                        Save checklist line changes before refreshing. The checklist is ready only when all required lines are accepted.
                                     </div>
                                 <separator string="Required Document Lines" />
                                 <field name="x_line_ids">
