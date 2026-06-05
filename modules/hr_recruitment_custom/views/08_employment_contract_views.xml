@@ -10,18 +10,18 @@
                 decoration-info="x_state in ['ready_to_render', 'generated']"
                 decoration-success="x_state in ['signed_uploaded', 'ministry_accredited', 'handover_ready']"
                 decoration-danger="x_state == 'cancelled'">
-                <field name="x_name" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']" string="اسم العقد"/>
-                <field name="x_contract_number" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']" string="رقم العقد"/>
-                <field name="x_applicant_id" string="المتقدم"/>
-                <field name="x_state" string="الحالة" widget="badge"
+                <field name="x_name" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']" string="Contract Name"/>
+                <field name="x_contract_number" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']" string="Contract Number"/>
+                <field name="x_applicant_id" string="Applicant"/>
+                <field name="x_state" string="Status" widget="badge"
                     decoration-muted="x_state == 'draft_data'"
                     decoration-info="x_state in ['ready_to_render', 'generated']"
                     decoration-warning="x_state == 'printed'"
                     decoration-success="x_state in ['signed_uploaded', 'ministry_accredited', 'handover_ready']"
                     decoration-danger="x_state == 'cancelled'"/>
-                <field name="x_generated_attachment_id" string="المسودة"/>
-                <field name="x_signed_attachment_id" string="الموقع"/>
-                <field name="x_ministry_accredited_attachment_id" string="المعتمد"/>
+                <field name="x_generated_attachment_id" string="Draft PDF"/>
+                <field name="x_signed_attachment_id" string="Signed PDF"/>
+                <field name="x_ministry_accredited_attachment_id" string="Accredited PDF"/>
             </list>
         </field>
     </record>
@@ -34,27 +34,27 @@
                 <header>
                     <button type="action"
                         name="hr_recruitment_custom.action_employment_contract_update_data_placeholder"
-                        string="تحديث بيانات العقد"
+                        string="Update Contract"
                         class="btn-secondary"
                         invisible="not id or x_state in ['printed', 'signed_uploaded', 'ministry_accredited', 'handover_ready', 'cancelled']"/>
                     <button type="action"
                         name="hr_recruitment_custom.action_employment_contract_generate_pdf_placeholder"
-                        string="توليد مسودة العقد"
+                        string="Generate Draft Contract"
                         class="btn-primary"
                         invisible="not id or x_state in ['printed', 'signed_uploaded', 'ministry_accredited', 'handover_ready', 'cancelled']"/>
                     <button type="action"
                         name="hr_recruitment_custom.action_employment_contract_mark_printed"
-                        string="اعتماد الطباعة"
+                        string="Confirm Printed"
                         class="btn-secondary"
                         invisible="not id or x_state != 'generated' or not x_generated_attachment_id"/>
                     <button type="action"
                         name="hr_recruitment_custom.action_employment_contract_confirm_signed_upload"
-                        string="تثبيت النسخة الموقعة"
+                        string="Confirm Signed Upload"
                         class="btn-primary"
                         invisible="not id or x_state != 'printed' or not x_signed_attachment_id"/>
                     <button type="action"
                         name="hr_recruitment_custom.action_employment_contract_confirm_ministry_accredited_upload"
-                        string="تثبيت اعتماد وزارة العمل"
+                        string="Confirm Ministry Accreditation"
                         class="btn-primary"
                         invisible="not id or x_state != 'signed_uploaded' or not x_ministry_accredited_attachment_id"/>
                     <field name="x_state"
@@ -64,7 +64,7 @@
                 </header>
                 <sheet>
                     <group>
-                        <group string="هوية العقد">
+                        <group string="Contract Identity">
                             <field name="x_name" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                             <field name="x_contract_number" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                             <field name="x_contract_date" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
@@ -73,7 +73,7 @@
                             <field name="x_template_version" readonly="1"/>
                             <field name="x_field_map_version" readonly="1"/>
                         </group>
-                        <group string="روابط المصدر">
+                        <group string="Source Links">
                             <field name="x_applicant_id"
                                 readonly="1"
                                 options="{'no_create': True, 'no_create_edit': True}"/>
@@ -93,9 +93,9 @@
                     </group>
 
                     <notebook>
-                        <page string="بيانات العقد">
+                        <page string="Contract Data">
                             <group>
-                                <group string="بيانات أساسية">
+                                <group string="Basic Data">
                                     <field name="x_name" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_state" widget="badge"
                                         decoration-muted="x_state == 'draft_data'"
@@ -108,7 +108,7 @@
                                     <field name="x_contract_date" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                             <field name="x_contract_day_ar" readonly="1"/>
                                 </group>
-                                <group string="القالب والسجل">
+                                <group string="Template and Registry">
                                     <field name="x_template_code" readonly="1"/>
                                     <field name="x_template_version" readonly="1"/>
                                     <field name="x_field_map_version" readonly="1"/>
@@ -117,14 +117,14 @@
                             </group>
                         </page>
 
-                        <page string="الطرف الأول">
+                        <page string="First Party">
                             <group>
-                                <group string="جهة العمل">
+                                <group string="Employer">
                                     <field name="x_company_name_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_company_registration_number" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_company_address_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                 </group>
-                                <group string="الممثل القانوني">
+                                <group string="Legal Representative">
                                     <field name="x_representative_name_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_representative_title_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_representative_nationality_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
@@ -132,9 +132,9 @@
                             </group>
                         </page>
 
-                        <page string="الطرف الثاني">
+                        <page string="Second Party">
                             <group>
-                                <group string="الاسم والهوية">
+                                <group string="Name and Identity">
                                     <field name="x_full_name_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_first_name_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_father_name_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
@@ -142,7 +142,7 @@
                                     <field name="x_surname_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_national_id" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                 </group>
-                                <group string="البيانات الشخصية">
+                                <group string="Personal Data">
                                     <field name="x_date_of_birth" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_gender" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_marital_status" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
@@ -155,12 +155,12 @@
                             </group>
                         </page>
 
-                        <page string="الهوية والإقامة">
+                        <page string="Identity and Residence">
                             <group>
-                                <group string="مستند الهوية">
+                                <group string="Identity Document">
                                     <button type="action"
                                         name="hr_recruitment_custom.action_employment_contract_update_data_placeholder"
-                                        string="تحديث مستند الهوية"
+                                        string="Update Identity Document"
                                         class="btn-secondary"
                                         invisible="x_state not in ['draft_data', 'ready_to_render']"/>
                                     <field name="x_identity_document_source" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
@@ -169,7 +169,7 @@
                                     <field name="x_identity_document_issue_date" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_identity_document_expiry_date" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                 </group>
-                                <group string="الإقامة">
+                                <group string="Residence">
                                     <field name="x_residence_region_id" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_residence_district_id" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_residence_municipality_id" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
@@ -180,15 +180,15 @@
                             </group>
                         </page>
 
-                        <page string="المصرف والمؤهلات والصحة">
+                        <page string="Bank, Qualifications, and Health">
                             <group>
-                                <group string="المصرف">
+                                <group string="Bank">
                                     <field name="x_bank_name" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_bank_branch" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_bank_account_number" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_iban" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                 </group>
-                                <group string="المؤهل والأسرة والصحة">
+                                <group string="Qualification, Family, and Health">
                                     <field name="x_qualification_type" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_qualification_subject" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_family_paper_number" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
@@ -200,16 +200,16 @@
                             </group>
                         </page>
 
-                        <page string="الوظيفة والمدة">
+                        <page string="Job and Duration">
                             <group>
-                                <group string="الوظيفة">
+                                <group string="Job">
                                     <field name="x_job_id" readonly="1"/>
                                     <field name="x_job_title_ar" readonly="1"/>
                                     <field name="x_department_id" readonly="1"/>
                                     <field name="x_department_name_ar" readonly="1"/>
                                     <field name="x_work_location" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                 </group>
-                                <group string="مدة العقد">
+                                <group string="Contract Duration">
                                     <field name="x_contract_start_date" readonly="1"/>
                                     <field name="x_contract_end_date" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_contract_duration_value" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
@@ -220,14 +220,14 @@
                             </group>
                         </page>
 
-                        <page string="الأجر والمزايا">
+                        <page string="Wage and Benefits">
                             <group>
-                                <group string="الأجر">
+                                <group string="Wage">
                                     <field name="x_monthly_wage_amount" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_monthly_wage_text_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_annual_leave_days" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                 </group>
-                                <group string="المزايا والبدلات">
+                                <group string="Benefits and Allowances">
                                     <field name="x_allowances_text_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_benefits_text_ar" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
                                     <field name="x_compensation_notes" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']"/>
@@ -235,8 +235,8 @@
                             </group>
                         </page>
 
-                        <page string="المستندات والطباعة">
-                            <group string="مسار المستند">
+                        <page string="Documents and Printing">
+                            <group string="Document Flow">
                                 <field name="x_state"
                                     widget="statusbar"
                                     statusbar_visible="draft_data,ready_to_render,generated,printed,signed_uploaded,ministry_accredited"
@@ -244,7 +244,7 @@
                                     nolabel="1"/>
                             </group>
                             <group>
-                                <group string="المسودة المولدة">
+                                <group string="Generated Draft">
                                     <field name="x_generated_attachment_id"
                                         readonly="1"
                                         options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
@@ -253,33 +253,33 @@
                                     <field name="x_printed_on" readonly="1"/>
                                     <field name="x_printed_by_user_id" readonly="1"/>
                                 </group>
-                                <group string="أوامر المسودة">
+                                <group string="Draft Actions">
                                     <button type="action"
                                         name="hr_recruitment_custom.action_employment_contract_generate_pdf_placeholder"
-                                        string="توليد مسودة العقد"
+                                        string="Generate Draft Contract"
                                         class="btn-primary"
                                         invisible="x_state in ['printed', 'signed_uploaded', 'ministry_accredited', 'handover_ready', 'cancelled']"/>
                                     <button type="action"
                                         name="hr_recruitment_custom.action_employment_contract_open_generated_pdf"
-                                        string="فتح المسودة"
+                                        string="Open Draft"
                                         class="btn-secondary"
                                         icon="fa-external-link"
                                         invisible="not x_generated_attachment_id"/>
                                     <button type="action"
                                         name="hr_recruitment_custom.action_employment_contract_download_generated_pdf"
-                                        string="تنزيل المسودة"
+                                        string="Download Draft"
                                         class="btn-secondary"
                                         icon="fa-download"
                                         invisible="not x_generated_attachment_id"/>
                                     <button type="action"
                                         name="hr_recruitment_custom.action_employment_contract_mark_printed"
-                                        string="اعتماد الطباعة"
+                                        string="Confirm Printed"
                                         class="btn-secondary"
                                         invisible="x_state != 'generated' or not x_generated_attachment_id"/>
                                 </group>
                             </group>
                             <group>
-                                <group string="النسخة الموقعة">
+                                <group string="Signed Copy">
                                     <field name="x_signed_attachment_id"
                                         readonly="x_state != 'printed'"
                                         domain="[('res_model', 'in', ['hr.applicant', 'x_hr.applicant_employment_contract', False])]"
@@ -289,23 +289,23 @@
                                     <field name="x_signed_uploaded_by_user_id" readonly="1"/>
                                     <button type="action"
                                         name="hr_recruitment_custom.action_employment_contract_confirm_signed_upload"
-                                        string="تثبيت النسخة الموقعة"
+                                        string="Confirm Signed Upload"
                                         class="btn-primary"
                                         invisible="x_state != 'printed' or not x_signed_attachment_id"/>
                                     <button type="action"
                                         name="hr_recruitment_custom.action_employment_contract_open_signed_pdf"
-                                        string="فتح النسخة الموقعة"
+                                        string="Open Signed Copy"
                                         class="btn-secondary"
                                         icon="fa-external-link"
                                         invisible="not x_signed_attachment_id"/>
                                     <button type="action"
                                         name="hr_recruitment_custom.action_employment_contract_download_signed_pdf"
-                                        string="تنزيل النسخة الموقعة"
+                                        string="Download Signed Copy"
                                         class="btn-secondary"
                                         icon="fa-download"
                                         invisible="not x_signed_attachment_id"/>
                                 </group>
-                                <group string="النسخة المعتمدة">
+                                <group string="Accredited Copy">
                                     <field name="x_ministry_accredited_attachment_id"
                                         readonly="x_state != 'signed_uploaded'"
                                         domain="[('res_model', 'in', ['hr.applicant', 'x_hr.applicant_employment_contract', False])]"
@@ -315,32 +315,32 @@
                                     <field name="x_ministry_accredited_by_user_id" readonly="1"/>
                                     <button type="action"
                                         name="hr_recruitment_custom.action_employment_contract_confirm_ministry_accredited_upload"
-                                        string="تثبيت اعتماد وزارة العمل"
+                                        string="Confirm Ministry Accreditation"
                                         class="btn-primary"
                                         invisible="x_state != 'signed_uploaded' or not x_ministry_accredited_attachment_id"/>
                                     <button type="action"
                                         name="hr_recruitment_custom.action_employment_contract_open_ministry_pdf"
-                                        string="فتح النسخة المعتمدة"
+                                        string="Open Accredited Copy"
                                         class="btn-secondary"
                                         icon="fa-external-link"
                                         invisible="not x_ministry_accredited_attachment_id"/>
                                     <button type="action"
                                         name="hr_recruitment_custom.action_employment_contract_download_ministry_pdf"
-                                        string="تنزيل النسخة المعتمدة"
+                                        string="Download Accredited Copy"
                                         class="btn-secondary"
                                         icon="fa-download"
                                         invisible="not x_ministry_accredited_attachment_id"/>
                                 </group>
                             </group>
-                            <group string="حالة التوليد">
+                            <group string="Generation Status">
                                 <field name="x_render_status" readonly="1"/>
                                 <field name="x_render_error" readonly="1"/>
                             </group>
                         </page>
 
 
-                        <page string="المصادر">
-                            <group string="روابط خزان الموارد البشرية">
+                        <page string="Sources">
+                            <group string="HR Repository Links">
                                 <group>
                                     <field name="x_pool_id" readonly="1" options="{'no_create': True, 'no_create_edit': True}"/>
                                     <field name="x_conversion_request_id" readonly="1" options="{'no_create': True, 'no_create_edit': True}"/>
@@ -352,7 +352,7 @@
                                 </group>
                             </group>
 
-                            <group string="مصادر الهوية والإقامة">
+                            <group string="Identity and Residence Sources">
                                 <group>
                                     <field name="x_identity_source_submission_id" readonly="1" options="{'no_create': True, 'no_create_edit': True}"/>
                                     <field name="x_identity_source_attachment_id" readonly="1" options="{'no_create': True, 'no_create_edit': True}"/>
@@ -367,7 +367,7 @@
                                 </group>
                             </group>
 
-                            <group string="مصادر المصرف والمؤهل والصحة">
+                            <group string="Bank, Qualification, and Health Sources">
                                 <group>
                                     <field name="x_bank_source_submission_id" readonly="1" options="{'no_create': True, 'no_create_edit': True}"/>
                                     <field name="x_bank_source_attachment_id" readonly="1" options="{'no_create': True, 'no_create_edit': True}"/>
@@ -381,19 +381,19 @@
                             </group>
                         </page>
 
-                        <page string="الترحيل للموظف">
+                        <page string="Employee Handover">
                             <group>
-                                <group string="جاهزية الترحيل">
+                                <group string="Handover Readiness">
                                     <field name="x_handover_state" readonly="1"/>
                                     <field name="x_handover_ready" readonly="1"/>
                                     <field name="x_handover_blocking_notes" readonly="1"/>
                                     <button type="action"
                                         name="hr_recruitment_custom.action_employment_contract_refresh_preboarding_gate"
-                                        string="تحديث جاهزية بوابة الترحيل"
+                                        string="Update Handover Gate Readiness"
                                         class="btn-secondary"
                                         invisible="not id or x_state not in ['signed_uploaded', 'ministry_accredited']"/>
                                 </group>
-                                <group string="السجلات المستقبلية">
+                                <group string="Future Records">
                                     <field name="x_employee_id" readonly="1"/>
                                     <field name="x_hr_contract_id" readonly="1"/>
                                     <field name="x_partner_bank_id" readonly="1"/>
@@ -401,7 +401,7 @@
                             </group>
                         </page>
 
-                        <page string="ملاحظات">
+                        <page string="Notes">
                             <group>
                                 <field name="x_notes" readonly="x_state not in ['draft_data', 'ready_to_render', 'generated']" nolabel="1"/>
                             </group>
