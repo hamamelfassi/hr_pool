@@ -35,6 +35,105 @@ def open_checklist_form(checklist):
 
 action = False
 
+CHATTER_TEXT_AR = {
+    "F-0003 Required Documents Checklist prepared with %s required document lines.": "تم إعداد قائمة المستندات المطلوبة F-0003 بعدد %s بند مستند مطلوب.",
+    "F-0003 Required Documents Checklist normalized. %s missing required document line(s) were added.": "تمت تسوية قائمة المستندات المطلوبة F-0003. تمت إضافة %s بند مستند مطلوب كان مفقوداً.",
+    "F-0003 Required Documents Checklist already exists and is up to date.": "قائمة المستندات المطلوبة F-0003 موجودة بالفعل ومحدثة.",
+    "F-0003 checklist readiness was refreshed without changing lifecycle state %s. %s required line(s) still lack accepted evidence.": "تم تحديث جاهزية قائمة F-0003 دون تغيير حالة دورة المستند %s. لا يزال هناك %s بند مطلوب بدون دليل مقبول.",
+    "F-0003 checklist readiness was refreshed without changing lifecycle state %s. All required lines currently have accepted evidence.": "تم تحديث جاهزية قائمة F-0003 دون تغيير حالة دورة المستند %s. جميع البنود المطلوبة لديها أدلة مقبولة حالياً.",
+    "F-0003 checklist remains In Review. %s required document line(s) do not have accepted evidence submissions yet.": "لا تزال قائمة F-0003 قيد المراجعة. يوجد %s بند مستند مطلوب لا يحتوي بعد على تقديم دليل مقبول.",
+    "F-0003 checklist is ready for PDF generation. All required document lines have accepted evidence submissions.": "قائمة F-0003 جاهزة لتوليد ملف PDF. جميع بنود المستندات المطلوبة لديها تقديمات أدلة مقبولة.",
+    "Required document submission accepted. The linked F-0003 checklist line was updated.": "تم قبول تقديم المستند المطلوب. تم تحديث بند قائمة F-0003 المرتبط.",
+    "Accepted evidence for required document line: %s.": "تم قبول الدليل لبند المستند المطلوب: %s.",
+    "Required document submission accepted for F-0003 checklist: %s.": "تم قبول تقديم المستند المطلوب لقائمة F-0003: %s.",
+    "Required document submission rejected. Rejection reason: %s": "تم رفض تقديم المستند المطلوب. سبب الرفض: %s",
+    "Rejected evidence for required document line: %s.": "تم رفض الدليل لبند المستند المطلوب: %s.",
+    "Required document submission rejected for F-0003 checklist: %s.": "تم رفض تقديم المستند المطلوب لقائمة F-0003: %s.",
+    "Manual submission created from required document checklist line.": "تم إنشاء هذا التقديم يدوياً من بند قائمة المستندات.",
+    "Manual submission created for required document: %s.": "تم إنشاء تقديم يدوي للمستند المطلوب: %s.",
+    "Required document submission request created from applicant Submissions tab.": "تم إنشاء طلب تقديم مستندات من تبويب التقديمات في سجل المتقدم.",
+    "Required document submission request created from applicant Submissions tab: %s.": "تم إنشاء طلب تقديم مستندات من تبويب التقديمات في سجل المتقدم: %s.",
+    "Prepared submission request from applicant Submissions tab. Request lines prepared: %s. Continuation URL generated.": "تم إعداد طلب التقديم من تبويب التقديمات في سجل المتقدم. تم إعداد %s بند طلب وتوليد رابط الاستكمال.",
+    "Prepared submission request %s from applicant Submissions tab and generated continuation URL.": "تم إعداد طلب التقديم %s من تبويب التقديمات في سجل المتقدم وتوليد رابط الاستكمال.",
+    "Prepared required document submission request %s from applicant Submissions tab.": "تم إعداد طلب تقديم المستندات المطلوبة %s من تبويب التقديمات في سجل المتقدم.",
+    "Candidate snapshot refreshed from applicant. Generated URL cleared and should be regenerated before sending.": "تم تحديث لقطة المرشح من سجل المتقدم. تم مسح الرابط المولد ويجب إعادة توليده قبل الإرسال.",
+    "Generated %s required document request line(s).": "تم توليد %s بند طلب مستند مطلوب.",
+    "Generated public submission request lines for request: %s.": "تم توليد بنود طلب التقديم العام للطلب: %s.",
+    "Generated Fillout continuation URL for required document submission request.": "تم توليد رابط استكمال Fillout لطلب تقديم المستندات المطلوبة.",
+    "Required document submission request email sent to %s.": "تم إرسال بريد طلب تقديم المستندات المطلوبة إلى %s.",
+    "Required document submission request sent: %s.": "تم إرسال طلب تقديم المستندات المطلوبة: %s.",
+    "Required document submission request marked as manually sent. URL should be shared through the chosen external channel.": "تم تعليم طلب تقديم المستندات المطلوبة كمرسل يدوياً. يجب مشاركة الرابط عبر القناة الخارجية المختارة.",
+    "Required document submission request marked as manually sent: %s.": "تم تعليم طلب تقديم المستندات المطلوبة كمرسل يدوياً: %s.",
+    "Required document submission request created from F-0003 checklist.": "تم إنشاء طلب تقديم مستندات من قائمة F-0003.",
+    "Required document submission request created from checklist: %s.": "تم إنشاء طلب تقديم مستندات من القائمة: %s.",
+    "Required document submission request created from F-0003 checklist: %s.": "تم إنشاء طلب تقديم مستندات من قائمة F-0003: %s.",
+    "Prepared submission request from checklist. Request lines prepared: %s. Continuation URL generated.": "تم إعداد طلب التقديم من القائمة. تم إعداد %s بند طلب وتوليد رابط الاستكمال.",
+    "Prepared submission request %s from checklist and generated continuation URL.": "تم إعداد طلب التقديم %s من القائمة وتوليد رابط الاستكمال.",
+    "Prepared required document submission request %s from F-0003 checklist.": "تم إعداد طلب تقديم المستندات المطلوبة %s من قائمة F-0003.",
+    "Synced request lines from submissions. Synced: %s. Linked orphan submissions: %s. Missing submissions: %s.": "تمت مزامنة بنود الطلب من التقديمات. تمت المزامنة: %s. تم ربط تقديمات غير مرتبطة: %s. تقديمات مفقودة: %s."
+}
+
+def _chatter_pattern_translate(text, mapping):
+    if text in mapping:
+        return mapping[text]
+
+    for source, target in mapping.items():
+        if '%s' not in source:
+            continue
+
+        parts = source.split('%s')
+        if not text.startswith(parts[0]):
+            continue
+
+        pos = len(parts[0])
+        values = []
+        ok = True
+
+        for index in range(1, len(parts)):
+            part = parts[index]
+
+            if part:
+                next_pos = text.find(part, pos)
+                if next_pos < 0:
+                    ok = False
+                    break
+                values.append(text[pos:next_pos])
+                pos = next_pos + len(part)
+            else:
+                if index == len(parts) - 1:
+                    values.append(text[pos:])
+                    pos = len(text)
+                else:
+                    ok = False
+                    break
+
+        if ok and pos == len(text):
+            try:
+                if len(values) == 1:
+                    return target % values[0]
+                return target % tuple(values)
+            except Exception:
+                return target
+
+    return None
+
+def chatter_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        translated = _chatter_pattern_translate(text, CHATTER_TEXT_AR)
+        if translated:
+            return translated
+
+    return text
+
+
 active_types = doc_type_model.search([
     ('x_active', '=', True),
 ], order='x_sequence asc, id asc')
@@ -145,16 +244,13 @@ for applicant in records.sudo():
 
     if created_checklist:
         applicant.message_post(
-            body='F-0003 Required Documents Checklist prepared with %s required document lines.' % added_count
-        )
+            body=chatter_text('F-0003 Required Documents Checklist prepared with %s required document lines.' % added_count))
     elif added_count:
         applicant.message_post(
-            body='F-0003 Required Documents Checklist normalized. %s missing required document line(s) were added.' % added_count
-        )
+            body=chatter_text('F-0003 Required Documents Checklist normalized. %s missing required document line(s) were added.' % added_count))
     else:
         applicant.message_post(
-            body='F-0003 Required Documents Checklist already exists and is up to date.'
-        )
+            body=chatter_text('F-0003 Required Documents Checklist already exists and is up to date.'))
 
     action = open_checklist_form(checklist)
     break
@@ -209,6 +305,105 @@ def toast(title, message, kind='warning', sticky=False, next_action=False):
 
 
 action = False
+
+CHATTER_TEXT_AR = {
+    "F-0003 Required Documents Checklist prepared with %s required document lines.": "تم إعداد قائمة المستندات المطلوبة F-0003 بعدد %s بند مستند مطلوب.",
+    "F-0003 Required Documents Checklist normalized. %s missing required document line(s) were added.": "تمت تسوية قائمة المستندات المطلوبة F-0003. تمت إضافة %s بند مستند مطلوب كان مفقوداً.",
+    "F-0003 Required Documents Checklist already exists and is up to date.": "قائمة المستندات المطلوبة F-0003 موجودة بالفعل ومحدثة.",
+    "F-0003 checklist readiness was refreshed without changing lifecycle state %s. %s required line(s) still lack accepted evidence.": "تم تحديث جاهزية قائمة F-0003 دون تغيير حالة دورة المستند %s. لا يزال هناك %s بند مطلوب بدون دليل مقبول.",
+    "F-0003 checklist readiness was refreshed without changing lifecycle state %s. All required lines currently have accepted evidence.": "تم تحديث جاهزية قائمة F-0003 دون تغيير حالة دورة المستند %s. جميع البنود المطلوبة لديها أدلة مقبولة حالياً.",
+    "F-0003 checklist remains In Review. %s required document line(s) do not have accepted evidence submissions yet.": "لا تزال قائمة F-0003 قيد المراجعة. يوجد %s بند مستند مطلوب لا يحتوي بعد على تقديم دليل مقبول.",
+    "F-0003 checklist is ready for PDF generation. All required document lines have accepted evidence submissions.": "قائمة F-0003 جاهزة لتوليد ملف PDF. جميع بنود المستندات المطلوبة لديها تقديمات أدلة مقبولة.",
+    "Required document submission accepted. The linked F-0003 checklist line was updated.": "تم قبول تقديم المستند المطلوب. تم تحديث بند قائمة F-0003 المرتبط.",
+    "Accepted evidence for required document line: %s.": "تم قبول الدليل لبند المستند المطلوب: %s.",
+    "Required document submission accepted for F-0003 checklist: %s.": "تم قبول تقديم المستند المطلوب لقائمة F-0003: %s.",
+    "Required document submission rejected. Rejection reason: %s": "تم رفض تقديم المستند المطلوب. سبب الرفض: %s",
+    "Rejected evidence for required document line: %s.": "تم رفض الدليل لبند المستند المطلوب: %s.",
+    "Required document submission rejected for F-0003 checklist: %s.": "تم رفض تقديم المستند المطلوب لقائمة F-0003: %s.",
+    "Manual submission created from required document checklist line.": "تم إنشاء هذا التقديم يدوياً من بند قائمة المستندات.",
+    "Manual submission created for required document: %s.": "تم إنشاء تقديم يدوي للمستند المطلوب: %s.",
+    "Required document submission request created from applicant Submissions tab.": "تم إنشاء طلب تقديم مستندات من تبويب التقديمات في سجل المتقدم.",
+    "Required document submission request created from applicant Submissions tab: %s.": "تم إنشاء طلب تقديم مستندات من تبويب التقديمات في سجل المتقدم: %s.",
+    "Prepared submission request from applicant Submissions tab. Request lines prepared: %s. Continuation URL generated.": "تم إعداد طلب التقديم من تبويب التقديمات في سجل المتقدم. تم إعداد %s بند طلب وتوليد رابط الاستكمال.",
+    "Prepared submission request %s from applicant Submissions tab and generated continuation URL.": "تم إعداد طلب التقديم %s من تبويب التقديمات في سجل المتقدم وتوليد رابط الاستكمال.",
+    "Prepared required document submission request %s from applicant Submissions tab.": "تم إعداد طلب تقديم المستندات المطلوبة %s من تبويب التقديمات في سجل المتقدم.",
+    "Candidate snapshot refreshed from applicant. Generated URL cleared and should be regenerated before sending.": "تم تحديث لقطة المرشح من سجل المتقدم. تم مسح الرابط المولد ويجب إعادة توليده قبل الإرسال.",
+    "Generated %s required document request line(s).": "تم توليد %s بند طلب مستند مطلوب.",
+    "Generated public submission request lines for request: %s.": "تم توليد بنود طلب التقديم العام للطلب: %s.",
+    "Generated Fillout continuation URL for required document submission request.": "تم توليد رابط استكمال Fillout لطلب تقديم المستندات المطلوبة.",
+    "Required document submission request email sent to %s.": "تم إرسال بريد طلب تقديم المستندات المطلوبة إلى %s.",
+    "Required document submission request sent: %s.": "تم إرسال طلب تقديم المستندات المطلوبة: %s.",
+    "Required document submission request marked as manually sent. URL should be shared through the chosen external channel.": "تم تعليم طلب تقديم المستندات المطلوبة كمرسل يدوياً. يجب مشاركة الرابط عبر القناة الخارجية المختارة.",
+    "Required document submission request marked as manually sent: %s.": "تم تعليم طلب تقديم المستندات المطلوبة كمرسل يدوياً: %s.",
+    "Required document submission request created from F-0003 checklist.": "تم إنشاء طلب تقديم مستندات من قائمة F-0003.",
+    "Required document submission request created from checklist: %s.": "تم إنشاء طلب تقديم مستندات من القائمة: %s.",
+    "Required document submission request created from F-0003 checklist: %s.": "تم إنشاء طلب تقديم مستندات من قائمة F-0003: %s.",
+    "Prepared submission request from checklist. Request lines prepared: %s. Continuation URL generated.": "تم إعداد طلب التقديم من القائمة. تم إعداد %s بند طلب وتوليد رابط الاستكمال.",
+    "Prepared submission request %s from checklist and generated continuation URL.": "تم إعداد طلب التقديم %s من القائمة وتوليد رابط الاستكمال.",
+    "Prepared required document submission request %s from F-0003 checklist.": "تم إعداد طلب تقديم المستندات المطلوبة %s من قائمة F-0003.",
+    "Synced request lines from submissions. Synced: %s. Linked orphan submissions: %s. Missing submissions: %s.": "تمت مزامنة بنود الطلب من التقديمات. تمت المزامنة: %s. تم ربط تقديمات غير مرتبطة: %s. تقديمات مفقودة: %s."
+}
+
+def _chatter_pattern_translate(text, mapping):
+    if text in mapping:
+        return mapping[text]
+
+    for source, target in mapping.items():
+        if '%s' not in source:
+            continue
+
+        parts = source.split('%s')
+        if not text.startswith(parts[0]):
+            continue
+
+        pos = len(parts[0])
+        values = []
+        ok = True
+
+        for index in range(1, len(parts)):
+            part = parts[index]
+
+            if part:
+                next_pos = text.find(part, pos)
+                if next_pos < 0:
+                    ok = False
+                    break
+                values.append(text[pos:next_pos])
+                pos = next_pos + len(part)
+            else:
+                if index == len(parts) - 1:
+                    values.append(text[pos:])
+                    pos = len(text)
+                else:
+                    ok = False
+                    break
+
+        if ok and pos == len(text):
+            try:
+                if len(values) == 1:
+                    return target % values[0]
+                return target % tuple(values)
+            except Exception:
+                return target
+
+    return None
+
+def chatter_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        translated = _chatter_pattern_translate(text, CHATTER_TEXT_AR)
+        if translated:
+            return translated
+
+    return text
+
 
 UI_TEXT_AR = {
     "F-0003 checklist has no required lines": "قائمة F-0003 لا تحتوي على بنود مطلوبة",
@@ -398,8 +593,7 @@ for rec in records.sudo():
         rec.write({'x_reviewer_user_id': env.user.id})
         if missing_lines:
             rec.message_post(
-                body='F-0003 checklist readiness was refreshed without changing lifecycle state %s. %s required line(s) still lack accepted evidence.' % (rec.x_state, len(missing_lines))
-            )
+                body=chatter_text('F-0003 checklist readiness was refreshed without changing lifecycle state %s. %s required line(s) still lack accepted evidence.' % (rec.x_state, len(missing_lines))))
             action = toast(
                 'F-0003 readiness refreshed',
                 'Checklist evidence statuses were refreshed, but lifecycle state was preserved as %s because the PDF/Sign lifecycle has already started. Use Sync for signed Odoo Sign results.' % rec.x_state,
@@ -409,8 +603,7 @@ for rec in records.sudo():
             )
         else:
             rec.message_post(
-                body='F-0003 checklist readiness was refreshed without changing lifecycle state %s. All required lines currently have accepted evidence.' % rec.x_state
-            )
+                body=chatter_text('F-0003 checklist readiness was refreshed without changing lifecycle state %s. All required lines currently have accepted evidence.' % rec.x_state))
             action = toast(
                 'F-0003 readiness refreshed',
                 'Checklist evidence statuses were refreshed. Lifecycle state was preserved as %s.' % rec.x_state,
@@ -426,8 +619,7 @@ for rec in records.sudo():
             'x_reviewer_user_id': env.user.id,
         })
         rec.message_post(
-            body='F-0003 checklist remains In Review. %s required document line(s) do not have accepted evidence submissions yet.' % len(missing_lines)
-        )
+            body=chatter_text('F-0003 checklist remains In Review. %s required document line(s) do not have accepted evidence submissions yet.' % len(missing_lines)))
         action = toast(
             'F-0003 still in review',
             '%s required document line(s) still need accepted evidence before PDF generation.' % len(missing_lines),
@@ -441,8 +633,7 @@ for rec in records.sudo():
             'x_reviewer_user_id': env.user.id,
         })
         rec.message_post(
-            body='F-0003 checklist is ready for PDF generation. All required document lines have accepted evidence submissions.'
-        )
+            body=chatter_text('F-0003 checklist is ready for PDF generation. All required document lines have accepted evidence submissions.'))
         action = toast(
             'F-0003 ready for PDF',
             'All required document lines have accepted evidence. The checklist is ready for PDF generation.',
