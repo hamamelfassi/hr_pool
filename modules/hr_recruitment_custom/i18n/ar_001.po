@@ -370,7 +370,7 @@ msgstr "إقرار المتقدم"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_decision_instance_x_hr_department_id
 msgid "Applicant Department"
-msgstr ""
+msgstr "قسم المتقدم"
 
 #. module: hr_recruitment_custom
 #: model:ir.model,name:hr_recruitment_custom.model_x_hr_applicant_employment_contract
@@ -400,7 +400,7 @@ msgstr "الجنس"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_decision_instance_x_hr_job_id
 msgid "Applicant Job"
-msgstr ""
+msgstr "وظيفة المتقدم"
 
 #. module: hr_recruitment_custom
 #: model:ir.model,name:hr_recruitment_custom.model_x_hr_applicant_mcep_interview
@@ -425,27 +425,27 @@ msgstr "رقم الطلب"
 #. module: hr_recruitment_custom
 #: model:ir.model,name:hr_recruitment_custom.model_x_hr_applicant_required_document_checklist
 msgid "Applicant Required Document Checklist"
-msgstr ""
+msgstr "قائمة المستندات المطلوبة للمتقدم"
 
 #. module: hr_recruitment_custom
 #: model:ir.model,name:hr_recruitment_custom.model_x_hr_applicant_required_document_line
 msgid "Applicant Required Document Line"
-msgstr ""
+msgstr "بند المستند المطلوب للمتقدم"
 
 #. module: hr_recruitment_custom
 #: model:ir.model,name:hr_recruitment_custom.model_x_hr_applicant_required_document_submission
 msgid "Applicant Required Document Submission"
-msgstr ""
+msgstr "تقديم المستند المطلوب للمتقدم"
 
 #. module: hr_recruitment_custom
 #: model:ir.model,name:hr_recruitment_custom.model_x_hr_applicant_required_document_submission_request
 msgid "Applicant Required Document Submission Request"
-msgstr ""
+msgstr "طلب تقديم المستندات المطلوبة للمتقدم"
 
 #. module: hr_recruitment_custom
 #: model:ir.model,name:hr_recruitment_custom.model_x_hr_applicant_required_document_submission_request_line
 msgid "Applicant Required Document Submission Request Line"
-msgstr ""
+msgstr "بند طلب تقديم المستندات المطلوبة للمتقدم"
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.report,name:hr_recruitment_custom.action_report_hr_applicant_tor_font_probe
@@ -488,7 +488,7 @@ msgstr "فرع المصرف"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_res_partner_bank_x_bank_branch_snapshot
 msgid "Bank Branch Snapshot"
-msgstr ""
+msgstr "لقطة فرع المصرف"
 
 #. module: hr_recruitment_custom
 #: model:x_hr.recruitment_required_document_type,x_name:hr_recruitment_custom.required_document_type_bank_information
@@ -508,7 +508,7 @@ msgstr "اسم المصرف"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_res_partner_bank_x_bank_name_snapshot
 msgid "Bank Name Snapshot"
-msgstr ""
+msgstr "لقطة اسم المصرف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_bank_source_attachment_id
@@ -553,13 +553,13 @@ msgstr "فصيلة الدم"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_board_decision_document_state
 msgid "Board Decision Document State"
-msgstr ""
+msgstr "حالة مستند قرار التعيين"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_decision_instance_x_hr_generated_on
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_board_decision_generated_on
 msgid "Board Decision Generated On"
-msgstr ""
+msgstr "تاريخ توليد قرار التعيين"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_board_decision_instance_id
@@ -570,17 +570,17 @@ msgstr "نسخة قرار التعيين"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_board_decision_instance_ids
 msgid "Board Decision Instances"
-msgstr ""
+msgstr "سجلات قرارات التعيين"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_board_decision_notes
 msgid "Board Decision Notes"
-msgstr ""
+msgstr "ملاحظات قرار التعيين"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_board_decision_number
 msgid "Board Decision Number"
-msgstr ""
+msgstr "رقم قرار التعيين"
 
 #. module: hr_recruitment_custom
 #: model:ir.actions.report,name:hr_recruitment_custom.action_report_board_decision_pdf
@@ -590,41 +590,41 @@ msgstr ""
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_board_decision_document_id
 msgid "Board Decision Recruitment Document"
-msgstr ""
+msgstr "مستند توظيف قرار التعيين"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_decision_instance_x_hr_sent_on
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_board_decision_sent_on
 msgid "Board Decision Sent On"
-msgstr ""
+msgstr "تاريخ إرسال قرار التعيين"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_decision_instance_x_hr_sign_request_id
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_board_decision_sign_request_id
 msgid "Board Decision Sign Request"
-msgstr ""
+msgstr "طلب توقيع قرار التعيين"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_board_decision_sign_request_state
 msgid "Board Decision Sign Request State"
-msgstr ""
+msgstr "حالة طلب توقيع قرار التعيين"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_decision_instance_x_hr_certificate_attachment_id
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_board_decision_certificate_attachment_id
 msgid "Board Decision Signature Certificate"
-msgstr ""
+msgstr "شهادة توقيع قرار التعيين"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_decision_instance_x_hr_signed_on
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_board_decision_signed_on
 msgid "Board Decision Signed On"
-msgstr ""
+msgstr "تاريخ توقيع قرار التعيين"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_board_decision_state
 msgid "Board Decision State"
-msgstr ""
+msgstr "حالة قرار التعيين"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_form_controlled
@@ -650,7 +650,7 @@ msgstr "الطموحات العملية"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_decision_instance_x_hr_signer_user_id
 msgid "Chairman Signer"
-msgstr ""
+msgstr "موقّع رئيس مجلس الإدارة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_line_x_checklist_id
@@ -675,7 +675,7 @@ msgstr "بند القائمة"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_request_line_x_checklist_line_param_name
 msgid "Checklist Line Parameter Name"
-msgstr ""
+msgstr "اسم معامل بند القائمة"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
@@ -878,17 +878,17 @@ msgstr "رمز الإقرار"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_declaration_x_name
 msgid "Declaration Name"
-msgstr ""
+msgstr "اسم الإقرار"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_declaration_x_sequence
 msgid "Declaration Sequence"
-msgstr ""
+msgstr "تسلسل الإقرار"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_declaration_x_state
 msgid "Declaration State"
-msgstr ""
+msgstr "حالة الإقرار"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_declaration_x_declaration_type
@@ -951,7 +951,7 @@ msgstr "الكود"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_request_line_x_document_code_param_name
 msgid "Document Code Parameter Name"
-msgstr ""
+msgstr "اسم معامل رمز المستند"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_line_x_document_code
@@ -966,7 +966,7 @@ msgstr "اسم المستند"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_type_x_name_ar
 msgid "Document Name AR"
-msgstr ""
+msgstr "اسم المستند بالعربية"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_line_x_document_name_ar
@@ -976,7 +976,7 @@ msgstr "الاسم العربي"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_type_x_name_en
 msgid "Document Name EN"
-msgstr ""
+msgstr "اسم المستند بالإنجليزية"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_line_x_document_name_en
@@ -1005,7 +1005,7 @@ msgstr "نوع المستند"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_request_line_x_document_type_param_name
 msgid "Document Type Parameter Name"
-msgstr ""
+msgstr "اسم معامل نوع المستند"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_x_hr_recruitment_document_form
@@ -1159,47 +1159,47 @@ msgstr "الرقم الوظيفي"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_artifacts_checked_by_user_id
 msgid "Employment Artifacts Checked By"
-msgstr ""
+msgstr "فحص مرفقات التوظيف بواسطة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_artifacts_checked_on
 msgid "Employment Artifacts Checked On"
-msgstr ""
+msgstr "تاريخ فحص مرفقات التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_artifacts_count
 msgid "Employment Artifacts Count"
-msgstr ""
+msgstr "عدد مرفقات التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_artifacts_notes
 msgid "Employment Artifacts Notes"
-msgstr ""
+msgstr "ملاحظات مرفقات التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_artifacts_ready
 msgid "Employment Artifacts Ready"
-msgstr ""
+msgstr "جاهزية مرفقات التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_bank_checked_by_user_id
 msgid "Employment Bank Checked By"
-msgstr ""
+msgstr "فحص بنك التوظيف بواسطة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_bank_checked_on
 msgid "Employment Bank Checked On"
-msgstr ""
+msgstr "تاريخ فحص بنك التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_bank_notes
 msgid "Employment Bank Notes"
-msgstr ""
+msgstr "ملاحظات بنك التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_bank_ready
 msgid "Employment Bank Ready"
-msgstr ""
+msgstr "جاهزية بنك التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_date
@@ -1280,132 +1280,132 @@ msgstr "عقود العمل"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_employee_id
 msgid "Employment Employee"
-msgstr ""
+msgstr "الموظف المرتبط بالتوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_employee_created_by_user_id
 msgid "Employment Employee Created By"
-msgstr ""
+msgstr "أنشأ موظف التوظيف بواسطة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_employee_created_on
 msgid "Employment Employee Created On"
-msgstr ""
+msgstr "تاريخ إنشاء موظف التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_employee_x_employment_handover_by_user_id
 msgid "Employment Handover By"
-msgstr ""
+msgstr "ترحيل التوظيف بواسطة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_handover_checked_by_user_id
 msgid "Employment Handover Checked By"
-msgstr ""
+msgstr "فحص ترحيل التوظيف بواسطة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_handover_checked_on
 msgid "Employment Handover Checked On"
-msgstr ""
+msgstr "تاريخ فحص ترحيل التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_handover_closed
 msgid "Employment Handover Closed"
-msgstr ""
+msgstr "إغلاق ترحيل التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_handover_closed_by_user_id
 msgid "Employment Handover Closed By"
-msgstr ""
+msgstr "أغلق ترحيل التوظيف بواسطة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_handover_closed_on
 msgid "Employment Handover Closed On"
-msgstr ""
+msgstr "تاريخ إغلاق ترحيل التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_handover_closure_notes
 msgid "Employment Handover Closure Notes"
-msgstr ""
+msgstr "ملاحظات إغلاق ترحيل التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_ir_attachment_x_employment_handover_kind
 msgid "Employment Handover Kind"
-msgstr ""
+msgstr "نوع ترحيل التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_handover_notes
 msgid "Employment Handover Notes"
-msgstr ""
+msgstr "ملاحظات ترحيل التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_employee_x_employment_handover_on
 msgid "Employment Handover On"
-msgstr ""
+msgstr "تاريخ ترحيل التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_handover_ready
 msgid "Employment Handover Ready"
-msgstr ""
+msgstr "جاهزية ترحيل التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_handover_state
 msgid "Employment Handover State"
-msgstr ""
+msgstr "حالة ترحيل التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_identity_checked_by_user_id
 msgid "Employment Identity Checked By"
-msgstr ""
+msgstr "فحص هوية التوظيف بواسطة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_identity_checked_on
 msgid "Employment Identity Checked On"
-msgstr ""
+msgstr "تاريخ فحص هوية التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_identity_count
 msgid "Employment Identity Count"
-msgstr ""
+msgstr "عدد سجلات هوية التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_identity_notes
 msgid "Employment Identity Notes"
-msgstr ""
+msgstr "ملاحظات هوية التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_identity_ready
 msgid "Employment Identity Ready"
-msgstr ""
+msgstr "جاهزية هوية التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_partner_bank_id
 msgid "Employment Partner Bank"
-msgstr ""
+msgstr "الحساب البنكي لشريك التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_payroll_checked_by_user_id
 msgid "Employment Payroll Checked By"
-msgstr ""
+msgstr "فحص رواتب التوظيف بواسطة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_payroll_checked_on
 msgid "Employment Payroll Checked On"
-msgstr ""
+msgstr "تاريخ فحص رواتب التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_payroll_notes
 msgid "Employment Payroll Notes"
-msgstr ""
+msgstr "ملاحظات رواتب التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_payroll_ready
 msgid "Employment Payroll Ready"
-msgstr ""
+msgstr "جاهزية رواتب التوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_stage_move_done
 msgid "Employment Stage Move Done"
-msgstr ""
+msgstr "تم نقل مرحلة التوظيف"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
@@ -1536,12 +1536,12 @@ msgstr "رابط النموذج الأصلي"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_request_line_x_fillout_prefix
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_type_x_fillout_prefix
 msgid "Fillout Prefix"
-msgstr ""
+msgstr "بادئة Fillout"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_line_x_fillout_prefix
 msgid "Fillout Prefix Snapshot"
-msgstr ""
+msgstr "لقطة بادئة Fillout"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_mcep_interview_x_final_grade
@@ -1654,7 +1654,7 @@ msgstr "المستند المولد / المرفوع"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_decision_instance_x_hr_generated_attachment_id
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_board_decision_generated_attachment_id
 msgid "Generated Board Decision PDF"
-msgstr ""
+msgstr "ملف PDF المولد لقرار التعيين"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_generated_by_user_id
@@ -1674,7 +1674,7 @@ msgstr "مسودة العقد المولدة"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_declaration_x_pdf_attachment_id
 msgid "Generated Declaration PDF"
-msgstr ""
+msgstr "ملف PDF المنشأ للإقرار"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_generated_attachment_id
@@ -1724,7 +1724,7 @@ msgstr "اسم الجد بالعربية"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_decision_instance_x_hr_document_state
 msgid "HR Document Signature State"
-msgstr ""
+msgstr "حالة توقيع مستند الموارد البشرية"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_board_decision_hr_letter_date
@@ -1735,7 +1735,7 @@ msgstr "تاريخ كتاب الموارد البشرية"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_board_decision_hr_letter_registration
 msgid "HR Letter Registration Number"
-msgstr ""
+msgstr "رقم تسجيل كتاب الموارد البشرية"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_pool_id
@@ -1773,7 +1773,7 @@ msgstr "نوع العقد للترحيل"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_handover_structure_type_id
 msgid "Handover Pay Category"
-msgstr ""
+msgstr "فئة أجر الترحيل"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_employment_contract_x_handover_ready
@@ -2235,7 +2235,7 @@ msgstr "ملاحظة السطر"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_line_x_notes
 msgid "Line Notes"
-msgstr ""
+msgstr "ملاحظات البند"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_board_decision_id
@@ -2758,7 +2758,7 @@ msgstr "تاريخ اعتماد الطباعة وبدء التوقيع اليد�
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_function_line_x_print_functional_area_name
 msgid "Printed Functional Area"
-msgstr ""
+msgstr "المجال الوظيفي المطبوع"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_tor_department_name
@@ -2848,7 +2848,7 @@ msgstr "التوصية بالتوظيف"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_decision_instance_x_hr_notes
 msgid "Recruitment Board Decision Notes"
-msgstr ""
+msgstr "ملاحظات قرار التعيين للتوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model,name:hr_recruitment_custom.model_x_hr_recruitment_document
@@ -2876,7 +2876,7 @@ msgstr "مستندات التوظيف"
 #. module: hr_recruitment_custom
 #: model:ir.model,name:hr_recruitment_custom.model_x_hr_recruitment_required_document_type
 msgid "Recruitment Required Document Type"
-msgstr ""
+msgstr "نوع المستند المطلوب للتوظيف"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,help:hr_recruitment_custom.field_hr_employee_x_source_applicant_id
@@ -2993,7 +2993,7 @@ msgstr "ملاحظات البند"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_request_line_x_request_line_param_name
 msgid "Request Line Parameter Name"
-msgstr ""
+msgstr "اسم معامل بند الطلب"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_request_line_x_state
@@ -3131,22 +3131,22 @@ msgstr "يتطلب مرفقًا"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_type_x_requires_document_number
 msgid "Requires Document Number"
-msgstr ""
+msgstr "يتطلب رقم المستند"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_type_x_requires_expiry_date
 msgid "Requires Expiry Date"
-msgstr ""
+msgstr "يتطلب تاريخ الانتهاء"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_type_x_requires_issue_date
 msgid "Requires Issue Date"
-msgstr ""
+msgstr "يتطلب تاريخ الإصدار"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_type_x_requires_issuing_authority
 msgid "Requires Issuing Authority"
-msgstr ""
+msgstr "يتطلب جهة الإصدار"
 
 #. module: hr_recruitment_custom
 #: model:base.automation,name:hr_recruitment_custom.automation_applicant_function_line_reseed_empty_print_values
@@ -3341,7 +3341,7 @@ msgstr "التسلسل"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_request_line_x_show_param_name
 msgid "Show Parameter Name"
-msgstr ""
+msgstr "إظهار اسم المعامل"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
@@ -3401,12 +3401,12 @@ msgstr "المستند الموقع"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_decision_instance_x_hr_signed_attachment_id
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_board_decision_signed_attachment_id
 msgid "Signed Board Decision PDF"
-msgstr ""
+msgstr "ملف PDF الموقع لقرار التعيين"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_applicant_declaration_x_signed_attachment_id
 msgid "Signed Declaration PDF"
-msgstr ""
+msgstr "ملف PDF الموقع للإقرار"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_employment_contract_signed_attachment_id
@@ -3477,27 +3477,27 @@ msgstr "المصدر"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_employee_x_source_applicant_id
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_res_partner_bank_x_source_applicant_id
 msgid "Source Applicant"
-msgstr ""
+msgstr "المتقدم المصدر"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_res_partner_bank_x_source_applicant_employment_contract_id
 msgid "Source Applicant Employment Contract"
-msgstr ""
+msgstr "عقد عمل المتقدم المصدر"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_res_partner_bank_x_source_bank_attachment_id
 msgid "Source Bank Attachment"
-msgstr ""
+msgstr "مرفق البنك المصدر"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_ir_attachment_x_source_employment_applicant_id
 msgid "Source Employment Applicant"
-msgstr ""
+msgstr "متقدم التوظيف المصدر"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_ir_attachment_x_source_employment_attachment_id
 msgid "Source Employment Attachment"
-msgstr ""
+msgstr "مرفق التوظيف المصدر"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_x_hr_recruitment_document__x_source_model
@@ -3521,7 +3521,7 @@ msgstr "مرجع المصدر"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_res_partner_bank_x_source_required_document_submission_id
 msgid "Source Required Document Submission"
-msgstr ""
+msgstr "تقديم المستند المطلوب المصدر"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_x_source_submission_id
@@ -3534,17 +3534,17 @@ msgstr "معرف التقديم المصدر"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_decision_instance_x_hr_stamped_attachment_id
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_board_decision_stamped_attachment_id
 msgid "Stamped Board Decision Copy"
-msgstr ""
+msgstr "النسخة المختومة من قرار التعيين"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_decision_instance_x_hr_stamped_filename
 msgid "Stamped Copy Filename"
-msgstr ""
+msgstr "اسم ملف النسخة المختومة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_decision_instance_x_hr_stamped_upload
 msgid "Stamped Copy Upload"
-msgstr ""
+msgstr "رفع النسخة المختومة"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_decision_instance_x_hr_stamped_on
@@ -3575,7 +3575,7 @@ msgstr "الحالة"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_line_x_capture_scope
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_type_x_capture_scope
 msgid "Structured Capture Scope"
-msgstr ""
+msgstr "نطاق التقاط البيانات المنظمة"
 
 #. module: hr_recruitment_custom
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
@@ -3620,7 +3620,7 @@ msgstr "طلب مستندات"
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_x_submission_request_line_id
 msgid "Submission Request Line"
-msgstr ""
+msgstr "بند طلب التقديم"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_line_x_submission_request_line_ids
@@ -3727,7 +3727,7 @@ msgstr ""
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_tor_date_of_receipt
 msgid "TOR Date of Receipt"
-msgstr ""
+msgstr "تاريخ استلام الوصف الوظيفي"
 
 #. module: hr_recruitment_custom
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_tor_department_id
@@ -7136,3 +7136,18 @@ msgstr "المراجع"
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_hr_applicant_form_inherit_hr_recruitment_custom
 msgid "Save checklist line changes before refreshing. The checklist is ready only when all required lines are accepted."
 msgstr "احفظ تغييرات بنود القائمة قبل التحديث. تصبح القائمة جاهزة فقط عندما تكون جميع البنود المطلوبة مقبولة."
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_contract_proposal_gate_passed
+msgid "Contract Proposal Gate Passed"
+msgstr "تم اجتياز بوابة مقترح العقد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_contract_proposal_gate_passed_on
+msgid "Contract Proposal Gate Passed On"
+msgstr "تاريخ اجتياز بوابة مقترح العقد"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_contract_proposal_gate_passed_by_user_id
+msgid "Contract Proposal Gate Passed By"
+msgstr "اجتاز بوابة مقترح العقد بواسطة"
