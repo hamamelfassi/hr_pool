@@ -558,7 +558,7 @@ else:
             'x_representative_nationality_ar': 'ليبي',
             'x_handover_state': 'not_ready',
         })
-        applicant.message_post(body='تم إنشاء سجل بيانات عقد العمل الرسمي وربطه بسجل المتقدم.')
+        applicant.message_post(body=chatter_text('Official employment contract data record was created and linked to the applicant record.'))
 
     result = refresh_contract_snapshot(contract, applicant)
 
@@ -1180,7 +1180,7 @@ else:
             'x_representative_nationality_ar': 'ليبي',
             'x_handover_state': 'not_ready',
         })
-        applicant.message_post(body='تم إنشاء سجل بيانات عقد العمل الرسمي وربطه بسجل المتقدم.')
+        applicant.message_post(body=chatter_text('Official employment contract data record was created and linked to the applicant record.'))
 
     result = refresh_contract_snapshot(contract, applicant)
 
@@ -1415,7 +1415,7 @@ else:
 
     contract.write({'x_generated_attachment_id': attachment.id, 'x_generated_on': datetime.datetime.now(), 'x_generated_by_user_id': env.user.id, 'x_recruitment_document_id': registry.id if registry else False, 'x_state': 'generated', 'x_render_status': 'generated', 'x_render_error': False})
     sync_applicant_from_contract(applicant, contract)
-    applicant.message_post(body='تم توليد مسودة عقد العمل الرسمي MCEP-HR-F-0005 وربطها بسجل العقد.', attachment_ids=[attachment.id])
+    applicant.message_post(body=chatter_text('Official employment contract draft MCEP-HR-F-0005 was generated and linked to the contract record.'), attachment_ids=[attachment.id])
     action = {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': {'title': ui_text('Draft contract generated'), 'message': ui_text('A PDF file was generated and linked to the contract and recruitment document registry.'), 'type': 'success', 'sticky': False, 'next': reload_contract(contract)}}
 </field>
         </record>

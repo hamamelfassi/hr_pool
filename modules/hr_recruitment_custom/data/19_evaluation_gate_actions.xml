@@ -14,6 +14,157 @@ registry_model = env['x_hr.recruitment_document'].sudo()
 stage_model = env['hr.recruitment.stage'].sudo()
 action = False
 
+CHATTER_TEXT_AR = {
+    "Contract preparation was blocked because evaluation documents are incomplete:<br/>%s": "تم منع تهيئة التعاقد بسبب مستندات تقييم غير مكتملة:<br/>%s",
+    "Contract preparation completed. Applicant moved from stage %s to stage %s after verifying signed documents: %s.": "تمت تهيئة التعاقد ونقل المتقدم من مرحلة %s إلى مرحلة %s بعد التحقق من المستندات الموقعة: %s.",
+    "Generated GRC board hiring decision was created and linked to the applicant record.": "تم إنشاء قرار التعيين المولد من قالب GRC وربطه بسجل المتقدم.",
+    "Generated board hiring decision was refreshed from applicant data.": "تم تحديث قرار التعيين المولد من بيانات المتقدم.",
+    "Board hiring decision document was generated and linked to the recruitment document registry.": "تم توليد مستند قرار التعيين وربطه بسجل مستندات التوظيف.",
+    "Board hiring decision was sent for signature through Odoo Sign to the Chairman.": "تم إرسال قرار التعيين للتوقيع عبر Odoo Sign إلى رئيس مجلس الإدارة.",
+    "Board hiring decision send through Odoo Sign executed, but the Sign request was not located automatically. Review the Sign app before retrying.": "تم تنفيذ إرسال قرار التعيين عبر Odoo Sign، لكن لم يتم العثور على طلب التوقيع تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.",
+    "Board hiring decision signature was synced through Odoo Sign and the signed document and certificate were linked where available.": "تمت مزامنة توقيع قرار التعيين عبر Odoo Sign وربط المستند الموقع وشهادة التوقيع إن وجدت.",
+    "Official employment contract data record was created and linked to the applicant record.": "تم إنشاء سجل بيانات عقد العمل الرسمي وربطه بسجل المتقدم.",
+    "Official employment contract draft MCEP-HR-F-0005 was generated and linked to the contract record.": "تم توليد مسودة عقد العمل الرسمي MCEP-HR-F-0005 وربطها بسجل العقد.",
+    "Employment contract printing was confirmed and the manual signature path was started.": "تم اعتماد طباعة عقد العمل وبدء مسار التوقيع اليدوي.",
+    "Manually signed employment contract copy was uploaded and confirmed.": "تم رفع وتثبيت النسخة الموقعة يدوياً من عقد العمل.",
+    "Ministry-accredited employment contract copy was uploaded and confirmed. Ministry accreditation is documented in the record and does not change the core employment readiness condition: signed/uploaded copy and completed documents.": "تم رفع وتثبيت النسخة المعتمدة من وزارة العمل لعقد العمل. اعتماد الوزارة موثق في السجل ولا يغيّر شرط جاهزية التوظيف الأساسي: النسخة الموقعة والمرفوعة وبقية المستندات المكتملة.",
+    "Employment readiness is incomplete. Remaining: %s.": "جاهزية التوظيف غير مكتملة. المتبقي: %s.",
+    "Required employment readiness documents are complete: board decision, employment contract, responsibilities, F-0007, and F-0009. The later handover stage can be opened without automatically creating native HR records in this pass.": "اكتملت مستندات جاهزية التوظيف المطلوبة: قرار التعيين، عقد العمل، الوصف الوظيفي، F-0007، وF-0009. يمكن فتح مرحلة الترحيل اللاحقة دون إنشاء سجلات HR الأصلية تلقائياً في هذا pass.",
+    "Default payroll handover settings were refreshed from contract/applicant data and safe defaults: %s.": "تم تحديث إعدادات الرواتب الافتراضية للترحيل من بيانات العقد/المتقدم والقيم الافتراضية الآمنة: %s.",
+    "No accepted bank account data exists for this applicant yet. No employee bank account was created.": "لا توجد بيانات حساب مصرفي مقبولة لهذا المتقدم حتى الآن. لم يتم إنشاء حساب بنكي للموظف.",
+    "Cannot create bank account because res.partner.bank has no account_number field in this database.": "لا يمكن إنشاء الحساب البنكي لأن نموذج res.partner.bank لا يحتوي على الحقل account_number في هذه القاعدة.",
+    "Could not create/update native employee bank account: %s": "تعذر إنشاء/تحديث الحساب البنكي الأصلي للموظف: %s",
+    "No official/signed attachments were found ready for handover to the employee record.": "لم يتم العثور على مرفقات رسمية/موقعة جاهزة للترحيل إلى سجل الموظف.",
+    "Attachments were found for handover, but no attachment was copied to the employee record.": "تم العثور على مرفقات للترحيل، لكن لم يتم نسخ أي مرفق إلى سجل الموظف.",
+    "Pre-employment attachments were handed over/confirmed on the employee record: %s.": "تم ترحيل/تأكيد مرفقات ما قبل التوظيف إلى سجل الموظف: %s.",
+    " Existing duplicate copies were skipped.": " تم تجاهل النسخ المكررة الموجودة مسبقاً.",
+    "Employment handover was not closed because the following items are missing: %s.": "لم يتم إغلاق ترحيل التوظيف نهائياً بسبب النواقص التالية: %s.",
+    "Applicant-to-employee handover was closed successfully. %s": "تم إغلاق ترحيل المتقدم إلى الموظف بنجاح. %s",
+    "Core handover data is complete, but final handover was not closed because of applicant stage: %s": "اكتملت بيانات الترحيل الأساسية، لكن لم يتم إغلاق الترحيل نهائياً بسبب مرحلة المتقدم: %s",
+    "Employment cannot start because employment readiness is incomplete. Remaining/required: %s": "لا يمكن بدء التوظيف لأن جاهزية التوظيف غير مكتملة. المتبقي/المطلوب: %s",
+    "An existing employee with the same national/identification number was found. A new employee was not created to avoid duplication. Review the existing employee and link manually if it is the same person.": "تم العثور على موظف حالي بنفس الرقم الوطني/التعريفي. لم يتم إنشاء موظف جديد لتجنب التكرار. يرجى مراجعة الموظف الحالي وربطه يدوياً إذا كان هو نفس الشخص.",
+    "More than one employee with the same national/identification number was found. Employment cannot be started automatically before duplicate cleanup.": "تم العثور على أكثر من موظف بنفس الرقم الوطني/التعريفي. لا يمكن بدء التوظيف آلياً قبل تنظيف التكرارات.",
+    "Employee linked. An employee record linked to this applicant was found, and no new employee was created. Payroll/contract readiness was updated on the employee record. Final closure check and stage movement were executed when conditions were complete.": "تم ربط الموظف. تم العثور على سجل موظف مرتبط بهذا المتقدم، ولم يتم إنشاء موظف جديد. تم تحديث جاهزية الرواتب/العقد على سجل الموظف. تم تنفيذ فحص الإغلاق النهائي ونقل المرحلة عند اكتمال الشروط.",
+    "Link/update was confirmed from applicant: %s.": "تم تأكيد الربط والتحديث من المتقدم: %s.",
+    "Employee record was created and linked to the applicant. Payroll/contract readiness was updated on the employee record. Official attachments were handed over/confirmed where available. Final closure check and stage movement were executed when conditions were complete.": "تم إنشاء سجل الموظف وربطه بالمتقدم. تم تحديث جاهزية الرواتب/العقد على سجل الموظف. تم ترحيل/تأكيد المرفقات الرسمية حيثما توفرت. تم تنفيذ فحص الإغلاق النهائي ونقل المرحلة عند اكتمال الشروط.",
+    "This employee was created from applicant: %s.": "تم إنشاء هذا الموظف من المتقدم: %s.",
+    "This bank account was created/updated from applicant: %s.": "تم إنشاء/تحديث هذا الحساب البنكي من المتقدم: %s.",
+    "Employee identification document model is not installed. Install hr_employment_custom first, then retry.": "نموذج هوية الموظف غير مثبت. ثبّت hr_employment_custom أولاً ثم أعد المحاولة.",
+    "No employee is linked to this applicant. Run Start Employment first, then retry identity handover.": "لا يوجد موظف مرتبط بهذا المتقدم. نفّذ بدء التوظيف أولاً ثم أعد ترحيل الهوية.",
+    "Identity data was handed over to the employee record: %s.": "تم ترحيل بيانات الهوية إلى سجل الموظف: %s.",
+    "No accepted identity documents were found for handover.": "لم يتم العثور على مستندات هوية مقبولة قابلة للترحيل.",
+    "Identity handover completed successfully. Created %s and updated %s record(s).": "تم ترحيل الهوية بنجاح. تم إنشاء %s وتحديث %s سجل.",
+    "No identity records were created or updated. Review accepted document status.": "لم يتم إنشاء أو تحديث أي سجلات هوية. راجع حالة المستندات المقبولة."
+}
+AR_TEXT_EN = {
+    "تم منع تهيئة التعاقد بسبب مستندات تقييم غير مكتملة:<br/>%s": "Contract preparation was blocked because evaluation documents are incomplete:<br/>%s",
+    "تمت تهيئة التعاقد ونقل المتقدم من مرحلة %s إلى مرحلة %s بعد التحقق من المستندات الموقعة: %s.": "Contract preparation completed. Applicant moved from stage %s to stage %s after verifying signed documents: %s.",
+    "تم إنشاء قرار التعيين المولد من قالب GRC وربطه بسجل المتقدم.": "Generated GRC board hiring decision was created and linked to the applicant record.",
+    "تم تحديث قرار التعيين المولد من بيانات المتقدم.": "Generated board hiring decision was refreshed from applicant data.",
+    "تم توليد مستند قرار التعيين وربطه بسجل مستندات التوظيف.": "Board hiring decision document was generated and linked to the recruitment document registry.",
+    "تم إرسال قرار التعيين للتوقيع عبر Odoo Sign إلى رئيس مجلس الإدارة.": "Board hiring decision was sent for signature through Odoo Sign to the Chairman.",
+    "تم تنفيذ إرسال قرار التعيين عبر Odoo Sign، لكن لم يتم العثور على طلب التوقيع تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.": "Board hiring decision send through Odoo Sign executed, but the Sign request was not located automatically. Review the Sign app before retrying.",
+    "تمت مزامنة توقيع قرار التعيين عبر Odoo Sign وربط المستند الموقع وشهادة التوقيع إن وجدت.": "Board hiring decision signature was synced through Odoo Sign and the signed document and certificate were linked where available.",
+    "تم إنشاء سجل بيانات عقد العمل الرسمي وربطه بسجل المتقدم.": "Official employment contract data record was created and linked to the applicant record.",
+    "تم توليد مسودة عقد العمل الرسمي MCEP-HR-F-0005 وربطها بسجل العقد.": "Official employment contract draft MCEP-HR-F-0005 was generated and linked to the contract record.",
+    "تم اعتماد طباعة عقد العمل وبدء مسار التوقيع اليدوي.": "Employment contract printing was confirmed and the manual signature path was started.",
+    "تم رفع وتثبيت النسخة الموقعة يدوياً من عقد العمل.": "Manually signed employment contract copy was uploaded and confirmed.",
+    "تم رفع وتثبيت النسخة المعتمدة من وزارة العمل لعقد العمل. اعتماد الوزارة موثق في السجل ولا يغيّر شرط جاهزية التوظيف الأساسي: النسخة الموقعة والمرفوعة وبقية المستندات المكتملة.": "Ministry-accredited employment contract copy was uploaded and confirmed. Ministry accreditation is documented in the record and does not change the core employment readiness condition: signed/uploaded copy and completed documents.",
+    "جاهزية التوظيف غير مكتملة. المتبقي: %s.": "Employment readiness is incomplete. Remaining: %s.",
+    "اكتملت مستندات جاهزية التوظيف المطلوبة: قرار التعيين، عقد العمل، الوصف الوظيفي، F-0007، وF-0009. يمكن فتح مرحلة الترحيل اللاحقة دون إنشاء سجلات HR الأصلية تلقائياً في هذا pass.": "Required employment readiness documents are complete: board decision, employment contract, responsibilities, F-0007, and F-0009. The later handover stage can be opened without automatically creating native HR records in this pass.",
+    "تم تحديث إعدادات الرواتب الافتراضية للترحيل من بيانات العقد/المتقدم والقيم الافتراضية الآمنة: %s.": "Default payroll handover settings were refreshed from contract/applicant data and safe defaults: %s.",
+    "لا توجد بيانات حساب مصرفي مقبولة لهذا المتقدم حتى الآن. لم يتم إنشاء حساب بنكي للموظف.": "No accepted bank account data exists for this applicant yet. No employee bank account was created.",
+    "لا يمكن إنشاء الحساب البنكي لأن نموذج res.partner.bank لا يحتوي على الحقل account_number في هذه القاعدة.": "Cannot create bank account because res.partner.bank has no account_number field in this database.",
+    "تعذر إنشاء/تحديث الحساب البنكي الأصلي للموظف: %s": "Could not create/update native employee bank account: %s",
+    "لم يتم العثور على مرفقات رسمية/موقعة جاهزة للترحيل إلى سجل الموظف.": "No official/signed attachments were found ready for handover to the employee record.",
+    "تم العثور على مرفقات للترحيل، لكن لم يتم نسخ أي مرفق إلى سجل الموظف.": "Attachments were found for handover, but no attachment was copied to the employee record.",
+    "تم ترحيل/تأكيد مرفقات ما قبل التوظيف إلى سجل الموظف: %s.": "Pre-employment attachments were handed over/confirmed on the employee record: %s.",
+    " تم تجاهل النسخ المكررة الموجودة مسبقاً.": " Existing duplicate copies were skipped.",
+    "لم يتم إغلاق ترحيل التوظيف نهائياً بسبب النواقص التالية: %s.": "Employment handover was not closed because the following items are missing: %s.",
+    "تم إغلاق ترحيل المتقدم إلى الموظف بنجاح. %s": "Applicant-to-employee handover was closed successfully. %s",
+    "اكتملت بيانات الترحيل الأساسية، لكن لم يتم إغلاق الترحيل نهائياً بسبب مرحلة المتقدم: %s": "Core handover data is complete, but final handover was not closed because of applicant stage: %s",
+    "لا يمكن بدء التوظيف لأن جاهزية التوظيف غير مكتملة. المتبقي/المطلوب: %s": "Employment cannot start because employment readiness is incomplete. Remaining/required: %s",
+    "تم العثور على موظف حالي بنفس الرقم الوطني/التعريفي. لم يتم إنشاء موظف جديد لتجنب التكرار. يرجى مراجعة الموظف الحالي وربطه يدوياً إذا كان هو نفس الشخص.": "An existing employee with the same national/identification number was found. A new employee was not created to avoid duplication. Review the existing employee and link manually if it is the same person.",
+    "تم العثور على أكثر من موظف بنفس الرقم الوطني/التعريفي. لا يمكن بدء التوظيف آلياً قبل تنظيف التكرارات.": "More than one employee with the same national/identification number was found. Employment cannot be started automatically before duplicate cleanup.",
+    "تم ربط الموظف. تم العثور على سجل موظف مرتبط بهذا المتقدم، ولم يتم إنشاء موظف جديد. تم تحديث جاهزية الرواتب/العقد على سجل الموظف. تم تنفيذ فحص الإغلاق النهائي ونقل المرحلة عند اكتمال الشروط.": "Employee linked. An employee record linked to this applicant was found, and no new employee was created. Payroll/contract readiness was updated on the employee record. Final closure check and stage movement were executed when conditions were complete.",
+    "تم تأكيد الربط والتحديث من المتقدم: %s.": "Link/update was confirmed from applicant: %s.",
+    "تم إنشاء سجل الموظف وربطه بالمتقدم. تم تحديث جاهزية الرواتب/العقد على سجل الموظف. تم ترحيل/تأكيد المرفقات الرسمية حيثما توفرت. تم تنفيذ فحص الإغلاق النهائي ونقل المرحلة عند اكتمال الشروط.": "Employee record was created and linked to the applicant. Payroll/contract readiness was updated on the employee record. Official attachments were handed over/confirmed where available. Final closure check and stage movement were executed when conditions were complete.",
+    "تم إنشاء هذا الموظف من المتقدم: %s.": "This employee was created from applicant: %s.",
+    "تم إنشاء/تحديث هذا الحساب البنكي من المتقدم: %s.": "This bank account was created/updated from applicant: %s.",
+    "نموذج هوية الموظف غير مثبت. ثبّت hr_employment_custom أولاً ثم أعد المحاولة.": "Employee identification document model is not installed. Install hr_employment_custom first, then retry.",
+    "لا يوجد موظف مرتبط بهذا المتقدم. نفّذ بدء التوظيف أولاً ثم أعد ترحيل الهوية.": "No employee is linked to this applicant. Run Start Employment first, then retry identity handover.",
+    "تم ترحيل بيانات الهوية إلى سجل الموظف: %s.": "Identity data was handed over to the employee record: %s.",
+    "لم يتم العثور على مستندات هوية مقبولة قابلة للترحيل.": "No accepted identity documents were found for handover.",
+    "تم ترحيل الهوية بنجاح. تم إنشاء %s وتحديث %s سجل.": "Identity handover completed successfully. Created %s and updated %s record(s).",
+    "لم يتم إنشاء أو تحديث أي سجلات هوية. راجع حالة المستندات المقبولة.": "No identity records were created or updated. Review accepted document status."
+}
+
+def _chatter_pattern_translate(text, mapping):
+    if text in mapping:
+        return mapping[text]
+
+    for source, target in mapping.items():
+        if '%s' not in source:
+            continue
+
+        parts = source.split('%s')
+        if not text.startswith(parts[0]):
+            continue
+
+        pos = len(parts[0])
+        values = []
+        ok = True
+
+        for index in range(1, len(parts)):
+            part = parts[index]
+
+            if part:
+                next_pos = text.find(part, pos)
+                if next_pos < 0:
+                    ok = False
+                    break
+                values.append(text[pos:next_pos])
+                pos = next_pos + len(part)
+            else:
+                if index == len(parts) - 1:
+                    values.append(text[pos:])
+                    pos = len(text)
+                else:
+                    ok = False
+                    break
+
+        if ok and pos == len(text):
+            try:
+                if len(values) == 1:
+                    return target % values[0]
+                return target % tuple(values)
+            except Exception:
+                return target
+
+    return None
+
+def chatter_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        translated = _chatter_pattern_translate(text, CHATTER_TEXT_AR)
+        if translated:
+            return translated
+        return text
+
+    translated = _chatter_pattern_translate(text, AR_TEXT_EN)
+    if translated:
+        return translated
+
+    return text
+
+
 UI_TEXT_AR = {
     "Create the contract first.": "أنشئ العقد أولاً.",
     "The applicant cannot be moved to Contract Proposal before closing the following documents:\n- ": "لا يمكن نقل المتقدم إلى مقترح العقد قبل إغلاق المستندات التالية:\n- ",
@@ -370,8 +521,7 @@ else:
 
         if blocking_messages:
             applicant.message_post(
-                body='تم منع تهيئة التعاقد بسبب مستندات تقييم غير مكتملة:<br/>%s' % '<br/>'.join(blocking_messages)
-            )
+                body=chatter_text('Contract preparation was blocked because evaluation documents are incomplete:<br/>%s' % '<br/>'.join(blocking_messages)))
 
             action = {
                 'type': 'ir.actions.client',
@@ -395,12 +545,11 @@ else:
         })
 
         applicant.message_post(
-            body='تمت تهيئة التعاقد ونقل المتقدم من مرحلة %s إلى مرحلة %s بعد التحقق من المستندات الموقعة: %s.' % (
+            body=chatter_text('Contract preparation completed. Applicant moved from stage %s to stage %s after verifying signed documents: %s.' % (
                 old_stage,
                 target_stage.display_name,
                 ', '.join(signed_documents)
-            )
-        )
+            )))
 
         action = {
             'type': 'ir.actions.client',
@@ -443,6 +592,157 @@ TARGET_STAGE_ID = 5
 registry_model = env['x_hr.recruitment_document'].sudo()
 stage_model = env['hr.recruitment.stage'].sudo()
 action = False
+
+CHATTER_TEXT_AR = {
+    "Contract preparation was blocked because evaluation documents are incomplete:<br/>%s": "تم منع تهيئة التعاقد بسبب مستندات تقييم غير مكتملة:<br/>%s",
+    "Contract preparation completed. Applicant moved from stage %s to stage %s after verifying signed documents: %s.": "تمت تهيئة التعاقد ونقل المتقدم من مرحلة %s إلى مرحلة %s بعد التحقق من المستندات الموقعة: %s.",
+    "Generated GRC board hiring decision was created and linked to the applicant record.": "تم إنشاء قرار التعيين المولد من قالب GRC وربطه بسجل المتقدم.",
+    "Generated board hiring decision was refreshed from applicant data.": "تم تحديث قرار التعيين المولد من بيانات المتقدم.",
+    "Board hiring decision document was generated and linked to the recruitment document registry.": "تم توليد مستند قرار التعيين وربطه بسجل مستندات التوظيف.",
+    "Board hiring decision was sent for signature through Odoo Sign to the Chairman.": "تم إرسال قرار التعيين للتوقيع عبر Odoo Sign إلى رئيس مجلس الإدارة.",
+    "Board hiring decision send through Odoo Sign executed, but the Sign request was not located automatically. Review the Sign app before retrying.": "تم تنفيذ إرسال قرار التعيين عبر Odoo Sign، لكن لم يتم العثور على طلب التوقيع تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.",
+    "Board hiring decision signature was synced through Odoo Sign and the signed document and certificate were linked where available.": "تمت مزامنة توقيع قرار التعيين عبر Odoo Sign وربط المستند الموقع وشهادة التوقيع إن وجدت.",
+    "Official employment contract data record was created and linked to the applicant record.": "تم إنشاء سجل بيانات عقد العمل الرسمي وربطه بسجل المتقدم.",
+    "Official employment contract draft MCEP-HR-F-0005 was generated and linked to the contract record.": "تم توليد مسودة عقد العمل الرسمي MCEP-HR-F-0005 وربطها بسجل العقد.",
+    "Employment contract printing was confirmed and the manual signature path was started.": "تم اعتماد طباعة عقد العمل وبدء مسار التوقيع اليدوي.",
+    "Manually signed employment contract copy was uploaded and confirmed.": "تم رفع وتثبيت النسخة الموقعة يدوياً من عقد العمل.",
+    "Ministry-accredited employment contract copy was uploaded and confirmed. Ministry accreditation is documented in the record and does not change the core employment readiness condition: signed/uploaded copy and completed documents.": "تم رفع وتثبيت النسخة المعتمدة من وزارة العمل لعقد العمل. اعتماد الوزارة موثق في السجل ولا يغيّر شرط جاهزية التوظيف الأساسي: النسخة الموقعة والمرفوعة وبقية المستندات المكتملة.",
+    "Employment readiness is incomplete. Remaining: %s.": "جاهزية التوظيف غير مكتملة. المتبقي: %s.",
+    "Required employment readiness documents are complete: board decision, employment contract, responsibilities, F-0007, and F-0009. The later handover stage can be opened without automatically creating native HR records in this pass.": "اكتملت مستندات جاهزية التوظيف المطلوبة: قرار التعيين، عقد العمل، الوصف الوظيفي، F-0007، وF-0009. يمكن فتح مرحلة الترحيل اللاحقة دون إنشاء سجلات HR الأصلية تلقائياً في هذا pass.",
+    "Default payroll handover settings were refreshed from contract/applicant data and safe defaults: %s.": "تم تحديث إعدادات الرواتب الافتراضية للترحيل من بيانات العقد/المتقدم والقيم الافتراضية الآمنة: %s.",
+    "No accepted bank account data exists for this applicant yet. No employee bank account was created.": "لا توجد بيانات حساب مصرفي مقبولة لهذا المتقدم حتى الآن. لم يتم إنشاء حساب بنكي للموظف.",
+    "Cannot create bank account because res.partner.bank has no account_number field in this database.": "لا يمكن إنشاء الحساب البنكي لأن نموذج res.partner.bank لا يحتوي على الحقل account_number في هذه القاعدة.",
+    "Could not create/update native employee bank account: %s": "تعذر إنشاء/تحديث الحساب البنكي الأصلي للموظف: %s",
+    "No official/signed attachments were found ready for handover to the employee record.": "لم يتم العثور على مرفقات رسمية/موقعة جاهزة للترحيل إلى سجل الموظف.",
+    "Attachments were found for handover, but no attachment was copied to the employee record.": "تم العثور على مرفقات للترحيل، لكن لم يتم نسخ أي مرفق إلى سجل الموظف.",
+    "Pre-employment attachments were handed over/confirmed on the employee record: %s.": "تم ترحيل/تأكيد مرفقات ما قبل التوظيف إلى سجل الموظف: %s.",
+    " Existing duplicate copies were skipped.": " تم تجاهل النسخ المكررة الموجودة مسبقاً.",
+    "Employment handover was not closed because the following items are missing: %s.": "لم يتم إغلاق ترحيل التوظيف نهائياً بسبب النواقص التالية: %s.",
+    "Applicant-to-employee handover was closed successfully. %s": "تم إغلاق ترحيل المتقدم إلى الموظف بنجاح. %s",
+    "Core handover data is complete, but final handover was not closed because of applicant stage: %s": "اكتملت بيانات الترحيل الأساسية، لكن لم يتم إغلاق الترحيل نهائياً بسبب مرحلة المتقدم: %s",
+    "Employment cannot start because employment readiness is incomplete. Remaining/required: %s": "لا يمكن بدء التوظيف لأن جاهزية التوظيف غير مكتملة. المتبقي/المطلوب: %s",
+    "An existing employee with the same national/identification number was found. A new employee was not created to avoid duplication. Review the existing employee and link manually if it is the same person.": "تم العثور على موظف حالي بنفس الرقم الوطني/التعريفي. لم يتم إنشاء موظف جديد لتجنب التكرار. يرجى مراجعة الموظف الحالي وربطه يدوياً إذا كان هو نفس الشخص.",
+    "More than one employee with the same national/identification number was found. Employment cannot be started automatically before duplicate cleanup.": "تم العثور على أكثر من موظف بنفس الرقم الوطني/التعريفي. لا يمكن بدء التوظيف آلياً قبل تنظيف التكرارات.",
+    "Employee linked. An employee record linked to this applicant was found, and no new employee was created. Payroll/contract readiness was updated on the employee record. Final closure check and stage movement were executed when conditions were complete.": "تم ربط الموظف. تم العثور على سجل موظف مرتبط بهذا المتقدم، ولم يتم إنشاء موظف جديد. تم تحديث جاهزية الرواتب/العقد على سجل الموظف. تم تنفيذ فحص الإغلاق النهائي ونقل المرحلة عند اكتمال الشروط.",
+    "Link/update was confirmed from applicant: %s.": "تم تأكيد الربط والتحديث من المتقدم: %s.",
+    "Employee record was created and linked to the applicant. Payroll/contract readiness was updated on the employee record. Official attachments were handed over/confirmed where available. Final closure check and stage movement were executed when conditions were complete.": "تم إنشاء سجل الموظف وربطه بالمتقدم. تم تحديث جاهزية الرواتب/العقد على سجل الموظف. تم ترحيل/تأكيد المرفقات الرسمية حيثما توفرت. تم تنفيذ فحص الإغلاق النهائي ونقل المرحلة عند اكتمال الشروط.",
+    "This employee was created from applicant: %s.": "تم إنشاء هذا الموظف من المتقدم: %s.",
+    "This bank account was created/updated from applicant: %s.": "تم إنشاء/تحديث هذا الحساب البنكي من المتقدم: %s.",
+    "Employee identification document model is not installed. Install hr_employment_custom first, then retry.": "نموذج هوية الموظف غير مثبت. ثبّت hr_employment_custom أولاً ثم أعد المحاولة.",
+    "No employee is linked to this applicant. Run Start Employment first, then retry identity handover.": "لا يوجد موظف مرتبط بهذا المتقدم. نفّذ بدء التوظيف أولاً ثم أعد ترحيل الهوية.",
+    "Identity data was handed over to the employee record: %s.": "تم ترحيل بيانات الهوية إلى سجل الموظف: %s.",
+    "No accepted identity documents were found for handover.": "لم يتم العثور على مستندات هوية مقبولة قابلة للترحيل.",
+    "Identity handover completed successfully. Created %s and updated %s record(s).": "تم ترحيل الهوية بنجاح. تم إنشاء %s وتحديث %s سجل.",
+    "No identity records were created or updated. Review accepted document status.": "لم يتم إنشاء أو تحديث أي سجلات هوية. راجع حالة المستندات المقبولة."
+}
+AR_TEXT_EN = {
+    "تم منع تهيئة التعاقد بسبب مستندات تقييم غير مكتملة:<br/>%s": "Contract preparation was blocked because evaluation documents are incomplete:<br/>%s",
+    "تمت تهيئة التعاقد ونقل المتقدم من مرحلة %s إلى مرحلة %s بعد التحقق من المستندات الموقعة: %s.": "Contract preparation completed. Applicant moved from stage %s to stage %s after verifying signed documents: %s.",
+    "تم إنشاء قرار التعيين المولد من قالب GRC وربطه بسجل المتقدم.": "Generated GRC board hiring decision was created and linked to the applicant record.",
+    "تم تحديث قرار التعيين المولد من بيانات المتقدم.": "Generated board hiring decision was refreshed from applicant data.",
+    "تم توليد مستند قرار التعيين وربطه بسجل مستندات التوظيف.": "Board hiring decision document was generated and linked to the recruitment document registry.",
+    "تم إرسال قرار التعيين للتوقيع عبر Odoo Sign إلى رئيس مجلس الإدارة.": "Board hiring decision was sent for signature through Odoo Sign to the Chairman.",
+    "تم تنفيذ إرسال قرار التعيين عبر Odoo Sign، لكن لم يتم العثور على طلب التوقيع تلقائياً. راجع تطبيق التوقيع قبل إعادة المحاولة.": "Board hiring decision send through Odoo Sign executed, but the Sign request was not located automatically. Review the Sign app before retrying.",
+    "تمت مزامنة توقيع قرار التعيين عبر Odoo Sign وربط المستند الموقع وشهادة التوقيع إن وجدت.": "Board hiring decision signature was synced through Odoo Sign and the signed document and certificate were linked where available.",
+    "تم إنشاء سجل بيانات عقد العمل الرسمي وربطه بسجل المتقدم.": "Official employment contract data record was created and linked to the applicant record.",
+    "تم توليد مسودة عقد العمل الرسمي MCEP-HR-F-0005 وربطها بسجل العقد.": "Official employment contract draft MCEP-HR-F-0005 was generated and linked to the contract record.",
+    "تم اعتماد طباعة عقد العمل وبدء مسار التوقيع اليدوي.": "Employment contract printing was confirmed and the manual signature path was started.",
+    "تم رفع وتثبيت النسخة الموقعة يدوياً من عقد العمل.": "Manually signed employment contract copy was uploaded and confirmed.",
+    "تم رفع وتثبيت النسخة المعتمدة من وزارة العمل لعقد العمل. اعتماد الوزارة موثق في السجل ولا يغيّر شرط جاهزية التوظيف الأساسي: النسخة الموقعة والمرفوعة وبقية المستندات المكتملة.": "Ministry-accredited employment contract copy was uploaded and confirmed. Ministry accreditation is documented in the record and does not change the core employment readiness condition: signed/uploaded copy and completed documents.",
+    "جاهزية التوظيف غير مكتملة. المتبقي: %s.": "Employment readiness is incomplete. Remaining: %s.",
+    "اكتملت مستندات جاهزية التوظيف المطلوبة: قرار التعيين، عقد العمل، الوصف الوظيفي، F-0007، وF-0009. يمكن فتح مرحلة الترحيل اللاحقة دون إنشاء سجلات HR الأصلية تلقائياً في هذا pass.": "Required employment readiness documents are complete: board decision, employment contract, responsibilities, F-0007, and F-0009. The later handover stage can be opened without automatically creating native HR records in this pass.",
+    "تم تحديث إعدادات الرواتب الافتراضية للترحيل من بيانات العقد/المتقدم والقيم الافتراضية الآمنة: %s.": "Default payroll handover settings were refreshed from contract/applicant data and safe defaults: %s.",
+    "لا توجد بيانات حساب مصرفي مقبولة لهذا المتقدم حتى الآن. لم يتم إنشاء حساب بنكي للموظف.": "No accepted bank account data exists for this applicant yet. No employee bank account was created.",
+    "لا يمكن إنشاء الحساب البنكي لأن نموذج res.partner.bank لا يحتوي على الحقل account_number في هذه القاعدة.": "Cannot create bank account because res.partner.bank has no account_number field in this database.",
+    "تعذر إنشاء/تحديث الحساب البنكي الأصلي للموظف: %s": "Could not create/update native employee bank account: %s",
+    "لم يتم العثور على مرفقات رسمية/موقعة جاهزة للترحيل إلى سجل الموظف.": "No official/signed attachments were found ready for handover to the employee record.",
+    "تم العثور على مرفقات للترحيل، لكن لم يتم نسخ أي مرفق إلى سجل الموظف.": "Attachments were found for handover, but no attachment was copied to the employee record.",
+    "تم ترحيل/تأكيد مرفقات ما قبل التوظيف إلى سجل الموظف: %s.": "Pre-employment attachments were handed over/confirmed on the employee record: %s.",
+    " تم تجاهل النسخ المكررة الموجودة مسبقاً.": " Existing duplicate copies were skipped.",
+    "لم يتم إغلاق ترحيل التوظيف نهائياً بسبب النواقص التالية: %s.": "Employment handover was not closed because the following items are missing: %s.",
+    "تم إغلاق ترحيل المتقدم إلى الموظف بنجاح. %s": "Applicant-to-employee handover was closed successfully. %s",
+    "اكتملت بيانات الترحيل الأساسية، لكن لم يتم إغلاق الترحيل نهائياً بسبب مرحلة المتقدم: %s": "Core handover data is complete, but final handover was not closed because of applicant stage: %s",
+    "لا يمكن بدء التوظيف لأن جاهزية التوظيف غير مكتملة. المتبقي/المطلوب: %s": "Employment cannot start because employment readiness is incomplete. Remaining/required: %s",
+    "تم العثور على موظف حالي بنفس الرقم الوطني/التعريفي. لم يتم إنشاء موظف جديد لتجنب التكرار. يرجى مراجعة الموظف الحالي وربطه يدوياً إذا كان هو نفس الشخص.": "An existing employee with the same national/identification number was found. A new employee was not created to avoid duplication. Review the existing employee and link manually if it is the same person.",
+    "تم العثور على أكثر من موظف بنفس الرقم الوطني/التعريفي. لا يمكن بدء التوظيف آلياً قبل تنظيف التكرارات.": "More than one employee with the same national/identification number was found. Employment cannot be started automatically before duplicate cleanup.",
+    "تم ربط الموظف. تم العثور على سجل موظف مرتبط بهذا المتقدم، ولم يتم إنشاء موظف جديد. تم تحديث جاهزية الرواتب/العقد على سجل الموظف. تم تنفيذ فحص الإغلاق النهائي ونقل المرحلة عند اكتمال الشروط.": "Employee linked. An employee record linked to this applicant was found, and no new employee was created. Payroll/contract readiness was updated on the employee record. Final closure check and stage movement were executed when conditions were complete.",
+    "تم تأكيد الربط والتحديث من المتقدم: %s.": "Link/update was confirmed from applicant: %s.",
+    "تم إنشاء سجل الموظف وربطه بالمتقدم. تم تحديث جاهزية الرواتب/العقد على سجل الموظف. تم ترحيل/تأكيد المرفقات الرسمية حيثما توفرت. تم تنفيذ فحص الإغلاق النهائي ونقل المرحلة عند اكتمال الشروط.": "Employee record was created and linked to the applicant. Payroll/contract readiness was updated on the employee record. Official attachments were handed over/confirmed where available. Final closure check and stage movement were executed when conditions were complete.",
+    "تم إنشاء هذا الموظف من المتقدم: %s.": "This employee was created from applicant: %s.",
+    "تم إنشاء/تحديث هذا الحساب البنكي من المتقدم: %s.": "This bank account was created/updated from applicant: %s.",
+    "نموذج هوية الموظف غير مثبت. ثبّت hr_employment_custom أولاً ثم أعد المحاولة.": "Employee identification document model is not installed. Install hr_employment_custom first, then retry.",
+    "لا يوجد موظف مرتبط بهذا المتقدم. نفّذ بدء التوظيف أولاً ثم أعد ترحيل الهوية.": "No employee is linked to this applicant. Run Start Employment first, then retry identity handover.",
+    "تم ترحيل بيانات الهوية إلى سجل الموظف: %s.": "Identity data was handed over to the employee record: %s.",
+    "لم يتم العثور على مستندات هوية مقبولة قابلة للترحيل.": "No accepted identity documents were found for handover.",
+    "تم ترحيل الهوية بنجاح. تم إنشاء %s وتحديث %s سجل.": "Identity handover completed successfully. Created %s and updated %s record(s).",
+    "لم يتم إنشاء أو تحديث أي سجلات هوية. راجع حالة المستندات المقبولة.": "No identity records were created or updated. Review accepted document status."
+}
+
+def _chatter_pattern_translate(text, mapping):
+    if text in mapping:
+        return mapping[text]
+
+    for source, target in mapping.items():
+        if '%s' not in source:
+            continue
+
+        parts = source.split('%s')
+        if not text.startswith(parts[0]):
+            continue
+
+        pos = len(parts[0])
+        values = []
+        ok = True
+
+        for index in range(1, len(parts)):
+            part = parts[index]
+
+            if part:
+                next_pos = text.find(part, pos)
+                if next_pos < 0:
+                    ok = False
+                    break
+                values.append(text[pos:next_pos])
+                pos = next_pos + len(part)
+            else:
+                if index == len(parts) - 1:
+                    values.append(text[pos:])
+                    pos = len(text)
+                else:
+                    ok = False
+                    break
+
+        if ok and pos == len(text):
+            try:
+                if len(values) == 1:
+                    return target % values[0]
+                return target % tuple(values)
+            except Exception:
+                return target
+
+    return None
+
+def chatter_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        translated = _chatter_pattern_translate(text, CHATTER_TEXT_AR)
+        if translated:
+            return translated
+        return text
+
+    translated = _chatter_pattern_translate(text, AR_TEXT_EN)
+    if translated:
+        return translated
+
+    return text
+
 
 UI_TEXT_AR = {
     "Contract Proposal stage missing": "مرحلة مقترح العقد غير موجودة",
@@ -795,8 +1095,7 @@ else:
 
         if blocking_messages:
             applicant.message_post(
-                body='تم منع تهيئة التعاقد بسبب مستندات تقييم غير مكتملة:<br/>%s' % '<br/>'.join(blocking_messages)
-            )
+                body=chatter_text('Contract preparation was blocked because evaluation documents are incomplete:<br/>%s' % '<br/>'.join(blocking_messages)))
 
             action = {
                 'type': 'ir.actions.client',
@@ -820,12 +1119,11 @@ else:
         })
 
         applicant.message_post(
-            body='تمت تهيئة التعاقد ونقل المتقدم من مرحلة %s إلى مرحلة %s بعد التحقق من المستندات الموقعة: %s.' % (
+            body=chatter_text('Contract preparation completed. Applicant moved from stage %s to stage %s after verifying signed documents: %s.' % (
                 old_stage,
                 target_stage.display_name,
                 ', '.join(signed_documents)
-            )
-        )
+            )))
 
         action = {
             'type': 'ir.actions.client',
