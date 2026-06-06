@@ -26,11 +26,8 @@
                     name="hr_recruitment_custom.action_hr_recruitment_document_for_applicant"
                     class="oe_stat_button"
                     icon="fa-files-o"
-                    invisible="not id">
-                    <div class="o_stat_info">
-                        <span class="o_stat_text">Recruitment Documents</span>
-                    </div>
-                </button>
+                    string="Recruitment Documents"
+                    invisible="not id" />
             </xpath>
 
             <xpath expr="//field[@name='partner_phone']" position="after">
