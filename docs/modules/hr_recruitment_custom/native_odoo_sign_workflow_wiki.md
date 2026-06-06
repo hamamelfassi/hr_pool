@@ -843,3 +843,79 @@ source record
 ```
 
 Unlike recruitment, employment workflows should not depend on a central recruitment document registry. Each source employment process record owns its own artifact fields.
+
+<!-- R10_SIGN_DOCTRINE_LOCK -->
+## R10 Sign lifecycle doctrine lock
+
+### Registry remains the source of truth
+
+The recruitment document registry remains authoritative even where native `sign.request` records are created, sent, signed, or synced.
+
+Native Sign is the signature execution layer. It is not the lifecycle authority for recruitment artifacts.
+
+The registry must retain:
+
+- `x_applicant_id`
+- `x_document_type`
+- `x_source_model`
+- `x_source_res_id`
+- `x_generated_attachment_id`
+- `x_signed_attachment_id`
+- `x_sign_certificate_attachment_id` where applicable
+- `x_sign_request_res_id`
+- `x_sign_request_reference`
+- `x_sign_request_state`
+
+### Descriptive Sign request labels
+
+All newly generated Sign requests should use durable descriptive labels where the schema permits writing them.
+
+The intended label pattern is:
+
+`<form type/code> - <document reference> - <applicant name>`
+
+Implemented examples:
+
+- `F-0002 Interview Evaluation - <reference> - <applicant>`
+- `F-0003 Required Documents Checklist - <reference> - <applicant>`
+- `F-0006 Responsibilities - <reference> - <applicant>`
+- `Board Decision - <reference> - <applicant>`
+- F-0004/F-0007/F-0009 declaration labels remain descriptive and form-specific.
+
+Where fields exist, the label should be written to:
+
+- `sign.request.reference`
+- `sign.request.subject`
+- `sign.request.name`
+- `x_hr.recruitment_document.x_sign_request_reference`
+
+### Applicant-facing anchoring
+
+For applicant-facing Sign visibility, new Sign requests should be anchored to `hr.applicant` where Odoo SaaS exposes compatible fields.
+
+The hardening strategy is:
+
+- send wizard model = `hr.applicant` where safe
+- send wizard res_ids = `[applicant.id]`
+- `reference_doc = hr.applicant,<applicant.id>` where supported
+- post-send write to sign.request `model`, `res_model`, `res_id`, `res_ids`, `res_model_id`, and `reference_doc` where supported
+
+This is best-effort because the exact native Sign schema can differ by Odoo SaaS version.
+
+The registry must still preserve the true source record via:
+
+- `x_source_model`
+- `x_source_res_id`
+
+For example, a F-0003 checklist remains traceable to the checklist source record even if the native Sign request is applicant-facing for UI filtering.
+
+### Native smart-button limitation
+
+If the native Sign Requests smart button continues to show unrelated applicant requests after runtime testing, stop patching native Sign internals.
+
+The approved fallback is a custom filtered recruitment Sign Requests surface based on the recruitment document registry:
+
+- domain: registry `x_applicant_id == current applicant`
+- records: registry rows with `x_sign_request_res_id`
+
+This keeps the business surface correct even if the native smart-button domain remains too broad.

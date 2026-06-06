@@ -166,3 +166,45 @@ Then start with:
 ```text
 13A — Preflight and dependency inspection
 ```
+
+<!-- R10_CURRENT_REFINEMENT_PHASE_LOCK -->
+## Current refinement phase — R1 to R10 documentation lock
+
+The current active phase is the `hr_recruitment_custom` repair/refinement closure following the R1–R8 implementation sprint.
+
+### Closed repair/refinement slices
+
+- R1 — F-0003 checklist lifecycle repair.
+- R2 — document checklist/submission request workflow and partial submission handling.
+- R3 — evaluation tab UX and translation cleanup.
+- R4 — responsibilities/TOR UX cleanup.
+- R5 — declaration and late-stage gate visibility hardening.
+- R6 — contract proposal gate and late-stage tab layout stabilization.
+- R7 — translation, toast, helper alert, chatter, model/field translation lock.
+- R8 — Sign request label and applicant anchoring hardening.
+
+### Deferred slice
+
+- R9 — canonical document reference, sequence, and filename normalization.
+
+R9 is deferred to a later higher-level refinement pass because it affects record naming, generated/signed filenames, Sign request labels, registry references, and possible migration/backfill strategy.
+
+### Current slice
+
+- R10 — documentation lock.
+
+R10 records the implemented repairs and the deferred backlog. It should not introduce new workflow logic.
+
+### Post-R10 production-testing note
+
+Before production deployment, run fresh Sign flow tests for:
+
+- F-0002
+- F-0003
+- F-0006
+- F-0004
+- F-0007
+- F-0009
+- Board Decision
+
+If native Sign smart-button leakage persists, use the approved fallback: a custom filtered recruitment Sign Requests surface driven by `x_hr.recruitment_document`, not further fragile native smart-button patching.

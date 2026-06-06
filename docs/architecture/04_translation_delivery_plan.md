@@ -87,3 +87,74 @@ Before Pass 7 begins, `hr_recruitment_custom` must update Arabic translations fo
 Translation debt from Pass 5/6 is not allowed to roll into Pass 7.
 
 Pass 7 has its own GRC decision-template translation burden and should not inherit unresolved Evaluation-stage UI translation debt.
+
+<!-- R10_TRANSLATION_RUNTIME_LOCK -->
+## R10 translation runtime lock
+
+The R7 translation repair establishes the current translation delivery doctrine for `hr_recruitment_custom`.
+
+### Source-label rule
+
+User-facing XML source labels should use English `msgid` values.
+
+Arabic display text belongs in:
+
+- `i18n/ar_001.po`
+
+This applies to:
+
+- button strings
+- field labels
+- tab/page names
+- helper alerts
+- list/form labels
+- search labels
+- action names where exported
+
+### Smart-button translation rule
+
+For stat/smart buttons, prefer a translatable button attribute:
+
+```xml
+<button string="Recruitment Documents" ... />
+```
+
+Do not rely only on nested free text such as:
+
+```xml
+<span class="o_stat_text">Recruitment Documents</span>
+```
+
+because Odoo may not consistently translate nested stat text.
+
+### Runtime notification rule
+
+Server-action notification messages are not reliably solved by PO alone.
+
+Use language-aware helpers:
+
+- `ui_text()` — display_notification / toast messages
+- `chatter_text()` — future message_post bodies
+
+### Historical chatter boundary
+
+Existing chatter posted before the translation repair remains unchanged.
+
+The R7F chatter repair applies only to future chatter generated after the patched module is installed.
+
+### Remaining acceptable PO inventory
+
+Empty PO entries may still exist for:
+
+- QWeb/report fragments
+- obsolete exported Arabic-source entries
+- inactive/generated terms
+- technical records not visible in normal UI
+
+The lock condition is not “zero empty PO entries”. The lock condition is:
+
+- active view labels translated
+- inline helper alerts translated
+- runtime notifications covered
+- future chatter covered
+- active model/field labels covered

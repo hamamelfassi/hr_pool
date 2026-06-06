@@ -869,3 +869,64 @@ The downstream module `hr_employment_custom` owns:
 - clearance/offboarding.
 
 Stage 2 recruitment remains the source of signed recruitment artifacts, while `hr_employment_custom` copies the final artifact history to the employee record during handover.
+
+<!-- R10_STAGE_2_REFINEMENT_LOCK -->
+## R10 Stage 2 refinement lock
+
+The R1–R8 refinement sprint establishes the current Stage 2 operating baseline.
+
+### First-gate lifecycle
+
+The first gate closes the evaluation package. The applicant cannot move to Contract Proposal until the following are complete:
+
+- F-0002 Interview Evaluation signed
+- F-0003 Required Documents Checklist signed
+- F-0004 Legal Documents Validity Declaration signed
+
+The move is explicit through the `Prepare Contract` action. It is not a silent automatic stage movement.
+
+### Second-stage lifecycle
+
+After the contract proposal gate passes, the following surfaces become available:
+
+- Responsibilities / F-0006
+- Declarations / F-0007 and F-0009
+- Decision / Board Decision
+- Contract / F-0005 employment contract data and artifact flow
+- Employment / handover readiness and start-employment shell
+
+Second-stage create/generate actions should remain hidden before the gate passes.
+
+### Applicant cockpit UI baseline
+
+The recruitment cockpit follows these repair-sprint UI rules:
+
+- source labels in XML are English
+- Arabic labels are provided through PO
+- smart button labels use translatable button strings
+- inline helper alerts use English source text and Arabic PO translations
+- RTL views place statusbars and buttons in direction-safe split rows
+- linked tables should not be compressed inside narrow groups
+
+### Sign lifecycle baseline
+
+The recruitment registry is the authoritative lifecycle spine.
+
+Native Odoo Sign requests are created and synced, but the business truth remains in:
+
+- `x_hr.recruitment_document`
+
+New Sign requests should carry descriptive labels and applicant-facing anchors where the Odoo SaaS schema supports them.
+
+### Accepted Sign smart-button fallback
+
+If production testing shows that Odoo’s native Sign Requests smart button still displays unrelated requests, implement a custom filtered recruitment sign-request surface instead of continuing to patch native Sign internals.
+
+That custom surface should be registry-driven:
+
+- registry `x_applicant_id == current applicant`
+- registry `x_sign_request_res_id is set`
+
+### Deferred reference normalization
+
+Canonical form instance references, sequence rules, and draft/signed filename conventions are deferred. They are not part of the R1–R8 repair lock.

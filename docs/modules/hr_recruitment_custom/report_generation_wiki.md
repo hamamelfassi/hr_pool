@@ -443,3 +443,43 @@ F-0003 confirms the checklist/table/signature pattern and the importance of the 
 - one-page formats where the source form requires it;
 - fixed signature/date rows for Odoo Sign coordinates;
 - generated PDF must be tested as PDF, not only as HTML preview.
+
+<!-- R10_REFERENCE_FILENAME_DEFERRED_LOCK -->
+## R10 deferred document reference / sequence / filename normalization
+
+The repair sprint intentionally does not renormalize document references, sequence numbers, or PDF filenames.
+
+This work is deferred to R9 or a later higher-level refinement pass because it affects:
+
+- `x_name` values
+- `x_document_reference` values
+- generated PDF filenames
+- signed PDF filenames
+- Sign request labels
+- registry references
+- legacy/test records
+- download action assumptions
+- report names
+- possible migration/backfill rules
+
+### Future target convention
+
+The future canonical convention should distinguish:
+
+- Form identifier
+- Form instance identifier
+- Generated draft filename
+- Signed filename
+- Sign request display label
+- Registry `x_name` / `x_document_reference`
+
+The future design should define:
+
+- stripped form code convention
+- applicant/form owner identifier convention
+- per-owner/per-form sequence
+- date suffix
+- draft/signed filename state suffix
+- whether existing test records need migration
+
+Until that pass is explicitly scoped, do not patch individual report actions just to make filenames look cleaner. The current repair baseline prioritizes lifecycle correctness, Sign sync reliability, UI consistency, translation, and applicant anchoring.

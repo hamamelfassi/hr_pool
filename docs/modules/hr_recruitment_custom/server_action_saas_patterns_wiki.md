@@ -245,3 +245,91 @@ Related documentation:
 * `docs/modules/hr_recruitment_custom/report_generation_wiki.md`
 
 ````
+
+<!-- R10_RUNTIME_TRANSLATION_DOCTRINE -->
+## R10 runtime translation doctrine for server actions
+
+Server-action user messages have two categories:
+
+- display_notification / toast messages
+- future chatter messages
+
+### Toast / display_notification messages
+
+For server-action notifications, use a local helper pattern such as:
+
+```python
+UI_TEXT_AR = {
+    "English source message": "Arabic translated message",
+}
+
+def ui_text(text):
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar') and text in UI_TEXT_AR:
+        return UI_TEXT_AR[text]
+
+    return text
+```
+
+Then wrap notification payloads:
+
+```python
+'params': {
+    'title': ui_text(title),
+    'message': ui_text(message),
+    'type': kind,
+    'sticky': sticky,
+}
+```
+
+or direct literals:
+
+```python
+'title': ui_text('English source title')
+'message': ui_text('English source message')
+```
+
+The source key should be English. Arabic literals should not be used as the source key in new server-action notifications.
+
+### Future chatter messages
+
+For future chatter, use `chatter_text(...)`:
+
+```python
+message_post(body=chatter_text('English source message'))
+```
+
+Important boundary:
+
+R7F affects future chatter only. Existing chatter already posted on old test records is not backfilled.
+
+### Pattern with dynamic values
+
+Dynamic messages should use stable `%s` source templates:
+
+```python
+message_post(body=chatter_text('F-0003 checklist sent through native Odoo Sign. Request ID: %s.' % request_id))
+```
+
+The helper may pattern-match the rendered text to translate the dynamic value.
+
+### Do not mix runtime translations with PO-only view translations
+
+Use PO files for:
+
+- views
+- menus
+- actions
+- field labels
+- selection labels
+- inline helper alerts in XML
+
+Use `ui_text()` / `chatter_text()` for:
+
+- server-action display_notification payloads
+- server-action toast helpers
+- future message_post bodies
