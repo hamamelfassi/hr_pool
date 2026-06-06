@@ -11,6 +11,88 @@ interview_model = env['x_hr.applicant_mcep_interview'].sudo()
 
 action = False
 
+CHATTER_TEXT_AR = {
+    "F-0002 Interview PDF generated in the background. Draft artifact: %s.": "تم توليد ملف تقييم المقابلة F-0002 في الخلفية. المسودة: %s.",
+    "F-0002 Interview PDF generated and attached to applicant Files. Draft artifact: %s.": "تم توليد ملف تقييم المقابلة F-0002 وإرفاقه بملفات المتقدم. المسودة: %s.",
+    "F-0002 sent through native Odoo Sign to %s. Sign request ID: %s.": "تم إرسال F-0002 عبر توقيع أودو إلى %s. معرف طلب التوقيع: %s.",
+    "F-0002 Interview Evaluation sent through native Odoo Sign to %s.": "تم إرسال تقييم المقابلة F-0002 عبر توقيع أودو إلى %s.",
+    "Native Odoo Sign send_request() executed for F-0002, but the generated sign.request could not be located automatically. Check Sign app template/request created from template ID %s.": "تم تنفيذ send_request() عبر توقيع أودو لـ F-0002، لكن تعذر العثور تلقائياً على طلب التوقيع الناتج. راجع قالب/طلب التوقيع المنشأ من القالب رقم %s في تطبيق التوقيع.",
+    "F-0002 native Odoo Sign request is not fully signed yet. Current Sign request state: %s. Ask the signer to complete signing, then sync again.": "لم يكتمل توقيع طلب F-0002 عبر توقيع أودو بعد. حالة طلب التوقيع الحالية: %s. اطلب من الموقّع إكمال التوقيع ثم زامن مرة أخرى.",
+    "F-0002 native Odoo Sign completion sync checked request %s. Current state: %s. Registry was not closed.": "فحصت مزامنة اكتمال توقيع F-0002 طلب التوقيع %s. الحالة الحالية: %s. لم يتم إغلاق سجل المستند.",
+    "F-0002 native Odoo Sign completion synced. Signed artifact linked: %s.": "تمت مزامنة اكتمال توقيع F-0002 عبر توقيع أودو. تم ربط المستند الموقع: %s.",
+    "F-0002 Interview Evaluation signed through native Odoo Sign. Signed artifact and certificate, where available, were linked to the recruitment document registry.": "تم توقيع تقييم المقابلة F-0002 عبر توقيع أودو. وتم ربط المستند الموقع والشهادة، عند توفرها، بسجل مستندات التوظيف.",
+    "F-0003 Required Documents Checklist PDF generated and recruitment document registry marked as Generated.": "تم توليد ملف قائمة المستندات المطلوبة F-0003 وتم تعليم سجل مستندات التوظيف كمولد.",
+    "F-0003 Required Documents Checklist PDF generated and linked to the recruitment document registry.": "تم توليد ملف قائمة المستندات المطلوبة F-0003 وربطه بسجل مستندات التوظيف.",
+    "F-0003 checklist sent through native Odoo Sign. Request ID: %s.": "تم إرسال قائمة F-0003 عبر توقيع أودو. معرف الطلب: %s.",
+    "F-0003 Required Documents Checklist sent through native Odoo Sign. Request ID: %s.": "تم إرسال قائمة المستندات المطلوبة F-0003 عبر توقيع أودو. معرف الطلب: %s.",
+    "Native Odoo Sign send_request() executed for F-0003, but the generated sign.request could not be located automatically. Check Sign app template/request created from template ID %s.": "تم تنفيذ send_request() عبر توقيع أودو لـ F-0003، لكن تعذر العثور تلقائياً على طلب التوقيع الناتج. راجع قالب/طلب التوقيع المنشأ من القالب رقم %s في تطبيق التوقيع.",
+    "F-0003 native Odoo Sign request is not fully signed yet. Current Sign request state: %s. Ask the signer to complete signing, then sync again.": "لم يكتمل توقيع طلب F-0003 عبر توقيع أودو بعد. حالة طلب التوقيع الحالية: %s. اطلب من الموقّع إكمال التوقيع ثم زامن مرة أخرى.",
+    "F-0003 native Odoo Sign completion sync checked request %s. Current state: %s. Registry was not closed.": "فحصت مزامنة اكتمال توقيع F-0003 طلب التوقيع %s. الحالة الحالية: %s. لم يتم إغلاق سجل المستند.",
+    "F-0003 native Odoo Sign completion synced. Signed artifact linked: %s.": "تمت مزامنة اكتمال توقيع F-0003 عبر توقيع أودو. تم ربط المستند الموقع: %s.",
+    "F-0003 Required Documents Checklist signed through native Odoo Sign. Signed F-0003 artifact and certificate, where available, were linked to the recruitment document registry.": "تم توقيع قائمة المستندات المطلوبة F-0003 عبر توقيع أودو. وتم ربط مستند F-0003 الموقع والشهادة، عند توفرها، بسجل مستندات التوظيف."
+}
+
+def _chatter_pattern_translate(text, mapping):
+    if text in mapping:
+        return mapping[text]
+
+    for source, target in mapping.items():
+        if '%s' not in source:
+            continue
+
+        parts = source.split('%s')
+        if not text.startswith(parts[0]):
+            continue
+
+        pos = len(parts[0])
+        values = []
+        ok = True
+
+        for index in range(1, len(parts)):
+            part = parts[index]
+
+            if part:
+                next_pos = text.find(part, pos)
+                if next_pos < 0:
+                    ok = False
+                    break
+                values.append(text[pos:next_pos])
+                pos = next_pos + len(part)
+            else:
+                if index == len(parts) - 1:
+                    values.append(text[pos:])
+                    pos = len(text)
+                else:
+                    ok = False
+                    break
+
+        if ok and pos == len(text):
+            try:
+                if len(values) == 1:
+                    return target % values[0]
+                return target % tuple(values)
+            except Exception:
+                return target
+
+    return None
+
+def chatter_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        translated = _chatter_pattern_translate(text, CHATTER_TEXT_AR)
+        if translated:
+            return translated
+
+    return text
+
+
 UI_TEXT_AR = {
     "Applicant missing": "المتقدم غير مرتبط",
     "Link this interview to an applicant before generating the interview PDF.": "اربط تقييم المقابلة بمتقدم قبل توليد ملف PDF.",
@@ -335,8 +417,8 @@ for rec in records.sudo():
         registry_values['x_version'] = 1
         registry_doc = registry_model.create(registry_values)
 
-    rec.message_post(body='F-0002 Interview PDF generated in the background. Draft artifact: %s.' % filename)
-    rec.x_applicant_id.message_post(body='F-0002 Interview PDF generated and attached to applicant Files. Draft artifact: %s.' % filename)
+    rec.message_post(body=chatter_text('F-0002 Interview PDF generated in the background. Draft artifact: %s.' % filename))
+    rec.x_applicant_id.message_post(body=chatter_text('F-0002 Interview PDF generated and attached to applicant Files. Draft artifact: %s.' % filename))
 
     action = toast('F-0002 PDF generated', 'Draft PDF generated: %s.' % filename, 'success', False, reload_interview(rec))
     break
@@ -361,6 +443,88 @@ sign_send_signer_model = env['sign.send.request.signer'].sudo()
 sign_request_model = env['sign.request'].sudo()
 
 action = False
+
+CHATTER_TEXT_AR = {
+    "F-0002 Interview PDF generated in the background. Draft artifact: %s.": "تم توليد ملف تقييم المقابلة F-0002 في الخلفية. المسودة: %s.",
+    "F-0002 Interview PDF generated and attached to applicant Files. Draft artifact: %s.": "تم توليد ملف تقييم المقابلة F-0002 وإرفاقه بملفات المتقدم. المسودة: %s.",
+    "F-0002 sent through native Odoo Sign to %s. Sign request ID: %s.": "تم إرسال F-0002 عبر توقيع أودو إلى %s. معرف طلب التوقيع: %s.",
+    "F-0002 Interview Evaluation sent through native Odoo Sign to %s.": "تم إرسال تقييم المقابلة F-0002 عبر توقيع أودو إلى %s.",
+    "Native Odoo Sign send_request() executed for F-0002, but the generated sign.request could not be located automatically. Check Sign app template/request created from template ID %s.": "تم تنفيذ send_request() عبر توقيع أودو لـ F-0002، لكن تعذر العثور تلقائياً على طلب التوقيع الناتج. راجع قالب/طلب التوقيع المنشأ من القالب رقم %s في تطبيق التوقيع.",
+    "F-0002 native Odoo Sign request is not fully signed yet. Current Sign request state: %s. Ask the signer to complete signing, then sync again.": "لم يكتمل توقيع طلب F-0002 عبر توقيع أودو بعد. حالة طلب التوقيع الحالية: %s. اطلب من الموقّع إكمال التوقيع ثم زامن مرة أخرى.",
+    "F-0002 native Odoo Sign completion sync checked request %s. Current state: %s. Registry was not closed.": "فحصت مزامنة اكتمال توقيع F-0002 طلب التوقيع %s. الحالة الحالية: %s. لم يتم إغلاق سجل المستند.",
+    "F-0002 native Odoo Sign completion synced. Signed artifact linked: %s.": "تمت مزامنة اكتمال توقيع F-0002 عبر توقيع أودو. تم ربط المستند الموقع: %s.",
+    "F-0002 Interview Evaluation signed through native Odoo Sign. Signed artifact and certificate, where available, were linked to the recruitment document registry.": "تم توقيع تقييم المقابلة F-0002 عبر توقيع أودو. وتم ربط المستند الموقع والشهادة، عند توفرها، بسجل مستندات التوظيف.",
+    "F-0003 Required Documents Checklist PDF generated and recruitment document registry marked as Generated.": "تم توليد ملف قائمة المستندات المطلوبة F-0003 وتم تعليم سجل مستندات التوظيف كمولد.",
+    "F-0003 Required Documents Checklist PDF generated and linked to the recruitment document registry.": "تم توليد ملف قائمة المستندات المطلوبة F-0003 وربطه بسجل مستندات التوظيف.",
+    "F-0003 checklist sent through native Odoo Sign. Request ID: %s.": "تم إرسال قائمة F-0003 عبر توقيع أودو. معرف الطلب: %s.",
+    "F-0003 Required Documents Checklist sent through native Odoo Sign. Request ID: %s.": "تم إرسال قائمة المستندات المطلوبة F-0003 عبر توقيع أودو. معرف الطلب: %s.",
+    "Native Odoo Sign send_request() executed for F-0003, but the generated sign.request could not be located automatically. Check Sign app template/request created from template ID %s.": "تم تنفيذ send_request() عبر توقيع أودو لـ F-0003، لكن تعذر العثور تلقائياً على طلب التوقيع الناتج. راجع قالب/طلب التوقيع المنشأ من القالب رقم %s في تطبيق التوقيع.",
+    "F-0003 native Odoo Sign request is not fully signed yet. Current Sign request state: %s. Ask the signer to complete signing, then sync again.": "لم يكتمل توقيع طلب F-0003 عبر توقيع أودو بعد. حالة طلب التوقيع الحالية: %s. اطلب من الموقّع إكمال التوقيع ثم زامن مرة أخرى.",
+    "F-0003 native Odoo Sign completion sync checked request %s. Current state: %s. Registry was not closed.": "فحصت مزامنة اكتمال توقيع F-0003 طلب التوقيع %s. الحالة الحالية: %s. لم يتم إغلاق سجل المستند.",
+    "F-0003 native Odoo Sign completion synced. Signed artifact linked: %s.": "تمت مزامنة اكتمال توقيع F-0003 عبر توقيع أودو. تم ربط المستند الموقع: %s.",
+    "F-0003 Required Documents Checklist signed through native Odoo Sign. Signed F-0003 artifact and certificate, where available, were linked to the recruitment document registry.": "تم توقيع قائمة المستندات المطلوبة F-0003 عبر توقيع أودو. وتم ربط مستند F-0003 الموقع والشهادة، عند توفرها، بسجل مستندات التوظيف."
+}
+
+def _chatter_pattern_translate(text, mapping):
+    if text in mapping:
+        return mapping[text]
+
+    for source, target in mapping.items():
+        if '%s' not in source:
+            continue
+
+        parts = source.split('%s')
+        if not text.startswith(parts[0]):
+            continue
+
+        pos = len(parts[0])
+        values = []
+        ok = True
+
+        for index in range(1, len(parts)):
+            part = parts[index]
+
+            if part:
+                next_pos = text.find(part, pos)
+                if next_pos < 0:
+                    ok = False
+                    break
+                values.append(text[pos:next_pos])
+                pos = next_pos + len(part)
+            else:
+                if index == len(parts) - 1:
+                    values.append(text[pos:])
+                    pos = len(text)
+                else:
+                    ok = False
+                    break
+
+        if ok and pos == len(text):
+            try:
+                if len(values) == 1:
+                    return target % values[0]
+                return target % tuple(values)
+            except Exception:
+                return target
+
+    return None
+
+def chatter_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        translated = _chatter_pattern_translate(text, CHATTER_TEXT_AR)
+        if translated:
+            return translated
+
+    return text
+
 
 UI_TEXT_AR = {
     "Applicant missing": "المتقدم غير مرتبط",
@@ -698,8 +862,8 @@ for rec in records.sudo():
             'x_interviewer_user_id': interviewer_user.id,
         })
 
-        rec.message_post(body='F-0002 sent through native Odoo Sign to %s. Sign request ID: %s.' % (interviewer_partner.display_name, generated_request.id))
-        applicant.message_post(body='F-0002 Interview Evaluation sent through native Odoo Sign to %s.' % interviewer_partner.display_name)
+        rec.message_post(body=chatter_text('F-0002 sent through native Odoo Sign to %s. Sign request ID: %s.' % (interviewer_partner.display_name, generated_request.id)))
+        applicant.message_post(body=chatter_text('F-0002 Interview Evaluation sent through native Odoo Sign to %s.' % interviewer_partner.display_name))
 
         action = toast('F-0002 sent through Odoo Sign', 'Native Odoo Sign request created and sent to %s.' % interviewer_partner.display_name, 'success', False, reload_interview(rec))
     else:
@@ -715,8 +879,8 @@ for rec in records.sudo():
             'x_notes': ((registry_doc.x_notes or '') + '\nNative Odoo Sign send_request() executed for F-0002 on %s, but the generated sign.request could not be located automatically. Dynamic template ID: %s. Interviewer: %s.' % (sent_on, sign_template.id, interviewer_partner.display_name)).strip(),
         })
 
-        rec.message_post(body='Native Odoo Sign send_request() executed for F-0002, but the generated sign.request could not be located automatically. Check Sign app template/request created from template ID %s.' % sign_template.id)
-        applicant.message_post(body='Native Odoo Sign send_request() executed for F-0002, but the generated sign.request could not be located automatically. Check Sign app template/request created from template ID %s.' % sign_template.id)
+        rec.message_post(body=chatter_text('Native Odoo Sign send_request() executed for F-0002, but the generated sign.request could not be located automatically. Check Sign app template/request created from template ID %s.' % sign_template.id))
+        applicant.message_post(body=chatter_text('Native Odoo Sign send_request() executed for F-0002, but the generated sign.request could not be located automatically. Check Sign app template/request created from template ID %s.' % sign_template.id))
 
         action = toast('F-0002 Sign request lookup failed', 'send_request() executed, but the generated sign.request was not found automatically. Check Sign app before retrying.', 'warning', True, reload_interview(rec))
 
@@ -738,6 +902,88 @@ sign_request_model = env['sign.request'].sudo()
 attachment_model = env['ir.attachment'].sudo()
 
 action = False
+
+CHATTER_TEXT_AR = {
+    "F-0002 Interview PDF generated in the background. Draft artifact: %s.": "تم توليد ملف تقييم المقابلة F-0002 في الخلفية. المسودة: %s.",
+    "F-0002 Interview PDF generated and attached to applicant Files. Draft artifact: %s.": "تم توليد ملف تقييم المقابلة F-0002 وإرفاقه بملفات المتقدم. المسودة: %s.",
+    "F-0002 sent through native Odoo Sign to %s. Sign request ID: %s.": "تم إرسال F-0002 عبر توقيع أودو إلى %s. معرف طلب التوقيع: %s.",
+    "F-0002 Interview Evaluation sent through native Odoo Sign to %s.": "تم إرسال تقييم المقابلة F-0002 عبر توقيع أودو إلى %s.",
+    "Native Odoo Sign send_request() executed for F-0002, but the generated sign.request could not be located automatically. Check Sign app template/request created from template ID %s.": "تم تنفيذ send_request() عبر توقيع أودو لـ F-0002، لكن تعذر العثور تلقائياً على طلب التوقيع الناتج. راجع قالب/طلب التوقيع المنشأ من القالب رقم %s في تطبيق التوقيع.",
+    "F-0002 native Odoo Sign request is not fully signed yet. Current Sign request state: %s. Ask the signer to complete signing, then sync again.": "لم يكتمل توقيع طلب F-0002 عبر توقيع أودو بعد. حالة طلب التوقيع الحالية: %s. اطلب من الموقّع إكمال التوقيع ثم زامن مرة أخرى.",
+    "F-0002 native Odoo Sign completion sync checked request %s. Current state: %s. Registry was not closed.": "فحصت مزامنة اكتمال توقيع F-0002 طلب التوقيع %s. الحالة الحالية: %s. لم يتم إغلاق سجل المستند.",
+    "F-0002 native Odoo Sign completion synced. Signed artifact linked: %s.": "تمت مزامنة اكتمال توقيع F-0002 عبر توقيع أودو. تم ربط المستند الموقع: %s.",
+    "F-0002 Interview Evaluation signed through native Odoo Sign. Signed artifact and certificate, where available, were linked to the recruitment document registry.": "تم توقيع تقييم المقابلة F-0002 عبر توقيع أودو. وتم ربط المستند الموقع والشهادة، عند توفرها، بسجل مستندات التوظيف.",
+    "F-0003 Required Documents Checklist PDF generated and recruitment document registry marked as Generated.": "تم توليد ملف قائمة المستندات المطلوبة F-0003 وتم تعليم سجل مستندات التوظيف كمولد.",
+    "F-0003 Required Documents Checklist PDF generated and linked to the recruitment document registry.": "تم توليد ملف قائمة المستندات المطلوبة F-0003 وربطه بسجل مستندات التوظيف.",
+    "F-0003 checklist sent through native Odoo Sign. Request ID: %s.": "تم إرسال قائمة F-0003 عبر توقيع أودو. معرف الطلب: %s.",
+    "F-0003 Required Documents Checklist sent through native Odoo Sign. Request ID: %s.": "تم إرسال قائمة المستندات المطلوبة F-0003 عبر توقيع أودو. معرف الطلب: %s.",
+    "Native Odoo Sign send_request() executed for F-0003, but the generated sign.request could not be located automatically. Check Sign app template/request created from template ID %s.": "تم تنفيذ send_request() عبر توقيع أودو لـ F-0003، لكن تعذر العثور تلقائياً على طلب التوقيع الناتج. راجع قالب/طلب التوقيع المنشأ من القالب رقم %s في تطبيق التوقيع.",
+    "F-0003 native Odoo Sign request is not fully signed yet. Current Sign request state: %s. Ask the signer to complete signing, then sync again.": "لم يكتمل توقيع طلب F-0003 عبر توقيع أودو بعد. حالة طلب التوقيع الحالية: %s. اطلب من الموقّع إكمال التوقيع ثم زامن مرة أخرى.",
+    "F-0003 native Odoo Sign completion sync checked request %s. Current state: %s. Registry was not closed.": "فحصت مزامنة اكتمال توقيع F-0003 طلب التوقيع %s. الحالة الحالية: %s. لم يتم إغلاق سجل المستند.",
+    "F-0003 native Odoo Sign completion synced. Signed artifact linked: %s.": "تمت مزامنة اكتمال توقيع F-0003 عبر توقيع أودو. تم ربط المستند الموقع: %s.",
+    "F-0003 Required Documents Checklist signed through native Odoo Sign. Signed F-0003 artifact and certificate, where available, were linked to the recruitment document registry.": "تم توقيع قائمة المستندات المطلوبة F-0003 عبر توقيع أودو. وتم ربط مستند F-0003 الموقع والشهادة، عند توفرها، بسجل مستندات التوظيف."
+}
+
+def _chatter_pattern_translate(text, mapping):
+    if text in mapping:
+        return mapping[text]
+
+    for source, target in mapping.items():
+        if '%s' not in source:
+            continue
+
+        parts = source.split('%s')
+        if not text.startswith(parts[0]):
+            continue
+
+        pos = len(parts[0])
+        values = []
+        ok = True
+
+        for index in range(1, len(parts)):
+            part = parts[index]
+
+            if part:
+                next_pos = text.find(part, pos)
+                if next_pos < 0:
+                    ok = False
+                    break
+                values.append(text[pos:next_pos])
+                pos = next_pos + len(part)
+            else:
+                if index == len(parts) - 1:
+                    values.append(text[pos:])
+                    pos = len(text)
+                else:
+                    ok = False
+                    break
+
+        if ok and pos == len(text):
+            try:
+                if len(values) == 1:
+                    return target % values[0]
+                return target % tuple(values)
+            except Exception:
+                return target
+
+    return None
+
+def chatter_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        translated = _chatter_pattern_translate(text, CHATTER_TEXT_AR)
+        if translated:
+            return translated
+
+    return text
+
 
 UI_TEXT_AR = {
     "Applicant missing": "المتقدم غير مرتبط",
@@ -966,8 +1212,8 @@ for rec in records.sudo():
     })
 
     if request_state not in ['signed', 'completed']:
-        rec.message_post(body='F-0002 native Odoo Sign request is not fully signed yet. Current Sign request state: %s. Ask the signer to complete signing, then sync again.' % request_state)
-        applicant.message_post(body='F-0002 native Odoo Sign completion sync checked request %s. Current state: %s. Registry was not closed.' % (sign_request.id, request_state))
+        rec.message_post(body=chatter_text('F-0002 native Odoo Sign request is not fully signed yet. Current Sign request state: %s. Ask the signer to complete signing, then sync again.' % request_state))
+        applicant.message_post(body=chatter_text('F-0002 native Odoo Sign completion sync checked request %s. Current state: %s. Registry was not closed.' % (sign_request.id, request_state)))
 
         action = toast('F-0002 not fully signed yet', 'Odoo Sign request is still in state: %s. Ask the signer to complete signing, then sync again.' % request_state, 'warning', False, reload_interview(rec))
         continue
@@ -1069,8 +1315,8 @@ for rec in records.sudo():
         'x_signed_attachment_id': signed_copy.id,
     })
 
-    rec.message_post(body='F-0002 native Odoo Sign completion synced. Signed artifact linked: %s.' % signed_copy.name)
-    applicant.message_post(body='F-0002 Interview Evaluation signed through native Odoo Sign. Signed artifact and certificate, where available, were linked to the recruitment document registry.')
+    rec.message_post(body=chatter_text('F-0002 native Odoo Sign completion synced. Signed artifact linked: %s.' % signed_copy.name))
+    applicant.message_post(body=chatter_text('F-0002 Interview Evaluation signed through native Odoo Sign. Signed artifact and certificate, where available, were linked to the recruitment document registry.'))
 
     action = toast('F-0002 signed', 'Signed F-0002 result synced. Signed artifact: %s.' % signed_copy.name, 'success', False, reload_interview(rec))
     break
