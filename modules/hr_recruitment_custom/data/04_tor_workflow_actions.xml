@@ -7,6 +7,133 @@
         <field name="code"><![CDATA[
 action = False
 
+CHATTER_TEXT_AR = {
+    "F-0004 legal documents validity declaration record created.": "تم إنشاء سجل إقرار صحة المستندات F-0004.",
+    "F-0007 policies and procedures compliance declaration record created.": "تم إنشاء سجل إقرار الالتزام باللوائح والسياسات F-0007.",
+    "Existing F-0007 policies and procedures compliance declaration record was opened without creating a duplicate.": "تم فتح سجل إقرار الالتزام باللوائح والسياسات F-0007 القائم دون إنشاء نسخة مكررة.",
+    "F-0009 confidentiality and non-disclosure declaration record created.": "تم إنشاء سجل إقرار السرية وعدم الإفصاح F-0009.",
+    "Existing F-0009 confidentiality and non-disclosure declaration record was opened without creating a duplicate.": "تم فتح سجل إقرار السرية وعدم الإفصاح F-0009 القائم دون إنشاء نسخة مكررة.",
+    "Previous generated F-0009 copy was replaced by a newer test/generated copy.": "تم استبدال نسخة F-0009 المنشأة السابقة بنسخة اختبار/توليد أحدث.",
+    "Previous generated F-0007 copy was replaced by a newer test/generated copy.": "تم استبدال نسخة F-0007 المنشأة السابقة بنسخة اختبار/توليد أحدث.",
+    "F-0004 PDF was generated and linked to the declaration record.": "تم إنشاء ملف F-0004 وربطه بسجل الإقرار.",
+    "F-0004 PDF was generated and linked to the recruitment document registry.": "تم إنشاء ملف F-0004 وربطه بسجل مستندات التوظيف.",
+    "F-0007 PDF was generated and linked to the declaration record.": "تم إنشاء ملف F-0007 وربطه بسجل الإقرار.",
+    "F-0007 PDF was generated and linked to the recruitment document registry.": "تم إنشاء ملف F-0007 وربطه بسجل مستندات التوظيف.",
+    "F-0009 PDF was generated and linked to the declaration record.": "تم إنشاء ملف F-0009 وربطه بسجل الإقرار.",
+    "F-0009 PDF was generated and linked to the recruitment document registry.": "تم إنشاء ملف F-0009 وربطه بسجل مستندات التوظيف.",
+    "F-0004 sent through Odoo Sign to %s.": "تم إرسال F-0004 عبر توقيع أودو إلى %s.",
+    "F-0004 declaration sent through Odoo Sign to %s.": "تم إرسال إقرار F-0004 عبر توقيع أودو إلى %s.",
+    "F-0007 sent through Odoo Sign to applicant %s. Sign request ID: %s.": "تم إرسال F-0007 عبر توقيع أودو إلى المتقدم %s. رقم طلب التوقيع: %s.",
+    "F-0009 sent through Odoo Sign to applicant %s. Sign request ID: %s.": "تم إرسال F-0009 عبر توقيع أودو إلى المتقدم %s. رقم طلب التوقيع: %s.",
+    "%s Sign request is not complete yet. Current request state: %s.": "طلب توقيع %s لم يكتمل بعد. حالة الطلب الحالية: %s.",
+    "%s signature state checked. Current state: %s.": "تم فحص حالة توقيع %s. الحالة الحالية: %s.",
+    "F-0004 Sign request is not complete yet. Current request state: %s.": "طلب توقيع F-0004 لم يكتمل بعد. حالة الطلب الحالية: %s.",
+    "F-0004 signature state checked. Current state: %s.": "تم فحص حالة توقيع F-0004. الحالة الحالية: %s.",
+    "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.": "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.",
+    "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.": "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.",
+    "Cannot generate the responsibilities draft before completing: %s.": "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.",
+    "The previous unsigned responsibilities draft was replaced by a newer draft.": "تم استبدال مسودة الوصف الوظيفي السابقة بمسودة أحدث غير موقعة.",
+    "Responsibilities draft generated, linked to the applicant record, and recruitment document registry updated.": "تم توليد مسودة الوصف الوظيفي وربطها بسجل المتقدم وتحديث سجل وثائق التوظيف.",
+    "Responsibilities sent through Odoo Sign to responsible manager %s and applicant %s. Sign request ID: %s. %s": "تم إرسال الوصف الوظيفي عبر توقيع أودو إلى المدير المسؤول %s والمتقدم %s. رقم طلب التوقيع: %s. %s",
+    "Responsibilities signature state checked. Current state: %s.": "تم فحص حالة توقيع الوصف الوظيفي. الحالة الحالية: %s."
+}
+AR_TEXT_EN = {
+    "تم إنشاء سجل إقرار صحة المستندات F-0004.": "F-0004 legal documents validity declaration record created.",
+    "تم إنشاء سجل إقرار الالتزام باللوائح والسياسات F-0007.": "F-0007 policies and procedures compliance declaration record created.",
+    "تم فتح سجل إقرار الالتزام باللوائح والسياسات F-0007 القائم دون إنشاء نسخة مكررة.": "Existing F-0007 policies and procedures compliance declaration record was opened without creating a duplicate.",
+    "تم إنشاء سجل إقرار السرية وعدم الإفصاح F-0009.": "F-0009 confidentiality and non-disclosure declaration record created.",
+    "تم فتح سجل إقرار السرية وعدم الإفصاح F-0009 القائم دون إنشاء نسخة مكررة.": "Existing F-0009 confidentiality and non-disclosure declaration record was opened without creating a duplicate.",
+    "تم استبدال نسخة F-0009 المنشأة السابقة بنسخة اختبار/توليد أحدث.": "Previous generated F-0009 copy was replaced by a newer test/generated copy.",
+    "تم استبدال نسخة F-0007 المنشأة السابقة بنسخة اختبار/توليد أحدث.": "Previous generated F-0007 copy was replaced by a newer test/generated copy.",
+    "تم إنشاء ملف F-0004 وربطه بسجل الإقرار.": "F-0004 PDF was generated and linked to the declaration record.",
+    "تم إنشاء ملف F-0004 وربطه بسجل مستندات التوظيف.": "F-0004 PDF was generated and linked to the recruitment document registry.",
+    "تم إنشاء ملف F-0007 وربطه بسجل الإقرار.": "F-0007 PDF was generated and linked to the declaration record.",
+    "تم إنشاء ملف F-0007 وربطه بسجل مستندات التوظيف.": "F-0007 PDF was generated and linked to the recruitment document registry.",
+    "تم إنشاء ملف F-0009 وربطه بسجل الإقرار.": "F-0009 PDF was generated and linked to the declaration record.",
+    "تم إنشاء ملف F-0009 وربطه بسجل مستندات التوظيف.": "F-0009 PDF was generated and linked to the recruitment document registry.",
+    "تم إرسال F-0004 عبر توقيع أودو إلى %s.": "F-0004 sent through Odoo Sign to %s.",
+    "تم إرسال إقرار F-0004 عبر توقيع أودو إلى %s.": "F-0004 declaration sent through Odoo Sign to %s.",
+    "تم إرسال F-0007 عبر توقيع أودو إلى المتقدم %s. رقم طلب التوقيع: %s.": "F-0007 sent through Odoo Sign to applicant %s. Sign request ID: %s.",
+    "تم إرسال F-0009 عبر توقيع أودو إلى المتقدم %s. رقم طلب التوقيع: %s.": "F-0009 sent through Odoo Sign to applicant %s. Sign request ID: %s.",
+    "طلب توقيع %s لم يكتمل بعد. حالة الطلب الحالية: %s.": "%s Sign request is not complete yet. Current request state: %s.",
+    "تم فحص حالة توقيع %s. الحالة الحالية: %s.": "%s signature state checked. Current state: %s.",
+    "طلب توقيع F-0004 لم يكتمل بعد. حالة الطلب الحالية: %s.": "F-0004 Sign request is not complete yet. Current request state: %s.",
+    "تم فحص حالة توقيع F-0004. الحالة الحالية: %s.": "F-0004 signature state checked. Current state: %s.",
+    "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.": "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.",
+    "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.": "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.",
+    "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.": "Cannot generate the responsibilities draft before completing: %s.",
+    "تم استبدال مسودة الوصف الوظيفي السابقة بمسودة أحدث غير موقعة.": "The previous unsigned responsibilities draft was replaced by a newer draft.",
+    "تم توليد مسودة الوصف الوظيفي وربطها بسجل المتقدم وتحديث سجل وثائق التوظيف.": "Responsibilities draft generated, linked to the applicant record, and recruitment document registry updated.",
+    "تم إرسال الوصف الوظيفي عبر توقيع أودو إلى المدير المسؤول %s والمتقدم %s. رقم طلب التوقيع: %s. %s": "Responsibilities sent through Odoo Sign to responsible manager %s and applicant %s. Sign request ID: %s. %s",
+    "تم فحص حالة توقيع الوصف الوظيفي. الحالة الحالية: %s.": "Responsibilities signature state checked. Current state: %s."
+}
+
+def _chatter_pattern_translate(text, mapping):
+    if text in mapping:
+        return mapping[text]
+
+    for source, target in mapping.items():
+        if '%s' not in source:
+            continue
+
+        parts = source.split('%s')
+        if not text.startswith(parts[0]):
+            continue
+
+        pos = len(parts[0])
+        values = []
+        ok = True
+
+        for index in range(1, len(parts)):
+            part = parts[index]
+
+            if part:
+                next_pos = text.find(part, pos)
+                if next_pos < 0:
+                    ok = False
+                    break
+                values.append(text[pos:next_pos])
+                pos = next_pos + len(part)
+            else:
+                if index == len(parts) - 1:
+                    values.append(text[pos:])
+                    pos = len(text)
+                else:
+                    ok = False
+                    break
+
+        if ok and pos == len(text):
+            try:
+                if len(values) == 1:
+                    return target % values[0]
+                return target % tuple(values)
+            except Exception:
+                return target
+
+    return None
+
+def chatter_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        translated = _chatter_pattern_translate(text, CHATTER_TEXT_AR)
+        if translated:
+            return translated
+        return text
+
+    translated = _chatter_pattern_translate(text, AR_TEXT_EN)
+    if translated:
+        return translated
+
+    return text
+
+
 UI_TEXT_AR = {
     "No applicant": "لا يوجد متقدم",
     "Unsupported declaration type": "نوع إقرار غير مدعوم",
@@ -296,8 +423,8 @@ for rec in records.sudo():
     ], order='id desc', limit=1)
 
     if signed_registry_doc or rec.x_tor_state == 'signed' or rec.x_tor_signed_attachment_id:
-        msg = 'لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.'
-        rec.message_post(body=msg)
+        msg = 'Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.'
+        rec.message_post(body=chatter_text(msg))
         action = toast('إعادة التوليد موقوفة', msg, 'warning', True)
         continue
 
@@ -309,8 +436,8 @@ for rec in records.sudo():
     ], order='id desc', limit=1)
 
     if active_signature_doc or rec.x_tor_state == 'sent':
-        msg = 'لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.'
-        rec.message_post(body=msg)
+        msg = 'Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.'
+        rec.message_post(body=chatter_text(msg))
         action = toast('طلب توقيع مفتوح', msg, 'warning', True)
         continue
 
@@ -367,8 +494,8 @@ for rec in records.sudo():
         missing.append('المهام المتفق عليها')
 
     if missing:
-        msg = 'لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.' % ('، '.join(missing))
-        rec.message_post(body=msg)
+        msg = 'Cannot generate the responsibilities draft before completing: %s.' % ('، '.join(missing))
+        rec.message_post(body=chatter_text(msg))
         action = toast('بيانات ناقصة', msg, 'warning', False)
         continue
 
@@ -396,7 +523,7 @@ for rec in records.sudo():
     last_attachment = attachment
 
     if rec.x_tor_pdf_attachment_id:
-        rec.message_post(body='تم استبدال مسودة الوصف الوظيفي السابقة بمسودة أحدث غير موقعة.')
+        rec.message_post(body=chatter_text('The previous unsigned responsibilities draft was replaced by a newer draft.'))
 
     generated_on = datetime.datetime.now()
 
@@ -448,7 +575,7 @@ for rec in records.sudo():
     else:
         registry_doc = Registry.create(registry_values)
 
-    rec.message_post(body='تم توليد مسودة الوصف الوظيفي وربطها بسجل المتقدم وتحديث سجل وثائق التوظيف.')
+    rec.message_post(body=chatter_text('Responsibilities draft generated, linked to the applicant record, and recruitment document registry updated.'))
 
 if len(records) == 1 and last_attachment:
     action = {
@@ -473,6 +600,133 @@ elif not action:
         <field name="state">code</field>
         <field name="code"><![CDATA[
 action = False
+
+CHATTER_TEXT_AR = {
+    "F-0004 legal documents validity declaration record created.": "تم إنشاء سجل إقرار صحة المستندات F-0004.",
+    "F-0007 policies and procedures compliance declaration record created.": "تم إنشاء سجل إقرار الالتزام باللوائح والسياسات F-0007.",
+    "Existing F-0007 policies and procedures compliance declaration record was opened without creating a duplicate.": "تم فتح سجل إقرار الالتزام باللوائح والسياسات F-0007 القائم دون إنشاء نسخة مكررة.",
+    "F-0009 confidentiality and non-disclosure declaration record created.": "تم إنشاء سجل إقرار السرية وعدم الإفصاح F-0009.",
+    "Existing F-0009 confidentiality and non-disclosure declaration record was opened without creating a duplicate.": "تم فتح سجل إقرار السرية وعدم الإفصاح F-0009 القائم دون إنشاء نسخة مكررة.",
+    "Previous generated F-0009 copy was replaced by a newer test/generated copy.": "تم استبدال نسخة F-0009 المنشأة السابقة بنسخة اختبار/توليد أحدث.",
+    "Previous generated F-0007 copy was replaced by a newer test/generated copy.": "تم استبدال نسخة F-0007 المنشأة السابقة بنسخة اختبار/توليد أحدث.",
+    "F-0004 PDF was generated and linked to the declaration record.": "تم إنشاء ملف F-0004 وربطه بسجل الإقرار.",
+    "F-0004 PDF was generated and linked to the recruitment document registry.": "تم إنشاء ملف F-0004 وربطه بسجل مستندات التوظيف.",
+    "F-0007 PDF was generated and linked to the declaration record.": "تم إنشاء ملف F-0007 وربطه بسجل الإقرار.",
+    "F-0007 PDF was generated and linked to the recruitment document registry.": "تم إنشاء ملف F-0007 وربطه بسجل مستندات التوظيف.",
+    "F-0009 PDF was generated and linked to the declaration record.": "تم إنشاء ملف F-0009 وربطه بسجل الإقرار.",
+    "F-0009 PDF was generated and linked to the recruitment document registry.": "تم إنشاء ملف F-0009 وربطه بسجل مستندات التوظيف.",
+    "F-0004 sent through Odoo Sign to %s.": "تم إرسال F-0004 عبر توقيع أودو إلى %s.",
+    "F-0004 declaration sent through Odoo Sign to %s.": "تم إرسال إقرار F-0004 عبر توقيع أودو إلى %s.",
+    "F-0007 sent through Odoo Sign to applicant %s. Sign request ID: %s.": "تم إرسال F-0007 عبر توقيع أودو إلى المتقدم %s. رقم طلب التوقيع: %s.",
+    "F-0009 sent through Odoo Sign to applicant %s. Sign request ID: %s.": "تم إرسال F-0009 عبر توقيع أودو إلى المتقدم %s. رقم طلب التوقيع: %s.",
+    "%s Sign request is not complete yet. Current request state: %s.": "طلب توقيع %s لم يكتمل بعد. حالة الطلب الحالية: %s.",
+    "%s signature state checked. Current state: %s.": "تم فحص حالة توقيع %s. الحالة الحالية: %s.",
+    "F-0004 Sign request is not complete yet. Current request state: %s.": "طلب توقيع F-0004 لم يكتمل بعد. حالة الطلب الحالية: %s.",
+    "F-0004 signature state checked. Current state: %s.": "تم فحص حالة توقيع F-0004. الحالة الحالية: %s.",
+    "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.": "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.",
+    "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.": "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.",
+    "Cannot generate the responsibilities draft before completing: %s.": "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.",
+    "The previous unsigned responsibilities draft was replaced by a newer draft.": "تم استبدال مسودة الوصف الوظيفي السابقة بمسودة أحدث غير موقعة.",
+    "Responsibilities draft generated, linked to the applicant record, and recruitment document registry updated.": "تم توليد مسودة الوصف الوظيفي وربطها بسجل المتقدم وتحديث سجل وثائق التوظيف.",
+    "Responsibilities sent through Odoo Sign to responsible manager %s and applicant %s. Sign request ID: %s. %s": "تم إرسال الوصف الوظيفي عبر توقيع أودو إلى المدير المسؤول %s والمتقدم %s. رقم طلب التوقيع: %s. %s",
+    "Responsibilities signature state checked. Current state: %s.": "تم فحص حالة توقيع الوصف الوظيفي. الحالة الحالية: %s."
+}
+AR_TEXT_EN = {
+    "تم إنشاء سجل إقرار صحة المستندات F-0004.": "F-0004 legal documents validity declaration record created.",
+    "تم إنشاء سجل إقرار الالتزام باللوائح والسياسات F-0007.": "F-0007 policies and procedures compliance declaration record created.",
+    "تم فتح سجل إقرار الالتزام باللوائح والسياسات F-0007 القائم دون إنشاء نسخة مكررة.": "Existing F-0007 policies and procedures compliance declaration record was opened without creating a duplicate.",
+    "تم إنشاء سجل إقرار السرية وعدم الإفصاح F-0009.": "F-0009 confidentiality and non-disclosure declaration record created.",
+    "تم فتح سجل إقرار السرية وعدم الإفصاح F-0009 القائم دون إنشاء نسخة مكررة.": "Existing F-0009 confidentiality and non-disclosure declaration record was opened without creating a duplicate.",
+    "تم استبدال نسخة F-0009 المنشأة السابقة بنسخة اختبار/توليد أحدث.": "Previous generated F-0009 copy was replaced by a newer test/generated copy.",
+    "تم استبدال نسخة F-0007 المنشأة السابقة بنسخة اختبار/توليد أحدث.": "Previous generated F-0007 copy was replaced by a newer test/generated copy.",
+    "تم إنشاء ملف F-0004 وربطه بسجل الإقرار.": "F-0004 PDF was generated and linked to the declaration record.",
+    "تم إنشاء ملف F-0004 وربطه بسجل مستندات التوظيف.": "F-0004 PDF was generated and linked to the recruitment document registry.",
+    "تم إنشاء ملف F-0007 وربطه بسجل الإقرار.": "F-0007 PDF was generated and linked to the declaration record.",
+    "تم إنشاء ملف F-0007 وربطه بسجل مستندات التوظيف.": "F-0007 PDF was generated and linked to the recruitment document registry.",
+    "تم إنشاء ملف F-0009 وربطه بسجل الإقرار.": "F-0009 PDF was generated and linked to the declaration record.",
+    "تم إنشاء ملف F-0009 وربطه بسجل مستندات التوظيف.": "F-0009 PDF was generated and linked to the recruitment document registry.",
+    "تم إرسال F-0004 عبر توقيع أودو إلى %s.": "F-0004 sent through Odoo Sign to %s.",
+    "تم إرسال إقرار F-0004 عبر توقيع أودو إلى %s.": "F-0004 declaration sent through Odoo Sign to %s.",
+    "تم إرسال F-0007 عبر توقيع أودو إلى المتقدم %s. رقم طلب التوقيع: %s.": "F-0007 sent through Odoo Sign to applicant %s. Sign request ID: %s.",
+    "تم إرسال F-0009 عبر توقيع أودو إلى المتقدم %s. رقم طلب التوقيع: %s.": "F-0009 sent through Odoo Sign to applicant %s. Sign request ID: %s.",
+    "طلب توقيع %s لم يكتمل بعد. حالة الطلب الحالية: %s.": "%s Sign request is not complete yet. Current request state: %s.",
+    "تم فحص حالة توقيع %s. الحالة الحالية: %s.": "%s signature state checked. Current state: %s.",
+    "طلب توقيع F-0004 لم يكتمل بعد. حالة الطلب الحالية: %s.": "F-0004 Sign request is not complete yet. Current request state: %s.",
+    "تم فحص حالة توقيع F-0004. الحالة الحالية: %s.": "F-0004 signature state checked. Current state: %s.",
+    "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.": "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.",
+    "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.": "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.",
+    "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.": "Cannot generate the responsibilities draft before completing: %s.",
+    "تم استبدال مسودة الوصف الوظيفي السابقة بمسودة أحدث غير موقعة.": "The previous unsigned responsibilities draft was replaced by a newer draft.",
+    "تم توليد مسودة الوصف الوظيفي وربطها بسجل المتقدم وتحديث سجل وثائق التوظيف.": "Responsibilities draft generated, linked to the applicant record, and recruitment document registry updated.",
+    "تم إرسال الوصف الوظيفي عبر توقيع أودو إلى المدير المسؤول %s والمتقدم %s. رقم طلب التوقيع: %s. %s": "Responsibilities sent through Odoo Sign to responsible manager %s and applicant %s. Sign request ID: %s. %s",
+    "تم فحص حالة توقيع الوصف الوظيفي. الحالة الحالية: %s.": "Responsibilities signature state checked. Current state: %s."
+}
+
+def _chatter_pattern_translate(text, mapping):
+    if text in mapping:
+        return mapping[text]
+
+    for source, target in mapping.items():
+        if '%s' not in source:
+            continue
+
+        parts = source.split('%s')
+        if not text.startswith(parts[0]):
+            continue
+
+        pos = len(parts[0])
+        values = []
+        ok = True
+
+        for index in range(1, len(parts)):
+            part = parts[index]
+
+            if part:
+                next_pos = text.find(part, pos)
+                if next_pos < 0:
+                    ok = False
+                    break
+                values.append(text[pos:next_pos])
+                pos = next_pos + len(part)
+            else:
+                if index == len(parts) - 1:
+                    values.append(text[pos:])
+                    pos = len(text)
+                else:
+                    ok = False
+                    break
+
+        if ok and pos == len(text):
+            try:
+                if len(values) == 1:
+                    return target % values[0]
+                return target % tuple(values)
+            except Exception:
+                return target
+
+    return None
+
+def chatter_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        translated = _chatter_pattern_translate(text, CHATTER_TEXT_AR)
+        if translated:
+            return translated
+        return text
+
+    translated = _chatter_pattern_translate(text, AR_TEXT_EN)
+    if translated:
+        return translated
+
+    return text
+
 
 UI_TEXT_AR = {
     "No applicant": "لا يوجد متقدم",
@@ -1046,7 +1300,7 @@ for rec in records.sudo():
             'x_tor_sent_on': sent_on,
         })
 
-        rec.message_post(body='تم إرسال الوصف الوظيفي عبر توقيع أودو إلى المدير المسؤول %s والمتقدم %s. رقم طلب التوقيع: %s. %s' % (manager_partner.display_name, applicant_partner.display_name, generated_request.id, applicant_anchor_note))
+        rec.message_post(body=chatter_text('Responsibilities sent through Odoo Sign to responsible manager %s and applicant %s. Sign request ID: %s. %s' % (manager_partner.display_name, applicant_partner.display_name, generated_request.id, applicant_anchor_note)))
 
         action = {
             'type': 'ir.actions.client',
@@ -1089,6 +1343,133 @@ registry_model = env['x_hr.recruitment_document'].sudo()
 sign_request_model = env['sign.request'].sudo()
 attachment_model = env['ir.attachment'].sudo()
 action = False
+
+CHATTER_TEXT_AR = {
+    "F-0004 legal documents validity declaration record created.": "تم إنشاء سجل إقرار صحة المستندات F-0004.",
+    "F-0007 policies and procedures compliance declaration record created.": "تم إنشاء سجل إقرار الالتزام باللوائح والسياسات F-0007.",
+    "Existing F-0007 policies and procedures compliance declaration record was opened without creating a duplicate.": "تم فتح سجل إقرار الالتزام باللوائح والسياسات F-0007 القائم دون إنشاء نسخة مكررة.",
+    "F-0009 confidentiality and non-disclosure declaration record created.": "تم إنشاء سجل إقرار السرية وعدم الإفصاح F-0009.",
+    "Existing F-0009 confidentiality and non-disclosure declaration record was opened without creating a duplicate.": "تم فتح سجل إقرار السرية وعدم الإفصاح F-0009 القائم دون إنشاء نسخة مكررة.",
+    "Previous generated F-0009 copy was replaced by a newer test/generated copy.": "تم استبدال نسخة F-0009 المنشأة السابقة بنسخة اختبار/توليد أحدث.",
+    "Previous generated F-0007 copy was replaced by a newer test/generated copy.": "تم استبدال نسخة F-0007 المنشأة السابقة بنسخة اختبار/توليد أحدث.",
+    "F-0004 PDF was generated and linked to the declaration record.": "تم إنشاء ملف F-0004 وربطه بسجل الإقرار.",
+    "F-0004 PDF was generated and linked to the recruitment document registry.": "تم إنشاء ملف F-0004 وربطه بسجل مستندات التوظيف.",
+    "F-0007 PDF was generated and linked to the declaration record.": "تم إنشاء ملف F-0007 وربطه بسجل الإقرار.",
+    "F-0007 PDF was generated and linked to the recruitment document registry.": "تم إنشاء ملف F-0007 وربطه بسجل مستندات التوظيف.",
+    "F-0009 PDF was generated and linked to the declaration record.": "تم إنشاء ملف F-0009 وربطه بسجل الإقرار.",
+    "F-0009 PDF was generated and linked to the recruitment document registry.": "تم إنشاء ملف F-0009 وربطه بسجل مستندات التوظيف.",
+    "F-0004 sent through Odoo Sign to %s.": "تم إرسال F-0004 عبر توقيع أودو إلى %s.",
+    "F-0004 declaration sent through Odoo Sign to %s.": "تم إرسال إقرار F-0004 عبر توقيع أودو إلى %s.",
+    "F-0007 sent through Odoo Sign to applicant %s. Sign request ID: %s.": "تم إرسال F-0007 عبر توقيع أودو إلى المتقدم %s. رقم طلب التوقيع: %s.",
+    "F-0009 sent through Odoo Sign to applicant %s. Sign request ID: %s.": "تم إرسال F-0009 عبر توقيع أودو إلى المتقدم %s. رقم طلب التوقيع: %s.",
+    "%s Sign request is not complete yet. Current request state: %s.": "طلب توقيع %s لم يكتمل بعد. حالة الطلب الحالية: %s.",
+    "%s signature state checked. Current state: %s.": "تم فحص حالة توقيع %s. الحالة الحالية: %s.",
+    "F-0004 Sign request is not complete yet. Current request state: %s.": "طلب توقيع F-0004 لم يكتمل بعد. حالة الطلب الحالية: %s.",
+    "F-0004 signature state checked. Current state: %s.": "تم فحص حالة توقيع F-0004. الحالة الحالية: %s.",
+    "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.": "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.",
+    "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.": "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.",
+    "Cannot generate the responsibilities draft before completing: %s.": "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.",
+    "The previous unsigned responsibilities draft was replaced by a newer draft.": "تم استبدال مسودة الوصف الوظيفي السابقة بمسودة أحدث غير موقعة.",
+    "Responsibilities draft generated, linked to the applicant record, and recruitment document registry updated.": "تم توليد مسودة الوصف الوظيفي وربطها بسجل المتقدم وتحديث سجل وثائق التوظيف.",
+    "Responsibilities sent through Odoo Sign to responsible manager %s and applicant %s. Sign request ID: %s. %s": "تم إرسال الوصف الوظيفي عبر توقيع أودو إلى المدير المسؤول %s والمتقدم %s. رقم طلب التوقيع: %s. %s",
+    "Responsibilities signature state checked. Current state: %s.": "تم فحص حالة توقيع الوصف الوظيفي. الحالة الحالية: %s."
+}
+AR_TEXT_EN = {
+    "تم إنشاء سجل إقرار صحة المستندات F-0004.": "F-0004 legal documents validity declaration record created.",
+    "تم إنشاء سجل إقرار الالتزام باللوائح والسياسات F-0007.": "F-0007 policies and procedures compliance declaration record created.",
+    "تم فتح سجل إقرار الالتزام باللوائح والسياسات F-0007 القائم دون إنشاء نسخة مكررة.": "Existing F-0007 policies and procedures compliance declaration record was opened without creating a duplicate.",
+    "تم إنشاء سجل إقرار السرية وعدم الإفصاح F-0009.": "F-0009 confidentiality and non-disclosure declaration record created.",
+    "تم فتح سجل إقرار السرية وعدم الإفصاح F-0009 القائم دون إنشاء نسخة مكررة.": "Existing F-0009 confidentiality and non-disclosure declaration record was opened without creating a duplicate.",
+    "تم استبدال نسخة F-0009 المنشأة السابقة بنسخة اختبار/توليد أحدث.": "Previous generated F-0009 copy was replaced by a newer test/generated copy.",
+    "تم استبدال نسخة F-0007 المنشأة السابقة بنسخة اختبار/توليد أحدث.": "Previous generated F-0007 copy was replaced by a newer test/generated copy.",
+    "تم إنشاء ملف F-0004 وربطه بسجل الإقرار.": "F-0004 PDF was generated and linked to the declaration record.",
+    "تم إنشاء ملف F-0004 وربطه بسجل مستندات التوظيف.": "F-0004 PDF was generated and linked to the recruitment document registry.",
+    "تم إنشاء ملف F-0007 وربطه بسجل الإقرار.": "F-0007 PDF was generated and linked to the declaration record.",
+    "تم إنشاء ملف F-0007 وربطه بسجل مستندات التوظيف.": "F-0007 PDF was generated and linked to the recruitment document registry.",
+    "تم إنشاء ملف F-0009 وربطه بسجل الإقرار.": "F-0009 PDF was generated and linked to the declaration record.",
+    "تم إنشاء ملف F-0009 وربطه بسجل مستندات التوظيف.": "F-0009 PDF was generated and linked to the recruitment document registry.",
+    "تم إرسال F-0004 عبر توقيع أودو إلى %s.": "F-0004 sent through Odoo Sign to %s.",
+    "تم إرسال إقرار F-0004 عبر توقيع أودو إلى %s.": "F-0004 declaration sent through Odoo Sign to %s.",
+    "تم إرسال F-0007 عبر توقيع أودو إلى المتقدم %s. رقم طلب التوقيع: %s.": "F-0007 sent through Odoo Sign to applicant %s. Sign request ID: %s.",
+    "تم إرسال F-0009 عبر توقيع أودو إلى المتقدم %s. رقم طلب التوقيع: %s.": "F-0009 sent through Odoo Sign to applicant %s. Sign request ID: %s.",
+    "طلب توقيع %s لم يكتمل بعد. حالة الطلب الحالية: %s.": "%s Sign request is not complete yet. Current request state: %s.",
+    "تم فحص حالة توقيع %s. الحالة الحالية: %s.": "%s signature state checked. Current state: %s.",
+    "طلب توقيع F-0004 لم يكتمل بعد. حالة الطلب الحالية: %s.": "F-0004 Sign request is not complete yet. Current request state: %s.",
+    "تم فحص حالة توقيع F-0004. الحالة الحالية: %s.": "F-0004 signature state checked. Current state: %s.",
+    "لا يمكن إعادة توليد الوصف الوظيفي بعد اكتمال توقيعه. أنشئ مسار تعديل/إلغاء مستقل عند الحاجة بدلاً من استبدال النسخة الموقعة.": "Responsibilities cannot be regenerated after signature completion. Create a separate amendment/cancellation flow if needed instead of replacing the signed copy.",
+    "لا يمكن إعادة توليد الوصف الوظيفي أثناء وجود طلب توقيع مفتوح. أكمل التوقيع أو عالج الطلب المفتوح أولاً.": "Responsibilities cannot be regenerated while an open Sign request exists. Complete or resolve the open request first.",
+    "لا يمكن توليد مسودة الوصف الوظيفي قبل استكمال: %s.": "Cannot generate the responsibilities draft before completing: %s.",
+    "تم استبدال مسودة الوصف الوظيفي السابقة بمسودة أحدث غير موقعة.": "The previous unsigned responsibilities draft was replaced by a newer draft.",
+    "تم توليد مسودة الوصف الوظيفي وربطها بسجل المتقدم وتحديث سجل وثائق التوظيف.": "Responsibilities draft generated, linked to the applicant record, and recruitment document registry updated.",
+    "تم إرسال الوصف الوظيفي عبر توقيع أودو إلى المدير المسؤول %s والمتقدم %s. رقم طلب التوقيع: %s. %s": "Responsibilities sent through Odoo Sign to responsible manager %s and applicant %s. Sign request ID: %s. %s",
+    "تم فحص حالة توقيع الوصف الوظيفي. الحالة الحالية: %s.": "Responsibilities signature state checked. Current state: %s."
+}
+
+def _chatter_pattern_translate(text, mapping):
+    if text in mapping:
+        return mapping[text]
+
+    for source, target in mapping.items():
+        if '%s' not in source:
+            continue
+
+        parts = source.split('%s')
+        if not text.startswith(parts[0]):
+            continue
+
+        pos = len(parts[0])
+        values = []
+        ok = True
+
+        for index in range(1, len(parts)):
+            part = parts[index]
+
+            if part:
+                next_pos = text.find(part, pos)
+                if next_pos < 0:
+                    ok = False
+                    break
+                values.append(text[pos:next_pos])
+                pos = next_pos + len(part)
+            else:
+                if index == len(parts) - 1:
+                    values.append(text[pos:])
+                    pos = len(text)
+                else:
+                    ok = False
+                    break
+
+        if ok and pos == len(text):
+            try:
+                if len(values) == 1:
+                    return target % values[0]
+                return target % tuple(values)
+            except Exception:
+                return target
+
+    return None
+
+def chatter_text(text):
+    if not text:
+        return text
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        translated = _chatter_pattern_translate(text, CHATTER_TEXT_AR)
+        if translated:
+            return translated
+        return text
+
+    translated = _chatter_pattern_translate(text, AR_TEXT_EN)
+    if translated:
+        return translated
+
+    return text
+
 
 UI_TEXT_AR = {
     "No applicant": "لا يوجد متقدم",
@@ -1414,7 +1795,7 @@ for rec in records.sudo():
     })
 
     if request_state not in ['signed', 'completed']:
-        rec.message_post(body='تم فحص حالة توقيع الوصف الوظيفي. الحالة الحالية: %s.' % request_state)
+        rec.message_post(body=chatter_text('Responsibilities signature state checked. Current state: %s.' % request_state))
         action = toast(
             'التوقيع لم يكتمل بعد',
             'طلب توقيع أودو لا يزال بحالة: %s.' % request_state,
@@ -1567,7 +1948,7 @@ for rec in records.sudo():
         attachment_ids.append(certificate_copy.id)
 
     rec.message_post(
-        body='تمت مزامنة توقيع الوصف الوظيفي وربط النسخة الموقعة بسجل المتقدم وسجل مستندات التوظيف. طلب التوقيع: %s.' % sign_request.id,
+        body=chatter_text('تمت مزامنة توقيع الوصف الوظيفي وربط النسخة الموقعة بسجل المتقدم وسجل مستندات التوظيف. طلب التوقيع: %s.' % sign_request.id),
         attachment_ids=attachment_ids,
     )
 
