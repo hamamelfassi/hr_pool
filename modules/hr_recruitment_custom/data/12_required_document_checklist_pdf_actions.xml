@@ -829,8 +829,8 @@ for rec in records.sudo():
         'validity': validity_date,
         'certificate_reference': False,
         'reminder_enabled': False,
-        'model': 'x_hr.applicant_required_document_checklist',
-        'res_ids': str([rec.id]),
+        'model': 'hr.applicant',
+        'res_ids': str([applicant.id]),
     })
 
     if send_request.signer_ids:
@@ -866,6 +866,30 @@ for rec in records.sudo():
             sign_request_label_vals['name'] = sign_request_label
         if sign_request_label_vals:
             generated_request.sudo().write(sign_request_label_vals)
+
+        applicant_anchor_vals = {}
+        if 'model' in sign_request_model._fields:
+            applicant_anchor_vals['model'] = 'hr.applicant'
+        if 'res_model' in sign_request_model._fields:
+            applicant_anchor_vals['res_model'] = 'hr.applicant'
+        if 'res_id' in sign_request_model._fields:
+            applicant_anchor_vals['res_id'] = applicant.id
+        if 'res_ids' in sign_request_model._fields:
+            applicant_anchor_vals['res_ids'] = str([applicant.id])
+        if 'reference_doc' in sign_request_model._fields:
+            applicant_anchor_vals['reference_doc'] = 'hr.applicant,%s' % applicant.id
+        if 'res_model_id' in sign_request_model._fields:
+            try:
+                applicant_model = env['ir.model']._get('hr.applicant')
+            except:
+                applicant_model = False
+            if applicant_model:
+                applicant_anchor_vals['res_model_id'] = applicant_model.id
+        if applicant_anchor_vals:
+            try:
+                generated_request.sudo().write(applicant_anchor_vals)
+            except:
+                pass
 
         registry_doc.write({
             'x_state': 'signature_requested',
