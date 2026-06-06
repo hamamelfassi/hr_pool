@@ -801,7 +801,10 @@ for rec in records.sudo():
         'constant': False,
     })
 
-    subject = 'Signature Request - %s' % filename
+    applicant_name = applicant.partner_name or applicant.name or rec.x_full_name_snapshot or 'Applicant'
+    document_reference = rec.x_document_reference or registry_doc.x_name or 'MCEP-HR-F-0002'
+    sign_request_label = 'F-0002 Interview Evaluation - %s - %s' % (document_reference, applicant_name)
+    subject = 'Signature Request - %s' % sign_request_label
     body = '<p>Please review and sign the attached F-0002 Interview Evaluation.</p>'
 
     send_request = sign_send_model.create({
@@ -840,6 +843,16 @@ for rec in records.sudo():
     ], order='create_date desc, id desc', limit=1)
 
     if generated_request:
+        sign_request_label_vals = {}
+        if 'reference' in sign_request_model._fields:
+            sign_request_label_vals['reference'] = sign_request_label
+        if 'subject' in sign_request_model._fields:
+            sign_request_label_vals['subject'] = subject
+        if 'name' in sign_request_model._fields:
+            sign_request_label_vals['name'] = sign_request_label
+        if sign_request_label_vals:
+            generated_request.sudo().write(sign_request_label_vals)
+
         registry_doc.write({
             'x_state': 'signature_requested',
             'x_sent_on': sent_on,
@@ -849,7 +862,7 @@ for rec in records.sudo():
             'x_signature_mode': 'native_sign',
             'x_sign_request_model': 'sign.request',
             'x_sign_request_res_id': generated_request.id,
-            'x_sign_request_reference': generated_request.reference or filename,
+            'x_sign_request_reference': sign_request_label,
             'x_sign_request_state': generated_request.state or 'sent',
             'x_sign_request_url': '/odoo/sign/%s' % generated_request.id,
             'x_generated_attachment_id': pdf_attachment.id,
@@ -874,7 +887,7 @@ for rec in records.sudo():
             'x_source_res_id': rec.id,
             'x_signature_mode': 'native_sign',
             'x_sign_request_model': 'sign.request',
-            'x_sign_request_reference': filename,
+            'x_sign_request_reference': sign_request_label,
             'x_sign_request_state': 'lookup_failed_after_send_request',
             'x_notes': ((registry_doc.x_notes or '') + '\nNative Odoo Sign send_request() executed for F-0002 on %s, but the generated sign.request could not be located automatically. Dynamic template ID: %s. Interviewer: %s.' % (sent_on, sign_template.id, interviewer_partner.display_name)).strip(),
         })

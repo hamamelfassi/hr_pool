@@ -1189,7 +1189,10 @@ for rec in records.sudo():
         'constant': False,
     })
 
-    subject = 'Signature Request - %s' % filename
+    applicant_name = rec.x_tor_recipient_name or rec.partner_name or rec.name or 'Applicant'
+    document_reference = rec.x_tor_document_reference or registry_doc.x_name or 'MCEP-HR-F-0006'
+    sign_request_label = 'F-0006 Responsibilities - %s - %s' % (document_reference, applicant_name)
+    subject = 'Signature Request - %s' % sign_request_label
     body = '<p>Please review and sign the attached Job Description / Terms of Responsibilities.</p>'
 
     send_vals = {
@@ -1279,6 +1282,16 @@ for rec in records.sudo():
             except:
                 applicant_anchor_note = 'Native applicant anchor fields were detected but Odoo prevented writing them on sign.request; send wizard remains anchored to hr.applicant/res_ids.'
 
+            sign_request_label_vals = {}
+            if 'reference' in sign_request_model._fields:
+                sign_request_label_vals['reference'] = sign_request_label
+            if 'subject' in sign_request_model._fields:
+                sign_request_label_vals['subject'] = subject
+            if 'name' in sign_request_model._fields:
+                sign_request_label_vals['name'] = sign_request_label
+            if sign_request_label_vals:
+                generated_request.sudo().write(sign_request_label_vals)
+
         registry_doc.write({
             'x_state': 'signature_requested',
             'x_sent_on': sent_on,
@@ -1288,7 +1301,7 @@ for rec in records.sudo():
             'x_signature_mode': 'native_sign',
             'x_sign_request_model': 'sign.request',
             'x_sign_request_res_id': generated_request.id,
-            'x_sign_request_reference': generated_request.reference or filename,
+            'x_sign_request_reference': sign_request_label,
             'x_sign_request_state': generated_request.state or 'sent',
             'x_sign_request_url': '/odoo/sign/%s' % generated_request.id,
             'x_generated_attachment_id': pdf_attachment.id,
@@ -1318,7 +1331,7 @@ for rec in records.sudo():
             'x_state': 'generated',
             'x_signature_mode': 'native_sign',
             'x_sign_request_model': 'sign.request',
-            'x_sign_request_reference': filename,
+            'x_sign_request_reference': sign_request_label,
             'x_sign_request_state': 'lookup_failed_after_send_request',
             'x_generated_attachment_id': pdf_attachment.id,
             'x_notes': ((registry_doc.x_notes or '') + '\\nNative Odoo Sign send_request() executed for F-0006 / الوصف الوظيفي on %s, but the generated sign.request could not be located automatically. Dynamic template ID: %s.' % (sent_on, sign_template.id)).strip(),

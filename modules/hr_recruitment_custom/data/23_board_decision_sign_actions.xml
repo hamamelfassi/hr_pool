@@ -608,7 +608,10 @@ else:
             'constant': False,
         })
 
-        subject = 'Signature Request - ' + filename
+        applicant_name = applicant.partner_name or applicant.name or 'Applicant'
+        document_reference = registry_doc.x_name or filename or 'Board Decision'
+        sign_request_label = 'Board Decision - %s - %s' % (document_reference, applicant_name)
+        subject = 'Signature Request - ' + sign_request_label
         body = '<p>يرجى مراجعة وتوقيع قرار التعيين المرفق.</p>'
 
         send_request = sign_send_model.create({
@@ -647,6 +650,16 @@ else:
         ], order='create_date desc, id desc', limit=1)
 
         if generated_request:
+            sign_request_label_vals = {}
+            if 'reference' in sign_request_model._fields:
+                sign_request_label_vals['reference'] = sign_request_label
+            if 'subject' in sign_request_model._fields:
+                sign_request_label_vals['subject'] = subject
+            if 'name' in sign_request_model._fields:
+                sign_request_label_vals['name'] = sign_request_label
+            if sign_request_label_vals:
+                generated_request.sudo().write(sign_request_label_vals)
+
             registry_doc.write({
                 'x_state': 'signature_requested',
                 'x_sent_on': sent_on,
@@ -656,7 +669,7 @@ else:
                 'x_signature_mode': 'native_sign',
                 'x_sign_request_model': 'sign.request',
                 'x_sign_request_res_id': generated_request.id,
-                'x_sign_request_reference': generated_request.reference or filename,
+                'x_sign_request_reference': sign_request_label,
                 'x_sign_request_state': generated_request.state or 'sent',
                 'x_sign_request_url': '/odoo/sign/' + str(generated_request.id),
                 'x_notes': ((registry_doc.x_notes or '') + '\nNative Odoo Sign request created for board decision on %s. Request ID: %s. Chairman: %s.' % (sent_on, generated_request.id, signer_partner.display_name)).strip(),
@@ -678,7 +691,7 @@ else:
                 'x_sent_on': sent_on,
                 'x_signature_mode': 'native_sign',
                 'x_sign_request_model': 'sign.request',
-                'x_sign_request_reference': filename,
+                'x_sign_request_reference': sign_request_label,
                 'x_sign_request_state': 'sent_request_not_found',
                 'x_notes': ((registry_doc.x_notes or '') + '\nNative Odoo Sign send_request() executed for board decision on %s, but generated sign.request could not be located automatically. Dynamic template ID: %s.' % (sent_on, sign_template.id)).strip(),
             })
