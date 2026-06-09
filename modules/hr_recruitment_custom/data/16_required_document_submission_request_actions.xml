@@ -2753,5 +2753,243 @@ if not action:
             ]]></field>
         </record>
 
+        <record id="action_required_document_submission_request_generate_gateway_url" model="ir.actions.server">
+            <field name="name">Generate Gateway Link</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission_request" />
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+gateway_base_url = 'https://apply.marsellia.com/continue'
+
+def notify(title, message, notification_type='warning'):
+    return {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': title,
+            'message': message,
+            'type': notification_type,
+            'sticky': False,
+        }
+    }
+
+for request in records.sudo():
+    if request.x_state not in ('draft', 'prepared', 'sent'):
+        action = notify(
+            'Gateway link not allowed',
+            'Gateway links can only be generated for draft, prepared, or sent requests.'
+        )
+        continue
+
+    token = request.x_generated_token
+    if not token:
+        env.cr.execute(
+            "SELECT md5(random()::text || clock_timestamp()::text || %s)",
+            [str(request.id)]
+        )
+        random_hex = env.cr.fetchone()[0]
+        token = 'MCEP-GW-%05d-%s' % (request.id, random_hex)
+
+    gateway_url = '%s/%s' % (gateway_base_url, token)
+
+    request.write({
+        'x_generated_token': token,
+        'x_gateway_url': gateway_url,
+    })
+
+    request.message_post(body='Gateway continuation link generated.')
+
+    action = notify(
+        'Gateway link generated',
+        'Gateway continuation link has been generated.',
+        'success'
+    )
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+        <record id="action_required_document_submission_request_open_gateway_url" model="ir.actions.server">
+            <field name="name">Open Gateway Link</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission_request" />
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+
+def notify(title, message, notification_type='warning'):
+    return {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': title,
+            'message': message,
+            'type': notification_type,
+            'sticky': False,
+        }
+    }
+
+for request in records.sudo():
+    if not request.x_gateway_url:
+        action = notify(
+            'Gateway URL missing',
+            'Generate the gateway continuation link before opening it.'
+        )
+        continue
+
+    action = {
+        'type': 'ir.actions.act_url',
+        'url': request.x_gateway_url,
+        'target': 'new',
+    }
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
+        <record id="action_required_document_submission_request_send_email" model="ir.actions.server">
+            <field name="name">Send Submission Request Email</field>
+            <field name="model_id" ref="hr_recruitment_custom.model_x_hr_applicant_required_document_submission_request" />
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+mail_model = env['mail.mail'].sudo()
+action = False
+gateway_base_url = 'https://apply.marsellia.com/continue'
+
+def notify(title, message, notification_type='warning'):
+    return {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': title,
+            'message': message,
+            'type': notification_type,
+            'sticky': False,
+        }
+    }
+
+def ensure_gateway_link(request):
+    token = request.x_generated_token
+    if not token:
+        env.cr.execute(
+            "SELECT md5(random()::text || clock_timestamp()::text || %s)",
+            [str(request.id)]
+        )
+        random_hex = env.cr.fetchone()[0]
+        token = 'MCEP-GW-%05d-%s' % (request.id, random_hex)
+
+    gateway_url = request.x_gateway_url or ('%s/%s' % (gateway_base_url, token))
+
+    request.write({
+        'x_generated_token': token,
+        'x_gateway_url': gateway_url,
+    })
+
+    return token, gateway_url
+
+def html_escape(value):
+    if value in (False, None):
+        return ''
+    return str(value).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;')
+
+for request in records.sudo():
+    if request.x_state not in ('draft', 'prepared', 'sent'):
+        action = notify(
+            'Request cannot be sent',
+            'Only draft, prepared, or sent requests can be sent by email.'
+        )
+        continue
+
+    if not request.x_generated_url:
+        action = notify(
+            'Fillout URL missing',
+            'Generate the Fillout continuation URL before sending the email.'
+        )
+        continue
+
+    if not request.x_candidate_email_snapshot:
+        action = notify(
+            'Candidate email missing',
+            'Refresh the candidate snapshot or add an applicant email before sending.'
+        )
+        continue
+
+    token, gateway_url = ensure_gateway_link(request)
+
+    safe_gateway_url = html_escape(gateway_url)
+    safe_fillout_url = html_escape(request.x_generated_url)
+    safe_token = html_escape(token)
+    candidate_name = html_escape(request.x_candidate_name_snapshot or request.x_applicant_id.partner_name or request.x_applicant_id.display_name or '')
+
+    subject = 'Required recruitment documents submission request'
+    body_html = """
+<div dir="rtl" style="font-family: Arial, Tahoma, sans-serif; line-height: 1.8;">
+    <p>مرحباً %s،</p>
+    <p>يرجى استخدام رابط بوابة مرسيليا التالي لاستكمال تقديم المستندات والبيانات المطلوبة لإجراءات التوظيف:</p>
+    <p><a href="%s">%s</a></p>
+    <p><strong>رمز الدخول للبوابة:</strong> %s</p>
+    <p>خلال فترة الانتقال الحالية، يمكن أيضاً استخدام رابط Fillout التالي كخيار بديل:</p>
+    <p><a href="%s">%s</a></p>
+    <p>يرجى عدم مشاركة هذه الروابط أو الرمز مع أي طرف آخر.</p>
+</div>
+<hr/>
+<div dir="ltr" style="font-family: Arial, Tahoma, sans-serif; line-height: 1.8;">
+    <p>Hello %s,</p>
+    <p>Please use the following Marsellia Gateway link to complete the requested recruitment document and data submissions:</p>
+    <p><a href="%s">%s</a></p>
+    <p><strong>Gateway access token:</strong> %s</p>
+    <p>During the transition period, you may also use the following Fillout link as an alternative option:</p>
+    <p><a href="%s">%s</a></p>
+    <p>Please do not share these links or this token with anyone else.</p>
+</div>
+""" % (
+        candidate_name,
+        safe_gateway_url,
+        safe_gateway_url,
+        safe_token,
+        safe_fillout_url,
+        safe_fillout_url,
+        candidate_name,
+        safe_gateway_url,
+        safe_gateway_url,
+        safe_token,
+        safe_fillout_url,
+        safe_fillout_url,
+    )
+
+    mail_values = {
+        'subject': subject,
+        'body_html': body_html,
+        'email_to': request.x_candidate_email_snapshot,
+        'auto_delete': False,
+    }
+
+    if env.user.email:
+        mail_values['email_from'] = env.user.email
+
+    mail = mail_model.create(mail_values)
+    mail.send()
+
+    sent_on = datetime.datetime.now()
+    request.write({
+        'x_state': 'sent',
+        'x_sent_by_user_id': env.user.id,
+        'x_sent_on': sent_on,
+    })
+
+    request.message_post(body='Required document submission request email sent to %s with Gateway and Fillout links.' % request.x_candidate_email_snapshot)
+
+    if request.x_checklist_id:
+        request.x_checklist_id.message_post(body='Required document submission request sent: %s.' % (request.x_request_reference or request.x_name))
+
+    if request.x_applicant_id:
+        request.x_applicant_id.message_post(body='Required document submission request sent: %s.' % (request.x_request_reference or request.x_name))
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+            ]]></field>
+        </record>
+
     </data>
 </odoo>

@@ -112,6 +112,7 @@
                 ('manual', 'تحميل يدوي'),
                 ('fillout_zite', 'Fillout / Zite'),
                 ('n8n', 'تحديث n8n'),
+                ('gateway', 'بوابة مرسيليا'),
                 ('other', 'أخرى')
                 ]</field>
         </record>

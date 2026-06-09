@@ -7151,3 +7151,31 @@ msgstr "تاريخ اجتياز بوابة مقترح العقد"
 #: model:ir.model.fields,field_description:hr_recruitment_custom.field_hr_applicant_x_contract_proposal_gate_passed_by_user_id
 msgid "Contract Proposal Gate Passed By"
 msgstr "اجتاز بوابة مقترح العقد بواسطة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_request_x_generated_token
+msgid "Gateway Token"
+msgstr "رمز بوابة مرسيليا"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields,field_description:hr_recruitment_custom.field_required_document_submission_request_x_gateway_url
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_form_gateway_continuation
+msgid "Gateway Continuation URL"
+msgstr "رابط بوابة الاستكمال"
+
+#. module: hr_recruitment_custom
+#: model:ir.actions.server,name:hr_recruitment_custom.action_required_document_submission_request_generate_gateway_url
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_form_gateway_continuation
+msgid "Generate Gateway Link"
+msgstr "توليد رابط البوابة"
+
+#. module: hr_recruitment_custom
+#: model:ir.actions.server,name:hr_recruitment_custom.action_required_document_submission_request_open_gateway_url
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_custom.view_required_document_submission_request_form_gateway_continuation
+msgid "Open Gateway Link"
+msgstr "فتح رابط البوابة"
+
+#. module: hr_recruitment_custom
+#: model:ir.model.fields.selection,name:hr_recruitment_custom.selection__x_hr_applicant_required_document_submission__x_source__gateway
+msgid "بوابة مرسيليا"
+msgstr "بوابة مرسيليا"

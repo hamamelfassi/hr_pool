@@ -156,4 +156,32 @@
         </field>
     </record>
 
+
+    <record id="view_required_document_submission_request_form_gateway_continuation" model="ir.ui.view">
+        <field name="name">x.hr.applicant.required.document.submission.request.form.gateway.continuation</field>
+        <field name="model">x_hr.applicant_required_document_submission_request</field>
+        <field name="inherit_id" ref="hr_recruitment_custom.view_required_document_submission_request_form_controlled" />
+        <field name="priority" eval="15" />
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='hr_recruitment_custom.action_required_document_submission_request_generate_url']" position="after">
+                <button type="action"
+                    name="hr_recruitment_custom.action_required_document_submission_request_generate_gateway_url"
+                    string="Generate Gateway Link"
+                    class="btn-secondary"
+                    invisible="not id or x_state not in ('draft', 'prepared')" />
+                <button type="action"
+                    name="hr_recruitment_custom.action_required_document_submission_request_open_gateway_url"
+                    string="Open Gateway Link"
+                    class="btn-secondary"
+                    invisible="not id or not x_gateway_url or x_state not in ('draft', 'prepared', 'sent')" />
+            </xpath>
+
+            <xpath expr="//field[@name='x_generated_url']" position="after">
+                <separator string="Gateway Continuation URL" colspan="2" />
+                <field name="x_generated_token" readonly="1" />
+                <field name="x_gateway_url" readonly="1" />
+            </xpath>
+        </field>
+    </record>
+
 </odoo>
