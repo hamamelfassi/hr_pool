@@ -1337,3 +1337,207 @@ msgstr "مسودة"
 #: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_conversion_request_list
 msgid "Request Conversion"
 msgstr "طلب الترحيل"
+
+
+# F-0001 preferred role canonical labels
+#. module: hr_pool
+#: model:x_hr.preferred_role_type,x_name:hr_pool.preferred_role_admin
+msgid "Office Management"
+msgstr "الإدارة المكتبية"
+
+#. module: hr_pool
+#: model:x_hr.preferred_role_type,x_name:hr_pool.preferred_role_finance
+msgid "Marketing / Collection"
+msgstr "التسويق / التحصيل"
+
+#. module: hr_pool
+#: model:x_hr.preferred_role_type,x_name:hr_pool.preferred_role_technical
+msgid "Information Technology"
+msgstr "تقنية المعلومات"
+
+#. module: hr_pool
+#: model:x_hr.preferred_role_type,x_name:hr_pool.preferred_role_management
+msgid "Logistics Operations Management"
+msgstr "إدارة العمليات اللوجستية"
+
+#. module: hr_pool
+#: model:x_hr.preferred_role_type,x_name:hr_pool.preferred_role_driver
+msgid "Transportation and Fleet Management"
+msgstr "إدارة النقل والحركة"
+
+#. module: hr_pool
+#: model:x_hr.preferred_role_type,x_name:hr_pool.preferred_role_hse
+msgid "Medical / Oil Waste Management"
+msgstr "إدارة المخلفات الطبية / النفطية"
+
+#. module: hr_pool
+#: model:x_hr.preferred_role_type,x_name:hr_pool.preferred_role_other
+msgid "Others"
+msgstr "أخرى"
+
+
+# F-0001 parent qualification type selections
+#. module: hr_pool
+#: model:ir.model.fields.selection,name:hr_pool.sel_pool_qualification_type_graduate
+msgid "Graduate"
+msgstr "خريج"
+
+#. module: hr_pool
+#: model:ir.model.fields.selection,name:hr_pool.sel_pool_qualification_type_bachelor
+msgid "Bachelor"
+msgstr "بكالوريوس"
+
+#. module: hr_pool
+#: model:ir.model.fields.selection,name:hr_pool.sel_pool_qualification_type_master
+msgid "Master"
+msgstr "ماجستير"
+
+#. module: hr_pool
+#: model:ir.model.fields.selection,name:hr_pool.sel_pool_qualification_type_doctor
+msgid "Doctor"
+msgstr "دكتوراه"
+
+#. module: hr_pool
+#: model:ir.model.fields.selection,name:hr_pool.sel_pool_qualification_type_diploma
+msgid "Diploma"
+msgstr "دبلوم"
+
+#. module: hr_pool
+#: model:ir.model.fields.selection,name:hr_pool.sel_pool_qualification_type_high_school
+msgid "High School"
+msgstr "الثانوية العامة"
+
+#. module: hr_pool
+#: model:ir.model.fields.selection,name:hr_pool.sel_pool_qualification_type_secondary
+msgid "Secondary"
+msgstr "التعليم الثانوي"
+
+#. module: hr_pool
+#: model:ir.model.fields.selection,name:hr_pool.sel_pool_qualification_type_training
+msgid "Training"
+msgstr "دورة تدريبية"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
+msgid "Request"
+msgstr "طلب التوظيف"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
+msgid "Document Details"
+msgstr "بيانات المستند"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
+msgid "Sign Request Details"
+msgstr "بيانات طلب التوقيع"
+
+#. module: hr_pool
+#: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
+msgid "Notes"
+msgstr "ملاحظات"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_qualification_type
+msgid "Qualification Type"
+msgstr "نوع المؤهل"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_specialisation
+msgid "Specialisation"
+msgstr "التخصص"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_f0001_document_reference
+msgid "F-0001 Document Reference"
+msgstr "مرجع طلب التوظيف"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_f0001_state
+msgid "F-0001 State"
+msgstr "حالة طلب التوظيف"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_f0001_pdf_attachment_id
+msgid "F-0001 Generated PDF"
+msgstr "ملف طلب التوظيف المُنشأ"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_f0001_signed_attachment_id
+msgid "F-0001 Signed PDF"
+msgstr "ملف طلب التوظيف الموقّع"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_f0001_sign_certificate_attachment_id
+msgid "F-0001 Sign Certificate"
+msgstr "شهادة توقيع طلب التوظيف"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_f0001_sign_request_res_id
+msgid "F-0001 Sign Request ID"
+msgstr "رقم طلب التوقيع"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_f0001_sign_request_state
+msgid "F-0001 Sign Request State"
+msgstr "حالة طلب التوقيع"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_f0001_sign_request_reference
+msgid "F-0001 Sign Request Reference"
+msgstr "مرجع طلب التوقيع"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_f0001_sign_request_url
+msgid "F-0001 Sign Request URL"
+msgstr "رابط طلب التوقيع"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_f0001_generated_on
+msgid "F-0001 Generated On"
+msgstr "تاريخ إنشاء طلب التوظيف"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_f0001_sent_on
+msgid "F-0001 Sent On"
+msgstr "تاريخ الإرسال للتوقيع"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_f0001_signed_on
+msgid "F-0001 Signed On"
+msgstr "تاريخ التوقيع"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_f0001_responsible_user_id
+msgid "F-0001 Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: hr_pool
+#: model:ir.model.fields,field_description:hr_pool.field_hr_pool_x_f0001_notes
+msgid "F-0001 Notes"
+msgstr "ملاحظات طلب التوظيف"
+
+#. module: hr_pool
+#: model:ir.model.fields.selection,name:hr_pool.sel_pool_f0001_state_draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: hr_pool
+#: model:ir.model.fields.selection,name:hr_pool.sel_pool_f0001_state_generated
+msgid "Generated"
+msgstr "منشأ"
+
+#. module: hr_pool
+#: model:ir.model.fields.selection,name:hr_pool.sel_pool_f0001_state_signature_requested
+msgid "Signature Requested"
+msgstr "تم طلب التوقيع"
+
+#. module: hr_pool
+#: model:ir.model.fields.selection,name:hr_pool.sel_pool_f0001_state_signed
+msgid "Signed"
+msgstr "موقّع"
+
+#. module: hr_pool
+#: model:ir.model.fields.selection,name:hr_pool.sel_pool_f0001_state_cancelled
+msgid "Cancelled"
+msgstr "ملغى"

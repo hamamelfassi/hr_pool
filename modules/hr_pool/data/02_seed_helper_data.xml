@@ -47,37 +47,37 @@
     </record>
 
     <record id="preferred_role_technical" model="x_hr.preferred_role_type">
-        <field name="x_name">Technical</field>
-        <field name="x_sequence">10</field>
+        <field name="x_name">Information Technology</field>
+        <field name="x_sequence">30</field>
         <field name="x_active" eval="True" />
     </record>
     <record id="preferred_role_finance" model="x_hr.preferred_role_type">
-        <field name="x_name">Finance</field>
+        <field name="x_name">Marketing / Collection</field>
         <field name="x_sequence">20</field>
         <field name="x_active" eval="True" />
     </record>
     <record id="preferred_role_hse" model="x_hr.preferred_role_type">
-        <field name="x_name">HSE / Compliance</field>
-        <field name="x_sequence">30</field>
-        <field name="x_active" eval="True" />
-    </record>
-    <record id="preferred_role_driver" model="x_hr.preferred_role_type">
-        <field name="x_name">Drivers / Operators</field>
-        <field name="x_sequence">40</field>
-        <field name="x_active" eval="True" />
-    </record>
-    <record id="preferred_role_management" model="x_hr.preferred_role_type">
-        <field name="x_name">Management</field>
-        <field name="x_sequence">50</field>
-        <field name="x_active" eval="True" />
-    </record>
-    <record id="preferred_role_admin" model="x_hr.preferred_role_type">
-        <field name="x_name">Administration</field>
+        <field name="x_name">Medical / Oil Waste Management</field>
         <field name="x_sequence">60</field>
         <field name="x_active" eval="True" />
     </record>
+    <record id="preferred_role_driver" model="x_hr.preferred_role_type">
+        <field name="x_name">Transportation and Fleet Management</field>
+        <field name="x_sequence">50</field>
+        <field name="x_active" eval="True" />
+    </record>
+    <record id="preferred_role_management" model="x_hr.preferred_role_type">
+        <field name="x_name">Logistics Operations Management</field>
+        <field name="x_sequence">40</field>
+        <field name="x_active" eval="True" />
+    </record>
+    <record id="preferred_role_admin" model="x_hr.preferred_role_type">
+        <field name="x_name">Office Management</field>
+        <field name="x_sequence">10</field>
+        <field name="x_active" eval="True" />
+    </record>
     <record id="preferred_role_other" model="x_hr.preferred_role_type">
-        <field name="x_name">Other</field>
+        <field name="x_name">Others</field>
         <field name="x_sequence">70</field>
         <field name="x_active" eval="True" />
     </record>

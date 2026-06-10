@@ -6,7 +6,8 @@
         "contacts",
         "grc_backbone",
         "hr_recruitment",
-        "mail"
+        "mail",
+        "sign"
     ],
     "installable": True,
     "auto_install": False,
@@ -28,7 +29,9 @@
         "data/07_defaults.xml",
         "data/08_intake_identity_automation.xml",
         "data/04_server_actions.xml",
-        "data/06_conversion_request_server_actions.xml",
+        "data/06_conversion_request_server_actions.xml",        "report/00_pool_report_paperformat.xml",
+        "report/01_pool_report_assets.xml",
+
         "report/01_paperformat.xml",
         "report/02_hr_pool_report_templates.xml",
         "report/03_hr_pool_report_actions.xml",

@@ -221,6 +221,147 @@
         <field name="tracking" eval="1" />
     </record>
 
+    <record id="field_hr_pool_x_qualification_type" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_qualification_type</field>
+        <field name="field_description">Qualification Type</field>
+        <field name="ttype">selection</field>
+        <field name="tracking" eval="1"/>
+    </record>
+
+    <record id="field_hr_pool_x_specialisation" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_specialisation</field>
+        <field name="field_description">Specialisation</field>
+        <field name="ttype">text</field>
+        <field name="tracking" eval="1"/>
+    </record>
+
+    <record id="field_hr_pool_x_f0001_document_reference" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_f0001_document_reference</field>
+        <field name="field_description">F-0001 Document Reference</field>
+        <field name="ttype">char</field>
+        <field name="readonly" eval="True"/>
+        <field name="index" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_f0001_state" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_f0001_state</field>
+        <field name="field_description">F-0001 State</field>
+        <field name="ttype">selection</field>
+        <field name="readonly" eval="True"/>
+        <field name="index" eval="True"/>
+        <field name="tracking" eval="1"/>
+    </record>
+
+    <record id="field_hr_pool_x_f0001_pdf_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_f0001_pdf_attachment_id</field>
+        <field name="field_description">F-0001 Generated PDF</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+        <field name="on_delete">set null</field>
+        <field name="readonly" eval="True"/>
+        <field name="tracking" eval="1"/>
+    </record>
+
+    <record id="field_hr_pool_x_f0001_signed_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_f0001_signed_attachment_id</field>
+        <field name="field_description">F-0001 Signed PDF</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+        <field name="on_delete">set null</field>
+        <field name="readonly" eval="True"/>
+        <field name="tracking" eval="1"/>
+    </record>
+
+    <record id="field_hr_pool_x_f0001_sign_certificate_attachment_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_f0001_sign_certificate_attachment_id</field>
+        <field name="field_description">F-0001 Sign Certificate</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">ir.attachment</field>
+        <field name="on_delete">set null</field>
+        <field name="readonly" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_f0001_sign_request_res_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_f0001_sign_request_res_id</field>
+        <field name="field_description">F-0001 Sign Request ID</field>
+        <field name="ttype">integer</field>
+        <field name="readonly" eval="True"/>
+        <field name="index" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_f0001_sign_request_state" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_f0001_sign_request_state</field>
+        <field name="field_description">F-0001 Sign Request State</field>
+        <field name="ttype">char</field>
+        <field name="readonly" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_f0001_sign_request_reference" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_f0001_sign_request_reference</field>
+        <field name="field_description">F-0001 Sign Request Reference</field>
+        <field name="ttype">char</field>
+        <field name="readonly" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_f0001_sign_request_url" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_f0001_sign_request_url</field>
+        <field name="field_description">F-0001 Sign Request URL</field>
+        <field name="ttype">char</field>
+        <field name="readonly" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_f0001_generated_on" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_f0001_generated_on</field>
+        <field name="field_description">F-0001 Generated On</field>
+        <field name="ttype">datetime</field>
+        <field name="readonly" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_f0001_sent_on" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_f0001_sent_on</field>
+        <field name="field_description">F-0001 Sent On</field>
+        <field name="ttype">datetime</field>
+        <field name="readonly" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_f0001_signed_on" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_f0001_signed_on</field>
+        <field name="field_description">F-0001 Signed On</field>
+        <field name="ttype">datetime</field>
+        <field name="readonly" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_f0001_responsible_user_id" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_f0001_responsible_user_id</field>
+        <field name="field_description">F-0001 Responsible User</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">res.users</field>
+        <field name="on_delete">set null</field>
+        <field name="readonly" eval="True"/>
+    </record>
+
+    <record id="field_hr_pool_x_f0001_notes" model="ir.model.fields">
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="name">x_f0001_notes</field>
+        <field name="field_description">F-0001 Notes</field>
+        <field name="ttype">text</field>
+    </record>
+
     <record id="field_hr_pool_x_phone" model="ir.model.fields">
         <field name="model_id" ref="hr_pool.model_x_hr_pool" />
         <field name="name">x_phone</field>

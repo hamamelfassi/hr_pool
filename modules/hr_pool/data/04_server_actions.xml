@@ -47,4 +47,657 @@ for rec in records:
         rec.message_post(body='Chairman rejected candidate.')
         ]]></field>
     </record>
+
+    <record id="action_hr_pool_generate_f0001_pdf" model="ir.actions.server">
+        <field name="name">Generate F-0001 PDF</field>
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+action = False
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def reload_pool(rec):
+    view = env.ref('hr_pool.view_hr_pool_form', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or rec.display_name or 'HR Pool',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+for rec in records.sudo():
+    if rec.x_f0001_state in ('signature_requested', 'signed'):
+        action = toast(
+            'F-0001',
+            'لا يمكن إعادة إنشاء نموذج F-0001 بعد دخوله مسار التوقيع.',
+            'warning',
+            True,
+            reload_pool(rec),
+        )
+        continue
+
+    if not rec.x_name:
+        action = toast('F-0001', 'يجب حفظ اسم المرشح قبل إنشاء نموذج F-0001.', 'warning', True, reload_pool(rec))
+        continue
+
+    if not rec.x_phone:
+        action = toast('F-0001', 'يجب إدخال رقم هاتف المرشح قبل إنشاء نموذج F-0001.', 'warning', True, reload_pool(rec))
+        continue
+
+    if not rec.x_email:
+        action = toast('F-0001', 'يجب إدخال البريد الإلكتروني للمرشح قبل إنشاء نموذج F-0001.', 'warning', True, reload_pool(rec))
+        continue
+
+    if not rec.x_qualification_type:
+        action = toast('F-0001', 'يجب اختيار نوع المؤهل العلمي قبل إنشاء نموذج F-0001.', 'warning', True, reload_pool(rec))
+        continue
+
+    if not rec.x_specialisation:
+        action = toast('F-0001', 'يجب إدخال التخصص / مجال الدراسة قبل إنشاء نموذج F-0001.', 'warning', True, reload_pool(rec))
+        continue
+
+    generated_on = datetime.datetime.now()
+    form_code = 'MCEP-HR-F-0001'
+
+    document_reference = rec.x_f0001_document_reference
+    if not document_reference:
+        document_reference = '%s-%05d' % (form_code, rec.id)
+
+    rec.write({
+        'x_f0001_document_reference': document_reference,
+        'x_f0001_responsible_user_id': env.user.id,
+    })
+    rec = rec.sudo().browse(rec.id)
+
+    report_xmlid = 'hr_pool.action_report_hr_pool_f0001_job_application'
+    pdf_content, _content_type = env['ir.actions.report'].sudo()._render_qweb_pdf(report_xmlid, [rec.id])
+
+    filename = '%s - طلب التوظيف F-0001.pdf' % (document_reference,)
+
+    attachment = env['ir.attachment'].sudo().create({
+        'name': filename,
+        'type': 'binary',
+        'raw': pdf_content,
+        'mimetype': 'application/pdf',
+        'res_model': rec._name,
+        'res_id': rec.id,
+    })
+
+    rec.write({
+        'x_f0001_pdf_attachment_id': attachment.id,
+        'x_f0001_generated_on': generated_on,
+        'x_f0001_state': 'generated',
+    })
+
+    rec.message_post(
+        body='تم إنشاء نموذج طلب التوظيف F-0001 وربطه بسجل المرشح.',
+        subtype_xmlid='mail.mt_note',
+        attachment_ids=[attachment.id],
+    )
+
+    action = toast('F-0001', 'تم إنشاء نموذج F-0001 بنجاح.', 'success', False, reload_pool(rec))
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+
+    <record id="action_hr_pool_download_f0001_generated_pdf" model="ir.actions.server">
+        <field name="name">Download F-0001 Generated PDF</field>
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+action = False
+for rec in records.sudo():
+    attachment = rec.x_f0001_pdf_attachment_id
+    if attachment:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'F-0001',
+                'message': 'لا يوجد ملف F-0001 منشأ على هذا السجل بعد.',
+                'type': 'warning',
+                'sticky': False,
+            },
+        }
+    break
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+
+    <record id="action_hr_pool_download_f0001_signed_pdf" model="ir.actions.server">
+        <field name="name">Download F-0001 Signed PDF</field>
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+action = False
+for rec in records.sudo():
+    attachment = rec.x_f0001_signed_attachment_id
+    if attachment:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'F-0001',
+                'message': 'لا يوجد ملف F-0001 موقّع على هذا السجل بعد.',
+                'type': 'warning',
+                'sticky': False,
+            },
+        }
+    break
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+
+    <record id="action_hr_pool_download_f0001_sign_certificate" model="ir.actions.server">
+        <field name="name">Download F-0001 Sign Certificate</field>
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+action = False
+for rec in records.sudo():
+    attachment = rec.x_f0001_sign_certificate_attachment_id
+    if attachment:
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            'target': 'self',
+        }
+    else:
+        action = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'F-0001',
+                'message': 'لا توجد شهادة توقيع مرتبطة بنموذج F-0001 بعد.',
+                'type': 'warning',
+                'sticky': False,
+            },
+        }
+    break
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+
+    <record id="action_hr_pool_send_f0001_sign" model="ir.actions.server">
+        <field name="name">Send F-0001 to Sign</field>
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+sign_template_model = env['sign.template'].sudo()
+sign_document_model = env['sign.document'].sudo()
+sign_item_model = env['sign.item'].sudo()
+sign_role_model = env['sign.item.role'].sudo()
+sign_send_model = env['sign.send.request'].sudo()
+sign_send_signer_model = env['sign.send.request.signer'].sudo()
+sign_request_model = env['sign.request'].sudo()
+partner_model = env['res.partner'].sudo()
+
+signature_type = env.ref('sign.sign_item_type_signature', raise_if_not_found=False)
+
+action = False
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def reload_pool(rec):
+    view = env.ref('hr_pool.view_hr_pool_form', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or rec.display_name or 'HR Pool',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+def get_or_create_role(name, fallbacks):
+    role = sign_role_model.search([('name', '=', name)], order='id asc', limit=1)
+    if role:
+        return role
+    for fallback in fallbacks:
+        role = sign_role_model.search([('name', '=', fallback)], order='id asc', limit=1)
+        if role:
+            return role
+    return sign_role_model.create({'name': name})
+
+
+def candidate_partner(rec):
+    email = (rec.x_email or '').strip()
+    if not email:
+        return False
+
+    partner = partner_model.search([('email', '=', email)], order='id asc', limit=1)
+    if partner:
+        vals = {}
+        if rec.x_name and not partner.name:
+            vals['name'] = rec.x_name
+        if rec.x_phone and not partner.phone:
+            vals['phone'] = rec.x_phone
+        if vals:
+            partner.write(vals)
+        return partner
+
+    return partner_model.create({
+        'name': rec.x_name or email,
+        'email': email,
+        'phone': rec.x_phone or False,
+    })
+
+
+def signer_order_vals(order):
+    vals = {'mail_sent_order': order}
+    for optional_field in ('sequence', 'sign_order'):
+        if optional_field in sign_send_signer_model._fields:
+            vals[optional_field] = order
+    return vals
+
+
+if not signature_type:
+    action = toast('Odoo Sign setup missing', 'Signature field type sign.sign_item_type_signature was not found.', 'warning', True)
+else:
+    candidate_role = get_or_create_role('Candidate', ['Applicant', 'Customer', 'Signatory'])
+
+    for rec in records.sudo():
+        if rec.x_f0001_state == 'signed' or rec.x_f0001_signed_attachment_id:
+            action = toast('Already signed', 'F-0001 is already signed for this candidate.', 'warning', False, reload_pool(rec))
+            continue
+
+        if rec.x_f0001_sign_request_res_id:
+            existing_request = sign_request_model.browse(rec.x_f0001_sign_request_res_id)
+            if existing_request.exists() and (existing_request.state or '') not in ('cancelled', 'canceled'):
+                action = toast('Duplicate Sign request blocked', 'An active Odoo Sign request already exists for F-0001. Use Sync instead.', 'warning', True, reload_pool(rec))
+                continue
+
+        if rec.x_f0001_state != 'generated' or not rec.x_f0001_pdf_attachment_id:
+            action = toast('Generate PDF first', 'Generate the F-0001 PDF before sending it to Odoo Sign.', 'warning', False, reload_pool(rec))
+            continue
+
+        candidate_sign_partner = candidate_partner(rec)
+        if not candidate_sign_partner or not candidate_sign_partner.email:
+            action = toast('Missing candidate email', 'The candidate needs an email before sending F-0001 to Sign.', 'warning', True, reload_pool(rec))
+            continue
+
+        pdf_attachment = rec.x_f0001_pdf_attachment_id.sudo()
+        filename = pdf_attachment.name or ('%s - F-0001 Job Application.pdf' % (rec.x_f0001_document_reference or 'MCEP-HR-F-0001'))
+        sent_on = datetime.datetime.now()
+        validity_date = datetime.date.today() + datetime.timedelta(days=60)
+
+        sign_template = sign_template_model.create({
+            'name': filename,
+            'user_id': env.user.id,
+            'signature_request_validity': 60,
+        })
+
+        sign_document = sign_document_model.create({
+            'template_id': sign_template.id,
+            'attachment_id': pdf_attachment.id,
+            'name': filename,
+            'sequence': 1,
+        })
+
+        # F-0001 accepted one-page geometry after Slice 1F-D rendering.
+        # Candidate signature item is placed inside the lower blank signature box.
+        # Coordinates are normalized fractions of the PDF page.
+        sign_item_model.create({
+            'document_id': sign_document.id,
+            'type_id': signature_type.id,
+            'responsible_id': candidate_role.id,
+            'page': 1,
+            'posX': 0.225,
+            'posY': 0.895,
+            'width': 0.315,
+            'height': 0.045,
+            'required': True,
+            'name': 'Candidate Signature',
+            'alignment': 'left',
+            'constant': False,
+        })
+
+        subject = 'Signature Request - %s' % filename
+        body = '<p>Please review and sign the attached F-0001 Job Application form.</p>'
+
+        send_vals = {
+            'template_id': sign_template.id,
+            'signer_id': candidate_sign_partner.id,
+            'subject': subject,
+            'body': body,
+            'validity': validity_date,
+            'certificate_reference': False,
+            'reminder_enabled': False,
+            'model': 'x_hr.pool',
+            'res_ids': str([rec.id]),
+        }
+        if 'set_sign_order' in sign_send_model._fields:
+            send_vals['set_sign_order'] = True
+
+        send_request = sign_send_model.create(send_vals)
+
+        signer_line = send_request.signer_ids.filtered(lambda line: line.role_id.id == candidate_role.id)[:1]
+        ordered_vals = signer_order_vals(1)
+        ordered_vals['partner_id'] = candidate_sign_partner.id
+
+        if signer_line:
+            signer_line.sudo().write(ordered_vals)
+        else:
+            create_vals = signer_order_vals(1)
+            create_vals.update({
+                'sign_send_request_id': send_request.id,
+                'role_id': candidate_role.id,
+                'partner_id': candidate_sign_partner.id,
+            })
+            sign_send_signer_model.create(create_vals)
+
+        if 'set_sign_order' in send_request._fields:
+            send_request.sudo().write({'set_sign_order': True})
+
+        send_request.send_request()
+
+        generated_request = sign_request_model.search([
+            ('template_id', '=', sign_template.id),
+        ], order='create_date desc, id desc', limit=1)
+
+        if generated_request:
+            rec.write({
+                'x_f0001_state': 'signature_requested',
+                'x_f0001_sent_on': sent_on,
+                'x_f0001_sign_request_res_id': generated_request.id,
+                'x_f0001_sign_request_state': generated_request.state or 'sent',
+                'x_f0001_sign_request_reference': generated_request.reference or filename,
+                'x_f0001_sign_request_url': '/odoo/sign/%s' % generated_request.id,
+                'x_f0001_responsible_user_id': env.user.id,
+                'x_f0001_notes': ((rec.x_f0001_notes or '') + '\nNative Odoo Sign request created for F-0001 on %s. Request ID: %s. Candidate: %s.' % (sent_on, generated_request.id, candidate_sign_partner.display_name)).strip(),
+            })
+
+            rec.message_post(
+                body='تم إرسال نموذج طلب التوظيف F-0001 للتوقيع عبر توقيع أودو. رقم طلب التوقيع: %s.' % generated_request.id,
+                subtype_xmlid='mail.mt_note',
+                attachment_ids=[pdf_attachment.id],
+            )
+
+            action = toast('Sent to Sign', 'F-0001 was sent to the candidate signer.', 'success', False, reload_pool(rec))
+        else:
+            rec.write({
+                'x_f0001_sent_on': sent_on,
+                'x_f0001_sign_request_state': 'lookup_failed_after_send_request',
+                'x_f0001_sign_request_reference': filename,
+                'x_f0001_notes': ((rec.x_f0001_notes or '') + '\nNative Odoo Sign send_request() executed for F-0001 on %s, but the generated sign.request could not be located automatically. Dynamic template ID: %s.' % (sent_on, sign_template.id)).strip(),
+            })
+            action = toast('Sign request lookup failed', 'Send request executed, but the generated sign.request was not found automatically. Check the Sign app.', 'warning', True, reload_pool(rec))
+
+        break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
+
+    <record id="action_hr_pool_sync_f0001_sign" model="ir.actions.server">
+        <field name="name">Sync F-0001 Sign</field>
+        <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+sign_request_model = env['sign.request'].sudo()
+attachment_model = env['ir.attachment'].sudo()
+action = False
+
+
+def reload_pool(rec):
+    view = env.ref('hr_pool.view_hr_pool_form', raise_if_not_found=False)
+    action = {
+        'type': 'ir.actions.act_window',
+        'name': rec.x_name or rec.display_name or 'HR Pool',
+        'res_model': rec._name,
+        'res_id': rec.id,
+        'view_mode': 'form',
+        'target': 'current',
+    }
+    if view:
+        action['views'] = [(view.id, 'form')]
+    return action
+
+
+def toast(title, message, kind='warning', sticky=False, next_action=False):
+    params = {
+        'title': title,
+        'message': message,
+        'type': kind,
+        'sticky': sticky,
+    }
+    if next_action:
+        params['next'] = next_action
+    return {'type': 'ir.actions.client', 'tag': 'display_notification', 'params': params}
+
+
+def looks_like_certificate(attachment):
+    name = (attachment.name or '').lower()
+    return (
+        'certificate' in name
+        or 'completion' in name
+        or 'completed' in name
+        or 'history' in name
+        or 'audit' in name
+        or 'trail' in name
+        or 'شهادة' in name
+        or 'إكمال' in name
+        or 'اكمال' in name
+    )
+
+
+for rec in records.sudo():
+    # Sync generated PDF state first if needed.
+    if not rec.x_f0001_pdf_attachment_id:
+        generated_pdf = attachment_model.search([
+            ('res_model', '=', rec._name),
+            ('res_id', '=', rec.id),
+            ('mimetype', '=', 'application/pdf'),
+            ('name', 'ilike', 'F-0001'),
+        ], order='create_date desc, id desc', limit=1)
+        if generated_pdf:
+            rec.write({
+                'x_f0001_pdf_attachment_id': generated_pdf.id,
+                'x_f0001_generated_on': rec.x_f0001_generated_on or generated_pdf.create_date or datetime.datetime.now(),
+                'x_f0001_state': 'generated',
+            })
+
+    elif rec.x_f0001_state == 'draft':
+        rec.write({
+            'x_f0001_generated_on': rec.x_f0001_generated_on or rec.x_f0001_pdf_attachment_id.create_date or datetime.datetime.now(),
+            'x_f0001_state': 'generated',
+        })
+
+    if not rec.x_f0001_sign_request_res_id:
+        action = toast('PDF state synced', 'No linked Odoo Sign request was found yet. PDF generation state has been refreshed where possible.', 'success', False, reload_pool(rec))
+        continue
+
+    sign_request = sign_request_model.browse(rec.x_f0001_sign_request_res_id)
+    if not sign_request.exists():
+        rec.write({'x_f0001_sign_request_state': 'missing_sign_request'})
+        action = toast('Missing Sign request', 'The linked Odoo Sign request no longer exists or cannot be accessed.', 'warning', True, reload_pool(rec))
+        continue
+
+    request_state = sign_request.state or 'unknown'
+
+    values = {
+        'x_f0001_sign_request_state': request_state,
+        'x_f0001_sign_request_reference': sign_request.reference or rec.x_f0001_sign_request_reference,
+    }
+
+    if request_state not in ('signed', 'completed'):
+        if rec.x_f0001_state != 'signature_requested':
+            values['x_f0001_state'] = 'signature_requested'
+        if not rec.x_f0001_sent_on:
+            values['x_f0001_sent_on'] = sign_request.create_date or datetime.datetime.now()
+        rec.write(values)
+        rec.message_post(
+            body='تمت مزامنة حالة توقيع نموذج F-0001. الحالة الحالية: %s.' % request_state,
+            subtype_xmlid='mail.mt_note',
+        )
+        action = toast('Sign state synced', 'F-0001 Sign request is currently: %s.' % request_state, 'warning', False, reload_pool(rec))
+        continue
+
+    completed_attachments = sign_request.completed_document_attachment_ids
+
+    related_attachments = attachment_model.search([
+        ('res_model', '=', 'sign.request'),
+        ('res_id', '=', sign_request.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    pool_attachments = attachment_model.search([
+        ('res_model', '=', rec._name),
+        ('res_id', '=', rec.id),
+        ('mimetype', '=', 'application/pdf'),
+    ], order='create_date desc, id desc')
+
+    all_attachments = completed_attachments | related_attachments | pool_attachments
+
+    signed_native = False
+    certificate_native = False
+
+    for attachment in all_attachments:
+        if rec.x_f0001_pdf_attachment_id and attachment.id == rec.x_f0001_pdf_attachment_id.id:
+            continue
+        if looks_like_certificate(attachment):
+            if not certificate_native:
+                certificate_native = attachment
+        elif not signed_native:
+            signed_native = attachment
+
+    if not signed_native:
+        rec.write({
+            'x_f0001_sign_request_state': 'signed_no_business_document_found',
+            'x_f0001_notes': ((rec.x_f0001_notes or '') + '\nOdoo Sign request %s is signed, but no signed business PDF was found during F-0001 sync on %s.' % (sign_request.id, datetime.datetime.now())).strip(),
+        })
+        action = toast('Signed PDF not found', 'The Sign request is signed, but the completed signed PDF was not found yet. Try Sync again after Odoo finishes processing.', 'warning', True, reload_pool(rec))
+        continue
+
+    signed_copy = rec.x_f0001_signed_attachment_id
+    if signed_copy and looks_like_certificate(signed_copy):
+        signed_copy = False
+    if signed_copy and rec.x_f0001_pdf_attachment_id and signed_copy.id == rec.x_f0001_pdf_attachment_id.id:
+        signed_copy = False
+
+    if not signed_copy:
+        signed_name = signed_native.name or ('Signed F-0001 - %s.pdf' % (rec.x_name or rec.x_f0001_document_reference or rec.id))
+        if signed_native.res_model == rec._name and signed_native.res_id == rec.id:
+            signed_copy = signed_native
+        else:
+            signed_copy = signed_native.copy({
+                'name': signed_name,
+                'res_model': rec._name,
+                'res_id': rec.id,
+            })
+
+    certificate_copy = rec.x_f0001_sign_certificate_attachment_id
+    if not certificate_copy and certificate_native:
+        certificate_name = certificate_native.name or ('Sign Certificate F-0001 - %s.pdf' % (rec.x_name or rec.x_f0001_document_reference or rec.id))
+        if certificate_native.res_model == rec._name and certificate_native.res_id == rec.id:
+            certificate_copy = certificate_native
+        else:
+            certificate_copy = certificate_native.copy({
+                'name': certificate_name,
+                'res_model': rec._name,
+                'res_id': rec.id,
+            })
+
+    signed_on = False
+    if sign_request.write_date:
+        signed_on = sign_request.write_date
+
+    signer_items = sign_request.request_item_ids.filtered(lambda item: item.state == 'completed')
+    for signer_item in signer_items:
+        if signer_item.write_date and (not signed_on or signer_item.write_date > signed_on):
+            signed_on = signer_item.write_date
+
+    if not signed_on and sign_request.completion_date:
+        signed_on = datetime.datetime.combine(sign_request.completion_date, datetime.time(12, 0, 0))
+
+    if not signed_on:
+        signed_on = datetime.datetime.now()
+
+    write_vals = {
+        'x_f0001_state': 'signed',
+        'x_f0001_signed_on': signed_on,
+        'x_f0001_signed_attachment_id': signed_copy.id,
+        'x_f0001_sign_request_state': request_state,
+        'x_f0001_sign_request_reference': sign_request.reference or rec.x_f0001_sign_request_reference,
+        'x_f0001_sign_request_url': rec.x_f0001_sign_request_url or ('/odoo/sign/%s' % sign_request.id),
+        'x_f0001_notes': ((rec.x_f0001_notes or '') + '\nNative Odoo Sign completion synced for F-0001 on %s. Sign request ID: %s. Signed artifact: %s.' % (datetime.datetime.now(), sign_request.id, signed_copy.name)).strip(),
+    }
+
+    if not rec.x_f0001_sent_on:
+        write_vals['x_f0001_sent_on'] = sign_request.create_date or signed_on
+
+    if certificate_copy:
+        write_vals['x_f0001_sign_certificate_attachment_id'] = certificate_copy.id
+
+    rec.write(write_vals)
+
+    attachment_ids = [signed_copy.id]
+    if certificate_copy:
+        attachment_ids.append(certificate_copy.id)
+
+    rec.message_post(
+        body='تم توقيع نموذج طلب التوظيف F-0001 عبر توقيع أودو وربط النسخة الموقعة والشهادة، عند توفرها، بسجل المرشح.',
+        subtype_xmlid='mail.mt_note',
+        attachment_ids=attachment_ids,
+    )
+
+    action = toast('F-0001 signed', 'F-0001 Sign result was synced and the signed PDF was linked to the candidate pool record.', 'success', False, reload_pool(rec))
+    break
+
+if not action:
+    action = {'type': 'ir.actions.client', 'tag': 'reload'}
+        ]]></field>
+    </record>
 </odoo>

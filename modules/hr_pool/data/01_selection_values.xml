@@ -146,6 +146,73 @@
         <field name="value">contractor</field>
     </record>
 
+    <record id="sel_pool_qualification_type_graduate" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_qualification_type"/>
+        <field name="name">Graduate</field>
+        <field name="value">graduate</field>
+    </record>
+    <record id="sel_pool_qualification_type_bachelor" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_qualification_type"/>
+        <field name="name">Bachelor</field>
+        <field name="value">bachelor</field>
+    </record>
+    <record id="sel_pool_qualification_type_master" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_qualification_type"/>
+        <field name="name">Master</field>
+        <field name="value">master</field>
+    </record>
+    <record id="sel_pool_qualification_type_doctor" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_qualification_type"/>
+        <field name="name">Doctor</field>
+        <field name="value">doctor</field>
+    </record>
+    <record id="sel_pool_qualification_type_diploma" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_qualification_type"/>
+        <field name="name">Diploma</field>
+        <field name="value">diploma</field>
+    </record>
+    <record id="sel_pool_qualification_type_high_school" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_qualification_type"/>
+        <field name="name">High School</field>
+        <field name="value">high_school</field>
+    </record>
+    <record id="sel_pool_qualification_type_secondary" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_qualification_type"/>
+        <field name="name">Secondary</field>
+        <field name="value">secondary</field>
+    </record>
+    <record id="sel_pool_qualification_type_training" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_qualification_type"/>
+        <field name="name">Training</field>
+        <field name="value">training</field>
+    </record>
+
+    <record id="sel_pool_f0001_state_draft" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_f0001_state"/>
+        <field name="name">Draft</field>
+        <field name="value">draft</field>
+    </record>
+    <record id="sel_pool_f0001_state_generated" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_f0001_state"/>
+        <field name="name">Generated</field>
+        <field name="value">generated</field>
+    </record>
+    <record id="sel_pool_f0001_state_signature_requested" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_f0001_state"/>
+        <field name="name">Signature Requested</field>
+        <field name="value">signature_requested</field>
+    </record>
+    <record id="sel_pool_f0001_state_signed" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_f0001_state"/>
+        <field name="name">Signed</field>
+        <field name="value">signed</field>
+    </record>
+    <record id="sel_pool_f0001_state_cancelled" model="ir.model.fields.selection">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_f0001_state"/>
+        <field name="name">Cancelled</field>
+        <field name="value">cancelled</field>
+    </record>
+
     <record id="sel_qualification_doctorate" model="ir.model.fields.selection">
         <field name="field_id" ref="hr_pool.field_edu_x_qualification_type"/>
         <field name="name">Doctorate</field>

@@ -14,4 +14,9 @@
         <field name="field_id" ref="hr_pool.field_hr_pool_x_chairman_decision"/>
         <field name="json_value">"pending"</field>
     </record>
+
+    <record id="default_hr_pool_x_f0001_state" model="ir.default">
+        <field name="field_id" ref="hr_pool.field_hr_pool_x_f0001_state"/>
+        <field name="json_value">"draft"</field>
+    </record>
 </odoo>

@@ -284,4 +284,298 @@
             </t>
         </t>
     </template>
+
+    <template id="report_hr_pool_f0001_job_application_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <head>
+                    <meta charset="UTF-8"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                </head>
+
+                <t t-set="form_code" t-value="'MCEP-HR-F-0001'"/>
+                <t t-set="form_title_ar" t-value="'طلب توظيف'"/>
+                <t t-set="form_title_en" t-value="'Job Application'"/>
+                <t t-set="page_label" t-value="'Page 1 / 1'"/>
+                <t t-set="candidate_name" t-value="o.x_name or o.display_name or ''"/>
+                <t t-set="document_reference" t-value="o.x_f0001_document_reference or o.x_intake_reference or o.display_name or ''"/>
+                <t t-set="selected_role_ids" t-value="o.x_preferred_role_type_ids.ids"/>
+                <t t-set="preferred_role_rows" t-value="o.env['x_hr.preferred_role_type'].sudo().search([('x_active', '=', True)], order='x_sequence asc, id asc')"/>
+
+                <t t-call="hr_pool.mcep_pool_report_assets"/>
+
+                <div class="page mcep-emp-page mcep-f0001-page">
+                    <t t-call="hr_pool.mcep_pool_report_header"/>
+
+                    <style>
+                        .mcep-f0001-page {
+                            font-size: 11.6px;
+                            line-height: 1.50;
+                            padding-top: 2.2mm;
+                            padding-bottom: 0.3mm;
+                        }
+
+                        .mcep-f0001-page .mcep-emp-header {
+                            margin-bottom: 2.0mm;
+                        }
+
+                        .mcep-f0001-title {
+                            text-align: center;
+                            font-size: 22px;
+                            font-weight: 700;
+                            margin: 1.6mm 0 0.7mm 0;
+                        }
+
+                        .mcep-f0001-subtitle {
+                            text-align: center;
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 14px;
+                            font-weight: 700;
+                            margin: 0 0 2.5mm 0;
+                        }
+
+                        .mcep-f0001-intro-ar {
+                            direction: rtl;
+                            text-align: right;
+                            font-weight: 700;
+                            margin: 1.4mm 0 1.0mm 0;
+                            line-height: 1.65;
+                        }
+
+                        .mcep-f0001-intro-en {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            text-align: left;
+                            font-size: 10.3px;
+                            margin: 0 0 2.9mm 0;
+                            line-height: 1.53;
+                        }
+
+                        .mcep-f0001-section {
+                            font-size: 13px;
+                            font-weight: 700;
+                            margin: 2.35mm 0 1.05mm 0;
+                            padding: 1.15mm 1.45mm;
+                            border-bottom: 1px solid #111827;
+                            direction: rtl;
+                            text-align: right;
+                        }
+
+                        .mcep-f0001-en {
+                            direction: ltr;
+                            unicode-bidi: isolate;
+                            font-size: 9.6px;
+                            color: #374151;
+                            line-height: 1.22;
+                        }
+
+                        .mcep-f0001-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            table-layout: fixed;
+                            margin-bottom: 2.35mm;
+                        }
+
+                        .mcep-f0001-table th,
+                        .mcep-f0001-table td {
+                            border: 1px solid #6b7280;
+                            padding: 1.42mm 1.52mm;
+                            vertical-align: middle;
+                            line-height: 1.31;
+                        }
+
+                        .mcep-f0001-table th {
+                            background: #f8fafc;
+                            font-weight: 700;
+                            text-align: center;
+                        }
+
+                        .mcep-f0001-value {
+                            min-height: 6.1mm;
+                            text-align: center;
+                            font-weight: 600;
+                        }
+
+                        .mcep-f0001-help {
+                            font-weight: 700;
+                            text-align: right;
+                            direction: rtl;
+                            margin-bottom: 1.35mm;
+                            line-height: 1.52;
+                        }
+
+                        .mcep-f0001-help .mcep-f0001-en {
+                            display: block;
+                            text-align: center;
+                            font-weight: 700;
+                            color: #111827;
+                        }
+
+                        .mcep-f0001-check {
+                            text-align: center;
+                            font-size: 12.5px;
+                            direction: rtl;
+                            white-space: nowrap;
+                        }
+
+                        .mcep-f0001-notes-box {
+                            min-height: 26mm;
+                            border: 1px solid #6b7280;
+                            padding: 1.8mm;
+                            margin-top: 1.35mm;
+                            white-space: pre-wrap;
+                            line-height: 1.45;
+                        }
+
+                        .mcep-f0001-sign-table {
+                            width: 70%;
+                            margin: 7.4mm auto 0 auto;
+                            border-collapse: collapse;
+                            table-layout: fixed;
+                            direction: ltr;
+                        }
+
+                        .mcep-f0001-sign-table td {
+                            border: 1px solid #6b7280;
+                            padding: 2.9mm;
+                            height: 12.9mm;
+                            vertical-align: middle;
+                            text-align: center;
+                            font-weight: 700;
+                            line-height: 1.28;
+                        }
+                    </style>
+
+                    <div class="mcep-f0001-title">طلب توظيف</div>
+                    <div class="mcep-f0001-subtitle">Job Application</div>
+
+                    <div class="mcep-f0001-intro-ar">
+                        إلــــــى / فريق عمل شركة مرسيليا للنظافة وحماية البيئة<br/>
+                        أتقدم إليكم برغبتي في الالتحاق بفريق عمل شركتكم الموقرة، إيمانًا مني بأن النجاح يتحقق بالانضمام إلى بيئة عمل إبداعية وملهمة.
+                    </div>
+                    <div class="mcep-f0001-intro-en">
+                        To / The Work Team of MCEP<br/>
+                        I submit to you my desire to join the work team of your esteemed company, believing that success is achieved by joining a creative and inspiring work environment.
+                    </div>
+
+                    <table class="mcep-f0001-table">
+                        <tbody>
+                            <tr>
+                                <th style="width: 18%;">الاسم<br/><span class="mcep-f0001-en">Full Name</span></th>
+                                <td style="width: 32%;" class="mcep-f0001-value"><span t-out="candidate_name"/></td>
+                                <th style="width: 18%;">المؤهل العلمي<br/><span class="mcep-f0001-en">Academic Qualification</span></th>
+                                <td style="width: 32%;" class="mcep-f0001-value">
+                                    <span t-field="o.x_qualification_type"/>
+                                    <t t-if="o.x_specialisation">
+                                        <span> — </span>
+                                        <span t-out="o.x_specialisation"/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>رقم الهاتف<br/><span class="mcep-f0001-en">Phone Number</span></th>
+                                <td class="mcep-f0001-value"><span t-out="o.x_phone or ''"/></td>
+                                <th>البريد الإلكتروني<br/><span class="mcep-f0001-en">Email Address</span></th>
+                                <td class="mcep-f0001-value"><span t-out="o.x_email or ''"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="mcep-f0001-section">
+                        الرغبات الوظيفية <span class="mcep-f0001-en">Job Preferences</span>
+                    </div>
+
+                    <div class="mcep-f0001-help">
+                        يرجى من مقدم الطلب اختيار الإدارة أو أكثر مما يتناسب مع اهتماماته وطموحاته
+                        <span class="mcep-f0001-en">The applicant is kindly requested to choose one or more departments that match his interests and ambitions.</span>
+                    </div>
+
+                    <table class="mcep-f0001-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 54%;">البند <span class="mcep-f0001-en">Item</span></th>
+                                <th style="width: 12%;">☑</th>
+                                <th style="width: 34%;">ملاحظات <span class="mcep-f0001-en">Notes</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="preferred_role_rows" t-as="role">
+                                <tr>
+                                    <td>
+                                        <span t-out="role.x_name or role.display_name or ''"/>
+                                    </td>
+                                    <td class="mcep-f0001-check">
+                                        <t t-if="role.id in selected_role_ids">☑</t>
+                                        <t t-if="role.id not in selected_role_ids">☐</t>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <th>نوع العمل المرغوب <span class="mcep-f0001-en">Preferred Work Type</span></th>
+                                <td colspan="2" class="mcep-f0001-value"><span t-field="o.x_preferred_work_type"/></td>
+                            </tr>
+                            <tr>
+                                <th>مواقع العمل المفضلة <span class="mcep-f0001-en">Preferred Locations</span></th>
+                                <td colspan="2" class="mcep-f0001-value">
+                                    <t t-set="preferred_location_names" t-value="', '.join(o.x_preferred_work_municipality_ids.mapped('display_name')) if o.x_preferred_work_municipality_ids else ''"/>
+                                    <span t-out="preferred_location_names or o.x_preferred_work_locations or ''"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="mcep-f0001-section">
+                        التزاماتي العائلية والشخصية <span class="mcep-f0001-en">My Family and Personal Commitments</span>
+                    </div>
+
+                    <table class="mcep-f0001-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 46%;">البند <span class="mcep-f0001-en">Item</span></th>
+                                <th style="width: 20%;">التكرار <span class="mcep-f0001-en">Frequency</span></th>
+                                <th style="width: 34%;">ملاحظات <span class="mcep-f0001-en">Notes</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-if="o.x_commitment_line_ids">
+                                <t t-foreach="o.x_commitment_line_ids" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <span t-out="line.x_commitment_type_id.x_name or line.x_commitment_type_id.display_name or ''"/>
+                                        </td>
+                                        <td class="mcep-f0001-value"><span t-field="line.x_frequency"/></td>
+                                        <td><span t-out="line.x_notes or ''"/></td>
+                                    </tr>
+                                </t>
+                            </t>
+                            <t t-if="not o.x_commitment_line_ids">
+                                <tr>
+                                    <td colspan="3" class="mcep-f0001-value">لا توجد التزامات مسجلة</td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <div class="mcep-f0001-help">
+                        هذا القسم يتيح للمتقدم أن يوضح ظروفه الخاصة لتقديرها عند توزيع المهام وجدولة الأوقات
+                        <span class="mcep-f0001-en">This section allows the applicant to explain his special circumstances to be considered when assigning tasks and scheduling times.</span>
+                    </div>
+                    <div class="mcep-f0001-notes-box">
+                        <span t-out="o.x_commitments_description or ''"/>
+                    </div>
+
+                    <table class="mcep-f0001-sign-table">
+                        <tbody>
+                            <tr>
+                                <td style="width: 60%;"></td>
+                                <td style="width: 40%;">التوقيع<br/><span class="mcep-f0001-en">Signature</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
 </odoo>
