@@ -5,16 +5,65 @@
         <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
         <field name="state">code</field>
         <field name="code"><![CDATA[
-for rec in records:
-    if (
-        (rec.x_intake_phase == 'prescreening' and rec.x_chairman_decision == 'pending')
-        or (rec.x_intake_phase == 'pooling' and rec.x_chairman_decision == 'rejected')
-    ):
-        rec.write({
-            'x_chairman_decision': 'approved',
-            'x_intake_phase': 'pooling',
-        })
-        rec.message_post(body='Chairman approved candidate into pooling.')
+
+def ui_text(en, ar):
+    try:
+        translated = env._(en)
+        if translated and translated != en:
+            return translated
+    except Exception:
+        pass
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        return ar
+
+    return en
+
+action = False
+
+if not env.user.has_group('hr_pool.group_hr_pool_chairman'):
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': 'HR Pool',
+            'message': ui_text('Only the HR Pool Chairman may approve admission into the pool.', 'لا يملك صلاحية اعتماد إدراج المرشح في الخزان إلا رئيس مجلس الإدارة.'),
+            'type': 'warning',
+            'sticky': True,
+        },
+    }
+else:
+    changed_count = 0
+    for rec in records:
+        if (
+            (rec.x_intake_phase == 'prescreening' and rec.x_chairman_decision == 'pending')
+            or (rec.x_intake_phase == 'pooling' and rec.x_chairman_decision == 'rejected')
+        ):
+            rec.sudo().write({
+                'x_chairman_decision': 'approved',
+                'x_intake_phase': 'pooling',
+            })
+            rec.message_post(
+                body=ui_text('Chairman approved candidate into pool.', 'اعتمد رئيس مجلس الإدارة إدراج المرشح في خزان الموارد البشرية.')
+            )
+            changed_count += 1
+
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': 'HR Pool',
+            'message': ui_text('Candidate admission approved.', 'تم اعتماد إدراج المرشح في الخزان.') if changed_count else ui_text('No eligible pool admission record was changed.', 'لا يوجد سجل مؤهل للتغيير.'),
+            'type': 'success' if changed_count else 'warning',
+            'sticky': False,
+            'next': {'type': 'ir.actions.client', 'tag': 'reload'},
+        },
+    }
         ]]></field>
     </record>
 
@@ -23,13 +72,41 @@ for rec in records:
         <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
         <field name="state">code</field>
         <field name="code"><![CDATA[
+
+def ui_text(en, ar):
+    try:
+        translated = env._(en)
+        if translated and translated != en:
+            return translated
+    except Exception:
+        pass
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        return ar
+
+    return en
+
+action = {
+    'type': 'ir.actions.client',
+    'tag': 'display_notification',
+    'params': {
+        'title': 'HR Pool',
+        'message': ui_text('The On Hold workflow has been retired. Use Approve or Reject only.', 'تم إلغاء مسار التعليق. استخدم الاعتماد أو الرفض فقط.'),
+        'type': 'warning',
+        'sticky': True,
+    },
+}
+
 for rec in records:
-    if rec.x_intake_phase == 'pooling' and rec.x_chairman_decision == 'approved':
-        rec.write({
-            'x_chairman_decision': 'on_hold',
-            'x_intake_phase': 'pooling',
-        })
-        rec.message_post(body='Chairman put candidate on hold.')
+    if env.user.has_group('hr_pool.group_hr_pool_chairman'):
+        rec.message_post(
+            body=ui_text('On Hold workflow was invoked but is retired; no state change was made.', 'تم استدعاء مسار التعليق بعد إلغائه ولم يتم تغيير حالة السجل.')
+        )
         ]]></field>
     </record>
 
@@ -38,13 +115,62 @@ for rec in records:
         <field name="model_id" ref="hr_pool.model_x_hr_pool"/>
         <field name="state">code</field>
         <field name="code"><![CDATA[
-for rec in records:
-    if rec.x_intake_phase in ('prescreening', 'pooling') and rec.x_chairman_decision in ('pending', 'approved', 'on_hold'):
-        rec.write({
-            'x_chairman_decision': 'rejected',
-            'x_intake_phase': 'pooling',
-        })
-        rec.message_post(body='Chairman rejected candidate.')
+
+def ui_text(en, ar):
+    try:
+        translated = env._(en)
+        if translated and translated != en:
+            return translated
+    except Exception:
+        pass
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        return ar
+
+    return en
+
+action = False
+
+if not env.user.has_group('hr_pool.group_hr_pool_chairman'):
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': 'HR Pool',
+            'message': ui_text('Only the HR Pool Chairman may reject pool candidates.', 'لا يملك صلاحية رفض مرشحي الخزان إلا رئيس مجلس الإدارة.'),
+            'type': 'warning',
+            'sticky': True,
+        },
+    }
+else:
+    changed_count = 0
+    for rec in records:
+        if rec.x_intake_phase in ('prescreening', 'pooling') and rec.x_chairman_decision in ('pending', 'approved'):
+            rec.sudo().write({
+                'x_chairman_decision': 'rejected',
+                'x_intake_phase': 'pooling',
+            })
+            rec.message_post(
+                body=ui_text('Chairman rejected candidate.', 'رفض رئيس مجلس الإدارة المرشح في خزان الموارد البشرية.')
+            )
+            changed_count += 1
+
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'title': 'HR Pool',
+            'message': ui_text('Candidate rejected.', 'تم رفض المرشح.') if changed_count else ui_text('No eligible pool candidate was rejected.', 'لا يوجد مرشح مؤهل للرفض.'),
+            'type': 'success' if changed_count else 'warning',
+            'sticky': False,
+            'next': {'type': 'ir.actions.client', 'tag': 'reload'},
+        },
+    }
         ]]></field>
     </record>
 

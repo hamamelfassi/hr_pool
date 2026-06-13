@@ -5,13 +5,32 @@
         <field name="model_id" ref="hr_pool.model_x_hr_pool" />
         <field name="state">code</field>
         <field name="code"><![CDATA[
+
+def ui_text(en, ar):
+    try:
+        translated = env._(en)
+        if translated and translated != en:
+            return translated
+    except Exception:
+        pass
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        return ar
+
+    return en
+
 request = False
 pool_for_create = False
 
 for rec in records:
     if rec.x_intake_phase != 'pooling':
         continue
-    if rec.x_chairman_decision not in ('approved', 'on_hold'):
+    if rec.x_chairman_decision != 'approved':
         continue
 
     existing_request = False
@@ -22,7 +41,7 @@ for rec in records:
     if existing_request:
         request = existing_request
         rec.sudo().write({'x_intake_phase': 'conversion'})
-        rec.message_post(body='Opened existing conversion request: %s' % (request.display_name,))
+        rec.message_post(body=ui_text('Opened existing conversion request: %s', 'تم فتح طلب ترحيل قائم: %s') % (request.display_name,))
     else:
         pool_for_create = rec
 
@@ -69,11 +88,30 @@ if len(records) == 1:
             ref="hr_pool.automation_hr_pool_conversion_request_sync_parent_phase_on_create" />
         <field name="state">code</field>
         <field name="code"><![CDATA[
+
+def ui_text(en, ar):
+    try:
+        translated = env._(en)
+        if translated and translated != en:
+            return translated
+    except Exception:
+        pass
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        return ar
+
+    return en
+
 for req in records:
     pool = req.x_pool_id.sudo()
     if req.x_state == 'in_progress' and pool and pool.x_intake_phase != 'conversion':
         pool.write({'x_intake_phase': 'conversion'})
-        pool.message_post(body='Conversion request saved; pool record moved to Conversion phase.')
+        pool.message_post(body=ui_text('Conversion request saved; pool record moved to Conversion Request phase.', 'تم حفظ طلب الترحيل ونقل سجل الخزان إلى مرحلة طلب الترحيل.'))
         ]]></field>
     </record>
 
@@ -93,11 +131,30 @@ for req in records:
             ref="hr_pool.automation_hr_pool_conversion_request_sync_parent_phase_on_write" />
         <field name="state">code</field>
         <field name="code"><![CDATA[
+
+def ui_text(en, ar):
+    try:
+        translated = env._(en)
+        if translated and translated != en:
+            return translated
+    except Exception:
+        pass
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        return ar
+
+    return en
+
 for req in records:
     pool = req.x_pool_id.sudo()
     if req.x_state == 'in_progress' and pool and pool.x_intake_phase != 'conversion':
         pool.write({'x_intake_phase': 'conversion'})
-        pool.message_post(body='Conversion request updated; pool record moved to Conversion phase.')
+        pool.message_post(body=ui_text('Conversion request updated; pool record moved to Conversion Request phase.', 'تم تحديث طلب الترحيل ونقل سجل الخزان إلى مرحلة طلب الترحيل.'))
         ]]></field>
     </record>
     <record id="action_hr_pool_conversion_request_submit" model="ir.actions.server">
@@ -105,6 +162,25 @@ for req in records:
         <field name="model_id" ref="hr_pool.model_x_hr_pool_conversion_request" />
         <field name="state">code</field>
         <field name="code"><![CDATA[
+
+def ui_text(en, ar):
+    try:
+        translated = env._(en)
+        if translated and translated != en:
+            return translated
+    except Exception:
+        pass
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        return ar
+
+    return en
+
 for req in records:
     if req.x_state != 'draft':
         continue
@@ -122,9 +198,9 @@ for req in records:
 
     if pool and pool.x_intake_phase != 'conversion':
         pool.write({'x_intake_phase': 'conversion'})
-        pool.message_post(body='Conversion requested; pool record moved to Conversion phase.')
+        pool.message_post(body=ui_text('Conversion requested; pool record moved to Conversion Request phase.', 'تم تقديم طلب الترحيل ونقل سجل الخزان إلى مرحلة طلب الترحيل.'))
 
-    req.message_post(body='Conversion request submitted and is now in progress.')
+    req.message_post(body=ui_text('Conversion request submitted and is now in progress.', 'تم تقديم طلب الترحيل وأصبح قيد المعالجة.'))
         ]]></field>
     </record>
     <record id="action_hr_pool_conversion_request_approve" model="ir.actions.server">
@@ -132,6 +208,25 @@ for req in records:
         <field name="model_id" ref="hr_pool.model_x_hr_pool_conversion_request" />
         <field name="state">code</field>
         <field name="code"><![CDATA[
+
+def ui_text(en, ar):
+    try:
+        translated = env._(en)
+        if translated and translated != en:
+            return translated
+    except Exception:
+        pass
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        return ar
+
+    return en
+
 for req in records:
     if not env.user.has_group('hr_pool.group_hr_pool_chairman'):
         raise Warning('Only the HR Pool Chairman can approve conversion requests.')
@@ -234,8 +329,8 @@ for req in records:
         'x_conversion_job_id': req.x_job_id.id,
         'x_applicant_id': applicant.id,
     })
-    req.message_post(body='Conversion request approved.')
-    pool.message_post(body='Pool record converted to applicant.')
+    req.message_post(body=ui_text('Conversion request approved.', 'اعتمد رئيس مجلس الإدارة طلب الترحيل.'))
+    pool.message_post(body=ui_text('Pool record converted to applicant.', 'تم تحويل سجل الخزان إلى طلب توظيف.'))
         ]]></field>
     </record>
 
@@ -244,6 +339,25 @@ for req in records:
         <field name="model_id" ref="hr_pool.model_x_hr_pool_conversion_request" />
         <field name="state">code</field>
         <field name="code"><![CDATA[
+
+def ui_text(en, ar):
+    try:
+        translated = env._(en)
+        if translated and translated != en:
+            return translated
+    except Exception:
+        pass
+
+    try:
+        lang = env.user.lang or ''
+    except Exception:
+        lang = ''
+
+    if lang.startswith('ar'):
+        return ar
+
+    return en
+
 for req in records:
     if not env.user.has_group('hr_pool.group_hr_pool_chairman'):
         raise Warning('Only the HR Pool Chairman can reject conversion requests.')
@@ -259,8 +373,8 @@ for req in records:
         'x_intake_phase': 'pooling',
         'x_chairman_decision': 'approved',
     })
-    req.message_post(body='Conversion request rejected.')
-    pool.message_post(body='Conversion request rejected; pool returned to pooling and remains chairman-approved.')
+    req.message_post(body=ui_text('Conversion request rejected.', 'رفض رئيس مجلس الإدارة طلب الترحيل.'))
+    pool.message_post(body=ui_text('Conversion request rejected; pool returned to pool and remains chairman-approved.', 'تم رفض طلب الترحيل وإرجاع سجل الخزان إلى حالة الاعتماد.'))
         ]]></field>
     </record>
 </odoo>

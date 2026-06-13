@@ -119,22 +119,20 @@
                 <header>
                     <field name="x_intake_phase" widget="statusbar" options="{'clickable': false}" />
                     <button type="action"
-                        name="hr_pool.action_hr_pool_create_conversion_request"
-                        string="Convert"
-                        class="btn-primary"
-                        invisible="not id or x_intake_phase != 'pooling' or x_chairman_decision not in ['approved', 'on_hold'] or x_applicant_id" />
+                            name="hr_pool.action_hr_pool_create_conversion_request"
+                            string="Request Conversion"
+                            class="btn-primary"
+                            invisible="not id or x_intake_phase != 'pooling' or x_chairman_decision != 'approved' or x_applicant_id"/>
                     <button type="action"
-                        name="hr_pool.action_hr_pool_approve_to_pool"
-                        string="Approve"
-                        invisible="not id or not ((x_intake_phase == 'prescreening' and x_chairman_decision == 'pending') or (x_intake_phase == 'pooling' and x_chairman_decision == 'rejected'))" />
+                            name="hr_pool.action_hr_pool_approve_to_pool"
+                            string="Approve"
+                            groups="hr_pool.group_hr_pool_chairman"
+                            invisible="not id or not ((x_intake_phase == 'prescreening' and x_chairman_decision == 'pending') or (x_intake_phase == 'pooling' and x_chairman_decision == 'rejected'))"/>
                     <button type="action"
-                        name="hr_pool.action_hr_pool_put_on_hold"
-                        string="On Hold"
-                        invisible="not id or x_intake_phase != 'pooling' or x_chairman_decision != 'approved'" />
-                    <button type="action"
-                        name="hr_pool.action_hr_pool_reject"
-                        string="Reject"
-                        invisible="not id or x_intake_phase not in ['prescreening', 'pooling'] or x_chairman_decision not in ['pending', 'approved', 'on_hold']" />
+                            name="hr_pool.action_hr_pool_reject"
+                            string="Reject"
+                            groups="hr_pool.group_hr_pool_chairman"
+                            invisible="not id or x_intake_phase not in ['prescreening', 'pooling'] or x_chairman_decision not in ['pending', 'approved']"/>
                 </header>
                 <sheet>
                     <group>
@@ -159,7 +157,6 @@
                                 widget="badge"
                                 class="fs-5 fw-bold"
                                 decoration-info="x_chairman_decision == 'pending'"
-                                decoration-warning="x_chairman_decision == 'on_hold'"
                                 decoration-success="x_chairman_decision == 'approved'"
                                 decoration-danger="x_chairman_decision == 'rejected'" />
                             <field name="x_reviewer_recommendation" />

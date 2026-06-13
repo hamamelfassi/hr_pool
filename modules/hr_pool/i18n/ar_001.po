@@ -193,7 +193,7 @@ msgstr "متعاون"
 #. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_phase_conversion
 msgid "Conversion"
-msgstr "الترحيل"
+msgstr "طلب ترحيل"
 
 #. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_decision_conversion_approved
@@ -214,7 +214,7 @@ msgstr "تم رفض الترحيل"
 #. module: hr_pool
 #: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_conversion_request_form
 msgid "Conversion Request"
-msgstr "طلب الترحيل"
+msgstr "طلب ترحيل"
 
 #. module: hr_pool
 #: model:ir.actions.act_window,name:hr_pool.action_hr_pool_conversion_request
@@ -227,8 +227,8 @@ msgstr "طلبات الترحيل"
 
 #. module: hr_pool
 #: model_terms:ir.ui.view,arch_db:hr_pool.view_hr_pool_form
-msgid "Convert"
-msgstr "ترحيل"
+msgid "Request Conversion"
+msgstr "طلب ترحيل"
 
 #. module: hr_pool
 #: model:ir.model.fields.selection,name:hr_pool.sel_phase_converted
@@ -1541,3 +1541,98 @@ msgstr "موقّع"
 #: model:ir.model.fields.selection,name:hr_pool.sel_pool_f0001_state_cancelled
 msgid "Cancelled"
 msgstr "ملغى"
+
+
+#. module: hr_pool
+msgid "Only the HR Pool Chairman may approve admission into the pool."
+msgstr "لا يملك صلاحية اعتماد إدراج المرشح في الخزان إلا رئيس مجلس الإدارة."
+
+
+#. module: hr_pool
+msgid "Chairman approved candidate into pool."
+msgstr "اعتمد رئيس مجلس الإدارة إدراج المرشح في خزان الموارد البشرية."
+
+
+#. module: hr_pool
+msgid "Candidate admission approved."
+msgstr "تم اعتماد إدراج المرشح في الخزان."
+
+
+#. module: hr_pool
+msgid "No eligible pool admission record was changed."
+msgstr "لا يوجد سجل مؤهل للتغيير."
+
+
+#. module: hr_pool
+msgid "The On Hold workflow has been retired. Use Approve or Reject only."
+msgstr "تم إلغاء مسار التعليق. استخدم الاعتماد أو الرفض فقط."
+
+
+#. module: hr_pool
+msgid "On Hold workflow was invoked but is retired; no state change was made."
+msgstr "تم استدعاء مسار التعليق بعد إلغائه ولم يتم تغيير حالة السجل."
+
+
+#. module: hr_pool
+msgid "Only the HR Pool Chairman may reject pool candidates."
+msgstr "لا يملك صلاحية رفض مرشحي الخزان إلا رئيس مجلس الإدارة."
+
+
+#. module: hr_pool
+msgid "Chairman rejected candidate."
+msgstr "رفض رئيس مجلس الإدارة المرشح في خزان الموارد البشرية."
+
+
+#. module: hr_pool
+msgid "Candidate rejected."
+msgstr "تم رفض المرشح."
+
+
+#. module: hr_pool
+msgid "No eligible pool candidate was rejected."
+msgstr "لا يوجد مرشح مؤهل للرفض."
+
+
+#. module: hr_pool
+msgid "Opened existing conversion request: %s"
+msgstr "تم فتح طلب ترحيل قائم: %s"
+
+
+#. module: hr_pool
+msgid "Conversion request saved; pool record moved to Conversion Request phase."
+msgstr "تم حفظ طلب الترحيل ونقل سجل الخزان إلى مرحلة طلب الترحيل."
+
+
+#. module: hr_pool
+msgid "Conversion request updated; pool record moved to Conversion Request phase."
+msgstr "تم تحديث طلب الترحيل ونقل سجل الخزان إلى مرحلة طلب الترحيل."
+
+
+#. module: hr_pool
+msgid "Conversion requested; pool record moved to Conversion Request phase."
+msgstr "تم تقديم طلب الترحيل ونقل سجل الخزان إلى مرحلة طلب الترحيل."
+
+
+#. module: hr_pool
+msgid "Conversion request submitted and is now in progress."
+msgstr "تم تقديم طلب الترحيل وأصبح قيد المعالجة."
+
+
+#. module: hr_pool
+msgid "Conversion request approved."
+msgstr "اعتمد رئيس مجلس الإدارة طلب الترحيل."
+
+
+#. module: hr_pool
+msgid "Pool record converted to applicant."
+msgstr "تم تحويل سجل الخزان إلى طلب توظيف."
+
+
+#. module: hr_pool
+msgid "Conversion request rejected."
+msgstr "رفض رئيس مجلس الإدارة طلب الترحيل."
+
+
+#. module: hr_pool
+msgid "Conversion request rejected; pool returned to pool and remains chairman-approved."
+msgstr "تم رفض طلب الترحيل وإرجاع سجل الخزان إلى حالة الاعتماد."

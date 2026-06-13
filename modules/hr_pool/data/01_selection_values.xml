@@ -33,7 +33,7 @@
     </record>
     <record id="sel_phase_conversion" model="ir.model.fields.selection">
         <field name="field_id" ref="hr_pool.field_hr_pool_x_intake_phase"/>
-        <field name="name">Conversion</field>
+        <field name="name">Conversion Request</field>
         <field name="value">conversion</field>
     </record>
     <record id="sel_phase_converted" model="ir.model.fields.selection">
@@ -52,11 +52,17 @@
         <field name="name">Approved</field>
         <field name="value">approved</field>
     </record>
-    <record id="sel_decision_on_hold" model="ir.model.fields.selection">
-        <field name="field_id" ref="hr_pool.field_hr_pool_x_chairman_decision"/>
-        <field name="name">On Hold</field>
-        <field name="value">on_hold</field>
-    </record>
+
+    <!-- PR0B: retire On Hold from active workflow.
+         Existing records are moved to approved before the old selection row is removed. -->
+    <function model="x_hr.pool" name="write">
+        <function model="x_hr.pool" name="search" eval="[[('x_chairman_decision', '=', 'on_hold')]]"/>
+        <value eval="{'x_chairman_decision': 'approved'}"/>
+    </function>
+
+    <function model="ir.model.fields.selection" name="unlink">
+        <function model="ir.model.fields.selection" name="search" eval="[[('field_id', '=', ref('hr_pool.field_hr_pool_x_chairman_decision')), ('value', '=', 'on_hold')]]"/>
+    </function>
     <record id="sel_decision_rejected" model="ir.model.fields.selection">
         <field name="field_id" ref="hr_pool.field_hr_pool_x_chairman_decision"/>
         <field name="name">Rejected</field>
